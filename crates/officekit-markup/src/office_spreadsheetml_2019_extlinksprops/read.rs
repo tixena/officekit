@@ -221,8 +221,27 @@ use officekit_xml::element::Element;
 /// Read `xxlnp:externalLinksPr` into a `ExternalLinksPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn external_links_pr(element: &Element) -> super::ExternalLinksPr {
+    external_links_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xxlnp:externalLinksPr` into a `ExternalLinksPr` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn external_links_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExternalLinksPr {
+    external_links_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xxlnp:externalLinksPr` into a `ExternalLinksPr` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn external_links_pr_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ExternalLinksPr {
     let mut node = super::ExternalLinksPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXTERNAL_LINKS_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXTERNAL_LINKS_PR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.auto_refresh);

@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `c16:bubble3D` into a `Bubble3D`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bubble3d(element: &Element) -> super::Bubble3D {
+    bubble3d_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:bubble3D` into a `Bubble3D` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bubble3d_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Bubble3D {
+    bubble3d_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:bubble3D` into a `Bubble3D` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bubble3d_from_item(item: officekit_markup_base::Item<'_>) -> super::Bubble3D {
     let mut node = super::Bubble3D::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BUBBLE3D_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BUBBLE3D_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);
@@ -235,9 +250,28 @@ pub fn bubble3d(element: &Element) -> super::Bubble3D {
 /// Read `c16:categoryFilterException` into a `CategoryFilterException`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn category_filter_exception(element: &Element) -> super::CategoryFilterException {
+    category_filter_exception_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:categoryFilterException` into a `CategoryFilterException` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn category_filter_exception_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CategoryFilterException {
+    category_filter_exception_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:categoryFilterException` into a `CategoryFilterException` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn category_filter_exception_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CategoryFilterException {
     let mut node = super::CategoryFilterException::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::CATEGORY_FILTER_EXCEPTION_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::CATEGORY_FILTER_EXCEPTION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.unique_id),
@@ -257,9 +291,28 @@ pub fn category_filter_exception(element: &Element) -> super::CategoryFilterExce
 /// Read `c16:categoryFilterExceptions` into a `CategoryFilterExceptions`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn category_filter_exceptions(element: &Element) -> super::CategoryFilterExceptions {
+    category_filter_exceptions_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:categoryFilterExceptions` into a `CategoryFilterExceptions` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn category_filter_exceptions_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CategoryFilterExceptions {
+    category_filter_exceptions_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:categoryFilterExceptions` into a `CategoryFilterExceptions` from an element, or from
+/// its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn category_filter_exceptions_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CategoryFilterExceptions {
     let mut node = super::CategoryFilterExceptions::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::CATEGORY_FILTER_EXCEPTIONS_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::CATEGORY_FILTER_EXCEPTIONS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.category_filter_exception);
@@ -272,8 +325,23 @@ pub fn category_filter_exceptions(element: &Element) -> super::CategoryFilterExc
 /// Read `c16:dLbl` into a `DLbl`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn d_lbl(element: &Element) -> super::DLbl {
+    d_lbl_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:dLbl` into a `DLbl` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn d_lbl_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DLbl {
+    d_lbl_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:dLbl` into a `DLbl` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn d_lbl_from_item(item: officekit_markup_base::Item<'_>) -> super::DLbl {
     let mut node = super::DLbl::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::D_LBL_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::D_LBL_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.index),
@@ -289,9 +357,27 @@ pub fn d_lbl(element: &Element) -> super::DLbl {
 /// Read `c16:datapointuniqueidmap` into a `Datapointuniqueidmap`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn datapointuniqueidmap(element: &Element) -> super::Datapointuniqueidmap {
+    datapointuniqueidmap_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:datapointuniqueidmap` into a `Datapointuniqueidmap` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn datapointuniqueidmap_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Datapointuniqueidmap {
+    datapointuniqueidmap_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:datapointuniqueidmap` into a `Datapointuniqueidmap` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn datapointuniqueidmap_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::Datapointuniqueidmap {
     let mut node = super::Datapointuniqueidmap::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::DATAPOINTUNIQUEIDMAP_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DATAPOINTUNIQUEIDMAP_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.ptentry);
@@ -304,8 +390,24 @@ pub fn datapointuniqueidmap(element: &Element) -> super::Datapointuniqueidmap {
 /// Read `c16:explosion` into a `Explosion`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn explosion(element: &Element) -> super::Explosion {
+    explosion_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:explosion` into a `Explosion` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn explosion_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Explosion {
+    explosion_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:explosion` into a `Explosion` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn explosion_from_item(item: officekit_markup_base::Item<'_>) -> super::Explosion {
     let mut node = super::Explosion::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXPLOSION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXPLOSION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);
@@ -320,9 +422,32 @@ pub fn explosion(element: &Element) -> super::Explosion {
 pub fn filtered_lit_cache_multi_lvl_str_filtered_literal_cache(
     element: &Element,
 ) -> super::FilteredLitCacheMultiLvlStrFilteredLiteralCache {
+    filtered_lit_cache_multi_lvl_str_filtered_literal_cache_from_item(
+        officekit_markup_base::Item::Tree(element),
+    )
+}
+
+/// Read `c16:filteredLitCache` into a `FilteredLitCacheMultiLvlStrFilteredLiteralCache` from its
+/// start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn filtered_lit_cache_multi_lvl_str_filtered_literal_cache_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::FilteredLitCacheMultiLvlStrFilteredLiteralCache {
+    filtered_lit_cache_multi_lvl_str_filtered_literal_cache_from_item(
+        officekit_markup_base::Item::Events(start, events),
+    )
+}
+
+/// Read `c16:filteredLitCache` into a `FilteredLitCacheMultiLvlStrFilteredLiteralCache` from an
+/// element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn filtered_lit_cache_multi_lvl_str_filtered_literal_cache_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::FilteredLitCacheMultiLvlStrFilteredLiteralCache {
     let mut node = super::FilteredLitCacheMultiLvlStrFilteredLiteralCache::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::FILTERED_LIT_CACHE_MULTI_LVL_STR_FILTERED_LITERAL_CACHE_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -339,9 +464,32 @@ pub fn filtered_lit_cache_multi_lvl_str_filtered_literal_cache(
 pub fn filtered_lit_cache_num_filtered_literal_cache(
     element: &Element,
 ) -> super::FilteredLitCacheNumFilteredLiteralCache {
-    let mut node = super::FilteredLitCacheNumFilteredLiteralCache::default();
-    let mut reader = officekit_markup_base::Reader::new(
+    filtered_lit_cache_num_filtered_literal_cache_from_item(officekit_markup_base::Item::Tree(
         element,
+    ))
+}
+
+/// Read `c16:filteredLitCache` into a `FilteredLitCacheNumFilteredLiteralCache` from its start tag
+/// and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn filtered_lit_cache_num_filtered_literal_cache_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::FilteredLitCacheNumFilteredLiteralCache {
+    filtered_lit_cache_num_filtered_literal_cache_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `c16:filteredLitCache` into a `FilteredLitCacheNumFilteredLiteralCache` from an element, or
+/// from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn filtered_lit_cache_num_filtered_literal_cache_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::FilteredLitCacheNumFilteredLiteralCache {
+    let mut node = super::FilteredLitCacheNumFilteredLiteralCache::default();
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::FILTERED_LIT_CACHE_NUM_FILTERED_LITERAL_CACHE_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -358,9 +506,32 @@ pub fn filtered_lit_cache_num_filtered_literal_cache(
 pub fn filtered_lit_cache_str_filtered_literal_cache(
     element: &Element,
 ) -> super::FilteredLitCacheStrFilteredLiteralCache {
-    let mut node = super::FilteredLitCacheStrFilteredLiteralCache::default();
-    let mut reader = officekit_markup_base::Reader::new(
+    filtered_lit_cache_str_filtered_literal_cache_from_item(officekit_markup_base::Item::Tree(
         element,
+    ))
+}
+
+/// Read `c16:filteredLitCache` into a `FilteredLitCacheStrFilteredLiteralCache` from its start tag
+/// and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn filtered_lit_cache_str_filtered_literal_cache_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::FilteredLitCacheStrFilteredLiteralCache {
+    filtered_lit_cache_str_filtered_literal_cache_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `c16:filteredLitCache` into a `FilteredLitCacheStrFilteredLiteralCache` from an element, or
+/// from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn filtered_lit_cache_str_filtered_literal_cache_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::FilteredLitCacheStrFilteredLiteralCache {
+    let mut node = super::FilteredLitCacheStrFilteredLiteralCache::default();
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::FILTERED_LIT_CACHE_STR_FILTERED_LITERAL_CACHE_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -375,8 +546,27 @@ pub fn filtered_lit_cache_str_filtered_literal_cache(
 /// Read `c16:invertIfNegative` into a `InvertIfNegative`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn invert_if_negative(element: &Element) -> super::InvertIfNegative {
+    invert_if_negative_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:invertIfNegative` into a `InvertIfNegative` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn invert_if_negative_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::InvertIfNegative {
+    invert_if_negative_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:invertIfNegative` into a `InvertIfNegative` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn invert_if_negative_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::InvertIfNegative {
     let mut node = super::InvertIfNegative::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::INVERT_IF_NEGATIVE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::INVERT_IF_NEGATIVE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);
@@ -389,8 +579,27 @@ pub fn invert_if_negative(element: &Element) -> super::InvertIfNegative {
 /// Read `c16:literalDataChart` into a `LiteralDataChart`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn literal_data_chart(element: &Element) -> super::LiteralDataChart {
+    literal_data_chart_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:literalDataChart` into a `LiteralDataChart` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn literal_data_chart_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::LiteralDataChart {
+    literal_data_chart_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:literalDataChart` into a `LiteralDataChart` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn literal_data_chart_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::LiteralDataChart {
     let mut node = super::LiteralDataChart::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::LITERAL_DATA_CHART_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::LITERAL_DATA_CHART_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);
@@ -403,8 +612,23 @@ pub fn literal_data_chart(element: &Element) -> super::LiteralDataChart {
 /// Read `c16:marker` into a `Marker`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn marker(element: &Element) -> super::Marker {
+    marker_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:marker` into a `Marker` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn marker_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Marker {
+    marker_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:marker` into a `Marker` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn marker_from_item(item: officekit_markup_base::Item<'_>) -> super::Marker {
     let mut node = super::Marker::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::MARKER_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::MARKER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.symbol),
@@ -421,8 +645,27 @@ pub fn marker(element: &Element) -> super::Marker {
 /// Read `c16:multiLvlStrCache` into a `MultiLvlStrCache`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn multi_lvl_str_cache(element: &Element) -> super::MultiLvlStrCache {
+    multi_lvl_str_cache_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:multiLvlStrCache` into a `MultiLvlStrCache` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn multi_lvl_str_cache_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::MultiLvlStrCache {
+    multi_lvl_str_cache_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:multiLvlStrCache` into a `MultiLvlStrCache` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn multi_lvl_str_cache_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::MultiLvlStrCache {
     let mut node = super::MultiLvlStrCache::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::MULTI_LVL_STR_CACHE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::MULTI_LVL_STR_CACHE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.point_count),
@@ -438,8 +681,23 @@ pub fn multi_lvl_str_cache(element: &Element) -> super::MultiLvlStrCache {
 /// Read `c16:numCache` into a `NumCache`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn num_cache(element: &Element) -> super::NumCache {
+    num_cache_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:numCache` into a `NumCache` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn num_cache_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NumCache {
+    num_cache_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:numCache` into a `NumCache` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn num_cache_from_item(item: officekit_markup_base::Item<'_>) -> super::NumCache {
     let mut node = super::NumCache::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NUM_CACHE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NUM_CACHE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.format_code),
@@ -456,8 +714,25 @@ pub fn num_cache(element: &Element) -> super::NumCache {
 /// Read `c16:pivotOptions16` into a `PivotOptions16`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_options16(element: &Element) -> super::PivotOptions16 {
+    pivot_options16_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:pivotOptions16` into a `PivotOptions16` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pivot_options16_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PivotOptions16 {
+    pivot_options16_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:pivotOptions16` into a `PivotOptions16` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pivot_options16_from_item(item: officekit_markup_base::Item<'_>) -> super::PivotOptions16 {
     let mut node = super::PivotOptions16::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PIVOT_OPTIONS16_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PIVOT_OPTIONS16_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.show_expand_collapse_field_buttons);
@@ -470,8 +745,23 @@ pub fn pivot_options16(element: &Element) -> super::PivotOptions16 {
 /// Read `c16:ptentry` into a `Ptentry`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ptentry(element: &Element) -> super::Ptentry {
+    ptentry_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:ptentry` into a `Ptentry` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ptentry_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Ptentry {
+    ptentry_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:ptentry` into a `Ptentry` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ptentry_from_item(item: officekit_markup_base::Item<'_>) -> super::Ptentry {
     let mut node = super::Ptentry::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PTENTRY_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PTENTRY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.ptidx),
@@ -486,8 +776,23 @@ pub fn ptentry(element: &Element) -> super::Ptentry {
 /// Read `c16:ptidx` into a `Ptidx`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ptidx(element: &Element) -> super::Ptidx {
+    ptidx_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:ptidx` into a `Ptidx` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ptidx_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Ptidx {
+    ptidx_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:ptidx` into a `Ptidx` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ptidx_from_item(item: officekit_markup_base::Item<'_>) -> super::Ptidx {
     let mut node = super::Ptidx::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PTIDX_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PTIDX_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -502,11 +807,28 @@ pub fn ptidx(element: &Element) -> super::Ptidx {
 pub fn show_expand_collapse_field_buttons(
     element: &Element,
 ) -> super::ShowExpandCollapseFieldButtons {
+    show_expand_collapse_field_buttons_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:showExpandCollapseFieldButtons` into a `ShowExpandCollapseFieldButtons` from its start
+/// tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn show_expand_collapse_field_buttons_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ShowExpandCollapseFieldButtons {
+    show_expand_collapse_field_buttons_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:showExpandCollapseFieldButtons` into a `ShowExpandCollapseFieldButtons` from an
+/// element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn show_expand_collapse_field_buttons_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ShowExpandCollapseFieldButtons {
     let mut node = super::ShowExpandCollapseFieldButtons::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::SHOW_EXPAND_COLLAPSE_FIELD_BUTTONS_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::SHOW_EXPAND_COLLAPSE_FIELD_BUTTONS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);
@@ -519,8 +841,23 @@ pub fn show_expand_collapse_field_buttons(
 /// Read `c16:spPr` into a `SpPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sp_pr(element: &Element) -> super::SpPr {
+    sp_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:spPr` into a `SpPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sp_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SpPr {
+    sp_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:spPr` into a `SpPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sp_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::SpPr {
     let mut node = super::SpPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SP_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SP_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bw_mode),
@@ -542,8 +879,23 @@ pub fn sp_pr(element: &Element) -> super::SpPr {
 /// Read `c16:strCache` into a `StrCache`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn str_cache(element: &Element) -> super::StrCache {
+    str_cache_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:strCache` into a `StrCache` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn str_cache_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::StrCache {
+    str_cache_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:strCache` into a `StrCache` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn str_cache_from_item(item: officekit_markup_base::Item<'_>) -> super::StrCache {
     let mut node = super::StrCache::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::STR_CACHE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::STR_CACHE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.point_count),
@@ -559,7 +911,22 @@ pub fn str_cache(element: &Element) -> super::StrCache {
 /// Read `c16:uniqueID` into a `UniqueID`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn unique_id(element: &Element) -> super::UniqueID {
-    let reader = officekit_markup_base::Reader::new(element, &super::UNIQUE_ID_SHAPE);
+    unique_id_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:uniqueID` into a `UniqueID` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn unique_id_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::UniqueID {
+    unique_id_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:uniqueID` into a `UniqueID` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn unique_id_from_item(item: officekit_markup_base::Item<'_>) -> super::UniqueID {
+    let reader = officekit_markup_base::Reader::of(item, &super::UNIQUE_ID_SHAPE);
     super::UniqueID {
         user_data: (),
         unknown: reader.finish(),
@@ -569,7 +936,22 @@ pub fn unique_id(element: &Element) -> super::UniqueID {
 /// Read `c16:uniqueId` into a `UniqueId`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn unique_id_2(element: &Element) -> super::UniqueId {
-    let reader = officekit_markup_base::Reader::new(element, &super::UNIQUE_ID_2_SHAPE);
+    unique_id_2_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16:uniqueId` into a `UniqueId` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn unique_id_2_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::UniqueId {
+    unique_id_2_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16:uniqueId` into a `UniqueId` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn unique_id_2_from_item(item: officekit_markup_base::Item<'_>) -> super::UniqueId {
+    let reader = officekit_markup_base::Reader::of(item, &super::UNIQUE_ID_2_SHAPE);
     super::UniqueId {
         user_data: (),
         unknown: reader.finish(),

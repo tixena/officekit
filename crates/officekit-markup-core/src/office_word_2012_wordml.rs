@@ -223,7 +223,6 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::common_simple_types;
-use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
 
@@ -789,8 +788,8 @@ impl<X: UserData> AppearanceWith<X> {
 }
 
 impl officekit_markup_base::Read for Appearance {
-    fn read(element: &Element) -> Self {
-        read::appearance(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::appearance_from_item(item)
     }
 }
 
@@ -827,8 +826,8 @@ impl<X: UserData> ChartTrackingRefBasedWith<X> {
 }
 
 impl officekit_markup_base::Read for ChartTrackingRefBased {
-    fn read(element: &Element) -> Self {
-        read::chart_tracking_ref_based(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::chart_tracking_ref_based_from_item(item)
     }
 }
 
@@ -865,8 +864,8 @@ impl<X: UserData> CollapsedWith<X> {
 }
 
 impl officekit_markup_base::Read for Collapsed {
-    fn read(element: &Element) -> Self {
-        read::collapsed(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::collapsed_from_item(item)
     }
 }
 
@@ -909,8 +908,8 @@ impl<X: UserData> ColorWith<X> {
 }
 
 impl officekit_markup_base::Read for Color {
-    fn read(element: &Element) -> Self {
-        read::color(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::color_from_item(item)
     }
 }
 
@@ -951,8 +950,8 @@ impl<X: UserData> CommentExWith<X> {
 }
 
 impl officekit_markup_base::Read for CommentEx {
-    fn read(element: &Element) -> Self {
-        read::comment_ex(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::comment_ex_from_item(item)
     }
 }
 
@@ -989,8 +988,8 @@ impl<X: UserData> CommentsExWith<X> {
 }
 
 impl officekit_markup_base::Read for CommentsEx {
-    fn read(element: &Element) -> Self {
-        read::comments_ex(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::comments_ex_from_item(item)
     }
 }
 
@@ -1031,8 +1030,8 @@ impl<X: UserData> DataBindingWith<X> {
 }
 
 impl officekit_markup_base::Read for DataBinding {
-    fn read(element: &Element) -> Self {
-        read::data_binding(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_binding_from_item(item)
     }
 }
 
@@ -1069,8 +1068,8 @@ impl<X: UserData> DoNotAllowInsertDeleteSectionWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotAllowInsertDeleteSection {
-    fn read(element: &Element) -> Self {
-        read::do_not_allow_insert_delete_section(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_allow_insert_delete_section_from_item(item)
     }
 }
 
@@ -1107,8 +1106,8 @@ impl<X: UserData> DocIdWith<X> {
 }
 
 impl officekit_markup_base::Read for DocId {
-    fn read(element: &Element) -> Self {
-        read::doc_id(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::doc_id_from_item(item)
     }
 }
 
@@ -1145,8 +1144,8 @@ impl<X: UserData> FootnoteColumnsWith<X> {
 }
 
 impl officekit_markup_base::Read for FootnoteColumns {
-    fn read(element: &Element) -> Self {
-        read::footnote_columns(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::footnote_columns_from_item(item)
     }
 }
 
@@ -1183,8 +1182,8 @@ impl<X: UserData> PeopleWith<X> {
 }
 
 impl officekit_markup_base::Read for People {
-    fn read(element: &Element) -> Self {
-        read::people(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::people_from_item(item)
     }
 }
 
@@ -1225,8 +1224,8 @@ impl<X: UserData> PersonWith<X> {
 }
 
 impl officekit_markup_base::Read for Person {
-    fn read(element: &Element) -> Self {
-        read::person(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::person_from_item(item)
     }
 }
 
@@ -1265,8 +1264,8 @@ impl<X: UserData> PresenceInfoWith<X> {
 }
 
 impl officekit_markup_base::Read for PresenceInfo {
-    fn read(element: &Element) -> Self {
-        read::presence_info(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::presence_info_from_item(item)
     }
 }
 
@@ -1307,8 +1306,8 @@ impl<X: UserData> RepeatingSectionWith<X> {
 }
 
 impl officekit_markup_base::Read for RepeatingSection {
-    fn read(element: &Element) -> Self {
-        read::repeating_section(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::repeating_section_from_item(item)
     }
 }
 
@@ -1341,8 +1340,8 @@ impl<X: UserData> RepeatingSectionItemWith<X> {
 }
 
 impl officekit_markup_base::Read for RepeatingSectionItem {
-    fn read(element: &Element) -> Self {
-        read::repeating_section_item(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::repeating_section_item_from_item(item)
     }
 }
 
@@ -1433,8 +1432,8 @@ impl<X: UserData> SectionTitleWith<X> {
 }
 
 impl officekit_markup_base::Read for SectionTitle {
-    fn read(element: &Element) -> Self {
-        read::section_title(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::section_title_from_item(item)
     }
 }
 
@@ -1471,8 +1470,8 @@ impl<X: UserData> WebExtensionCreatedWith<X> {
 }
 
 impl officekit_markup_base::Read for WebExtensionCreated {
-    fn read(element: &Element) -> Self {
-        read::web_extension_created(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::web_extension_created_from_item(item)
     }
 }
 
@@ -1509,8 +1508,8 @@ impl<X: UserData> WebExtensionLinkedWith<X> {
 }
 
 impl officekit_markup_base::Read for WebExtensionLinked {
-    fn read(element: &Element) -> Self {
-        read::web_extension_linked(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::web_extension_linked_from_item(item)
     }
 }
 

@@ -221,7 +221,23 @@ use officekit_xml::element::Element;
 /// Read `xlrdwi:address` into a `Address`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn address(element: &Element) -> super::Address {
-    let reader = officekit_markup_base::Reader::new(element, &super::ADDRESS_SHAPE);
+    address_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrdwi:address` into a `Address` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn address_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Address {
+    address_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrdwi:address` into a `Address` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn address_from_item(item: officekit_markup_base::Item<'_>) -> super::Address {
+    let reader = officekit_markup_base::Reader::of(item, &super::ADDRESS_SHAPE);
     super::Address {
         user_data: (),
         unknown: reader.finish(),
@@ -231,7 +247,22 @@ pub fn address(element: &Element) -> super::Address {
 /// Read `xlrdwi:blip` into a `Blip`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn blip(element: &Element) -> super::Blip {
-    let reader = officekit_markup_base::Reader::new(element, &super::BLIP_SHAPE);
+    blip_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrdwi:blip` into a `Blip` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn blip_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Blip {
+    blip_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrdwi:blip` into a `Blip` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn blip_from_item(item: officekit_markup_base::Item<'_>) -> super::Blip {
+    let reader = officekit_markup_base::Reader::of(item, &super::BLIP_SHAPE);
     super::Blip {
         user_data: (),
         unknown: reader.finish(),
@@ -241,8 +272,23 @@ pub fn blip(element: &Element) -> super::Blip {
 /// Read `xlrdwi:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrdwi:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrdwi:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -255,7 +301,26 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `xlrdwi:moreImagesAddress` into a `MoreImagesAddress`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn more_images_address(element: &Element) -> super::MoreImagesAddress {
-    let reader = officekit_markup_base::Reader::new(element, &super::MORE_IMAGES_ADDRESS_SHAPE);
+    more_images_address_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrdwi:moreImagesAddress` into a `MoreImagesAddress` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn more_images_address_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::MoreImagesAddress {
+    more_images_address_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrdwi:moreImagesAddress` into a `MoreImagesAddress` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn more_images_address_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::MoreImagesAddress {
+    let reader = officekit_markup_base::Reader::of(item, &super::MORE_IMAGES_ADDRESS_SHAPE);
     super::MoreImagesAddress {
         user_data: (),
         unknown: reader.finish(),
@@ -265,8 +330,25 @@ pub fn more_images_address(element: &Element) -> super::MoreImagesAddress {
 /// Read `xlrdwi:webImageSrd` into a `WebImageSrd`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn web_image_srd(element: &Element) -> super::WebImageSrd {
+    web_image_srd_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrdwi:webImageSrd` into a `WebImageSrd` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn web_image_srd_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::WebImageSrd {
+    web_image_srd_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrdwi:webImageSrd` into a `WebImageSrd` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn web_image_srd_from_item(item: officekit_markup_base::Item<'_>) -> super::WebImageSrd {
     let mut node = super::WebImageSrd::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::WEB_IMAGE_SRD_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::WEB_IMAGE_SRD_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.address),
@@ -282,8 +364,25 @@ pub fn web_image_srd(element: &Element) -> super::WebImageSrd {
 /// Read `xlrdwi:webImagesSrd` into a `WebImagesSrd`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn web_images_srd(element: &Element) -> super::WebImagesSrd {
+    web_images_srd_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrdwi:webImagesSrd` into a `WebImagesSrd` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn web_images_srd_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::WebImagesSrd {
+    web_images_srd_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrdwi:webImagesSrd` into a `WebImagesSrd` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn web_images_srd_from_item(item: officekit_markup_base::Item<'_>) -> super::WebImagesSrd {
     let mut node = super::WebImagesSrd::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::WEB_IMAGES_SRD_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::WEB_IMAGES_SRD_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.web_image_srd),

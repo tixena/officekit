@@ -349,6 +349,7 @@
 use crate::parts::part_root::{self, PartRoot};
 #[cfg(feature = "transitional")]
 use crate::transitional::Transitional as _;
+use officekit_markup::Item;
 use officekit_markup::office_word_2012_wordml;
 #[cfg(feature = "strict")]
 use officekit_strict::Strict as _;
@@ -374,6 +375,11 @@ pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::COMMENTS_EXTEN
 
 impl PartRoot for office_word_2012_wordml::CommentsEx {
     const LOCAL_NAME: &'static str = "commentsEx";
+
+    fn from_part(root: Item<'_>) -> Result<Self, String> {
+        super::check_root(root.element(), 100, Self::LOCAL_NAME)?;
+        Ok(office_word_2012_wordml::read::comments_ex_from_item(root))
+    }
 
     fn from_tree(root: &Element) -> Result<Self, String> {
         super::check_root(root, 100, Self::LOCAL_NAME)?;

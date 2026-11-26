@@ -226,7 +226,6 @@ pub mod write;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
-use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::values::ValueError;
@@ -474,8 +473,8 @@ impl<X: UserData> AutoBuNodeInfoWith<X> {
 }
 
 impl officekit_markup_base::Read for AutoBuNodeInfo {
-    fn read(element: &Element) -> Self {
-        read::auto_bu_node_info(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::auto_bu_node_info_from_item(item)
     }
 }
 
@@ -512,8 +511,8 @@ impl<X: UserData> AutoBuNodeInfoLstWith<X> {
 }
 
 impl officekit_markup_base::Read for AutoBuNodeInfoLst {
-    fn read(element: &Element) -> Self {
-        read::auto_bu_node_info_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::auto_bu_node_info_lst_from_item(item)
     }
 }
 
@@ -556,8 +555,8 @@ impl<X: UserData> BuPrWith<X> {
 }
 
 impl officekit_markup_base::Read for BuPr {
-    fn read(element: &Element) -> Self {
-        read::bu_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bu_pr_from_item(item)
     }
 }
 

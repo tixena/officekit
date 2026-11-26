@@ -222,7 +222,6 @@ pub mod read;
 pub mod write;
 
 use crate::UserData;
-use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
 
@@ -403,8 +402,8 @@ impl<X: UserData> SetOfAdditionalCharacteristicsWith<X> {
 }
 
 impl crate::Read for SetOfAdditionalCharacteristics {
-    fn read(element: &Element) -> Self {
-        read::set_of_additional_characteristics(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::set_of_additional_characteristics_from_item(item)
     }
 }
 
@@ -447,8 +446,8 @@ impl<X: UserData> SingleCharacteristicWith<X> {
 }
 
 impl crate::Read for SingleCharacteristic {
-    fn read(element: &Element) -> Self {
-        read::single_characteristic(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::single_characteristic_from_item(item)
     }
 }
 

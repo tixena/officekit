@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `pic14:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pic14:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pic14:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -235,8 +250,23 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `pic14:style` into a `Style`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style(element: &Element) -> super::Style {
+    style_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pic14:style` into a `Style` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn style_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Style {
+    style_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pic14:style` into a `Style` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn style_from_item(item: officekit_markup_base::Item<'_>) -> super::Style {
     let mut node = super::Style::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::STYLE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::STYLE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.line_reference),

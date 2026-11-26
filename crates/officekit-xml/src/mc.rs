@@ -3,6 +3,9 @@
 
 #[cfg(feature = "binary-format")]
 mod archive;
+mod events;
+
+pub use events::Processed;
 
 use alloc::borrow::Cow;
 use alloc::collections::BTreeSet;
@@ -143,6 +146,11 @@ fn context<'context>(
     Cow::Owned(inside)
 }
 
+/// Whether `element` is an `mc:AlternateContent` block.
+fn is_alternate_content(element: &Element) -> bool {
+    is_mc(&element.name.namespace) && element.name.local == "AlternateContent"
+}
+
 /// Whether `namespace` is the markup-compatibility namespace.
 #[must_use = "this only answers the question"]
 pub fn is_mc(namespace: &Namespace) -> bool {
@@ -213,43 +221,56 @@ fn process_children(
     let nodes = mem::take(&mut element.children);
     let mut children = Vec::with_capacity(nodes.len());
     for node in nodes {
-        let Node::Element(mut child) = node else {
-            children.push(node);
-            continue;
-        };
-        if is_mc(&child.name.namespace) && child.name.local == "AlternateContent" {
-            if let Some((declarations, mut branch)) = selected_branch(child, target, scope) {
-                scope.push(&declarations);
-                let processed = process_children(&mut branch, target, scope, context);
-                scope.pop();
-                processed?;
-                children.extend(
-                    branch
-                        .children
-                        .into_iter()
-                        .map(|content| with_used_declarations(content, &declarations)),
-                );
-            }
-            continue;
-        }
-        scope.push(&child.namespace_declarations);
-        let outcome = process_child(&mut child, target, scope, context);
-        scope.pop();
-        match outcome? {
-            Outcome::Drop => {}
-            Outcome::Keep => children.push(Node::Element(child)),
-            Outcome::Unwrap => {
-                let declarations = child.namespace_declarations;
-                children.extend(
-                    child
-                        .children
-                        .into_iter()
-                        .map(|grandchild| with_declarations(grandchild, &declarations)),
-                );
-            }
-        }
+        process_node(node, target, scope, context, &mut children)?;
     }
     element.children = children;
+    Ok(())
+}
+
+/// Process one child of an element in `context`, the element's declarations already in
+/// `scope`: what takes its place goes onto `children`.
+fn process_node(
+    node: Node,
+    target: OfficeVersion,
+    scope: &mut Scope,
+    context: &Context,
+    children: &mut Vec<Node>,
+) -> Result<(), XmlError> {
+    let Node::Element(mut child) = node else {
+        children.push(node);
+        return Ok(());
+    };
+    if is_alternate_content(&child) {
+        if let Some((declarations, mut branch)) = selected_branch(child, target, scope) {
+            scope.push(&declarations);
+            let processed = process_children(&mut branch, target, scope, context);
+            scope.pop();
+            processed?;
+            children.extend(
+                branch
+                    .children
+                    .into_iter()
+                    .map(|content| with_used_declarations(content, &declarations)),
+            );
+        }
+        return Ok(());
+    }
+    scope.push(&child.namespace_declarations);
+    let outcome = process_child(&mut child, target, scope, context);
+    scope.pop();
+    match outcome? {
+        Outcome::Drop => {}
+        Outcome::Keep => children.push(Node::Element(child)),
+        Outcome::Unwrap => {
+            let declarations = child.namespace_declarations;
+            children.extend(
+                child
+                    .children
+                    .into_iter()
+                    .map(|grandchild| with_declarations(grandchild, &declarations)),
+            );
+        }
+    }
     Ok(())
 }
 
@@ -260,6 +281,19 @@ fn process_kept(
     element: &mut Element,
     target: OfficeVersion,
     scope: &mut Scope,
+    context: &Context,
+) -> Result<(), XmlError> {
+    keep_attributes(element, target, scope, context)?;
+    process_children(element, target, scope, context)
+}
+
+/// The attribute rules of an element that stays, its declarations already in `scope`: refuse a
+/// `mc:MustUnderstand` namespace `target` lacks, and drop the ignorable attributes `target` does
+/// not understand.
+fn keep_attributes(
+    element: &mut Element,
+    target: OfficeVersion,
+    scope: &Scope,
     context: &Context,
 ) -> Result<(), XmlError> {
     for prefix in mc_attribute(element, "MustUnderstand")
@@ -279,7 +313,7 @@ fn process_kept(
         let namespace = &attribute.name.namespace;
         !context.ignorable.contains(namespace) || understands(namespace, target)
     });
-    process_children(element, target, scope, context)
+    Ok(())
 }
 
 /// The `Requires` list of an `mc:Choice`, an unqualified attribute; empty when
@@ -358,6 +392,12 @@ pub fn with_declarations(node: Node, declarations: &[NamespaceDeclaration]) -> N
     let Node::Element(mut element) = node else {
         return node;
     };
+    add_declarations(&mut element, declarations);
+    Node::Element(element)
+}
+
+/// Give `element` the `declarations` it does not make itself, before its own.
+fn add_declarations(element: &mut Element, declarations: &[NamespaceDeclaration]) {
     let mut merged: Vec<NamespaceDeclaration> = declarations
         .iter()
         .filter(|declaration| {
@@ -370,7 +410,6 @@ pub fn with_declarations(node: Node, declarations: &[NamespaceDeclaration]) -> N
         .collect();
     merged.append(&mut element.namespace_declarations);
     element.namespace_declarations = merged;
-    Node::Element(element)
 }
 
 /// [`with_declarations`] with only those of `declarations` the node's subtree uses: a

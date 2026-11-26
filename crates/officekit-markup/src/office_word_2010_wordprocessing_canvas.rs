@@ -228,7 +228,7 @@ use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_markup_core::office_word_2010_wordml;
 use officekit_markup_core::picture;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -657,8 +657,8 @@ impl<X: UserData> BgWith<X> {
 }
 
 impl officekit_markup_base::Read for Bg {
-    fn read(element: &Element) -> Self {
-        read::bg(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bg_from_item(item)
     }
 }
 
@@ -695,8 +695,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -749,8 +749,8 @@ impl<X: UserData> GraphicFrameWith<X> {
 }
 
 impl officekit_markup_base::Read for GraphicFrame {
-    fn read(element: &Element) -> Self {
-        read::graphic_frame(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::graphic_frame_from_item(item)
     }
 }
 
@@ -791,8 +791,8 @@ impl<X: UserData> WholeWith<X> {
 }
 
 impl officekit_markup_base::Read for Whole {
-    fn read(element: &Element) -> Self {
-        read::whole(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::whole_from_item(item)
     }
 }
 
@@ -830,18 +830,14 @@ impl officekit_markup_base::Read for WordprocessingCanvasContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W14, "contentPart")) => {
-                Self::ContentPart(officekit_markup_base::read(element))
-            }
-            Some((NS_WPC, "graphicFrame")) => {
-                Self::GraphicFrame(officekit_markup_base::read(element))
-            }
-            Some((NS_PIC, "pic")) => Self::Picture(officekit_markup_base::read(element)),
-            Some((NS_WPG, "wgp")) => Self::Wgp(officekit_markup_base::read(element)),
-            Some((NS_WPS, "wsp")) => Self::Wsp(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W14, "contentPart")) => Self::ContentPart(item.read()),
+            Some((NS_WPC, "graphicFrame")) => Self::GraphicFrame(item.read()),
+            Some((NS_PIC, "pic")) => Self::Picture(item.read()),
+            Some((NS_WPG, "wgp")) => Self::Wgp(item.read()),
+            Some((NS_WPS, "wsp")) => Self::Wsp(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -897,8 +893,8 @@ impl<X: UserData> WpcWith<X> {
 }
 
 impl officekit_markup_base::Read for Wpc {
-    fn read(element: &Element) -> Self {
-        read::wpc(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::wpc_from_item(item)
     }
 }
 

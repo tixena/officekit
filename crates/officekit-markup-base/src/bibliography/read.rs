@@ -221,8 +221,25 @@ use officekit_xml::element::Element;
 /// Read `b:AbbreviatedCaseNumber` into a `AbbreviatedCaseNumber`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn abbreviated_case_number(element: &Element) -> super::AbbreviatedCaseNumber {
+    abbreviated_case_number_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:AbbreviatedCaseNumber` into a `AbbreviatedCaseNumber` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn abbreviated_case_number_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::AbbreviatedCaseNumber {
+    abbreviated_case_number_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:AbbreviatedCaseNumber` into a `AbbreviatedCaseNumber` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn abbreviated_case_number_from_item(item: crate::Item<'_>) -> super::AbbreviatedCaseNumber {
     let mut node = super::AbbreviatedCaseNumber::default();
-    let mut reader = crate::Reader::new(element, &super::ABBREVIATED_CASE_NUMBER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::ABBREVIATED_CASE_NUMBER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -235,8 +252,24 @@ pub fn abbreviated_case_number(element: &Element) -> super::AbbreviatedCaseNumbe
 /// Read `b:AlbumTitle` into a `AlbumTitle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn album_title(element: &Element) -> super::AlbumTitle {
+    album_title_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:AlbumTitle` into a `AlbumTitle` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn album_title_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::AlbumTitle {
+    album_title_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:AlbumTitle` into a `AlbumTitle` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn album_title_from_item(item: crate::Item<'_>) -> super::AlbumTitle {
     let mut node = super::AlbumTitle::default();
-    let mut reader = crate::Reader::new(element, &super::ALBUM_TITLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::ALBUM_TITLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -249,8 +282,20 @@ pub fn album_title(element: &Element) -> super::AlbumTitle {
 /// Read `b:Artist` into a `Artist`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artist(element: &Element) -> super::Artist {
+    artist_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Artist` into a `Artist` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn artist_from_events(start: Element, events: &dyn crate::EventSource) -> super::Artist {
+    artist_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Artist` into a `Artist` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn artist_from_item(item: crate::Item<'_>) -> super::Artist {
     let mut node = super::Artist::default();
-    let mut reader = crate::Reader::new(element, &super::ARTIST_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::ARTIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.name_list);
@@ -263,8 +308,20 @@ pub fn artist(element: &Element) -> super::Artist {
 /// Read `b:Author` into a `Author`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn author(element: &Element) -> super::Author {
+    author_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Author` into a `Author` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn author_from_events(start: Element, events: &dyn crate::EventSource) -> super::Author {
+    author_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Author` into a `Author` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn author_from_item(item: crate::Item<'_>) -> super::Author {
     let mut node = super::Author::default();
-    let mut reader = crate::Reader::new(element, &super::AUTHOR_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::AUTHOR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -277,8 +334,24 @@ pub fn author(element: &Element) -> super::Author {
 /// Read `b:BookAuthor` into a `BookAuthor`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn book_author(element: &Element) -> super::BookAuthor {
+    book_author_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:BookAuthor` into a `BookAuthor` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn book_author_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::BookAuthor {
+    book_author_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:BookAuthor` into a `BookAuthor` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn book_author_from_item(item: crate::Item<'_>) -> super::BookAuthor {
     let mut node = super::BookAuthor::default();
-    let mut reader = crate::Reader::new(element, &super::BOOK_AUTHOR_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::BOOK_AUTHOR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.name_list);
@@ -291,8 +364,20 @@ pub fn book_author(element: &Element) -> super::BookAuthor {
 /// Read `b:BookTitle` into a `BookTitle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn book_title(element: &Element) -> super::BookTitle {
+    book_title_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:BookTitle` into a `BookTitle` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn book_title_from_events(start: Element, events: &dyn crate::EventSource) -> super::BookTitle {
+    book_title_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:BookTitle` into a `BookTitle` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn book_title_from_item(item: crate::Item<'_>) -> super::BookTitle {
     let mut node = super::BookTitle::default();
-    let mut reader = crate::Reader::new(element, &super::BOOK_TITLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::BOOK_TITLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -305,8 +390,25 @@ pub fn book_title(element: &Element) -> super::BookTitle {
 /// Read `b:BroadcastTitle` into a `BroadcastTitle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn broadcast_title(element: &Element) -> super::BroadcastTitle {
+    broadcast_title_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:BroadcastTitle` into a `BroadcastTitle` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn broadcast_title_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::BroadcastTitle {
+    broadcast_title_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:BroadcastTitle` into a `BroadcastTitle` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn broadcast_title_from_item(item: crate::Item<'_>) -> super::BroadcastTitle {
     let mut node = super::BroadcastTitle::default();
-    let mut reader = crate::Reader::new(element, &super::BROADCAST_TITLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::BROADCAST_TITLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -319,8 +421,24 @@ pub fn broadcast_title(element: &Element) -> super::BroadcastTitle {
 /// Read `b:Broadcaster` into a `Broadcaster`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn broadcaster(element: &Element) -> super::Broadcaster {
+    broadcaster_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Broadcaster` into a `Broadcaster` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn broadcaster_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::Broadcaster {
+    broadcaster_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Broadcaster` into a `Broadcaster` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn broadcaster_from_item(item: crate::Item<'_>) -> super::Broadcaster {
     let mut node = super::Broadcaster::default();
-    let mut reader = crate::Reader::new(element, &super::BROADCASTER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::BROADCASTER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -333,8 +451,24 @@ pub fn broadcaster(element: &Element) -> super::Broadcaster {
 /// Read `b:CaseNumber` into a `CaseNumber`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn case_number(element: &Element) -> super::CaseNumber {
+    case_number_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:CaseNumber` into a `CaseNumber` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn case_number_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CaseNumber {
+    case_number_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:CaseNumber` into a `CaseNumber` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn case_number_from_item(item: crate::Item<'_>) -> super::CaseNumber {
     let mut node = super::CaseNumber::default();
-    let mut reader = crate::Reader::new(element, &super::CASE_NUMBER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CASE_NUMBER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -347,8 +481,24 @@ pub fn case_number(element: &Element) -> super::CaseNumber {
 /// Read `b:ChapterNumber` into a `ChapterNumber`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn chapter_number(element: &Element) -> super::ChapterNumber {
+    chapter_number_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:ChapterNumber` into a `ChapterNumber` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn chapter_number_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ChapterNumber {
+    chapter_number_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:ChapterNumber` into a `ChapterNumber` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn chapter_number_from_item(item: crate::Item<'_>) -> super::ChapterNumber {
     let mut node = super::ChapterNumber::default();
-    let mut reader = crate::Reader::new(element, &super::CHAPTER_NUMBER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CHAPTER_NUMBER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -361,8 +511,20 @@ pub fn chapter_number(element: &Element) -> super::ChapterNumber {
 /// Read `b:City` into a `City`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn city(element: &Element) -> super::City {
+    city_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:City` into a `City` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn city_from_events(start: Element, events: &dyn crate::EventSource) -> super::City {
+    city_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:City` into a `City` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn city_from_item(item: crate::Item<'_>) -> super::City {
     let mut node = super::City::default();
-    let mut reader = crate::Reader::new(element, &super::CITY_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CITY_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -375,8 +537,20 @@ pub fn city(element: &Element) -> super::City {
 /// Read `b:Comments` into a `Comments`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comments(element: &Element) -> super::Comments {
+    comments_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Comments` into a `Comments` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comments_from_events(start: Element, events: &dyn crate::EventSource) -> super::Comments {
+    comments_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Comments` into a `Comments` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comments_from_item(item: crate::Item<'_>) -> super::Comments {
     let mut node = super::Comments::default();
-    let mut reader = crate::Reader::new(element, &super::COMMENTS_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::COMMENTS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -389,8 +563,20 @@ pub fn comments(element: &Element) -> super::Comments {
 /// Read `b:Compiler` into a `Compiler`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn compiler(element: &Element) -> super::Compiler {
+    compiler_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Compiler` into a `Compiler` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn compiler_from_events(start: Element, events: &dyn crate::EventSource) -> super::Compiler {
+    compiler_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Compiler` into a `Compiler` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn compiler_from_item(item: crate::Item<'_>) -> super::Compiler {
     let mut node = super::Compiler::default();
-    let mut reader = crate::Reader::new(element, &super::COMPILER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::COMPILER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.name_list);
@@ -403,8 +589,20 @@ pub fn compiler(element: &Element) -> super::Compiler {
 /// Read `b:Composer` into a `Composer`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn composer(element: &Element) -> super::Composer {
+    composer_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Composer` into a `Composer` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn composer_from_events(start: Element, events: &dyn crate::EventSource) -> super::Composer {
+    composer_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Composer` into a `Composer` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn composer_from_item(item: crate::Item<'_>) -> super::Composer {
     let mut node = super::Composer::default();
-    let mut reader = crate::Reader::new(element, &super::COMPOSER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::COMPOSER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.name_list);
@@ -417,8 +615,20 @@ pub fn composer(element: &Element) -> super::Composer {
 /// Read `b:Conductor` into a `Conductor`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn conductor(element: &Element) -> super::Conductor {
+    conductor_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Conductor` into a `Conductor` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn conductor_from_events(start: Element, events: &dyn crate::EventSource) -> super::Conductor {
+    conductor_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Conductor` into a `Conductor` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn conductor_from_item(item: crate::Item<'_>) -> super::Conductor {
     let mut node = super::Conductor::default();
-    let mut reader = crate::Reader::new(element, &super::CONDUCTOR_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CONDUCTOR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.name_list);
@@ -431,8 +641,27 @@ pub fn conductor(element: &Element) -> super::Conductor {
 /// Read `b:ConferenceName` into a `ConferenceOrProceedingsName`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn conference_or_proceedings_name(element: &Element) -> super::ConferenceOrProceedingsName {
+    conference_or_proceedings_name_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:ConferenceName` into a `ConferenceOrProceedingsName` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn conference_or_proceedings_name_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ConferenceOrProceedingsName {
+    conference_or_proceedings_name_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:ConferenceName` into a `ConferenceOrProceedingsName` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn conference_or_proceedings_name_from_item(
+    item: crate::Item<'_>,
+) -> super::ConferenceOrProceedingsName {
     let mut node = super::ConferenceOrProceedingsName::default();
-    let mut reader = crate::Reader::new(element, &super::CONFERENCE_OR_PROCEEDINGS_NAME_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CONFERENCE_OR_PROCEEDINGS_NAME_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -445,8 +674,24 @@ pub fn conference_or_proceedings_name(element: &Element) -> super::ConferenceOrP
 /// Read `b:Author` into a `ContributorsList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn contributors_list(element: &Element) -> super::ContributorsList {
+    contributors_list_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Author` into a `ContributorsList` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn contributors_list_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ContributorsList {
+    contributors_list_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Author` into a `ContributorsList` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn contributors_list_from_item(item: crate::Item<'_>) -> super::ContributorsList {
     let mut node = super::ContributorsList::default();
-    let mut reader = crate::Reader::new(element, &super::CONTRIBUTORS_LIST_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CONTRIBUTORS_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -465,8 +710,24 @@ pub fn contributors_list_content(element: &Element) -> super::ContributorsListCo
 /// Read `b:Corporate` into a `CorporateAuthor`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn corporate_author(element: &Element) -> super::CorporateAuthor {
+    corporate_author_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Corporate` into a `CorporateAuthor` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn corporate_author_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CorporateAuthor {
+    corporate_author_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Corporate` into a `CorporateAuthor` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn corporate_author_from_item(item: crate::Item<'_>) -> super::CorporateAuthor {
     let mut node = super::CorporateAuthor::default();
-    let mut reader = crate::Reader::new(element, &super::CORPORATE_AUTHOR_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CORPORATE_AUTHOR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -479,8 +740,20 @@ pub fn corporate_author(element: &Element) -> super::CorporateAuthor {
 /// Read `b:Counsel` into a `Counsel`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn counsel(element: &Element) -> super::Counsel {
+    counsel_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Counsel` into a `Counsel` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn counsel_from_events(start: Element, events: &dyn crate::EventSource) -> super::Counsel {
+    counsel_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Counsel` into a `Counsel` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn counsel_from_item(item: crate::Item<'_>) -> super::Counsel {
     let mut node = super::Counsel::default();
-    let mut reader = crate::Reader::new(element, &super::COUNSEL_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::COUNSEL_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.name_list);
@@ -493,8 +766,25 @@ pub fn counsel(element: &Element) -> super::Counsel {
 /// Read `b:CountryRegion` into a `CountryOrRegion`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn country_or_region(element: &Element) -> super::CountryOrRegion {
+    country_or_region_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:CountryRegion` into a `CountryOrRegion` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn country_or_region_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CountryOrRegion {
+    country_or_region_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:CountryRegion` into a `CountryOrRegion` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn country_or_region_from_item(item: crate::Item<'_>) -> super::CountryOrRegion {
     let mut node = super::CountryOrRegion::default();
-    let mut reader = crate::Reader::new(element, &super::COUNTRY_OR_REGION_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::COUNTRY_OR_REGION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -507,8 +797,20 @@ pub fn country_or_region(element: &Element) -> super::CountryOrRegion {
 /// Read `b:Court` into a `Court`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn court(element: &Element) -> super::Court {
+    court_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Court` into a `Court` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn court_from_events(start: Element, events: &dyn crate::EventSource) -> super::Court {
+    court_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Court` into a `Court` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn court_from_item(item: crate::Item<'_>) -> super::Court {
     let mut node = super::Court::default();
-    let mut reader = crate::Reader::new(element, &super::COURT_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::COURT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -521,8 +823,20 @@ pub fn court(element: &Element) -> super::Court {
 /// Read `b:Day` into a `Day`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn day(element: &Element) -> super::Day {
+    day_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Day` into a `Day` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn day_from_events(start: Element, events: &dyn crate::EventSource) -> super::Day {
+    day_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Day` into a `Day` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn day_from_item(item: crate::Item<'_>) -> super::Day {
     let mut node = super::Day::default();
-    let mut reader = crate::Reader::new(element, &super::DAY_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::DAY_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -535,8 +849,24 @@ pub fn day(element: &Element) -> super::Day {
 /// Read `b:DayAccessed` into a `DayAccessed`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn day_accessed(element: &Element) -> super::DayAccessed {
+    day_accessed_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:DayAccessed` into a `DayAccessed` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn day_accessed_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::DayAccessed {
+    day_accessed_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:DayAccessed` into a `DayAccessed` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn day_accessed_from_item(item: crate::Item<'_>) -> super::DayAccessed {
     let mut node = super::DayAccessed::default();
-    let mut reader = crate::Reader::new(element, &super::DAY_ACCESSED_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::DAY_ACCESSED_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -549,8 +879,24 @@ pub fn day_accessed(element: &Element) -> super::DayAccessed {
 /// Read `b:Department` into a `Department`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn department(element: &Element) -> super::Department {
+    department_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Department` into a `Department` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn department_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::Department {
+    department_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Department` into a `Department` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn department_from_item(item: crate::Item<'_>) -> super::Department {
     let mut node = super::Department::default();
-    let mut reader = crate::Reader::new(element, &super::DEPARTMENT_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::DEPARTMENT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -563,8 +909,20 @@ pub fn department(element: &Element) -> super::Department {
 /// Read `b:Director` into a `Director`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn director(element: &Element) -> super::Director {
+    director_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Director` into a `Director` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn director_from_events(start: Element, events: &dyn crate::EventSource) -> super::Director {
+    director_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Director` into a `Director` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn director_from_item(item: crate::Item<'_>) -> super::Director {
     let mut node = super::Director::default();
-    let mut reader = crate::Reader::new(element, &super::DIRECTOR_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::DIRECTOR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.name_list);
@@ -577,8 +935,24 @@ pub fn director(element: &Element) -> super::Director {
 /// Read `b:Distributor` into a `Distributor`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn distributor(element: &Element) -> super::Distributor {
+    distributor_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Distributor` into a `Distributor` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn distributor_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::Distributor {
+    distributor_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Distributor` into a `Distributor` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn distributor_from_item(item: crate::Item<'_>) -> super::Distributor {
     let mut node = super::Distributor::default();
-    let mut reader = crate::Reader::new(element, &super::DISTRIBUTOR_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::DISTRIBUTOR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -591,8 +965,20 @@ pub fn distributor(element: &Element) -> super::Distributor {
 /// Read `b:Editor` into a `Editor`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn editor(element: &Element) -> super::Editor {
+    editor_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Editor` into a `Editor` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn editor_from_events(start: Element, events: &dyn crate::EventSource) -> super::Editor {
+    editor_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Editor` into a `Editor` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn editor_from_item(item: crate::Item<'_>) -> super::Editor {
     let mut node = super::Editor::default();
-    let mut reader = crate::Reader::new(element, &super::EDITOR_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::EDITOR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.name_list);
@@ -605,8 +991,24 @@ pub fn editor(element: &Element) -> super::Editor {
 /// Read `b:Edition` into a `EditorEdition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn editor_edition(element: &Element) -> super::EditorEdition {
+    editor_edition_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Edition` into a `EditorEdition` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn editor_edition_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::EditorEdition {
+    editor_edition_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Edition` into a `EditorEdition` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn editor_edition_from_item(item: crate::Item<'_>) -> super::EditorEdition {
     let mut node = super::EditorEdition::default();
-    let mut reader = crate::Reader::new(element, &super::EDITOR_EDITION_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::EDITOR_EDITION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -619,8 +1021,20 @@ pub fn editor_edition(element: &Element) -> super::EditorEdition {
 /// Read `b:Guid` into a `Guid`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn guid(element: &Element) -> super::Guid {
+    guid_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Guid` into a `Guid` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn guid_from_events(start: Element, events: &dyn crate::EventSource) -> super::Guid {
+    guid_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Guid` into a `Guid` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn guid_from_item(item: crate::Item<'_>) -> super::Guid {
     let mut node = super::Guid::default();
-    let mut reader = crate::Reader::new(element, &super::GUID_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::GUID_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -633,8 +1047,24 @@ pub fn guid(element: &Element) -> super::Guid {
 /// Read `b:Institution` into a `Institution`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn institution(element: &Element) -> super::Institution {
+    institution_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Institution` into a `Institution` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn institution_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::Institution {
+    institution_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Institution` into a `Institution` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn institution_from_item(item: crate::Item<'_>) -> super::Institution {
     let mut node = super::Institution::default();
-    let mut reader = crate::Reader::new(element, &super::INSTITUTION_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::INSTITUTION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -647,8 +1077,25 @@ pub fn institution(element: &Element) -> super::Institution {
 /// Read `b:InternetSiteTitle` into a `InternetSiteTitle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn internet_site_title(element: &Element) -> super::InternetSiteTitle {
+    internet_site_title_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:InternetSiteTitle` into a `InternetSiteTitle` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn internet_site_title_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::InternetSiteTitle {
+    internet_site_title_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:InternetSiteTitle` into a `InternetSiteTitle` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn internet_site_title_from_item(item: crate::Item<'_>) -> super::InternetSiteTitle {
     let mut node = super::InternetSiteTitle::default();
-    let mut reader = crate::Reader::new(element, &super::INTERNET_SITE_TITLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::INTERNET_SITE_TITLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -661,8 +1108,24 @@ pub fn internet_site_title(element: &Element) -> super::InternetSiteTitle {
 /// Read `b:Interviewee` into a `Interviewee`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn interviewee(element: &Element) -> super::Interviewee {
+    interviewee_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Interviewee` into a `Interviewee` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn interviewee_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::Interviewee {
+    interviewee_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Interviewee` into a `Interviewee` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn interviewee_from_item(item: crate::Item<'_>) -> super::Interviewee {
     let mut node = super::Interviewee::default();
-    let mut reader = crate::Reader::new(element, &super::INTERVIEWEE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::INTERVIEWEE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.name_list);
@@ -675,8 +1138,24 @@ pub fn interviewee(element: &Element) -> super::Interviewee {
 /// Read `b:Interviewer` into a `Interviewer`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn interviewer(element: &Element) -> super::Interviewer {
+    interviewer_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Interviewer` into a `Interviewer` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn interviewer_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::Interviewer {
+    interviewer_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Interviewer` into a `Interviewer` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn interviewer_from_item(item: crate::Item<'_>) -> super::Interviewer {
     let mut node = super::Interviewer::default();
-    let mut reader = crate::Reader::new(element, &super::INTERVIEWER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::INTERVIEWER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.name_list);
@@ -689,8 +1168,20 @@ pub fn interviewer(element: &Element) -> super::Interviewer {
 /// Read `b:Inventor` into a `Inventor`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn inventor(element: &Element) -> super::Inventor {
+    inventor_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Inventor` into a `Inventor` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn inventor_from_events(start: Element, events: &dyn crate::EventSource) -> super::Inventor {
+    inventor_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Inventor` into a `Inventor` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn inventor_from_item(item: crate::Item<'_>) -> super::Inventor {
     let mut node = super::Inventor::default();
-    let mut reader = crate::Reader::new(element, &super::INVENTOR_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::INVENTOR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.name_list);
@@ -703,8 +1194,20 @@ pub fn inventor(element: &Element) -> super::Inventor {
 /// Read `b:Issue` into a `Issue`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn issue(element: &Element) -> super::Issue {
+    issue_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Issue` into a `Issue` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn issue_from_events(start: Element, events: &dyn crate::EventSource) -> super::Issue {
+    issue_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Issue` into a `Issue` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn issue_from_item(item: crate::Item<'_>) -> super::Issue {
     let mut node = super::Issue::default();
-    let mut reader = crate::Reader::new(element, &super::ISSUE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::ISSUE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -717,8 +1220,24 @@ pub fn issue(element: &Element) -> super::Issue {
 /// Read `b:JournalName` into a `JournalName`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn journal_name(element: &Element) -> super::JournalName {
+    journal_name_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:JournalName` into a `JournalName` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn journal_name_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::JournalName {
+    journal_name_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:JournalName` into a `JournalName` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn journal_name_from_item(item: crate::Item<'_>) -> super::JournalName {
     let mut node = super::JournalName::default();
-    let mut reader = crate::Reader::new(element, &super::JOURNAL_NAME_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::JOURNAL_NAME_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -731,8 +1250,20 @@ pub fn journal_name(element: &Element) -> super::JournalName {
 /// Read `b:LCID` into a `LocaleID`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn locale_id(element: &Element) -> super::LocaleID {
+    locale_id_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:LCID` into a `LocaleID` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn locale_id_from_events(start: Element, events: &dyn crate::EventSource) -> super::LocaleID {
+    locale_id_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:LCID` into a `LocaleID` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn locale_id_from_item(item: crate::Item<'_>) -> super::LocaleID {
     let mut node = super::LocaleID::default();
-    let mut reader = crate::Reader::new(element, &super::LOCALE_ID_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::LOCALE_ID_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -745,8 +1276,20 @@ pub fn locale_id(element: &Element) -> super::LocaleID {
 /// Read `b:Medium` into a `Medium`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn medium(element: &Element) -> super::Medium {
+    medium_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Medium` into a `Medium` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn medium_from_events(start: Element, events: &dyn crate::EventSource) -> super::Medium {
+    medium_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Medium` into a `Medium` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn medium_from_item(item: crate::Item<'_>) -> super::Medium {
     let mut node = super::Medium::default();
-    let mut reader = crate::Reader::new(element, &super::MEDIUM_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::MEDIUM_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -759,8 +1302,20 @@ pub fn medium(element: &Element) -> super::Medium {
 /// Read `b:Month` into a `Month`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn month(element: &Element) -> super::Month {
+    month_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Month` into a `Month` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn month_from_events(start: Element, events: &dyn crate::EventSource) -> super::Month {
+    month_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Month` into a `Month` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn month_from_item(item: crate::Item<'_>) -> super::Month {
     let mut node = super::Month::default();
-    let mut reader = crate::Reader::new(element, &super::MONTH_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::MONTH_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -773,8 +1328,24 @@ pub fn month(element: &Element) -> super::Month {
 /// Read `b:MonthAccessed` into a `MonthAccessed`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn month_accessed(element: &Element) -> super::MonthAccessed {
+    month_accessed_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:MonthAccessed` into a `MonthAccessed` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn month_accessed_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::MonthAccessed {
+    month_accessed_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:MonthAccessed` into a `MonthAccessed` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn month_accessed_from_item(item: crate::Item<'_>) -> super::MonthAccessed {
     let mut node = super::MonthAccessed::default();
-    let mut reader = crate::Reader::new(element, &super::MONTH_ACCESSED_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::MONTH_ACCESSED_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -787,8 +1358,20 @@ pub fn month_accessed(element: &Element) -> super::MonthAccessed {
 /// Read `b:NameList` into a `NameList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn name_list(element: &Element) -> super::NameList {
+    name_list_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:NameList` into a `NameList` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn name_list_from_events(start: Element, events: &dyn crate::EventSource) -> super::NameList {
+    name_list_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:NameList` into a `NameList` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn name_list_from_item(item: crate::Item<'_>) -> super::NameList {
     let mut node = super::NameList::default();
-    let mut reader = crate::Reader::new(element, &super::NAME_LIST_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::NAME_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.person);
@@ -807,8 +1390,25 @@ pub fn name_or_corporate(element: &Element) -> super::NameOrCorporateContent {
 /// Read `b:NumberVolumes` into a `NumberOfVolumes`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn number_of_volumes(element: &Element) -> super::NumberOfVolumes {
+    number_of_volumes_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:NumberVolumes` into a `NumberOfVolumes` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn number_of_volumes_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::NumberOfVolumes {
+    number_of_volumes_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:NumberVolumes` into a `NumberOfVolumes` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn number_of_volumes_from_item(item: crate::Item<'_>) -> super::NumberOfVolumes {
     let mut node = super::NumberOfVolumes::default();
-    let mut reader = crate::Reader::new(element, &super::NUMBER_OF_VOLUMES_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::NUMBER_OF_VOLUMES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -821,8 +1421,20 @@ pub fn number_of_volumes(element: &Element) -> super::NumberOfVolumes {
 /// Read `b:Pages` into a `Pages`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pages(element: &Element) -> super::Pages {
+    pages_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Pages` into a `Pages` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pages_from_events(start: Element, events: &dyn crate::EventSource) -> super::Pages {
+    pages_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Pages` into a `Pages` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pages_from_item(item: crate::Item<'_>) -> super::Pages {
     let mut node = super::Pages::default();
-    let mut reader = crate::Reader::new(element, &super::PAGES_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PAGES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -835,8 +1447,24 @@ pub fn pages(element: &Element) -> super::Pages {
 /// Read `b:PatentNumber` into a `PatentNumber`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn patent_number(element: &Element) -> super::PatentNumber {
+    patent_number_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:PatentNumber` into a `PatentNumber` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn patent_number_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::PatentNumber {
+    patent_number_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:PatentNumber` into a `PatentNumber` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn patent_number_from_item(item: crate::Item<'_>) -> super::PatentNumber {
     let mut node = super::PatentNumber::default();
-    let mut reader = crate::Reader::new(element, &super::PATENT_NUMBER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PATENT_NUMBER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -849,8 +1477,23 @@ pub fn patent_number(element: &Element) -> super::PatentNumber {
 /// Read `b:Type` into a `PatentType`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn patent_type(element: &Element) -> super::PatentType {
+    patent_type_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Type` into a `PatentType` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn patent_type_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::PatentType {
+    patent_type_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Type` into a `PatentType` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn patent_type_from_item(item: crate::Item<'_>) -> super::PatentType {
     let mut node = super::PatentType::default();
-    let mut reader = crate::Reader::new(element, &super::PATENT_TYPE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PATENT_TYPE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -863,8 +1506,20 @@ pub fn patent_type(element: &Element) -> super::PatentType {
 /// Read `b:Performer` into a `Performer`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn performer(element: &Element) -> super::Performer {
+    performer_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Performer` into a `Performer` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn performer_from_events(start: Element, events: &dyn crate::EventSource) -> super::Performer {
+    performer_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Performer` into a `Performer` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn performer_from_item(item: crate::Item<'_>) -> super::Performer {
     let mut node = super::Performer::default();
-    let mut reader = crate::Reader::new(element, &super::PERFORMER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PERFORMER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -877,8 +1532,25 @@ pub fn performer(element: &Element) -> super::Performer {
 /// Read `b:PeriodicalTitle` into a `PeriodicalTitle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn periodical_title(element: &Element) -> super::PeriodicalTitle {
+    periodical_title_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:PeriodicalTitle` into a `PeriodicalTitle` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn periodical_title_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::PeriodicalTitle {
+    periodical_title_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:PeriodicalTitle` into a `PeriodicalTitle` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn periodical_title_from_item(item: crate::Item<'_>) -> super::PeriodicalTitle {
     let mut node = super::PeriodicalTitle::default();
-    let mut reader = crate::Reader::new(element, &super::PERIODICAL_TITLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PERIODICAL_TITLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -891,8 +1563,20 @@ pub fn periodical_title(element: &Element) -> super::PeriodicalTitle {
 /// Read `b:Person` into a `Person`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn person(element: &Element) -> super::Person {
+    person_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Person` into a `Person` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn person_from_events(start: Element, events: &dyn crate::EventSource) -> super::Person {
+    person_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Person` into a `Person` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn person_from_item(item: crate::Item<'_>) -> super::Person {
     let mut node = super::Person::default();
-    let mut reader = crate::Reader::new(element, &super::PERSON_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PERSON_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.persons_last_or_family_name),
@@ -908,8 +1592,27 @@ pub fn person(element: &Element) -> super::Person {
 /// Read `b:First` into a `PersonsFirstOrGivenName`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn persons_first_or_given_name(element: &Element) -> super::PersonsFirstOrGivenName {
+    persons_first_or_given_name_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:First` into a `PersonsFirstOrGivenName` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn persons_first_or_given_name_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::PersonsFirstOrGivenName {
+    persons_first_or_given_name_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:First` into a `PersonsFirstOrGivenName` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn persons_first_or_given_name_from_item(
+    item: crate::Item<'_>,
+) -> super::PersonsFirstOrGivenName {
     let mut node = super::PersonsFirstOrGivenName::default();
-    let mut reader = crate::Reader::new(element, &super::PERSONS_FIRST_OR_GIVEN_NAME_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PERSONS_FIRST_OR_GIVEN_NAME_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -922,8 +1625,27 @@ pub fn persons_first_or_given_name(element: &Element) -> super::PersonsFirstOrGi
 /// Read `b:Last` into a `PersonsLastOrFamilyName`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn persons_last_or_family_name(element: &Element) -> super::PersonsLastOrFamilyName {
+    persons_last_or_family_name_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Last` into a `PersonsLastOrFamilyName` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn persons_last_or_family_name_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::PersonsLastOrFamilyName {
+    persons_last_or_family_name_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Last` into a `PersonsLastOrFamilyName` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn persons_last_or_family_name_from_item(
+    item: crate::Item<'_>,
+) -> super::PersonsLastOrFamilyName {
     let mut node = super::PersonsLastOrFamilyName::default();
-    let mut reader = crate::Reader::new(element, &super::PERSONS_LAST_OR_FAMILY_NAME_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PERSONS_LAST_OR_FAMILY_NAME_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -936,8 +1658,27 @@ pub fn persons_last_or_family_name(element: &Element) -> super::PersonsLastOrFam
 /// Read `b:Middle` into a `PersonsMiddleOrOtherName`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn persons_middle_or_other_name(element: &Element) -> super::PersonsMiddleOrOtherName {
+    persons_middle_or_other_name_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Middle` into a `PersonsMiddleOrOtherName` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn persons_middle_or_other_name_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::PersonsMiddleOrOtherName {
+    persons_middle_or_other_name_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Middle` into a `PersonsMiddleOrOtherName` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn persons_middle_or_other_name_from_item(
+    item: crate::Item<'_>,
+) -> super::PersonsMiddleOrOtherName {
     let mut node = super::PersonsMiddleOrOtherName::default();
-    let mut reader = crate::Reader::new(element, &super::PERSONS_MIDDLE_OR_OTHER_NAME_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PERSONS_MIDDLE_OR_OTHER_NAME_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -950,8 +1691,24 @@ pub fn persons_middle_or_other_name(element: &Element) -> super::PersonsMiddleOr
 /// Read `b:ProducerName` into a `ProducerName`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn producer_name(element: &Element) -> super::ProducerName {
+    producer_name_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:ProducerName` into a `ProducerName` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn producer_name_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ProducerName {
+    producer_name_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:ProducerName` into a `ProducerName` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn producer_name_from_item(item: crate::Item<'_>) -> super::ProducerName {
     let mut node = super::ProducerName::default();
-    let mut reader = crate::Reader::new(element, &super::PRODUCER_NAME_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PRODUCER_NAME_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.list);
@@ -964,8 +1721,25 @@ pub fn producer_name(element: &Element) -> super::ProducerName {
 /// Read `b:ProductionCompany` into a `ProductionCompany`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn production_company(element: &Element) -> super::ProductionCompany {
+    production_company_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:ProductionCompany` into a `ProductionCompany` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn production_company_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ProductionCompany {
+    production_company_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:ProductionCompany` into a `ProductionCompany` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn production_company_from_item(item: crate::Item<'_>) -> super::ProductionCompany {
     let mut node = super::ProductionCompany::default();
-    let mut reader = crate::Reader::new(element, &super::PRODUCTION_COMPANY_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PRODUCTION_COMPANY_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -978,8 +1752,25 @@ pub fn production_company(element: &Element) -> super::ProductionCompany {
 /// Read `b:PublicationTitle` into a `PublicationTitle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn publication_title(element: &Element) -> super::PublicationTitle {
+    publication_title_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:PublicationTitle` into a `PublicationTitle` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn publication_title_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::PublicationTitle {
+    publication_title_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:PublicationTitle` into a `PublicationTitle` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn publication_title_from_item(item: crate::Item<'_>) -> super::PublicationTitle {
     let mut node = super::PublicationTitle::default();
-    let mut reader = crate::Reader::new(element, &super::PUBLICATION_TITLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PUBLICATION_TITLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -992,8 +1783,20 @@ pub fn publication_title(element: &Element) -> super::PublicationTitle {
 /// Read `b:Publisher` into a `Publisher`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn publisher(element: &Element) -> super::Publisher {
+    publisher_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Publisher` into a `Publisher` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn publisher_from_events(start: Element, events: &dyn crate::EventSource) -> super::Publisher {
+    publisher_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Publisher` into a `Publisher` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn publisher_from_item(item: crate::Item<'_>) -> super::Publisher {
     let mut node = super::Publisher::default();
-    let mut reader = crate::Reader::new(element, &super::PUBLISHER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PUBLISHER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1006,8 +1809,25 @@ pub fn publisher(element: &Element) -> super::Publisher {
 /// Read `b:RecordingNumber` into a `RecordingNumber`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn recording_number(element: &Element) -> super::RecordingNumber {
+    recording_number_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:RecordingNumber` into a `RecordingNumber` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn recording_number_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::RecordingNumber {
+    recording_number_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:RecordingNumber` into a `RecordingNumber` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn recording_number_from_item(item: crate::Item<'_>) -> super::RecordingNumber {
     let mut node = super::RecordingNumber::default();
-    let mut reader = crate::Reader::new(element, &super::RECORDING_NUMBER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::RECORDING_NUMBER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1020,8 +1840,24 @@ pub fn recording_number(element: &Element) -> super::RecordingNumber {
 /// Read `b:RefOrder` into a `ReferenceOrder`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn reference_order(element: &Element) -> super::ReferenceOrder {
+    reference_order_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:RefOrder` into a `ReferenceOrder` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn reference_order_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ReferenceOrder {
+    reference_order_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:RefOrder` into a `ReferenceOrder` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn reference_order_from_item(item: crate::Item<'_>) -> super::ReferenceOrder {
     let mut node = super::ReferenceOrder::default();
-    let mut reader = crate::Reader::new(element, &super::REFERENCE_ORDER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::REFERENCE_ORDER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1034,8 +1870,20 @@ pub fn reference_order(element: &Element) -> super::ReferenceOrder {
 /// Read `b:Reporter` into a `Reporter`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn reporter(element: &Element) -> super::Reporter {
+    reporter_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Reporter` into a `Reporter` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn reporter_from_events(start: Element, events: &dyn crate::EventSource) -> super::Reporter {
+    reporter_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Reporter` into a `Reporter` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn reporter_from_item(item: crate::Item<'_>) -> super::Reporter {
     let mut node = super::Reporter::default();
-    let mut reader = crate::Reader::new(element, &super::REPORTER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::REPORTER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1048,8 +1896,24 @@ pub fn reporter(element: &Element) -> super::Reporter {
 /// Read `b:ShortTitle` into a `ShortTitle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn short_title(element: &Element) -> super::ShortTitle {
+    short_title_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:ShortTitle` into a `ShortTitle` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn short_title_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ShortTitle {
+    short_title_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:ShortTitle` into a `ShortTitle` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn short_title_from_item(item: crate::Item<'_>) -> super::ShortTitle {
     let mut node = super::ShortTitle::default();
-    let mut reader = crate::Reader::new(element, &super::SHORT_TITLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SHORT_TITLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1062,8 +1926,20 @@ pub fn short_title(element: &Element) -> super::ShortTitle {
 /// Read `b:Source` into a `Source`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn source(element: &Element) -> super::Source {
+    source_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Source` into a `Source` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn source_from_events(start: Element, events: &dyn crate::EventSource) -> super::Source {
+    source_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Source` into a `Source` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn source_from_item(item: crate::Item<'_>) -> super::Source {
     let mut node = super::Source::default();
-    let mut reader = crate::Reader::new(element, &super::SOURCE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SOURCE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -1082,8 +1958,24 @@ pub fn source_content(element: &Element) -> super::SourceContent {
 /// Read `b:SourceType` into a `SourceType`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn source_type(element: &Element) -> super::SourceType {
+    source_type_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:SourceType` into a `SourceType` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn source_type_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::SourceType {
+    source_type_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:SourceType` into a `SourceType` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn source_type_from_item(item: crate::Item<'_>) -> super::SourceType {
     let mut node = super::SourceType::default();
-    let mut reader = crate::Reader::new(element, &super::SOURCE_TYPE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SOURCE_TYPE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1096,8 +1988,20 @@ pub fn source_type(element: &Element) -> super::SourceType {
 /// Read `b:Sources` into a `Sources`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sources(element: &Element) -> super::Sources {
+    sources_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Sources` into a `Sources` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sources_from_events(start: Element, events: &dyn crate::EventSource) -> super::Sources {
+    sources_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Sources` into a `Sources` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sources_from_item(item: crate::Item<'_>) -> super::Sources {
     let mut node = super::Sources::default();
-    let mut reader = crate::Reader::new(element, &super::SOURCES_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SOURCES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.selected_style),
@@ -1114,8 +2018,25 @@ pub fn sources(element: &Element) -> super::Sources {
 /// Read `b:StandardNumber` into a `StandardNumber`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn standard_number(element: &Element) -> super::StandardNumber {
+    standard_number_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:StandardNumber` into a `StandardNumber` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn standard_number_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::StandardNumber {
+    standard_number_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:StandardNumber` into a `StandardNumber` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn standard_number_from_item(item: crate::Item<'_>) -> super::StandardNumber {
     let mut node = super::StandardNumber::default();
-    let mut reader = crate::Reader::new(element, &super::STANDARD_NUMBER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::STANDARD_NUMBER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1128,8 +2049,25 @@ pub fn standard_number(element: &Element) -> super::StandardNumber {
 /// Read `b:StateProvince` into a `StateOrProvince`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn state_or_province(element: &Element) -> super::StateOrProvince {
+    state_or_province_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:StateProvince` into a `StateOrProvince` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn state_or_province_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::StateOrProvince {
+    state_or_province_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:StateProvince` into a `StateOrProvince` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn state_or_province_from_item(item: crate::Item<'_>) -> super::StateOrProvince {
     let mut node = super::StateOrProvince::default();
-    let mut reader = crate::Reader::new(element, &super::STATE_OR_PROVINCE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::STATE_OR_PROVINCE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1142,8 +2080,20 @@ pub fn state_or_province(element: &Element) -> super::StateOrProvince {
 /// Read `b:Station` into a `Station`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn station(element: &Element) -> super::Station {
+    station_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Station` into a `Station` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn station_from_events(start: Element, events: &dyn crate::EventSource) -> super::Station {
+    station_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Station` into a `Station` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn station_from_item(item: crate::Item<'_>) -> super::Station {
     let mut node = super::Station::default();
-    let mut reader = crate::Reader::new(element, &super::STATION_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::STATION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1156,8 +2106,20 @@ pub fn station(element: &Element) -> super::Station {
 /// Read `b:Tag` into a `Tag`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tag(element: &Element) -> super::Tag {
+    tag_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Tag` into a `Tag` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tag_from_events(start: Element, events: &dyn crate::EventSource) -> super::Tag {
+    tag_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Tag` into a `Tag` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tag_from_item(item: crate::Item<'_>) -> super::Tag {
     let mut node = super::Tag::default();
-    let mut reader = crate::Reader::new(element, &super::TAG_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::TAG_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1170,8 +2132,20 @@ pub fn tag(element: &Element) -> super::Tag {
 /// Read `b:Theater` into a `Theater`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn theater(element: &Element) -> super::Theater {
+    theater_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Theater` into a `Theater` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn theater_from_events(start: Element, events: &dyn crate::EventSource) -> super::Theater {
+    theater_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Theater` into a `Theater` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn theater_from_item(item: crate::Item<'_>) -> super::Theater {
     let mut node = super::Theater::default();
-    let mut reader = crate::Reader::new(element, &super::THEATER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::THEATER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1184,8 +2158,24 @@ pub fn theater(element: &Element) -> super::Theater {
 /// Read `b:ThesisType` into a `ThesisType`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn thesis_type(element: &Element) -> super::ThesisType {
+    thesis_type_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:ThesisType` into a `ThesisType` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn thesis_type_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ThesisType {
+    thesis_type_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:ThesisType` into a `ThesisType` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn thesis_type_from_item(item: crate::Item<'_>) -> super::ThesisType {
     let mut node = super::ThesisType::default();
-    let mut reader = crate::Reader::new(element, &super::THESIS_TYPE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::THESIS_TYPE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1198,8 +2188,20 @@ pub fn thesis_type(element: &Element) -> super::ThesisType {
 /// Read `b:Title` into a `Title`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn title(element: &Element) -> super::Title {
+    title_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Title` into a `Title` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn title_from_events(start: Element, events: &dyn crate::EventSource) -> super::Title {
+    title_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Title` into a `Title` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn title_from_item(item: crate::Item<'_>) -> super::Title {
     let mut node = super::Title::default();
-    let mut reader = crate::Reader::new(element, &super::TITLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::TITLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1212,8 +2214,24 @@ pub fn title(element: &Element) -> super::Title {
 /// Read `b:Translator` into a `Translator`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn translator(element: &Element) -> super::Translator {
+    translator_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Translator` into a `Translator` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn translator_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::Translator {
+    translator_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Translator` into a `Translator` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn translator_from_item(item: crate::Item<'_>) -> super::Translator {
     let mut node = super::Translator::default();
-    let mut reader = crate::Reader::new(element, &super::TRANSLATOR_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::TRANSLATOR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.name_list);
@@ -1226,8 +2244,20 @@ pub fn translator(element: &Element) -> super::Translator {
 /// Read `b:URL` into a `Url`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn url(element: &Element) -> super::Url {
+    url_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:URL` into a `Url` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn url_from_events(start: Element, events: &dyn crate::EventSource) -> super::Url {
+    url_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:URL` into a `Url` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn url_from_item(item: crate::Item<'_>) -> super::Url {
     let mut node = super::Url::default();
-    let mut reader = crate::Reader::new(element, &super::URL_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::URL_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1240,8 +2270,20 @@ pub fn url(element: &Element) -> super::Url {
 /// Read `b:Version` into a `Version`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn version(element: &Element) -> super::Version {
+    version_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Version` into a `Version` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn version_from_events(start: Element, events: &dyn crate::EventSource) -> super::Version {
+    version_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Version` into a `Version` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn version_from_item(item: crate::Item<'_>) -> super::Version {
     let mut node = super::Version::default();
-    let mut reader = crate::Reader::new(element, &super::VERSION_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::VERSION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1254,8 +2296,20 @@ pub fn version(element: &Element) -> super::Version {
 /// Read `b:Volume` into a `Volume`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn volume(element: &Element) -> super::Volume {
+    volume_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Volume` into a `Volume` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn volume_from_events(start: Element, events: &dyn crate::EventSource) -> super::Volume {
+    volume_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Volume` into a `Volume` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn volume_from_item(item: crate::Item<'_>) -> super::Volume {
     let mut node = super::Volume::default();
-    let mut reader = crate::Reader::new(element, &super::VOLUME_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::VOLUME_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1268,8 +2322,20 @@ pub fn volume(element: &Element) -> super::Volume {
 /// Read `b:Writer` into a `Writer`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn writer(element: &Element) -> super::Writer {
+    writer_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Writer` into a `Writer` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn writer_from_events(start: Element, events: &dyn crate::EventSource) -> super::Writer {
+    writer_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Writer` into a `Writer` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn writer_from_item(item: crate::Item<'_>) -> super::Writer {
     let mut node = super::Writer::default();
-    let mut reader = crate::Reader::new(element, &super::WRITER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::WRITER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.name_list);
@@ -1282,8 +2348,20 @@ pub fn writer(element: &Element) -> super::Writer {
 /// Read `b:Year` into a `Year`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn year(element: &Element) -> super::Year {
+    year_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:Year` into a `Year` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn year_from_events(start: Element, events: &dyn crate::EventSource) -> super::Year {
+    year_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:Year` into a `Year` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn year_from_item(item: crate::Item<'_>) -> super::Year {
     let mut node = super::Year::default();
-    let mut reader = crate::Reader::new(element, &super::YEAR_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::YEAR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1296,8 +2374,24 @@ pub fn year(element: &Element) -> super::Year {
 /// Read `b:YearAccessed` into a `YearAccessed`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn year_accessed(element: &Element) -> super::YearAccessed {
+    year_accessed_from_item(crate::Item::Tree(element))
+}
+
+/// Read `b:YearAccessed` into a `YearAccessed` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn year_accessed_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::YearAccessed {
+    year_accessed_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `b:YearAccessed` into a `YearAccessed` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn year_accessed_from_item(item: crate::Item<'_>) -> super::YearAccessed {
     let mut node = super::YearAccessed::default();
-    let mut reader = crate::Reader::new(element, &super::YEAR_ACCESSED_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::YEAR_ACCESSED_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);

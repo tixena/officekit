@@ -350,6 +350,7 @@
 use crate::parts::part_root::{self, PartRoot};
 #[cfg(feature = "transitional")]
 use crate::transitional::Transitional as _;
+use officekit_markup::Item;
 use officekit_markup::additional_characteristics;
 #[cfg(feature = "strict")]
 use officekit_strict::Strict as _;
@@ -374,6 +375,11 @@ pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::CUSTOM_XML;
 
 impl PartRoot for additional_characteristics::SetOfAdditionalCharacteristics {
     const LOCAL_NAME: &'static str = "additionalCharacteristics";
+
+    fn from_part(root: Item<'_>) -> Result<Self, String> {
+        super::check_root(root.element(), 7, Self::LOCAL_NAME)?;
+        Ok(additional_characteristics::read::set_of_additional_characteristics_from_item(root))
+    }
 
     fn from_tree(root: &Element) -> Result<Self, String> {
         super::check_root(root, 7, Self::LOCAL_NAME)?;

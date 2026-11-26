@@ -222,7 +222,6 @@ pub mod read;
 pub mod write;
 
 use officekit_markup_base::UserData;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
 const NS_P: Option<NamespaceId> = Some(64);
@@ -556,8 +555,8 @@ impl<X: UserData> ChartTrackingRefBasedWith<X> {
 }
 
 impl officekit_markup_base::Read for ChartTrackingRefBased {
-    fn read(element: &Element) -> Self {
-        read::chart_tracking_ref_based(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::chart_tracking_ref_based_from_item(item)
     }
 }
 
@@ -594,8 +593,8 @@ impl<X: UserData> ClrWith<X> {
 }
 
 impl officekit_markup_base::Read for Clr {
-    fn read(element: &Element) -> Self {
-        read::clr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::clr_from_item(item)
     }
 }
 
@@ -632,8 +631,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -683,8 +682,8 @@ impl<X: UserData> GuideWith<X> {
 }
 
 impl officekit_markup_base::Read for Guide {
-    fn read(element: &Element) -> Self {
-        read::guide(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::guide_from_item(item)
     }
 }
 
@@ -725,8 +724,8 @@ impl<X: UserData> NotesGuideLstWith<X> {
 }
 
 impl officekit_markup_base::Read for NotesGuideLst {
-    fn read(element: &Element) -> Self {
-        read::notes_guide_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::notes_guide_lst_from_item(item)
     }
 }
 
@@ -765,8 +764,8 @@ impl<X: UserData> ParentCmWith<X> {
 }
 
 impl officekit_markup_base::Read for ParentCm {
-    fn read(element: &Element) -> Self {
-        read::parent_cm(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::parent_cm_from_item(item)
     }
 }
 
@@ -805,8 +804,8 @@ impl<X: UserData> PresenceInfoWith<X> {
 }
 
 impl officekit_markup_base::Read for PresenceInfo {
-    fn read(element: &Element) -> Self {
-        read::presence_info(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::presence_info_from_item(item)
     }
 }
 
@@ -847,8 +846,8 @@ impl<X: UserData> PrstTransWith<X> {
 }
 
 impl officekit_markup_base::Read for PrstTrans {
-    fn read(element: &Element) -> Self {
-        read::prst_trans(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::prst_trans_from_item(item)
     }
 }
 
@@ -889,8 +888,8 @@ impl<X: UserData> SldGuideLstWith<X> {
 }
 
 impl officekit_markup_base::Read for SldGuideLst {
-    fn read(element: &Element) -> Self {
-        read::sld_guide_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sld_guide_lst_from_item(item)
     }
 }
 
@@ -931,8 +930,8 @@ impl<X: UserData> ThreadingInfoWith<X> {
 }
 
 impl officekit_markup_base::Read for ThreadingInfo {
-    fn read(element: &Element) -> Self {
-        read::threading_info(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::threading_info_from_item(item)
     }
 }
 

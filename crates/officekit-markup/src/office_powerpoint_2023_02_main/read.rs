@@ -221,7 +221,22 @@ use officekit_xml::element::Element;
 /// Read `p232:cameo` into a `Cameo`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cameo(element: &Element) -> super::Cameo {
-    let reader = officekit_markup_base::Reader::new(element, &super::CAMEO_SHAPE);
+    cameo_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p232:cameo` into a `Cameo` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn cameo_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Cameo {
+    cameo_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p232:cameo` into a `Cameo` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn cameo_from_item(item: officekit_markup_base::Item<'_>) -> super::Cameo {
+    let reader = officekit_markup_base::Reader::of(item, &super::CAMEO_SHAPE);
     super::Cameo {
         user_data: (),
         unknown: reader.finish(),
@@ -231,8 +246,24 @@ pub fn cameo(element: &Element) -> super::Cameo {
 /// Read `p232:phTypeExt` into a `PhTypeExt`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ph_type_ext(element: &Element) -> super::PhTypeExt {
+    ph_type_ext_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p232:phTypeExt` into a `PhTypeExt` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ph_type_ext_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PhTypeExt {
+    ph_type_ext_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p232:phTypeExt` into a `PhTypeExt` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ph_type_ext_from_item(item: officekit_markup_base::Item<'_>) -> super::PhTypeExt {
     let mut node = super::PhTypeExt::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PH_TYPE_EXT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PH_TYPE_EXT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.r#type);
@@ -251,8 +282,23 @@ pub fn placeholder_type(element: &Element) -> super::PlaceholderTypeContent {
 /// Read `p232:type` into a `Type`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r#type(element: &Element) -> super::Type {
+    type_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p232:type` into a `Type` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn type_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Type {
+    type_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p232:type` into a `Type` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn type_from_item(item: officekit_markup_base::Item<'_>) -> super::Type {
     let mut node = super::Type::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TYPE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TYPE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -265,7 +311,22 @@ pub fn r#type(element: &Element) -> super::Type {
 /// Read `p232:unknown` into a `Unknown`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn unknown(element: &Element) -> super::Unknown {
-    let reader = officekit_markup_base::Reader::new(element, &super::UNKNOWN_SHAPE);
+    unknown_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p232:unknown` into a `Unknown` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn unknown_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Unknown {
+    unknown_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p232:unknown` into a `Unknown` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn unknown_from_item(item: officekit_markup_base::Item<'_>) -> super::Unknown {
+    let reader = officekit_markup_base::Reader::of(item, &super::UNKNOWN_SHAPE);
     super::Unknown {
         user_data: (),
         unknown: reader.finish(),

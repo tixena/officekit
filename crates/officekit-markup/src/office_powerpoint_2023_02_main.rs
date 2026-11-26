@@ -225,7 +225,7 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -520,8 +520,8 @@ impl<X: UserData> CameoWith<X> {
 }
 
 impl officekit_markup_base::Read for Cameo {
-    fn read(element: &Element) -> Self {
-        read::cameo(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cameo_from_item(item)
     }
 }
 
@@ -558,8 +558,8 @@ impl<X: UserData> PhTypeExtWith<X> {
 }
 
 impl officekit_markup_base::Read for PhTypeExt {
-    fn read(element: &Element) -> Self {
-        read::ph_type_ext(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ph_type_ext_from_item(item)
     }
 }
 
@@ -596,11 +596,11 @@ impl officekit_markup_base::Read for PlaceholderTypeContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_P232, "cameo")) => Self::Cameo(officekit_markup_base::read(element)),
-            Some((NS_P232, "unknown")) => Self::Unknown(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_P232, "cameo")) => Self::Cameo(item.read()),
+            Some((NS_P232, "unknown")) => Self::Unknown(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -641,8 +641,8 @@ impl<X: UserData> TypeWith<X> {
 }
 
 impl officekit_markup_base::Read for Type {
-    fn read(element: &Element) -> Self {
-        read::r#type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::type_from_item(item)
     }
 }
 
@@ -675,8 +675,8 @@ impl<X: UserData> UnknownWith<X> {
 }
 
 impl officekit_markup_base::Read for Unknown {
-    fn read(element: &Element) -> Self {
-        read::unknown(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::unknown_from_item(item)
     }
 }
 

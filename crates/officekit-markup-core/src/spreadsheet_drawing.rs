@@ -222,7 +222,7 @@ pub mod read;
 pub mod write;
 
 use officekit_markup_base::UserData;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
 
@@ -1688,8 +1688,8 @@ impl<X: UserData> AbsoluteAnchorShapeSizeWith<X> {
 }
 
 impl officekit_markup_base::Read for AbsoluteAnchorShapeSize {
-    fn read(element: &Element) -> Self {
-        read::absolute_anchor_shape_size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::absolute_anchor_shape_size_from_item(item)
     }
 }
 
@@ -1728,8 +1728,8 @@ impl<X: UserData> ClientDataWith<X> {
 }
 
 impl officekit_markup_base::Read for ClientData {
-    fn read(element: &Element) -> Self {
-        read::client_data(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::client_data_from_item(item)
     }
 }
 
@@ -1766,8 +1766,8 @@ impl<X: UserData> ColWith<X> {
 }
 
 impl officekit_markup_base::Read for Col {
-    fn read(element: &Element) -> Self {
-        read::col(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::col_from_item(item)
     }
 }
 
@@ -1827,8 +1827,8 @@ impl<X: UserData> ColumnOffsetWith<X> {
 }
 
 impl officekit_markup_base::Read for ColumnOffset {
-    fn read(element: &Element) -> Self {
-        read::column_offset(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::column_offset_from_item(item)
     }
 }
 
@@ -1873,8 +1873,8 @@ impl<X: UserData> ConnectionNonVisualShapePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for ConnectionNonVisualShapeProperties {
-    fn read(element: &Element) -> Self {
-        read::connection_non_visual_shape_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::connection_non_visual_shape_properties_from_item(item)
     }
 }
 
@@ -1925,8 +1925,8 @@ impl<X: UserData> ConnectionShapeWith<X> {
 }
 
 impl officekit_markup_base::Read for ConnectionShape {
-    fn read(element: &Element) -> Self {
-        read::connection_shape(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::connection_shape_from_item(item)
     }
 }
 
@@ -1963,8 +1963,8 @@ impl<X: UserData> ContentPartWith<X> {
 }
 
 impl officekit_markup_base::Read for ContentPart {
-    fn read(element: &Element) -> Self {
-        read::content_part(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::content_part_from_item(item)
     }
 }
 
@@ -2007,8 +2007,8 @@ impl<X: UserData> EndingAnchorPointWith<X> {
 }
 
 impl officekit_markup_base::Read for EndingAnchorPoint {
-    fn read(element: &Element) -> Self {
-        read::ending_anchor_point(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ending_anchor_point_from_item(item)
     }
 }
 
@@ -2059,8 +2059,8 @@ impl<X: UserData> GraphicFrameWith<X> {
 }
 
 impl officekit_markup_base::Read for GraphicFrame {
-    fn read(element: &Element) -> Self {
-        read::graphic_frame(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::graphic_frame_from_item(item)
     }
 }
 
@@ -2105,8 +2105,8 @@ impl<X: UserData> GroupShapeWith<X> {
 }
 
 impl officekit_markup_base::Read for GroupShape {
-    fn read(element: &Element) -> Self {
-        read::group_shape(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::group_shape_from_item(item)
     }
 }
 
@@ -2143,19 +2143,15 @@ impl officekit_markup_base::Read for GroupShapeContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_XDR, "cxnSp")) => Self::ConnectionShape(officekit_markup_base::read(element)),
-            Some((NS_XDR14, "contentPart")) => {
-                Self::ContentPart(officekit_markup_base::read(element))
-            }
-            Some((NS_XDR, "graphicFrame")) => {
-                Self::GraphicFrame(officekit_markup_base::read(element))
-            }
-            Some((NS_XDR, "grpSp")) => Self::GroupShape(officekit_markup_base::read(element)),
-            Some((NS_XDR, "pic")) => Self::Picture(officekit_markup_base::read(element)),
-            Some((NS_XDR, "sp")) => Self::Shape(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_XDR, "cxnSp")) => Self::ConnectionShape(item.read()),
+            Some((NS_XDR14, "contentPart")) => Self::ContentPart(item.read()),
+            Some((NS_XDR, "graphicFrame")) => Self::GraphicFrame(item.read()),
+            Some((NS_XDR, "grpSp")) => Self::GroupShape(item.read()),
+            Some((NS_XDR, "pic")) => Self::Picture(item.read()),
+            Some((NS_XDR, "sp")) => Self::Shape(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -2220,8 +2216,8 @@ impl<X: UserData> GroupShapePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for GroupShapeProperties {
-    fn read(element: &Element) -> Self {
-        read::group_shape_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::group_shape_properties_from_item(item)
     }
 }
 
@@ -2270,8 +2266,8 @@ impl<X: UserData> NonVisualConnectorShapeDrawingPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for NonVisualConnectorShapeDrawingProperties {
-    fn read(element: &Element) -> Self {
-        read::non_visual_connector_shape_drawing_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::non_visual_connector_shape_drawing_properties_from_item(item)
     }
 }
 
@@ -2328,8 +2324,8 @@ impl<X: UserData> NonVisualDrawingPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for NonVisualDrawingProperties {
-    fn read(element: &Element) -> Self {
-        read::non_visual_drawing_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::non_visual_drawing_properties_from_item(item)
     }
 }
 
@@ -2370,8 +2366,8 @@ impl<X: UserData> NonVisualGraphicFrameDrawingPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for NonVisualGraphicFrameDrawingProperties {
-    fn read(element: &Element) -> Self {
-        read::non_visual_graphic_frame_drawing_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::non_visual_graphic_frame_drawing_properties_from_item(item)
     }
 }
 
@@ -2412,8 +2408,8 @@ impl<X: UserData> NonVisualGroupShapeDrawingPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for NonVisualGroupShapeDrawingProperties {
-    fn read(element: &Element) -> Self {
-        read::non_visual_group_shape_drawing_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::non_visual_group_shape_drawing_properties_from_item(item)
     }
 }
 
@@ -2458,8 +2454,8 @@ impl<X: UserData> NonVisualPictureDrawingPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for NonVisualPictureDrawingProperties {
-    fn read(element: &Element) -> Self {
-        read::non_visual_picture_drawing_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::non_visual_picture_drawing_properties_from_item(item)
     }
 }
 
@@ -2501,8 +2497,8 @@ impl<X: UserData> NonVisualPropertiesForAConnectionShapeWith<X> {
 }
 
 impl officekit_markup_base::Read for NonVisualPropertiesForAConnectionShape {
-    fn read(element: &Element) -> Self {
-        read::non_visual_properties_for_a_connection_shape(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::non_visual_properties_for_a_connection_shape_from_item(item)
     }
 }
 
@@ -2544,8 +2540,8 @@ impl<X: UserData> NonVisualPropertiesForAGraphicFrameWith<X> {
 }
 
 impl officekit_markup_base::Read for NonVisualPropertiesForAGraphicFrame {
-    fn read(element: &Element) -> Self {
-        read::non_visual_properties_for_a_graphic_frame(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::non_visual_properties_for_a_graphic_frame_from_item(item)
     }
 }
 
@@ -2587,8 +2583,8 @@ impl<X: UserData> NonVisualPropertiesForAGroupShapeWith<X> {
 }
 
 impl officekit_markup_base::Read for NonVisualPropertiesForAGroupShape {
-    fn read(element: &Element) -> Self {
-        read::non_visual_properties_for_a_group_shape(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::non_visual_properties_for_a_group_shape_from_item(item)
     }
 }
 
@@ -2629,8 +2625,8 @@ impl<X: UserData> NonVisualPropertiesForAPictureWith<X> {
 }
 
 impl officekit_markup_base::Read for NonVisualPropertiesForAPicture {
-    fn read(element: &Element) -> Self {
-        read::non_visual_properties_for_a_picture(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::non_visual_properties_for_a_picture_from_item(item)
     }
 }
 
@@ -2671,8 +2667,8 @@ impl<X: UserData> NonVisualPropertiesForAShapeWith<X> {
 }
 
 impl officekit_markup_base::Read for NonVisualPropertiesForAShape {
-    fn read(element: &Element) -> Self {
-        read::non_visual_properties_for_a_shape(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::non_visual_properties_for_a_shape_from_item(item)
     }
 }
 
@@ -2715,19 +2711,15 @@ impl officekit_markup_base::Read for ObjectContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_XDR, "cxnSp")) => Self::ConnectionShape(officekit_markup_base::read(element)),
-            Some((NS_XDR, "contentPart")) => {
-                Self::ContentPart(officekit_markup_base::read(element))
-            }
-            Some((NS_XDR, "graphicFrame")) => {
-                Self::GraphicFrame(officekit_markup_base::read(element))
-            }
-            Some((NS_XDR, "grpSp")) => Self::GroupShape(officekit_markup_base::read(element)),
-            Some((NS_XDR, "pic")) => Self::Picture(officekit_markup_base::read(element)),
-            Some((NS_XDR, "sp")) => Self::Shape(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_XDR, "cxnSp")) => Self::ConnectionShape(item.read()),
+            Some((NS_XDR, "contentPart")) => Self::ContentPart(item.read()),
+            Some((NS_XDR, "graphicFrame")) => Self::GraphicFrame(item.read()),
+            Some((NS_XDR, "grpSp")) => Self::GroupShape(item.read()),
+            Some((NS_XDR, "pic")) => Self::Picture(item.read()),
+            Some((NS_XDR, "sp")) => Self::Shape(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -2784,8 +2776,8 @@ impl<X: UserData> OneCellAnchorShapeSizeWith<X> {
 }
 
 impl officekit_markup_base::Read for OneCellAnchorShapeSize {
-    fn read(element: &Element) -> Self {
-        read::one_cell_anchor_shape_size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::one_cell_anchor_shape_size_from_item(item)
     }
 }
 
@@ -2840,8 +2832,8 @@ impl<X: UserData> PictureWith<X> {
 }
 
 impl officekit_markup_base::Read for Picture {
-    fn read(element: &Element) -> Self {
-        read::picture(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::picture_from_item(item)
     }
 }
 
@@ -2892,8 +2884,8 @@ impl<X: UserData> PictureFillWith<X> {
 }
 
 impl officekit_markup_base::Read for PictureFill {
-    fn read(element: &Element) -> Self {
-        read::picture_fill(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::picture_fill_from_item(item)
     }
 }
 
@@ -2932,8 +2924,8 @@ impl<X: UserData> PositionWith<X> {
 }
 
 impl officekit_markup_base::Read for Position {
-    fn read(element: &Element) -> Self {
-        read::position(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::position_from_item(item)
     }
 }
 
@@ -3020,8 +3012,8 @@ impl<X: UserData> RowWith<X> {
 }
 
 impl officekit_markup_base::Read for Row {
-    fn read(element: &Element) -> Self {
-        read::row(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::row_from_item(item)
     }
 }
 
@@ -3081,8 +3073,8 @@ impl<X: UserData> RowOffsetWith<X> {
 }
 
 impl officekit_markup_base::Read for RowOffset {
-    fn read(element: &Element) -> Self {
-        read::row_offset(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::row_offset_from_item(item)
     }
 }
 
@@ -3141,8 +3133,8 @@ impl<X: UserData> ShapeWith<X> {
 }
 
 impl officekit_markup_base::Read for Shape {
-    fn read(element: &Element) -> Self {
-        read::shape(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shape_from_item(item)
     }
 }
 
@@ -3181,8 +3173,8 @@ impl<X: UserData> ShapeExtentWith<X> {
 }
 
 impl officekit_markup_base::Read for ShapeExtent {
-    fn read(element: &Element) -> Self {
-        read::shape_extent(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shape_extent_from_item(item)
     }
 }
 
@@ -3251,8 +3243,8 @@ impl<X: UserData> ShapePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for ShapeProperties {
-    fn read(element: &Element) -> Self {
-        read::shape_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shape_properties_from_item(item)
     }
 }
 
@@ -3301,8 +3293,8 @@ impl<X: UserData> ShapeStyleWith<X> {
 }
 
 impl officekit_markup_base::Read for ShapeStyle {
-    fn read(element: &Element) -> Self {
-        read::shape_style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shape_style_from_item(item)
     }
 }
 
@@ -3347,8 +3339,8 @@ impl<X: UserData> ShapeTextBodyWith<X> {
 }
 
 impl officekit_markup_base::Read for ShapeTextBody {
-    fn read(element: &Element) -> Self {
-        read::shape_text_body(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shape_text_body_from_item(item)
     }
 }
 
@@ -3391,8 +3383,8 @@ impl<X: UserData> StartingAnchorPointWith<X> {
 }
 
 impl officekit_markup_base::Read for StartingAnchorPoint {
-    fn read(element: &Element) -> Self {
-        read::starting_anchor_point(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::starting_anchor_point_from_item(item)
     }
 }
 
@@ -3445,8 +3437,8 @@ impl<X: UserData> TwoCellAnchorShapeSizeWith<X> {
 }
 
 impl officekit_markup_base::Read for TwoCellAnchorShapeSize {
-    fn read(element: &Element) -> Self {
-        read::two_cell_anchor_shape_size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::two_cell_anchor_shape_size_from_item(item)
     }
 }
 
@@ -3483,8 +3475,8 @@ impl<X: UserData> WorksheetDrawingWith<X> {
 }
 
 impl officekit_markup_base::Read for WorksheetDrawing {
-    fn read(element: &Element) -> Self {
-        read::worksheet_drawing(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::worksheet_drawing_from_item(item)
     }
 }
 
@@ -3522,18 +3514,12 @@ impl officekit_markup_base::Read for WorksheetDrawingContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_XDR, "absoluteAnchor")) => {
-                Self::AbsoluteAnchorShapeSize(officekit_markup_base::read(element))
-            }
-            Some((NS_XDR, "oneCellAnchor")) => {
-                Self::OneCellAnchorShapeSize(officekit_markup_base::read(element))
-            }
-            Some((NS_XDR, "twoCellAnchor")) => {
-                Self::TwoCellAnchorShapeSize(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_XDR, "absoluteAnchor")) => Self::AbsoluteAnchorShapeSize(item.read()),
+            Some((NS_XDR, "oneCellAnchor")) => Self::OneCellAnchorShapeSize(item.read()),
+            Some((NS_XDR, "twoCellAnchor")) => Self::TwoCellAnchorShapeSize(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -3587,8 +3573,8 @@ impl<X: UserData> XfrmWith<X> {
 }
 
 impl officekit_markup_base::Read for Xfrm {
-    fn read(element: &Element) -> Self {
-        read::xfrm(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xfrm_from_item(item)
     }
 }
 

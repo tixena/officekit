@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `clbl:ext` into a `Ext`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext(element: &Element) -> super::Ext {
+    ext_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `clbl:ext` into a `Ext` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Ext {
+    ext_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `clbl:ext` into a `Ext` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_from_item(item: officekit_markup_base::Item<'_>) -> super::Ext {
     let mut node = super::Ext::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.uri),
@@ -237,8 +252,23 @@ pub fn ext(element: &Element) -> super::Ext {
 /// Read `clbl:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `clbl:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `clbl:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.ext);
@@ -251,8 +281,23 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `clbl:label` into a `Label`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn label(element: &Element) -> super::Label {
+    label_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `clbl:label` into a `Label` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn label_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Label {
+    label_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `clbl:label` into a `Label` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn label_from_item(item: officekit_markup_base::Item<'_>) -> super::Label {
     let mut node = super::Label::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::LABEL_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::LABEL_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -274,8 +319,24 @@ pub fn label(element: &Element) -> super::Label {
 /// Read `clbl:labelList` into a `LabelList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn label_list(element: &Element) -> super::LabelList {
+    label_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `clbl:labelList` into a `LabelList` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn label_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::LabelList {
+    label_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `clbl:labelList` into a `LabelList` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn label_list_from_item(item: officekit_markup_base::Item<'_>) -> super::LabelList {
     let mut node = super::LabelList::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::LABEL_LIST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::LABEL_LIST_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.label),

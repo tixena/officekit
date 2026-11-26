@@ -225,7 +225,6 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -347,8 +346,8 @@ impl<X: UserData> PivotTableDefinition16With<X> {
 }
 
 impl officekit_markup_base::Read for PivotTableDefinition16 {
-    fn read(element: &Element) -> Self {
-        read::pivot_table_definition16(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pivot_table_definition16_from_item(item)
     }
 }
 

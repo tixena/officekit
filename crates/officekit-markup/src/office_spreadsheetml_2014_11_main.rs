@@ -225,7 +225,6 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::values::ValueError;
@@ -513,8 +512,8 @@ impl<X: UserData> CalculatedTimeColumnWith<X> {
 }
 
 impl officekit_markup_base::Read for CalculatedTimeColumn {
-    fn read(element: &Element) -> Self {
-        read::calculated_time_column(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::calculated_time_column_from_item(item)
     }
 }
 
@@ -559,8 +558,8 @@ impl<X: UserData> ModelTimeGroupingWith<X> {
 }
 
 impl officekit_markup_base::Read for ModelTimeGrouping {
-    fn read(element: &Element) -> Self {
-        read::model_time_grouping(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::model_time_grouping_from_item(item)
     }
 }
 
@@ -665,8 +664,8 @@ impl<X: UserData> ModelTimeGroupingsWith<X> {
 }
 
 impl officekit_markup_base::Read for ModelTimeGroupings {
-    fn read(element: &Element) -> Self {
-        read::model_time_groupings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::model_time_groupings_from_item(item)
     }
 }
 

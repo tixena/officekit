@@ -223,11 +223,30 @@ use officekit_xml::element::Element;
 pub fn external_code_service_image_as_input(
     element: &Element,
 ) -> super::ExternalCodeServiceImageAsInput {
+    external_code_service_image_as_input_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlecs2:externalCodeServiceImageAsInput` into a `ExternalCodeServiceImageAsInput` from its
+/// start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn external_code_service_image_as_input_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExternalCodeServiceImageAsInput {
+    external_code_service_image_as_input_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `xlecs2:externalCodeServiceImageAsInput` into a `ExternalCodeServiceImageAsInput` from an
+/// element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn external_code_service_image_as_input_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ExternalCodeServiceImageAsInput {
     let mut node = super::ExternalCodeServiceImageAsInput::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::EXTERNAL_CODE_SERVICE_IMAGE_AS_INPUT_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::EXTERNAL_CODE_SERVICE_IMAGE_AS_INPUT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.max_width),

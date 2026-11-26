@@ -222,7 +222,6 @@ pub mod read;
 pub mod write;
 
 use crate::UserData;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
 const NS_DS: Option<NamespaceId> = Some(46);
@@ -333,8 +332,8 @@ impl<X: UserData> AssociatedXMLSchemaWith<X> {
 }
 
 impl crate::Read for AssociatedXMLSchema {
-    fn read(element: &Element) -> Self {
-        read::associated_xml_schema(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::associated_xml_schema_from_item(item)
     }
 }
 
@@ -375,8 +374,8 @@ impl<X: UserData> CustomXMLDataPropertiesWith<X> {
 }
 
 impl crate::Read for CustomXMLDataProperties {
-    fn read(element: &Element) -> Self {
-        read::custom_xml_data_properties(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::custom_xml_data_properties_from_item(item)
     }
 }
 
@@ -413,8 +412,8 @@ impl<X: UserData> SetOfAssociatedXMLSchemasWith<X> {
 }
 
 impl crate::Read for SetOfAssociatedXMLSchemas {
-    fn read(element: &Element) -> Self {
-        read::set_of_associated_xml_schemas(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::set_of_associated_xml_schemas_from_item(item)
     }
 }
 

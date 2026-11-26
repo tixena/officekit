@@ -226,7 +226,6 @@ pub mod write;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -501,8 +500,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -555,8 +554,8 @@ impl<X: UserData> TaskpaneWith<X> {
 }
 
 impl officekit_markup_base::Read for Taskpane {
-    fn read(element: &Element) -> Self {
-        read::taskpane(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::taskpane_from_item(item)
     }
 }
 
@@ -593,8 +592,8 @@ impl<X: UserData> TaskpanesWith<X> {
 }
 
 impl officekit_markup_base::Read for Taskpanes {
-    fn read(element: &Element) -> Self {
-        read::taskpanes(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::taskpanes_from_item(item)
     }
 }
 
@@ -631,8 +630,8 @@ impl<X: UserData> WebextensionrefWith<X> {
 }
 
 impl officekit_markup_base::Read for Webextensionref {
-    fn read(element: &Element) -> Self {
-        read::webextensionref(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::webextensionref_from_item(item)
     }
 }
 

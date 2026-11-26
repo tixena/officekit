@@ -225,7 +225,6 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -456,8 +455,8 @@ impl<X: UserData> DataFieldFutureDataWith<X> {
 }
 
 impl officekit_markup_base::Read for DataFieldFutureData {
-    fn read(element: &Element) -> Self {
-        read::data_field_future_data(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_field_future_data_from_item(item)
     }
 }
 
@@ -494,8 +493,8 @@ impl<X: UserData> IgnorableAfterVersionWith<X> {
 }
 
 impl officekit_markup_base::Read for IgnorableAfterVersion {
-    fn read(element: &Element) -> Self {
-        read::ignorable_after_version(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ignorable_after_version_from_item(item)
     }
 }
 
@@ -532,8 +531,8 @@ impl<X: UserData> ImplicitMeasureSupportWith<X> {
 }
 
 impl officekit_markup_base::Read for ImplicitMeasureSupport {
-    fn read(element: &Element) -> Self {
-        read::implicit_measure_support(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::implicit_measure_support_from_item(item)
     }
 }
 

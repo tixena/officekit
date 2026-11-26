@@ -225,7 +225,6 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -331,8 +330,8 @@ impl<X: UserData> ReadonlyRecommendedWith<X> {
 }
 
 impl officekit_markup_base::Read for ReadonlyRecommended {
-    fn read(element: &Element) -> Self {
-        read::readonly_recommended(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::readonly_recommended_from_item(item)
     }
 }
 

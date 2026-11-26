@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `wpc:bg` into a `Bg`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bg(element: &Element) -> super::Bg {
+    bg_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wpc:bg` into a `Bg` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bg_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Bg {
+    bg_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wpc:bg` into a `Bg` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bg_from_item(item: officekit_markup_base::Item<'_>) -> super::Bg {
     let mut node = super::Bg::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BG_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BG_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.fill_properties_content),
@@ -237,8 +252,23 @@ pub fn bg(element: &Element) -> super::Bg {
 /// Read `wpc:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wpc:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wpc:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -251,8 +281,24 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `wpc:graphicFrame` into a `GraphicFrame`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn graphic_frame(element: &Element) -> super::GraphicFrame {
+    graphic_frame_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wpc:graphicFrame` into a `GraphicFrame` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn graphic_frame_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::GraphicFrame {
+    graphic_frame_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wpc:graphicFrame` into a `GraphicFrame` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn graphic_frame_from_item(item: officekit_markup_base::Item<'_>) -> super::GraphicFrame {
     let mut node = super::GraphicFrame::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::GRAPHIC_FRAME_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::GRAPHIC_FRAME_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.c_nv_pr),
@@ -270,8 +316,23 @@ pub fn graphic_frame(element: &Element) -> super::GraphicFrame {
 /// Read `wpc:whole` into a `Whole`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn whole(element: &Element) -> super::Whole {
+    whole_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wpc:whole` into a `Whole` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn whole_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Whole {
+    whole_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wpc:whole` into a `Whole` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn whole_from_item(item: officekit_markup_base::Item<'_>) -> super::Whole {
     let mut node = super::Whole::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::WHOLE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::WHOLE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.outline),
@@ -292,8 +353,23 @@ pub fn wordprocessing_canvas(element: &Element) -> super::WordprocessingCanvasCo
 /// Read `wpc:wpc` into a `Wpc`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wpc(element: &Element) -> super::Wpc {
+    wpc_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wpc:wpc` into a `Wpc` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wpc_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Wpc {
+    wpc_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wpc:wpc` into a `Wpc` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wpc_from_item(item: officekit_markup_base::Item<'_>) -> super::Wpc {
     let mut node = super::Wpc::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::WPC_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::WPC_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.bg),

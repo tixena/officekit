@@ -221,8 +221,25 @@ use officekit_xml::element::Element;
 /// Read `ds:schemaRef` into a `AssociatedXMLSchema`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn associated_xml_schema(element: &Element) -> super::AssociatedXMLSchema {
+    associated_xml_schema_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ds:schemaRef` into a `AssociatedXMLSchema` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn associated_xml_schema_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::AssociatedXMLSchema {
+    associated_xml_schema_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ds:schemaRef` into a `AssociatedXMLSchema` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn associated_xml_schema_from_item(item: crate::Item<'_>) -> super::AssociatedXMLSchema {
     let mut node = super::AssociatedXMLSchema::default();
-    let mut reader = crate::Reader::new(element, &super::ASSOCIATED_XML_SCHEMA_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::ASSOCIATED_XML_SCHEMA_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.uri);
@@ -235,8 +252,27 @@ pub fn associated_xml_schema(element: &Element) -> super::AssociatedXMLSchema {
 /// Read `ds:datastoreItem` into a `CustomXMLDataProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xml_data_properties(element: &Element) -> super::CustomXMLDataProperties {
+    custom_xml_data_properties_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ds:datastoreItem` into a `CustomXMLDataProperties` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_xml_data_properties_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CustomXMLDataProperties {
+    custom_xml_data_properties_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ds:datastoreItem` into a `CustomXMLDataProperties` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_xml_data_properties_from_item(
+    item: crate::Item<'_>,
+) -> super::CustomXMLDataProperties {
     let mut node = super::CustomXMLDataProperties::default();
-    let mut reader = crate::Reader::new(element, &super::CUSTOM_XML_DATA_PROPERTIES_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CUSTOM_XML_DATA_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.item_id),
@@ -251,8 +287,27 @@ pub fn custom_xml_data_properties(element: &Element) -> super::CustomXMLDataProp
 /// Read `ds:schemaRefs` into a `SetOfAssociatedXMLSchemas`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn set_of_associated_xml_schemas(element: &Element) -> super::SetOfAssociatedXMLSchemas {
+    set_of_associated_xml_schemas_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ds:schemaRefs` into a `SetOfAssociatedXMLSchemas` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn set_of_associated_xml_schemas_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::SetOfAssociatedXMLSchemas {
+    set_of_associated_xml_schemas_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ds:schemaRefs` into a `SetOfAssociatedXMLSchemas` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn set_of_associated_xml_schemas_from_item(
+    item: crate::Item<'_>,
+) -> super::SetOfAssociatedXMLSchemas {
     let mut node = super::SetOfAssociatedXMLSchemas::default();
-    let mut reader = crate::Reader::new(element, &super::SET_OF_ASSOCIATED_XML_SCHEMAS_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SET_OF_ASSOCIATED_XML_SCHEMAS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.associated_xml_schema);

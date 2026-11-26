@@ -225,7 +225,6 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -339,8 +338,8 @@ impl<X: UserData> ExternalCodeServiceImageAsInputWith<X> {
 }
 
 impl officekit_markup_base::Read for ExternalCodeServiceImageAsInput {
-    fn read(element: &Element) -> Self {
-        read::external_code_service_image_as_input(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::external_code_service_image_as_input_from_item(item)
     }
 }
 

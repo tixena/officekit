@@ -221,8 +221,24 @@ use officekit_xml::element::Element;
 /// Read `p16:designElem` into a `DesignElem`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn design_elem(element: &Element) -> super::DesignElem {
+    design_elem_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p16:designElem` into a `DesignElem` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn design_elem_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DesignElem {
+    design_elem_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p16:designElem` into a `DesignElem` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn design_elem_from_item(item: officekit_markup_base::Item<'_>) -> super::DesignElem {
     let mut node = super::DesignElem::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DESIGN_ELEM_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DESIGN_ELEM_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);

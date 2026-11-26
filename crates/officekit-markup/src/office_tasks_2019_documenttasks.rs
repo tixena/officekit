@@ -225,7 +225,7 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -1311,8 +1311,8 @@ impl<X: UserData> AnchorWith<X> {
 }
 
 impl officekit_markup_base::Read for Anchor {
-    fn read(element: &Element) -> Self {
-        read::anchor(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::anchor_from_item(item)
     }
 }
 
@@ -1345,8 +1345,8 @@ impl<X: UserData> AssignWith<X> {
 }
 
 impl officekit_markup_base::Read for Assign {
-    fn read(element: &Element) -> Self {
-        read::assign(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::assign_from_item(item)
     }
 }
 
@@ -1379,8 +1379,8 @@ impl<X: UserData> AttributionWith<X> {
 }
 
 impl officekit_markup_base::Read for Attribution {
-    fn read(element: &Element) -> Self {
-        read::attribution(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::attribution_from_item(item)
     }
 }
 
@@ -1417,8 +1417,8 @@ impl<X: UserData> CommentWith<X> {
 }
 
 impl officekit_markup_base::Read for Comment {
-    fn read(element: &Element) -> Self {
-        read::comment(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::comment_from_item(item)
     }
 }
 
@@ -1451,8 +1451,8 @@ impl<X: UserData> CreateWith<X> {
 }
 
 impl officekit_markup_base::Read for Create {
-    fn read(element: &Element) -> Self {
-        read::create(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::create_from_item(item)
     }
 }
 
@@ -1485,8 +1485,8 @@ impl<X: UserData> DeleteWith<X> {
 }
 
 impl officekit_markup_base::Read for Delete {
-    fn read(element: &Element) -> Self {
-        read::delete(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::delete_from_item(item)
     }
 }
 
@@ -1541,8 +1541,8 @@ impl<X: UserData> EventWith<X> {
 }
 
 impl officekit_markup_base::Read for Event {
-    fn read(element: &Element) -> Self {
-        read::event(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::event_from_item(item)
     }
 }
 
@@ -1579,8 +1579,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -1617,8 +1617,8 @@ impl<X: UserData> HistoryWith<X> {
 }
 
 impl officekit_markup_base::Read for History {
-    fn read(element: &Element) -> Self {
-        read::history(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::history_from_item(item)
     }
 }
 
@@ -1655,8 +1655,8 @@ impl<X: UserData> PriorityWith<X> {
 }
 
 impl officekit_markup_base::Read for Priority {
-    fn read(element: &Element) -> Self {
-        read::priority(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::priority_from_item(item)
     }
 }
 
@@ -1693,8 +1693,8 @@ impl<X: UserData> ProgressWith<X> {
 }
 
 impl officekit_markup_base::Read for Progress {
-    fn read(element: &Element) -> Self {
-        read::progress(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::progress_from_item(item)
     }
 }
 
@@ -1733,8 +1733,8 @@ impl<X: UserData> ScheduleWith<X> {
 }
 
 impl officekit_markup_base::Read for Schedule {
-    fn read(element: &Element) -> Self {
-        read::schedule(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::schedule_from_item(item)
     }
 }
 
@@ -1771,8 +1771,8 @@ impl<X: UserData> SetTitleWith<X> {
 }
 
 impl officekit_markup_base::Read for SetTitle {
-    fn read(element: &Element) -> Self {
-        read::set_title(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::set_title_from_item(item)
     }
 }
 
@@ -1821,8 +1821,8 @@ impl<X: UserData> TaskWith<X> {
 }
 
 impl officekit_markup_base::Read for Task {
-    fn read(element: &Element) -> Self {
-        read::task(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::task_from_item(item)
     }
 }
 
@@ -1864,20 +1864,20 @@ impl officekit_markup_base::Read for TaskHistoryEventContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_T, "Assign")) => Self::Assign(officekit_markup_base::read(element)),
-            Some((NS_T, "Create")) => Self::Create(officekit_markup_base::read(element)),
-            Some((NS_T, "Delete")) => Self::Delete(officekit_markup_base::read(element)),
-            Some((NS_T, "Priority")) => Self::Priority(officekit_markup_base::read(element)),
-            Some((NS_T, "Progress")) => Self::Progress(officekit_markup_base::read(element)),
-            Some((NS_T, "Schedule")) => Self::Schedule(officekit_markup_base::read(element)),
-            Some((NS_T, "SetTitle")) => Self::SetTitle(officekit_markup_base::read(element)),
-            Some((NS_T, "Unassign")) => Self::Unassign(officekit_markup_base::read(element)),
-            Some((NS_T, "UnassignAll")) => Self::UnassignAll(officekit_markup_base::read(element)),
-            Some((NS_T, "Undelete")) => Self::Undelete(officekit_markup_base::read(element)),
-            Some((NS_T, "Undo")) => Self::Undo(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_T, "Assign")) => Self::Assign(item.read()),
+            Some((NS_T, "Create")) => Self::Create(item.read()),
+            Some((NS_T, "Delete")) => Self::Delete(item.read()),
+            Some((NS_T, "Priority")) => Self::Priority(item.read()),
+            Some((NS_T, "Progress")) => Self::Progress(item.read()),
+            Some((NS_T, "Schedule")) => Self::Schedule(item.read()),
+            Some((NS_T, "SetTitle")) => Self::SetTitle(item.read()),
+            Some((NS_T, "Unassign")) => Self::Unassign(item.read()),
+            Some((NS_T, "UnassignAll")) => Self::UnassignAll(item.read()),
+            Some((NS_T, "Undelete")) => Self::Undelete(item.read()),
+            Some((NS_T, "Undo")) => Self::Undo(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -1928,8 +1928,8 @@ impl<X: UserData> TasksWith<X> {
 }
 
 impl officekit_markup_base::Read for Tasks {
-    fn read(element: &Element) -> Self {
-        read::tasks(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tasks_from_item(item)
     }
 }
 
@@ -1962,8 +1962,8 @@ impl<X: UserData> UnassignWith<X> {
 }
 
 impl officekit_markup_base::Read for Unassign {
-    fn read(element: &Element) -> Self {
-        read::unassign(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::unassign_from_item(item)
     }
 }
 
@@ -1996,8 +1996,8 @@ impl<X: UserData> UnassignAllWith<X> {
 }
 
 impl officekit_markup_base::Read for UnassignAll {
-    fn read(element: &Element) -> Self {
-        read::unassign_all(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::unassign_all_from_item(item)
     }
 }
 
@@ -2030,8 +2030,8 @@ impl<X: UserData> UndeleteWith<X> {
 }
 
 impl officekit_markup_base::Read for Undelete {
-    fn read(element: &Element) -> Self {
-        read::undelete(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::undelete_from_item(item)
     }
 }
 
@@ -2068,8 +2068,8 @@ impl<X: UserData> UndoWith<X> {
 }
 
 impl officekit_markup_base::Read for Undo {
-    fn read(element: &Element) -> Self {
-        read::undo(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::undo_from_item(item)
     }
 }
 

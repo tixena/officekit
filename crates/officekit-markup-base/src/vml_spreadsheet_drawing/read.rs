@@ -221,8 +221,20 @@ use officekit_xml::element::Element;
 /// Read `xvml:Anchor` into a `Anchor`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn anchor(element: &Element) -> super::Anchor {
+    anchor_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Anchor` into a `Anchor` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn anchor_from_events(start: Element, events: &dyn crate::EventSource) -> super::Anchor {
+    anchor_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Anchor` into a `Anchor` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn anchor_from_item(item: crate::Item<'_>) -> super::Anchor {
     let mut node = super::Anchor::default();
-    let mut reader = crate::Reader::new(element, &super::ANCHOR_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::ANCHOR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -235,8 +247,25 @@ pub fn anchor(element: &Element) -> super::Anchor {
 /// Read `xvml:ClientData` into a `AttachedObjectData`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn attached_object_data(element: &Element) -> super::AttachedObjectData {
+    attached_object_data_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:ClientData` into a `AttachedObjectData` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn attached_object_data_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::AttachedObjectData {
+    attached_object_data_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:ClientData` into a `AttachedObjectData` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn attached_object_data_from_item(item: crate::Item<'_>) -> super::AttachedObjectData {
     let mut node = super::AttachedObjectData::default();
-    let mut reader = crate::Reader::new(element, &super::ATTACHED_OBJECT_DATA_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::ATTACHED_OBJECT_DATA_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.object_type),
@@ -257,8 +286,21 @@ pub fn attached_object_data_content(element: &Element) -> super::AttachedObjectD
 /// Read `xvml:AutoFill` into a `AutoFill`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn auto_fill(element: &Element) -> super::AutoFill {
+    auto_fill_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:AutoFill` into a `AutoFill` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn auto_fill_from_events(start: Element, events: &dyn crate::EventSource) -> super::AutoFill {
+    auto_fill_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:AutoFill` into a `AutoFill` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn auto_fill_from_item(item: crate::Item<'_>) -> super::AutoFill {
     let mut node = super::AutoFill::default();
-    let mut reader = crate::Reader::new(element, &super::AUTO_FILL_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::AUTO_FILL_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -271,8 +313,21 @@ pub fn auto_fill(element: &Element) -> super::AutoFill {
 /// Read `xvml:AutoLine` into a `AutoLine`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn auto_line(element: &Element) -> super::AutoLine {
+    auto_line_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:AutoLine` into a `AutoLine` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn auto_line_from_events(start: Element, events: &dyn crate::EventSource) -> super::AutoLine {
+    auto_line_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:AutoLine` into a `AutoLine` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn auto_line_from_item(item: crate::Item<'_>) -> super::AutoLine {
     let mut node = super::AutoLine::default();
-    let mut reader = crate::Reader::new(element, &super::AUTO_LINE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::AUTO_LINE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -285,8 +340,25 @@ pub fn auto_line(element: &Element) -> super::AutoLine {
 /// Read `xvml:AutoPict` into a `AutomaticallySize`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn automatically_size(element: &Element) -> super::AutomaticallySize {
+    automatically_size_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:AutoPict` into a `AutomaticallySize` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn automatically_size_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::AutomaticallySize {
+    automatically_size_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:AutoPict` into a `AutomaticallySize` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn automatically_size_from_item(item: crate::Item<'_>) -> super::AutomaticallySize {
     let mut node = super::AutomaticallySize::default();
-    let mut reader = crate::Reader::new(element, &super::AUTOMATICALLY_SIZE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::AUTOMATICALLY_SIZE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -299,8 +371,23 @@ pub fn automatically_size(element: &Element) -> super::AutomaticallySize {
 /// Read `xvml:LCT` into a `CallbackType`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn callback_type(element: &Element) -> super::CallbackType {
+    callback_type_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:LCT` into a `CallbackType` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn callback_type_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CallbackType {
+    callback_type_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:LCT` into a `CallbackType` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn callback_type_from_item(item: crate::Item<'_>) -> super::CallbackType {
     let mut node = super::CallbackType::default();
-    let mut reader = crate::Reader::new(element, &super::CALLBACK_TYPE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CALLBACK_TYPE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -313,8 +400,25 @@ pub fn callback_type(element: &Element) -> super::CallbackType {
 /// Read `xvml:FmlaPict` into a `CameraSourceRange`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn camera_source_range(element: &Element) -> super::CameraSourceRange {
+    camera_source_range_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:FmlaPict` into a `CameraSourceRange` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn camera_source_range_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CameraSourceRange {
+    camera_source_range_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:FmlaPict` into a `CameraSourceRange` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn camera_source_range_from_item(item: crate::Item<'_>) -> super::CameraSourceRange {
     let mut node = super::CameraSourceRange::default();
-    let mut reader = crate::Reader::new(element, &super::CAMERA_SOURCE_RANGE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CAMERA_SOURCE_RANGE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -327,8 +431,24 @@ pub fn camera_source_range(element: &Element) -> super::CameraSourceRange {
 /// Read `xvml:Camera` into a `CameraTool`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn camera_tool(element: &Element) -> super::CameraTool {
+    camera_tool_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Camera` into a `CameraTool` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn camera_tool_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CameraTool {
+    camera_tool_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Camera` into a `CameraTool` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn camera_tool_from_item(item: crate::Item<'_>) -> super::CameraTool {
     let mut node = super::CameraTool::default();
-    let mut reader = crate::Reader::new(element, &super::CAMERA_TOOL_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CAMERA_TOOL_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -341,8 +461,24 @@ pub fn camera_tool(element: &Element) -> super::CameraTool {
 /// Read `xvml:Cancel` into a `CancelButton`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cancel_button(element: &Element) -> super::CancelButton {
+    cancel_button_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Cancel` into a `CancelButton` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn cancel_button_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CancelButton {
+    cancel_button_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Cancel` into a `CancelButton` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn cancel_button_from_item(item: crate::Item<'_>) -> super::CancelButton {
     let mut node = super::CancelButton::default();
-    let mut reader = crate::Reader::new(element, &super::CANCEL_BUTTON_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CANCEL_BUTTON_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -355,8 +491,20 @@ pub fn cancel_button(element: &Element) -> super::CancelButton {
 /// Read `xvml:Checked` into a `Checked`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn checked(element: &Element) -> super::Checked {
+    checked_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Checked` into a `Checked` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn checked_from_events(start: Element, events: &dyn crate::EventSource) -> super::Checked {
+    checked_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Checked` into a `Checked` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn checked_from_item(item: crate::Item<'_>) -> super::Checked {
     let mut node = super::Checked::default();
-    let mut reader = crate::Reader::new(element, &super::CHECKED_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CHECKED_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -369,8 +517,24 @@ pub fn checked(element: &Element) -> super::Checked {
 /// Read `xvml:CF` into a `ClipboardFormat`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn clipboard_format(element: &Element) -> super::ClipboardFormat {
+    clipboard_format_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:CF` into a `ClipboardFormat` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn clipboard_format_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ClipboardFormat {
+    clipboard_format_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:CF` into a `ClipboardFormat` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn clipboard_format_from_item(item: crate::Item<'_>) -> super::ClipboardFormat {
     let mut node = super::ClipboardFormat::default();
-    let mut reader = crate::Reader::new(element, &super::CLIPBOARD_FORMAT_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CLIPBOARD_FORMAT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -383,8 +547,25 @@ pub fn clipboard_format(element: &Element) -> super::ClipboardFormat {
 /// Read `xvml:Column` into a `CommentColumnTarget`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_column_target(element: &Element) -> super::CommentColumnTarget {
+    comment_column_target_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Column` into a `CommentColumnTarget` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_column_target_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CommentColumnTarget {
+    comment_column_target_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Column` into a `CommentColumnTarget` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_column_target_from_item(item: crate::Item<'_>) -> super::CommentColumnTarget {
     let mut node = super::CommentColumnTarget::default();
-    let mut reader = crate::Reader::new(element, &super::COMMENT_COLUMN_TARGET_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::COMMENT_COLUMN_TARGET_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -397,8 +578,24 @@ pub fn comment_column_target(element: &Element) -> super::CommentColumnTarget {
 /// Read `xvml:Row` into a `CommentRowTarget`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_row_target(element: &Element) -> super::CommentRowTarget {
+    comment_row_target_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Row` into a `CommentRowTarget` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_row_target_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CommentRowTarget {
+    comment_row_target_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Row` into a `CommentRowTarget` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_row_target_from_item(item: crate::Item<'_>) -> super::CommentRowTarget {
     let mut node = super::CommentRowTarget::default();
-    let mut reader = crate::Reader::new(element, &super::COMMENT_ROW_TARGET_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::COMMENT_ROW_TARGET_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -411,8 +608,27 @@ pub fn comment_row_target(element: &Element) -> super::CommentRowTarget {
 /// Read `xvml:Visible` into a `CommentVisibilityToggle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_visibility_toggle(element: &Element) -> super::CommentVisibilityToggle {
+    comment_visibility_toggle_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Visible` into a `CommentVisibilityToggle` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_visibility_toggle_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CommentVisibilityToggle {
+    comment_visibility_toggle_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Visible` into a `CommentVisibilityToggle` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_visibility_toggle_from_item(
+    item: crate::Item<'_>,
+) -> super::CommentVisibilityToggle {
     let mut node = super::CommentVisibilityToggle::default();
-    let mut reader = crate::Reader::new(element, &super::COMMENT_VISIBILITY_TOGGLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::COMMENT_VISIBILITY_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -425,8 +641,25 @@ pub fn comment_visibility_toggle(element: &Element) -> super::CommentVisibilityT
 /// Read `xvml:ColHidden` into a `CommentsColumnIsHidden`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comments_column_is_hidden(element: &Element) -> super::CommentsColumnIsHidden {
+    comments_column_is_hidden_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:ColHidden` into a `CommentsColumnIsHidden` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comments_column_is_hidden_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CommentsColumnIsHidden {
+    comments_column_is_hidden_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:ColHidden` into a `CommentsColumnIsHidden` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comments_column_is_hidden_from_item(item: crate::Item<'_>) -> super::CommentsColumnIsHidden {
     let mut node = super::CommentsColumnIsHidden::default();
-    let mut reader = crate::Reader::new(element, &super::COMMENTS_COLUMN_IS_HIDDEN_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::COMMENTS_COLUMN_IS_HIDDEN_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -439,8 +672,25 @@ pub fn comments_column_is_hidden(element: &Element) -> super::CommentsColumnIsHi
 /// Read `xvml:RowHidden` into a `CommentsRowIsHidden`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comments_row_is_hidden(element: &Element) -> super::CommentsRowIsHidden {
+    comments_row_is_hidden_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:RowHidden` into a `CommentsRowIsHidden` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comments_row_is_hidden_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CommentsRowIsHidden {
+    comments_row_is_hidden_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:RowHidden` into a `CommentsRowIsHidden` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comments_row_is_hidden_from_item(item: crate::Item<'_>) -> super::CommentsRowIsHidden {
     let mut node = super::CommentsRowIsHidden::default();
-    let mut reader = crate::Reader::new(element, &super::COMMENTS_ROW_IS_HIDDEN_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::COMMENTS_ROW_IS_HIDDEN_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -453,8 +703,24 @@ pub fn comments_row_is_hidden(element: &Element) -> super::CommentsRowIsHidden {
 /// Read `xvml:Default` into a `DefaultButton`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn default_button(element: &Element) -> super::DefaultButton {
+    default_button_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Default` into a `DefaultButton` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn default_button_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::DefaultButton {
+    default_button_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Default` into a `DefaultButton` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn default_button_from_item(item: crate::Item<'_>) -> super::DefaultButton {
     let mut node = super::DefaultButton::default();
-    let mut reader = crate::Reader::new(element, &super::DEFAULT_BUTTON_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::DEFAULT_BUTTON_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -467,8 +733,25 @@ pub fn default_button(element: &Element) -> super::DefaultButton {
 /// Read `xvml:DefaultSize` into a `DefaultSizeToggle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn default_size_toggle(element: &Element) -> super::DefaultSizeToggle {
+    default_size_toggle_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:DefaultSize` into a `DefaultSizeToggle` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn default_size_toggle_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::DefaultSizeToggle {
+    default_size_toggle_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:DefaultSize` into a `DefaultSizeToggle` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn default_size_toggle_from_item(item: crate::Item<'_>) -> super::DefaultSizeToggle {
     let mut node = super::DefaultSizeToggle::default();
-    let mut reader = crate::Reader::new(element, &super::DEFAULT_SIZE_TOGGLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::DEFAULT_SIZE_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -481,8 +764,25 @@ pub fn default_size_toggle(element: &Element) -> super::DefaultSizeToggle {
 /// Read `xvml:NoThreeD` into a `Disable3DNoThreeD`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn disable3d_no_three_d(element: &Element) -> super::Disable3DNoThreeD {
+    disable3d_no_three_d_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:NoThreeD` into a `Disable3DNoThreeD` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn disable3d_no_three_d_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::Disable3DNoThreeD {
+    disable3d_no_three_d_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:NoThreeD` into a `Disable3DNoThreeD` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn disable3d_no_three_d_from_item(item: crate::Item<'_>) -> super::Disable3DNoThreeD {
     let mut node = super::Disable3DNoThreeD::default();
-    let mut reader = crate::Reader::new(element, &super::DISABLE3D_NO_THREE_D_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::DISABLE3D_NO_THREE_D_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -495,8 +795,25 @@ pub fn disable3d_no_three_d(element: &Element) -> super::Disable3DNoThreeD {
 /// Read `xvml:NoThreeD2` into a `Disable3DNoThreeD2`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn disable3d_no_three_d2(element: &Element) -> super::Disable3DNoThreeD2 {
+    disable3d_no_three_d2_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:NoThreeD2` into a `Disable3DNoThreeD2` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn disable3d_no_three_d2_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::Disable3DNoThreeD2 {
+    disable3d_no_three_d2_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:NoThreeD2` into a `Disable3DNoThreeD2` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn disable3d_no_three_d2_from_item(item: crate::Item<'_>) -> super::Disable3DNoThreeD2 {
     let mut node = super::Disable3DNoThreeD2::default();
-    let mut reader = crate::Reader::new(element, &super::DISABLE3D_NO_THREE_D2_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::DISABLE3D_NO_THREE_D2_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -509,8 +826,24 @@ pub fn disable3d_no_three_d2(element: &Element) -> super::Disable3DNoThreeD2 {
 /// Read `xvml:Dismiss` into a `DismissButton`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dismiss_button(element: &Element) -> super::DismissButton {
+    dismiss_button_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Dismiss` into a `DismissButton` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dismiss_button_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::DismissButton {
+    dismiss_button_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Dismiss` into a `DismissButton` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dismiss_button_from_item(item: crate::Item<'_>) -> super::DismissButton {
     let mut node = super::DismissButton::default();
-    let mut reader = crate::Reader::new(element, &super::DISMISS_BUTTON_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::DISMISS_BUTTON_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -523,8 +856,25 @@ pub fn dismiss_button(element: &Element) -> super::DismissButton {
 /// Read `xvml:Colored` into a `DropdownColorToggle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dropdown_color_toggle(element: &Element) -> super::DropdownColorToggle {
+    dropdown_color_toggle_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Colored` into a `DropdownColorToggle` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dropdown_color_toggle_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::DropdownColorToggle {
+    dropdown_color_toggle_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Colored` into a `DropdownColorToggle` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dropdown_color_toggle_from_item(item: crate::Item<'_>) -> super::DropdownColorToggle {
     let mut node = super::DropdownColorToggle::default();
-    let mut reader = crate::Reader::new(element, &super::DROPDOWN_COLOR_TOGGLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::DROPDOWN_COLOR_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -537,8 +887,25 @@ pub fn dropdown_color_toggle(element: &Element) -> super::DropdownColorToggle {
 /// Read `xvml:DropLines` into a `DropdownMaximumLines`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dropdown_maximum_lines(element: &Element) -> super::DropdownMaximumLines {
+    dropdown_maximum_lines_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:DropLines` into a `DropdownMaximumLines` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dropdown_maximum_lines_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::DropdownMaximumLines {
+    dropdown_maximum_lines_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:DropLines` into a `DropdownMaximumLines` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dropdown_maximum_lines_from_item(item: crate::Item<'_>) -> super::DropdownMaximumLines {
     let mut node = super::DropdownMaximumLines::default();
-    let mut reader = crate::Reader::new(element, &super::DROPDOWN_MAXIMUM_LINES_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::DROPDOWN_MAXIMUM_LINES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -551,8 +918,24 @@ pub fn dropdown_maximum_lines(element: &Element) -> super::DropdownMaximumLines 
 /// Read `xvml:DropStyle` into a `DropdownStyle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dropdown_style(element: &Element) -> super::DropdownStyle {
+    dropdown_style_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:DropStyle` into a `DropdownStyle` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dropdown_style_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::DropdownStyle {
+    dropdown_style_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:DropStyle` into a `DropdownStyle` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dropdown_style_from_item(item: crate::Item<'_>) -> super::DropdownStyle {
     let mut node = super::DropdownStyle::default();
-    let mut reader = crate::Reader::new(element, &super::DROPDOWN_STYLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::DROPDOWN_STYLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -565,8 +948,24 @@ pub fn dropdown_style(element: &Element) -> super::DropdownStyle {
 /// Read `xvml:DDE` into a `DynamicDataExchange`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dynamic_data_exchange(element: &Element) -> super::DynamicDataExchange {
+    dynamic_data_exchange_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:DDE` into a `DynamicDataExchange` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dynamic_data_exchange_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::DynamicDataExchange {
+    dynamic_data_exchange_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:DDE` into a `DynamicDataExchange` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dynamic_data_exchange_from_item(item: crate::Item<'_>) -> super::DynamicDataExchange {
     let mut node = super::DynamicDataExchange::default();
-    let mut reader = crate::Reader::new(element, &super::DYNAMIC_DATA_EXCHANGE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::DYNAMIC_DATA_EXCHANGE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -579,8 +978,24 @@ pub fn dynamic_data_exchange(element: &Element) -> super::DynamicDataExchange {
 /// Read `xvml:MapOCX` into a `EmbeddedControl`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_control(element: &Element) -> super::EmbeddedControl {
+    embedded_control_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:MapOCX` into a `EmbeddedControl` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_control_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::EmbeddedControl {
+    embedded_control_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:MapOCX` into a `EmbeddedControl` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_control_from_item(item: crate::Item<'_>) -> super::EmbeddedControl {
     let mut node = super::EmbeddedControl::default();
-    let mut reader = crate::Reader::new(element, &super::EMBEDDED_CONTROL_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::EMBEDDED_CONTROL_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -593,8 +1008,25 @@ pub fn embedded_control(element: &Element) -> super::EmbeddedControl {
 /// Read `xvml:JustLastX` into a `FarEastAlignmentToggle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn far_east_alignment_toggle(element: &Element) -> super::FarEastAlignmentToggle {
+    far_east_alignment_toggle_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:JustLastX` into a `FarEastAlignmentToggle` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn far_east_alignment_toggle_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::FarEastAlignmentToggle {
+    far_east_alignment_toggle_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:JustLastX` into a `FarEastAlignmentToggle` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn far_east_alignment_toggle_from_item(item: crate::Item<'_>) -> super::FarEastAlignmentToggle {
     let mut node = super::FarEastAlignmentToggle::default();
-    let mut reader = crate::Reader::new(element, &super::FAR_EAST_ALIGNMENT_TOGGLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::FAR_EAST_ALIGNMENT_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -607,8 +1039,25 @@ pub fn far_east_alignment_toggle(element: &Element) -> super::FarEastAlignmentTo
 /// Read `xvml:FirstButton` into a `FirstRadioButton`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn first_radio_button(element: &Element) -> super::FirstRadioButton {
+    first_radio_button_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:FirstButton` into a `FirstRadioButton` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn first_radio_button_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::FirstRadioButton {
+    first_radio_button_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:FirstButton` into a `FirstRadioButton` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn first_radio_button_from_item(item: crate::Item<'_>) -> super::FirstRadioButton {
     let mut node = super::FirstRadioButton::default();
-    let mut reader = crate::Reader::new(element, &super::FIRST_RADIO_BUTTON_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::FIRST_RADIO_BUTTON_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -621,8 +1070,24 @@ pub fn first_radio_button(element: &Element) -> super::FirstRadioButton {
 /// Read `xvml:AutoScale` into a `FontAutoScale`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn font_auto_scale(element: &Element) -> super::FontAutoScale {
+    font_auto_scale_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:AutoScale` into a `FontAutoScale` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn font_auto_scale_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::FontAutoScale {
+    font_auto_scale_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:AutoScale` into a `FontAutoScale` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn font_auto_scale_from_item(item: crate::Item<'_>) -> super::FontAutoScale {
     let mut node = super::FontAutoScale::default();
-    let mut reader = crate::Reader::new(element, &super::FONT_AUTO_SCALE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::FONT_AUTO_SCALE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -635,8 +1100,23 @@ pub fn font_auto_scale(element: &Element) -> super::FontAutoScale {
 /// Read `xvml:Help` into a `HelpButton`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn help_button(element: &Element) -> super::HelpButton {
+    help_button_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Help` into a `HelpButton` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn help_button_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::HelpButton {
+    help_button_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Help` into a `HelpButton` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn help_button_from_item(item: crate::Item<'_>) -> super::HelpButton {
     let mut node = super::HelpButton::default();
-    let mut reader = crate::Reader::new(element, &super::HELP_BUTTON_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::HELP_BUTTON_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -649,8 +1129,27 @@ pub fn help_button(element: &Element) -> super::HelpButton {
 /// Read `xvml:TextHAlign` into a `HorizontalTextAlignment`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn horizontal_text_alignment(element: &Element) -> super::HorizontalTextAlignment {
+    horizontal_text_alignment_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:TextHAlign` into a `HorizontalTextAlignment` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn horizontal_text_alignment_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::HorizontalTextAlignment {
+    horizontal_text_alignment_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:TextHAlign` into a `HorizontalTextAlignment` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn horizontal_text_alignment_from_item(
+    item: crate::Item<'_>,
+) -> super::HorizontalTextAlignment {
     let mut node = super::HorizontalTextAlignment::default();
-    let mut reader = crate::Reader::new(element, &super::HORIZONTAL_TEXT_ALIGNMENT_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::HORIZONTAL_TEXT_ALIGNMENT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -663,8 +1162,25 @@ pub fn horizontal_text_alignment(element: &Element) -> super::HorizontalTextAlig
 /// Read `xvml:ScriptExtended` into a `HTMLScriptAttributes`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn html_script_attributes(element: &Element) -> super::HTMLScriptAttributes {
+    html_script_attributes_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:ScriptExtended` into a `HTMLScriptAttributes` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn html_script_attributes_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::HTMLScriptAttributes {
+    html_script_attributes_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:ScriptExtended` into a `HTMLScriptAttributes` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn html_script_attributes_from_item(item: crate::Item<'_>) -> super::HTMLScriptAttributes {
     let mut node = super::HTMLScriptAttributes::default();
-    let mut reader = crate::Reader::new(element, &super::HTML_SCRIPT_ATTRIBUTES_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::HTML_SCRIPT_ATTRIBUTES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -677,8 +1193,25 @@ pub fn html_script_attributes(element: &Element) -> super::HTMLScriptAttributes 
 /// Read `xvml:ScriptLanguage` into a `HTMLScriptLanguage`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn html_script_language(element: &Element) -> super::HTMLScriptLanguage {
+    html_script_language_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:ScriptLanguage` into a `HTMLScriptLanguage` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn html_script_language_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::HTMLScriptLanguage {
+    html_script_language_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:ScriptLanguage` into a `HTMLScriptLanguage` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn html_script_language_from_item(item: crate::Item<'_>) -> super::HTMLScriptLanguage {
     let mut node = super::HTMLScriptLanguage::default();
-    let mut reader = crate::Reader::new(element, &super::HTML_SCRIPT_LANGUAGE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::HTML_SCRIPT_LANGUAGE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -691,8 +1224,25 @@ pub fn html_script_language(element: &Element) -> super::HTMLScriptLanguage {
 /// Read `xvml:ScriptLocation` into a `HTMLScriptLocation`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn html_script_location(element: &Element) -> super::HTMLScriptLocation {
+    html_script_location_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:ScriptLocation` into a `HTMLScriptLocation` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn html_script_location_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::HTMLScriptLocation {
+    html_script_location_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:ScriptLocation` into a `HTMLScriptLocation` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn html_script_location_from_item(item: crate::Item<'_>) -> super::HTMLScriptLocation {
     let mut node = super::HTMLScriptLocation::default();
-    let mut reader = crate::Reader::new(element, &super::HTML_SCRIPT_LOCATION_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::HTML_SCRIPT_LOCATION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -705,8 +1255,25 @@ pub fn html_script_location(element: &Element) -> super::HTMLScriptLocation {
 /// Read `xvml:ScriptText` into a `HTMLScriptText`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn html_script_text(element: &Element) -> super::HTMLScriptText {
+    html_script_text_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:ScriptText` into a `HTMLScriptText` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn html_script_text_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::HTMLScriptText {
+    html_script_text_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:ScriptText` into a `HTMLScriptText` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn html_script_text_from_item(item: crate::Item<'_>) -> super::HTMLScriptText {
     let mut node = super::HTMLScriptText::default();
-    let mut reader = crate::Reader::new(element, &super::HTML_SCRIPT_TEXT_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::HTML_SCRIPT_TEXT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -719,8 +1286,24 @@ pub fn html_script_text(element: &Element) -> super::HTMLScriptText {
 /// Read `xvml:FmlaLink` into a `LinkedFormula`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn linked_formula(element: &Element) -> super::LinkedFormula {
+    linked_formula_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:FmlaLink` into a `LinkedFormula` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn linked_formula_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::LinkedFormula {
+    linked_formula_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:FmlaLink` into a `LinkedFormula` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn linked_formula_from_item(item: crate::Item<'_>) -> super::LinkedFormula {
     let mut node = super::LinkedFormula::default();
-    let mut reader = crate::Reader::new(element, &super::LINKED_FORMULA_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::LINKED_FORMULA_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -733,8 +1316,25 @@ pub fn linked_formula(element: &Element) -> super::LinkedFormula {
 /// Read `xvml:FmlaGroup` into a `LinkedFormulaGroupBox`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn linked_formula_group_box(element: &Element) -> super::LinkedFormulaGroupBox {
+    linked_formula_group_box_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:FmlaGroup` into a `LinkedFormulaGroupBox` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn linked_formula_group_box_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::LinkedFormulaGroupBox {
+    linked_formula_group_box_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:FmlaGroup` into a `LinkedFormulaGroupBox` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn linked_formula_group_box_from_item(item: crate::Item<'_>) -> super::LinkedFormulaGroupBox {
     let mut node = super::LinkedFormulaGroupBox::default();
-    let mut reader = crate::Reader::new(element, &super::LINKED_FORMULA_GROUP_BOX_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::LINKED_FORMULA_GROUP_BOX_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -747,8 +1347,25 @@ pub fn linked_formula_group_box(element: &Element) -> super::LinkedFormulaGroupB
 /// Read `xvml:FmlaRange` into a `ListItemsSourceRange`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_items_source_range(element: &Element) -> super::ListItemsSourceRange {
+    list_items_source_range_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:FmlaRange` into a `ListItemsSourceRange` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_items_source_range_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ListItemsSourceRange {
+    list_items_source_range_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:FmlaRange` into a `ListItemsSourceRange` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_items_source_range_from_item(item: crate::Item<'_>) -> super::ListItemsSourceRange {
     let mut node = super::ListItemsSourceRange::default();
-    let mut reader = crate::Reader::new(element, &super::LIST_ITEMS_SOURCE_RANGE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::LIST_ITEMS_SOURCE_RANGE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -761,8 +1378,24 @@ pub fn list_items_source_range(element: &Element) -> super::ListItemsSourceRange
 /// Read `xvml:Locked` into a `LockToggle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn lock_toggle(element: &Element) -> super::LockToggle {
+    lock_toggle_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Locked` into a `LockToggle` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn lock_toggle_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::LockToggle {
+    lock_toggle_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Locked` into a `LockToggle` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn lock_toggle_from_item(item: crate::Item<'_>) -> super::LockToggle {
     let mut node = super::LockToggle::default();
-    let mut reader = crate::Reader::new(element, &super::LOCK_TOGGLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::LOCK_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -775,8 +1408,25 @@ pub fn lock_toggle(element: &Element) -> super::LockToggle {
 /// Read `xvml:Disabled` into a `MacroDisableToggle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn macro_disable_toggle(element: &Element) -> super::MacroDisableToggle {
+    macro_disable_toggle_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Disabled` into a `MacroDisableToggle` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn macro_disable_toggle_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::MacroDisableToggle {
+    macro_disable_toggle_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Disabled` into a `MacroDisableToggle` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn macro_disable_toggle_from_item(item: crate::Item<'_>) -> super::MacroDisableToggle {
     let mut node = super::MacroDisableToggle::default();
-    let mut reader = crate::Reader::new(element, &super::MACRO_DISABLE_TOGGLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::MACRO_DISABLE_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -789,8 +1439,24 @@ pub fn macro_disable_toggle(element: &Element) -> super::MacroDisableToggle {
 /// Read `xvml:WidthMin` into a `MinimumWidth`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn minimum_width(element: &Element) -> super::MinimumWidth {
+    minimum_width_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:WidthMin` into a `MinimumWidth` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn minimum_width_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::MinimumWidth {
+    minimum_width_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:WidthMin` into a `MinimumWidth` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn minimum_width_from_item(item: crate::Item<'_>) -> super::MinimumWidth {
     let mut node = super::MinimumWidth::default();
-    let mut reader = crate::Reader::new(element, &super::MINIMUM_WIDTH_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::MINIMUM_WIDTH_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -803,8 +1469,25 @@ pub fn minimum_width(element: &Element) -> super::MinimumWidth {
 /// Read `xvml:MoveWithCells` into a `MoveWithCells`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn move_with_cells(element: &Element) -> super::MoveWithCells {
+    move_with_cells_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:MoveWithCells` into a `MoveWithCells` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn move_with_cells_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::MoveWithCells {
+    move_with_cells_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:MoveWithCells` into a `MoveWithCells` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn move_with_cells_from_item(item: crate::Item<'_>) -> super::MoveWithCells {
     let mut node = super::MoveWithCells::default();
-    let mut reader = crate::Reader::new(element, &super::MOVE_WITH_CELLS_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::MOVE_WITH_CELLS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -817,8 +1500,21 @@ pub fn move_with_cells(element: &Element) -> super::MoveWithCells {
 /// Read `xvml:MultiLine` into a `MultiLine`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn multi_line(element: &Element) -> super::MultiLine {
+    multi_line_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:MultiLine` into a `MultiLine` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn multi_line_from_events(start: Element, events: &dyn crate::EventSource) -> super::MultiLine {
+    multi_line_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:MultiLine` into a `MultiLine` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn multi_line_from_item(item: crate::Item<'_>) -> super::MultiLine {
     let mut node = super::MultiLine::default();
-    let mut reader = crate::Reader::new(element, &super::MULTI_LINE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::MULTI_LINE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -831,8 +1527,25 @@ pub fn multi_line(element: &Element) -> super::MultiLine {
 /// Read `xvml:MultiSel` into a `MultipleSelections`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn multiple_selections(element: &Element) -> super::MultipleSelections {
+    multiple_selections_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:MultiSel` into a `MultipleSelections` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn multiple_selections_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::MultipleSelections {
+    multiple_selections_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:MultiSel` into a `MultipleSelections` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn multiple_selections_from_item(item: crate::Item<'_>) -> super::MultipleSelections {
     let mut node = super::MultipleSelections::default();
-    let mut reader = crate::Reader::new(element, &super::MULTIPLE_SELECTIONS_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::MULTIPLE_SELECTIONS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -845,8 +1558,25 @@ pub fn multiple_selections(element: &Element) -> super::MultipleSelections {
 /// Read `xvml:ListItem` into a `NonLinkedListItem`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_linked_list_item(element: &Element) -> super::NonLinkedListItem {
+    non_linked_list_item_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:ListItem` into a `NonLinkedListItem` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_linked_list_item_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::NonLinkedListItem {
+    non_linked_list_item_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:ListItem` into a `NonLinkedListItem` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_linked_list_item_from_item(item: crate::Item<'_>) -> super::NonLinkedListItem {
     let mut node = super::NonLinkedListItem::default();
-    let mut reader = crate::Reader::new(element, &super::NON_LINKED_LIST_ITEM_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::NON_LINKED_LIST_ITEM_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -859,8 +1589,24 @@ pub fn non_linked_list_item(element: &Element) -> super::NonLinkedListItem {
 /// Read `xvml:SecretEdit` into a `PasswordEdit`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn password_edit(element: &Element) -> super::PasswordEdit {
+    password_edit_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:SecretEdit` into a `PasswordEdit` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn password_edit_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::PasswordEdit {
+    password_edit_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:SecretEdit` into a `PasswordEdit` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn password_edit_from_item(item: crate::Item<'_>) -> super::PasswordEdit {
     let mut node = super::PasswordEdit::default();
-    let mut reader = crate::Reader::new(element, &super::PASSWORD_EDIT_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PASSWORD_EDIT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -873,8 +1619,27 @@ pub fn password_edit(element: &Element) -> super::PasswordEdit {
 /// Read `xvml:Accel` into a `PrimaryKeyboardAccelerator`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn primary_keyboard_accelerator(element: &Element) -> super::PrimaryKeyboardAccelerator {
+    primary_keyboard_accelerator_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Accel` into a `PrimaryKeyboardAccelerator` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn primary_keyboard_accelerator_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::PrimaryKeyboardAccelerator {
+    primary_keyboard_accelerator_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Accel` into a `PrimaryKeyboardAccelerator` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn primary_keyboard_accelerator_from_item(
+    item: crate::Item<'_>,
+) -> super::PrimaryKeyboardAccelerator {
     let mut node = super::PrimaryKeyboardAccelerator::default();
-    let mut reader = crate::Reader::new(element, &super::PRIMARY_KEYBOARD_ACCELERATOR_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PRIMARY_KEYBOARD_ACCELERATOR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -887,8 +1652,24 @@ pub fn primary_keyboard_accelerator(element: &Element) -> super::PrimaryKeyboard
 /// Read `xvml:PrintObject` into a `PrintToggle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn print_toggle(element: &Element) -> super::PrintToggle {
+    print_toggle_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:PrintObject` into a `PrintToggle` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn print_toggle_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::PrintToggle {
+    print_toggle_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:PrintObject` into a `PrintToggle` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn print_toggle_from_item(item: crate::Item<'_>) -> super::PrintToggle {
     let mut node = super::PrintToggle::default();
-    let mut reader = crate::Reader::new(element, &super::PRINT_TOGGLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PRINT_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -901,8 +1682,25 @@ pub fn print_toggle(element: &Element) -> super::PrintToggle {
 /// Read `xvml:RecalcAlways` into a `RecalculationToggle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn recalculation_toggle(element: &Element) -> super::RecalculationToggle {
+    recalculation_toggle_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:RecalcAlways` into a `RecalculationToggle` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn recalculation_toggle_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::RecalculationToggle {
+    recalculation_toggle_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:RecalcAlways` into a `RecalculationToggle` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn recalculation_toggle_from_item(item: crate::Item<'_>) -> super::RecalculationToggle {
     let mut node = super::RecalculationToggle::default();
-    let mut reader = crate::Reader::new(element, &super::RECALCULATION_TOGGLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::RECALCULATION_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -915,8 +1713,27 @@ pub fn recalculation_toggle(element: &Element) -> super::RecalculationToggle {
 /// Read `xvml:FmlaMacro` into a `ReferenceToCustomFunction`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn reference_to_custom_function(element: &Element) -> super::ReferenceToCustomFunction {
+    reference_to_custom_function_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:FmlaMacro` into a `ReferenceToCustomFunction` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn reference_to_custom_function_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ReferenceToCustomFunction {
+    reference_to_custom_function_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:FmlaMacro` into a `ReferenceToCustomFunction` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn reference_to_custom_function_from_item(
+    item: crate::Item<'_>,
+) -> super::ReferenceToCustomFunction {
     let mut node = super::ReferenceToCustomFunction::default();
-    let mut reader = crate::Reader::new(element, &super::REFERENCE_TO_CUSTOM_FUNCTION_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::REFERENCE_TO_CUSTOM_FUNCTION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -929,8 +1746,25 @@ pub fn reference_to_custom_function(element: &Element) -> super::ReferenceToCust
 /// Read `xvml:SizeWithCells` into a `ResizeWithCells`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn resize_with_cells(element: &Element) -> super::ResizeWithCells {
+    resize_with_cells_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:SizeWithCells` into a `ResizeWithCells` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn resize_with_cells_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ResizeWithCells {
+    resize_with_cells_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:SizeWithCells` into a `ResizeWithCells` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn resize_with_cells_from_item(item: crate::Item<'_>) -> super::ResizeWithCells {
     let mut node = super::ResizeWithCells::default();
-    let mut reader = crate::Reader::new(element, &super::RESIZE_WITH_CELLS_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::RESIZE_WITH_CELLS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -943,8 +1777,24 @@ pub fn resize_with_cells(element: &Element) -> super::ResizeWithCells {
 /// Read `xvml:Inc` into a `ScrollBarIncrement`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scroll_bar_increment(element: &Element) -> super::ScrollBarIncrement {
+    scroll_bar_increment_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Inc` into a `ScrollBarIncrement` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn scroll_bar_increment_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ScrollBarIncrement {
+    scroll_bar_increment_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Inc` into a `ScrollBarIncrement` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn scroll_bar_increment_from_item(item: crate::Item<'_>) -> super::ScrollBarIncrement {
     let mut node = super::ScrollBarIncrement::default();
-    let mut reader = crate::Reader::new(element, &super::SCROLL_BAR_INCREMENT_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SCROLL_BAR_INCREMENT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -957,8 +1807,24 @@ pub fn scroll_bar_increment(element: &Element) -> super::ScrollBarIncrement {
 /// Read `xvml:Max` into a `ScrollBarMaximum`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scroll_bar_maximum(element: &Element) -> super::ScrollBarMaximum {
+    scroll_bar_maximum_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Max` into a `ScrollBarMaximum` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn scroll_bar_maximum_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ScrollBarMaximum {
+    scroll_bar_maximum_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Max` into a `ScrollBarMaximum` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn scroll_bar_maximum_from_item(item: crate::Item<'_>) -> super::ScrollBarMaximum {
     let mut node = super::ScrollBarMaximum::default();
-    let mut reader = crate::Reader::new(element, &super::SCROLL_BAR_MAXIMUM_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SCROLL_BAR_MAXIMUM_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -971,8 +1837,24 @@ pub fn scroll_bar_maximum(element: &Element) -> super::ScrollBarMaximum {
 /// Read `xvml:Min` into a `ScrollBarMinimum`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scroll_bar_minimum(element: &Element) -> super::ScrollBarMinimum {
+    scroll_bar_minimum_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Min` into a `ScrollBarMinimum` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn scroll_bar_minimum_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ScrollBarMinimum {
+    scroll_bar_minimum_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Min` into a `ScrollBarMinimum` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn scroll_bar_minimum_from_item(item: crate::Item<'_>) -> super::ScrollBarMinimum {
     let mut node = super::ScrollBarMinimum::default();
-    let mut reader = crate::Reader::new(element, &super::SCROLL_BAR_MINIMUM_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SCROLL_BAR_MINIMUM_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -985,8 +1867,25 @@ pub fn scroll_bar_minimum(element: &Element) -> super::ScrollBarMinimum {
 /// Read `xvml:Horiz` into a `ScrollBarOrientation`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scroll_bar_orientation(element: &Element) -> super::ScrollBarOrientation {
+    scroll_bar_orientation_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Horiz` into a `ScrollBarOrientation` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn scroll_bar_orientation_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ScrollBarOrientation {
+    scroll_bar_orientation_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Horiz` into a `ScrollBarOrientation` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn scroll_bar_orientation_from_item(item: crate::Item<'_>) -> super::ScrollBarOrientation {
     let mut node = super::ScrollBarOrientation::default();
-    let mut reader = crate::Reader::new(element, &super::SCROLL_BAR_ORIENTATION_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SCROLL_BAR_ORIENTATION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -999,8 +1898,25 @@ pub fn scroll_bar_orientation(element: &Element) -> super::ScrollBarOrientation 
 /// Read `xvml:Page` into a `ScrollBarPageIncrement`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scroll_bar_page_increment(element: &Element) -> super::ScrollBarPageIncrement {
+    scroll_bar_page_increment_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Page` into a `ScrollBarPageIncrement` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn scroll_bar_page_increment_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ScrollBarPageIncrement {
+    scroll_bar_page_increment_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Page` into a `ScrollBarPageIncrement` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn scroll_bar_page_increment_from_item(item: crate::Item<'_>) -> super::ScrollBarPageIncrement {
     let mut node = super::ScrollBarPageIncrement::default();
-    let mut reader = crate::Reader::new(element, &super::SCROLL_BAR_PAGE_INCREMENT_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SCROLL_BAR_PAGE_INCREMENT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1013,8 +1929,24 @@ pub fn scroll_bar_page_increment(element: &Element) -> super::ScrollBarPageIncre
 /// Read `xvml:Val` into a `ScrollBarPosition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scroll_bar_position(element: &Element) -> super::ScrollBarPosition {
+    scroll_bar_position_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Val` into a `ScrollBarPosition` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn scroll_bar_position_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ScrollBarPosition {
+    scroll_bar_position_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Val` into a `ScrollBarPosition` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn scroll_bar_position_from_item(item: crate::Item<'_>) -> super::ScrollBarPosition {
     let mut node = super::ScrollBarPosition::default();
-    let mut reader = crate::Reader::new(element, &super::SCROLL_BAR_POSITION_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SCROLL_BAR_POSITION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1027,8 +1959,24 @@ pub fn scroll_bar_position(element: &Element) -> super::ScrollBarPosition {
 /// Read `xvml:Dx` into a `ScrollBarWidth`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scroll_bar_width(element: &Element) -> super::ScrollBarWidth {
+    scroll_bar_width_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Dx` into a `ScrollBarWidth` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn scroll_bar_width_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ScrollBarWidth {
+    scroll_bar_width_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Dx` into a `ScrollBarWidth` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn scroll_bar_width_from_item(item: crate::Item<'_>) -> super::ScrollBarWidth {
     let mut node = super::ScrollBarWidth::default();
-    let mut reader = crate::Reader::new(element, &super::SCROLL_BAR_WIDTH_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SCROLL_BAR_WIDTH_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1041,8 +1989,27 @@ pub fn scroll_bar_width(element: &Element) -> super::ScrollBarWidth {
 /// Read `xvml:Accel2` into a `SecondaryKeyboardAccelerator`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn secondary_keyboard_accelerator(element: &Element) -> super::SecondaryKeyboardAccelerator {
+    secondary_keyboard_accelerator_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Accel2` into a `SecondaryKeyboardAccelerator` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn secondary_keyboard_accelerator_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::SecondaryKeyboardAccelerator {
+    secondary_keyboard_accelerator_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Accel2` into a `SecondaryKeyboardAccelerator` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn secondary_keyboard_accelerator_from_item(
+    item: crate::Item<'_>,
+) -> super::SecondaryKeyboardAccelerator {
     let mut node = super::SecondaryKeyboardAccelerator::default();
-    let mut reader = crate::Reader::new(element, &super::SECONDARY_KEYBOARD_ACCELERATOR_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SECONDARY_KEYBOARD_ACCELERATOR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1055,8 +2022,24 @@ pub fn secondary_keyboard_accelerator(element: &Element) -> super::SecondaryKeyb
 /// Read `xvml:Sel` into a `SelectedEntry`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn selected_entry(element: &Element) -> super::SelectedEntry {
+    selected_entry_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:Sel` into a `SelectedEntry` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn selected_entry_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::SelectedEntry {
+    selected_entry_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:Sel` into a `SelectedEntry` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn selected_entry_from_item(item: crate::Item<'_>) -> super::SelectedEntry {
     let mut node = super::SelectedEntry::default();
-    let mut reader = crate::Reader::new(element, &super::SELECTED_ENTRY_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SELECTED_ENTRY_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1069,8 +2052,24 @@ pub fn selected_entry(element: &Element) -> super::SelectedEntry {
 /// Read `xvml:SelType` into a `SelectionType`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn selection_type(element: &Element) -> super::SelectionType {
+    selection_type_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:SelType` into a `SelectionType` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn selection_type_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::SelectionType {
+    selection_type_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:SelType` into a `SelectionType` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn selection_type_from_item(item: crate::Item<'_>) -> super::SelectionType {
     let mut node = super::SelectionType::default();
-    let mut reader = crate::Reader::new(element, &super::SELECTION_TYPE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SELECTION_TYPE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1083,8 +2082,24 @@ pub fn selection_type(element: &Element) -> super::SelectionType {
 /// Read `xvml:FmlaTxbx` into a `TextFormula`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_formula(element: &Element) -> super::TextFormula {
+    text_formula_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:FmlaTxbx` into a `TextFormula` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn text_formula_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::TextFormula {
+    text_formula_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:FmlaTxbx` into a `TextFormula` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn text_formula_from_item(item: crate::Item<'_>) -> super::TextFormula {
     let mut node = super::TextFormula::default();
-    let mut reader = crate::Reader::new(element, &super::TEXT_FORMULA_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::TEXT_FORMULA_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1097,8 +2112,21 @@ pub fn text_formula(element: &Element) -> super::TextFormula {
 /// Read `xvml:LockText` into a `TextLock`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_lock(element: &Element) -> super::TextLock {
+    text_lock_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:LockText` into a `TextLock` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn text_lock_from_events(start: Element, events: &dyn crate::EventSource) -> super::TextLock {
+    text_lock_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:LockText` into a `TextLock` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn text_lock_from_item(item: crate::Item<'_>) -> super::TextLock {
     let mut node = super::TextLock::default();
-    let mut reader = crate::Reader::new(element, &super::TEXT_LOCK_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::TEXT_LOCK_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1111,8 +2139,24 @@ pub fn text_lock(element: &Element) -> super::TextLock {
 /// Read `xvml:UIObj` into a `UIObjectToggle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ui_object_toggle(element: &Element) -> super::UIObjectToggle {
+    ui_object_toggle_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:UIObj` into a `UIObjectToggle` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ui_object_toggle_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::UIObjectToggle {
+    ui_object_toggle_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:UIObj` into a `UIObjectToggle` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ui_object_toggle_from_item(item: crate::Item<'_>) -> super::UIObjectToggle {
     let mut node = super::UIObjectToggle::default();
-    let mut reader = crate::Reader::new(element, &super::UI_OBJECT_TOGGLE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::UI_OBJECT_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1125,8 +2169,20 @@ pub fn ui_object_toggle(element: &Element) -> super::UIObjectToggle {
 /// Read `xvml:ValidIds` into a `ValidID`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn valid_id(element: &Element) -> super::ValidID {
+    valid_id_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:ValidIds` into a `ValidID` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn valid_id_from_events(start: Element, events: &dyn crate::EventSource) -> super::ValidID {
+    valid_id_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:ValidIds` into a `ValidID` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn valid_id_from_item(item: crate::Item<'_>) -> super::ValidID {
     let mut node = super::ValidID::default();
-    let mut reader = crate::Reader::new(element, &super::VALID_ID_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::VALID_ID_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1139,8 +2195,24 @@ pub fn valid_id(element: &Element) -> super::ValidID {
 /// Read `xvml:VTEdit` into a `ValidationType`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn validation_type(element: &Element) -> super::ValidationType {
+    validation_type_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:VTEdit` into a `ValidationType` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn validation_type_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ValidationType {
+    validation_type_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:VTEdit` into a `ValidationType` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn validation_type_from_item(item: crate::Item<'_>) -> super::ValidationType {
     let mut node = super::ValidationType::default();
-    let mut reader = crate::Reader::new(element, &super::VALIDATION_TYPE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::VALIDATION_TYPE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1153,8 +2225,24 @@ pub fn validation_type(element: &Element) -> super::ValidationType {
 /// Read `xvml:VScroll` into a `VerticalScroll`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn vertical_scroll(element: &Element) -> super::VerticalScroll {
+    vertical_scroll_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:VScroll` into a `VerticalScroll` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn vertical_scroll_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::VerticalScroll {
+    vertical_scroll_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:VScroll` into a `VerticalScroll` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn vertical_scroll_from_item(item: crate::Item<'_>) -> super::VerticalScroll {
     let mut node = super::VerticalScroll::default();
-    let mut reader = crate::Reader::new(element, &super::VERTICAL_SCROLL_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::VERTICAL_SCROLL_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -1167,8 +2255,25 @@ pub fn vertical_scroll(element: &Element) -> super::VerticalScroll {
 /// Read `xvml:TextVAlign` into a `VerticalTextAlignment`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn vertical_text_alignment(element: &Element) -> super::VerticalTextAlignment {
+    vertical_text_alignment_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xvml:TextVAlign` into a `VerticalTextAlignment` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn vertical_text_alignment_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::VerticalTextAlignment {
+    vertical_text_alignment_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xvml:TextVAlign` into a `VerticalTextAlignment` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn vertical_text_alignment_from_item(item: crate::Item<'_>) -> super::VerticalTextAlignment {
     let mut node = super::VerticalTextAlignment::default();
-    let mut reader = crate::Reader::new(element, &super::VERTICAL_TEXT_ALIGNMENT_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::VERTICAL_TEXT_ALIGNMENT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);

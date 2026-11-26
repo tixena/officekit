@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `woe:oembed` into a `Oembed`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn oembed(element: &Element) -> super::Oembed {
+    oembed_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `woe:oembed` into a `Oembed` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn oembed_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Oembed {
+    oembed_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `woe:oembed` into a `Oembed` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn oembed_from_item(item: officekit_markup_base::Item<'_>) -> super::Oembed {
     let mut node = super::Oembed::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::OEMBED_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::OEMBED_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.o_embed_url),

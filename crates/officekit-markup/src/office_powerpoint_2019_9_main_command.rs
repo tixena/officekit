@@ -225,7 +225,6 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -487,8 +486,8 @@ impl<X: UserData> CmMKWith<X> {
 }
 
 impl officekit_markup_base::Read for CmMK {
-    fn read(element: &Element) -> Self {
-        read::cm_mk(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cm_mk_from_item(item)
     }
 }
 
@@ -529,8 +528,8 @@ impl<X: UserData> CmMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for CmMkLst {
-    fn read(element: &Element) -> Self {
-        read::cm_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cm_mk_lst_from_item(item)
     }
 }
 
@@ -567,8 +566,8 @@ impl<X: UserData> CmRplyMkWith<X> {
 }
 
 impl officekit_markup_base::Read for CmRplyMk {
-    fn read(element: &Element) -> Self {
-        read::cm_rply_mk(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cm_rply_mk_from_item(item)
     }
 }
 
@@ -609,8 +608,8 @@ impl<X: UserData> CmRplyMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for CmRplyMkLst {
-    fn read(element: &Element) -> Self {
-        read::cm_rply_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cm_rply_mk_lst_from_item(item)
     }
 }
 

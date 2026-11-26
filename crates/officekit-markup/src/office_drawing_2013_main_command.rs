@@ -226,7 +226,7 @@ pub mod write;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::values::ValueError;
@@ -6726,8 +6726,8 @@ impl<X: UserData> BlipFillBlipFillPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for BlipFillBlipFillProperties {
-    fn read(element: &Element) -> Self {
-        read::blip_fill_blip_fill_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::blip_fill_blip_fill_properties_from_item(item)
     }
 }
 
@@ -6776,8 +6776,8 @@ impl<X: UserData> BlipFillResetBlipFillPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for BlipFillResetBlipFillProperties {
-    fn read(element: &Element) -> Self {
-        read::blip_fill_reset_blip_fill_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::blip_fill_reset_blip_fill_properties_from_item(item)
     }
 }
 
@@ -6870,8 +6870,8 @@ impl<X: UserData> BodyPrWith<X> {
 }
 
 impl officekit_markup_base::Read for BodyPr {
-    fn read(element: &Element) -> Self {
-        read::body_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::body_pr_from_item(item)
     }
 }
 
@@ -6914,8 +6914,8 @@ impl<X: UserData> BoundsWith<X> {
 }
 
 impl officekit_markup_base::Read for Bounds {
-    fn read(element: &Element) -> Self {
-        read::bounds(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bounds_from_item(item)
     }
 }
 
@@ -6948,8 +6948,8 @@ impl<X: UserData> BwModeWith<X> {
 }
 
 impl officekit_markup_base::Read for BwMode {
-    fn read(element: &Element) -> Self {
-        read::bw_mode(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bw_mode_from_item(item)
     }
 }
 
@@ -7012,8 +7012,8 @@ impl<X: UserData> CNvCxnSpPrModifyNonVisualConnectorPropsWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvCxnSpPrModifyNonVisualConnectorProps {
-    fn read(element: &Element) -> Self {
-        read::c_nv_cxn_sp_pr_modify_non_visual_connector_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_cxn_sp_pr_modify_non_visual_connector_props_from_item(item)
     }
 }
 
@@ -7094,8 +7094,8 @@ impl<X: UserData> CNvCxnSpPrResetNonVisualConnectorPropsWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvCxnSpPrResetNonVisualConnectorProps {
-    fn read(element: &Element) -> Self {
-        read::c_nv_cxn_sp_pr_reset_non_visual_connector_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_cxn_sp_pr_reset_non_visual_connector_props_from_item(item)
     }
 }
 
@@ -7142,8 +7142,8 @@ impl<X: UserData> CNvGraphicFramePrWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvGraphicFramePr {
-    fn read(element: &Element) -> Self {
-        read::c_nv_graphic_frame_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_graphic_frame_pr_from_item(item)
     }
 }
 
@@ -7192,8 +7192,8 @@ impl<X: UserData> CNvGrpSpPrModifyNonVisualGroupDrawingShapePropsWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvGrpSpPrModifyNonVisualGroupDrawingShapeProps {
-    fn read(element: &Element) -> Self {
-        read::c_nv_grp_sp_pr_modify_non_visual_group_drawing_shape_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_grp_sp_pr_modify_non_visual_group_drawing_shape_props_from_item(item)
     }
 }
 
@@ -7235,8 +7235,8 @@ impl<X: UserData> CNvGrpSpPrNonVisualGroupDrawingShapePropsWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvGrpSpPrNonVisualGroupDrawingShapeProps {
-    fn read(element: &Element) -> Self {
-        read::c_nv_grp_sp_pr_non_visual_group_drawing_shape_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_grp_sp_pr_non_visual_group_drawing_shape_props_from_item(item)
     }
 }
 
@@ -7294,8 +7294,8 @@ impl<X: UserData> CNvInkPrWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvInkPr {
-    fn read(element: &Element) -> Self {
-        read::c_nv_ink_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_ink_pr_from_item(item)
     }
 }
 
@@ -7354,8 +7354,8 @@ impl<X: UserData> CNvPicPrModifyNonVisualPicturePropsWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvPicPrModifyNonVisualPictureProps {
-    fn read(element: &Element) -> Self {
-        read::c_nv_pic_pr_modify_non_visual_picture_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_pic_pr_modify_non_visual_picture_props_from_item(item)
     }
 }
 
@@ -7392,8 +7392,8 @@ impl<X: UserData> CNvPicPrResetNonVisualPicturePropsWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvPicPrResetNonVisualPictureProps {
-    fn read(element: &Element) -> Self {
-        read::c_nv_pic_pr_reset_non_visual_picture_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_pic_pr_reset_non_visual_picture_props_from_item(item)
     }
 }
 
@@ -7440,8 +7440,8 @@ impl<X: UserData> CNvPrModifyNonVisualDrawingPropsWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvPrModifyNonVisualDrawingProps {
-    fn read(element: &Element) -> Self {
-        read::c_nv_pr_modify_non_visual_drawing_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_pr_modify_non_visual_drawing_props_from_item(item)
     }
 }
 
@@ -7498,8 +7498,8 @@ impl<X: UserData> CNvPrNonVisualDrawingPropsWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvPrNonVisualDrawingProps {
-    fn read(element: &Element) -> Self {
-        read::c_nv_pr_non_visual_drawing_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_pr_non_visual_drawing_props_from_item(item)
     }
 }
 
@@ -7558,8 +7558,8 @@ impl<X: UserData> CNvSpPrWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvSpPr {
-    fn read(element: &Element) -> Self {
-        read::c_nv_sp_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_sp_pr_from_item(item)
     }
 }
 
@@ -7658,8 +7658,8 @@ impl<X: UserData> CompressPicPrWith<X> {
 }
 
 impl officekit_markup_base::Read for CompressPicPr {
-    fn read(element: &Element) -> Self {
-        read::compress_pic_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::compress_pic_pr_from_item(item)
     }
 }
 
@@ -7698,8 +7698,8 @@ impl<X: UserData> ContextTextCharRangeContextWith<X> {
 }
 
 impl officekit_markup_base::Read for ContextTextCharRangeContext {
-    fn read(element: &Element) -> Self {
-        read::context_text_char_range_context(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::context_text_char_range_context_from_item(item)
     }
 }
 
@@ -7738,8 +7738,8 @@ impl<X: UserData> CxnSpMkWith<X> {
 }
 
 impl officekit_markup_base::Read for CxnSpMk {
-    fn read(element: &Element) -> Self {
-        read::cxn_sp_mk(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cxn_sp_mk_from_item(item)
     }
 }
 
@@ -7776,8 +7776,8 @@ impl<X: UserData> CxnSpMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for CxnSpMkLst {
-    fn read(element: &Element) -> Self {
-        read::cxn_sp_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cxn_sp_mk_lst_from_item(item)
     }
 }
 
@@ -7814,8 +7814,8 @@ impl<X: UserData> DcMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for DcMkLst {
-    fn read(element: &Element) -> Self {
-        read::dc_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::dc_mk_lst_from_item(item)
     }
 }
 
@@ -7852,8 +7852,8 @@ impl<X: UserData> DeMasterMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for DeMasterMkLst {
-    fn read(element: &Element) -> Self {
-        read::de_master_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::de_master_mk_lst_from_item(item)
     }
 }
 
@@ -7890,8 +7890,8 @@ impl<X: UserData> DeMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for DeMkLst {
-    fn read(element: &Element) -> Self {
-        read::de_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::de_mk_lst_from_item(item)
     }
 }
 
@@ -7924,8 +7924,8 @@ impl<X: UserData> DePkgWith<X> {
 }
 
 impl officekit_markup_base::Read for DePkg {
-    fn read(element: &Element) -> Self {
-        read::de_pkg(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::de_pkg_from_item(item)
     }
 }
 
@@ -7962,8 +7962,8 @@ impl<X: UserData> DeSrcMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for DeSrcMkLst {
-    fn read(element: &Element) -> Self {
-        read::de_src_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::de_src_mk_lst_from_item(item)
     }
 }
 
@@ -8000,8 +8000,8 @@ impl<X: UserData> DeTgtMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for DeTgtMkLst {
-    fn read(element: &Element) -> Self {
-        read::de_tgt_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::de_tgt_mk_lst_from_item(item)
     }
 }
 
@@ -8038,8 +8038,8 @@ impl<X: UserData> DgMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for DgMkLst {
-    fn read(element: &Element) -> Self {
-        read::dg_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::dg_mk_lst_from_item(item)
     }
 }
 
@@ -8072,8 +8072,8 @@ impl<X: UserData> DpiWith<X> {
 }
 
 impl officekit_markup_base::Read for Dpi {
-    fn read(element: &Element) -> Self {
-        read::dpi(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::dpi_from_item(item)
     }
 }
 
@@ -8110,8 +8110,8 @@ impl<X: UserData> DrSelLstWith<X> {
 }
 
 impl officekit_markup_base::Read for DrSelLst {
-    fn read(element: &Element) -> Self {
-        read::dr_sel_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::dr_sel_lst_from_item(item)
     }
 }
 
@@ -8148,8 +8148,8 @@ impl<X: UserData> EditorSelLstWith<X> {
 }
 
 impl officekit_markup_base::Read for EditorSelLst {
-    fn read(element: &Element) -> Self {
-        read::editor_sel_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::editor_sel_lst_from_item(item)
     }
 }
 
@@ -8182,8 +8182,8 @@ impl<X: UserData> EffectWith<X> {
 }
 
 impl officekit_markup_base::Read for Effect {
-    fn read(element: &Element) -> Self {
-        read::effect(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::effect_from_item(item)
     }
 }
 
@@ -8224,8 +8224,8 @@ impl<X: UserData> EffectRefWith<X> {
 }
 
 impl officekit_markup_base::Read for EffectRef {
-    fn read(element: &Element) -> Self {
-        read::effect_ref(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::effect_ref_from_item(item)
     }
 }
 
@@ -8264,8 +8264,8 @@ impl<X: UserData> EndCxnConnectionWith<X> {
 }
 
 impl officekit_markup_base::Read for EndCxnConnection {
-    fn read(element: &Element) -> Self {
-        read::end_cxn_connection(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::end_cxn_connection_from_item(item)
     }
 }
 
@@ -8298,8 +8298,8 @@ impl<X: UserData> EndCxnEmptyWith<X> {
 }
 
 impl officekit_markup_base::Read for EndCxnEmpty {
-    fn read(element: &Element) -> Self {
-        read::end_cxn_empty(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::end_cxn_empty_from_item(item)
     }
 }
 
@@ -8332,8 +8332,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -8366,8 +8366,8 @@ impl<X: UserData> FillWith<X> {
 }
 
 impl officekit_markup_base::Read for Fill {
-    fn read(element: &Element) -> Self {
-        read::fill(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::fill_from_item(item)
     }
 }
 
@@ -8400,8 +8400,8 @@ impl<X: UserData> FillModeWith<X> {
 }
 
 impl officekit_markup_base::Read for FillMode {
-    fn read(element: &Element) -> Self {
-        read::fill_mode(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::fill_mode_from_item(item)
     }
 }
 
@@ -8434,8 +8434,8 @@ impl<X: UserData> FillRectWith<X> {
 }
 
 impl officekit_markup_base::Read for FillRect {
-    fn read(element: &Element) -> Self {
-        read::fill_rect(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::fill_rect_from_item(item)
     }
 }
 
@@ -8476,8 +8476,8 @@ impl<X: UserData> FillRefWith<X> {
 }
 
 impl officekit_markup_base::Read for FillRef {
-    fn read(element: &Element) -> Self {
-        read::fill_ref(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::fill_ref_from_item(item)
     }
 }
 
@@ -8518,8 +8518,8 @@ impl<X: UserData> FontRefWith<X> {
 }
 
 impl officekit_markup_base::Read for FontRef {
-    fn read(element: &Element) -> Self {
-        read::font_ref(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::font_ref_from_item(item)
     }
 }
 
@@ -8552,8 +8552,8 @@ impl<X: UserData> GeomWith<X> {
 }
 
 impl officekit_markup_base::Read for Geom {
-    fn read(element: &Element) -> Self {
-        read::geom(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::geom_from_item(item)
     }
 }
 
@@ -8592,8 +8592,8 @@ impl<X: UserData> GraphicFrameMkWith<X> {
 }
 
 impl officekit_markup_base::Read for GraphicFrameMk {
-    fn read(element: &Element) -> Self {
-        read::graphic_frame_mk(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::graphic_frame_mk_from_item(item)
     }
 }
 
@@ -8630,8 +8630,8 @@ impl<X: UserData> GraphicFrameMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for GraphicFrameMkLst {
-    fn read(element: &Element) -> Self {
-        read::graphic_frame_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::graphic_frame_mk_lst_from_item(item)
     }
 }
 
@@ -8668,8 +8668,8 @@ impl<X: UserData> GraphicParentMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for GraphicParentMkLst {
-    fn read(element: &Element) -> Self {
-        read::graphic_parent_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::graphic_parent_mk_lst_from_item(item)
     }
 }
 
@@ -8706,8 +8706,8 @@ impl<X: UserData> GridColMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for GridColMkLst {
-    fn read(element: &Element) -> Self {
-        read::grid_col_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::grid_col_mk_lst_from_item(item)
     }
 }
 
@@ -8744,17 +8744,15 @@ impl officekit_markup_base::Read for GroupCommandContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_OAC, "cxnSpMk")) => Self::CxnSpMk(officekit_markup_base::read(element)),
-            Some((NS_OAC, "graphicFrameMk")) => {
-                Self::GraphicFrameMk(officekit_markup_base::read(element))
-            }
-            Some((NS_OAC, "grpSpMk")) => Self::GrpSpMk(officekit_markup_base::read(element)),
-            Some((NS_OAC, "inkMk")) => Self::InkMk(officekit_markup_base::read(element)),
-            Some((NS_OAC, "picMk")) => Self::PicMk(officekit_markup_base::read(element)),
-            Some((NS_OAC, "spMk")) => Self::SpMk(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_OAC, "cxnSpMk")) => Self::CxnSpMk(item.read()),
+            Some((NS_OAC, "graphicFrameMk")) => Self::GraphicFrameMk(item.read()),
+            Some((NS_OAC, "grpSpMk")) => Self::GrpSpMk(item.read()),
+            Some((NS_OAC, "inkMk")) => Self::InkMk(item.read()),
+            Some((NS_OAC, "picMk")) => Self::PicMk(item.read()),
+            Some((NS_OAC, "spMk")) => Self::SpMk(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -8824,8 +8822,8 @@ impl<X: UserData> GrpCmdWith<X> {
 }
 
 impl officekit_markup_base::Read for GrpCmd {
-    fn read(element: &Element) -> Self {
-        read::grp_cmd(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::grp_cmd_from_item(item)
     }
 }
 
@@ -8864,8 +8862,8 @@ impl<X: UserData> GrpSpMkWith<X> {
 }
 
 impl officekit_markup_base::Read for GrpSpMk {
-    fn read(element: &Element) -> Self {
-        read::grp_sp_mk(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::grp_sp_mk_from_item(item)
     }
 }
 
@@ -8902,8 +8900,8 @@ impl<X: UserData> GrpSpMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for GrpSpMkLst {
-    fn read(element: &Element) -> Self {
-        read::grp_sp_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::grp_sp_mk_lst_from_item(item)
     }
 }
 
@@ -8960,8 +8958,8 @@ impl<X: UserData> GrpSpPrGroupShapePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for GrpSpPrGroupShapeProperties {
-    fn read(element: &Element) -> Self {
-        read::grp_sp_pr_group_shape_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::grp_sp_pr_group_shape_properties_from_item(item)
     }
 }
 
@@ -9018,8 +9016,8 @@ impl<X: UserData> GrpSpPrResetGroupShapePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for GrpSpPrResetGroupShapeProperties {
-    fn read(element: &Element) -> Self {
-        read::grp_sp_pr_reset_group_shape_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::grp_sp_pr_reset_group_shape_properties_from_item(item)
     }
 }
 
@@ -9052,8 +9050,8 @@ impl<X: UserData> HlinkClickEmptyWith<X> {
 }
 
 impl officekit_markup_base::Read for HlinkClickEmpty {
-    fn read(element: &Element) -> Self {
-        read::hlink_click_empty(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hlink_click_empty_from_item(item)
     }
 }
 
@@ -9090,8 +9088,8 @@ impl<X: UserData> HlinkClickHyperlinkPropsWith<X> {
 }
 
 impl officekit_markup_base::Read for HlinkClickHyperlinkProps {
-    fn read(element: &Element) -> Self {
-        read::hlink_click_hyperlink_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hlink_click_hyperlink_props_from_item(item)
     }
 }
 
@@ -9124,8 +9122,8 @@ impl<X: UserData> HlinkHoverEmptyWith<X> {
 }
 
 impl officekit_markup_base::Read for HlinkHoverEmpty {
-    fn read(element: &Element) -> Self {
-        read::hlink_hover_empty(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hlink_hover_empty_from_item(item)
     }
 }
 
@@ -9162,8 +9160,8 @@ impl<X: UserData> HlinkHoverHyperlinkPropsWith<X> {
 }
 
 impl officekit_markup_base::Read for HlinkHoverHyperlinkProps {
-    fn read(element: &Element) -> Self {
-        read::hlink_hover_hyperlink_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hlink_hover_hyperlink_props_from_item(item)
     }
 }
 
@@ -9200,8 +9198,8 @@ impl<X: UserData> HlinkMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for HlinkMkLst {
-    fn read(element: &Element) -> Self {
-        read::hlink_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hlink_mk_lst_from_item(item)
     }
 }
 
@@ -9242,8 +9240,8 @@ impl<X: UserData> HlinkModifyHyperlinkPropsWith<X> {
 }
 
 impl officekit_markup_base::Read for HlinkModifyHyperlinkProps {
-    fn read(element: &Element) -> Self {
-        read::hlink_modify_hyperlink_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hlink_modify_hyperlink_props_from_item(item)
     }
 }
 
@@ -9284,8 +9282,8 @@ impl<X: UserData> HlinkResetHyperlinkPropsWith<X> {
 }
 
 impl officekit_markup_base::Read for HlinkResetHyperlinkProps {
-    fn read(element: &Element) -> Self {
-        read::hlink_reset_hyperlink_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hlink_reset_hyperlink_props_from_item(item)
     }
 }
 
@@ -9322,8 +9320,8 @@ impl<X: UserData> ImgDataWith<X> {
 }
 
 impl officekit_markup_base::Read for ImgData {
-    fn read(element: &Element) -> Self {
-        read::img_data(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::img_data_from_item(item)
     }
 }
 
@@ -9360,8 +9358,8 @@ impl<X: UserData> ImgLinkWith<X> {
 }
 
 impl officekit_markup_base::Read for ImgLink {
-    fn read(element: &Element) -> Self {
-        read::img_link(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::img_link_from_item(item)
     }
 }
 
@@ -9400,8 +9398,8 @@ impl<X: UserData> ImgUrlWith<X> {
 }
 
 impl officekit_markup_base::Read for ImgUrl {
-    fn read(element: &Element) -> Self {
-        read::img_url(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::img_url_from_item(item)
     }
 }
 
@@ -9440,8 +9438,8 @@ impl<X: UserData> InkMkWith<X> {
 }
 
 impl officekit_markup_base::Read for InkMk {
-    fn read(element: &Element) -> Self {
-        read::ink_mk(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ink_mk_from_item(item)
     }
 }
 
@@ -9478,8 +9476,8 @@ impl<X: UserData> InkMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for InkMkLst {
-    fn read(element: &Element) -> Self {
-        read::ink_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ink_mk_lst_from_item(item)
     }
 }
 
@@ -9512,8 +9510,8 @@ impl<X: UserData> LfPrWith<X> {
 }
 
 impl officekit_markup_base::Read for LfPr {
-    fn read(element: &Element) -> Self {
-        read::lf_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::lf_pr_from_item(item)
     }
 }
 
@@ -9580,8 +9578,8 @@ impl<X: UserData> LinePropsWith<X> {
 }
 
 impl officekit_markup_base::Read for LineProps {
-    fn read(element: &Element) -> Self {
-        read::line_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::line_props_from_item(item)
     }
 }
 
@@ -9614,8 +9612,8 @@ impl<X: UserData> LnWith<X> {
 }
 
 impl officekit_markup_base::Read for Ln {
-    fn read(element: &Element) -> Self {
-        read::ln(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ln_from_item(item)
     }
 }
 
@@ -9656,8 +9654,8 @@ impl<X: UserData> LnRefWith<X> {
 }
 
 impl officekit_markup_base::Read for LnRef {
-    fn read(element: &Element) -> Self {
-        read::ln_ref(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ln_ref_from_item(item)
     }
 }
 
@@ -9694,8 +9692,8 @@ impl<X: UserData> Model3DMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for Model3DMkLst {
-    fn read(element: &Element) -> Self {
-        read::model3d_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::model3d_mk_lst_from_item(item)
     }
 }
 
@@ -9728,8 +9726,8 @@ impl<X: UserData> NoAdjustHandlesWith<X> {
 }
 
 impl officekit_markup_base::Read for NoAdjustHandles {
-    fn read(element: &Element) -> Self {
-        read::no_adjust_handles(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::no_adjust_handles_from_item(item)
     }
 }
 
@@ -9762,8 +9760,8 @@ impl<X: UserData> NoChangeArrowheadsWith<X> {
 }
 
 impl officekit_markup_base::Read for NoChangeArrowheads {
-    fn read(element: &Element) -> Self {
-        read::no_change_arrowheads(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::no_change_arrowheads_from_item(item)
     }
 }
 
@@ -9796,8 +9794,8 @@ impl<X: UserData> NoChangeAspectWith<X> {
 }
 
 impl officekit_markup_base::Read for NoChangeAspect {
-    fn read(element: &Element) -> Self {
-        read::no_change_aspect(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::no_change_aspect_from_item(item)
     }
 }
 
@@ -9830,8 +9828,8 @@ impl<X: UserData> NoChangeShapeTypeWith<X> {
 }
 
 impl officekit_markup_base::Read for NoChangeShapeType {
-    fn read(element: &Element) -> Self {
-        read::no_change_shape_type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::no_change_shape_type_from_item(item)
     }
 }
 
@@ -9864,8 +9862,8 @@ impl<X: UserData> NoEditPointsWith<X> {
 }
 
 impl officekit_markup_base::Read for NoEditPoints {
-    fn read(element: &Element) -> Self {
-        read::no_edit_points(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::no_edit_points_from_item(item)
     }
 }
 
@@ -9898,8 +9896,8 @@ impl<X: UserData> NoGrpWith<X> {
 }
 
 impl officekit_markup_base::Read for NoGrp {
-    fn read(element: &Element) -> Self {
-        read::no_grp(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::no_grp_from_item(item)
     }
 }
 
@@ -9932,8 +9930,8 @@ impl<X: UserData> NoMoveWith<X> {
 }
 
 impl officekit_markup_base::Read for NoMove {
-    fn read(element: &Element) -> Self {
-        read::no_move(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::no_move_from_item(item)
     }
 }
 
@@ -9966,8 +9964,8 @@ impl<X: UserData> NoResizeWith<X> {
 }
 
 impl officekit_markup_base::Read for NoResize {
-    fn read(element: &Element) -> Self {
-        read::no_resize(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::no_resize_from_item(item)
     }
 }
 
@@ -10000,8 +9998,8 @@ impl<X: UserData> NoRotWith<X> {
 }
 
 impl officekit_markup_base::Read for NoRot {
-    fn read(element: &Element) -> Self {
-        read::no_rot(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::no_rot_from_item(item)
     }
 }
 
@@ -10034,8 +10032,8 @@ impl<X: UserData> NoSelectWith<X> {
 }
 
 impl officekit_markup_base::Read for NoSelect {
-    fn read(element: &Element) -> Self {
-        read::no_select(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::no_select_from_item(item)
     }
 }
 
@@ -10074,8 +10072,8 @@ impl<X: UserData> OffWith<X> {
 }
 
 impl officekit_markup_base::Read for Off {
-    fn read(element: &Element) -> Self {
-        read::off(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::off_from_item(item)
     }
 }
 
@@ -10112,8 +10110,8 @@ impl<X: UserData> OrigImgDataWith<X> {
 }
 
 impl officekit_markup_base::Read for OrigImgData {
-    fn read(element: &Element) -> Self {
-        read::orig_img_data(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::orig_img_data_from_item(item)
     }
 }
 
@@ -10210,8 +10208,8 @@ impl<X: UserData> PPrWith<X> {
 }
 
 impl officekit_markup_base::Read for PPr {
-    fn read(element: &Element) -> Self {
-        read::p_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::p_pr_from_item(item)
     }
 }
 
@@ -10250,8 +10248,8 @@ impl<X: UserData> PicMkWith<X> {
 }
 
 impl officekit_markup_base::Read for PicMk {
-    fn read(element: &Element) -> Self {
-        read::pic_mk(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pic_mk_from_item(item)
     }
 }
 
@@ -10288,8 +10286,8 @@ impl<X: UserData> PicMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for PicMkLst {
-    fn read(element: &Element) -> Self {
-        read::pic_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pic_mk_lst_from_item(item)
     }
 }
 
@@ -10326,8 +10324,8 @@ impl<X: UserData> ResetWith<X> {
 }
 
 impl officekit_markup_base::Read for Reset {
-    fn read(element: &Element) -> Self {
-        read::reset(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::reset_from_item(item)
     }
 }
 
@@ -10360,8 +10358,8 @@ impl<X: UserData> RotWithShapeWith<X> {
 }
 
 impl officekit_markup_base::Read for RotWithShape {
-    fn read(element: &Element) -> Self {
-        read::rot_with_shape(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rot_with_shape_from_item(item)
     }
 }
 
@@ -10394,8 +10392,8 @@ impl<X: UserData> Scene3dWith<X> {
 }
 
 impl officekit_markup_base::Read for Scene3d {
-    fn read(element: &Element) -> Self {
-        read::scene3d(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::scene3d_from_item(item)
     }
 }
 
@@ -10432,8 +10430,8 @@ impl<X: UserData> SndDataWith<X> {
 }
 
 impl officekit_markup_base::Read for SndData {
-    fn read(element: &Element) -> Self {
-        read::snd_data(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::snd_data_from_item(item)
     }
 }
 
@@ -10466,8 +10464,8 @@ impl<X: UserData> Sp3dWith<X> {
 }
 
 impl officekit_markup_base::Read for Sp3d {
-    fn read(element: &Element) -> Self {
-        read::sp3d(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sp3d_from_item(item)
     }
 }
 
@@ -10506,8 +10504,8 @@ impl<X: UserData> SpMkWith<X> {
 }
 
 impl officekit_markup_base::Read for SpMk {
-    fn read(element: &Element) -> Self {
-        read::sp_mk(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sp_mk_from_item(item)
     }
 }
 
@@ -10544,8 +10542,8 @@ impl<X: UserData> SpMkLstShapeMonikerListWith<X> {
 }
 
 impl officekit_markup_base::Read for SpMkLstShapeMonikerList {
-    fn read(element: &Element) -> Self {
-        read::sp_mk_lst_shape_moniker_list(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sp_mk_lst_shape_moniker_list_from_item(item)
     }
 }
 
@@ -10582,8 +10580,8 @@ impl<X: UserData> SpMkLstShapePropsMonikerListWith<X> {
 }
 
 impl officekit_markup_base::Read for SpMkLstShapePropsMonikerList {
-    fn read(element: &Element) -> Self {
-        read::sp_mk_lst_shape_props_moniker_list(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sp_mk_lst_shape_props_moniker_list_from_item(item)
     }
 }
 
@@ -10652,8 +10650,8 @@ impl<X: UserData> SpPrResetShapePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for SpPrResetShapeProperties {
-    fn read(element: &Element) -> Self {
-        read::sp_pr_reset_shape_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sp_pr_reset_shape_properties_from_item(item)
     }
 }
 
@@ -10722,8 +10720,8 @@ impl<X: UserData> SpPrShapePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for SpPrShapeProperties {
-    fn read(element: &Element) -> Self {
-        read::sp_pr_shape_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sp_pr_shape_properties_from_item(item)
     }
 }
 
@@ -10756,8 +10754,8 @@ impl<X: UserData> SrcRectEmptyWith<X> {
 }
 
 impl officekit_markup_base::Read for SrcRectEmpty {
-    fn read(element: &Element) -> Self {
-        read::src_rect_empty(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::src_rect_empty_from_item(item)
     }
 }
 
@@ -10790,8 +10788,8 @@ impl<X: UserData> SrcRectRelativeRectPropsWith<X> {
 }
 
 impl officekit_markup_base::Read for SrcRectRelativeRectProps {
-    fn read(element: &Element) -> Self {
-        read::src_rect_relative_rect_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::src_rect_relative_rect_props_from_item(item)
     }
 }
 
@@ -10830,8 +10828,8 @@ impl<X: UserData> StCxnConnectionWith<X> {
 }
 
 impl officekit_markup_base::Read for StCxnConnection {
-    fn read(element: &Element) -> Self {
-        read::st_cxn_connection(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::st_cxn_connection_from_item(item)
     }
 }
 
@@ -10864,8 +10862,8 @@ impl<X: UserData> StCxnEmptyWith<X> {
 }
 
 impl officekit_markup_base::Read for StCxnEmpty {
-    fn read(element: &Element) -> Self {
-        read::st_cxn_empty(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::st_cxn_empty_from_item(item)
     }
 }
 
@@ -10914,8 +10912,8 @@ impl<X: UserData> StyleWith<X> {
 }
 
 impl officekit_markup_base::Read for Style {
-    fn read(element: &Element) -> Self {
-        read::style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::style_from_item(item)
     }
 }
 
@@ -10952,8 +10950,8 @@ impl<X: UserData> SvgBlipMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for SvgBlipMkLst {
-    fn read(element: &Element) -> Self {
-        read::svg_blip_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::svg_blip_mk_lst_from_item(item)
     }
 }
 
@@ -10990,8 +10988,8 @@ impl<X: UserData> TblMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for TblMkLst {
-    fn read(element: &Element) -> Self {
-        read::tbl_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tbl_mk_lst_from_item(item)
     }
 }
 
@@ -11028,8 +11026,8 @@ impl<X: UserData> TcMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for TcMkLst {
-    fn read(element: &Element) -> Self {
-        read::tc_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tc_mk_lst_from_item(item)
     }
 }
 
@@ -11066,8 +11064,8 @@ impl<X: UserData> TrMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for TrMkLst {
-    fn read(element: &Element) -> Self {
-        read::tr_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tr_mk_lst_from_item(item)
     }
 }
 
@@ -11104,8 +11102,8 @@ impl<X: UserData> TxBodyMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for TxBodyMkLst {
-    fn read(element: &Element) -> Self {
-        read::tx_body_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tx_body_mk_lst_from_item(item)
     }
 }
 
@@ -11138,8 +11136,8 @@ impl<X: UserData> TxBodyPkgWith<X> {
 }
 
 impl officekit_markup_base::Read for TxBodyPkg {
-    fn read(element: &Element) -> Self {
-        read::tx_body_pkg(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tx_body_pkg_from_item(item)
     }
 }
 
@@ -11176,8 +11174,8 @@ impl<X: UserData> TxMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for TxMkLst {
-    fn read(element: &Element) -> Self {
-        read::tx_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tx_mk_lst_from_item(item)
     }
 }
 
@@ -11214,8 +11212,8 @@ impl<X: UserData> UseBoundsWith<X> {
 }
 
 impl officekit_markup_base::Read for UseBounds {
-    fn read(element: &Element) -> Self {
-        read::use_bounds(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::use_bounds_from_item(item)
     }
 }
 
@@ -11252,8 +11250,8 @@ impl<X: UserData> ViewSelLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ViewSelLst {
-    fn read(element: &Element) -> Self {
-        read::view_sel_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::view_sel_lst_from_item(item)
     }
 }
 
@@ -11286,8 +11284,8 @@ impl<X: UserData> XfrmEmptyWith<X> {
 }
 
 impl officekit_markup_base::Read for XfrmEmpty {
-    fn read(element: &Element) -> Self {
-        read::xfrm_empty(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xfrm_empty_from_item(item)
     }
 }
 
@@ -11336,8 +11334,8 @@ impl<X: UserData> XfrmModifyTransformPropsWith<X> {
 }
 
 impl officekit_markup_base::Read for XfrmModifyTransformProps {
-    fn read(element: &Element) -> Self {
-        read::xfrm_modify_transform_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xfrm_modify_transform_props_from_item(item)
     }
 }
 
@@ -11386,8 +11384,8 @@ impl<X: UserData> XfrmTransform2DWith<X> {
 }
 
 impl officekit_markup_base::Read for XfrmTransform2D {
-    fn read(element: &Element) -> Self {
-        read::xfrm_transform2d(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xfrm_transform2d_from_item(item)
     }
 }
 

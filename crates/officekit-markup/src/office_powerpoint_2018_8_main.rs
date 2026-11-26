@@ -227,7 +227,7 @@ use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_markup_core::presentation;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::values::ValueError;
@@ -1123,8 +1123,8 @@ impl<X: UserData> AuthorWith<X> {
 }
 
 impl officekit_markup_base::Read for Author {
-    fn read(element: &Element) -> Self {
-        read::author(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::author_from_item(item)
     }
 }
 
@@ -1161,8 +1161,8 @@ impl<X: UserData> AuthorLstWith<X> {
 }
 
 impl officekit_markup_base::Read for AuthorLst {
-    fn read(element: &Element) -> Self {
-        read::author_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::author_lst_from_item(item)
     }
 }
 
@@ -1242,8 +1242,8 @@ impl<X: UserData> CmWith<X> {
 }
 
 impl officekit_markup_base::Read for Cm {
-    fn read(element: &Element) -> Self {
-        read::cm(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cm_from_item(item)
     }
 }
 
@@ -1277,8 +1277,8 @@ impl<X: UserData> CmLstWith<X> {
 }
 
 impl officekit_markup_base::Read for CmLst {
-    fn read(element: &Element) -> Self {
-        read::cm_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cm_lst_from_item(item)
     }
 }
 
@@ -1317,29 +1317,19 @@ impl officekit_markup_base::Read for CommentContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_OAC, "deMkLst")) => Self::DeMkLst(officekit_markup_base::read(element)),
-            Some((NS_OAC, "gridColMkLst")) => {
-                Self::GridColMkLst(officekit_markup_base::read(element))
-            }
-            Some((NS_PC, "sldLayoutMkLst")) => {
-                Self::SldLayoutMkLst(officekit_markup_base::read(element))
-            }
-            Some((NS_PC, "sldMasterMkLst")) => {
-                Self::SldMasterMkLst(officekit_markup_base::read(element))
-            }
-            Some((NS_PC, "sldMkLst")) => Self::SldMkLst(officekit_markup_base::read(element)),
-            Some((NS_OAC, "tcMkLst")) => Self::TcMkLst(officekit_markup_base::read(element)),
-            Some((NS_OAC, "trMkLst")) => Self::TrMkLst(officekit_markup_base::read(element)),
-            Some((NS_OAC, "txBodyMkLst")) => {
-                Self::TxBodyMkLst(officekit_markup_base::read(element))
-            }
-            Some((NS_OAC, "txMkLst")) => Self::TxMkLst(officekit_markup_base::read(element)),
-            Some((NS_P188, "unknownAnchor")) => {
-                Self::UnknownAnchor(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_OAC, "deMkLst")) => Self::DeMkLst(item.read()),
+            Some((NS_OAC, "gridColMkLst")) => Self::GridColMkLst(item.read()),
+            Some((NS_PC, "sldLayoutMkLst")) => Self::SldLayoutMkLst(item.read()),
+            Some((NS_PC, "sldMasterMkLst")) => Self::SldMasterMkLst(item.read()),
+            Some((NS_PC, "sldMkLst")) => Self::SldMkLst(item.read()),
+            Some((NS_OAC, "tcMkLst")) => Self::TcMkLst(item.read()),
+            Some((NS_OAC, "trMkLst")) => Self::TrMkLst(item.read()),
+            Some((NS_OAC, "txBodyMkLst")) => Self::TxBodyMkLst(item.read()),
+            Some((NS_OAC, "txMkLst")) => Self::TxMkLst(item.read()),
+            Some((NS_P188, "unknownAnchor")) => Self::UnknownAnchor(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -1388,8 +1378,8 @@ impl<X: UserData> CommentRelWith<X> {
 }
 
 impl officekit_markup_base::Read for CommentRel {
-    fn read(element: &Element) -> Self {
-        read::comment_rel(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::comment_rel_from_item(item)
     }
 }
 
@@ -1476,8 +1466,8 @@ impl<X: UserData> ExtLstCommentPropertiesExtensionListWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLstCommentPropertiesExtensionList {
-    fn read(element: &Element) -> Self {
-        read::ext_lst_comment_properties_extension_list(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_comment_properties_extension_list_from_item(item)
     }
 }
 
@@ -1514,8 +1504,8 @@ impl<X: UserData> ExtLstExtensionListWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLstExtensionList {
-    fn read(element: &Element) -> Self {
-        read::ext_lst_extension_list(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_extension_list_from_item(item)
     }
 }
 
@@ -1554,8 +1544,8 @@ impl<X: UserData> PosWith<X> {
 }
 
 impl officekit_markup_base::Read for Pos {
-    fn read(element: &Element) -> Self {
-        read::pos(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pos_from_item(item)
     }
 }
 
@@ -1611,8 +1601,8 @@ impl<X: UserData> ReplyWith<X> {
 }
 
 impl officekit_markup_base::Read for Reply {
-    fn read(element: &Element) -> Self {
-        read::reply(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::reply_from_item(item)
     }
 }
 
@@ -1649,8 +1639,8 @@ impl<X: UserData> ReplyLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ReplyLst {
-    fn read(element: &Element) -> Self {
-        read::reply_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::reply_lst_from_item(item)
     }
 }
 
@@ -1695,8 +1685,8 @@ impl<X: UserData> TxBodyWith<X> {
 }
 
 impl officekit_markup_base::Read for TxBody {
-    fn read(element: &Element) -> Self {
-        read::tx_body(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tx_body_from_item(item)
     }
 }
 
@@ -1729,8 +1719,8 @@ impl<X: UserData> UnknownAnchorWith<X> {
 }
 
 impl officekit_markup_base::Read for UnknownAnchor {
-    fn read(element: &Element) -> Self {
-        read::unknown_anchor(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::unknown_anchor_from_item(item)
     }
 }
 

@@ -221,9 +221,28 @@ use officekit_xml::element::Element;
 /// Read `xlpda:pivotCacheDynamicArray` into a `PivotCacheDynamicArray`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_cache_dynamic_array(element: &Element) -> super::PivotCacheDynamicArray {
+    pivot_cache_dynamic_array_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlpda:pivotCacheDynamicArray` into a `PivotCacheDynamicArray` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pivot_cache_dynamic_array_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PivotCacheDynamicArray {
+    pivot_cache_dynamic_array_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlpda:pivotCacheDynamicArray` into a `PivotCacheDynamicArray` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pivot_cache_dynamic_array_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PivotCacheDynamicArray {
     let mut node = super::PivotCacheDynamicArray::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PIVOT_CACHE_DYNAMIC_ARRAY_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::PIVOT_CACHE_DYNAMIC_ARRAY_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.r#ref);

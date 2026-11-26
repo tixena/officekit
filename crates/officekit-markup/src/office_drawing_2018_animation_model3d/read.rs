@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `a3danim:animPr` into a `AnimPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn anim_pr(element: &Element) -> super::AnimPr {
+    anim_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `a3danim:animPr` into a `AnimPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn anim_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AnimPr {
+    anim_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `a3danim:animPr` into a `AnimPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn anim_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::AnimPr {
     let mut node = super::AnimPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::ANIM_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ANIM_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.name),
@@ -243,8 +258,24 @@ pub fn anim_pr(element: &Element) -> super::AnimPr {
 /// Read `a3danim:embedAnim` into a `EmbedAnim`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embed_anim(element: &Element) -> super::EmbedAnim {
+    embed_anim_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `a3danim:embedAnim` into a `EmbedAnim` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embed_anim_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::EmbedAnim {
+    embed_anim_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `a3danim:embedAnim` into a `EmbedAnim` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embed_anim_from_item(item: officekit_markup_base::Item<'_>) -> super::EmbedAnim {
     let mut node = super::EmbedAnim::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EMBED_ANIM_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EMBED_ANIM_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.anim_id),
@@ -260,8 +291,23 @@ pub fn embed_anim(element: &Element) -> super::EmbedAnim {
 /// Read `a3danim:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `a3danim:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `a3danim:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -274,8 +320,25 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `a3danim:posterFrame` into a `PosterFrame`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn poster_frame(element: &Element) -> super::PosterFrame {
+    poster_frame_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `a3danim:posterFrame` into a `PosterFrame` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn poster_frame_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PosterFrame {
+    poster_frame_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `a3danim:posterFrame` into a `PosterFrame` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn poster_frame_from_item(item: officekit_markup_base::Item<'_>) -> super::PosterFrame {
     let mut node = super::PosterFrame::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::POSTER_FRAME_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::POSTER_FRAME_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.anim_id),

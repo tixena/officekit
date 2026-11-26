@@ -225,7 +225,6 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -389,8 +388,8 @@ impl<X: UserData> DataDisplayOptions16With<X> {
 }
 
 impl officekit_markup_base::Read for DataDisplayOptions16 {
-    fn read(element: &Element) -> Self {
-        read::data_display_options16(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_display_options16_from_item(item)
     }
 }
 
@@ -427,8 +426,8 @@ impl<X: UserData> DispNaAsBlankWith<X> {
 }
 
 impl officekit_markup_base::Read for DispNaAsBlank {
-    fn read(element: &Element) -> Self {
-        read::disp_na_as_blank(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::disp_na_as_blank_from_item(item)
     }
 }
 

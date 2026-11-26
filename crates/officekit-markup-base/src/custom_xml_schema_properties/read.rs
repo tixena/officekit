@@ -221,8 +221,27 @@ use officekit_xml::element::Element;
 /// Read `sl:schema` into a `CustomXMLSchemaReference`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xml_schema_reference(element: &Element) -> super::CustomXMLSchemaReference {
+    custom_xml_schema_reference_from_item(crate::Item::Tree(element))
+}
+
+/// Read `sl:schema` into a `CustomXMLSchemaReference` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_xml_schema_reference_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CustomXMLSchemaReference {
+    custom_xml_schema_reference_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `sl:schema` into a `CustomXMLSchemaReference` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_xml_schema_reference_from_item(
+    item: crate::Item<'_>,
+) -> super::CustomXMLSchemaReference {
     let mut node = super::CustomXMLSchemaReference::default();
-    let mut reader = crate::Reader::new(element, &super::CUSTOM_XML_SCHEMA_REFERENCE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CUSTOM_XML_SCHEMA_REFERENCE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.uri),
@@ -241,9 +260,28 @@ pub fn custom_xml_schema_reference(element: &Element) -> super::CustomXMLSchemaR
 pub fn embedded_custom_xml_schema_supplementary_data(
     element: &Element,
 ) -> super::EmbeddedCustomXMLSchemaSupplementaryData {
+    embedded_custom_xml_schema_supplementary_data_from_item(crate::Item::Tree(element))
+}
+
+/// Read `sl:schemaLibrary` into a `EmbeddedCustomXMLSchemaSupplementaryData` from its start tag and
+/// the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_custom_xml_schema_supplementary_data_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::EmbeddedCustomXMLSchemaSupplementaryData {
+    embedded_custom_xml_schema_supplementary_data_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `sl:schemaLibrary` into a `EmbeddedCustomXMLSchemaSupplementaryData` from an element, or
+/// from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_custom_xml_schema_supplementary_data_from_item(
+    item: crate::Item<'_>,
+) -> super::EmbeddedCustomXMLSchemaSupplementaryData {
     let mut node = super::EmbeddedCustomXMLSchemaSupplementaryData::default();
-    let mut reader = crate::Reader::new(
-        element,
+    let mut reader = crate::Reader::of(
+        item,
         &super::EMBEDDED_CUSTOM_XML_SCHEMA_SUPPLEMENTARY_DATA_SHAPE,
     );
     for (index, field) in &mut reader {

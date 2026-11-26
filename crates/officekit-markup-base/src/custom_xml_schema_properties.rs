@@ -222,7 +222,6 @@ pub mod read;
 pub mod write;
 
 use crate::UserData;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
 const NS_SL: Option<NamespaceId> = Some(90);
@@ -323,8 +322,8 @@ impl<X: UserData> CustomXMLSchemaReferenceWith<X> {
 }
 
 impl crate::Read for CustomXMLSchemaReference {
-    fn read(element: &Element) -> Self {
-        read::custom_xml_schema_reference(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::custom_xml_schema_reference_from_item(item)
     }
 }
 
@@ -361,8 +360,8 @@ impl<X: UserData> EmbeddedCustomXMLSchemaSupplementaryDataWith<X> {
 }
 
 impl crate::Read for EmbeddedCustomXMLSchemaSupplementaryData {
-    fn read(element: &Element) -> Self {
-        read::embedded_custom_xml_schema_supplementary_data(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::embedded_custom_xml_schema_supplementary_data_from_item(item)
     }
 }
 

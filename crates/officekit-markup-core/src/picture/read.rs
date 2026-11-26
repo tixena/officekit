@@ -221,9 +221,28 @@ use officekit_xml::element::Element;
 /// Read `pic:cNvPr` into a `NonVisualDrawingProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawingProperties {
+    non_visual_drawing_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pic:cNvPr` into a `NonVisualDrawingProperties` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_drawing_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualDrawingProperties {
+    non_visual_drawing_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pic:cNvPr` into a `NonVisualDrawingProperties` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_drawing_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualDrawingProperties {
     let mut node = super::NonVisualDrawingProperties::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -246,9 +265,30 @@ pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawi
 pub fn non_visual_picture_drawing_properties(
     element: &Element,
 ) -> super::NonVisualPictureDrawingProperties {
+    non_visual_picture_drawing_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pic:cNvPicPr` into a `NonVisualPictureDrawingProperties` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_picture_drawing_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualPictureDrawingProperties {
+    non_visual_picture_drawing_properties_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `pic:cNvPicPr` into a `NonVisualPictureDrawingProperties` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_picture_drawing_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualPictureDrawingProperties {
     let mut node = super::NonVisualPictureDrawingProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -266,9 +306,28 @@ pub fn non_visual_picture_drawing_properties(
 /// Read `pic:nvPicPr` into a `NonVisualPictureProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_picture_properties(element: &Element) -> super::NonVisualPictureProperties {
+    non_visual_picture_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pic:nvPicPr` into a `NonVisualPictureProperties` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_picture_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualPictureProperties {
+    non_visual_picture_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pic:nvPicPr` into a `NonVisualPictureProperties` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_picture_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualPictureProperties {
     let mut node = super::NonVisualPictureProperties::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::NON_VISUAL_PICTURE_PROPERTIES_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::NON_VISUAL_PICTURE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.non_visual_drawing_properties),
@@ -283,8 +342,23 @@ pub fn non_visual_picture_properties(element: &Element) -> super::NonVisualPictu
 /// Read `pic:pic` into a `Picture`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn picture(element: &Element) -> super::Picture {
+    picture_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pic:pic` into a `Picture` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn picture_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Picture {
+    picture_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pic:pic` into a `Picture` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn picture_from_item(item: officekit_markup_base::Item<'_>) -> super::Picture {
     let mut node = super::Picture::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PICTURE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PICTURE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.non_visual_picture_properties),
@@ -302,8 +376,24 @@ pub fn picture(element: &Element) -> super::Picture {
 /// Read `pic:blipFill` into a `PictureFill`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn picture_fill(element: &Element) -> super::PictureFill {
+    picture_fill_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pic:blipFill` into a `PictureFill` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn picture_fill_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PictureFill {
+    picture_fill_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pic:blipFill` into a `PictureFill` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn picture_fill_from_item(item: officekit_markup_base::Item<'_>) -> super::PictureFill {
     let mut node = super::PictureFill::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PICTURE_FILL_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PICTURE_FILL_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.dpi),
@@ -321,8 +411,24 @@ pub fn picture_fill(element: &Element) -> super::PictureFill {
 /// Read `pic:spPr` into a `ShapeProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_properties(element: &Element) -> super::ShapeProperties {
+    shape_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pic:spPr` into a `ShapeProperties` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ShapeProperties {
+    shape_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pic:spPr` into a `ShapeProperties` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_properties_from_item(item: officekit_markup_base::Item<'_>) -> super::ShapeProperties {
     let mut node = super::ShapeProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_PROPERTIES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bw_mode),

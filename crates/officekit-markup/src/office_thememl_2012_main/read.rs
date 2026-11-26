@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `thm15:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `thm15:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `thm15:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -235,8 +250,24 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `thm15:themeFamily` into a `ThemeFamily`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn theme_family(element: &Element) -> super::ThemeFamily {
+    theme_family_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `thm15:themeFamily` into a `ThemeFamily` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn theme_family_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ThemeFamily {
+    theme_family_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `thm15:themeFamily` into a `ThemeFamily` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn theme_family_from_item(item: officekit_markup_base::Item<'_>) -> super::ThemeFamily {
     let mut node = super::ThemeFamily::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::THEME_FAMILY_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::THEME_FAMILY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.name),
@@ -253,8 +284,25 @@ pub fn theme_family(element: &Element) -> super::ThemeFamily {
 /// Read `thm15:themeVariant` into a `ThemeVariant`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn theme_variant(element: &Element) -> super::ThemeVariant {
+    theme_variant_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `thm15:themeVariant` into a `ThemeVariant` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn theme_variant_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ThemeVariant {
+    theme_variant_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `thm15:themeVariant` into a `ThemeVariant` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn theme_variant_from_item(item: officekit_markup_base::Item<'_>) -> super::ThemeVariant {
     let mut node = super::ThemeVariant::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::THEME_VARIANT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::THEME_VARIANT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.name),
@@ -273,8 +321,27 @@ pub fn theme_variant(element: &Element) -> super::ThemeVariant {
 /// Read `thm15:themeVariantLst` into a `ThemeVariantLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn theme_variant_lst(element: &Element) -> super::ThemeVariantLst {
+    theme_variant_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `thm15:themeVariantLst` into a `ThemeVariantLst` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn theme_variant_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ThemeVariantLst {
+    theme_variant_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `thm15:themeVariantLst` into a `ThemeVariantLst` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn theme_variant_lst_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ThemeVariantLst {
     let mut node = super::ThemeVariantLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::THEME_VARIANT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::THEME_VARIANT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.theme_variant);

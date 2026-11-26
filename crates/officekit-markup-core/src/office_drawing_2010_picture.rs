@@ -222,7 +222,6 @@ pub mod read;
 pub mod write;
 
 use officekit_markup_base::UserData;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -317,8 +316,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -367,8 +366,8 @@ impl<X: UserData> StyleWith<X> {
 }
 
 impl officekit_markup_base::Read for Style {
-    fn read(element: &Element) -> Self {
-        read::style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::style_from_item(item)
     }
 }
 

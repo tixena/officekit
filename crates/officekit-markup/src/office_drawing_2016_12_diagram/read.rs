@@ -221,8 +221,24 @@ use officekit_xml::element::Element;
 /// Read `dgm1612:lstStyle` into a `LstStyle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn lst_style(element: &Element) -> super::LstStyle {
+    lst_style_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dgm1612:lstStyle` into a `LstStyle` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn lst_style_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::LstStyle {
+    lst_style_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dgm1612:lstStyle` into a `LstStyle` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn lst_style_from_item(item: officekit_markup_base::Item<'_>) -> super::LstStyle {
     let mut node = super::LstStyle::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::LST_STYLE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::LST_STYLE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.default_paragraph_style),
@@ -246,8 +262,23 @@ pub fn lst_style(element: &Element) -> super::LstStyle {
 /// Read `dgm1612:spPr` into a `SpPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sp_pr(element: &Element) -> super::SpPr {
+    sp_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dgm1612:spPr` into a `SpPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sp_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SpPr {
+    sp_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dgm1612:spPr` into a `SpPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sp_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::SpPr {
     let mut node = super::SpPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SP_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SP_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bw_mode),

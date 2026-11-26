@@ -350,6 +350,7 @@
 use crate::parts::part_root::{self, PartRoot};
 #[cfg(feature = "transitional")]
 use crate::transitional::Transitional as _;
+use officekit_markup::Item;
 use officekit_markup::drawing;
 #[cfg(feature = "strict")]
 use officekit_strict::Strict as _;
@@ -375,6 +376,11 @@ pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::TABLE_STYLES;
 
 impl PartRoot for drawing::TableStyleList {
     const LOCAL_NAME: &'static str = "tblStyleLst";
+
+    fn from_part(root: Item<'_>) -> Result<Self, String> {
+        super::check_root(root.element(), 0, Self::LOCAL_NAME)?;
+        Ok(drawing::read::table_style_list_from_item(root))
+    }
 
     fn from_tree(root: &Element) -> Result<Self, String> {
         super::check_root(root, 0, Self::LOCAL_NAME)?;

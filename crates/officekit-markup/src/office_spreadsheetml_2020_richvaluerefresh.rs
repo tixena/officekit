@@ -225,7 +225,6 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -395,8 +394,8 @@ impl<X: UserData> RefreshIntervalWith<X> {
 }
 
 impl officekit_markup_base::Read for RefreshInterval {
-    fn read(element: &Element) -> Self {
-        read::refresh_interval(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::refresh_interval_from_item(item)
     }
 }
 
@@ -433,8 +432,8 @@ impl<X: UserData> RefreshIntervalsWith<X> {
 }
 
 impl officekit_markup_base::Read for RefreshIntervals {
-    fn read(element: &Element) -> Self {
-        read::refresh_intervals(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::refresh_intervals_from_item(item)
     }
 }
 

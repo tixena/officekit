@@ -226,7 +226,7 @@ use officekit_markup_base::common_simple_types;
 use officekit_markup_base::vml_presentation_drawing;
 use officekit_markup_base::vml_spreadsheet_drawing;
 use officekit_markup_base::vml_wordprocessing_drawing;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
 
@@ -4003,8 +4003,8 @@ impl<X: UserData> ArcSegmentWith<X> {
 }
 
 impl officekit_markup_base::Read for ArcSegment {
-    fn read(element: &Element) -> Self {
-        read::arc_segment(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::arc_segment_from_item(item)
     }
 }
 
@@ -4157,8 +4157,8 @@ impl<X: UserData> BezierCurveWith<X> {
 }
 
 impl officekit_markup_base::Read for BezierCurve {
-    fn read(element: &Element) -> Self {
-        read::bezier_curve(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bezier_curve_from_item(item)
     }
 }
 
@@ -4211,8 +4211,8 @@ impl<X: UserData> DocumentBackgroundWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentBackground {
-    fn read(element: &Element) -> Self {
-        read::document_background(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_background_from_item(item)
     }
 }
 
@@ -4351,8 +4351,8 @@ impl<X: UserData> ImageDataWith<X> {
 }
 
 impl officekit_markup_base::Read for ImageData {
-    fn read(element: &Element) -> Self {
-        read::image_data(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::image_data_from_item(item)
     }
 }
 
@@ -4517,8 +4517,8 @@ impl<X: UserData> ImageFileWith<X> {
 }
 
 impl officekit_markup_base::Read for ImageFile {
-    fn read(element: &Element) -> Self {
-        read::image_file(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::image_file_from_item(item)
     }
 }
 
@@ -4721,8 +4721,8 @@ impl<X: UserData> LineWith<X> {
 }
 
 impl officekit_markup_base::Read for Line {
-    fn read(element: &Element) -> Self {
-        read::line(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::line_from_item(item)
     }
 }
 
@@ -4885,8 +4885,8 @@ impl<X: UserData> LineStrokeSettingsWith<X> {
 }
 
 impl officekit_markup_base::Read for LineStrokeSettings {
-    fn read(element: &Element) -> Self {
-        read::line_stroke_settings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::line_stroke_settings_from_item(item)
     }
 }
 
@@ -5033,8 +5033,8 @@ impl<X: UserData> MultiplePathLineWith<X> {
 }
 
 impl officekit_markup_base::Read for MultiplePathLine {
-    fn read(element: &Element) -> Self {
-        read::multiple_path_line(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::multiple_path_line_from_item(item)
     }
 }
 
@@ -5121,49 +5121,33 @@ impl officekit_markup_base::Read for MultiplePathLineContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W10, "anchorlock")) => {
-                Self::AnchorLocationIsLocked(officekit_markup_base::read(element))
-            }
-            Some((NS_XVML, "ClientData")) => {
-                Self::AttachedObjectData(officekit_markup_base::read(element))
-            }
-            Some((NS_W10, "borderbottom")) => {
-                Self::BottomBorder(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "callout")) => Self::Callout(officekit_markup_base::read(element)),
-            Some((NS_O, "signatureline")) => {
-                Self::DigitalSignatureLine(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "extrusion")) => Self::Extrusion(officekit_markup_base::read(element)),
-            Some((NS_V, "imagedata")) => Self::ImageData(officekit_markup_base::read(element)),
-            Some((NS_O, "ink")) => Self::Ink(officekit_markup_base::read(element)),
-            Some((NS_W10, "borderleft")) => Self::LeftBorder(officekit_markup_base::read(element)),
-            Some((NS_V, "stroke")) => {
-                Self::LineStrokeSettings(officekit_markup_base::read(element))
-            }
-            Some((NS_W10, "borderright")) => {
-                Self::RightBorder(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "formulas")) => Self::SetOfFormulas(officekit_markup_base::read(element)),
-            Some((NS_V, "handles")) => Self::SetOfHandles(officekit_markup_base::read(element)),
-            Some((NS_V, "shadow")) => Self::ShadowEffect(officekit_markup_base::read(element)),
-            Some((NS_O, "clippath")) => {
-                Self::ShapeClippingPath(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "fill")) => Self::ShapeFillProperties(officekit_markup_base::read(element)),
-            Some((NS_V, "path")) => Self::ShapePath(officekit_markup_base::read(element)),
-            Some((NS_O, "lock")) => Self::ShapeProtections(officekit_markup_base::read(element)),
-            Some((NS_O, "skew")) => Self::SkewTransform(officekit_markup_base::read(element)),
-            Some((NS_V, "textbox")) => Self::TextBox(officekit_markup_base::read(element)),
-            Some((NS_V, "textpath")) => Self::TextLayoutPath(officekit_markup_base::read(element)),
-            Some((NS_W10, "wrap")) => Self::TextWrapping(officekit_markup_base::read(element)),
-            Some((NS_W10, "bordertop")) => Self::TopBorder(officekit_markup_base::read(element)),
-            Some((NS_PVML, "textdata")) => {
-                Self::VMLDiagramText(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W10, "anchorlock")) => Self::AnchorLocationIsLocked(item.read()),
+            Some((NS_XVML, "ClientData")) => Self::AttachedObjectData(item.read()),
+            Some((NS_W10, "borderbottom")) => Self::BottomBorder(item.read()),
+            Some((NS_O, "callout")) => Self::Callout(item.read()),
+            Some((NS_O, "signatureline")) => Self::DigitalSignatureLine(item.read()),
+            Some((NS_O, "extrusion")) => Self::Extrusion(item.read()),
+            Some((NS_V, "imagedata")) => Self::ImageData(item.read()),
+            Some((NS_O, "ink")) => Self::Ink(item.read()),
+            Some((NS_W10, "borderleft")) => Self::LeftBorder(item.read()),
+            Some((NS_V, "stroke")) => Self::LineStrokeSettings(item.read()),
+            Some((NS_W10, "borderright")) => Self::RightBorder(item.read()),
+            Some((NS_V, "formulas")) => Self::SetOfFormulas(item.read()),
+            Some((NS_V, "handles")) => Self::SetOfHandles(item.read()),
+            Some((NS_V, "shadow")) => Self::ShadowEffect(item.read()),
+            Some((NS_O, "clippath")) => Self::ShapeClippingPath(item.read()),
+            Some((NS_V, "fill")) => Self::ShapeFillProperties(item.read()),
+            Some((NS_V, "path")) => Self::ShapePath(item.read()),
+            Some((NS_O, "lock")) => Self::ShapeProtections(item.read()),
+            Some((NS_O, "skew")) => Self::SkewTransform(item.read()),
+            Some((NS_V, "textbox")) => Self::TextBox(item.read()),
+            Some((NS_V, "textpath")) => Self::TextLayoutPath(item.read()),
+            Some((NS_W10, "wrap")) => Self::TextWrapping(item.read()),
+            Some((NS_W10, "bordertop")) => Self::TopBorder(item.read()),
+            Some((NS_PVML, "textdata")) => Self::VMLDiagramText(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -5403,8 +5387,8 @@ impl<X: UserData> OvalWith<X> {
 }
 
 impl officekit_markup_base::Read for Oval {
-    fn read(element: &Element) -> Self {
-        read::oval(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::oval_from_item(item)
     }
 }
 
@@ -5549,8 +5533,8 @@ impl<X: UserData> RectangleWith<X> {
 }
 
 impl officekit_markup_base::Read for Rectangle {
-    fn read(element: &Element) -> Self {
-        read::rectangle(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rectangle_from_item(item)
     }
 }
 
@@ -5697,8 +5681,8 @@ impl<X: UserData> RoundedRectangleWith<X> {
 }
 
 impl officekit_markup_base::Read for RoundedRectangle {
-    fn read(element: &Element) -> Self {
-        read::rounded_rectangle(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rounded_rectangle_from_item(item)
     }
 }
 
@@ -5735,8 +5719,8 @@ impl<X: UserData> SetOfFormulasWith<X> {
 }
 
 impl officekit_markup_base::Read for SetOfFormulas {
-    fn read(element: &Element) -> Self {
-        read::set_of_formulas(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::set_of_formulas_from_item(item)
     }
 }
 
@@ -5773,8 +5757,8 @@ impl<X: UserData> SetOfHandlesWith<X> {
 }
 
 impl officekit_markup_base::Read for SetOfHandles {
-    fn read(element: &Element) -> Self {
-        read::set_of_handles(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::set_of_handles_from_item(item)
     }
 }
 
@@ -5831,8 +5815,8 @@ impl<X: UserData> ShadowEffectWith<X> {
 }
 
 impl officekit_markup_base::Read for ShadowEffect {
-    fn read(element: &Element) -> Self {
-        read::shadow_effect(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shadow_effect_from_item(item)
     }
 }
 
@@ -6038,8 +6022,8 @@ impl<X: UserData> ShapeDefinitionWith<X> {
 }
 
 impl officekit_markup_base::Read for ShapeDefinition {
-    fn read(element: &Element) -> Self {
-        read::shape_definition(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shape_definition_from_item(item)
     }
 }
 
@@ -6130,55 +6114,35 @@ impl officekit_markup_base::Read for ShapeDefinitionContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W10, "anchorlock")) => {
-                Self::AnchorLocationIsLocked(officekit_markup_base::read(element))
-            }
-            Some((NS_XVML, "ClientData")) => {
-                Self::AttachedObjectData(officekit_markup_base::read(element))
-            }
-            Some((NS_W10, "borderbottom")) => {
-                Self::BottomBorder(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "callout")) => Self::Callout(officekit_markup_base::read(element)),
-            Some((NS_O, "signatureline")) => {
-                Self::DigitalSignatureLine(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "extrusion")) => Self::Extrusion(officekit_markup_base::read(element)),
-            Some((NS_V, "imagedata")) => Self::ImageData(officekit_markup_base::read(element)),
-            Some((NS_O, "ink")) => Self::Ink(officekit_markup_base::read(element)),
-            Some((NS_PVML, "iscomment")) => {
-                Self::InkAnnotationFlag(officekit_markup_base::read(element))
-            }
-            Some((NS_W10, "borderleft")) => Self::LeftBorder(officekit_markup_base::read(element)),
-            Some((NS_V, "stroke")) => {
-                Self::LineStrokeSettings(officekit_markup_base::read(element))
-            }
-            Some((NS_W10, "borderright")) => {
-                Self::RightBorder(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "formulas")) => Self::SetOfFormulas(officekit_markup_base::read(element)),
-            Some((NS_V, "handles")) => Self::SetOfHandles(officekit_markup_base::read(element)),
-            Some((NS_V, "shadow")) => Self::ShadowEffect(officekit_markup_base::read(element)),
-            Some((NS_O, "clippath")) => {
-                Self::ShapeClippingPath(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "fill")) => Self::ShapeFillProperties(officekit_markup_base::read(element)),
-            Some((NS_V, "path")) => Self::ShapePath(officekit_markup_base::read(element)),
-            Some((NS_O, "lock")) => Self::ShapeProtections(officekit_markup_base::read(element)),
-            Some((NS_O, "skew")) => Self::SkewTransform(officekit_markup_base::read(element)),
-            Some((NS_O, "equationxml")) => {
-                Self::StorageForAlternateMathContent(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "textbox")) => Self::TextBox(officekit_markup_base::read(element)),
-            Some((NS_V, "textpath")) => Self::TextLayoutPath(officekit_markup_base::read(element)),
-            Some((NS_W10, "wrap")) => Self::TextWrapping(officekit_markup_base::read(element)),
-            Some((NS_W10, "bordertop")) => Self::TopBorder(officekit_markup_base::read(element)),
-            Some((NS_PVML, "textdata")) => {
-                Self::VMLDiagramText(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W10, "anchorlock")) => Self::AnchorLocationIsLocked(item.read()),
+            Some((NS_XVML, "ClientData")) => Self::AttachedObjectData(item.read()),
+            Some((NS_W10, "borderbottom")) => Self::BottomBorder(item.read()),
+            Some((NS_O, "callout")) => Self::Callout(item.read()),
+            Some((NS_O, "signatureline")) => Self::DigitalSignatureLine(item.read()),
+            Some((NS_O, "extrusion")) => Self::Extrusion(item.read()),
+            Some((NS_V, "imagedata")) => Self::ImageData(item.read()),
+            Some((NS_O, "ink")) => Self::Ink(item.read()),
+            Some((NS_PVML, "iscomment")) => Self::InkAnnotationFlag(item.read()),
+            Some((NS_W10, "borderleft")) => Self::LeftBorder(item.read()),
+            Some((NS_V, "stroke")) => Self::LineStrokeSettings(item.read()),
+            Some((NS_W10, "borderright")) => Self::RightBorder(item.read()),
+            Some((NS_V, "formulas")) => Self::SetOfFormulas(item.read()),
+            Some((NS_V, "handles")) => Self::SetOfHandles(item.read()),
+            Some((NS_V, "shadow")) => Self::ShadowEffect(item.read()),
+            Some((NS_O, "clippath")) => Self::ShapeClippingPath(item.read()),
+            Some((NS_V, "fill")) => Self::ShapeFillProperties(item.read()),
+            Some((NS_V, "path")) => Self::ShapePath(item.read()),
+            Some((NS_O, "lock")) => Self::ShapeProtections(item.read()),
+            Some((NS_O, "skew")) => Self::SkewTransform(item.read()),
+            Some((NS_O, "equationxml")) => Self::StorageForAlternateMathContent(item.read()),
+            Some((NS_V, "textbox")) => Self::TextBox(item.read()),
+            Some((NS_V, "textpath")) => Self::TextLayoutPath(item.read()),
+            Some((NS_W10, "wrap")) => Self::TextWrapping(item.read()),
+            Some((NS_W10, "bordertop")) => Self::TopBorder(item.read()),
+            Some((NS_PVML, "textdata")) => Self::VMLDiagramText(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -6441,48 +6405,32 @@ impl officekit_markup_base::Read for ShapeElementContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W10, "anchorlock")) => {
-                Self::AnchorLocationIsLocked(officekit_markup_base::read(element))
-            }
-            Some((NS_XVML, "ClientData")) => {
-                Self::AttachedObjectData(officekit_markup_base::read(element))
-            }
-            Some((NS_W10, "borderbottom")) => {
-                Self::BottomBorder(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "callout")) => Self::Callout(officekit_markup_base::read(element)),
-            Some((NS_O, "signatureline")) => {
-                Self::DigitalSignatureLine(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "extrusion")) => Self::Extrusion(officekit_markup_base::read(element)),
-            Some((NS_V, "imagedata")) => Self::ImageData(officekit_markup_base::read(element)),
-            Some((NS_W10, "borderleft")) => Self::LeftBorder(officekit_markup_base::read(element)),
-            Some((NS_V, "stroke")) => {
-                Self::LineStrokeSettings(officekit_markup_base::read(element))
-            }
-            Some((NS_W10, "borderright")) => {
-                Self::RightBorder(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "formulas")) => Self::SetOfFormulas(officekit_markup_base::read(element)),
-            Some((NS_V, "handles")) => Self::SetOfHandles(officekit_markup_base::read(element)),
-            Some((NS_V, "shadow")) => Self::ShadowEffect(officekit_markup_base::read(element)),
-            Some((NS_O, "clippath")) => {
-                Self::ShapeClippingPath(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "fill")) => Self::ShapeFillProperties(officekit_markup_base::read(element)),
-            Some((NS_V, "path")) => Self::ShapePath(officekit_markup_base::read(element)),
-            Some((NS_O, "lock")) => Self::ShapeProtections(officekit_markup_base::read(element)),
-            Some((NS_O, "skew")) => Self::SkewTransform(officekit_markup_base::read(element)),
-            Some((NS_V, "textbox")) => Self::TextBox(officekit_markup_base::read(element)),
-            Some((NS_V, "textpath")) => Self::TextLayoutPath(officekit_markup_base::read(element)),
-            Some((NS_W10, "wrap")) => Self::TextWrapping(officekit_markup_base::read(element)),
-            Some((NS_W10, "bordertop")) => Self::TopBorder(officekit_markup_base::read(element)),
-            Some((NS_PVML, "textdata")) => {
-                Self::VMLDiagramText(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W10, "anchorlock")) => Self::AnchorLocationIsLocked(item.read()),
+            Some((NS_XVML, "ClientData")) => Self::AttachedObjectData(item.read()),
+            Some((NS_W10, "borderbottom")) => Self::BottomBorder(item.read()),
+            Some((NS_O, "callout")) => Self::Callout(item.read()),
+            Some((NS_O, "signatureline")) => Self::DigitalSignatureLine(item.read()),
+            Some((NS_O, "extrusion")) => Self::Extrusion(item.read()),
+            Some((NS_V, "imagedata")) => Self::ImageData(item.read()),
+            Some((NS_W10, "borderleft")) => Self::LeftBorder(item.read()),
+            Some((NS_V, "stroke")) => Self::LineStrokeSettings(item.read()),
+            Some((NS_W10, "borderright")) => Self::RightBorder(item.read()),
+            Some((NS_V, "formulas")) => Self::SetOfFormulas(item.read()),
+            Some((NS_V, "handles")) => Self::SetOfHandles(item.read()),
+            Some((NS_V, "shadow")) => Self::ShadowEffect(item.read()),
+            Some((NS_O, "clippath")) => Self::ShapeClippingPath(item.read()),
+            Some((NS_V, "fill")) => Self::ShapeFillProperties(item.read()),
+            Some((NS_V, "path")) => Self::ShapePath(item.read()),
+            Some((NS_O, "lock")) => Self::ShapeProtections(item.read()),
+            Some((NS_O, "skew")) => Self::SkewTransform(item.read()),
+            Some((NS_V, "textbox")) => Self::TextBox(item.read()),
+            Some((NS_V, "textpath")) => Self::TextLayoutPath(item.read()),
+            Some((NS_W10, "wrap")) => Self::TextWrapping(item.read()),
+            Some((NS_W10, "bordertop")) => Self::TopBorder(item.read()),
+            Some((NS_PVML, "textdata")) => Self::VMLDiagramText(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -6600,8 +6548,8 @@ impl<X: UserData> ShapeFillPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for ShapeFillProperties {
-    fn read(element: &Element) -> Self {
-        read::shape_fill_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shape_fill_properties_from_item(item)
     }
 }
 
@@ -6771,8 +6719,8 @@ impl<X: UserData> ShapeGroupWith<X> {
 }
 
 impl officekit_markup_base::Read for ShapeGroup {
-    fn read(element: &Element) -> Self {
-        read::shape_group(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shape_group_from_item(item)
     }
 }
 
@@ -6866,64 +6814,44 @@ impl officekit_markup_base::Read for ShapeGroupContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W10, "anchorlock")) => {
-                Self::AnchorLocationIsLocked(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "arc")) => Self::ArcSegment(officekit_markup_base::read(element)),
-            Some((NS_XVML, "ClientData")) => {
-                Self::AttachedObjectData(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "curve")) => Self::BezierCurve(officekit_markup_base::read(element)),
-            Some((NS_W10, "borderbottom")) => {
-                Self::BottomBorder(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "callout")) => Self::Callout(officekit_markup_base::read(element)),
-            Some((NS_O, "signatureline")) => {
-                Self::DigitalSignatureLine(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "extrusion")) => Self::Extrusion(officekit_markup_base::read(element)),
-            Some((NS_V, "imagedata")) => Self::ImageData(officekit_markup_base::read(element)),
-            Some((NS_V, "image")) => Self::ImageFile(officekit_markup_base::read(element)),
-            Some((NS_W10, "borderleft")) => Self::LeftBorder(officekit_markup_base::read(element)),
-            Some((NS_V, "line")) => Self::Line(officekit_markup_base::read(element)),
-            Some((NS_V, "stroke")) => {
-                Self::LineStrokeSettings(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "polyline")) => {
-                Self::MultiplePathLine(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "oval")) => Self::Oval(officekit_markup_base::read(element)),
-            Some((NS_V, "rect")) => Self::Rectangle(officekit_markup_base::read(element)),
-            Some((NS_W10, "borderright")) => {
-                Self::RightBorder(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "roundrect")) => {
-                Self::RoundedRectangle(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "formulas")) => Self::SetOfFormulas(officekit_markup_base::read(element)),
-            Some((NS_V, "handles")) => Self::SetOfHandles(officekit_markup_base::read(element)),
-            Some((NS_V, "shadow")) => Self::ShadowEffect(officekit_markup_base::read(element)),
-            Some((NS_O, "clippath")) => {
-                Self::ShapeClippingPath(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "shape")) => Self::ShapeDefinition(officekit_markup_base::read(element)),
-            Some((NS_V, "fill")) => Self::ShapeFillProperties(officekit_markup_base::read(element)),
-            Some((NS_V, "group")) => Self::ShapeGroup(officekit_markup_base::read(element)),
-            Some((NS_V, "path")) => Self::ShapePath(officekit_markup_base::read(element)),
-            Some((NS_O, "lock")) => Self::ShapeProtections(officekit_markup_base::read(element)),
-            Some((NS_V, "shapetype")) => Self::ShapeTemplate(officekit_markup_base::read(element)),
-            Some((NS_O, "skew")) => Self::SkewTransform(officekit_markup_base::read(element)),
-            Some((NS_V, "textbox")) => Self::TextBox(officekit_markup_base::read(element)),
-            Some((NS_V, "textpath")) => Self::TextLayoutPath(officekit_markup_base::read(element)),
-            Some((NS_W10, "wrap")) => Self::TextWrapping(officekit_markup_base::read(element)),
-            Some((NS_W10, "bordertop")) => Self::TopBorder(officekit_markup_base::read(element)),
-            Some((NS_O, "diagram")) => Self::VMLDiagram(officekit_markup_base::read(element)),
-            Some((NS_PVML, "textdata")) => {
-                Self::VMLDiagramText(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W10, "anchorlock")) => Self::AnchorLocationIsLocked(item.read()),
+            Some((NS_V, "arc")) => Self::ArcSegment(item.read()),
+            Some((NS_XVML, "ClientData")) => Self::AttachedObjectData(item.read()),
+            Some((NS_V, "curve")) => Self::BezierCurve(item.read()),
+            Some((NS_W10, "borderbottom")) => Self::BottomBorder(item.read()),
+            Some((NS_O, "callout")) => Self::Callout(item.read()),
+            Some((NS_O, "signatureline")) => Self::DigitalSignatureLine(item.read()),
+            Some((NS_O, "extrusion")) => Self::Extrusion(item.read()),
+            Some((NS_V, "imagedata")) => Self::ImageData(item.read()),
+            Some((NS_V, "image")) => Self::ImageFile(item.read()),
+            Some((NS_W10, "borderleft")) => Self::LeftBorder(item.read()),
+            Some((NS_V, "line")) => Self::Line(item.read()),
+            Some((NS_V, "stroke")) => Self::LineStrokeSettings(item.read()),
+            Some((NS_V, "polyline")) => Self::MultiplePathLine(item.read()),
+            Some((NS_V, "oval")) => Self::Oval(item.read()),
+            Some((NS_V, "rect")) => Self::Rectangle(item.read()),
+            Some((NS_W10, "borderright")) => Self::RightBorder(item.read()),
+            Some((NS_V, "roundrect")) => Self::RoundedRectangle(item.read()),
+            Some((NS_V, "formulas")) => Self::SetOfFormulas(item.read()),
+            Some((NS_V, "handles")) => Self::SetOfHandles(item.read()),
+            Some((NS_V, "shadow")) => Self::ShadowEffect(item.read()),
+            Some((NS_O, "clippath")) => Self::ShapeClippingPath(item.read()),
+            Some((NS_V, "shape")) => Self::ShapeDefinition(item.read()),
+            Some((NS_V, "fill")) => Self::ShapeFillProperties(item.read()),
+            Some((NS_V, "group")) => Self::ShapeGroup(item.read()),
+            Some((NS_V, "path")) => Self::ShapePath(item.read()),
+            Some((NS_O, "lock")) => Self::ShapeProtections(item.read()),
+            Some((NS_V, "shapetype")) => Self::ShapeTemplate(item.read()),
+            Some((NS_O, "skew")) => Self::SkewTransform(item.read()),
+            Some((NS_V, "textbox")) => Self::TextBox(item.read()),
+            Some((NS_V, "textpath")) => Self::TextLayoutPath(item.read()),
+            Some((NS_W10, "wrap")) => Self::TextWrapping(item.read()),
+            Some((NS_W10, "bordertop")) => Self::TopBorder(item.read()),
+            Some((NS_O, "diagram")) => Self::VMLDiagram(item.read()),
+            Some((NS_PVML, "textdata")) => Self::VMLDiagramText(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -7147,8 +7075,8 @@ impl<X: UserData> ShapeHandleWith<X> {
 }
 
 impl officekit_markup_base::Read for ShapeHandle {
-    fn read(element: &Element) -> Self {
-        read::shape_handle(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shape_handle_from_item(item)
     }
 }
 
@@ -7213,8 +7141,8 @@ impl<X: UserData> ShapePathWith<X> {
 }
 
 impl officekit_markup_base::Read for ShapePath {
-    fn read(element: &Element) -> Self {
-        read::shape_path(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shape_path_from_item(item)
     }
 }
 
@@ -7369,8 +7297,8 @@ impl<X: UserData> ShapeTemplateWith<X> {
 }
 
 impl officekit_markup_base::Read for ShapeTemplate {
-    fn read(element: &Element) -> Self {
-        read::shape_template(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shape_template_from_item(item)
     }
 }
 
@@ -7407,8 +7335,8 @@ impl<X: UserData> SingleFormulaWith<X> {
 }
 
 impl officekit_markup_base::Read for SingleFormula {
-    fn read(element: &Element) -> Self {
-        read::single_formula(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::single_formula_from_item(item)
     }
 }
 
@@ -7728,8 +7656,8 @@ impl<X: UserData> TextBoxWith<X> {
 }
 
 impl officekit_markup_base::Read for TextBox {
-    fn read(element: &Element) -> Self {
-        read::text_box(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::text_box_from_item(item)
     }
 }
 
@@ -7761,12 +7689,10 @@ impl officekit_markup_base::Read for TextBoxContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "txbxContent")) => {
-                Self::RichTextBoxContentContainer(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "txbxContent")) => Self::RichTextBoxContentContainer(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -7820,8 +7746,8 @@ impl<X: UserData> TextLayoutPathWith<X> {
 }
 
 impl officekit_markup_base::Read for TextLayoutPath {
-    fn read(element: &Element) -> Self {
-        read::text_layout_path(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::text_layout_path_from_item(item)
     }
 }
 

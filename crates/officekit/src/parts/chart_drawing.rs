@@ -350,6 +350,7 @@
 use crate::parts::part_root::{self, PartRoot};
 #[cfg(feature = "transitional")]
 use crate::transitional::Transitional as _;
+use officekit_markup::Item;
 use officekit_markup::chart;
 #[cfg(feature = "strict")]
 use officekit_strict::Strict as _;
@@ -375,6 +376,11 @@ pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::CHART_USER_SHA
 
 impl PartRoot for chart::UserShapes {
     const LOCAL_NAME: &'static str = "userShapes";
+
+    fn from_part(root: Item<'_>) -> Result<Self, String> {
+        super::check_root(root.element(), 22, Self::LOCAL_NAME)?;
+        Ok(chart::read::user_shapes_from_item(root))
+    }
 
     fn from_tree(root: &Element) -> Result<Self, String> {
         super::check_root(root, 22, Self::LOCAL_NAME)?;

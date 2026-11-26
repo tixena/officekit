@@ -251,7 +251,12 @@ pub fn root_name(bytes: &[u8]) -> Option<QName> {
 }
 
 /// The part's bytes as UTF-8. A byte order mark names UTF-16, as XML 1.0, 4.3.3 requires of it.
-fn utf8_of(bytes: &[u8]) -> Result<Cow<'_, [u8]>, XmlError> {
+///
+/// # Errors
+///
+/// [`XmlError::Malformed`] for UTF-16 that ends inside a character or holds an unpaired
+/// surrogate.
+pub fn utf8_of(bytes: &[u8]) -> Result<Cow<'_, [u8]>, XmlError> {
     let (rest, big_endian) = match bytes {
         [0xFF, 0xFE, rest @ ..] => (rest, false),
         [0xFE, 0xFF, rest @ ..] => (rest, true),

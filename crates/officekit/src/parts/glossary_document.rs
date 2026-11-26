@@ -350,6 +350,7 @@
 use crate::parts::part_root::{self, PartRoot};
 #[cfg(feature = "transitional")]
 use crate::transitional::Transitional as _;
+use officekit_markup::Item;
 use officekit_markup::wordprocessing;
 #[cfg(feature = "strict")]
 use officekit_strict::Strict as _;
@@ -375,6 +376,11 @@ pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::GLOSSARY_DOCUM
 
 impl PartRoot for wordprocessing::GlossaryDocumentRootElement {
     const LOCAL_NAME: &'static str = "glossaryDocument";
+
+    fn from_part(root: Item<'_>) -> Result<Self, String> {
+        super::check_root(root.element(), 97, Self::LOCAL_NAME)?;
+        Ok(wordprocessing::read::glossary_document_root_element_from_item(root))
+    }
 
     fn from_tree(root: &Element) -> Result<Self, String> {
         super::check_root(root, 97, Self::LOCAL_NAME)?;

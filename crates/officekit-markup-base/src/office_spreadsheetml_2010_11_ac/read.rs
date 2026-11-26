@@ -221,8 +221,20 @@ use officekit_xml::element::Element;
 /// Read `x15ac:absPath` into a `AbsPath`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn abs_path(element: &Element) -> super::AbsPath {
+    abs_path_from_item(crate::Item::Tree(element))
+}
+
+/// Read `x15ac:absPath` into a `AbsPath` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn abs_path_from_events(start: Element, events: &dyn crate::EventSource) -> super::AbsPath {
+    abs_path_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `x15ac:absPath` into a `AbsPath` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn abs_path_from_item(item: crate::Item<'_>) -> super::AbsPath {
     let mut node = super::AbsPath::default();
-    let mut reader = crate::Reader::new(element, &super::ABS_PATH_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::ABS_PATH_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.url);

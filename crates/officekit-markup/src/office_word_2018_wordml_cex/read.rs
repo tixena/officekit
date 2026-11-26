@@ -221,8 +221,27 @@ use officekit_xml::element::Element;
 /// Read `w16cex:commentExtensible` into a `CommentExtensible`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_extensible(element: &Element) -> super::CommentExtensible {
+    comment_extensible_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `w16cex:commentExtensible` into a `CommentExtensible` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_extensible_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CommentExtensible {
+    comment_extensible_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `w16cex:commentExtensible` into a `CommentExtensible` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_extensible_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CommentExtensible {
     let mut node = super::CommentExtensible::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENT_EXTENSIBLE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMMENT_EXTENSIBLE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.durable_id),
@@ -239,8 +258,27 @@ pub fn comment_extensible(element: &Element) -> super::CommentExtensible {
 /// Read `w16cex:commentsExtensible` into a `CommentsExtensible`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comments_extensible(element: &Element) -> super::CommentsExtensible {
+    comments_extensible_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `w16cex:commentsExtensible` into a `CommentsExtensible` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comments_extensible_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CommentsExtensible {
+    comments_extensible_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `w16cex:commentsExtensible` into a `CommentsExtensible` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comments_extensible_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CommentsExtensible {
     let mut node = super::CommentsExtensible::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENTS_EXTENSIBLE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMMENTS_EXTENSIBLE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.comment_extensible),
@@ -255,8 +293,23 @@ pub fn comments_extensible(element: &Element) -> super::CommentsExtensible {
 /// Read `w16cex:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `w16cex:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `w16cex:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.ext);

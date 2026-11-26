@@ -221,8 +221,24 @@ use officekit_xml::element::Element;
 /// Read `wp15:webVideoPr` into a `WebVideoPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn web_video_pr(element: &Element) -> super::WebVideoPr {
+    web_video_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp15:webVideoPr` into a `WebVideoPr` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn web_video_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::WebVideoPr {
+    web_video_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp15:webVideoPr` into a `WebVideoPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn web_video_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::WebVideoPr {
     let mut node = super::WebVideoPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::WEB_VIDEO_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::WEB_VIDEO_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.embedded_html),

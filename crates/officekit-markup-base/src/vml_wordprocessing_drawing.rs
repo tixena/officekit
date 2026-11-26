@@ -222,7 +222,6 @@ pub mod read;
 pub mod write;
 
 use crate::UserData;
-use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
 
@@ -647,8 +646,8 @@ impl<X: UserData> AnchorLocationIsLockedWith<X> {
 }
 
 impl crate::Read for AnchorLocationIsLocked {
-    fn read(element: &Element) -> Self {
-        read::anchor_location_is_locked(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::anchor_location_is_locked_from_item(item)
     }
 }
 
@@ -814,8 +813,8 @@ impl<X: UserData> BottomBorderWith<X> {
 }
 
 impl crate::Read for BottomBorder {
-    fn read(element: &Element) -> Self {
-        read::bottom_border(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::bottom_border_from_item(item)
     }
 }
 
@@ -911,8 +910,8 @@ impl<X: UserData> LeftBorderWith<X> {
 }
 
 impl crate::Read for LeftBorder {
-    fn read(element: &Element) -> Self {
-        read::left_border(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::left_border_from_item(item)
     }
 }
 
@@ -953,8 +952,8 @@ impl<X: UserData> RightBorderWith<X> {
 }
 
 impl crate::Read for RightBorder {
-    fn read(element: &Element) -> Self {
-        read::right_border(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::right_border_from_item(item)
     }
 }
 
@@ -997,8 +996,8 @@ impl<X: UserData> TextWrappingWith<X> {
 }
 
 impl crate::Read for TextWrapping {
-    fn read(element: &Element) -> Self {
-        read::text_wrapping(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::text_wrapping_from_item(item)
     }
 }
 
@@ -1142,8 +1141,8 @@ impl<X: UserData> TopBorderWith<X> {
 }
 
 impl crate::Read for TopBorder {
-    fn read(element: &Element) -> Self {
-        read::top_border(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::top_border_from_item(item)
     }
 }
 

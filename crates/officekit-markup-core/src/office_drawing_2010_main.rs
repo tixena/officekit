@@ -222,7 +222,7 @@ pub mod read;
 pub mod write;
 
 use officekit_markup_base::UserData;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::NamespaceId;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -1906,8 +1906,8 @@ impl<X: UserData> ArtisticBlurWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticBlur {
-    fn read(element: &Element) -> Self {
-        read::artistic_blur(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_blur_from_item(item)
     }
 }
 
@@ -1946,8 +1946,8 @@ impl<X: UserData> ArtisticCementWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticCement {
-    fn read(element: &Element) -> Self {
-        read::artistic_cement(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_cement_from_item(item)
     }
 }
 
@@ -1986,8 +1986,8 @@ impl<X: UserData> ArtisticChalkSketchWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticChalkSketch {
-    fn read(element: &Element) -> Self {
-        read::artistic_chalk_sketch(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_chalk_sketch_from_item(item)
     }
 }
 
@@ -2026,8 +2026,8 @@ impl<X: UserData> ArtisticCrisscrossEtchingWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticCrisscrossEtching {
-    fn read(element: &Element) -> Self {
-        read::artistic_crisscross_etching(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_crisscross_etching_from_item(item)
     }
 }
 
@@ -2066,8 +2066,8 @@ impl<X: UserData> ArtisticCutoutWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticCutout {
-    fn read(element: &Element) -> Self {
-        read::artistic_cutout(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_cutout_from_item(item)
     }
 }
 
@@ -2106,8 +2106,8 @@ impl<X: UserData> ArtisticFilmGrainWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticFilmGrain {
-    fn read(element: &Element) -> Self {
-        read::artistic_film_grain(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_film_grain_from_item(item)
     }
 }
 
@@ -2146,8 +2146,8 @@ impl<X: UserData> ArtisticGlassWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticGlass {
-    fn read(element: &Element) -> Self {
-        read::artistic_glass(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_glass_from_item(item)
     }
 }
 
@@ -2186,8 +2186,8 @@ impl<X: UserData> ArtisticGlowDiffusedWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticGlowDiffused {
-    fn read(element: &Element) -> Self {
-        read::artistic_glow_diffused(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_glow_diffused_from_item(item)
     }
 }
 
@@ -2226,8 +2226,8 @@ impl<X: UserData> ArtisticGlowEdgesWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticGlowEdges {
-    fn read(element: &Element) -> Self {
-        read::artistic_glow_edges(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_glow_edges_from_item(item)
     }
 }
 
@@ -2266,8 +2266,8 @@ impl<X: UserData> ArtisticLightScreenWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticLightScreen {
-    fn read(element: &Element) -> Self {
-        read::artistic_light_screen(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_light_screen_from_item(item)
     }
 }
 
@@ -2306,8 +2306,8 @@ impl<X: UserData> ArtisticLineDrawingWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticLineDrawing {
-    fn read(element: &Element) -> Self {
-        read::artistic_line_drawing(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_line_drawing_from_item(item)
     }
 }
 
@@ -2346,8 +2346,8 @@ impl<X: UserData> ArtisticMarkerWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticMarker {
-    fn read(element: &Element) -> Self {
-        read::artistic_marker(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_marker_from_item(item)
     }
 }
 
@@ -2386,8 +2386,8 @@ impl<X: UserData> ArtisticMosiaicBubblesWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticMosiaicBubbles {
-    fn read(element: &Element) -> Self {
-        read::artistic_mosiaic_bubbles(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_mosiaic_bubbles_from_item(item)
     }
 }
 
@@ -2426,8 +2426,8 @@ impl<X: UserData> ArtisticPaintBrushWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticPaintBrush {
-    fn read(element: &Element) -> Self {
-        read::artistic_paint_brush(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_paint_brush_from_item(item)
     }
 }
 
@@ -2466,8 +2466,8 @@ impl<X: UserData> ArtisticPaintStrokesWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticPaintStrokes {
-    fn read(element: &Element) -> Self {
-        read::artistic_paint_strokes(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_paint_strokes_from_item(item)
     }
 }
 
@@ -2506,8 +2506,8 @@ impl<X: UserData> ArtisticPastelsSmoothWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticPastelsSmooth {
-    fn read(element: &Element) -> Self {
-        read::artistic_pastels_smooth(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_pastels_smooth_from_item(item)
     }
 }
 
@@ -2546,8 +2546,8 @@ impl<X: UserData> ArtisticPencilGrayscaleWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticPencilGrayscale {
-    fn read(element: &Element) -> Self {
-        read::artistic_pencil_grayscale(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_pencil_grayscale_from_item(item)
     }
 }
 
@@ -2586,8 +2586,8 @@ impl<X: UserData> ArtisticPencilSketchWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticPencilSketch {
-    fn read(element: &Element) -> Self {
-        read::artistic_pencil_sketch(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_pencil_sketch_from_item(item)
     }
 }
 
@@ -2626,8 +2626,8 @@ impl<X: UserData> ArtisticPhotocopyWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticPhotocopy {
-    fn read(element: &Element) -> Self {
-        read::artistic_photocopy(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_photocopy_from_item(item)
     }
 }
 
@@ -2666,8 +2666,8 @@ impl<X: UserData> ArtisticPlasticWrapWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticPlasticWrap {
-    fn read(element: &Element) -> Self {
-        read::artistic_plastic_wrap(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_plastic_wrap_from_item(item)
     }
 }
 
@@ -2706,8 +2706,8 @@ impl<X: UserData> ArtisticTexturizerWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticTexturizer {
-    fn read(element: &Element) -> Self {
-        read::artistic_texturizer(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_texturizer_from_item(item)
     }
 }
 
@@ -2746,8 +2746,8 @@ impl<X: UserData> ArtisticWatercolorSpongeWith<X> {
 }
 
 impl officekit_markup_base::Read for ArtisticWatercolorSponge {
-    fn read(element: &Element) -> Self {
-        read::artistic_watercolor_sponge(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::artistic_watercolor_sponge_from_item(item)
     }
 }
 
@@ -2790,8 +2790,8 @@ impl<X: UserData> BackgroundMarkWith<X> {
 }
 
 impl officekit_markup_base::Read for BackgroundMark {
-    fn read(element: &Element) -> Self {
-        read::background_mark(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::background_mark_from_item(item)
     }
 }
 
@@ -2842,8 +2842,8 @@ impl<X: UserData> BackgroundRemovalWith<X> {
 }
 
 impl officekit_markup_base::Read for BackgroundRemoval {
-    fn read(element: &Element) -> Self {
-        read::background_removal(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::background_removal_from_item(item)
     }
 }
 
@@ -2882,8 +2882,8 @@ impl<X: UserData> BrightnessContrastWith<X> {
 }
 
 impl officekit_markup_base::Read for BrightnessContrast {
-    fn read(element: &Element) -> Self {
-        read::brightness_contrast(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::brightness_contrast_from_item(item)
     }
 }
 
@@ -2928,8 +2928,8 @@ impl<X: UserData> CNvContentPartPrWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvContentPartPr {
-    fn read(element: &Element) -> Self {
-        read::c_nv_content_part_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_content_part_pr_from_item(item)
     }
 }
 
@@ -2986,8 +2986,8 @@ impl<X: UserData> CNvPrWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvPr {
-    fn read(element: &Element) -> Self {
-        read::c_nv_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_pr_from_item(item)
     }
 }
 
@@ -3026,8 +3026,8 @@ impl<X: UserData> CameraToolWith<X> {
 }
 
 impl officekit_markup_base::Read for CameraTool {
-    fn read(element: &Element) -> Self {
-        read::camera_tool(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::camera_tool_from_item(item)
     }
 }
 
@@ -3064,8 +3064,8 @@ impl<X: UserData> ColorTemperatureWith<X> {
 }
 
 impl officekit_markup_base::Read for ColorTemperature {
-    fn read(element: &Element) -> Self {
-        read::color_temperature(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::color_temperature_from_item(item)
     }
 }
 
@@ -3102,8 +3102,8 @@ impl<X: UserData> CompatExtWith<X> {
 }
 
 impl officekit_markup_base::Read for CompatExt {
-    fn read(element: &Element) -> Self {
-        read::compat_ext(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::compat_ext_from_item(item)
     }
 }
 
@@ -3154,8 +3154,8 @@ impl<X: UserData> ContentPartWith<X> {
 }
 
 impl officekit_markup_base::Read for ContentPart {
-    fn read(element: &Element) -> Self {
-        read::content_part(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::content_part_from_item(item)
     }
 }
 
@@ -3214,8 +3214,8 @@ impl<X: UserData> CpLocksWith<X> {
 }
 
 impl officekit_markup_base::Read for CpLocks {
-    fn read(element: &Element) -> Self {
-        read::cp_locks(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cp_locks_from_item(item)
     }
 }
 
@@ -3252,8 +3252,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -3296,8 +3296,8 @@ impl<X: UserData> ForegroundMarkWith<X> {
 }
 
 impl officekit_markup_base::Read for ForegroundMark {
-    fn read(element: &Element) -> Self {
-        read::foreground_mark(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::foreground_mark_from_item(item)
     }
 }
 
@@ -3334,8 +3334,8 @@ impl<X: UserData> HiddenEffectsWith<X> {
 }
 
 impl officekit_markup_base::Read for HiddenEffects {
-    fn read(element: &Element) -> Self {
-        read::hidden_effects(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hidden_effects_from_item(item)
     }
 }
 
@@ -3372,8 +3372,8 @@ impl<X: UserData> HiddenFillWith<X> {
 }
 
 impl officekit_markup_base::Read for HiddenFill {
-    fn read(element: &Element) -> Self {
-        read::hidden_fill(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hidden_fill_from_item(item)
     }
 }
 
@@ -3440,8 +3440,8 @@ impl<X: UserData> HiddenLineWith<X> {
 }
 
 impl officekit_markup_base::Read for HiddenLine {
-    fn read(element: &Element) -> Self {
-        read::hidden_line(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hidden_line_from_item(item)
     }
 }
 
@@ -3490,8 +3490,8 @@ impl<X: UserData> HiddenScene3dWith<X> {
 }
 
 impl officekit_markup_base::Read for HiddenScene3d {
-    fn read(element: &Element) -> Self {
-        read::hidden_scene3d(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hidden_scene3d_from_item(item)
     }
 }
 
@@ -3554,8 +3554,8 @@ impl<X: UserData> HiddenSp3dWith<X> {
 }
 
 impl officekit_markup_base::Read for HiddenSp3d {
-    fn read(element: &Element) -> Self {
-        read::hidden_sp3d(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hidden_sp3d_from_item(item)
     }
 }
 
@@ -3596,8 +3596,8 @@ impl<X: UserData> ImgEffectWith<X> {
 }
 
 impl officekit_markup_base::Read for ImgEffect {
-    fn read(element: &Element) -> Self {
-        read::img_effect(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::img_effect_from_item(item)
     }
 }
 
@@ -3638,8 +3638,8 @@ impl<X: UserData> ImgLayerWith<X> {
 }
 
 impl officekit_markup_base::Read for ImgLayer {
-    fn read(element: &Element) -> Self {
-        read::img_layer(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::img_layer_from_item(item)
     }
 }
 
@@ -3676,8 +3676,8 @@ impl<X: UserData> ImgPropsWith<X> {
 }
 
 impl officekit_markup_base::Read for ImgProps {
-    fn read(element: &Element) -> Self {
-        read::img_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::img_props_from_item(item)
     }
 }
 
@@ -3714,8 +3714,8 @@ impl<X: UserData> IsCanvasWith<X> {
 }
 
 impl officekit_markup_base::Read for IsCanvas {
-    fn read(element: &Element) -> Self {
-        read::is_canvas(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::is_canvas_from_item(item)
     }
 }
 
@@ -3748,8 +3748,8 @@ impl<X: UserData> MWith<X> {
 }
 
 impl officekit_markup_base::Read for M {
-    fn read(element: &Element) -> Self {
-        read::m(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::m_from_item(item)
     }
 }
 
@@ -3790,8 +3790,8 @@ impl<X: UserData> NvContentPartPrWith<X> {
 }
 
 impl officekit_markup_base::Read for NvContentPartPr {
-    fn read(element: &Element) -> Self {
-        read::nv_content_part_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::nv_content_part_pr_from_item(item)
     }
 }
 
@@ -3905,88 +3905,40 @@ impl officekit_markup_base::Read for PictureEffectContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_A14, "artisticBlur")) => {
-                Self::ArtisticBlur(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticCement")) => {
-                Self::ArtisticCement(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticChalkSketch")) => {
-                Self::ArtisticChalkSketch(officekit_markup_base::read(element))
-            }
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_A14, "artisticBlur")) => Self::ArtisticBlur(item.read()),
+            Some((NS_A14, "artisticCement")) => Self::ArtisticCement(item.read()),
+            Some((NS_A14, "artisticChalkSketch")) => Self::ArtisticChalkSketch(item.read()),
             Some((NS_A14, "artisticCrisscrossEtching")) => {
-                Self::ArtisticCrisscrossEtching(officekit_markup_base::read(element))
+                Self::ArtisticCrisscrossEtching(item.read())
             }
-            Some((NS_A14, "artisticCutout")) => {
-                Self::ArtisticCutout(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticFilmGrain")) => {
-                Self::ArtisticFilmGrain(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticGlass")) => {
-                Self::ArtisticGlass(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticGlowDiffused")) => {
-                Self::ArtisticGlowDiffused(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticGlowEdges")) => {
-                Self::ArtisticGlowEdges(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticLightScreen")) => {
-                Self::ArtisticLightScreen(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticLineDrawing")) => {
-                Self::ArtisticLineDrawing(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticMarker")) => {
-                Self::ArtisticMarker(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticMosiaicBubbles")) => {
-                Self::ArtisticMosiaicBubbles(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticPaintBrush")) => {
-                Self::ArtisticPaintBrush(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticPaintStrokes")) => {
-                Self::ArtisticPaintStrokes(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticPastelsSmooth")) => {
-                Self::ArtisticPastelsSmooth(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticPencilGrayscale")) => {
-                Self::ArtisticPencilGrayscale(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticPencilSketch")) => {
-                Self::ArtisticPencilSketch(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticPhotocopy")) => {
-                Self::ArtisticPhotocopy(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticPlasticWrap")) => {
-                Self::ArtisticPlasticWrap(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "artisticTexturizer")) => {
-                Self::ArtisticTexturizer(officekit_markup_base::read(element))
-            }
+            Some((NS_A14, "artisticCutout")) => Self::ArtisticCutout(item.read()),
+            Some((NS_A14, "artisticFilmGrain")) => Self::ArtisticFilmGrain(item.read()),
+            Some((NS_A14, "artisticGlass")) => Self::ArtisticGlass(item.read()),
+            Some((NS_A14, "artisticGlowDiffused")) => Self::ArtisticGlowDiffused(item.read()),
+            Some((NS_A14, "artisticGlowEdges")) => Self::ArtisticGlowEdges(item.read()),
+            Some((NS_A14, "artisticLightScreen")) => Self::ArtisticLightScreen(item.read()),
+            Some((NS_A14, "artisticLineDrawing")) => Self::ArtisticLineDrawing(item.read()),
+            Some((NS_A14, "artisticMarker")) => Self::ArtisticMarker(item.read()),
+            Some((NS_A14, "artisticMosiaicBubbles")) => Self::ArtisticMosiaicBubbles(item.read()),
+            Some((NS_A14, "artisticPaintBrush")) => Self::ArtisticPaintBrush(item.read()),
+            Some((NS_A14, "artisticPaintStrokes")) => Self::ArtisticPaintStrokes(item.read()),
+            Some((NS_A14, "artisticPastelsSmooth")) => Self::ArtisticPastelsSmooth(item.read()),
+            Some((NS_A14, "artisticPencilGrayscale")) => Self::ArtisticPencilGrayscale(item.read()),
+            Some((NS_A14, "artisticPencilSketch")) => Self::ArtisticPencilSketch(item.read()),
+            Some((NS_A14, "artisticPhotocopy")) => Self::ArtisticPhotocopy(item.read()),
+            Some((NS_A14, "artisticPlasticWrap")) => Self::ArtisticPlasticWrap(item.read()),
+            Some((NS_A14, "artisticTexturizer")) => Self::ArtisticTexturizer(item.read()),
             Some((NS_A14, "artisticWatercolorSponge")) => {
-                Self::ArtisticWatercolorSponge(officekit_markup_base::read(element))
+                Self::ArtisticWatercolorSponge(item.read())
             }
-            Some((NS_A14, "backgroundRemoval")) => {
-                Self::BackgroundRemoval(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "brightnessContrast")) => {
-                Self::BrightnessContrast(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "colorTemperature")) => {
-                Self::ColorTemperature(officekit_markup_base::read(element))
-            }
-            Some((NS_A14, "saturation")) => Self::Saturation(officekit_markup_base::read(element)),
-            Some((NS_A14, "sharpenSoften")) => {
-                Self::SharpenSoften(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+            Some((NS_A14, "backgroundRemoval")) => Self::BackgroundRemoval(item.read()),
+            Some((NS_A14, "brightnessContrast")) => Self::BrightnessContrast(item.read()),
+            Some((NS_A14, "colorTemperature")) => Self::ColorTemperature(item.read()),
+            Some((NS_A14, "saturation")) => Self::Saturation(item.read()),
+            Some((NS_A14, "sharpenSoften")) => Self::SharpenSoften(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -4052,8 +4004,8 @@ impl<X: UserData> SaturationWith<X> {
 }
 
 impl officekit_markup_base::Read for Saturation {
-    fn read(element: &Element) -> Self {
-        read::saturation(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::saturation_from_item(item)
     }
 }
 
@@ -4090,8 +4042,8 @@ impl<X: UserData> ShadowObscuredWith<X> {
 }
 
 impl officekit_markup_base::Read for ShadowObscured {
-    fn read(element: &Element) -> Self {
-        read::shadow_obscured(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shadow_obscured_from_item(item)
     }
 }
 
@@ -4128,8 +4080,8 @@ impl<X: UserData> SharpenSoftenWith<X> {
 }
 
 impl officekit_markup_base::Read for SharpenSoften {
-    fn read(element: &Element) -> Self {
-        read::sharpen_soften(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sharpen_soften_from_item(item)
     }
 }
 
@@ -4166,8 +4118,8 @@ impl<X: UserData> UseLocalDpiWith<X> {
 }
 
 impl officekit_markup_base::Read for UseLocalDpi {
-    fn read(element: &Element) -> Self {
-        read::use_local_dpi(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::use_local_dpi_from_item(item)
     }
 }
 
@@ -4216,8 +4168,8 @@ impl<X: UserData> XfrmWith<X> {
 }
 
 impl officekit_markup_base::Read for Xfrm {
-    fn read(element: &Element) -> Self {
-        read::xfrm(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xfrm_from_item(item)
     }
 }
 

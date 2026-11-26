@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `wps:bodyPr` into a `BodyPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn body_pr(element: &Element) -> super::BodyPr {
+    body_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wps:bodyPr` into a `BodyPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn body_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BodyPr {
+    body_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wps:bodyPr` into a `BodyPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn body_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::BodyPr {
     let mut node = super::BodyPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BODY_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BODY_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.rot),
@@ -259,8 +274,23 @@ pub fn body_pr(element: &Element) -> super::BodyPr {
 /// Read `wps:cNvCnPr` into a `CNvCnPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_cn_pr(element: &Element) -> super::CNvCnPr {
+    c_nv_cn_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wps:cNvCnPr` into a `CNvCnPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_cn_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CNvCnPr {
+    c_nv_cn_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wps:cNvCnPr` into a `CNvCnPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_cn_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::CNvCnPr {
     let mut node = super::CNvCnPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_CN_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::C_NV_CN_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.connection_shape_locks),
@@ -277,8 +307,23 @@ pub fn c_nv_cn_pr(element: &Element) -> super::CNvCnPr {
 /// Read `wps:cNvPr` into a `CNvPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_pr(element: &Element) -> super::CNvPr {
+    c_nv_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wps:cNvPr` into a `CNvPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CNvPr {
+    c_nv_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wps:cNvPr` into a `CNvPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::CNvPr {
     let mut node = super::CNvPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::C_NV_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -299,8 +344,23 @@ pub fn c_nv_pr(element: &Element) -> super::CNvPr {
 /// Read `wps:cNvSpPr` into a `CNvSpPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_sp_pr(element: &Element) -> super::CNvSpPr {
+    c_nv_sp_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wps:cNvSpPr` into a `CNvSpPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_sp_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CNvSpPr {
+    c_nv_sp_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wps:cNvSpPr` into a `CNvSpPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_sp_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::CNvSpPr {
     let mut node = super::CNvSpPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_SP_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::C_NV_SP_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.tx_box),
@@ -316,8 +376,23 @@ pub fn c_nv_sp_pr(element: &Element) -> super::CNvSpPr {
 /// Read `wps:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wps:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wps:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -330,8 +405,24 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `wps:linkedTxbx` into a `LinkedTxbx`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn linked_txbx(element: &Element) -> super::LinkedTxbx {
+    linked_txbx_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wps:linkedTxbx` into a `LinkedTxbx` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn linked_txbx_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::LinkedTxbx {
+    linked_txbx_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wps:linkedTxbx` into a `LinkedTxbx` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn linked_txbx_from_item(item: officekit_markup_base::Item<'_>) -> super::LinkedTxbx {
     let mut node = super::LinkedTxbx::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::LINKED_TXBX_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::LINKED_TXBX_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -360,8 +451,23 @@ pub fn shape_text(element: &Element) -> super::ShapeTextContent {
 /// Read `wps:spPr` into a `SpPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sp_pr(element: &Element) -> super::SpPr {
+    sp_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wps:spPr` into a `SpPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sp_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SpPr {
+    sp_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wps:spPr` into a `SpPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sp_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::SpPr {
     let mut node = super::SpPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SP_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SP_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bw_mode),
@@ -383,8 +489,23 @@ pub fn sp_pr(element: &Element) -> super::SpPr {
 /// Read `wps:style` into a `Style`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style(element: &Element) -> super::Style {
+    style_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wps:style` into a `Style` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn style_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Style {
+    style_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wps:style` into a `Style` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn style_from_item(item: officekit_markup_base::Item<'_>) -> super::Style {
     let mut node = super::Style::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::STYLE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::STYLE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.line_reference),
@@ -401,8 +522,23 @@ pub fn style(element: &Element) -> super::Style {
 /// Read `wps:txbx` into a `Txbx`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn txbx(element: &Element) -> super::Txbx {
+    txbx_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wps:txbx` into a `Txbx` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn txbx_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Txbx {
+    txbx_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wps:txbx` into a `Txbx` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn txbx_from_item(item: officekit_markup_base::Item<'_>) -> super::Txbx {
     let mut node = super::Txbx::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TXBX_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TXBX_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -418,8 +554,23 @@ pub fn txbx(element: &Element) -> super::Txbx {
 /// Read `wps:wsp` into a `Wsp`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wsp(element: &Element) -> super::Wsp {
+    wsp_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wps:wsp` into a `Wsp` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wsp_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Wsp {
+    wsp_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wps:wsp` into a `Wsp` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wsp_from_item(item: officekit_markup_base::Item<'_>) -> super::Wsp {
     let mut node = super::Wsp::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::WSP_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::WSP_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.normal_east_asian_flow),

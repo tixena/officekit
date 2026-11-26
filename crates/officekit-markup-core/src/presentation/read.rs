@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `p:guide` into a `AGuide`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn a_guide(element: &Element) -> super::AGuide {
+    a_guide_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:guide` into a `AGuide` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn a_guide_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AGuide {
+    a_guide_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:guide` into a `AGuide` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn a_guide_from_item(item: officekit_markup_base::Item<'_>) -> super::AGuide {
     let mut node = super::AGuide::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::A_GUIDE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::A_GUIDE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.orient),
@@ -237,7 +252,22 @@ pub fn a_guide(element: &Element) -> super::AGuide {
 /// Read `p:sldAll` into a `AllSlides`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn all_slides(element: &Element) -> super::AllSlides {
-    let reader = officekit_markup_base::Reader::new(element, &super::ALL_SLIDES_SHAPE);
+    all_slides_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sldAll` into a `AllSlides` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn all_slides_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AllSlides {
+    all_slides_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sldAll` into a `AllSlides` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn all_slides_from_item(item: officekit_markup_base::Item<'_>) -> super::AllSlides {
+    let reader = officekit_markup_base::Reader::of(item, &super::ALL_SLIDES_SHAPE);
     super::AllSlides {
         user_data: (),
         unknown: reader.finish(),
@@ -247,8 +277,23 @@ pub fn all_slides(element: &Element) -> super::AllSlides {
 /// Read `p:anim` into a `Animate`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn animate(element: &Element) -> super::Animate {
+    animate_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:anim` into a `Animate` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn animate_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Animate {
+    animate_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:anim` into a `Animate` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn animate_from_item(item: officekit_markup_base::Item<'_>) -> super::Animate {
     let mut node = super::Animate::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::ANIMATE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ANIMATE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.by),
@@ -269,9 +314,27 @@ pub fn animate(element: &Element) -> super::Animate {
 /// Read `p:animClr` into a `AnimateColorBehavior`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn animate_color_behavior(element: &Element) -> super::AnimateColorBehavior {
+    animate_color_behavior_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:animClr` into a `AnimateColorBehavior` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn animate_color_behavior_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AnimateColorBehavior {
+    animate_color_behavior_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:animClr` into a `AnimateColorBehavior` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn animate_color_behavior_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::AnimateColorBehavior {
     let mut node = super::AnimateColorBehavior::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::ANIMATE_COLOR_BEHAVIOR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ANIMATE_COLOR_BEHAVIOR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.clr_spc),
@@ -296,8 +359,24 @@ pub fn animate_color_by(element: &Element) -> super::AnimateColorByContent {
 /// Read `p:animEffect` into a `AnimateEffect`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn animate_effect(element: &Element) -> super::AnimateEffect {
+    animate_effect_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:animEffect` into a `AnimateEffect` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn animate_effect_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AnimateEffect {
+    animate_effect_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:animEffect` into a `AnimateEffect` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn animate_effect_from_item(item: officekit_markup_base::Item<'_>) -> super::AnimateEffect {
     let mut node = super::AnimateEffect::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::ANIMATE_EFFECT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ANIMATE_EFFECT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.transition),
@@ -315,8 +394,24 @@ pub fn animate_effect(element: &Element) -> super::AnimateEffect {
 /// Read `p:animMotion` into a `AnimateMotion`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn animate_motion(element: &Element) -> super::AnimateMotion {
+    animate_motion_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:animMotion` into a `AnimateMotion` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn animate_motion_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AnimateMotion {
+    animate_motion_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:animMotion` into a `AnimateMotion` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn animate_motion_from_item(item: officekit_markup_base::Item<'_>) -> super::AnimateMotion {
     let mut node = super::AnimateMotion::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::ANIMATE_MOTION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ANIMATE_MOTION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.origin),
@@ -340,8 +435,24 @@ pub fn animate_motion(element: &Element) -> super::AnimateMotion {
 /// Read `p:animRot` into a `AnimateRotation`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn animate_rotation(element: &Element) -> super::AnimateRotation {
+    animate_rotation_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:animRot` into a `AnimateRotation` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn animate_rotation_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AnimateRotation {
+    animate_rotation_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:animRot` into a `AnimateRotation` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn animate_rotation_from_item(item: officekit_markup_base::Item<'_>) -> super::AnimateRotation {
     let mut node = super::AnimateRotation::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::ANIMATE_ROTATION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ANIMATE_ROTATION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.by),
@@ -359,8 +470,24 @@ pub fn animate_rotation(element: &Element) -> super::AnimateRotation {
 /// Read `p:animScale` into a `AnimateScale`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn animate_scale(element: &Element) -> super::AnimateScale {
+    animate_scale_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:animScale` into a `AnimateScale` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn animate_scale_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AnimateScale {
+    animate_scale_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:animScale` into a `AnimateScale` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn animate_scale_from_item(item: officekit_markup_base::Item<'_>) -> super::AnimateScale {
     let mut node = super::AnimateScale::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::ANIMATE_SCALE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ANIMATE_SCALE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.zoom_contents),
@@ -385,8 +512,24 @@ pub fn animation_variant(element: &Element) -> super::AnimationVariantContent {
 /// Read `p:attrName` into a `AttributeName`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn attribute_name(element: &Element) -> super::AttributeName {
+    attribute_name_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:attrName` into a `AttributeName` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn attribute_name_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AttributeName {
+    attribute_name_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:attrName` into a `AttributeName` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn attribute_name_from_item(item: officekit_markup_base::Item<'_>) -> super::AttributeName {
     let mut node = super::AttributeName::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::ATTRIBUTE_NAME_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ATTRIBUTE_NAME_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -399,8 +542,27 @@ pub fn attribute_name(element: &Element) -> super::AttributeName {
 /// Read `p:attrNameLst` into a `AttributeNameList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn attribute_name_list(element: &Element) -> super::AttributeNameList {
+    attribute_name_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:attrNameLst` into a `AttributeNameList` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn attribute_name_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AttributeNameList {
+    attribute_name_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:attrNameLst` into a `AttributeNameList` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn attribute_name_list_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::AttributeNameList {
     let mut node = super::AttributeNameList::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::ATTRIBUTE_NAME_LIST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ATTRIBUTE_NAME_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.attribute_name);
@@ -413,8 +575,23 @@ pub fn attribute_name_list(element: &Element) -> super::AttributeNameList {
 /// Read `p:audio` into a `Audio`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn audio(element: &Element) -> super::Audio {
+    audio_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:audio` into a `Audio` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn audio_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Audio {
+    audio_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:audio` into a `Audio` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn audio_from_item(item: officekit_markup_base::Item<'_>) -> super::Audio {
     let mut node = super::Audio::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::AUDIO_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::AUDIO_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.is_narration),
@@ -429,7 +606,22 @@ pub fn audio(element: &Element) -> super::Audio {
 /// Read `p:bg` into a `Background`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn background(element: &Element) -> super::Background {
-    let reader = officekit_markup_base::Reader::new(element, &super::BACKGROUND_SHAPE);
+    background_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:bg` into a `Background` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn background_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Background {
+    background_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:bg` into a `Background` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn background_from_item(item: officekit_markup_base::Item<'_>) -> super::Background {
+    let reader = officekit_markup_base::Reader::of(item, &super::BACKGROUND_SHAPE);
     super::Background {
         user_data: (),
         unknown: reader.finish(),
@@ -439,9 +631,26 @@ pub fn background(element: &Element) -> super::Background {
 /// Read `p:bgPr` into a `BackgroundProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn background_properties(element: &Element) -> super::BackgroundProperties {
+    background_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:bgPr` into a `BackgroundProperties` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn background_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BackgroundProperties {
+    background_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:bgPr` into a `BackgroundProperties` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn background_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::BackgroundProperties {
     let mut node = super::BackgroundProperties::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::BACKGROUND_PROPERTIES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BACKGROUND_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.shade_to_title),
@@ -458,9 +667,28 @@ pub fn background_properties(element: &Element) -> super::BackgroundProperties {
 /// Read `p:bgRef` into a `BackgroundStyleReference`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn background_style_reference(element: &Element) -> super::BackgroundStyleReference {
+    background_style_reference_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:bgRef` into a `BackgroundStyleReference` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn background_style_reference_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BackgroundStyleReference {
+    background_style_reference_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:bgRef` into a `BackgroundStyleReference` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn background_style_reference_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::BackgroundStyleReference {
     let mut node = super::BackgroundStyleReference::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::BACKGROUND_STYLE_REFERENCE_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::BACKGROUND_STYLE_REFERENCE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.idx),
@@ -475,9 +703,27 @@ pub fn background_style_reference(element: &Element) -> super::BackgroundStyleRe
 /// Read `p:blinds` into a `BlindsSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn blinds_slide_transition(element: &Element) -> super::BlindsSlideTransition {
+    blinds_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:blinds` into a `BlindsSlideTransition` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn blinds_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BlindsSlideTransition {
+    blinds_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:blinds` into a `BlindsSlideTransition` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn blinds_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::BlindsSlideTransition {
     let mut node = super::BlindsSlideTransition::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::BLINDS_SLIDE_TRANSITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BLINDS_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.dir);
@@ -490,8 +736,26 @@ pub fn blinds_slide_transition(element: &Element) -> super::BlindsSlideTransitio
 /// Read `p:bold` into a `BoldEmbeddedFont`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bold_embedded_font(element: &Element) -> super::BoldEmbeddedFont {
+    bold_embedded_font_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:bold` into a `BoldEmbeddedFont` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bold_embedded_font_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BoldEmbeddedFont {
+    bold_embedded_font_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:bold` into a `BoldEmbeddedFont` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bold_embedded_font_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::BoldEmbeddedFont {
     let mut node = super::BoldEmbeddedFont::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BOLD_EMBEDDED_FONT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BOLD_EMBEDDED_FONT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.id);
@@ -504,9 +768,28 @@ pub fn bold_embedded_font(element: &Element) -> super::BoldEmbeddedFont {
 /// Read `p:boldItalic` into a `BoldItalicEmbeddedFont`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bold_italic_embedded_font(element: &Element) -> super::BoldItalicEmbeddedFont {
+    bold_italic_embedded_font_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:boldItalic` into a `BoldItalicEmbeddedFont` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bold_italic_embedded_font_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BoldItalicEmbeddedFont {
+    bold_italic_embedded_font_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:boldItalic` into a `BoldItalicEmbeddedFont` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bold_italic_embedded_font_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::BoldItalicEmbeddedFont {
     let mut node = super::BoldItalicEmbeddedFont::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::BOLD_ITALIC_EMBEDDED_FONT_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::BOLD_ITALIC_EMBEDDED_FONT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.id);
@@ -519,8 +802,24 @@ pub fn bold_italic_embedded_font(element: &Element) -> super::BoldItalicEmbedded
 /// Read `p:boolVal` into a `BooleanVariant`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn boolean_variant(element: &Element) -> super::BooleanVariant {
+    boolean_variant_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:boolVal` into a `BooleanVariant` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn boolean_variant_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BooleanVariant {
+    boolean_variant_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:boolVal` into a `BooleanVariant` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn boolean_variant_from_item(item: officekit_markup_base::Item<'_>) -> super::BooleanVariant {
     let mut node = super::BooleanVariant::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BOOLEAN_VARIANT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BOOLEAN_VARIANT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);
@@ -533,9 +832,26 @@ pub fn boolean_variant(element: &Element) -> super::BooleanVariant {
 /// Read `p:browse` into a `BrowseSlideShowMode`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn browse_slide_show_mode(element: &Element) -> super::BrowseSlideShowMode {
+    browse_slide_show_mode_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:browse` into a `BrowseSlideShowMode` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn browse_slide_show_mode_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BrowseSlideShowMode {
+    browse_slide_show_mode_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:browse` into a `BrowseSlideShowMode` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn browse_slide_show_mode_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::BrowseSlideShowMode {
     let mut node = super::BrowseSlideShowMode::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::BROWSE_SLIDE_SHOW_MODE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BROWSE_SLIDE_SHOW_MODE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.show_scrollbar);
@@ -548,7 +864,22 @@ pub fn browse_slide_show_mode(element: &Element) -> super::BrowseSlideShowMode {
 /// Read `p:bldAsOne` into a `BuildAsOne`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn build_as_one(element: &Element) -> super::BuildAsOne {
-    let reader = officekit_markup_base::Reader::new(element, &super::BUILD_AS_ONE_SHAPE);
+    build_as_one_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:bldAsOne` into a `BuildAsOne` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn build_as_one_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BuildAsOne {
+    build_as_one_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:bldAsOne` into a `BuildAsOne` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn build_as_one_from_item(item: officekit_markup_base::Item<'_>) -> super::BuildAsOne {
+    let reader = officekit_markup_base::Reader::of(item, &super::BUILD_AS_ONE_SHAPE);
     super::BuildAsOne {
         user_data: (),
         unknown: reader.finish(),
@@ -558,8 +889,23 @@ pub fn build_as_one(element: &Element) -> super::BuildAsOne {
 /// Read `p:bldDgm` into a `BuildDiagram`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn build_diagram(element: &Element) -> super::BuildDiagram {
+    build_diagram_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:bldDgm` into a `BuildDiagram` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn build_diagram_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BuildDiagram {
+    build_diagram_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:bldDgm` into a `BuildDiagram` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn build_diagram_from_item(item: officekit_markup_base::Item<'_>) -> super::BuildDiagram {
     let mut node = super::BuildDiagram::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BUILD_DIAGRAM_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BUILD_DIAGRAM_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.spid),
@@ -576,9 +922,27 @@ pub fn build_diagram(element: &Element) -> super::BuildDiagram {
 /// Read `p:bldOleChart` into a `BuildEmbeddedChart`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn build_embedded_chart(element: &Element) -> super::BuildEmbeddedChart {
+    build_embedded_chart_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:bldOleChart` into a `BuildEmbeddedChart` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn build_embedded_chart_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BuildEmbeddedChart {
+    build_embedded_chart_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:bldOleChart` into a `BuildEmbeddedChart` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn build_embedded_chart_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::BuildEmbeddedChart {
     let mut node = super::BuildEmbeddedChart::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::BUILD_EMBEDDED_CHART_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BUILD_EMBEDDED_CHART_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.spid),
@@ -596,8 +960,24 @@ pub fn build_embedded_chart(element: &Element) -> super::BuildEmbeddedChart {
 /// Read `p:bldGraphic` into a `BuildGraphics`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn build_graphics(element: &Element) -> super::BuildGraphics {
+    build_graphics_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:bldGraphic` into a `BuildGraphics` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn build_graphics_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BuildGraphics {
+    build_graphics_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:bldGraphic` into a `BuildGraphics` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn build_graphics_from_item(item: officekit_markup_base::Item<'_>) -> super::BuildGraphics {
     let mut node = super::BuildGraphics::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BUILD_GRAPHICS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BUILD_GRAPHICS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.spid),
@@ -620,8 +1000,23 @@ pub fn build_graphics_content(element: &Element) -> super::BuildGraphicsContent 
 /// Read `p:bldLst` into a `BuildList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn build_list(element: &Element) -> super::BuildList {
+    build_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:bldLst` into a `BuildList` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn build_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BuildList {
+    build_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:bldLst` into a `BuildList` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn build_list_from_item(item: officekit_markup_base::Item<'_>) -> super::BuildList {
     let mut node = super::BuildList::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BUILD_LIST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BUILD_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -640,8 +1035,23 @@ pub fn build_list_content(element: &Element) -> super::BuildListContent {
 /// Read `p:bldP` into a `BuildParagraph`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn build_paragraph(element: &Element) -> super::BuildParagraph {
+    build_paragraph_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:bldP` into a `BuildParagraph` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn build_paragraph_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BuildParagraph {
+    build_paragraph_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:bldP` into a `BuildParagraph` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn build_paragraph_from_item(item: officekit_markup_base::Item<'_>) -> super::BuildParagraph {
     let mut node = super::BuildParagraph::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BUILD_PARAGRAPH_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BUILD_PARAGRAPH_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.spid),
@@ -664,8 +1074,26 @@ pub fn build_paragraph(element: &Element) -> super::BuildParagraph {
 /// Read `p:bldSub` into a `BuildSubElements`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn build_sub_elements(element: &Element) -> super::BuildSubElements {
+    build_sub_elements_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:bldSub` into a `BuildSubElements` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn build_sub_elements_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BuildSubElements {
+    build_sub_elements_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:bldSub` into a `BuildSubElements` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn build_sub_elements_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::BuildSubElements {
     let mut node = super::BuildSubElements::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BUILD_SUB_ELEMENTS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BUILD_SUB_ELEMENTS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -678,8 +1106,23 @@ pub fn build_sub_elements(element: &Element) -> super::BuildSubElements {
 /// Read `p:by` into a `By`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn by(element: &Element) -> super::By {
+    by_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:by` into a `By` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn by_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::By {
+    by_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:by` into a `By` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn by_from_item(item: officekit_markup_base::Item<'_>) -> super::By {
     let mut node = super::By::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BY_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BY_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -692,8 +1135,23 @@ pub fn by(element: &Element) -> super::By {
 /// Read `p:by` into a `ByTLPoint`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn by_tl_point(element: &Element) -> super::ByTLPoint {
+    by_tl_point_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:by` into a `ByTLPoint` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn by_tl_point_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ByTLPoint {
+    by_tl_point_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:by` into a `ByTLPoint` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn by_tl_point_from_item(item: officekit_markup_base::Item<'_>) -> super::ByTLPoint {
     let mut node = super::ByTLPoint::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BY_TL_POINT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BY_TL_POINT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.x),
@@ -708,8 +1166,24 @@ pub fn by_tl_point(element: &Element) -> super::ByTLPoint {
 /// Read `p:charRg` into a `CharacterRange`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn character_range(element: &Element) -> super::CharacterRange {
+    character_range_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:charRg` into a `CharacterRange` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn character_range_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CharacterRange {
+    character_range_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:charRg` into a `CharacterRange` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn character_range_from_item(item: officekit_markup_base::Item<'_>) -> super::CharacterRange {
     let mut node = super::CharacterRange::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CHARACTER_RANGE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CHARACTER_RANGE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.st),
@@ -724,9 +1198,28 @@ pub fn character_range(element: &Element) -> super::CharacterRange {
 /// Read `p:checker` into a `CheckerSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn checker_slide_transition(element: &Element) -> super::CheckerSlideTransition {
+    checker_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:checker` into a `CheckerSlideTransition` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn checker_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CheckerSlideTransition {
+    checker_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:checker` into a `CheckerSlideTransition` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn checker_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CheckerSlideTransition {
     let mut node = super::CheckerSlideTransition::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::CHECKER_SLIDE_TRANSITION_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::CHECKER_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.dir);
@@ -739,9 +1232,27 @@ pub fn checker_slide_transition(element: &Element) -> super::CheckerSlideTransit
 /// Read `p:childTnLst` into a `ChildrenTimeNodeList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn children_time_node_list(element: &Element) -> super::ChildrenTimeNodeList {
+    children_time_node_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:childTnLst` into a `ChildrenTimeNodeList` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn children_time_node_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ChildrenTimeNodeList {
+    children_time_node_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:childTnLst` into a `ChildrenTimeNodeList` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn children_time_node_list_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ChildrenTimeNodeList {
     let mut node = super::ChildrenTimeNodeList::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::CHILDREN_TIME_NODE_LIST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CHILDREN_TIME_NODE_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -754,7 +1265,26 @@ pub fn children_time_node_list(element: &Element) -> super::ChildrenTimeNodeList
 /// Read `p:circle` into a `CircleSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn circle_slide_transition(element: &Element) -> super::CircleSlideTransition {
-    let reader = officekit_markup_base::Reader::new(element, &super::CIRCLE_SLIDE_TRANSITION_SHAPE);
+    circle_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:circle` into a `CircleSlideTransition` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn circle_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CircleSlideTransition {
+    circle_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:circle` into a `CircleSlideTransition` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn circle_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CircleSlideTransition {
+    let reader = officekit_markup_base::Reader::of(item, &super::CIRCLE_SLIDE_TRANSITION_SHAPE);
     super::CircleSlideTransition {
         user_data: (),
         unknown: reader.finish(),
@@ -764,8 +1294,23 @@ pub fn circle_slide_transition(element: &Element) -> super::CircleSlideTransitio
 /// Read `p:clrMru` into a `ColorMRU`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color_mru(element: &Element) -> super::ColorMRU {
+    color_mru_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:clrMru` into a `ColorMRU` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn color_mru_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ColorMRU {
+    color_mru_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:clrMru` into a `ColorMRU` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn color_mru_from_item(item: officekit_markup_base::Item<'_>) -> super::ColorMRU {
     let mut node = super::ColorMRU::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COLOR_MRU_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COLOR_MRU_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -778,8 +1323,24 @@ pub fn color_mru(element: &Element) -> super::ColorMRU {
 /// Read `p:clrMap` into a `ColorSchemeMap`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color_scheme_map(element: &Element) -> super::ColorSchemeMap {
+    color_scheme_map_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:clrMap` into a `ColorSchemeMap` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn color_scheme_map_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ColorSchemeMap {
+    color_scheme_map_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:clrMap` into a `ColorSchemeMap` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn color_scheme_map_from_item(item: officekit_markup_base::Item<'_>) -> super::ColorSchemeMap {
     let mut node = super::ColorSchemeMap::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COLOR_SCHEME_MAP_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COLOR_SCHEME_MAP_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bg1),
@@ -805,9 +1366,28 @@ pub fn color_scheme_map(element: &Element) -> super::ColorSchemeMap {
 /// Read `p:clrMapOvr` into a `ColorSchemeMapOverride`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color_scheme_map_override(element: &Element) -> super::ColorSchemeMapOverride {
+    color_scheme_map_override_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:clrMapOvr` into a `ColorSchemeMapOverride` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn color_scheme_map_override_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ColorSchemeMapOverride {
+    color_scheme_map_override_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:clrMapOvr` into a `ColorSchemeMapOverride` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn color_scheme_map_override_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ColorSchemeMapOverride {
     let mut node = super::ColorSchemeMapOverride::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::COLOR_SCHEME_MAP_OVERRIDE_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::COLOR_SCHEME_MAP_OVERRIDE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -820,8 +1400,23 @@ pub fn color_scheme_map_override(element: &Element) -> super::ColorSchemeMapOver
 /// Read `p:clrVal` into a `ColorValue`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color_value(element: &Element) -> super::ColorValue {
+    color_value_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:clrVal` into a `ColorValue` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn color_value_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ColorValue {
+    color_value_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:clrVal` into a `ColorValue` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn color_value_from_item(item: officekit_markup_base::Item<'_>) -> super::ColorValue {
     let mut node = super::ColorValue::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COLOR_VALUE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COLOR_VALUE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -834,9 +1429,26 @@ pub fn color_value(element: &Element) -> super::ColorValue {
 /// Read `p:comb` into a `CombSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comb_slide_transition(element: &Element) -> super::CombSlideTransition {
+    comb_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:comb` into a `CombSlideTransition` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comb_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CombSlideTransition {
+    comb_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:comb` into a `CombSlideTransition` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comb_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CombSlideTransition {
     let mut node = super::CombSlideTransition::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::COMB_SLIDE_TRANSITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMB_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.dir);
@@ -849,8 +1461,23 @@ pub fn comb_slide_transition(element: &Element) -> super::CombSlideTransition {
 /// Read `p:cmd` into a `Command`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn command(element: &Element) -> super::Command {
+    command_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cmd` into a `Command` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn command_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Command {
+    command_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:cmd` into a `Command` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn command_from_item(item: officekit_markup_base::Item<'_>) -> super::Command {
     let mut node = super::Command::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COMMAND_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMMAND_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r#type),
@@ -866,8 +1493,23 @@ pub fn command(element: &Element) -> super::Command {
 /// Read `p:cm` into a `Comment`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment(element: &Element) -> super::Comment {
+    comment_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cm` into a `Comment` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Comment {
+    comment_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:cm` into a `Comment` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_from_item(item: officekit_markup_base::Item<'_>) -> super::Comment {
     let mut node = super::Comment::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMMENT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.author_id),
@@ -886,8 +1528,24 @@ pub fn comment(element: &Element) -> super::Comment {
 /// Read `p:cmAuthor` into a `CommentAuthor`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_author(element: &Element) -> super::CommentAuthor {
+    comment_author_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cmAuthor` into a `CommentAuthor` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_author_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CommentAuthor {
+    comment_author_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:cmAuthor` into a `CommentAuthor` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_author_from_item(item: officekit_markup_base::Item<'_>) -> super::CommentAuthor {
     let mut node = super::CommentAuthor::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENT_AUTHOR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMMENT_AUTHOR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -906,8 +1564,23 @@ pub fn comment_author(element: &Element) -> super::CommentAuthor {
 /// Read `p:cmLst` into a `CommentList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_list(element: &Element) -> super::CommentList {
+    comment_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cmLst` into a `CommentList` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CommentList {
+    comment_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:cmLst` into a `CommentList` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_list_from_item(item: officekit_markup_base::Item<'_>) -> super::CommentList {
     let mut node = super::CommentList::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENT_LIST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMMENT_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.comment);
@@ -920,8 +1593,23 @@ pub fn comment_list(element: &Element) -> super::CommentList {
 /// Read `p:pos` into a `CommentPosition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_position(element: &Element) -> super::CommentPosition {
+    comment_position_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:pos` into a `CommentPosition` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_position_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CommentPosition {
+    comment_position_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:pos` into a `CommentPosition` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_position_from_item(item: officekit_markup_base::Item<'_>) -> super::CommentPosition {
     let mut node = super::CommentPosition::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENT_POSITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMMENT_POSITION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.x),
@@ -936,9 +1624,26 @@ pub fn comment_position(element: &Element) -> super::CommentPosition {
 /// Read `p:text` into a `CommentsTextContent`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comments_text_content(element: &Element) -> super::CommentsTextContent {
+    comments_text_content_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:text` into a `CommentsTextContent` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comments_text_content_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CommentsTextContent {
+    comments_text_content_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:text` into a `CommentsTextContent` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comments_text_content_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CommentsTextContent {
     let mut node = super::CommentsTextContent::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::COMMENTS_TEXT_CONTENT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMMENTS_TEXT_CONTENT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -951,8 +1656,24 @@ pub fn comments_text_content(element: &Element) -> super::CommentsTextContent {
 /// Read `p:cBhvr` into a `CommonBehavior`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn common_behavior(element: &Element) -> super::CommonBehavior {
+    common_behavior_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cBhvr` into a `CommonBehavior` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn common_behavior_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CommonBehavior {
+    common_behavior_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:cBhvr` into a `CommonBehavior` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn common_behavior_from_item(item: officekit_markup_base::Item<'_>) -> super::CommonBehavior {
     let mut node = super::CommonBehavior::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COMMON_BEHAVIOR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMMON_BEHAVIOR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.additive),
@@ -976,9 +1697,28 @@ pub fn common_behavior(element: &Element) -> super::CommonBehavior {
 /// Read `p:cMediaNode` into a `CommonMediaNodeProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn common_media_node_properties(element: &Element) -> super::CommonMediaNodeProperties {
+    common_media_node_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cMediaNode` into a `CommonMediaNodeProperties` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn common_media_node_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CommonMediaNodeProperties {
+    common_media_node_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:cMediaNode` into a `CommonMediaNodeProperties` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn common_media_node_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CommonMediaNodeProperties {
     let mut node = super::CommonMediaNodeProperties::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::COMMON_MEDIA_NODE_PROPERTIES_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::COMMON_MEDIA_NODE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.vol),
@@ -997,8 +1737,26 @@ pub fn common_media_node_properties(element: &Element) -> super::CommonMediaNode
 /// Read `p:cSld` into a `CommonSlideData`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn common_slide_data(element: &Element) -> super::CommonSlideData {
+    common_slide_data_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cSld` into a `CommonSlideData` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn common_slide_data_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CommonSlideData {
+    common_slide_data_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:cSld` into a `CommonSlideData` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn common_slide_data_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CommonSlideData {
     let mut node = super::CommonSlideData::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COMMON_SLIDE_DATA_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMMON_SLIDE_DATA_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.name),
@@ -1017,9 +1775,28 @@ pub fn common_slide_data(element: &Element) -> super::CommonSlideData {
 /// Read `p:cSldViewPr` into a `CommonSlideViewProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn common_slide_view_properties(element: &Element) -> super::CommonSlideViewProperties {
+    common_slide_view_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cSldViewPr` into a `CommonSlideViewProperties` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn common_slide_view_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CommonSlideViewProperties {
+    common_slide_view_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:cSldViewPr` into a `CommonSlideViewProperties` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn common_slide_view_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CommonSlideViewProperties {
     let mut node = super::CommonSlideViewProperties::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::COMMON_SLIDE_VIEW_PROPERTIES_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::COMMON_SLIDE_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.snap_to_grid),
@@ -1037,9 +1814,28 @@ pub fn common_slide_view_properties(element: &Element) -> super::CommonSlideView
 /// Read `p:cTn` into a `CommonTimeNodeProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn common_time_node_properties(element: &Element) -> super::CommonTimeNodeProperties {
+    common_time_node_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cTn` into a `CommonTimeNodeProperties` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn common_time_node_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CommonTimeNodeProperties {
+    common_time_node_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:cTn` into a `CommonTimeNodeProperties` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn common_time_node_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CommonTimeNodeProperties {
     let mut node = super::CommonTimeNodeProperties::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::COMMON_TIME_NODE_PROPERTIES_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::COMMON_TIME_NODE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -1082,9 +1878,27 @@ pub fn common_time_node_properties(element: &Element) -> super::CommonTimeNodePr
 /// Read `p:cViewPr` into a `CommonViewProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn common_view_properties(element: &Element) -> super::CommonViewProperties {
+    common_view_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cViewPr` into a `CommonViewProperties` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn common_view_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CommonViewProperties {
+    common_view_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:cViewPr` into a `CommonViewProperties` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn common_view_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CommonViewProperties {
     let mut node = super::CommonViewProperties::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::COMMON_VIEW_PROPERTIES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMMON_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.var_scale),
@@ -1100,8 +1914,23 @@ pub fn common_view_properties(element: &Element) -> super::CommonViewProperties 
 /// Read `p:cond` into a `Condition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn condition(element: &Element) -> super::Condition {
+    condition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cond` into a `Condition` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn condition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Condition {
+    condition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:cond` into a `Condition` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn condition_from_item(item: officekit_markup_base::Item<'_>) -> super::Condition {
     let mut node = super::Condition::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CONDITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CONDITION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.evt),
@@ -1117,8 +1946,24 @@ pub fn condition(element: &Element) -> super::Condition {
 /// Read `p:cxnSp` into a `ConnectionShape`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn connection_shape(element: &Element) -> super::ConnectionShape {
+    connection_shape_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cxnSp` into a `ConnectionShape` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn connection_shape_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ConnectionShape {
+    connection_shape_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:cxnSp` into a `ConnectionShape` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn connection_shape_from_item(item: officekit_markup_base::Item<'_>) -> super::ConnectionShape {
     let mut node = super::ConnectionShape::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CONNECTION_SHAPE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CONNECTION_SHAPE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.non_visual_properties),
@@ -1135,8 +1980,24 @@ pub fn connection_shape(element: &Element) -> super::ConnectionShape {
 /// Read `p:contentPart` into a `ContentPart`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn content_part(element: &Element) -> super::ContentPart {
+    content_part_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:contentPart` into a `ContentPart` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn content_part_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ContentPart {
+    content_part_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:contentPart` into a `ContentPart` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn content_part_from_item(item: officekit_markup_base::Item<'_>) -> super::ContentPart {
     let mut node = super::ContentPart::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CONTENT_PART_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CONTENT_PART_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.id);
@@ -1149,9 +2010,26 @@ pub fn content_part(element: &Element) -> super::ContentPart {
 /// Read `p:cover` into a `CoverSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cover_slide_transition(element: &Element) -> super::CoverSlideTransition {
+    cover_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cover` into a `CoverSlideTransition` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn cover_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CoverSlideTransition {
+    cover_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:cover` into a `CoverSlideTransition` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn cover_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CoverSlideTransition {
     let mut node = super::CoverSlideTransition::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::COVER_SLIDE_TRANSITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COVER_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.dir);
@@ -1164,8 +2042,23 @@ pub fn cover_slide_transition(element: &Element) -> super::CoverSlideTransition 
 /// Read `p:custShow` into a `CustomShow`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_show(element: &Element) -> super::CustomShow {
+    custom_show_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:custShow` into a `CustomShow` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_show_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CustomShow {
+    custom_show_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:custShow` into a `CustomShow` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_show_from_item(item: officekit_markup_base::Item<'_>) -> super::CustomShow {
     let mut node = super::CustomShow::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOM_SHOW_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CUSTOM_SHOW_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.id);
@@ -1178,9 +2071,27 @@ pub fn custom_show(element: &Element) -> super::CustomShow {
 /// Read `p:custShow` into a `CustomShowCustomShow`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_show_custom_show(element: &Element) -> super::CustomShowCustomShow {
+    custom_show_custom_show_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:custShow` into a `CustomShowCustomShow` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_show_custom_show_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CustomShowCustomShow {
+    custom_show_custom_show_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:custShow` into a `CustomShowCustomShow` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_show_custom_show_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CustomShowCustomShow {
     let mut node = super::CustomShowCustomShow::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::CUSTOM_SHOW_CUSTOM_SHOW_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CUSTOM_SHOW_CUSTOM_SHOW_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.name),
@@ -1197,8 +2108,24 @@ pub fn custom_show_custom_show(element: &Element) -> super::CustomShowCustomShow
 /// Read `p:custData` into a `CustomerData`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn customer_data(element: &Element) -> super::CustomerData {
+    customer_data_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:custData` into a `CustomerData` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn customer_data_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CustomerData {
+    customer_data_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:custData` into a `CustomerData` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn customer_data_from_item(item: officekit_markup_base::Item<'_>) -> super::CustomerData {
     let mut node = super::CustomerData::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOMER_DATA_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CUSTOMER_DATA_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.id);
@@ -1211,8 +2138,27 @@ pub fn customer_data(element: &Element) -> super::CustomerData {
 /// Read `p:custDataLst` into a `CustomerDataList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn customer_data_list(element: &Element) -> super::CustomerDataList {
+    customer_data_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:custDataLst` into a `CustomerDataList` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn customer_data_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CustomerDataList {
+    customer_data_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:custDataLst` into a `CustomerDataList` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn customer_data_list_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CustomerDataList {
     let mut node = super::CustomerDataList::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOMER_DATA_LIST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CUSTOMER_DATA_LIST_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.customer_data),
@@ -1227,8 +2173,26 @@ pub fn customer_data_list(element: &Element) -> super::CustomerDataList {
 /// Read `p:tags` into a `CustomerDataTags`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn customer_data_tags(element: &Element) -> super::CustomerDataTags {
+    customer_data_tags_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:tags` into a `CustomerDataTags` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn customer_data_tags_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CustomerDataTags {
+    customer_data_tags_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:tags` into a `CustomerDataTags` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn customer_data_tags_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CustomerDataTags {
     let mut node = super::CustomerDataTags::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOMER_DATA_TAGS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CUSTOMER_DATA_TAGS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.id);
@@ -1241,9 +2205,26 @@ pub fn customer_data_tags(element: &Element) -> super::CustomerDataTags {
 /// Read `p:cut` into a `CutSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cut_slide_transition(element: &Element) -> super::CutSlideTransition {
+    cut_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cut` into a `CutSlideTransition` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn cut_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CutSlideTransition {
+    cut_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:cut` into a `CutSlideTransition` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn cut_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CutSlideTransition {
     let mut node = super::CutSlideTransition::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::CUT_SLIDE_TRANSITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CUT_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.thru_blk);
@@ -1256,8 +2237,26 @@ pub fn cut_slide_transition(element: &Element) -> super::CutSlideTransition {
 /// Read `p:diamond` into a `DiamondSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn diamond_slide_transition(element: &Element) -> super::DiamondSlideTransition {
-    let reader =
-        officekit_markup_base::Reader::new(element, &super::DIAMOND_SLIDE_TRANSITION_SHAPE);
+    diamond_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:diamond` into a `DiamondSlideTransition` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn diamond_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DiamondSlideTransition {
+    diamond_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:diamond` into a `DiamondSlideTransition` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn diamond_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::DiamondSlideTransition {
+    let reader = officekit_markup_base::Reader::of(item, &super::DIAMOND_SLIDE_TRANSITION_SHAPE);
     super::DiamondSlideTransition {
         user_data: (),
         unknown: reader.finish(),
@@ -1267,8 +2266,26 @@ pub fn diamond_slide_transition(element: &Element) -> super::DiamondSlideTransit
 /// Read `p:dissolve` into a `DissolveSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dissolve_slide_transition(element: &Element) -> super::DissolveSlideTransition {
-    let reader =
-        officekit_markup_base::Reader::new(element, &super::DISSOLVE_SLIDE_TRANSITION_SHAPE);
+    dissolve_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:dissolve` into a `DissolveSlideTransition` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dissolve_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DissolveSlideTransition {
+    dissolve_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:dissolve` into a `DissolveSlideTransition` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dissolve_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::DissolveSlideTransition {
+    let reader = officekit_markup_base::Reader::of(item, &super::DISSOLVE_SLIDE_TRANSITION_SHAPE);
     super::DissolveSlideTransition {
         user_data: (),
         unknown: reader.finish(),
@@ -1278,9 +2295,27 @@ pub fn dissolve_slide_transition(element: &Element) -> super::DissolveSlideTrans
 /// Read `p:oleChartEl` into a `EmbeddedChartElement`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_chart_element(element: &Element) -> super::EmbeddedChartElement {
+    embedded_chart_element_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:oleChartEl` into a `EmbeddedChartElement` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_chart_element_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::EmbeddedChartElement {
+    embedded_chart_element_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:oleChartEl` into a `EmbeddedChartElement` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_chart_element_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::EmbeddedChartElement {
     let mut node = super::EmbeddedChartElement::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::EMBEDDED_CHART_ELEMENT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EMBEDDED_CHART_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r#type),
@@ -1295,8 +2330,24 @@ pub fn embedded_chart_element(element: &Element) -> super::EmbeddedChartElement 
 /// Read `p:control` into a `EmbeddedControl`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_control(element: &Element) -> super::EmbeddedControl {
+    embedded_control_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:control` into a `EmbeddedControl` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_control_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::EmbeddedControl {
+    embedded_control_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:control` into a `EmbeddedControl` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_control_from_item(item: officekit_markup_base::Item<'_>) -> super::EmbeddedControl {
     let mut node = super::EmbeddedControl::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EMBEDDED_CONTROL_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EMBEDDED_CONTROL_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.spid),
@@ -1317,8 +2368,24 @@ pub fn embedded_control(element: &Element) -> super::EmbeddedControl {
 /// Read `p:embeddedFont` into a `EmbeddedFont`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_font(element: &Element) -> super::EmbeddedFont {
+    embedded_font_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:embeddedFont` into a `EmbeddedFont` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_font_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::EmbeddedFont {
+    embedded_font_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:embeddedFont` into a `EmbeddedFont` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_font_from_item(item: officekit_markup_base::Item<'_>) -> super::EmbeddedFont {
     let mut node = super::EmbeddedFont::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EMBEDDED_FONT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EMBEDDED_FONT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.name),
@@ -1336,8 +2403,27 @@ pub fn embedded_font(element: &Element) -> super::EmbeddedFont {
 /// Read `p:embeddedFontLst` into a `EmbeddedFontList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_font_list(element: &Element) -> super::EmbeddedFontList {
+    embedded_font_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:embeddedFontLst` into a `EmbeddedFontList` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_font_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::EmbeddedFontList {
+    embedded_font_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:embeddedFontLst` into a `EmbeddedFontList` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_font_list_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::EmbeddedFontList {
     let mut node = super::EmbeddedFontList::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EMBEDDED_FONT_LIST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EMBEDDED_FONT_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.embedded_font);
@@ -1350,8 +2436,26 @@ pub fn embedded_font_list(element: &Element) -> super::EmbeddedFontList {
 /// Read `p:font` into a `EmbeddedFontName`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_font_name(element: &Element) -> super::EmbeddedFontName {
+    embedded_font_name_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:font` into a `EmbeddedFontName` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_font_name_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::EmbeddedFontName {
+    embedded_font_name_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:font` into a `EmbeddedFontName` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_font_name_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::EmbeddedFontName {
     let mut node = super::EmbeddedFontName::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EMBEDDED_FONT_NAME_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EMBEDDED_FONT_NAME_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.typeface),
@@ -1374,9 +2478,28 @@ pub fn embedded_object(element: &Element) -> super::EmbeddedObjectContent {
 /// Read `p:embed` into a `EmbeddedObjectOrControl`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_object_or_control(element: &Element) -> super::EmbeddedObjectOrControl {
+    embedded_object_or_control_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:embed` into a `EmbeddedObjectOrControl` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_object_or_control_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::EmbeddedObjectOrControl {
+    embedded_object_or_control_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:embed` into a `EmbeddedObjectOrControl` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_object_or_control_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::EmbeddedObjectOrControl {
     let mut node = super::EmbeddedObjectOrControl::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::EMBEDDED_OBJECT_OR_CONTROL_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::EMBEDDED_OBJECT_OR_CONTROL_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.follow_color_scheme),
@@ -1391,9 +2514,28 @@ pub fn embedded_object_or_control(element: &Element) -> super::EmbeddedObjectOrC
 /// Read `p:oleObj` into a `EmbeddedObjectsAndControls`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_objects_and_controls(element: &Element) -> super::EmbeddedObjectsAndControls {
+    embedded_objects_and_controls_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:oleObj` into a `EmbeddedObjectsAndControls` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_objects_and_controls_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::EmbeddedObjectsAndControls {
+    embedded_objects_and_controls_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:oleObj` into a `EmbeddedObjectsAndControls` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn embedded_objects_and_controls_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::EmbeddedObjectsAndControls {
     let mut node = super::EmbeddedObjectsAndControls::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::EMBEDDED_OBJECTS_AND_CONTROLS_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::EMBEDDED_OBJECTS_AND_CONTROLS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.spid),
@@ -1415,8 +2557,27 @@ pub fn embedded_objects_and_controls(element: &Element) -> super::EmbeddedObject
 /// Read `p:endCondLst` into a `EndConditionsList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn end_conditions_list(element: &Element) -> super::EndConditionsList {
+    end_conditions_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:endCondLst` into a `EndConditionsList` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn end_conditions_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::EndConditionsList {
+    end_conditions_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:endCondLst` into a `EndConditionsList` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn end_conditions_list_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::EndConditionsList {
     let mut node = super::EndConditionsList::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::END_CONDITIONS_LIST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::END_CONDITIONS_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.condition);
@@ -1429,8 +2590,23 @@ pub fn end_conditions_list(element: &Element) -> super::EndConditionsList {
 /// Read `p:endSync` into a `EndSync`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn end_sync(element: &Element) -> super::EndSync {
+    end_sync_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:endSync` into a `EndSync` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn end_sync_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::EndSync {
+    end_sync_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:endSync` into a `EndSync` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn end_sync_from_item(item: officekit_markup_base::Item<'_>) -> super::EndSync {
     let mut node = super::EndSync::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::END_SYNC_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::END_SYNC_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.evt),
@@ -1446,8 +2622,23 @@ pub fn end_sync(element: &Element) -> super::EndSync {
 /// Read `p:excl` into a `Exclusive`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn exclusive(element: &Element) -> super::Exclusive {
+    exclusive_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:excl` into a `Exclusive` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn exclusive_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Exclusive {
+    exclusive_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:excl` into a `Exclusive` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn exclusive_from_item(item: officekit_markup_base::Item<'_>) -> super::Exclusive {
     let mut node = super::Exclusive::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXCLUSIVE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXCLUSIVE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.common_time_node_properties);
@@ -1460,8 +2651,23 @@ pub fn exclusive(element: &Element) -> super::Exclusive {
 /// Read `p:ext` into a `Extension`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn extension(element: &Element) -> super::Extension {
+    extension_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:ext` into a `Extension` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn extension_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Extension {
+    extension_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:ext` into a `Extension` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn extension_from_item(item: officekit_markup_base::Item<'_>) -> super::Extension {
     let mut node = super::Extension::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXTENSION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXTENSION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.uri),
@@ -1476,8 +2682,24 @@ pub fn extension(element: &Element) -> super::Extension {
 /// Read `p:extLst` into a `ExtensionList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn extension_list(element: &Element) -> super::ExtensionList {
+    extension_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:extLst` into a `ExtensionList` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn extension_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtensionList {
+    extension_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:extLst` into a `ExtensionList` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn extension_list_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtensionList {
     let mut node = super::ExtensionList::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXTENSION_LIST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXTENSION_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -1492,9 +2714,30 @@ pub fn extension_list(element: &Element) -> super::ExtensionList {
 pub fn extension_list_with_modification_flag(
     element: &Element,
 ) -> super::ExtensionListWithModificationFlag {
+    extension_list_with_modification_flag_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:extLst` into a `ExtensionListWithModificationFlag` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn extension_list_with_modification_flag_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtensionListWithModificationFlag {
+    extension_list_with_modification_flag_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `p:extLst` into a `ExtensionListWithModificationFlag` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn extension_list_with_modification_flag_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ExtensionListWithModificationFlag {
     let mut node = super::ExtensionListWithModificationFlag::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::EXTENSION_LIST_WITH_MODIFICATION_FLAG_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -1511,9 +2754,26 @@ pub fn extension_list_with_modification_flag(
 /// Read `p:fade` into a `FadeSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn fade_slide_transition(element: &Element) -> super::FadeSlideTransition {
+    fade_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:fade` into a `FadeSlideTransition` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn fade_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::FadeSlideTransition {
+    fade_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:fade` into a `FadeSlideTransition` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn fade_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::FadeSlideTransition {
     let mut node = super::FadeSlideTransition::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::FADE_SLIDE_TRANSITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::FADE_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.thru_blk);
@@ -1526,8 +2786,23 @@ pub fn fade_slide_transition(element: &Element) -> super::FadeSlideTransition {
 /// Read `p:fltVal` into a `FloatValue`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn float_value(element: &Element) -> super::FloatValue {
+    float_value_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:fltVal` into a `FloatValue` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn float_value_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::FloatValue {
+    float_value_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:fltVal` into a `FloatValue` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn float_value_from_item(item: officekit_markup_base::Item<'_>) -> super::FloatValue {
     let mut node = super::FloatValue::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::FLOAT_VALUE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::FLOAT_VALUE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);
@@ -1540,8 +2815,23 @@ pub fn float_value(element: &Element) -> super::FloatValue {
 /// Read `p:from` into a `FromColor`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn from_color(element: &Element) -> super::FromColor {
+    from_color_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:from` into a `FromColor` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn from_color_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::FromColor {
+    from_color_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:from` into a `FromColor` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn from_color_from_item(item: officekit_markup_base::Item<'_>) -> super::FromColor {
     let mut node = super::FromColor::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::FROM_COLOR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::FROM_COLOR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -1554,8 +2844,23 @@ pub fn from_color(element: &Element) -> super::FromColor {
 /// Read `p:from` into a `FromTLPoint`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn from_tl_point(element: &Element) -> super::FromTLPoint {
+    from_tl_point_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:from` into a `FromTLPoint` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn from_tl_point_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::FromTLPoint {
+    from_tl_point_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:from` into a `FromTLPoint` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn from_tl_point_from_item(item: officekit_markup_base::Item<'_>) -> super::FromTLPoint {
     let mut node = super::FromTLPoint::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::FROM_TL_POINT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::FROM_TL_POINT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.x),
@@ -1570,8 +2875,24 @@ pub fn from_tl_point(element: &Element) -> super::FromTLPoint {
 /// Read `p:graphicEl` into a `GraphicElement`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn graphic_element(element: &Element) -> super::GraphicElement {
+    graphic_element_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:graphicEl` into a `GraphicElement` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn graphic_element_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::GraphicElement {
+    graphic_element_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:graphicEl` into a `GraphicElement` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn graphic_element_from_item(item: officekit_markup_base::Item<'_>) -> super::GraphicElement {
     let mut node = super::GraphicElement::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::GRAPHIC_ELEMENT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::GRAPHIC_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -1584,8 +2905,24 @@ pub fn graphic_element(element: &Element) -> super::GraphicElement {
 /// Read `p:graphicFrame` into a `GraphicFrame`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn graphic_frame(element: &Element) -> super::GraphicFrame {
+    graphic_frame_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:graphicFrame` into a `GraphicFrame` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn graphic_frame_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::GraphicFrame {
+    graphic_frame_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:graphicFrame` into a `GraphicFrame` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn graphic_frame_from_item(item: officekit_markup_base::Item<'_>) -> super::GraphicFrame {
     let mut node = super::GraphicFrame::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::GRAPHIC_FRAME_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::GRAPHIC_FRAME_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bw_mode),
@@ -1603,8 +2940,24 @@ pub fn graphic_frame(element: &Element) -> super::GraphicFrame {
 /// Read `p:gridSpacing` into a `GridSpacing`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn grid_spacing(element: &Element) -> super::GridSpacing {
+    grid_spacing_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:gridSpacing` into a `GridSpacing` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn grid_spacing_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::GridSpacing {
+    grid_spacing_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:gridSpacing` into a `GridSpacing` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn grid_spacing_from_item(item: officekit_markup_base::Item<'_>) -> super::GridSpacing {
     let mut node = super::GridSpacing::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::GRID_SPACING_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::GRID_SPACING_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.cx),
@@ -1619,8 +2972,23 @@ pub fn grid_spacing(element: &Element) -> super::GridSpacing {
 /// Read `p:grpSp` into a `GroupShape`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_shape(element: &Element) -> super::GroupShape {
+    group_shape_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:grpSp` into a `GroupShape` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn group_shape_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::GroupShape {
+    group_shape_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:grpSp` into a `GroupShape` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn group_shape_from_item(item: officekit_markup_base::Item<'_>) -> super::GroupShape {
     let mut node = super::GroupShape::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::GROUP_SHAPE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::GROUP_SHAPE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.non_visual_properties),
@@ -1643,9 +3011,27 @@ pub fn group_shape_content(element: &Element) -> super::GroupShapeContent {
 /// Read `p:grpSpPr` into a `GroupShapeProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_shape_properties(element: &Element) -> super::GroupShapeProperties {
+    group_shape_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:grpSpPr` into a `GroupShapeProperties` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn group_shape_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::GroupShapeProperties {
+    group_shape_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:grpSpPr` into a `GroupShapeProperties` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn group_shape_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::GroupShapeProperties {
     let mut node = super::GroupShapeProperties::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::GROUP_SHAPE_PROPERTIES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::GROUP_SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bw_mode),
@@ -1664,8 +3050,24 @@ pub fn group_shape_properties(element: &Element) -> super::GroupShapeProperties 
 /// Read `p:handoutMaster` into a `HandoutMaster`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn handout_master(element: &Element) -> super::HandoutMaster {
+    handout_master_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:handoutMaster` into a `HandoutMaster` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn handout_master_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::HandoutMaster {
+    handout_master_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:handoutMaster` into a `HandoutMaster` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn handout_master_from_item(item: officekit_markup_base::Item<'_>) -> super::HandoutMaster {
     let mut node = super::HandoutMaster::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::HANDOUT_MASTER_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::HANDOUT_MASTER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.common_slide_data),
@@ -1682,8 +3084,27 @@ pub fn handout_master(element: &Element) -> super::HandoutMaster {
 /// Read `p:handoutMasterId` into a `HandoutMasterID`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn handout_master_id(element: &Element) -> super::HandoutMasterID {
+    handout_master_id_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:handoutMasterId` into a `HandoutMasterID` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn handout_master_id_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::HandoutMasterID {
+    handout_master_id_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:handoutMasterId` into a `HandoutMasterID` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn handout_master_id_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::HandoutMasterID {
     let mut node = super::HandoutMasterID::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::HANDOUT_MASTER_ID_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::HANDOUT_MASTER_ID_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -1700,9 +3121,32 @@ pub fn handout_master_id(element: &Element) -> super::HandoutMasterID {
 pub fn header_footer_information_for_a_slide_master(
     element: &Element,
 ) -> super::HeaderFooterInformationForASlideMaster {
-    let mut node = super::HeaderFooterInformationForASlideMaster::default();
-    let mut reader = officekit_markup_base::Reader::new(
+    header_footer_information_for_a_slide_master_from_item(officekit_markup_base::Item::Tree(
         element,
+    ))
+}
+
+/// Read `p:hf` into a `HeaderFooterInformationForASlideMaster` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn header_footer_information_for_a_slide_master_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::HeaderFooterInformationForASlideMaster {
+    header_footer_information_for_a_slide_master_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `p:hf` into a `HeaderFooterInformationForASlideMaster` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn header_footer_information_for_a_slide_master_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::HeaderFooterInformationForASlideMaster {
+    let mut node = super::HeaderFooterInformationForASlideMaster::default();
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::HEADER_FOOTER_INFORMATION_FOR_A_SLIDE_MASTER_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -1722,8 +3166,23 @@ pub fn header_footer_information_for_a_slide_master(
 /// Read `p:hsl` into a `Hsl`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hsl(element: &Element) -> super::Hsl {
+    hsl_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:hsl` into a `Hsl` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn hsl_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Hsl {
+    hsl_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:hsl` into a `Hsl` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn hsl_from_item(item: officekit_markup_base::Item<'_>) -> super::Hsl {
     let mut node = super::Hsl::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::HSL_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::HSL_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.h),
@@ -1739,9 +3198,28 @@ pub fn hsl(element: &Element) -> super::Hsl {
 /// Read `p:htmlPubPr` into a `HTMLPublishingProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn html_publishing_properties(element: &Element) -> super::HTMLPublishingProperties {
+    html_publishing_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:htmlPubPr` into a `HTMLPublishingProperties` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn html_publishing_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::HTMLPublishingProperties {
+    html_publishing_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:htmlPubPr` into a `HTMLPublishingProperties` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn html_publishing_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::HTMLPublishingProperties {
     let mut node = super::HTMLPublishingProperties::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::HTML_PUBLISHING_PROPERTIES_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::HTML_PUBLISHING_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.show_speaker_notes),
@@ -1760,8 +3238,23 @@ pub fn html_publishing_properties(element: &Element) -> super::HTMLPublishingPro
 /// Read `p:inkTgt` into a `InkTarget`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ink_target(element: &Element) -> super::InkTarget {
+    ink_target_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:inkTgt` into a `InkTarget` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ink_target_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::InkTarget {
+    ink_target_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:inkTgt` into a `InkTarget` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ink_target_from_item(item: officekit_markup_base::Item<'_>) -> super::InkTarget {
     let mut node = super::InkTarget::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::INK_TARGET_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::INK_TARGET_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.spid);
@@ -1774,8 +3267,23 @@ pub fn ink_target(element: &Element) -> super::InkTarget {
 /// Read `p:intVal` into a `Integer`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn integer(element: &Element) -> super::Integer {
+    integer_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:intVal` into a `Integer` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn integer_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Integer {
+    integer_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:intVal` into a `Integer` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn integer_from_item(item: officekit_markup_base::Item<'_>) -> super::Integer {
     let mut node = super::Integer::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::INTEGER_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::INTEGER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);
@@ -1788,9 +3296,26 @@ pub fn integer(element: &Element) -> super::Integer {
 /// Read `p:italic` into a `ItalicEmbeddedFont`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn italic_embedded_font(element: &Element) -> super::ItalicEmbeddedFont {
+    italic_embedded_font_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:italic` into a `ItalicEmbeddedFont` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn italic_embedded_font_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ItalicEmbeddedFont {
+    italic_embedded_font_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:italic` into a `ItalicEmbeddedFont` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn italic_embedded_font_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ItalicEmbeddedFont {
     let mut node = super::ItalicEmbeddedFont::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::ITALIC_EMBEDDED_FONT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ITALIC_EMBEDDED_FONT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.id);
@@ -1803,8 +3328,23 @@ pub fn italic_embedded_font(element: &Element) -> super::ItalicEmbeddedFont {
 /// Read `p:iterate` into a `Iterate`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn iterate(element: &Element) -> super::Iterate {
+    iterate_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:iterate` into a `Iterate` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn iterate_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Iterate {
+    iterate_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:iterate` into a `Iterate` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn iterate_from_item(item: officekit_markup_base::Item<'_>) -> super::Iterate {
     let mut node = super::Iterate::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::ITERATE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ITERATE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r#type),
@@ -1826,8 +3366,24 @@ pub fn iterate_content(element: &Element) -> super::IterateContent {
 /// Read `p:kinsoku` into a `KinsokuSettings`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn kinsoku_settings(element: &Element) -> super::KinsokuSettings {
+    kinsoku_settings_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:kinsoku` into a `KinsokuSettings` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn kinsoku_settings_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::KinsokuSettings {
+    kinsoku_settings_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:kinsoku` into a `KinsokuSettings` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn kinsoku_settings_from_item(item: officekit_markup_base::Item<'_>) -> super::KinsokuSettings {
     let mut node = super::KinsokuSettings::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::KINSOKU_SETTINGS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::KINSOKU_SETTINGS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.lang),
@@ -1843,9 +3399,26 @@ pub fn kinsoku_settings(element: &Element) -> super::KinsokuSettings {
 /// Read `p:kiosk` into a `KioskSlideShowMode`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn kiosk_slide_show_mode(element: &Element) -> super::KioskSlideShowMode {
+    kiosk_slide_show_mode_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:kiosk` into a `KioskSlideShowMode` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn kiosk_slide_show_mode_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::KioskSlideShowMode {
+    kiosk_slide_show_mode_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:kiosk` into a `KioskSlideShowMode` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn kiosk_slide_show_mode_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::KioskSlideShowMode {
     let mut node = super::KioskSlideShowMode::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::KIOSK_SLIDE_SHOW_MODE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::KIOSK_SLIDE_SHOW_MODE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.restart);
@@ -1858,9 +3431,27 @@ pub fn kiosk_slide_show_mode(element: &Element) -> super::KioskSlideShowMode {
 /// Read `p:link` into a `LinkedObjectOrControl`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn linked_object_or_control(element: &Element) -> super::LinkedObjectOrControl {
+    linked_object_or_control_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:link` into a `LinkedObjectOrControl` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn linked_object_or_control_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::LinkedObjectOrControl {
+    linked_object_or_control_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:link` into a `LinkedObjectOrControl` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn linked_object_or_control_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::LinkedObjectOrControl {
     let mut node = super::LinkedObjectOrControl::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::LINKED_OBJECT_OR_CONTROL_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::LINKED_OBJECT_OR_CONTROL_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.update_automatic),
@@ -1875,9 +3466,27 @@ pub fn linked_object_or_control(element: &Element) -> super::LinkedObjectOrContr
 /// Read `p:cmAuthorLst` into a `ListOfCommentAuthors`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_comment_authors(element: &Element) -> super::ListOfCommentAuthors {
+    list_of_comment_authors_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cmAuthorLst` into a `ListOfCommentAuthors` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_comment_authors_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ListOfCommentAuthors {
+    list_of_comment_authors_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:cmAuthorLst` into a `ListOfCommentAuthors` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_comment_authors_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ListOfCommentAuthors {
     let mut node = super::ListOfCommentAuthors::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::LIST_OF_COMMENT_AUTHORS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::LIST_OF_COMMENT_AUTHORS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.comment_author);
@@ -1890,8 +3499,24 @@ pub fn list_of_comment_authors(element: &Element) -> super::ListOfCommentAuthors
 /// Read `p:controls` into a `ListOfControls`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_controls(element: &Element) -> super::ListOfControls {
+    list_of_controls_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:controls` into a `ListOfControls` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_controls_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ListOfControls {
+    list_of_controls_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:controls` into a `ListOfControls` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_controls_from_item(item: officekit_markup_base::Item<'_>) -> super::ListOfControls {
     let mut node = super::ListOfControls::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::LIST_OF_CONTROLS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::LIST_OF_CONTROLS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.embedded_control);
@@ -1904,9 +3529,27 @@ pub fn list_of_controls(element: &Element) -> super::ListOfControls {
 /// Read `p:custShowLst` into a `ListOfCustomShows`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_custom_shows(element: &Element) -> super::ListOfCustomShows {
+    list_of_custom_shows_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:custShowLst` into a `ListOfCustomShows` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_custom_shows_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ListOfCustomShows {
+    list_of_custom_shows_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:custShowLst` into a `ListOfCustomShows` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_custom_shows_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ListOfCustomShows {
     let mut node = super::ListOfCustomShows::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::LIST_OF_CUSTOM_SHOWS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::LIST_OF_CUSTOM_SHOWS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.custom_show_custom_show);
@@ -1919,8 +3562,24 @@ pub fn list_of_custom_shows(element: &Element) -> super::ListOfCustomShows {
 /// Read `p:guideLst` into a `ListOfGuides`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_guides(element: &Element) -> super::ListOfGuides {
+    list_of_guides_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:guideLst` into a `ListOfGuides` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_guides_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ListOfGuides {
+    list_of_guides_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:guideLst` into a `ListOfGuides` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_guides_from_item(item: officekit_markup_base::Item<'_>) -> super::ListOfGuides {
     let mut node = super::ListOfGuides::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::LIST_OF_GUIDES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::LIST_OF_GUIDES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.a_guide);
@@ -1933,9 +3592,28 @@ pub fn list_of_guides(element: &Element) -> super::ListOfGuides {
 /// Read `p:handoutMasterIdLst` into a `ListOfHandoutMasterIDs`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_handout_master_i_ds(element: &Element) -> super::ListOfHandoutMasterIDs {
+    list_of_handout_master_i_ds_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:handoutMasterIdLst` into a `ListOfHandoutMasterIDs` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_handout_master_i_ds_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ListOfHandoutMasterIDs {
+    list_of_handout_master_i_ds_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:handoutMasterIdLst` into a `ListOfHandoutMasterIDs` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_handout_master_i_ds_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ListOfHandoutMasterIDs {
     let mut node = super::ListOfHandoutMasterIDs::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::LIST_OF_HANDOUT_MASTER_I_DS_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::LIST_OF_HANDOUT_MASTER_I_DS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.handout_master_id);
@@ -1948,9 +3626,28 @@ pub fn list_of_handout_master_i_ds(element: &Element) -> super::ListOfHandoutMas
 /// Read `p:notesMasterIdLst` into a `ListOfNotesMasterIDs`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_notes_master_i_ds(element: &Element) -> super::ListOfNotesMasterIDs {
+    list_of_notes_master_i_ds_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:notesMasterIdLst` into a `ListOfNotesMasterIDs` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_notes_master_i_ds_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ListOfNotesMasterIDs {
+    list_of_notes_master_i_ds_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:notesMasterIdLst` into a `ListOfNotesMasterIDs` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_notes_master_i_ds_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ListOfNotesMasterIDs {
     let mut node = super::ListOfNotesMasterIDs::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::LIST_OF_NOTES_MASTER_I_DS_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::LIST_OF_NOTES_MASTER_I_DS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.notes_master_id);
@@ -1963,9 +3660,28 @@ pub fn list_of_notes_master_i_ds(element: &Element) -> super::ListOfNotesMasterI
 /// Read `p:sldLst` into a `ListOfPresentationSlides`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_presentation_slides(element: &Element) -> super::ListOfPresentationSlides {
+    list_of_presentation_slides_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sldLst` into a `ListOfPresentationSlides` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_presentation_slides_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ListOfPresentationSlides {
+    list_of_presentation_slides_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sldLst` into a `ListOfPresentationSlides` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_presentation_slides_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ListOfPresentationSlides {
     let mut node = super::ListOfPresentationSlides::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::LIST_OF_PRESENTATION_SLIDES_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::LIST_OF_PRESENTATION_SLIDES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.presentation_slide);
@@ -1980,9 +3696,32 @@ pub fn list_of_presentation_slides(element: &Element) -> super::ListOfPresentati
 pub fn list_of_presentation_slides_outline_view_slide_list(
     element: &Element,
 ) -> super::ListOfPresentationSlidesOutlineViewSlideList {
+    list_of_presentation_slides_outline_view_slide_list_from_item(
+        officekit_markup_base::Item::Tree(element),
+    )
+}
+
+/// Read `p:sldLst` into a `ListOfPresentationSlidesOutlineViewSlideList` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_presentation_slides_outline_view_slide_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ListOfPresentationSlidesOutlineViewSlideList {
+    list_of_presentation_slides_outline_view_slide_list_from_item(
+        officekit_markup_base::Item::Events(start, events),
+    )
+}
+
+/// Read `p:sldLst` into a `ListOfPresentationSlidesOutlineViewSlideList` from an element, or from
+/// its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_presentation_slides_outline_view_slide_list_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ListOfPresentationSlidesOutlineViewSlideList {
     let mut node = super::ListOfPresentationSlidesOutlineViewSlideList::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::LIST_OF_PRESENTATION_SLIDES_OUTLINE_VIEW_SLIDE_LIST_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -1997,8 +3736,26 @@ pub fn list_of_presentation_slides_outline_view_slide_list(
 /// Read `p:sldIdLst` into a `ListOfSlideIDs`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_slide_i_ds(element: &Element) -> super::ListOfSlideIDs {
+    list_of_slide_i_ds_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sldIdLst` into a `ListOfSlideIDs` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_slide_i_ds_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ListOfSlideIDs {
+    list_of_slide_i_ds_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sldIdLst` into a `ListOfSlideIDs` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_slide_i_ds_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ListOfSlideIDs {
     let mut node = super::ListOfSlideIDs::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::LIST_OF_SLIDE_I_DS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::LIST_OF_SLIDE_I_DS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.slide_id);
@@ -2011,9 +3768,27 @@ pub fn list_of_slide_i_ds(element: &Element) -> super::ListOfSlideIDs {
 /// Read `p:sldLayoutIdLst` into a `ListOfSlideLayouts`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_slide_layouts(element: &Element) -> super::ListOfSlideLayouts {
+    list_of_slide_layouts_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sldLayoutIdLst` into a `ListOfSlideLayouts` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_slide_layouts_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ListOfSlideLayouts {
+    list_of_slide_layouts_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sldLayoutIdLst` into a `ListOfSlideLayouts` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_slide_layouts_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ListOfSlideLayouts {
     let mut node = super::ListOfSlideLayouts::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::LIST_OF_SLIDE_LAYOUTS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::LIST_OF_SLIDE_LAYOUTS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.slide_layout_id);
@@ -2026,9 +3801,28 @@ pub fn list_of_slide_layouts(element: &Element) -> super::ListOfSlideLayouts {
 /// Read `p:sldMasterIdLst` into a `ListOfSlideMasterIDs`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_slide_master_i_ds(element: &Element) -> super::ListOfSlideMasterIDs {
+    list_of_slide_master_i_ds_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sldMasterIdLst` into a `ListOfSlideMasterIDs` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_slide_master_i_ds_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ListOfSlideMasterIDs {
+    list_of_slide_master_i_ds_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sldMasterIdLst` into a `ListOfSlideMasterIDs` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_of_slide_master_i_ds_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ListOfSlideMasterIDs {
     let mut node = super::ListOfSlideMasterIDs::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::LIST_OF_SLIDE_MASTER_I_DS_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::LIST_OF_SLIDE_MASTER_I_DS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.slide_master_id);
@@ -2041,9 +3835,27 @@ pub fn list_of_slide_master_i_ds(element: &Element) -> super::ListOfSlideMasterI
 /// Read `p:modifyVerifier` into a `ModificationVerifier`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn modification_verifier(element: &Element) -> super::ModificationVerifier {
+    modification_verifier_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:modifyVerifier` into a `ModificationVerifier` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn modification_verifier_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ModificationVerifier {
+    modification_verifier_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:modifyVerifier` into a `ModificationVerifier` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn modification_verifier_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ModificationVerifier {
     let mut node = super::ModificationVerifier::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::MODIFICATION_VERIFIER_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::MODIFICATION_VERIFIER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.algorithm_name),
@@ -2072,8 +3884,26 @@ pub fn modification_verifier(element: &Element) -> super::ModificationVerifier {
 /// Read `p:newsflash` into a `NewsflashSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn newsflash_slide_transition(element: &Element) -> super::NewsflashSlideTransition {
-    let reader =
-        officekit_markup_base::Reader::new(element, &super::NEWSFLASH_SLIDE_TRANSITION_SHAPE);
+    newsflash_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:newsflash` into a `NewsflashSlideTransition` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn newsflash_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NewsflashSlideTransition {
+    newsflash_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:newsflash` into a `NewsflashSlideTransition` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn newsflash_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NewsflashSlideTransition {
+    let reader = officekit_markup_base::Reader::of(item, &super::NEWSFLASH_SLIDE_TRANSITION_SHAPE);
     super::NewsflashSlideTransition {
         user_data: (),
         unknown: reader.finish(),
@@ -2083,9 +3913,27 @@ pub fn newsflash_slide_transition(element: &Element) -> super::NewsflashSlideTra
 /// Read `p:nextCondLst` into a `NextConditionsList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn next_conditions_list(element: &Element) -> super::NextConditionsList {
+    next_conditions_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:nextCondLst` into a `NextConditionsList` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn next_conditions_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NextConditionsList {
+    next_conditions_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:nextCondLst` into a `NextConditionsList` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn next_conditions_list_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NextConditionsList {
     let mut node = super::NextConditionsList::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::NEXT_CONDITIONS_LIST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NEXT_CONDITIONS_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.condition);
@@ -2100,9 +3948,32 @@ pub fn next_conditions_list(element: &Element) -> super::NextConditionsList {
 pub fn non_visual_connector_shape_drawing_properties(
     element: &Element,
 ) -> super::NonVisualConnectorShapeDrawingProperties {
-    let mut node = super::NonVisualConnectorShapeDrawingProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(
+    non_visual_connector_shape_drawing_properties_from_item(officekit_markup_base::Item::Tree(
         element,
+    ))
+}
+
+/// Read `p:cNvCxnSpPr` into a `NonVisualConnectorShapeDrawingProperties` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_connector_shape_drawing_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualConnectorShapeDrawingProperties {
+    non_visual_connector_shape_drawing_properties_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `p:cNvCxnSpPr` into a `NonVisualConnectorShapeDrawingProperties` from an element, or from
+/// its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_connector_shape_drawing_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualConnectorShapeDrawingProperties {
+    let mut node = super::NonVisualConnectorShapeDrawingProperties::default();
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -2121,9 +3992,28 @@ pub fn non_visual_connector_shape_drawing_properties(
 /// Read `p:cNvPr` into a `NonVisualDrawingProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawingProperties {
+    non_visual_drawing_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cNvPr` into a `NonVisualDrawingProperties` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_drawing_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualDrawingProperties {
+    non_visual_drawing_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:cNvPr` into a `NonVisualDrawingProperties` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_drawing_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualDrawingProperties {
     let mut node = super::NonVisualDrawingProperties::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -2146,9 +4036,30 @@ pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawi
 pub fn non_visual_drawing_properties_for_a_shape(
     element: &Element,
 ) -> super::NonVisualDrawingPropertiesForAShape {
+    non_visual_drawing_properties_for_a_shape_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cNvSpPr` into a `NonVisualDrawingPropertiesForAShape` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_drawing_properties_for_a_shape_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualDrawingPropertiesForAShape {
+    non_visual_drawing_properties_for_a_shape_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `p:cNvSpPr` into a `NonVisualDrawingPropertiesForAShape` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_drawing_properties_for_a_shape_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualDrawingPropertiesForAShape {
     let mut node = super::NonVisualDrawingPropertiesForAShape::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::NON_VISUAL_DRAWING_PROPERTIES_FOR_A_SHAPE_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -2168,9 +4079,32 @@ pub fn non_visual_drawing_properties_for_a_shape(
 pub fn non_visual_graphic_frame_drawing_properties(
     element: &Element,
 ) -> super::NonVisualGraphicFrameDrawingProperties {
-    let mut node = super::NonVisualGraphicFrameDrawingProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(
+    non_visual_graphic_frame_drawing_properties_from_item(officekit_markup_base::Item::Tree(
         element,
+    ))
+}
+
+/// Read `p:cNvGraphicFramePr` into a `NonVisualGraphicFrameDrawingProperties` from its start tag
+/// and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_graphic_frame_drawing_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualGraphicFrameDrawingProperties {
+    non_visual_graphic_frame_drawing_properties_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `p:cNvGraphicFramePr` into a `NonVisualGraphicFrameDrawingProperties` from an element, or
+/// from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_graphic_frame_drawing_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualGraphicFrameDrawingProperties {
+    let mut node = super::NonVisualGraphicFrameDrawingProperties::default();
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -2189,9 +4123,30 @@ pub fn non_visual_graphic_frame_drawing_properties(
 pub fn non_visual_group_shape_drawing_properties(
     element: &Element,
 ) -> super::NonVisualGroupShapeDrawingProperties {
+    non_visual_group_shape_drawing_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cNvGrpSpPr` into a `NonVisualGroupShapeDrawingProperties` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_group_shape_drawing_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualGroupShapeDrawingProperties {
+    non_visual_group_shape_drawing_properties_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `p:cNvGrpSpPr` into a `NonVisualGroupShapeDrawingProperties` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_group_shape_drawing_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualGroupShapeDrawingProperties {
     let mut node = super::NonVisualGroupShapeDrawingProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -2210,9 +4165,30 @@ pub fn non_visual_group_shape_drawing_properties(
 pub fn non_visual_picture_drawing_properties(
     element: &Element,
 ) -> super::NonVisualPictureDrawingProperties {
+    non_visual_picture_drawing_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:cNvPicPr` into a `NonVisualPictureDrawingProperties` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_picture_drawing_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualPictureDrawingProperties {
+    non_visual_picture_drawing_properties_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `p:cNvPicPr` into a `NonVisualPictureDrawingProperties` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_picture_drawing_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualPictureDrawingProperties {
     let mut node = super::NonVisualPictureDrawingProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -2230,9 +4206,26 @@ pub fn non_visual_picture_drawing_properties(
 /// Read `p:nvPr` into a `NonVisualProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_properties(element: &Element) -> super::NonVisualProperties {
+    non_visual_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:nvPr` into a `NonVisualProperties` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualProperties {
+    non_visual_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:nvPr` into a `NonVisualProperties` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualProperties {
     let mut node = super::NonVisualProperties::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::NON_VISUAL_PROPERTIES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NON_VISUAL_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.is_photo),
@@ -2259,9 +4252,32 @@ pub fn non_visual_properties_content(element: &Element) -> super::NonVisualPrope
 pub fn non_visual_properties_for_a_connection_shape(
     element: &Element,
 ) -> super::NonVisualPropertiesForAConnectionShape {
-    let mut node = super::NonVisualPropertiesForAConnectionShape::default();
-    let mut reader = officekit_markup_base::Reader::new(
+    non_visual_properties_for_a_connection_shape_from_item(officekit_markup_base::Item::Tree(
         element,
+    ))
+}
+
+/// Read `p:nvCxnSpPr` into a `NonVisualPropertiesForAConnectionShape` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_properties_for_a_connection_shape_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualPropertiesForAConnectionShape {
+    non_visual_properties_for_a_connection_shape_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `p:nvCxnSpPr` into a `NonVisualPropertiesForAConnectionShape` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_properties_for_a_connection_shape_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualPropertiesForAConnectionShape {
+    let mut node = super::NonVisualPropertiesForAConnectionShape::default();
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::NON_VISUAL_PROPERTIES_FOR_A_CONNECTION_SHAPE_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -2281,9 +4297,30 @@ pub fn non_visual_properties_for_a_connection_shape(
 pub fn non_visual_properties_for_a_graphic_frame(
     element: &Element,
 ) -> super::NonVisualPropertiesForAGraphicFrame {
+    non_visual_properties_for_a_graphic_frame_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:nvGraphicFramePr` into a `NonVisualPropertiesForAGraphicFrame` from its start tag and
+/// the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_properties_for_a_graphic_frame_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualPropertiesForAGraphicFrame {
+    non_visual_properties_for_a_graphic_frame_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `p:nvGraphicFramePr` into a `NonVisualPropertiesForAGraphicFrame` from an element, or from
+/// its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_properties_for_a_graphic_frame_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualPropertiesForAGraphicFrame {
     let mut node = super::NonVisualPropertiesForAGraphicFrame::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::NON_VISUAL_PROPERTIES_FOR_A_GRAPHIC_FRAME_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -2303,9 +4340,30 @@ pub fn non_visual_properties_for_a_graphic_frame(
 pub fn non_visual_properties_for_a_group_shape(
     element: &Element,
 ) -> super::NonVisualPropertiesForAGroupShape {
+    non_visual_properties_for_a_group_shape_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:nvGrpSpPr` into a `NonVisualPropertiesForAGroupShape` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_properties_for_a_group_shape_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualPropertiesForAGroupShape {
+    non_visual_properties_for_a_group_shape_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `p:nvGrpSpPr` into a `NonVisualPropertiesForAGroupShape` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_properties_for_a_group_shape_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualPropertiesForAGroupShape {
     let mut node = super::NonVisualPropertiesForAGroupShape::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::NON_VISUAL_PROPERTIES_FOR_A_GROUP_SHAPE_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -2325,11 +4383,30 @@ pub fn non_visual_properties_for_a_group_shape(
 pub fn non_visual_properties_for_a_picture(
     element: &Element,
 ) -> super::NonVisualPropertiesForAPicture {
+    non_visual_properties_for_a_picture_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:nvPicPr` into a `NonVisualPropertiesForAPicture` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_properties_for_a_picture_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualPropertiesForAPicture {
+    non_visual_properties_for_a_picture_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `p:nvPicPr` into a `NonVisualPropertiesForAPicture` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_properties_for_a_picture_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualPropertiesForAPicture {
     let mut node = super::NonVisualPropertiesForAPicture::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::NON_VISUAL_PROPERTIES_FOR_A_PICTURE_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::NON_VISUAL_PROPERTIES_FOR_A_PICTURE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.non_visual_drawing_properties),
@@ -2345,11 +4422,28 @@ pub fn non_visual_properties_for_a_picture(
 /// Read `p:nvSpPr` into a `NonVisualPropertiesForAShape`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_properties_for_a_shape(element: &Element) -> super::NonVisualPropertiesForAShape {
+    non_visual_properties_for_a_shape_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:nvSpPr` into a `NonVisualPropertiesForAShape` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_properties_for_a_shape_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualPropertiesForAShape {
+    non_visual_properties_for_a_shape_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:nvSpPr` into a `NonVisualPropertiesForAShape` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_properties_for_a_shape_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualPropertiesForAShape {
     let mut node = super::NonVisualPropertiesForAShape::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::NON_VISUAL_PROPERTIES_FOR_A_SHAPE_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::NON_VISUAL_PROPERTIES_FOR_A_SHAPE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.non_visual_drawing_properties),
@@ -2365,9 +4459,27 @@ pub fn non_visual_properties_for_a_shape(element: &Element) -> super::NonVisualP
 /// Read `p:normalViewPr` into a `NormalViewProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn normal_view_properties(element: &Element) -> super::NormalViewProperties {
+    normal_view_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:normalViewPr` into a `NormalViewProperties` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn normal_view_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NormalViewProperties {
+    normal_view_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:normalViewPr` into a `NormalViewProperties` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn normal_view_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NormalViewProperties {
     let mut node = super::NormalViewProperties::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::NORMAL_VIEW_PROPERTIES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NORMAL_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.show_outline_icons),
@@ -2390,11 +4502,30 @@ pub fn normal_view_properties(element: &Element) -> super::NormalViewProperties 
 pub fn normal_view_restored_left_properties(
     element: &Element,
 ) -> super::NormalViewRestoredLeftProperties {
+    normal_view_restored_left_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:restoredLeft` into a `NormalViewRestoredLeftProperties` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn normal_view_restored_left_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NormalViewRestoredLeftProperties {
+    normal_view_restored_left_properties_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `p:restoredLeft` into a `NormalViewRestoredLeftProperties` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn normal_view_restored_left_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NormalViewRestoredLeftProperties {
     let mut node = super::NormalViewRestoredLeftProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::NORMAL_VIEW_RESTORED_LEFT_PROPERTIES_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::NORMAL_VIEW_RESTORED_LEFT_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.sz),
@@ -2411,11 +4542,30 @@ pub fn normal_view_restored_left_properties(
 pub fn normal_view_restored_top_properties(
     element: &Element,
 ) -> super::NormalViewRestoredTopProperties {
+    normal_view_restored_top_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:restoredTop` into a `NormalViewRestoredTopProperties` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn normal_view_restored_top_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NormalViewRestoredTopProperties {
+    normal_view_restored_top_properties_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `p:restoredTop` into a `NormalViewRestoredTopProperties` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn normal_view_restored_top_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NormalViewRestoredTopProperties {
     let mut node = super::NormalViewRestoredTopProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::NORMAL_VIEW_RESTORED_TOP_PROPERTIES_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::NORMAL_VIEW_RESTORED_TOP_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.sz),
@@ -2430,8 +4580,24 @@ pub fn normal_view_restored_top_properties(
 /// Read `p:notesMaster` into a `NotesMaster`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_master(element: &Element) -> super::NotesMaster {
+    notes_master_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:notesMaster` into a `NotesMaster` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_master_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NotesMaster {
+    notes_master_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:notesMaster` into a `NotesMaster` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_master_from_item(item: officekit_markup_base::Item<'_>) -> super::NotesMaster {
     let mut node = super::NotesMaster::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NOTES_MASTER_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NOTES_MASTER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.common_slide_data),
@@ -2449,8 +4615,24 @@ pub fn notes_master(element: &Element) -> super::NotesMaster {
 /// Read `p:notesMasterId` into a `NotesMasterID`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_master_id(element: &Element) -> super::NotesMasterID {
+    notes_master_id_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:notesMasterId` into a `NotesMasterID` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_master_id_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NotesMasterID {
+    notes_master_id_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:notesMasterId` into a `NotesMasterID` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_master_id_from_item(item: officekit_markup_base::Item<'_>) -> super::NotesMasterID {
     let mut node = super::NotesMasterID::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NOTES_MASTER_ID_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NOTES_MASTER_ID_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -2465,8 +4647,23 @@ pub fn notes_master_id(element: &Element) -> super::NotesMasterID {
 /// Read `p:notes` into a `NotesSlide`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_slide(element: &Element) -> super::NotesSlide {
+    notes_slide_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:notes` into a `NotesSlide` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_slide_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NotesSlide {
+    notes_slide_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:notes` into a `NotesSlide` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_slide_from_item(item: officekit_markup_base::Item<'_>) -> super::NotesSlide {
     let mut node = super::NotesSlide::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NOTES_SLIDE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NOTES_SLIDE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.show_master_sp),
@@ -2484,8 +4681,24 @@ pub fn notes_slide(element: &Element) -> super::NotesSlide {
 /// Read `p:notesSz` into a `NotesSlideSize`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_slide_size(element: &Element) -> super::NotesSlideSize {
+    notes_slide_size_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:notesSz` into a `NotesSlideSize` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_slide_size_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NotesSlideSize {
+    notes_slide_size_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:notesSz` into a `NotesSlideSize` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_slide_size_from_item(item: officekit_markup_base::Item<'_>) -> super::NotesSlideSize {
     let mut node = super::NotesSlideSize::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NOTES_SLIDE_SIZE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NOTES_SLIDE_SIZE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.cx),
@@ -2500,8 +4713,24 @@ pub fn notes_slide_size(element: &Element) -> super::NotesSlideSize {
 /// Read `p:notesStyle` into a `NotesTextStyle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_text_style(element: &Element) -> super::NotesTextStyle {
+    notes_text_style_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:notesStyle` into a `NotesTextStyle` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_text_style_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NotesTextStyle {
+    notes_text_style_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:notesStyle` into a `NotesTextStyle` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_text_style_from_item(item: officekit_markup_base::Item<'_>) -> super::NotesTextStyle {
     let mut node = super::NotesTextStyle::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NOTES_TEXT_STYLE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NOTES_TEXT_STYLE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.default_paragraph_style),
@@ -2525,9 +4754,28 @@ pub fn notes_text_style(element: &Element) -> super::NotesTextStyle {
 /// Read `p:notesTextViewPr` into a `NotesTextViewProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_text_view_properties(element: &Element) -> super::NotesTextViewProperties {
+    notes_text_view_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:notesTextViewPr` into a `NotesTextViewProperties` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_text_view_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NotesTextViewProperties {
+    notes_text_view_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:notesTextViewPr` into a `NotesTextViewProperties` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_text_view_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NotesTextViewProperties {
     let mut node = super::NotesTextViewProperties::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::NOTES_TEXT_VIEW_PROPERTIES_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::NOTES_TEXT_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.common_view_properties),
@@ -2542,9 +4790,27 @@ pub fn notes_text_view_properties(element: &Element) -> super::NotesTextViewProp
 /// Read `p:notesViewPr` into a `NotesViewProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_view_properties(element: &Element) -> super::NotesViewProperties {
+    notes_view_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:notesViewPr` into a `NotesViewProperties` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_view_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NotesViewProperties {
+    notes_view_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:notesViewPr` into a `NotesViewProperties` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_view_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NotesViewProperties {
     let mut node = super::NotesViewProperties::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::NOTES_VIEW_PROPERTIES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NOTES_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.common_slide_view_properties),
@@ -2559,9 +4825,27 @@ pub fn notes_view_properties(element: &Element) -> super::NotesViewProperties {
 /// Read `p:outlineViewPr` into a `OutlineViewProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn outline_view_properties(element: &Element) -> super::OutlineViewProperties {
+    outline_view_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:outlineViewPr` into a `OutlineViewProperties` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn outline_view_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::OutlineViewProperties {
+    outline_view_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:outlineViewPr` into a `OutlineViewProperties` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn outline_view_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::OutlineViewProperties {
     let mut node = super::OutlineViewProperties::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::OUTLINE_VIEW_PROPERTIES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::OUTLINE_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.common_view_properties),
@@ -2577,9 +4861,26 @@ pub fn outline_view_properties(element: &Element) -> super::OutlineViewPropertie
 /// Read `p:pRg` into a `ParagraphTextRange`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_text_range(element: &Element) -> super::ParagraphTextRange {
+    paragraph_text_range_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:pRg` into a `ParagraphTextRange` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn paragraph_text_range_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ParagraphTextRange {
+    paragraph_text_range_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:pRg` into a `ParagraphTextRange` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn paragraph_text_range_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ParagraphTextRange {
     let mut node = super::ParagraphTextRange::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PARAGRAPH_TEXT_RANGE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PARAGRAPH_TEXT_RANGE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.st),
@@ -2594,8 +4895,26 @@ pub fn paragraph_text_range(element: &Element) -> super::ParagraphTextRange {
 /// Read `p:par` into a `ParallelTimeNode`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn parallel_time_node(element: &Element) -> super::ParallelTimeNode {
+    parallel_time_node_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:par` into a `ParallelTimeNode` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn parallel_time_node_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ParallelTimeNode {
+    parallel_time_node_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:par` into a `ParallelTimeNode` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn parallel_time_node_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ParallelTimeNode {
     let mut node = super::ParallelTimeNode::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PARALLEL_TIME_NODE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PARALLEL_TIME_NODE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.common_time_node_properties);
@@ -2608,9 +4927,27 @@ pub fn parallel_time_node(element: &Element) -> super::ParallelTimeNode {
 /// Read `p:penClr` into a `PenColorForSlideShow`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pen_color_for_slide_show(element: &Element) -> super::PenColorForSlideShow {
+    pen_color_for_slide_show_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:penClr` into a `PenColorForSlideShow` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pen_color_for_slide_show_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PenColorForSlideShow {
+    pen_color_for_slide_show_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:penClr` into a `PenColorForSlideShow` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pen_color_for_slide_show_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PenColorForSlideShow {
     let mut node = super::PenColorForSlideShow::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PEN_COLOR_FOR_SLIDE_SHOW_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::PEN_COLOR_FOR_SLIDE_SHOW_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -2623,9 +4960,27 @@ pub fn pen_color_for_slide_show(element: &Element) -> super::PenColorForSlideSho
 /// Read `p:photoAlbum` into a `PhotoAlbumInformation`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn photo_album_information(element: &Element) -> super::PhotoAlbumInformation {
+    photo_album_information_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:photoAlbum` into a `PhotoAlbumInformation` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn photo_album_information_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PhotoAlbumInformation {
+    photo_album_information_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:photoAlbum` into a `PhotoAlbumInformation` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn photo_album_information_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PhotoAlbumInformation {
     let mut node = super::PhotoAlbumInformation::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PHOTO_ALBUM_INFORMATION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PHOTO_ALBUM_INFORMATION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bw),
@@ -2643,8 +4998,23 @@ pub fn photo_album_information(element: &Element) -> super::PhotoAlbumInformatio
 /// Read `p:pic` into a `Picture`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn picture(element: &Element) -> super::Picture {
+    picture_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:pic` into a `Picture` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn picture_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Picture {
+    picture_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:pic` into a `Picture` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn picture_from_item(item: officekit_markup_base::Item<'_>) -> super::Picture {
     let mut node = super::Picture::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PICTURE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PICTURE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.non_visual_properties),
@@ -2662,8 +5032,24 @@ pub fn picture(element: &Element) -> super::Picture {
 /// Read `p:blipFill` into a `PictureFill`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn picture_fill(element: &Element) -> super::PictureFill {
+    picture_fill_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:blipFill` into a `PictureFill` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn picture_fill_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PictureFill {
+    picture_fill_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:blipFill` into a `PictureFill` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn picture_fill_from_item(item: officekit_markup_base::Item<'_>) -> super::PictureFill {
     let mut node = super::PictureFill::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PICTURE_FILL_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PICTURE_FILL_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.dpi),
@@ -2681,8 +5067,25 @@ pub fn picture_fill(element: &Element) -> super::PictureFill {
 /// Read `p:ph` into a `PlaceholderShape`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn placeholder_shape(element: &Element) -> super::PlaceholderShape {
+    placeholder_shape_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:ph` into a `PlaceholderShape` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn placeholder_shape_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PlaceholderShape {
+    placeholder_shape_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:ph` into a `PlaceholderShape` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn placeholder_shape_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PlaceholderShape {
     let mut node = super::PlaceholderShape::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PLACEHOLDER_SHAPE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PLACEHOLDER_SHAPE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r#type),
@@ -2701,7 +5104,25 @@ pub fn placeholder_shape(element: &Element) -> super::PlaceholderShape {
 /// Read `p:plus` into a `PlusSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn plus_slide_transition(element: &Element) -> super::PlusSlideTransition {
-    let reader = officekit_markup_base::Reader::new(element, &super::PLUS_SLIDE_TRANSITION_SHAPE);
+    plus_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:plus` into a `PlusSlideTransition` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn plus_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PlusSlideTransition {
+    plus_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:plus` into a `PlusSlideTransition` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn plus_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PlusSlideTransition {
+    let reader = officekit_markup_base::Reader::of(item, &super::PLUS_SLIDE_TRANSITION_SHAPE);
     super::PlusSlideTransition {
         user_data: (),
         unknown: reader.finish(),
@@ -2711,8 +5132,24 @@ pub fn plus_slide_transition(element: &Element) -> super::PlusSlideTransition {
 /// Read `p:presentation` into a `Presentation`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation(element: &Element) -> super::Presentation {
+    presentation_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:presentation` into a `Presentation` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Presentation {
+    presentation_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:presentation` into a `Presentation` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_from_item(item: officekit_markup_base::Item<'_>) -> super::Presentation {
     let mut node = super::Presentation::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PRESENTATION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PRESENTATION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.server_zoom),
@@ -2752,9 +5189,28 @@ pub fn presentation(element: &Element) -> super::Presentation {
 /// Read `p:defaultTextStyle` into a `PresentationDefaultTextStyle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation_default_text_style(element: &Element) -> super::PresentationDefaultTextStyle {
+    presentation_default_text_style_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:defaultTextStyle` into a `PresentationDefaultTextStyle` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_default_text_style_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PresentationDefaultTextStyle {
+    presentation_default_text_style_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:defaultTextStyle` into a `PresentationDefaultTextStyle` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_default_text_style_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PresentationDefaultTextStyle {
     let mut node = super::PresentationDefaultTextStyle::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PRESENTATION_DEFAULT_TEXT_STYLE_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::PRESENTATION_DEFAULT_TEXT_STYLE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.default_paragraph_style),
@@ -2778,8 +5234,26 @@ pub fn presentation_default_text_style(element: &Element) -> super::Presentation
 /// Read `p:sld` into a `PresentationSlide`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation_slide(element: &Element) -> super::PresentationSlide {
+    presentation_slide_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sld` into a `PresentationSlide` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_slide_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PresentationSlide {
+    presentation_slide_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sld` into a `PresentationSlide` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_slide_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PresentationSlide {
     let mut node = super::PresentationSlide::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PRESENTATION_SLIDE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PRESENTATION_SLIDE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.id);
@@ -2794,9 +5268,32 @@ pub fn presentation_slide(element: &Element) -> super::PresentationSlide {
 pub fn presentation_slide_outline_view_slide_entry(
     element: &Element,
 ) -> super::PresentationSlideOutlineViewSlideEntry {
-    let mut node = super::PresentationSlideOutlineViewSlideEntry::default();
-    let mut reader = officekit_markup_base::Reader::new(
+    presentation_slide_outline_view_slide_entry_from_item(officekit_markup_base::Item::Tree(
         element,
+    ))
+}
+
+/// Read `p:sld` into a `PresentationSlideOutlineViewSlideEntry` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_slide_outline_view_slide_entry_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PresentationSlideOutlineViewSlideEntry {
+    presentation_slide_outline_view_slide_entry_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `p:sld` into a `PresentationSlideOutlineViewSlideEntry` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_slide_outline_view_slide_entry_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PresentationSlideOutlineViewSlideEntry {
+    let mut node = super::PresentationSlideOutlineViewSlideEntry::default();
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::PRESENTATION_SLIDE_OUTLINE_VIEW_SLIDE_ENTRY_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -2813,9 +5310,26 @@ pub fn presentation_slide_outline_view_slide_entry(
 /// Read `p:sldSz` into a `PresentationSlideSize`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation_slide_size(element: &Element) -> super::PresentationSlideSize {
+    presentation_slide_size_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sldSz` into a `PresentationSlideSize` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_slide_size_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PresentationSlideSize {
+    presentation_slide_size_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sldSz` into a `PresentationSlideSize` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_slide_size_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PresentationSlideSize {
     let mut node = super::PresentationSlideSize::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PRESENTATION_SLIDE_SIZE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PRESENTATION_SLIDE_SIZE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.cx),
@@ -2831,9 +5345,27 @@ pub fn presentation_slide_size(element: &Element) -> super::PresentationSlideSiz
 /// Read `p:sld` into a `PresentationSlideSlide`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation_slide_slide(element: &Element) -> super::PresentationSlideSlide {
+    presentation_slide_slide_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sld` into a `PresentationSlideSlide` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_slide_slide_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PresentationSlideSlide {
+    presentation_slide_slide_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sld` into a `PresentationSlideSlide` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_slide_slide_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PresentationSlideSlide {
     let mut node = super::PresentationSlideSlide::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PRESENTATION_SLIDE_SLIDE_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::PRESENTATION_SLIDE_SLIDE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.show_master_sp),
@@ -2854,9 +5386,28 @@ pub fn presentation_slide_slide(element: &Element) -> super::PresentationSlideSl
 /// Read `p:presentationPr` into a `PresentationWideProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation_wide_properties(element: &Element) -> super::PresentationWideProperties {
+    presentation_wide_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:presentationPr` into a `PresentationWideProperties` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_wide_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PresentationWideProperties {
+    presentation_wide_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:presentationPr` into a `PresentationWideProperties` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_wide_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PresentationWideProperties {
     let mut node = super::PresentationWideProperties::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PRESENTATION_WIDE_PROPERTIES_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::PRESENTATION_WIDE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.html_publishing_properties),
@@ -2877,11 +5428,28 @@ pub fn presentation_wide_properties(element: &Element) -> super::PresentationWid
 pub fn presentation_wide_show_properties(
     element: &Element,
 ) -> super::PresentationWideShowProperties {
+    presentation_wide_show_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:showPr` into a `PresentationWideShowProperties` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_wide_show_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PresentationWideShowProperties {
+    presentation_wide_show_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:showPr` into a `PresentationWideShowProperties` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_wide_show_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PresentationWideShowProperties {
     let mut node = super::PresentationWideShowProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::PRESENTATION_WIDE_SHOW_PROPERTIES_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::PRESENTATION_WIDE_SHOW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r#loop),
@@ -2904,11 +5472,28 @@ pub fn presentation_wide_show_properties(
 pub fn presentation_wide_view_properties(
     element: &Element,
 ) -> super::PresentationWideViewProperties {
+    presentation_wide_view_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:viewPr` into a `PresentationWideViewProperties` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_wide_view_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PresentationWideViewProperties {
+    presentation_wide_view_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:viewPr` into a `PresentationWideViewProperties` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presentation_wide_view_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PresentationWideViewProperties {
     let mut node = super::PresentationWideViewProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::PRESENTATION_WIDE_VIEW_PROPERTIES_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::PRESENTATION_WIDE_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.last_view),
@@ -2931,8 +5516,26 @@ pub fn presentation_wide_view_properties(
 /// Read `p:present` into a `PresenterSlideShowMode`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presenter_slide_show_mode(element: &Element) -> super::PresenterSlideShowMode {
-    let reader =
-        officekit_markup_base::Reader::new(element, &super::PRESENTER_SLIDE_SHOW_MODE_SHAPE);
+    presenter_slide_show_mode_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:present` into a `PresenterSlideShowMode` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presenter_slide_show_mode_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PresenterSlideShowMode {
+    presenter_slide_show_mode_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:present` into a `PresenterSlideShowMode` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn presenter_slide_show_mode_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PresenterSlideShowMode {
+    let reader = officekit_markup_base::Reader::of(item, &super::PRESENTER_SLIDE_SHOW_MODE_SHAPE);
     super::PresenterSlideShowMode {
         user_data: (),
         unknown: reader.finish(),
@@ -2942,9 +5545,28 @@ pub fn presenter_slide_show_mode(element: &Element) -> super::PresenterSlideShow
 /// Read `p:prevCondLst` into a `PreviousConditionsList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn previous_conditions_list(element: &Element) -> super::PreviousConditionsList {
+    previous_conditions_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:prevCondLst` into a `PreviousConditionsList` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn previous_conditions_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PreviousConditionsList {
+    previous_conditions_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:prevCondLst` into a `PreviousConditionsList` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn previous_conditions_list_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PreviousConditionsList {
     let mut node = super::PreviousConditionsList::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PREVIOUS_CONDITIONS_LIST_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::PREVIOUS_CONDITIONS_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.condition);
@@ -2957,8 +5579,26 @@ pub fn previous_conditions_list(element: &Element) -> super::PreviousConditionsL
 /// Read `p:prnPr` into a `PrintingProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn printing_properties(element: &Element) -> super::PrintingProperties {
+    printing_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:prnPr` into a `PrintingProperties` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn printing_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PrintingProperties {
+    printing_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:prnPr` into a `PrintingProperties` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn printing_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PrintingProperties {
     let mut node = super::PrintingProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PRINTING_PROPERTIES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PRINTING_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.prn_what),
@@ -2977,9 +5617,28 @@ pub fn printing_properties(element: &Element) -> super::PrintingProperties {
 /// Read `p:tag` into a `ProgrammableExtensibilityTag`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn programmable_extensibility_tag(element: &Element) -> super::ProgrammableExtensibilityTag {
+    programmable_extensibility_tag_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:tag` into a `ProgrammableExtensibilityTag` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn programmable_extensibility_tag_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ProgrammableExtensibilityTag {
+    programmable_extensibility_tag_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:tag` into a `ProgrammableExtensibilityTag` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn programmable_extensibility_tag_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ProgrammableExtensibilityTag {
     let mut node = super::ProgrammableExtensibilityTag::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PROGRAMMABLE_EXTENSIBILITY_TAG_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::PROGRAMMABLE_EXTENSIBILITY_TAG_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.name),
@@ -2994,9 +5653,26 @@ pub fn programmable_extensibility_tag(element: &Element) -> super::ProgrammableE
 /// Read `p:tagLst` into a `ProgrammableTabList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn programmable_tab_list(element: &Element) -> super::ProgrammableTabList {
+    programmable_tab_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:tagLst` into a `ProgrammableTabList` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn programmable_tab_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ProgrammableTabList {
+    programmable_tab_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:tagLst` into a `ProgrammableTabList` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn programmable_tab_list_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ProgrammableTabList {
     let mut node = super::ProgrammableTabList::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PROGRAMMABLE_TAB_LIST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PROGRAMMABLE_TAB_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.programmable_extensibility_tag);
@@ -3009,8 +5685,23 @@ pub fn programmable_tab_list(element: &Element) -> super::ProgrammableTabList {
 /// Read `p:progress` into a `Progress`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn progress(element: &Element) -> super::Progress {
+    progress_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:progress` into a `Progress` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn progress_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Progress {
+    progress_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:progress` into a `Progress` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn progress_from_item(item: officekit_markup_base::Item<'_>) -> super::Progress {
     let mut node = super::Progress::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PROGRESS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PROGRESS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -3023,9 +5714,26 @@ pub fn progress(element: &Element) -> super::Progress {
 /// Read `p:pull` into a `PullSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pull_slide_transition(element: &Element) -> super::PullSlideTransition {
+    pull_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:pull` into a `PullSlideTransition` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pull_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PullSlideTransition {
+    pull_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:pull` into a `PullSlideTransition` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pull_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PullSlideTransition {
     let mut node = super::PullSlideTransition::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PULL_SLIDE_TRANSITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PULL_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.dir);
@@ -3038,9 +5746,26 @@ pub fn pull_slide_transition(element: &Element) -> super::PullSlideTransition {
 /// Read `p:push` into a `PushSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn push_slide_transition(element: &Element) -> super::PushSlideTransition {
+    push_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:push` into a `PushSlideTransition` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn push_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PushSlideTransition {
+    push_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:push` into a `PushSlideTransition` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn push_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PushSlideTransition {
     let mut node = super::PushSlideTransition::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PUSH_SLIDE_TRANSITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PUSH_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.dir);
@@ -3053,9 +5778,28 @@ pub fn push_slide_transition(element: &Element) -> super::PushSlideTransition {
 /// Read `p:randomBar` into a `RandomBarSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn random_bar_slide_transition(element: &Element) -> super::RandomBarSlideTransition {
+    random_bar_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:randomBar` into a `RandomBarSlideTransition` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn random_bar_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RandomBarSlideTransition {
+    random_bar_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:randomBar` into a `RandomBarSlideTransition` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn random_bar_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::RandomBarSlideTransition {
     let mut node = super::RandomBarSlideTransition::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::RANDOM_BAR_SLIDE_TRANSITION_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::RANDOM_BAR_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.dir);
@@ -3068,7 +5812,26 @@ pub fn random_bar_slide_transition(element: &Element) -> super::RandomBarSlideTr
 /// Read `p:random` into a `RandomSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn random_slide_transition(element: &Element) -> super::RandomSlideTransition {
-    let reader = officekit_markup_base::Reader::new(element, &super::RANDOM_SLIDE_TRANSITION_SHAPE);
+    random_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:random` into a `RandomSlideTransition` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn random_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RandomSlideTransition {
+    random_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:random` into a `RandomSlideTransition` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn random_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::RandomSlideTransition {
+    let reader = officekit_markup_base::Reader::of(item, &super::RANDOM_SLIDE_TRANSITION_SHAPE);
     super::RandomSlideTransition {
         user_data: (),
         unknown: reader.finish(),
@@ -3078,9 +5841,26 @@ pub fn random_slide_transition(element: &Element) -> super::RandomSlideTransitio
 /// Read `p:regular` into a `RegularEmbeddedFont`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn regular_embedded_font(element: &Element) -> super::RegularEmbeddedFont {
+    regular_embedded_font_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:regular` into a `RegularEmbeddedFont` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn regular_embedded_font_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RegularEmbeddedFont {
+    regular_embedded_font_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:regular` into a `RegularEmbeddedFont` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn regular_embedded_font_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::RegularEmbeddedFont {
     let mut node = super::RegularEmbeddedFont::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::REGULAR_EMBEDDED_FONT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::REGULAR_EMBEDDED_FONT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.id);
@@ -3093,8 +5873,23 @@ pub fn regular_embedded_font(element: &Element) -> super::RegularEmbeddedFont {
 /// Read `p:rgb` into a `Rgb`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rgb(element: &Element) -> super::Rgb {
+    rgb_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:rgb` into a `Rgb` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rgb_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Rgb {
+    rgb_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:rgb` into a `Rgb` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rgb_from_item(item: officekit_markup_base::Item<'_>) -> super::Rgb {
     let mut node = super::Rgb::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::RGB_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::RGB_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r),
@@ -3110,8 +5905,23 @@ pub fn rgb(element: &Element) -> super::Rgb {
 /// Read `p:rCtr` into a `RotationCenter`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rotation_center(element: &Element) -> super::RotationCenter {
+    rotation_center_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:rCtr` into a `RotationCenter` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rotation_center_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RotationCenter {
+    rotation_center_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:rCtr` into a `RotationCenter` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rotation_center_from_item(item: officekit_markup_base::Item<'_>) -> super::RotationCenter {
     let mut node = super::RotationCenter::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::ROTATION_CENTER_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ROTATION_CENTER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.x),
@@ -3126,9 +5936,28 @@ pub fn rotation_center(element: &Element) -> super::RotationCenter {
 /// Read `p:rtn` into a `RuntimeNodeTriggerChoice`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn runtime_node_trigger_choice(element: &Element) -> super::RuntimeNodeTriggerChoice {
+    runtime_node_trigger_choice_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:rtn` into a `RuntimeNodeTriggerChoice` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn runtime_node_trigger_choice_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RuntimeNodeTriggerChoice {
+    runtime_node_trigger_choice_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:rtn` into a `RuntimeNodeTriggerChoice` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn runtime_node_trigger_choice_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::RuntimeNodeTriggerChoice {
     let mut node = super::RuntimeNodeTriggerChoice::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::RUNTIME_NODE_TRIGGER_CHOICE_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::RUNTIME_NODE_TRIGGER_CHOICE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);
@@ -3141,8 +5970,26 @@ pub fn runtime_node_trigger_choice(element: &Element) -> super::RuntimeNodeTrigg
 /// Read `p:seq` into a `SequenceTimeNode`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sequence_time_node(element: &Element) -> super::SequenceTimeNode {
+    sequence_time_node_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:seq` into a `SequenceTimeNode` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sequence_time_node_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SequenceTimeNode {
+    sequence_time_node_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:seq` into a `SequenceTimeNode` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sequence_time_node_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SequenceTimeNode {
     let mut node = super::SequenceTimeNode::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SEQUENCE_TIME_NODE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SEQUENCE_TIME_NODE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.concurrent),
@@ -3161,9 +6008,26 @@ pub fn sequence_time_node(element: &Element) -> super::SequenceTimeNode {
 /// Read `p:set` into a `SetTimeNodeBehavior`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn set_time_node_behavior(element: &Element) -> super::SetTimeNodeBehavior {
+    set_time_node_behavior_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:set` into a `SetTimeNodeBehavior` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn set_time_node_behavior_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SetTimeNodeBehavior {
+    set_time_node_behavior_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:set` into a `SetTimeNodeBehavior` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn set_time_node_behavior_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SetTimeNodeBehavior {
     let mut node = super::SetTimeNodeBehavior::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::SET_TIME_NODE_BEHAVIOR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SET_TIME_NODE_BEHAVIOR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.common_behavior),
@@ -3178,8 +6042,23 @@ pub fn set_time_node_behavior(element: &Element) -> super::SetTimeNodeBehavior {
 /// Read `p:sp` into a `Shape`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape(element: &Element) -> super::Shape {
+    shape_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sp` into a `Shape` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Shape {
+    shape_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sp` into a `Shape` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_from_item(item: officekit_markup_base::Item<'_>) -> super::Shape {
     let mut node = super::Shape::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SHAPE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.use_bg_fill),
@@ -3198,8 +6077,24 @@ pub fn shape(element: &Element) -> super::Shape {
 /// Read `p:spPr` into a `ShapeProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_properties(element: &Element) -> super::ShapeProperties {
+    shape_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:spPr` into a `ShapeProperties` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ShapeProperties {
+    shape_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:spPr` into a `ShapeProperties` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_properties_from_item(item: officekit_markup_base::Item<'_>) -> super::ShapeProperties {
     let mut node = super::ShapeProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_PROPERTIES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bw_mode),
@@ -3221,8 +6116,23 @@ pub fn shape_properties(element: &Element) -> super::ShapeProperties {
 /// Read `p:style` into a `ShapeStyle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_style(element: &Element) -> super::ShapeStyle {
+    shape_style_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:style` into a `ShapeStyle` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_style_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ShapeStyle {
+    shape_style_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:style` into a `ShapeStyle` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_style_from_item(item: officekit_markup_base::Item<'_>) -> super::ShapeStyle {
     let mut node = super::ShapeStyle::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_STYLE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SHAPE_STYLE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.line_reference),
@@ -3239,8 +6149,23 @@ pub fn shape_style(element: &Element) -> super::ShapeStyle {
 /// Read `p:spTgt` into a `ShapeTarget`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_target(element: &Element) -> super::ShapeTarget {
+    shape_target_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:spTgt` into a `ShapeTarget` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_target_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ShapeTarget {
+    shape_target_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:spTgt` into a `ShapeTarget` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_target_from_item(item: officekit_markup_base::Item<'_>) -> super::ShapeTarget {
     let mut node = super::ShapeTarget::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_TARGET_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SHAPE_TARGET_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.spid),
@@ -3261,8 +6186,24 @@ pub fn shape_target_content(element: &Element) -> super::ShapeTargetContent {
 /// Read `p:txBody` into a `ShapeTextBody`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_text_body(element: &Element) -> super::ShapeTextBody {
+    shape_text_body_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:txBody` into a `ShapeTextBody` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_text_body_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ShapeTextBody {
+    shape_text_body_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:txBody` into a `ShapeTextBody` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_text_body_from_item(item: officekit_markup_base::Item<'_>) -> super::ShapeTextBody {
     let mut node = super::ShapeTextBody::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_TEXT_BODY_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SHAPE_TEXT_BODY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.properties),
@@ -3278,8 +6219,23 @@ pub fn shape_text_body(element: &Element) -> super::ShapeTextBody {
 /// Read `p:spTree` into a `ShapeTree`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_tree(element: &Element) -> super::ShapeTree {
+    shape_tree_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:spTree` into a `ShapeTree` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_tree_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ShapeTree {
+    shape_tree_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:spTree` into a `ShapeTree` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_tree_from_item(item: officekit_markup_base::Item<'_>) -> super::ShapeTree {
     let mut node = super::ShapeTree::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_TREE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SHAPE_TREE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.non_visual_properties_for_a_group_shape),
@@ -3302,8 +6258,23 @@ pub fn show_type(element: &Element) -> super::ShowTypeContent {
 /// Read `p:bg` into a `SlideBackground`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_background(element: &Element) -> super::SlideBackground {
+    slide_background_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:bg` into a `SlideBackground` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_background_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideBackground {
+    slide_background_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:bg` into a `SlideBackground` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_background_from_item(item: officekit_markup_base::Item<'_>) -> super::SlideBackground {
     let mut node = super::SlideBackground::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SLIDE_BACKGROUND_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SLIDE_BACKGROUND_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bw_mode),
@@ -3324,8 +6295,23 @@ pub fn slide_background_content(element: &Element) -> super::SlideBackgroundCont
 /// Read `p:sldId` into a `SlideID`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_id(element: &Element) -> super::SlideID {
+    slide_id_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sldId` into a `SlideID` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_id_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideID {
+    slide_id_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sldId` into a `SlideID` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_id_from_item(item: officekit_markup_base::Item<'_>) -> super::SlideID {
     let mut node = super::SlideID::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SLIDE_ID_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SLIDE_ID_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -3341,8 +6327,24 @@ pub fn slide_id(element: &Element) -> super::SlideID {
 /// Read `p:sldLayout` into a `SlideLayout`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_layout(element: &Element) -> super::SlideLayout {
+    slide_layout_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sldLayout` into a `SlideLayout` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_layout_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideLayout {
+    slide_layout_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sldLayout` into a `SlideLayout` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_layout_from_item(item: officekit_markup_base::Item<'_>) -> super::SlideLayout {
     let mut node = super::SlideLayout::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SLIDE_LAYOUT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SLIDE_LAYOUT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.show_master_sp),
@@ -3367,8 +6369,24 @@ pub fn slide_layout(element: &Element) -> super::SlideLayout {
 /// Read `p:sldLayoutId` into a `SlideLayoutId`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_layout_id(element: &Element) -> super::SlideLayoutId {
+    slide_layout_id_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sldLayoutId` into a `SlideLayoutId` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_layout_id_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideLayoutId {
+    slide_layout_id_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sldLayoutId` into a `SlideLayoutId` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_layout_id_from_item(item: officekit_markup_base::Item<'_>) -> super::SlideLayoutId {
     let mut node = super::SlideLayoutId::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SLIDE_LAYOUT_ID_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SLIDE_LAYOUT_ID_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -3390,8 +6408,24 @@ pub fn slide_list(element: &Element) -> super::SlideListContent {
 /// Read `p:sldMaster` into a `SlideMaster`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_master(element: &Element) -> super::SlideMaster {
+    slide_master_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sldMaster` into a `SlideMaster` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_master_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideMaster {
+    slide_master_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sldMaster` into a `SlideMaster` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_master_from_item(item: officekit_markup_base::Item<'_>) -> super::SlideMaster {
     let mut node = super::SlideMaster::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SLIDE_MASTER_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SLIDE_MASTER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.preserve),
@@ -3413,9 +6447,28 @@ pub fn slide_master(element: &Element) -> super::SlideMaster {
 /// Read `p:bodyStyle` into a `SlideMasterBodyTextStyle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_master_body_text_style(element: &Element) -> super::SlideMasterBodyTextStyle {
+    slide_master_body_text_style_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:bodyStyle` into a `SlideMasterBodyTextStyle` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_master_body_text_style_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideMasterBodyTextStyle {
+    slide_master_body_text_style_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:bodyStyle` into a `SlideMasterBodyTextStyle` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_master_body_text_style_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SlideMasterBodyTextStyle {
     let mut node = super::SlideMasterBodyTextStyle::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::SLIDE_MASTER_BODY_TEXT_STYLE_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::SLIDE_MASTER_BODY_TEXT_STYLE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.default_paragraph_style),
@@ -3439,8 +6492,24 @@ pub fn slide_master_body_text_style(element: &Element) -> super::SlideMasterBody
 /// Read `p:sldMasterId` into a `SlideMasterID`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_master_id(element: &Element) -> super::SlideMasterID {
+    slide_master_id_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sldMasterId` into a `SlideMasterID` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_master_id_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideMasterID {
+    slide_master_id_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sldMasterId` into a `SlideMasterID` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_master_id_from_item(item: officekit_markup_base::Item<'_>) -> super::SlideMasterID {
     let mut node = super::SlideMasterID::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SLIDE_MASTER_ID_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SLIDE_MASTER_ID_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -3456,9 +6525,28 @@ pub fn slide_master_id(element: &Element) -> super::SlideMasterID {
 /// Read `p:otherStyle` into a `SlideMasterOtherTextStyle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_master_other_text_style(element: &Element) -> super::SlideMasterOtherTextStyle {
+    slide_master_other_text_style_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:otherStyle` into a `SlideMasterOtherTextStyle` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_master_other_text_style_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideMasterOtherTextStyle {
+    slide_master_other_text_style_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:otherStyle` into a `SlideMasterOtherTextStyle` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_master_other_text_style_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SlideMasterOtherTextStyle {
     let mut node = super::SlideMasterOtherTextStyle::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::SLIDE_MASTER_OTHER_TEXT_STYLE_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::SLIDE_MASTER_OTHER_TEXT_STYLE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.default_paragraph_style),
@@ -3482,9 +6570,28 @@ pub fn slide_master_other_text_style(element: &Element) -> super::SlideMasterOth
 /// Read `p:txStyles` into a `SlideMasterTextStyles`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_master_text_styles(element: &Element) -> super::SlideMasterTextStyles {
+    slide_master_text_styles_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:txStyles` into a `SlideMasterTextStyles` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_master_text_styles_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideMasterTextStyles {
+    slide_master_text_styles_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:txStyles` into a `SlideMasterTextStyles` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_master_text_styles_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SlideMasterTextStyles {
     let mut node = super::SlideMasterTextStyles::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::SLIDE_MASTER_TEXT_STYLES_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::SLIDE_MASTER_TEXT_STYLES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.slide_master_title_text_style),
@@ -3501,9 +6608,28 @@ pub fn slide_master_text_styles(element: &Element) -> super::SlideMasterTextStyl
 /// Read `p:titleStyle` into a `SlideMasterTitleTextStyle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_master_title_text_style(element: &Element) -> super::SlideMasterTitleTextStyle {
+    slide_master_title_text_style_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:titleStyle` into a `SlideMasterTitleTextStyle` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_master_title_text_style_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideMasterTitleTextStyle {
+    slide_master_title_text_style_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:titleStyle` into a `SlideMasterTitleTextStyle` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_master_title_text_style_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SlideMasterTitleTextStyle {
     let mut node = super::SlideMasterTitleTextStyle::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::SLIDE_MASTER_TITLE_TEXT_STYLE_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::SLIDE_MASTER_TITLE_TEXT_STYLE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.default_paragraph_style),
@@ -3527,8 +6653,23 @@ pub fn slide_master_title_text_style(element: &Element) -> super::SlideMasterTit
 /// Read `p:sldRg` into a `SlideRange`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_range(element: &Element) -> super::SlideRange {
+    slide_range_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sldRg` into a `SlideRange` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_range_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideRange {
+    slide_range_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sldRg` into a `SlideRange` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_range_from_item(item: officekit_markup_base::Item<'_>) -> super::SlideRange {
     let mut node = super::SlideRange::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SLIDE_RANGE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SLIDE_RANGE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.st),
@@ -3543,9 +6684,28 @@ pub fn slide_range(element: &Element) -> super::SlideRange {
 /// Read `p:sorterViewPr` into a `SlideSorterViewProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_sorter_view_properties(element: &Element) -> super::SlideSorterViewProperties {
+    slide_sorter_view_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sorterViewPr` into a `SlideSorterViewProperties` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_sorter_view_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideSorterViewProperties {
+    slide_sorter_view_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sorterViewPr` into a `SlideSorterViewProperties` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_sorter_view_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SlideSorterViewProperties {
     let mut node = super::SlideSorterViewProperties::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::SLIDE_SORTER_VIEW_PROPERTIES_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::SLIDE_SORTER_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.show_formatting),
@@ -3563,9 +6723,28 @@ pub fn slide_sorter_view_properties(element: &Element) -> super::SlideSorterView
 pub fn slide_synchronization_properties(
     element: &Element,
 ) -> super::SlideSynchronizationProperties {
+    slide_synchronization_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sldSyncPr` into a `SlideSynchronizationProperties` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_synchronization_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideSynchronizationProperties {
+    slide_synchronization_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sldSyncPr` into a `SlideSynchronizationProperties` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_synchronization_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SlideSynchronizationProperties {
     let mut node = super::SlideSynchronizationProperties::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::SLIDE_SYNCHRONIZATION_PROPERTIES_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::SLIDE_SYNCHRONIZATION_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.server_sld_id),
@@ -3582,7 +6761,22 @@ pub fn slide_synchronization_properties(
 /// Read `p:sldTgt` into a `SlideTarget`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_target(element: &Element) -> super::SlideTarget {
-    let reader = officekit_markup_base::Reader::new(element, &super::SLIDE_TARGET_SHAPE);
+    slide_target_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sldTgt` into a `SlideTarget` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_target_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideTarget {
+    slide_target_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sldTgt` into a `SlideTarget` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_target_from_item(item: officekit_markup_base::Item<'_>) -> super::SlideTarget {
+    let reader = officekit_markup_base::Reader::of(item, &super::SLIDE_TARGET_SHAPE);
     super::SlideTarget {
         user_data: (),
         unknown: reader.finish(),
@@ -3592,9 +6786,28 @@ pub fn slide_target(element: &Element) -> super::SlideTarget {
 /// Read `p:timing` into a `SlideTimingInformation`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_timing_information(element: &Element) -> super::SlideTimingInformation {
+    slide_timing_information_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:timing` into a `SlideTimingInformation` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_timing_information_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideTimingInformation {
+    slide_timing_information_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:timing` into a `SlideTimingInformation` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_timing_information_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SlideTimingInformation {
     let mut node = super::SlideTimingInformation::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::SLIDE_TIMING_INFORMATION_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::SLIDE_TIMING_INFORMATION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.time_node_list),
@@ -3618,11 +6831,30 @@ pub fn slide_transition(element: &Element) -> super::SlideTransitionContent {
 pub fn slide_transition_for_a_slide_layout(
     element: &Element,
 ) -> super::SlideTransitionForASlideLayout {
+    slide_transition_for_a_slide_layout_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:transition` into a `SlideTransitionForASlideLayout` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_transition_for_a_slide_layout_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideTransitionForASlideLayout {
+    slide_transition_for_a_slide_layout_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `p:transition` into a `SlideTransitionForASlideLayout` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_transition_for_a_slide_layout_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SlideTransitionForASlideLayout {
     let mut node = super::SlideTransitionForASlideLayout::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::SLIDE_TRANSITION_FOR_A_SLIDE_LAYOUT_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::SLIDE_TRANSITION_FOR_A_SLIDE_LAYOUT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.spd),
@@ -3642,9 +6874,27 @@ pub fn slide_transition_for_a_slide_layout(
 /// Read `p:slideViewPr` into a `SlideViewProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_view_properties(element: &Element) -> super::SlideViewProperties {
+    slide_view_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:slideViewPr` into a `SlideViewProperties` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_view_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SlideViewProperties {
+    slide_view_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:slideViewPr` into a `SlideViewProperties` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slide_view_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SlideViewProperties {
     let mut node = super::SlideViewProperties::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::SLIDE_VIEW_PROPERTIES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SLIDE_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.common),
@@ -3659,8 +6909,23 @@ pub fn slide_view_properties(element: &Element) -> super::SlideViewProperties {
 /// Read `p:smartTags` into a `SmartTags`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn smart_tags(element: &Element) -> super::SmartTags {
+    smart_tags_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:smartTags` into a `SmartTags` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn smart_tags_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SmartTags {
+    smart_tags_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:smartTags` into a `SmartTags` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn smart_tags_from_item(item: officekit_markup_base::Item<'_>) -> super::SmartTags {
     let mut node = super::SmartTags::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SMART_TAGS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SMART_TAGS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.id);
@@ -3673,8 +6938,23 @@ pub fn smart_tags(element: &Element) -> super::SmartTags {
 /// Read `p:snd` into a `Sound`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sound(element: &Element) -> super::Sound {
+    sound_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:snd` into a `Sound` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sound_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Sound {
+    sound_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:snd` into a `Sound` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sound_from_item(item: officekit_markup_base::Item<'_>) -> super::Sound {
     let mut node = super::Sound::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SOUND_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SOUND_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.embed),
@@ -3689,8 +6969,23 @@ pub fn sound(element: &Element) -> super::Sound {
 /// Read `p:sndAc` into a `SoundAction`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sound_action(element: &Element) -> super::SoundAction {
+    sound_action_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sndAc` into a `SoundAction` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sound_action_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SoundAction {
+    sound_action_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sndAc` into a `SoundAction` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sound_action_from_item(item: officekit_markup_base::Item<'_>) -> super::SoundAction {
     let mut node = super::SoundAction::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SOUND_ACTION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SOUND_ACTION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -3709,8 +7004,23 @@ pub fn sound_action_content(element: &Element) -> super::SoundActionContent {
 /// Read `p:sndTgt` into a `SoundTarget`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sound_target(element: &Element) -> super::SoundTarget {
+    sound_target_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:sndTgt` into a `SoundTarget` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sound_target_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SoundTarget {
+    sound_target_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:sndTgt` into a `SoundTarget` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sound_target_from_item(item: officekit_markup_base::Item<'_>) -> super::SoundTarget {
     let mut node = super::SoundTarget::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SOUND_TARGET_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SOUND_TARGET_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.embed),
@@ -3725,9 +7035,26 @@ pub fn sound_target(element: &Element) -> super::SoundTarget {
 /// Read `p:split` into a `SplitSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn split_slide_transition(element: &Element) -> super::SplitSlideTransition {
+    split_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:split` into a `SplitSlideTransition` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn split_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SplitSlideTransition {
+    split_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:split` into a `SplitSlideTransition` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn split_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SplitSlideTransition {
     let mut node = super::SplitSlideTransition::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::SPLIT_SLIDE_TRANSITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SPLIT_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.orient),
@@ -3742,9 +7069,27 @@ pub fn split_slide_transition(element: &Element) -> super::SplitSlideTransition 
 /// Read `p:stCondLst` into a `StartConditionsList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn start_conditions_list(element: &Element) -> super::StartConditionsList {
+    start_conditions_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:stCondLst` into a `StartConditionsList` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn start_conditions_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::StartConditionsList {
+    start_conditions_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:stCondLst` into a `StartConditionsList` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn start_conditions_list_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::StartConditionsList {
     let mut node = super::StartConditionsList::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::START_CONDITIONS_LIST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::START_CONDITIONS_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.condition);
@@ -3757,8 +7102,26 @@ pub fn start_conditions_list(element: &Element) -> super::StartConditionsList {
 /// Read `p:stSnd` into a `StartSoundAction`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn start_sound_action(element: &Element) -> super::StartSoundAction {
+    start_sound_action_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:stSnd` into a `StartSoundAction` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn start_sound_action_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::StartSoundAction {
+    start_sound_action_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:stSnd` into a `StartSoundAction` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn start_sound_action_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::StartSoundAction {
     let mut node = super::StartSoundAction::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::START_SOUND_ACTION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::START_SOUND_ACTION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r#loop),
@@ -3773,7 +7136,25 @@ pub fn start_sound_action(element: &Element) -> super::StartSoundAction {
 /// Read `p:endSnd` into a `StopSoundAction`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn stop_sound_action(element: &Element) -> super::StopSoundAction {
-    let reader = officekit_markup_base::Reader::new(element, &super::STOP_SOUND_ACTION_SHAPE);
+    stop_sound_action_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:endSnd` into a `StopSoundAction` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn stop_sound_action_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::StopSoundAction {
+    stop_sound_action_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:endSnd` into a `StopSoundAction` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn stop_sound_action_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::StopSoundAction {
+    let reader = officekit_markup_base::Reader::of(item, &super::STOP_SOUND_ACTION_SHAPE);
     super::StopSoundAction {
         user_data: (),
         unknown: reader.finish(),
@@ -3783,8 +7164,23 @@ pub fn stop_sound_action(element: &Element) -> super::StopSoundAction {
 /// Read `p:strVal` into a `StringValue`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn string_value(element: &Element) -> super::StringValue {
+    string_value_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:strVal` into a `StringValue` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn string_value_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::StringValue {
+    string_value_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:strVal` into a `StringValue` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn string_value_from_item(item: officekit_markup_base::Item<'_>) -> super::StringValue {
     let mut node = super::StringValue::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::STRING_VALUE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::STRING_VALUE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);
@@ -3797,9 +7193,27 @@ pub fn string_value(element: &Element) -> super::StringValue {
 /// Read `p:strips` into a `StripsSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn strips_slide_transition(element: &Element) -> super::StripsSlideTransition {
+    strips_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:strips` into a `StripsSlideTransition` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn strips_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::StripsSlideTransition {
+    strips_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:strips` into a `StripsSlideTransition` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn strips_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::StripsSlideTransition {
     let mut node = super::StripsSlideTransition::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::STRIPS_SLIDE_TRANSITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::STRIPS_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.dir);
@@ -3812,8 +7226,26 @@ pub fn strips_slide_transition(element: &Element) -> super::StripsSlideTransitio
 /// Read `p:subTnLst` into a `SubTimeNodesList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sub_time_nodes_list(element: &Element) -> super::SubTimeNodesList {
+    sub_time_nodes_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:subTnLst` into a `SubTimeNodesList` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sub_time_nodes_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SubTimeNodesList {
+    sub_time_nodes_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:subTnLst` into a `SubTimeNodesList` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sub_time_nodes_list_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SubTimeNodesList {
     let mut node = super::SubTimeNodesList::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SUB_TIME_NODES_LIST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SUB_TIME_NODES_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -3826,8 +7258,23 @@ pub fn sub_time_nodes_list(element: &Element) -> super::SubTimeNodesList {
 /// Read `p:subSp` into a `Subshape`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn subshape(element: &Element) -> super::Subshape {
+    subshape_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:subSp` into a `Subshape` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn subshape_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Subshape {
+    subshape_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:subSp` into a `Subshape` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn subshape_from_item(item: officekit_markup_base::Item<'_>) -> super::Subshape {
     let mut node = super::Subshape::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SUBSHAPE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SUBSHAPE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.spid);
@@ -3840,8 +7287,23 @@ pub fn subshape(element: &Element) -> super::Subshape {
 /// Read `p:tgtEl` into a `TargetElement`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn target_element(element: &Element) -> super::TargetElement {
+    target_element_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:tgtEl` into a `TargetElement` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn target_element_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TargetElement {
+    target_element_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:tgtEl` into a `TargetElement` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn target_element_from_item(item: officekit_markup_base::Item<'_>) -> super::TargetElement {
     let mut node = super::TargetElement::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TARGET_ELEMENT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TARGET_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -3860,9 +7322,26 @@ pub fn target_element_content(element: &Element) -> super::TargetElementContent 
 /// Read `p:tmpl` into a `TemplateEffectsTmpl`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn template_effects_tmpl(element: &Element) -> super::TemplateEffectsTmpl {
+    template_effects_tmpl_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:tmpl` into a `TemplateEffectsTmpl` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn template_effects_tmpl_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TemplateEffectsTmpl {
+    template_effects_tmpl_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:tmpl` into a `TemplateEffectsTmpl` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn template_effects_tmpl_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::TemplateEffectsTmpl {
     let mut node = super::TemplateEffectsTmpl::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::TEMPLATE_EFFECTS_TMPL_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TEMPLATE_EFFECTS_TMPL_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.lvl),
@@ -3877,9 +7356,28 @@ pub fn template_effects_tmpl(element: &Element) -> super::TemplateEffectsTmpl {
 /// Read `p:tmplLst` into a `TemplateEffectsTmplLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn template_effects_tmpl_lst(element: &Element) -> super::TemplateEffectsTmplLst {
+    template_effects_tmpl_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:tmplLst` into a `TemplateEffectsTmplLst` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn template_effects_tmpl_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TemplateEffectsTmplLst {
+    template_effects_tmpl_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:tmplLst` into a `TemplateEffectsTmplLst` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn template_effects_tmpl_lst_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::TemplateEffectsTmplLst {
     let mut node = super::TemplateEffectsTmplLst::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::TEMPLATE_EFFECTS_TMPL_LST_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::TEMPLATE_EFFECTS_TMPL_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.template_effects_tmpl);
@@ -3892,8 +7390,23 @@ pub fn template_effects_tmpl_lst(element: &Element) -> super::TemplateEffectsTmp
 /// Read `p:txEl` into a `TextElement`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_element(element: &Element) -> super::TextElement {
+    text_element_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:txEl` into a `TextElement` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn text_element_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TextElement {
+    text_element_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:txEl` into a `TextElement` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn text_element_from_item(item: officekit_markup_base::Item<'_>) -> super::TextElement {
     let mut node = super::TextElement::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TEXT_ELEMENT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TEXT_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -3912,8 +7425,23 @@ pub fn text_element_content(element: &Element) -> super::TextElementContent {
 /// Read `p:tmAbs` into a `TimeAbsolute`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn time_absolute(element: &Element) -> super::TimeAbsolute {
+    time_absolute_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:tmAbs` into a `TimeAbsolute` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn time_absolute_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TimeAbsolute {
+    time_absolute_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:tmAbs` into a `TimeAbsolute` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn time_absolute_from_item(item: officekit_markup_base::Item<'_>) -> super::TimeAbsolute {
     let mut node = super::TimeAbsolute::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TIME_ABSOLUTE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TIME_ABSOLUTE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);
@@ -3926,8 +7454,26 @@ pub fn time_absolute(element: &Element) -> super::TimeAbsolute {
 /// Read `p:tav` into a `TimeAnimateValue`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn time_animate_value(element: &Element) -> super::TimeAnimateValue {
+    time_animate_value_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:tav` into a `TimeAnimateValue` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn time_animate_value_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TimeAnimateValue {
+    time_animate_value_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:tav` into a `TimeAnimateValue` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn time_animate_value_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::TimeAnimateValue {
     let mut node = super::TimeAnimateValue::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TIME_ANIMATE_VALUE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TIME_ANIMATE_VALUE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.tm),
@@ -3943,9 +7489,28 @@ pub fn time_animate_value(element: &Element) -> super::TimeAnimateValue {
 /// Read `p:tavLst` into a `TimeAnimatedValueList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn time_animated_value_list(element: &Element) -> super::TimeAnimatedValueList {
+    time_animated_value_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:tavLst` into a `TimeAnimatedValueList` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn time_animated_value_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TimeAnimatedValueList {
+    time_animated_value_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:tavLst` into a `TimeAnimatedValueList` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn time_animated_value_list_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::TimeAnimatedValueList {
     let mut node = super::TimeAnimatedValueList::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::TIME_ANIMATED_VALUE_LIST_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::TIME_ANIMATED_VALUE_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.time_animate_value);
@@ -3964,8 +7529,23 @@ pub fn time_condition(element: &Element) -> super::TimeConditionContent {
 /// Read `p:tn` into a `TimeNode`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn time_node(element: &Element) -> super::TimeNode {
+    time_node_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:tn` into a `TimeNode` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn time_node_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TimeNode {
+    time_node_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:tn` into a `TimeNode` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn time_node_from_item(item: officekit_markup_base::Item<'_>) -> super::TimeNode {
     let mut node = super::TimeNode::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TIME_NODE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TIME_NODE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);
@@ -3978,8 +7558,23 @@ pub fn time_node(element: &Element) -> super::TimeNode {
 /// Read `p:tnLst` into a `TimeNodeList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn time_node_list(element: &Element) -> super::TimeNodeList {
+    time_node_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:tnLst` into a `TimeNodeList` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn time_node_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TimeNodeList {
+    time_node_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:tnLst` into a `TimeNodeList` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn time_node_list_from_item(item: officekit_markup_base::Item<'_>) -> super::TimeNodeList {
     let mut node = super::TimeNodeList::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TIME_NODE_LIST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TIME_NODE_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -3998,8 +7593,24 @@ pub fn time_node_list_content(element: &Element) -> super::TimeNodeListContent {
 /// Read `p:tmPct` into a `TimePercentage`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn time_percentage(element: &Element) -> super::TimePercentage {
+    time_percentage_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:tmPct` into a `TimePercentage` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn time_percentage_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TimePercentage {
+    time_percentage_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:tmPct` into a `TimePercentage` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn time_percentage_from_item(item: officekit_markup_base::Item<'_>) -> super::TimePercentage {
     let mut node = super::TimePercentage::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TIME_PERCENTAGE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TIME_PERCENTAGE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);
@@ -4012,8 +7623,23 @@ pub fn time_percentage(element: &Element) -> super::TimePercentage {
 /// Read `p:to` into a `To`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn to(element: &Element) -> super::To {
+    to_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:to` into a `To` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn to_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::To {
+    to_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:to` into a `To` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn to_from_item(item: officekit_markup_base::Item<'_>) -> super::To {
     let mut node = super::To::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TO_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TO_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.x),
@@ -4028,8 +7654,23 @@ pub fn to(element: &Element) -> super::To {
 /// Read `p:to` into a `ToColor`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn to_color(element: &Element) -> super::ToColor {
+    to_color_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:to` into a `ToColor` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn to_color_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ToColor {
+    to_color_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:to` into a `ToColor` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn to_color_from_item(item: officekit_markup_base::Item<'_>) -> super::ToColor {
     let mut node = super::ToColor::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TO_COLOR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TO_COLOR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -4042,8 +7683,25 @@ pub fn to_color(element: &Element) -> super::ToColor {
 /// Read `p:to` into a `ToTLAnimVariant`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn to_tl_anim_variant(element: &Element) -> super::ToTLAnimVariant {
+    to_tl_anim_variant_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:to` into a `ToTLAnimVariant` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn to_tl_anim_variant_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ToTLAnimVariant {
+    to_tl_anim_variant_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:to` into a `ToTLAnimVariant` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn to_tl_anim_variant_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ToTLAnimVariant {
     let mut node = super::ToTLAnimVariant::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TO_TL_ANIM_VARIANT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TO_TL_ANIM_VARIANT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -4056,8 +7714,23 @@ pub fn to_tl_anim_variant(element: &Element) -> super::ToTLAnimVariant {
 /// Read `p:val` into a `Value`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn value(element: &Element) -> super::Value {
+    value_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:val` into a `Value` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn value_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Value {
+    value_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:val` into a `Value` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn value_from_item(item: officekit_markup_base::Item<'_>) -> super::Value {
     let mut node = super::Value::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::VALUE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::VALUE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -4070,8 +7743,23 @@ pub fn value(element: &Element) -> super::Value {
 /// Read `p:video` into a `Video`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn video(element: &Element) -> super::Video {
+    video_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:video` into a `Video` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn video_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Video {
+    video_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:video` into a `Video` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn video_from_item(item: officekit_markup_base::Item<'_>) -> super::Video {
     let mut node = super::Video::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::VIDEO_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::VIDEO_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.full_scrn),
@@ -4086,8 +7774,23 @@ pub fn video(element: &Element) -> super::Video {
 /// Read `p:origin` into a `ViewOrigin`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn view_origin(element: &Element) -> super::ViewOrigin {
+    view_origin_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:origin` into a `ViewOrigin` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn view_origin_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ViewOrigin {
+    view_origin_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:origin` into a `ViewOrigin` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn view_origin_from_item(item: officekit_markup_base::Item<'_>) -> super::ViewOrigin {
     let mut node = super::ViewOrigin::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::VIEW_ORIGIN_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::VIEW_ORIGIN_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.x),
@@ -4102,8 +7805,23 @@ pub fn view_origin(element: &Element) -> super::ViewOrigin {
 /// Read `p:scale` into a `ViewScale`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn view_scale(element: &Element) -> super::ViewScale {
+    view_scale_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:scale` into a `ViewScale` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn view_scale_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ViewScale {
+    view_scale_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:scale` into a `ViewScale` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn view_scale_from_item(item: officekit_markup_base::Item<'_>) -> super::ViewScale {
     let mut node = super::ViewScale::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::VIEW_SCALE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::VIEW_SCALE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.horizontal_ratio),
@@ -4118,8 +7836,23 @@ pub fn view_scale(element: &Element) -> super::ViewScale {
 /// Read `p:webPr` into a `WebProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn web_properties(element: &Element) -> super::WebProperties {
+    web_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:webPr` into a `WebProperties` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn web_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::WebProperties {
+    web_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:webPr` into a `WebProperties` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn web_properties_from_item(item: officekit_markup_base::Item<'_>) -> super::WebProperties {
     let mut node = super::WebProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::WEB_PROPERTIES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::WEB_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.show_animation),
@@ -4142,7 +7875,25 @@ pub fn web_properties(element: &Element) -> super::WebProperties {
 /// Read `p:wedge` into a `WedgeSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wedge_slide_transition(element: &Element) -> super::WedgeSlideTransition {
-    let reader = officekit_markup_base::Reader::new(element, &super::WEDGE_SLIDE_TRANSITION_SHAPE);
+    wedge_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:wedge` into a `WedgeSlideTransition` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wedge_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::WedgeSlideTransition {
+    wedge_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:wedge` into a `WedgeSlideTransition` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wedge_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::WedgeSlideTransition {
+    let reader = officekit_markup_base::Reader::of(item, &super::WEDGE_SLIDE_TRANSITION_SHAPE);
     super::WedgeSlideTransition {
         user_data: (),
         unknown: reader.finish(),
@@ -4152,9 +7903,26 @@ pub fn wedge_slide_transition(element: &Element) -> super::WedgeSlideTransition 
 /// Read `p:wheel` into a `WheelSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wheel_slide_transition(element: &Element) -> super::WheelSlideTransition {
+    wheel_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:wheel` into a `WheelSlideTransition` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wheel_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::WheelSlideTransition {
+    wheel_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:wheel` into a `WheelSlideTransition` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wheel_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::WheelSlideTransition {
     let mut node = super::WheelSlideTransition::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::WHEEL_SLIDE_TRANSITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::WHEEL_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.spokes);
@@ -4167,9 +7935,26 @@ pub fn wheel_slide_transition(element: &Element) -> super::WheelSlideTransition 
 /// Read `p:wipe` into a `WipeSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wipe_slide_transition(element: &Element) -> super::WipeSlideTransition {
+    wipe_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:wipe` into a `WipeSlideTransition` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wipe_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::WipeSlideTransition {
+    wipe_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:wipe` into a `WipeSlideTransition` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wipe_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::WipeSlideTransition {
     let mut node = super::WipeSlideTransition::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::WIPE_SLIDE_TRANSITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::WIPE_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.dir);
@@ -4182,8 +7967,23 @@ pub fn wipe_slide_transition(element: &Element) -> super::WipeSlideTransition {
 /// Read `p:xfrm` into a `Xfrm`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn xfrm(element: &Element) -> super::Xfrm {
+    xfrm_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:xfrm` into a `Xfrm` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn xfrm_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Xfrm {
+    xfrm_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:xfrm` into a `Xfrm` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn xfrm_from_item(item: officekit_markup_base::Item<'_>) -> super::Xfrm {
     let mut node = super::Xfrm::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::XFRM_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::XFRM_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.rot),
@@ -4201,9 +8001,26 @@ pub fn xfrm(element: &Element) -> super::Xfrm {
 /// Read `p:zoom` into a `ZoomSlideTransition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn zoom_slide_transition(element: &Element) -> super::ZoomSlideTransition {
+    zoom_slide_transition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p:zoom` into a `ZoomSlideTransition` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn zoom_slide_transition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ZoomSlideTransition {
+    zoom_slide_transition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p:zoom` into a `ZoomSlideTransition` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn zoom_slide_transition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ZoomSlideTransition {
     let mut node = super::ZoomSlideTransition::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::ZOOM_SLIDE_TRANSITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ZOOM_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.dir);

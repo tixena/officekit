@@ -227,7 +227,7 @@ use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_markup_core::wordprocessing;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -1109,8 +1109,8 @@ impl<X: UserData> BodyPrWith<X> {
 }
 
 impl officekit_markup_base::Read for BodyPr {
-    fn read(element: &Element) -> Self {
-        read::body_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::body_pr_from_item(item)
     }
 }
 
@@ -1159,8 +1159,8 @@ impl<X: UserData> CNvCnPrWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvCnPr {
-    fn read(element: &Element) -> Self {
-        read::c_nv_cn_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_cn_pr_from_item(item)
     }
 }
 
@@ -1217,8 +1217,8 @@ impl<X: UserData> CNvPrWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvPr {
-    fn read(element: &Element) -> Self {
-        read::c_nv_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_pr_from_item(item)
     }
 }
 
@@ -1263,8 +1263,8 @@ impl<X: UserData> CNvSpPrWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvSpPr {
-    fn read(element: &Element) -> Self {
-        read::c_nv_sp_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_sp_pr_from_item(item)
     }
 }
 
@@ -1301,8 +1301,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -1345,8 +1345,8 @@ impl<X: UserData> LinkedTxbxWith<X> {
 }
 
 impl officekit_markup_base::Read for LinkedTxbx {
-    fn read(element: &Element) -> Self {
-        read::linked_txbx(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::linked_txbx_from_item(item)
     }
 }
 
@@ -1387,11 +1387,11 @@ impl officekit_markup_base::Read for ShapeNonVisualPropertiesContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_WPS, "cNvCnPr")) => Self::CNvCnPr(officekit_markup_base::read(element)),
-            Some((NS_WPS, "cNvSpPr")) => Self::CNvSpPr(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_WPS, "cNvCnPr")) => Self::CNvCnPr(item.read()),
+            Some((NS_WPS, "cNvSpPr")) => Self::CNvSpPr(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -1426,11 +1426,11 @@ impl officekit_markup_base::Read for ShapeTextContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_WPS, "linkedTxbx")) => Self::LinkedTxbx(officekit_markup_base::read(element)),
-            Some((NS_WPS, "txbx")) => Self::Txbx(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_WPS, "linkedTxbx")) => Self::LinkedTxbx(item.read()),
+            Some((NS_WPS, "txbx")) => Self::Txbx(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -1503,8 +1503,8 @@ impl<X: UserData> SpPrWith<X> {
 }
 
 impl officekit_markup_base::Read for SpPr {
-    fn read(element: &Element) -> Self {
-        read::sp_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sp_pr_from_item(item)
     }
 }
 
@@ -1553,8 +1553,8 @@ impl<X: UserData> StyleWith<X> {
 }
 
 impl officekit_markup_base::Read for Style {
-    fn read(element: &Element) -> Self {
-        read::style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::style_from_item(item)
     }
 }
 
@@ -1599,8 +1599,8 @@ impl<X: UserData> TxbxWith<X> {
 }
 
 impl officekit_markup_base::Read for Txbx {
-    fn read(element: &Element) -> Self {
-        read::txbx(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::txbx_from_item(item)
     }
 }
 
@@ -1665,8 +1665,8 @@ impl<X: UserData> WspWith<X> {
 }
 
 impl officekit_markup_base::Read for Wsp {
-    fn read(element: &Element) -> Self {
-        read::wsp(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::wsp_from_item(item)
     }
 }
 

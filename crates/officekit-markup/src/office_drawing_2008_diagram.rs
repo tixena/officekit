@@ -226,7 +226,7 @@ pub mod write;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -1284,8 +1284,8 @@ impl<X: UserData> CNvGrpSpPrWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvGrpSpPr {
-    fn read(element: &Element) -> Self {
-        read::c_nv_grp_sp_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_grp_sp_pr_from_item(item)
     }
 }
 
@@ -1342,8 +1342,8 @@ impl<X: UserData> CNvPrWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvPr {
-    fn read(element: &Element) -> Self {
-        read::c_nv_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_pr_from_item(item)
     }
 }
 
@@ -1388,8 +1388,8 @@ impl<X: UserData> CNvSpPrWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvSpPr {
-    fn read(element: &Element) -> Self {
-        read::c_nv_sp_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_sp_pr_from_item(item)
     }
 }
 
@@ -1428,8 +1428,8 @@ impl<X: UserData> DataModelExtWith<X> {
 }
 
 impl officekit_markup_base::Read for DataModelExt {
-    fn read(element: &Element) -> Self {
-        read::data_model_ext(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_model_ext_from_item(item)
     }
 }
 
@@ -1466,8 +1466,8 @@ impl<X: UserData> DrawingWith<X> {
 }
 
 impl officekit_markup_base::Read for Drawing {
-    fn read(element: &Element) -> Self {
-        read::drawing(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drawing_from_item(item)
     }
 }
 
@@ -1504,8 +1504,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -1536,11 +1536,11 @@ impl officekit_markup_base::Read for GroupShapeContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_DSP, "grpSp")) => Self::GrpSp(officekit_markup_base::read(element)),
-            Some((NS_DSP, "sp")) => Self::Sp(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_DSP, "grpSp")) => Self::GrpSp(item.read()),
+            Some((NS_DSP, "sp")) => Self::Sp(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -1593,8 +1593,8 @@ impl<X: UserData> GrpSpWith<X> {
 }
 
 impl officekit_markup_base::Read for GrpSp {
-    fn read(element: &Element) -> Self {
-        read::grp_sp(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::grp_sp_from_item(item)
     }
 }
 
@@ -1651,8 +1651,8 @@ impl<X: UserData> GrpSpPrWith<X> {
 }
 
 impl officekit_markup_base::Read for GrpSpPr {
-    fn read(element: &Element) -> Self {
-        read::grp_sp_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::grp_sp_pr_from_item(item)
     }
 }
 
@@ -1693,8 +1693,8 @@ impl<X: UserData> NvGrpSpPrWith<X> {
 }
 
 impl officekit_markup_base::Read for NvGrpSpPr {
-    fn read(element: &Element) -> Self {
-        read::nv_grp_sp_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::nv_grp_sp_pr_from_item(item)
     }
 }
 
@@ -1732,8 +1732,8 @@ impl<X: UserData> NvSpPrWith<X> {
 }
 
 impl officekit_markup_base::Read for NvSpPr {
-    fn read(element: &Element) -> Self {
-        read::nv_sp_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::nv_sp_pr_from_item(item)
     }
 }
 
@@ -1791,8 +1791,8 @@ impl<X: UserData> SpWith<X> {
 }
 
 impl officekit_markup_base::Read for Sp {
-    fn read(element: &Element) -> Self {
-        read::sp(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sp_from_item(item)
     }
 }
 
@@ -1861,8 +1861,8 @@ impl<X: UserData> SpPrWith<X> {
 }
 
 impl officekit_markup_base::Read for SpPr {
-    fn read(element: &Element) -> Self {
-        read::sp_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sp_pr_from_item(item)
     }
 }
 
@@ -1911,8 +1911,8 @@ impl<X: UserData> SpTreeWith<X> {
 }
 
 impl officekit_markup_base::Read for SpTree {
-    fn read(element: &Element) -> Self {
-        read::sp_tree(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sp_tree_from_item(item)
     }
 }
 
@@ -1961,8 +1961,8 @@ impl<X: UserData> StyleWith<X> {
 }
 
 impl officekit_markup_base::Read for Style {
-    fn read(element: &Element) -> Self {
-        read::style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::style_from_item(item)
     }
 }
 
@@ -2007,8 +2007,8 @@ impl<X: UserData> TxBodyWith<X> {
 }
 
 impl officekit_markup_base::Read for TxBody {
-    fn read(element: &Element) -> Self {
-        read::tx_body(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tx_body_from_item(item)
     }
 }
 
@@ -2057,8 +2057,8 @@ impl<X: UserData> TxXfrmWith<X> {
 }
 
 impl officekit_markup_base::Read for TxXfrm {
-    fn read(element: &Element) -> Self {
-        read::tx_xfrm(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tx_xfrm_from_item(item)
     }
 }
 

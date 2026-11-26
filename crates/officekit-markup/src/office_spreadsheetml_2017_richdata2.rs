@@ -227,7 +227,7 @@ use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::office_spreadsheetml_2009_9_main;
 use officekit_markup_core::spreadsheet;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::values::ValueError;
@@ -2610,8 +2610,8 @@ impl<X: UserData> AArrayWith<X> {
 }
 
 impl officekit_markup_base::Read for AArray {
-    fn read(element: &Element) -> Self {
-        read::a_array(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::a_array_from_item(item)
     }
 }
 
@@ -2652,8 +2652,8 @@ impl<X: UserData> ASupportingPropertyBagArrayWith<X> {
 }
 
 impl officekit_markup_base::Read for ASupportingPropertyBagArray {
-    fn read(element: &Element) -> Self {
-        read::a_supporting_property_bag_array(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::a_supporting_property_bag_array_from_item(item)
     }
 }
 
@@ -2698,8 +2698,8 @@ impl<X: UserData> ArrayDataWith<X> {
 }
 
 impl officekit_markup_base::Read for ArrayData {
-    fn read(element: &Element) -> Self {
-        read::array_data(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::array_data_from_item(item)
     }
 }
 
@@ -2794,8 +2794,8 @@ impl<X: UserData> CustomFilterWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomFilter {
-    fn read(element: &Element) -> Self {
-        read::custom_filter(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_filter_from_item(item)
     }
 }
 
@@ -2836,8 +2836,8 @@ impl<X: UserData> CustomFiltersWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomFilters {
-    fn read(element: &Element) -> Self {
-        read::custom_filters(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_filters_from_item(item)
     }
 }
 
@@ -2870,13 +2870,11 @@ impl officekit_markup_base::Read for CustomRichFiltersContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_XLRD2, "customFilter")) => {
-                Self::CustomFilter(officekit_markup_base::read(element))
-            }
-            Some((NS_XLRD2, "extLst")) => Self::ExtLst(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_XLRD2, "customFilter")) => Self::CustomFilter(item.read()),
+            Some((NS_XLRD2, "extLst")) => Self::ExtLst(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -2931,8 +2929,8 @@ impl<X: UserData> DateGroupItemWith<X> {
 }
 
 impl officekit_markup_base::Read for DateGroupItem {
-    fn read(element: &Element) -> Self {
-        read::date_group_item(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::date_group_item_from_item(item)
     }
 }
 
@@ -2973,8 +2971,8 @@ impl<X: UserData> DxfsWith<X> {
 }
 
 impl officekit_markup_base::Read for Dxfs {
-    fn read(element: &Element) -> Self {
-        read::dxfs(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::dxfs_from_item(item)
     }
 }
 
@@ -3021,8 +3019,8 @@ impl<X: UserData> DynamicFilterWith<X> {
 }
 
 impl officekit_markup_base::Read for DynamicFilter {
-    fn read(element: &Element) -> Self {
-        read::dynamic_filter(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::dynamic_filter_from_item(item)
     }
 }
 
@@ -3059,8 +3057,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -3103,8 +3101,8 @@ impl<X: UserData> FilterWith<X> {
 }
 
 impl officekit_markup_base::Read for Filter {
-    fn read(element: &Element) -> Self {
-        read::filter(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::filter_from_item(item)
     }
 }
 
@@ -3141,8 +3139,8 @@ impl<X: UserData> FilterColumnWith<X> {
 }
 
 impl officekit_markup_base::Read for FilterColumn {
-    fn read(element: &Element) -> Self {
-        read::filter_column(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::filter_column_from_item(item)
     }
 }
 
@@ -3187,8 +3185,8 @@ impl<X: UserData> FiltersWith<X> {
 }
 
 impl officekit_markup_base::Read for Filters {
-    fn read(element: &Element) -> Self {
-        read::filters(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::filters_from_item(item)
     }
 }
 
@@ -3227,8 +3225,8 @@ impl<X: UserData> FlagWith<X> {
 }
 
 impl officekit_markup_base::Read for Flag {
-    fn read(element: &Element) -> Self {
-        read::flag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::flag_from_item(item)
     }
 }
 
@@ -3269,8 +3267,8 @@ impl<X: UserData> GlobalWith<X> {
 }
 
 impl officekit_markup_base::Read for Global {
-    fn read(element: &Element) -> Self {
-        read::global(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::global_from_item(item)
     }
 }
 
@@ -3309,8 +3307,8 @@ impl<X: UserData> KWith<X> {
 }
 
 impl officekit_markup_base::Read for K {
-    fn read(element: &Element) -> Self {
-        read::k(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::k_from_item(item)
     }
 }
 
@@ -3348,8 +3346,8 @@ impl<X: UserData> KeyWith<X> {
 }
 
 impl officekit_markup_base::Read for Key {
-    fn read(element: &Element) -> Self {
-        read::key(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::key_from_item(item)
     }
 }
 
@@ -3383,8 +3381,8 @@ impl<X: UserData> KeyFlagsWith<X> {
 }
 
 impl officekit_markup_base::Read for KeyFlags {
-    fn read(element: &Element) -> Self {
-        read::key_flags(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::key_flags_from_item(item)
     }
 }
 
@@ -3423,8 +3421,8 @@ impl<X: UserData> RPrWith<X> {
 }
 
 impl officekit_markup_base::Read for RPr {
-    fn read(element: &Element) -> Self {
-        read::r_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::r_pr_from_item(item)
     }
 }
 
@@ -3462,8 +3460,8 @@ impl<X: UserData> RStyWith<X> {
 }
 
 impl officekit_markup_base::Read for RSty {
-    fn read(element: &Element) -> Self {
-        read::r_sty(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::r_sty_from_item(item)
     }
 }
 
@@ -3501,18 +3499,14 @@ impl officekit_markup_base::Read for RichFilterColumnContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_XLRD2, "customFilters")) => {
-                Self::CustomFilters(officekit_markup_base::read(element))
-            }
-            Some((NS_XLRD2, "dynamicFilter")) => {
-                Self::DynamicFilter(officekit_markup_base::read(element))
-            }
-            Some((NS_XLRD2, "extLst")) => Self::ExtLst(officekit_markup_base::read(element)),
-            Some((NS_XLRD2, "filters")) => Self::Filters(officekit_markup_base::read(element)),
-            Some((NS_XLRD2, "top10")) => Self::Top10(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_XLRD2, "customFilters")) => Self::CustomFilters(item.read()),
+            Some((NS_XLRD2, "dynamicFilter")) => Self::DynamicFilter(item.read()),
+            Some((NS_XLRD2, "extLst")) => Self::ExtLst(item.read()),
+            Some((NS_XLRD2, "filters")) => Self::Filters(item.read()),
+            Some((NS_XLRD2, "top10")) => Self::Top10(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -3608,8 +3602,8 @@ impl<X: UserData> RichPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for RichProperties {
-    fn read(element: &Element) -> Self {
-        read::rich_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rich_properties_from_item(item)
     }
 }
 
@@ -3660,8 +3654,8 @@ impl<X: UserData> RichSortConditionWith<X> {
 }
 
 impl officekit_markup_base::Read for RichSortCondition {
-    fn read(element: &Element) -> Self {
-        read::rich_sort_condition(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rich_sort_condition_from_item(item)
     }
 }
 
@@ -3710,8 +3704,8 @@ impl<X: UserData> RichStyleSheetWith<X> {
 }
 
 impl officekit_markup_base::Read for RichStyleSheet {
-    fn read(element: &Element) -> Self {
-        read::rich_style_sheet(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rich_style_sheet_from_item(item)
     }
 }
 
@@ -3745,8 +3739,8 @@ impl<X: UserData> RichStylesWith<X> {
 }
 
 impl officekit_markup_base::Read for RichStyles {
-    fn read(element: &Element) -> Self {
-        read::rich_styles(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rich_styles_from_item(item)
     }
 }
 
@@ -3785,8 +3779,8 @@ impl<X: UserData> RpvWith<X> {
 }
 
 impl officekit_markup_base::Read for Rpv {
-    fn read(element: &Element) -> Self {
-        read::rpv(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rpv_from_item(item)
     }
 }
 
@@ -3831,8 +3825,8 @@ impl<X: UserData> RvTypesInfoWith<X> {
 }
 
 impl officekit_markup_base::Read for RvTypesInfo {
-    fn read(element: &Element) -> Self {
-        read::rv_types_info(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rv_types_info_from_item(item)
     }
 }
 
@@ -3866,8 +3860,8 @@ impl<X: UserData> SWith<X> {
 }
 
 impl officekit_markup_base::Read for S {
-    fn read(element: &Element) -> Self {
-        read::s(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::s_from_item(item)
     }
 }
 
@@ -3908,8 +3902,8 @@ impl<X: UserData> SpbWith<X> {
 }
 
 impl officekit_markup_base::Read for Spb {
-    fn read(element: &Element) -> Self {
-        read::spb(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::spb_from_item(item)
     }
 }
 
@@ -3954,8 +3948,8 @@ impl<X: UserData> SpbArraysWith<X> {
 }
 
 impl officekit_markup_base::Read for SpbArrays {
-    fn read(element: &Element) -> Self {
-        read::spb_arrays(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::spb_arrays_from_item(item)
     }
 }
 
@@ -3997,8 +3991,8 @@ impl<X: UserData> SpbDataWith<X> {
 }
 
 impl officekit_markup_base::Read for SpbData {
-    fn read(element: &Element) -> Self {
-        read::spb_data(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::spb_data_from_item(item)
     }
 }
 
@@ -4040,8 +4034,8 @@ impl<X: UserData> SpbStructuresWith<X> {
 }
 
 impl officekit_markup_base::Read for SpbStructures {
-    fn read(element: &Element) -> Self {
-        read::spb_structures(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::spb_structures_from_item(item)
     }
 }
 
@@ -4195,8 +4189,8 @@ impl<X: UserData> SupportingPropertyBagsWith<X> {
 }
 
 impl officekit_markup_base::Read for SupportingPropertyBags {
-    fn read(element: &Element) -> Self {
-        read::supporting_property_bags(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::supporting_property_bags_from_item(item)
     }
 }
 
@@ -4241,8 +4235,8 @@ impl<X: UserData> Top10With<X> {
 }
 
 impl officekit_markup_base::Read for Top10 {
-    fn read(element: &Element) -> Self {
-        read::top10(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::top10_from_item(item)
     }
 }
 
@@ -4287,8 +4281,8 @@ impl<X: UserData> TypeWith<X> {
 }
 
 impl officekit_markup_base::Read for Type {
-    fn read(element: &Element) -> Self {
-        read::r#type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::type_from_item(item)
     }
 }
 
@@ -4325,8 +4319,8 @@ impl<X: UserData> TypesWith<X> {
 }
 
 impl officekit_markup_base::Read for Types {
-    fn read(element: &Element) -> Self {
-        read::types(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::types_from_item(item)
     }
 }
 
@@ -4365,8 +4359,8 @@ impl<X: UserData> VArrayValueWith<X> {
 }
 
 impl officekit_markup_base::Read for VArrayValue {
-    fn read(element: &Element) -> Self {
-        read::v_array_value(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::v_array_value_from_item(item)
     }
 }
 
@@ -4405,8 +4399,8 @@ impl<X: UserData> VSupportingPropertyBagArrayValueWith<X> {
 }
 
 impl officekit_markup_base::Read for VSupportingPropertyBagArrayValue {
-    fn read(element: &Element) -> Self {
-        read::v_supporting_property_bag_array_value(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::v_supporting_property_bag_array_value_from_item(item)
     }
 }
 
@@ -4443,8 +4437,8 @@ impl<X: UserData> VSupportingPropertyBagValueWith<X> {
 }
 
 impl officekit_markup_base::Read for VSupportingPropertyBagValue {
-    fn read(element: &Element) -> Self {
-        read::v_supporting_property_bag_value(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::v_supporting_property_bag_value_from_item(item)
     }
 }
 

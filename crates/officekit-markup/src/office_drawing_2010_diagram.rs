@@ -226,7 +226,6 @@ pub mod write;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -420,8 +419,8 @@ impl<X: UserData> CNvPrWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvPr {
-    fn read(element: &Element) -> Self {
-        read::c_nv_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_pr_from_item(item)
     }
 }
 
@@ -458,8 +457,8 @@ impl<X: UserData> RecolorImgWith<X> {
 }
 
 impl officekit_markup_base::Read for RecolorImg {
-    fn read(element: &Element) -> Self {
-        read::recolor_img(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::recolor_img_from_item(item)
     }
 }
 

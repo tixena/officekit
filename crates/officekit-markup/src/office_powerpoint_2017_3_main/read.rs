@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `p173:track` into a `Track`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn track(element: &Element) -> super::Track {
+    track_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p173:track` into a `Track` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn track_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Track {
+    track_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p173:track` into a `Track` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn track_from_item(item: officekit_markup_base::Item<'_>) -> super::Track {
     let mut node = super::Track::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TRACK_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TRACK_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -240,8 +255,24 @@ pub fn track(element: &Element) -> super::Track {
 /// Read `p173:trackLst` into a `TrackLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn track_lst(element: &Element) -> super::TrackLst {
+    track_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p173:trackLst` into a `TrackLst` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn track_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TrackLst {
+    track_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p173:trackLst` into a `TrackLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn track_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::TrackLst {
     let mut node = super::TrackLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TRACK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TRACK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.track);
@@ -254,8 +285,24 @@ pub fn track_lst(element: &Element) -> super::TrackLst {
 /// Read `p173:tracksInfo` into a `TracksInfo`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tracks_info(element: &Element) -> super::TracksInfo {
+    tracks_info_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p173:tracksInfo` into a `TracksInfo` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tracks_info_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TracksInfo {
+    tracks_info_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p173:tracksInfo` into a `TracksInfo` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tracks_info_from_item(item: officekit_markup_base::Item<'_>) -> super::TracksInfo {
     let mut node = super::TracksInfo::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TRACKS_INFO_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TRACKS_INFO_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.display_loc),

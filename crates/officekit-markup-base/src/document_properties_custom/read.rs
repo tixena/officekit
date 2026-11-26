@@ -221,8 +221,25 @@ use officekit_xml::element::Element;
 /// Read `op:Properties` into a `CustomFileProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_file_properties(element: &Element) -> super::CustomFileProperties {
+    custom_file_properties_from_item(crate::Item::Tree(element))
+}
+
+/// Read `op:Properties` into a `CustomFileProperties` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_file_properties_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CustomFileProperties {
+    custom_file_properties_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `op:Properties` into a `CustomFileProperties` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_file_properties_from_item(item: crate::Item<'_>) -> super::CustomFileProperties {
     let mut node = super::CustomFileProperties::default();
-    let mut reader = crate::Reader::new(element, &super::CUSTOM_FILE_PROPERTIES_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CUSTOM_FILE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.custom_file_property);
@@ -235,8 +252,25 @@ pub fn custom_file_properties(element: &Element) -> super::CustomFileProperties 
 /// Read `op:property` into a `CustomFileProperty`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_file_property(element: &Element) -> super::CustomFileProperty {
+    custom_file_property_from_item(crate::Item::Tree(element))
+}
+
+/// Read `op:property` into a `CustomFileProperty` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_file_property_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CustomFileProperty {
+    custom_file_property_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `op:property` into a `CustomFileProperty` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_file_property_from_item(item: crate::Item<'_>) -> super::CustomFileProperty {
     let mut node = super::CustomFileProperty::default();
-    let mut reader = crate::Reader::new(element, &super::CUSTOM_FILE_PROPERTY_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CUSTOM_FILE_PROPERTY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.fmtid),

@@ -221,8 +221,25 @@ use officekit_xml::element::Element;
 /// Read `xlrvr:refreshInterval` into a `RefreshInterval`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn refresh_interval(element: &Element) -> super::RefreshInterval {
+    refresh_interval_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrvr:refreshInterval` into a `RefreshInterval` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn refresh_interval_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RefreshInterval {
+    refresh_interval_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrvr:refreshInterval` into a `RefreshInterval` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn refresh_interval_from_item(item: officekit_markup_base::Item<'_>) -> super::RefreshInterval {
     let mut node = super::RefreshInterval::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::REFRESH_INTERVAL_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::REFRESH_INTERVAL_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.resource_id_int),
@@ -238,8 +255,27 @@ pub fn refresh_interval(element: &Element) -> super::RefreshInterval {
 /// Read `xlrvr:refreshIntervals` into a `RefreshIntervals`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn refresh_intervals(element: &Element) -> super::RefreshIntervals {
+    refresh_intervals_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrvr:refreshIntervals` into a `RefreshIntervals` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn refresh_intervals_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RefreshIntervals {
+    refresh_intervals_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrvr:refreshIntervals` into a `RefreshIntervals` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn refresh_intervals_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::RefreshIntervals {
     let mut node = super::RefreshIntervals::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::REFRESH_INTERVALS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::REFRESH_INTERVALS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.refresh_interval);

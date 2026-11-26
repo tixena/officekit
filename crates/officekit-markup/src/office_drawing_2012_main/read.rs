@@ -221,8 +221,24 @@ use officekit_xml::element::Element;
 /// Read `a15:backgroundPr` into a `BackgroundPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn background_pr(element: &Element) -> super::BackgroundPr {
+    background_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `a15:backgroundPr` into a `BackgroundPr` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn background_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BackgroundPr {
+    background_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `a15:backgroundPr` into a `BackgroundPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn background_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::BackgroundPr {
     let mut node = super::BackgroundPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BACKGROUND_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BACKGROUND_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bw_mode),
@@ -239,9 +255,27 @@ pub fn background_pr(element: &Element) -> super::BackgroundPr {
 /// Read `a15:nonVisualGroupProps` into a `NonVisualGroupProps`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_group_props(element: &Element) -> super::NonVisualGroupProps {
+    non_visual_group_props_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `a15:nonVisualGroupProps` into a `NonVisualGroupProps` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_group_props_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualGroupProps {
+    non_visual_group_props_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `a15:nonVisualGroupProps` into a `NonVisualGroupProps` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_group_props_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualGroupProps {
     let mut node = super::NonVisualGroupProps::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::NON_VISUAL_GROUP_PROPS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NON_VISUAL_GROUP_PROPS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.is_legacy_group);
@@ -254,8 +288,23 @@ pub fn non_visual_group_props(element: &Element) -> super::NonVisualGroupProps {
 /// Read `a15:objectPr` into a `ObjectPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn object_pr(element: &Element) -> super::ObjectPr {
+    object_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `a15:objectPr` into a `ObjectPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn object_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ObjectPr {
+    object_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `a15:objectPr` into a `ObjectPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn object_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::ObjectPr {
     let mut node = super::ObjectPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::OBJECT_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::OBJECT_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.object_id),
@@ -271,8 +320,25 @@ pub fn object_pr(element: &Element) -> super::ObjectPr {
 /// Read `a15:signatureLine` into a `SignatureLine`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn signature_line(element: &Element) -> super::SignatureLine {
+    signature_line_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `a15:signatureLine` into a `SignatureLine` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn signature_line_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SignatureLine {
+    signature_line_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `a15:signatureLine` into a `SignatureLine` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn signature_line_from_item(item: officekit_markup_base::Item<'_>) -> super::SignatureLine {
     let mut node = super::SignatureLine::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SIGNATURE_LINE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SIGNATURE_LINE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.is_signature_line),

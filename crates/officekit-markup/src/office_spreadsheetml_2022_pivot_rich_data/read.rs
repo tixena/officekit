@@ -221,8 +221,24 @@ use officekit_xml::element::Element;
 /// Read `xprd:richInfo` into a `RichInfo`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_info(element: &Element) -> super::RichInfo {
+    rich_info_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xprd:richInfo` into a `RichInfo` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rich_info_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RichInfo {
+    rich_info_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xprd:richInfo` into a `RichInfo` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rich_info_from_item(item: officekit_markup_base::Item<'_>) -> super::RichInfo {
     let mut node = super::RichInfo::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::RICH_INFO_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::RICH_INFO_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.pivot_cache_guid),

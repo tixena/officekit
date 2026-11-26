@@ -226,7 +226,6 @@ pub mod write;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -842,8 +841,8 @@ impl<X: UserData> AlternateReferencesWith<X> {
 }
 
 impl officekit_markup_base::Read for AlternateReferences {
-    fn read(element: &Element) -> Self {
-        read::alternate_references(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::alternate_references_from_item(item)
     }
 }
 
@@ -888,8 +887,8 @@ impl<X: UserData> BindingWith<X> {
 }
 
 impl officekit_markup_base::Read for Binding {
-    fn read(element: &Element) -> Self {
-        read::binding(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::binding_from_item(item)
     }
 }
 
@@ -926,8 +925,8 @@ impl<X: UserData> BindingsWith<X> {
 }
 
 impl officekit_markup_base::Read for Bindings {
-    fn read(element: &Element) -> Self {
-        read::bindings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bindings_from_item(item)
     }
 }
 
@@ -964,8 +963,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -1002,8 +1001,8 @@ impl<X: UserData> PropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for Properties {
-    fn read(element: &Element) -> Self {
-        read::properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::properties_from_item(item)
     }
 }
 
@@ -1042,8 +1041,8 @@ impl<X: UserData> PropertyWith<X> {
 }
 
 impl officekit_markup_base::Read for Property {
-    fn read(element: &Element) -> Self {
-        read::property(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::property_from_item(item)
     }
 }
 
@@ -1090,8 +1089,8 @@ impl<X: UserData> ReferenceWith<X> {
 }
 
 impl officekit_markup_base::Read for Reference {
-    fn read(element: &Element) -> Self {
-        read::reference(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::reference_from_item(item)
     }
 }
 
@@ -1140,8 +1139,8 @@ impl<X: UserData> SnapshotWith<X> {
 }
 
 impl officekit_markup_base::Read for Snapshot {
-    fn read(element: &Element) -> Self {
-        read::snapshot(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::snapshot_from_item(item)
     }
 }
 
@@ -1204,8 +1203,8 @@ impl<X: UserData> WebextensionWith<X> {
 }
 
 impl officekit_markup_base::Read for Webextension {
-    fn read(element: &Element) -> Self {
-        read::webextension(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::webextension_from_item(item)
     }
 }
 
@@ -1242,8 +1241,8 @@ impl<X: UserData> WebextensionrefWith<X> {
 }
 
 impl officekit_markup_base::Read for Webextensionref {
-    fn read(element: &Element) -> Self {
-        read::webextensionref(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::webextensionref_from_item(item)
     }
 }
 

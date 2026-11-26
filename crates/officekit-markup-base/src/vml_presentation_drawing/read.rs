@@ -221,7 +221,24 @@ use officekit_xml::element::Element;
 /// Read `pvml:iscomment` into a `InkAnnotationFlag`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ink_annotation_flag(element: &Element) -> super::InkAnnotationFlag {
-    let reader = crate::Reader::new(element, &super::INK_ANNOTATION_FLAG_SHAPE);
+    ink_annotation_flag_from_item(crate::Item::Tree(element))
+}
+
+/// Read `pvml:iscomment` into a `InkAnnotationFlag` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ink_annotation_flag_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::InkAnnotationFlag {
+    ink_annotation_flag_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `pvml:iscomment` into a `InkAnnotationFlag` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ink_annotation_flag_from_item(item: crate::Item<'_>) -> super::InkAnnotationFlag {
+    let reader = crate::Reader::of(item, &super::INK_ANNOTATION_FLAG_SHAPE);
     super::InkAnnotationFlag {
         user_data: (),
         unknown: reader.finish(),
@@ -231,8 +248,24 @@ pub fn ink_annotation_flag(element: &Element) -> super::InkAnnotationFlag {
 /// Read `pvml:textdata` into a `VMLDiagramText`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn vml_diagram_text(element: &Element) -> super::VMLDiagramText {
+    vml_diagram_text_from_item(crate::Item::Tree(element))
+}
+
+/// Read `pvml:textdata` into a `VMLDiagramText` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn vml_diagram_text_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::VMLDiagramText {
+    vml_diagram_text_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `pvml:textdata` into a `VMLDiagramText` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn vml_diagram_text_from_item(item: crate::Item<'_>) -> super::VMLDiagramText {
     let mut node = super::VMLDiagramText::default();
-    let mut reader = crate::Reader::new(element, &super::VML_DIAGRAM_TEXT_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::VML_DIAGRAM_TEXT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.id);

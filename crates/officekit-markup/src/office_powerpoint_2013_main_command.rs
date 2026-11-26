@@ -226,7 +226,6 @@ pub mod write;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -1568,8 +1567,8 @@ impl<X: UserData> AnimEffectMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for AnimEffectMkLst {
-    fn read(element: &Element) -> Self {
-        read::anim_effect_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::anim_effect_mk_lst_from_item(item)
     }
 }
 
@@ -1606,8 +1605,8 @@ impl<X: UserData> AnimEffectParentMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for AnimEffectParentMkLst {
-    fn read(element: &Element) -> Self {
-        read::anim_effect_parent_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::anim_effect_parent_mk_lst_from_item(item)
     }
 }
 
@@ -1644,8 +1643,8 @@ impl<X: UserData> CXmlMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for CXmlMkLst {
-    fn read(element: &Element) -> Self {
-        read::c_xml_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_xml_mk_lst_from_item(item)
     }
 }
 
@@ -1682,8 +1681,8 @@ impl<X: UserData> CmAuthorMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for CmAuthorMkLst {
-    fn read(element: &Element) -> Self {
-        read::cm_author_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cm_author_mk_lst_from_item(item)
     }
 }
 
@@ -1720,8 +1719,8 @@ impl<X: UserData> CmMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for CmMkLst {
-    fn read(element: &Element) -> Self {
-        read::cm_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cm_mk_lst_from_item(item)
     }
 }
 
@@ -1758,8 +1757,8 @@ impl<X: UserData> CustShowMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for CustShowMkLst {
-    fn read(element: &Element) -> Self {
-        read::cust_show_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cust_show_mk_lst_from_item(item)
     }
 }
 
@@ -1796,8 +1795,8 @@ impl<X: UserData> DesignTagMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for DesignTagMkLst {
-    fn read(element: &Element) -> Self {
-        read::design_tag_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::design_tag_mk_lst_from_item(item)
     }
 }
 
@@ -1830,8 +1829,8 @@ impl<X: UserData> DocMkWith<X> {
 }
 
 impl officekit_markup_base::Read for DocMk {
-    fn read(element: &Element) -> Self {
-        read::doc_mk(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::doc_mk_from_item(item)
     }
 }
 
@@ -1868,8 +1867,8 @@ impl<X: UserData> DocMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for DocMkLst {
-    fn read(element: &Element) -> Self {
-        read::doc_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::doc_mk_lst_from_item(item)
     }
 }
 
@@ -1906,8 +1905,8 @@ impl<X: UserData> HandoutMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for HandoutMkLst {
-    fn read(element: &Element) -> Self {
-        read::handout_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::handout_mk_lst_from_item(item)
     }
 }
 
@@ -1944,8 +1943,8 @@ impl<X: UserData> NotesMasterMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for NotesMasterMkLst {
-    fn read(element: &Element) -> Self {
-        read::notes_master_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::notes_master_mk_lst_from_item(item)
     }
 }
 
@@ -1982,8 +1981,8 @@ impl<X: UserData> NotesMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for NotesMkLst {
-    fn read(element: &Element) -> Self {
-        read::notes_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::notes_mk_lst_from_item(item)
     }
 }
 
@@ -2020,8 +2019,8 @@ impl<X: UserData> NotesTxtMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for NotesTxtMkLst {
-    fn read(element: &Element) -> Self {
-        read::notes_txt_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::notes_txt_mk_lst_from_item(item)
     }
 }
 
@@ -2058,8 +2057,8 @@ impl<X: UserData> SectionLnkObjMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for SectionLnkObjMkLst {
-    fn read(element: &Element) -> Self {
-        read::section_lnk_obj_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::section_lnk_obj_mk_lst_from_item(item)
     }
 }
 
@@ -2096,8 +2095,8 @@ impl<X: UserData> SectionMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for SectionMkLst {
-    fn read(element: &Element) -> Self {
-        read::section_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::section_mk_lst_from_item(item)
     }
 }
 
@@ -2134,8 +2133,8 @@ impl<X: UserData> SldBaseMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for SldBaseMkLst {
-    fn read(element: &Element) -> Self {
-        read::sld_base_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sld_base_mk_lst_from_item(item)
     }
 }
 
@@ -2172,8 +2171,8 @@ impl<X: UserData> SldLayoutMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for SldLayoutMkLst {
-    fn read(element: &Element) -> Self {
-        read::sld_layout_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sld_layout_mk_lst_from_item(item)
     }
 }
 
@@ -2210,8 +2209,8 @@ impl<X: UserData> SldMasterMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for SldMasterMkLst {
-    fn read(element: &Element) -> Self {
-        read::sld_master_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sld_master_mk_lst_from_item(item)
     }
 }
 
@@ -2250,8 +2249,8 @@ impl<X: UserData> SldMkWith<X> {
 }
 
 impl officekit_markup_base::Read for SldMk {
-    fn read(element: &Element) -> Self {
-        read::sld_mk(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sld_mk_from_item(item)
     }
 }
 
@@ -2296,8 +2295,8 @@ impl<X: UserData> SldMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for SldMkLst {
-    fn read(element: &Element) -> Self {
-        read::sld_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sld_mk_lst_from_item(item)
     }
 }
 
@@ -2334,8 +2333,8 @@ impl<X: UserData> SldPosMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for SldPosMkLst {
-    fn read(element: &Element) -> Self {
-        read::sld_pos_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sld_pos_mk_lst_from_item(item)
     }
 }
 
@@ -2372,8 +2371,8 @@ impl<X: UserData> TagMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for TagMkLst {
-    fn read(element: &Element) -> Self {
-        read::tag_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tag_mk_lst_from_item(item)
     }
 }
 
@@ -2410,8 +2409,8 @@ impl<X: UserData> TkAppMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for TkAppMkLst {
-    fn read(element: &Element) -> Self {
-        read::tk_app_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tk_app_mk_lst_from_item(item)
     }
 }
 
@@ -2448,8 +2447,8 @@ impl<X: UserData> TocMkLstWith<X> {
 }
 
 impl officekit_markup_base::Read for TocMkLst {
-    fn read(element: &Element) -> Self {
-        read::toc_mk_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::toc_mk_lst_from_item(item)
     }
 }
 

@@ -226,7 +226,7 @@ pub mod write;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::spreadsheet;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -2241,8 +2241,8 @@ impl<X: UserData> AWith<X> {
 }
 
 impl officekit_markup_base::Read for A {
-    fn read(element: &Element) -> Self {
-        read::a(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::a_from_item(item)
     }
 }
 
@@ -2285,17 +2285,15 @@ impl officekit_markup_base::Read for ArrayFeaturePropertyContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_XFPB, "b")) => Self::BBoolean(officekit_markup_base::read(element)),
-            Some((NS_XFPB, "bagId")) => {
-                Self::BagIdUnsignedInt(officekit_markup_base::read(element))
-            }
-            Some((NS_XFPB, "d")) => Self::DDouble(officekit_markup_base::read(element)),
-            Some((NS_XFPB, "i")) => Self::IInteger(officekit_markup_base::read(element)),
-            Some((NS_XFPB, "rel")) => Self::RelString(officekit_markup_base::read(element)),
-            Some((NS_XFPB, "s")) => Self::SString(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_XFPB, "b")) => Self::BBoolean(item.read()),
+            Some((NS_XFPB, "bagId")) => Self::BagIdUnsignedInt(item.read()),
+            Some((NS_XFPB, "d")) => Self::DDouble(item.read()),
+            Some((NS_XFPB, "i")) => Self::IInteger(item.read()),
+            Some((NS_XFPB, "rel")) => Self::RelString(item.read()),
+            Some((NS_XFPB, "s")) => Self::SString(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -2342,8 +2340,8 @@ impl<X: UserData> BBoolFeaturePropertyWith<X> {
 }
 
 impl officekit_markup_base::Read for BBoolFeatureProperty {
-    fn read(element: &Element) -> Self {
-        read::b_bool_feature_property(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::b_bool_feature_property_from_item(item)
     }
 }
 
@@ -2380,8 +2378,8 @@ impl<X: UserData> BBooleanWith<X> {
 }
 
 impl officekit_markup_base::Read for BBoolean {
-    fn read(element: &Element) -> Self {
-        read::b_boolean(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::b_boolean_from_item(item)
     }
 }
 
@@ -2428,8 +2426,8 @@ impl<X: UserData> BagWith<X> {
 }
 
 impl officekit_markup_base::Read for Bag {
-    fn read(element: &Element) -> Self {
-        read::bag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bag_from_item(item)
     }
 }
 
@@ -2466,8 +2464,8 @@ impl<X: UserData> BagExtWith<X> {
 }
 
 impl officekit_markup_base::Read for BagExt {
-    fn read(element: &Element) -> Self {
-        read::bag_ext(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bag_ext_from_item(item)
     }
 }
 
@@ -2506,8 +2504,8 @@ impl<X: UserData> BagIdBagFeaturePropertyWith<X> {
 }
 
 impl officekit_markup_base::Read for BagIdBagFeatureProperty {
-    fn read(element: &Element) -> Self {
-        read::bag_id_bag_feature_property(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bag_id_bag_feature_property_from_item(item)
     }
 }
 
@@ -2544,8 +2542,8 @@ impl<X: UserData> BagIdUnsignedIntWith<X> {
 }
 
 impl officekit_markup_base::Read for BagIdUnsignedInt {
-    fn read(element: &Element) -> Self {
-        read::bag_id_unsigned_int(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bag_id_unsigned_int_from_item(item)
     }
 }
 
@@ -2586,8 +2584,8 @@ impl<X: UserData> ColumnBodyRevDxfWith<X> {
 }
 
 impl officekit_markup_base::Read for ColumnBodyRevDxf {
-    fn read(element: &Element) -> Self {
-        read::column_body_rev_dxf(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::column_body_rev_dxf_from_item(item)
     }
 }
 
@@ -2628,8 +2626,8 @@ impl<X: UserData> ColumnHeaderRevDxfWith<X> {
 }
 
 impl officekit_markup_base::Read for ColumnHeaderRevDxf {
-    fn read(element: &Element) -> Self {
-        read::column_header_rev_dxf(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::column_header_rev_dxf_from_item(item)
     }
 }
 
@@ -2670,8 +2668,8 @@ impl<X: UserData> ColumnTotalsRevDxfWith<X> {
 }
 
 impl officekit_markup_base::Read for ColumnTotalsRevDxf {
-    fn read(element: &Element) -> Self {
-        read::column_totals_rev_dxf(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::column_totals_rev_dxf_from_item(item)
     }
 }
 
@@ -2710,8 +2708,8 @@ impl<X: UserData> DDecimalFeaturePropertyWith<X> {
 }
 
 impl officekit_markup_base::Read for DDecimalFeatureProperty {
-    fn read(element: &Element) -> Self {
-        read::d_decimal_feature_property(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::d_decimal_feature_property_from_item(item)
     }
 }
 
@@ -2748,8 +2746,8 @@ impl<X: UserData> DDoubleWith<X> {
 }
 
 impl officekit_markup_base::Read for DDouble {
-    fn read(element: &Element) -> Self {
-        read::d_double(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::d_double_from_item(item)
     }
 }
 
@@ -2786,8 +2784,8 @@ impl<X: UserData> DXFComplementWith<X> {
 }
 
 impl officekit_markup_base::Read for DXFComplement {
-    fn read(element: &Element) -> Self {
-        read::dxf_complement(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::dxf_complement_from_item(item)
     }
 }
 
@@ -2828,8 +2826,8 @@ impl<X: UserData> DataRevDxfWith<X> {
 }
 
 impl officekit_markup_base::Read for DataRevDxf {
-    fn read(element: &Element) -> Self {
-        read::data_rev_dxf(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_rev_dxf_from_item(item)
     }
 }
 
@@ -2890,8 +2888,8 @@ impl<X: UserData> DxfWith<X> {
 }
 
 impl officekit_markup_base::Read for Dxf {
-    fn read(element: &Element) -> Self {
-        read::dxf(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::dxf_from_item(item)
     }
 }
 
@@ -2928,8 +2926,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -2977,26 +2975,16 @@ impl officekit_markup_base::Read for FeaturePropertyBagContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_XFPB, "a")) => Self::A(officekit_markup_base::read(element)),
-            Some((NS_XFPB, "b")) => {
-                Self::BBoolFeatureProperty(officekit_markup_base::read(element))
-            }
-            Some((NS_XFPB, "bagId")) => {
-                Self::BagIdBagFeatureProperty(officekit_markup_base::read(element))
-            }
-            Some((NS_XFPB, "d")) => {
-                Self::DDecimalFeatureProperty(officekit_markup_base::read(element))
-            }
-            Some((NS_XFPB, "i")) => Self::IIntFeatureProperty(officekit_markup_base::read(element)),
-            Some((NS_XFPB, "rel")) => {
-                Self::RelRelFeatureProperty(officekit_markup_base::read(element))
-            }
-            Some((NS_XFPB, "s")) => {
-                Self::SStringFeatureProperty(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_XFPB, "a")) => Self::A(item.read()),
+            Some((NS_XFPB, "b")) => Self::BBoolFeatureProperty(item.read()),
+            Some((NS_XFPB, "bagId")) => Self::BagIdBagFeatureProperty(item.read()),
+            Some((NS_XFPB, "d")) => Self::DDecimalFeatureProperty(item.read()),
+            Some((NS_XFPB, "i")) => Self::IIntFeatureProperty(item.read()),
+            Some((NS_XFPB, "rel")) => Self::RelRelFeatureProperty(item.read()),
+            Some((NS_XFPB, "s")) => Self::SStringFeatureProperty(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -3051,8 +3039,8 @@ impl<X: UserData> FeaturePropertyBagsWith<X> {
 }
 
 impl officekit_markup_base::Read for FeaturePropertyBags {
-    fn read(element: &Element) -> Self {
-        read::feature_property_bags(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::feature_property_bags_from_item(item)
     }
 }
 
@@ -3094,8 +3082,8 @@ impl<X: UserData> FpbsWith<X> {
 }
 
 impl officekit_markup_base::Read for Fpbs {
-    fn read(element: &Element) -> Self {
-        read::fpbs(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::fpbs_from_item(item)
     }
 }
 
@@ -3136,8 +3124,8 @@ impl<X: UserData> HeaderRowBorderRevDxfWith<X> {
 }
 
 impl officekit_markup_base::Read for HeaderRowBorderRevDxf {
-    fn read(element: &Element) -> Self {
-        read::header_row_border_rev_dxf(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::header_row_border_rev_dxf_from_item(item)
     }
 }
 
@@ -3178,8 +3166,8 @@ impl<X: UserData> HeaderRowRevDxfWith<X> {
 }
 
 impl officekit_markup_base::Read for HeaderRowRevDxf {
-    fn read(element: &Element) -> Self {
-        read::header_row_rev_dxf(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::header_row_rev_dxf_from_item(item)
     }
 }
 
@@ -3218,8 +3206,8 @@ impl<X: UserData> IIntFeaturePropertyWith<X> {
 }
 
 impl officekit_markup_base::Read for IIntFeatureProperty {
-    fn read(element: &Element) -> Self {
-        read::i_int_feature_property(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::i_int_feature_property_from_item(item)
     }
 }
 
@@ -3256,8 +3244,8 @@ impl<X: UserData> IIntegerWith<X> {
 }
 
 impl officekit_markup_base::Read for IInteger {
-    fn read(element: &Element) -> Self {
-        read::i_integer(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::i_integer_from_item(item)
     }
 }
 
@@ -3296,8 +3284,8 @@ impl<X: UserData> RelRelFeaturePropertyWith<X> {
 }
 
 impl officekit_markup_base::Read for RelRelFeatureProperty {
-    fn read(element: &Element) -> Self {
-        read::rel_rel_feature_property(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rel_rel_feature_property_from_item(item)
     }
 }
 
@@ -3334,8 +3322,8 @@ impl<X: UserData> RelStringWith<X> {
 }
 
 impl officekit_markup_base::Read for RelString {
-    fn read(element: &Element) -> Self {
-        read::rel_string(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rel_string_from_item(item)
     }
 }
 
@@ -3376,8 +3364,8 @@ impl<X: UserData> RevdxfWith<X> {
 }
 
 impl officekit_markup_base::Read for Revdxf {
-    fn read(element: &Element) -> Self {
-        read::revdxf(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::revdxf_from_item(item)
     }
 }
 
@@ -3414,8 +3402,8 @@ impl<X: UserData> SStringWith<X> {
 }
 
 impl officekit_markup_base::Read for SString {
-    fn read(element: &Element) -> Self {
-        read::s_string(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::s_string_from_item(item)
     }
 }
 
@@ -3454,8 +3442,8 @@ impl<X: UserData> SStringFeaturePropertyWith<X> {
 }
 
 impl officekit_markup_base::Read for SStringFeatureProperty {
-    fn read(element: &Element) -> Self {
-        read::s_string_feature_property(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::s_string_feature_property_from_item(item)
     }
 }
 
@@ -3496,8 +3484,8 @@ impl<X: UserData> TableBorderRevDxfWith<X> {
 }
 
 impl officekit_markup_base::Read for TableBorderRevDxf {
-    fn read(element: &Element) -> Self {
-        read::table_border_rev_dxf(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_border_rev_dxf_from_item(item)
     }
 }
 
@@ -3538,8 +3526,8 @@ impl<X: UserData> TotalsRowBorderRevDxfWith<X> {
 }
 
 impl officekit_markup_base::Read for TotalsRowBorderRevDxf {
-    fn read(element: &Element) -> Self {
-        read::totals_row_border_rev_dxf(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::totals_row_border_rev_dxf_from_item(item)
     }
 }
 
@@ -3580,8 +3568,8 @@ impl<X: UserData> TotalsRowRevDxfWith<X> {
 }
 
 impl officekit_markup_base::Read for TotalsRowRevDxf {
-    fn read(element: &Element) -> Self {
-        read::totals_row_rev_dxf(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::totals_row_rev_dxf_from_item(item)
     }
 }
 
@@ -3618,8 +3606,8 @@ impl<X: UserData> XfComplementWith<X> {
 }
 
 impl officekit_markup_base::Read for XfComplement {
-    fn read(element: &Element) -> Self {
-        read::xf_complement(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xf_complement_from_item(item)
     }
 }
 

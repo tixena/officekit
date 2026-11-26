@@ -221,8 +221,24 @@ use officekit_xml::element::Element;
 /// Read `xlpar:autoRefresh` into a `AutoRefresh`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn auto_refresh(element: &Element) -> super::AutoRefresh {
+    auto_refresh_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlpar:autoRefresh` into a `AutoRefresh` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn auto_refresh_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AutoRefresh {
+    auto_refresh_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlpar:autoRefresh` into a `AutoRefresh` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn auto_refresh_from_item(item: officekit_markup_base::Item<'_>) -> super::AutoRefresh {
     let mut node = super::AutoRefresh::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::AUTO_REFRESH_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::AUTO_REFRESH_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);

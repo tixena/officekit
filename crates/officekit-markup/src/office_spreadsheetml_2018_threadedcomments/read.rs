@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `xltc:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xltc:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xltc:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -235,8 +250,23 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `xltc:mention` into a `Mention`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn mention(element: &Element) -> super::Mention {
+    mention_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xltc:mention` into a `Mention` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn mention_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Mention {
+    mention_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xltc:mention` into a `Mention` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn mention_from_item(item: officekit_markup_base::Item<'_>) -> super::Mention {
     let mut node = super::Mention::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::MENTION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::MENTION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.mentionperson_id),
@@ -253,8 +283,24 @@ pub fn mention(element: &Element) -> super::Mention {
 /// Read `xltc:mentions` into a `Mentions`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn mentions(element: &Element) -> super::Mentions {
+    mentions_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xltc:mentions` into a `Mentions` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn mentions_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Mentions {
+    mentions_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xltc:mentions` into a `Mentions` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn mentions_from_item(item: officekit_markup_base::Item<'_>) -> super::Mentions {
     let mut node = super::Mentions::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::MENTIONS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::MENTIONS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.mention);
@@ -267,8 +313,23 @@ pub fn mentions(element: &Element) -> super::Mentions {
 /// Read `xltc:person` into a `Person`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn person(element: &Element) -> super::Person {
+    person_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xltc:person` into a `Person` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn person_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Person {
+    person_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xltc:person` into a `Person` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn person_from_item(item: officekit_markup_base::Item<'_>) -> super::Person {
     let mut node = super::Person::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PERSON_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PERSON_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.display_name),
@@ -286,8 +347,24 @@ pub fn person(element: &Element) -> super::Person {
 /// Read `xltc:personList` into a `PersonList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn person_list(element: &Element) -> super::PersonList {
+    person_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xltc:personList` into a `PersonList` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn person_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PersonList {
+    person_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xltc:personList` into a `PersonList` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn person_list_from_item(item: officekit_markup_base::Item<'_>) -> super::PersonList {
     let mut node = super::PersonList::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PERSON_LIST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PERSON_LIST_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.person),
@@ -302,8 +379,23 @@ pub fn person_list(element: &Element) -> super::PersonList {
 /// Read `xltc:text` into a `Text`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text(element: &Element) -> super::Text {
+    text_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xltc:text` into a `Text` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn text_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Text {
+    text_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xltc:text` into a `Text` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn text_from_item(item: officekit_markup_base::Item<'_>) -> super::Text {
     let mut node = super::Text::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TEXT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TEXT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -316,8 +408,25 @@ pub fn text(element: &Element) -> super::Text {
 /// Read `xltc:threadedComment` into a `ThreadedComment`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn threaded_comment(element: &Element) -> super::ThreadedComment {
+    threaded_comment_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xltc:threadedComment` into a `ThreadedComment` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn threaded_comment_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ThreadedComment {
+    threaded_comment_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xltc:threadedComment` into a `ThreadedComment` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn threaded_comment_from_item(item: officekit_markup_base::Item<'_>) -> super::ThreadedComment {
     let mut node = super::ThreadedComment::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::THREADED_COMMENT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::THREADED_COMMENT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r#ref),
@@ -339,8 +448,27 @@ pub fn threaded_comment(element: &Element) -> super::ThreadedComment {
 /// Read `xltc:ThreadedComments` into a `ThreadedComments`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn threaded_comments(element: &Element) -> super::ThreadedComments {
+    threaded_comments_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xltc:ThreadedComments` into a `ThreadedComments` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn threaded_comments_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ThreadedComments {
+    threaded_comments_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xltc:ThreadedComments` into a `ThreadedComments` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn threaded_comments_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ThreadedComments {
     let mut node = super::ThreadedComments::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::THREADED_COMMENTS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::THREADED_COMMENTS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.threaded_comment),

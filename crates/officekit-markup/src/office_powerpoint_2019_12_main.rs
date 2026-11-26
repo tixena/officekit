@@ -226,7 +226,7 @@ pub mod write;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::presentation;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -1190,8 +1190,8 @@ impl<X: UserData> AddWith<X> {
 }
 
 impl officekit_markup_base::Read for Add {
-    fn read(element: &Element) -> Self {
-        read::add(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::add_from_item(item)
     }
 }
 
@@ -1232,8 +1232,8 @@ impl<X: UserData> AnchrWith<X> {
 }
 
 impl officekit_markup_base::Read for Anchr {
-    fn read(element: &Element) -> Self {
-        read::anchr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::anchr_from_item(item)
     }
 }
 
@@ -1266,8 +1266,8 @@ impl<X: UserData> AsgnWith<X> {
 }
 
 impl officekit_markup_base::Read for Asgn {
-    fn read(element: &Element) -> Self {
-        read::asgn(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::asgn_from_item(item)
     }
 }
 
@@ -1300,8 +1300,8 @@ impl<X: UserData> AtrbtnWith<X> {
 }
 
 impl officekit_markup_base::Read for Atrbtn {
-    fn read(element: &Element) -> Self {
-        read::atrbtn(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::atrbtn_from_item(item)
     }
 }
 
@@ -1338,8 +1338,8 @@ impl<X: UserData> CommentWith<X> {
 }
 
 impl officekit_markup_base::Read for Comment {
-    fn read(element: &Element) -> Self {
-        read::comment(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::comment_from_item(item)
     }
 }
 
@@ -1378,8 +1378,8 @@ impl<X: UserData> DateWith<X> {
 }
 
 impl officekit_markup_base::Read for Date {
-    fn read(element: &Element) -> Self {
-        read::date(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::date_from_item(item)
     }
 }
 
@@ -1434,8 +1434,8 @@ impl<X: UserData> EventWith<X> {
 }
 
 impl officekit_markup_base::Read for Event {
-    fn read(element: &Element) -> Self {
-        read::event(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::event_from_item(item)
     }
 }
 
@@ -1472,8 +1472,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -1510,8 +1510,8 @@ impl<X: UserData> HistoryWith<X> {
 }
 
 impl officekit_markup_base::Read for History {
-    fn read(element: &Element) -> Self {
-        read::history(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::history_from_item(item)
     }
 }
 
@@ -1548,8 +1548,8 @@ impl<X: UserData> PcntCmpltWith<X> {
 }
 
 impl officekit_markup_base::Read for PcntCmplt {
-    fn read(element: &Element) -> Self {
-        read::pcnt_cmplt(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pcnt_cmplt_from_item(item)
     }
 }
 
@@ -1586,8 +1586,8 @@ impl<X: UserData> PriWith<X> {
 }
 
 impl officekit_markup_base::Read for Pri {
-    fn read(element: &Element) -> Self {
-        read::pri(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pri_from_item(item)
     }
 }
 
@@ -1632,8 +1632,8 @@ impl<X: UserData> TaskHistoryDetailsWith<X> {
 }
 
 impl officekit_markup_base::Read for TaskHistoryDetails {
-    fn read(element: &Element) -> Self {
-        read::task_history_details(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::task_history_details_from_item(item)
     }
 }
 
@@ -1672,19 +1672,19 @@ impl officekit_markup_base::Read for TaskHistoryEventContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_P1912, "add")) => Self::Add(officekit_markup_base::read(element)),
-            Some((NS_P1912, "asgn")) => Self::Asgn(officekit_markup_base::read(element)),
-            Some((NS_P1912, "date")) => Self::Date(officekit_markup_base::read(element)),
-            Some((NS_P1912, "pcntCmplt")) => Self::PcntCmplt(officekit_markup_base::read(element)),
-            Some((NS_P1912, "pri")) => Self::Pri(officekit_markup_base::read(element)),
-            Some((NS_P1912, "title")) => Self::Title(officekit_markup_base::read(element)),
-            Some((NS_P1912, "unAsgn")) => Self::UnAsgn(officekit_markup_base::read(element)),
-            Some((NS_P1912, "unasgnAll")) => Self::UnasgnAll(officekit_markup_base::read(element)),
-            Some((NS_P1912, "undo")) => Self::Undo(officekit_markup_base::read(element)),
-            Some((NS_P1912, "unknown")) => Self::Unknown(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_P1912, "add")) => Self::Add(item.read()),
+            Some((NS_P1912, "asgn")) => Self::Asgn(item.read()),
+            Some((NS_P1912, "date")) => Self::Date(item.read()),
+            Some((NS_P1912, "pcntCmplt")) => Self::PcntCmplt(item.read()),
+            Some((NS_P1912, "pri")) => Self::Pri(item.read()),
+            Some((NS_P1912, "title")) => Self::Title(item.read()),
+            Some((NS_P1912, "unAsgn")) => Self::UnAsgn(item.read()),
+            Some((NS_P1912, "unasgnAll")) => Self::UnasgnAll(item.read()),
+            Some((NS_P1912, "undo")) => Self::Undo(item.read()),
+            Some((NS_P1912, "unknown")) => Self::Unknown(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -1733,8 +1733,8 @@ impl<X: UserData> TitleWith<X> {
 }
 
 impl officekit_markup_base::Read for Title {
-    fn read(element: &Element) -> Self {
-        read::title(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::title_from_item(item)
     }
 }
 
@@ -1767,8 +1767,8 @@ impl<X: UserData> UnAsgnWith<X> {
 }
 
 impl officekit_markup_base::Read for UnAsgn {
-    fn read(element: &Element) -> Self {
-        read::un_asgn(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::un_asgn_from_item(item)
     }
 }
 
@@ -1801,8 +1801,8 @@ impl<X: UserData> UnasgnAllWith<X> {
 }
 
 impl officekit_markup_base::Read for UnasgnAll {
-    fn read(element: &Element) -> Self {
-        read::unasgn_all(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::unasgn_all_from_item(item)
     }
 }
 
@@ -1839,8 +1839,8 @@ impl<X: UserData> UndoWith<X> {
 }
 
 impl officekit_markup_base::Read for Undo {
-    fn read(element: &Element) -> Self {
-        read::undo(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::undo_from_item(item)
     }
 }
 
@@ -1873,8 +1873,8 @@ impl<X: UserData> UnknownWith<X> {
 }
 
 impl officekit_markup_base::Read for Unknown {
-    fn read(element: &Element) -> Self {
-        read::unknown(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::unknown_from_item(item)
     }
 }
 

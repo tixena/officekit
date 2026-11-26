@@ -221,9 +221,28 @@ use officekit_xml::element::Element;
 /// Read `xpdl:pivotTableDefinition16` into a `PivotTableDefinition16`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_table_definition16(element: &Element) -> super::PivotTableDefinition16 {
+    pivot_table_definition16_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xpdl:pivotTableDefinition16` into a `PivotTableDefinition16` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pivot_table_definition16_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PivotTableDefinition16 {
+    pivot_table_definition16_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xpdl:pivotTableDefinition16` into a `PivotTableDefinition16` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pivot_table_definition16_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PivotTableDefinition16 {
     let mut node = super::PivotTableDefinition16::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PIVOT_TABLE_DEFINITION16_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::PIVOT_TABLE_DEFINITION16_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.enabled_subtotals_default),

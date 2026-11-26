@@ -350,6 +350,7 @@
 use crate::parts::part_root::{self, PartRoot};
 #[cfg(feature = "transitional")]
 use crate::transitional::Transitional as _;
+use officekit_markup::Item;
 use officekit_markup::document_properties_extended;
 #[cfg(feature = "strict")]
 use officekit_strict::Strict as _;
@@ -375,6 +376,15 @@ pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::EXTENDED_PROPE
 
 impl PartRoot for document_properties_extended::ApplicationSpecificFileProperties {
     const LOCAL_NAME: &'static str = "Properties";
+
+    fn from_part(root: Item<'_>) -> Result<Self, String> {
+        super::check_root(root.element(), 16, Self::LOCAL_NAME)?;
+        Ok(
+            document_properties_extended::read::application_specific_file_properties_from_item(
+                root,
+            ),
+        )
+    }
 
     fn from_tree(root: &Element) -> Result<Self, String> {
         super::check_root(root, 16, Self::LOCAL_NAME)?;

@@ -222,7 +222,6 @@ pub mod read;
 pub mod write;
 
 use crate::UserData;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
 const NS_X12AC: Option<NamespaceId> = Some(119);
@@ -278,8 +277,8 @@ impl<X: UserData> ListWith<X> {
 }
 
 impl crate::Read for List {
-    fn read(element: &Element) -> Self {
-        read::list(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::list_from_item(item)
     }
 }
 

@@ -225,7 +225,6 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -383,8 +382,8 @@ impl<X: UserData> CommentIdWith<X> {
 }
 
 impl officekit_markup_base::Read for CommentId {
-    fn read(element: &Element) -> Self {
-        read::comment_id(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::comment_id_from_item(item)
     }
 }
 
@@ -421,8 +420,8 @@ impl<X: UserData> CommentsIdsWith<X> {
 }
 
 impl officekit_markup_base::Read for CommentsIds {
-    fn read(element: &Element) -> Self {
-        read::comments_ids(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::comments_ids_from_item(item)
     }
 }
 

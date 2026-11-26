@@ -223,8 +223,27 @@ use officekit_xml::element::Element;
 pub fn set_of_additional_characteristics(
     element: &Element,
 ) -> super::SetOfAdditionalCharacteristics {
+    set_of_additional_characteristics_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ac:additionalCharacteristics` into a `SetOfAdditionalCharacteristics` from its start tag
+/// and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn set_of_additional_characteristics_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::SetOfAdditionalCharacteristics {
+    set_of_additional_characteristics_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ac:additionalCharacteristics` into a `SetOfAdditionalCharacteristics` from an element, or
+/// from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn set_of_additional_characteristics_from_item(
+    item: crate::Item<'_>,
+) -> super::SetOfAdditionalCharacteristics {
     let mut node = super::SetOfAdditionalCharacteristics::default();
-    let mut reader = crate::Reader::new(element, &super::SET_OF_ADDITIONAL_CHARACTERISTICS_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SET_OF_ADDITIONAL_CHARACTERISTICS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.single_characteristic);
@@ -237,8 +256,25 @@ pub fn set_of_additional_characteristics(
 /// Read `ac:characteristic` into a `SingleCharacteristic`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn single_characteristic(element: &Element) -> super::SingleCharacteristic {
+    single_characteristic_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ac:characteristic` into a `SingleCharacteristic` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn single_characteristic_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::SingleCharacteristic {
+    single_characteristic_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ac:characteristic` into a `SingleCharacteristic` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn single_characteristic_from_item(item: crate::Item<'_>) -> super::SingleCharacteristic {
     let mut node = super::SingleCharacteristic::default();
-    let mut reader = crate::Reader::new(element, &super::SINGLE_CHARACTERISTIC_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SINGLE_CHARACTERISTIC_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.name),

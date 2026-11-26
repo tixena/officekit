@@ -221,7 +221,22 @@ use officekit_xml::element::Element;
 /// Read `a16:colId` into a `ColId`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn col_id(element: &Element) -> super::ColId {
-    let reader = officekit_markup_base::Reader::new(element, &super::COL_ID_SHAPE);
+    col_id_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `a16:colId` into a `ColId` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn col_id_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ColId {
+    col_id_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `a16:colId` into a `ColId` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn col_id_from_item(item: officekit_markup_base::Item<'_>) -> super::ColId {
+    let reader = officekit_markup_base::Reader::of(item, &super::COL_ID_SHAPE);
     super::ColId {
         user_data: (),
         unknown: reader.finish(),
@@ -231,8 +246,24 @@ pub fn col_id(element: &Element) -> super::ColId {
 /// Read `a16:creationId` into a `CreationId`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn creation_id(element: &Element) -> super::CreationId {
+    creation_id_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `a16:creationId` into a `CreationId` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn creation_id_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CreationId {
+    creation_id_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `a16:creationId` into a `CreationId` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn creation_id_from_item(item: officekit_markup_base::Item<'_>) -> super::CreationId {
     let mut node = super::CreationId::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CREATION_ID_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CREATION_ID_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.id);
@@ -245,8 +276,24 @@ pub fn creation_id(element: &Element) -> super::CreationId {
 /// Read `a16:cxnDERefs` into a `CxnDERefs`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cxn_de_refs(element: &Element) -> super::CxnDERefs {
+    cxn_de_refs_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `a16:cxnDERefs` into a `CxnDERefs` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn cxn_de_refs_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CxnDERefs {
+    cxn_de_refs_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `a16:cxnDERefs` into a `CxnDERefs` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn cxn_de_refs_from_item(item: officekit_markup_base::Item<'_>) -> super::CxnDERefs {
     let mut node = super::CxnDERefs::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CXN_DE_REFS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CXN_DE_REFS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.st),
@@ -261,8 +308,24 @@ pub fn cxn_de_refs(element: &Element) -> super::CxnDERefs {
 /// Read `a16:predDERef` into a `PredDERef`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pred_de_ref(element: &Element) -> super::PredDERef {
+    pred_de_ref_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `a16:predDERef` into a `PredDERef` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pred_de_ref_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PredDERef {
+    pred_de_ref_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `a16:predDERef` into a `PredDERef` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pred_de_ref_from_item(item: officekit_markup_base::Item<'_>) -> super::PredDERef {
     let mut node = super::PredDERef::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PRED_DE_REF_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PRED_DE_REF_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.pred);
@@ -275,7 +338,22 @@ pub fn pred_de_ref(element: &Element) -> super::PredDERef {
 /// Read `a16:rowId` into a `RowId`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn row_id(element: &Element) -> super::RowId {
-    let reader = officekit_markup_base::Reader::new(element, &super::ROW_ID_SHAPE);
+    row_id_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `a16:rowId` into a `RowId` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn row_id_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RowId {
+    row_id_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `a16:rowId` into a `RowId` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn row_id_from_item(item: officekit_markup_base::Item<'_>) -> super::RowId {
+    let reader = officekit_markup_base::Reader::of(item, &super::ROW_ID_SHAPE);
     super::RowId {
         user_data: (),
         unknown: reader.finish(),

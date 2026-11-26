@@ -226,7 +226,6 @@ pub mod write;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -330,8 +329,8 @@ impl<X: UserData> ExtWith<X> {
 }
 
 impl officekit_markup_base::Read for Ext {
-    fn read(element: &Element) -> Self {
-        read::ext(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_from_item(item)
     }
 }
 

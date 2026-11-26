@@ -225,7 +225,6 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -496,8 +495,8 @@ impl<X: UserData> LastEditFeatureWith<X> {
 }
 
 impl officekit_markup_base::Read for LastEditFeature {
-    fn read(element: &Element) -> Self {
-        read::last_edit_feature(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::last_edit_feature_from_item(item)
     }
 }
 
@@ -534,8 +533,8 @@ impl<X: UserData> LastRefreshFeatureWith<X> {
 }
 
 impl officekit_markup_base::Read for LastRefreshFeature {
-    fn read(element: &Element) -> Self {
-        read::last_refresh_feature(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::last_refresh_feature_from_item(item)
     }
 }
 
@@ -572,8 +571,8 @@ impl<X: UserData> RequiredFeatureWith<X> {
 }
 
 impl officekit_markup_base::Read for RequiredFeature {
-    fn read(element: &Element) -> Self {
-        read::required_feature(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::required_feature_from_item(item)
     }
 }
 
@@ -618,8 +617,8 @@ impl<X: UserData> VersionInfoWith<X> {
 }
 
 impl officekit_markup_base::Read for VersionInfo {
-    fn read(element: &Element) -> Self {
-        read::version_info(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::version_info_from_item(item)
     }
 }
 

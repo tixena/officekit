@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `pRoam:key` into a `Key`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn key(element: &Element) -> super::Key {
+    key_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pRoam:key` into a `Key` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn key_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Key {
+    key_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pRoam:key` into a `Key` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn key_from_item(item: officekit_markup_base::Item<'_>) -> super::Key {
     let mut node = super::Key::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::KEY_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::KEY_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -235,8 +250,23 @@ pub fn key(element: &Element) -> super::Key {
 /// Read `pRoam:props` into a `Props`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn props(element: &Element) -> super::Props {
+    props_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pRoam:props` into a `Props` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn props_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Props {
+    props_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pRoam:props` into a `Props` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn props_from_item(item: officekit_markup_base::Item<'_>) -> super::Props {
     let mut node = super::Props::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PROPS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PROPS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.key),
@@ -251,8 +281,23 @@ pub fn props(element: &Element) -> super::Props {
 /// Read `pRoam:value` into a `Value`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn value(element: &Element) -> super::Value {
+    value_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pRoam:value` into a `Value` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn value_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Value {
+    value_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pRoam:value` into a `Value` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn value_from_item(item: officekit_markup_base::Item<'_>) -> super::Value {
     let mut node = super::Value::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::VALUE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::VALUE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);

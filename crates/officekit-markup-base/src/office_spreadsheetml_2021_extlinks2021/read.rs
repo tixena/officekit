@@ -221,7 +221,23 @@ use officekit_xml::element::Element;
 /// Read `xxl21:absoluteUrl` into a `AbsoluteUrl`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn absolute_url(element: &Element) -> super::AbsoluteUrl {
-    let reader = crate::Reader::new(element, &super::ABSOLUTE_URL_SHAPE);
+    absolute_url_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xxl21:absoluteUrl` into a `AbsoluteUrl` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn absolute_url_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::AbsoluteUrl {
+    absolute_url_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xxl21:absoluteUrl` into a `AbsoluteUrl` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn absolute_url_from_item(item: crate::Item<'_>) -> super::AbsoluteUrl {
+    let reader = crate::Reader::of(item, &super::ABSOLUTE_URL_SHAPE);
     super::AbsoluteUrl {
         user_data: (),
         unknown: reader.finish(),
@@ -231,8 +247,25 @@ pub fn absolute_url(element: &Element) -> super::AbsoluteUrl {
 /// Read `xxl21:alternateUrls` into a `AlternateUrls`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn alternate_urls(element: &Element) -> super::AlternateUrls {
+    alternate_urls_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xxl21:alternateUrls` into a `AlternateUrls` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn alternate_urls_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::AlternateUrls {
+    alternate_urls_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xxl21:alternateUrls` into a `AlternateUrls` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn alternate_urls_from_item(item: crate::Item<'_>) -> super::AlternateUrls {
     let mut node = super::AlternateUrls::default();
-    let mut reader = crate::Reader::new(element, &super::ALTERNATE_URLS_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::ALTERNATE_URLS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.drive_id),
@@ -249,7 +282,23 @@ pub fn alternate_urls(element: &Element) -> super::AlternateUrls {
 /// Read `xxl21:relativeUrl` into a `RelativeUrl`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn relative_url(element: &Element) -> super::RelativeUrl {
-    let reader = crate::Reader::new(element, &super::RELATIVE_URL_SHAPE);
+    relative_url_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xxl21:relativeUrl` into a `RelativeUrl` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn relative_url_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::RelativeUrl {
+    relative_url_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xxl21:relativeUrl` into a `RelativeUrl` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn relative_url_from_item(item: crate::Item<'_>) -> super::RelativeUrl {
+    let reader = crate::Reader::of(item, &super::RELATIVE_URL_SHAPE);
     super::RelativeUrl {
         user_data: (),
         unknown: reader.finish(),

@@ -1,9 +1,11 @@
 #[cfg(feature = "transitional")]
 use officekit_markup::wordprocessing::Footer;
+use officekit_markup::wordprocessing::{BlockContent, Document};
 use officekit_xml::conformance::ConformanceClass;
-use officekit_xml::element::{Element, NamespaceDeclaration, Node};
+use officekit_xml::element::{Element, NamespaceDeclaration, Node, XmlError};
 use officekit_xml::error::WriteError;
-use officekit_xml::name::QName;
+use officekit_xml::mc::MarkupCompatibility;
+use officekit_xml::name::{OfficeVersion, QName};
 use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::{OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
@@ -305,4 +307,155 @@ fn a_generated_store_of_a_new_part_registers_the_modules_content_type() {
             .content_type_overrides()
             .contains(&(footer, footer::CONTENT_TYPE.to_owned()))
     );
+}
+
+/// A main document part holding `body`, its root declaring `w`, `mc`, `w14`, `w16se`, `wps`
+/// and `x`.
+fn document_holding(body: &str) -> Package {
+    let mut package = Package::new();
+    let main = name("/word/document.xml");
+    let xml = format!(
+        "<?xml version=\"1.0\"?><!--before--><w:document xmlns:w=\"{WORDPROCESSING}\" \
+         xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" \
+         xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" \
+         xmlns:w16se=\"http://schemas.microsoft.com/office/word/2015/wordml/symex\" \
+         xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" \
+         xmlns:x=\"urn:x\" mc:Ignorable=\"w14 x\" x:root=\"1\">{body}</w:document><!--after-->"
+    );
+    package.set_part_bytes(&main, MAIN, xml.as_bytes()).unwrap();
+    package
+}
+
+/// The modes officekit's tests read with: `Keep`, and processing for each Office version.
+fn modes() -> Vec<MarkupCompatibility> {
+    [
+        OfficeVersion::Office2010,
+        OfficeVersion::Office2013,
+        OfficeVersion::Office2016,
+        OfficeVersion::Office2019,
+        OfficeVersion::Office2021,
+        OfficeVersion::Microsoft365,
+    ]
+    .into_iter()
+    .map(|target| MarkupCompatibility::Process { target })
+    .chain([MarkupCompatibility::Keep])
+    .collect()
+}
+
+/// The typed root read from the part's tree, as a load read it before it read the part forward.
+fn from_tree(package: &Package, options: OpenOptions) -> Result<Document, PackageError> {
+    let part = name("/word/document.xml");
+    let tree = package.load_tree(&part, options)?;
+    Document::from_tree(&tree.root).map_err(|reason| PackageError::Read { part, reason })
+}
+
+#[test]
+fn a_part_read_forward_gives_the_typed_root_its_tree_gives_in_every_mode() {
+    let symbol = "<mc:AlternateContent><mc:Choice Requires=\"w16se\"><w16se:symEx w16se:font=\"A\"/>\
+                  </mc:Choice><mc:Fallback><w:sym w:font=\"A\"/></mc:Fallback></mc:AlternateContent>";
+    let shape = "<mc:AlternateContent><mc:Choice Requires=\"wps\"><w:r><w:t>shape</w:t></w:r></mc:Choice>\
+                 <mc:Choice Requires=\"x\"><w:r><w:t>unknown</w:t></w:r></mc:Choice>\
+                 <mc:Fallback><w:r><w:t>fallback</w:t></w:r></mc:Fallback></mc:AlternateContent>";
+    let package = document_holding(&format!(
+        "<w:body x:b=\"2\"><!--note--><w:p w14:paraId=\"1\" x:c=\"3\"><w:r><w:t xml:space=\"preserve\"> a &amp; b </w:t>\
+         {symbol}</w:r>{shape}<x:unknown><w:r/></x:unknown><w:r><w:t>c</w:t><w:t>d</w:t></w:r></w:p>\
+         <x:block x:d=\"4\"><w:p/></x:block><w:tbl><w:tr><w:tc><w:p><w:r><w:t>cell</w:t></w:r></w:p></w:tc></w:tr></w:tbl>\
+         <w:sectPr><w:pgSz w:w=\"12240\" w:h=\"15840\"/></w:sectPr></w:body>"
+    ));
+    for markup_compatibility in modes() {
+        let mut options = OpenOptions::default();
+        options.markup_compatibility = markup_compatibility;
+        let read = load::<Document>(&package, &name("/word/document.xml"), options).unwrap();
+        assert_eq!(
+            read,
+            from_tree(&package, options).unwrap(),
+            "{markup_compatibility:?}"
+        );
+        let body = read.body.as_deref().unwrap();
+        assert!(
+            body.content
+                .iter()
+                .any(|block| matches!(block, BlockContent::Paragraph(_))),
+            "{markup_compatibility:?}: {body:?}"
+        );
+    }
+}
+
+#[test]
+fn unknown_elements_and_attributes_are_kept_as_the_tree_keeps_them() {
+    let package = document_holding("<x:before/><w:body x:b=\"2\"/><x:after>text</x:after>");
+    let read = load::<Document>(
+        &package,
+        &name("/word/document.xml"),
+        OpenOptions::default(),
+    )
+    .unwrap();
+    assert_eq!(read, from_tree(&package, OpenOptions::default()).unwrap());
+    assert_eq!(read.unknown.children.len(), 2);
+    assert_eq!(read.body.as_deref().unwrap().unknown.attributes.len(), 1);
+}
+
+#[test]
+fn a_generated_root_of_another_tag_is_the_same_read_error() {
+    let mut package = Package::new();
+    let part = name("/word/document.xml");
+    package
+        .set_part_bytes(
+            &part,
+            MAIN,
+            format!("<w:ftr xmlns:w=\"{WORDPROCESSING}\"><w:p/></w:ftr>").as_bytes(),
+        )
+        .unwrap();
+    let error = load::<Document>(&package, &part, OpenOptions::default()).unwrap_err();
+    assert!(
+        matches!(&error, PackageError::Read { part: read, reason } if read.as_str() == "/word/document.xml" && reason == "the root is <ftr>, not <document>"),
+        "got {error:?}"
+    );
+    package
+        .set_part_bytes(
+            &part,
+            MAIN,
+            b"<w:document xmlns:w=\"urn:not-word\"><w:body/></w:document>",
+        )
+        .unwrap();
+    let read = load::<Document>(&package, &part, OpenOptions::default()).unwrap_err();
+    let tree = from_tree(&package, OpenOptions::default()).unwrap_err();
+    assert_eq!(read.to_string(), tree.to_string());
+}
+
+#[test]
+fn a_part_that_cannot_be_read_is_an_xml_error() {
+    let mut process = OpenOptions::default();
+    process.markup_compatibility = MarkupCompatibility::Process {
+        target: OfficeVersion::Office2013,
+    };
+    for (body, options, expected) in [
+        ("<w:body><w:p></w:body>", OpenOptions::default(), None),
+        (
+            "<w:body mc:MustUnderstand=\"w16se\"/>",
+            process,
+            Some(XmlError::MustUnderstand {
+                prefix: "w16se".to_owned(),
+            }),
+        ),
+    ] {
+        let package = document_holding(body);
+        let error = load::<Document>(&package, &name("/word/document.xml"), options).unwrap_err();
+        assert!(
+            matches!(&error, PackageError::Xml { error: found, part } if part.as_str() == "/word/document.xml" && expected.as_ref().is_none_or(|wanted| found == wanted)),
+            "got {error:?}"
+        );
+    }
+    let mut package = Package::new();
+    let part = name("/word/note.xml");
+    for bytes in [&b"<!--no root-->"[..], b"<note/><note/>"] {
+        package
+            .set_part_bytes(&part, "application/xml", bytes)
+            .unwrap();
+        let error = load::<Note>(&package, &part, OpenOptions::default()).unwrap_err();
+        assert!(
+            matches!(&error, PackageError::Xml { error: XmlError::Malformed(_), part: read } if *read == part),
+            "got {error:?}"
+        );
+    }
 }

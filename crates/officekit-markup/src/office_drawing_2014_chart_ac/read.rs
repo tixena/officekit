@@ -221,8 +221,25 @@ use officekit_xml::element::Element;
 /// Read `c16ac:multiLvlStrLit` into a `MultiLvlStrLit`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn multi_lvl_str_lit(element: &Element) -> super::MultiLvlStrLit {
+    multi_lvl_str_lit_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16ac:multiLvlStrLit` into a `MultiLvlStrLit` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn multi_lvl_str_lit_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::MultiLvlStrLit {
+    multi_lvl_str_lit_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16ac:multiLvlStrLit` into a `MultiLvlStrLit` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn multi_lvl_str_lit_from_item(item: officekit_markup_base::Item<'_>) -> super::MultiLvlStrLit {
     let mut node = super::MultiLvlStrLit::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::MULTI_LVL_STR_LIT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::MULTI_LVL_STR_LIT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.point_count),

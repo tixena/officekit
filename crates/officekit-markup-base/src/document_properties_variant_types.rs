@@ -222,7 +222,7 @@ pub mod read;
 pub mod write;
 
 use crate::UserData;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
 
@@ -1552,8 +1552,8 @@ impl<X: UserData> ArrayWith<X> {
 }
 
 impl crate::Read for Array {
-    fn read(element: &Element) -> Self {
-        read::array(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::array_from_item(item)
     }
 }
 
@@ -1667,26 +1667,26 @@ impl crate::Read for ArrayContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match crate::name(element) {
-            Some((NS_VT, "bstr")) => Self::BasicString(crate::read(element)),
-            Some((NS_VT, "bool")) => Self::Boolean(crate::read(element)),
-            Some((NS_VT, "cy")) => Self::Currency(crate::read(element)),
-            Some((NS_VT, "date")) => Self::DateAndTime(crate::read(element)),
-            Some((NS_VT, "decimal")) => Self::Decimal(crate::read(element)),
-            Some((NS_VT, "error")) => Self::ErrorStatusCode(crate::read(element)),
-            Some((NS_VT, "i1")) => Self::I1(crate::read(element)),
-            Some((NS_VT, "i2")) => Self::I2(crate::read(element)),
-            Some((NS_VT, "i4")) => Self::I4(crate::read(element)),
-            Some((NS_VT, "int")) => Self::Integer(crate::read(element)),
-            Some((NS_VT, "r4")) => Self::R4(crate::read(element)),
-            Some((NS_VT, "r8")) => Self::R8(crate::read(element)),
-            Some((NS_VT, "ui1")) => Self::Ui1(crate::read(element)),
-            Some((NS_VT, "ui2")) => Self::Ui2(crate::read(element)),
-            Some((NS_VT, "ui4")) => Self::Ui4(crate::read(element)),
-            Some((NS_VT, "uint")) => Self::UnsignedInteger(crate::read(element)),
-            Some((NS_VT, "variant")) => Self::Variant(crate::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: crate::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_VT, "bstr")) => Self::BasicString(item.read()),
+            Some((NS_VT, "bool")) => Self::Boolean(item.read()),
+            Some((NS_VT, "cy")) => Self::Currency(item.read()),
+            Some((NS_VT, "date")) => Self::DateAndTime(item.read()),
+            Some((NS_VT, "decimal")) => Self::Decimal(item.read()),
+            Some((NS_VT, "error")) => Self::ErrorStatusCode(item.read()),
+            Some((NS_VT, "i1")) => Self::I1(item.read()),
+            Some((NS_VT, "i2")) => Self::I2(item.read()),
+            Some((NS_VT, "i4")) => Self::I4(item.read()),
+            Some((NS_VT, "int")) => Self::Integer(item.read()),
+            Some((NS_VT, "r4")) => Self::R4(item.read()),
+            Some((NS_VT, "r8")) => Self::R8(item.read()),
+            Some((NS_VT, "ui1")) => Self::Ui1(item.read()),
+            Some((NS_VT, "ui2")) => Self::Ui2(item.read()),
+            Some((NS_VT, "ui4")) => Self::Ui4(item.read()),
+            Some((NS_VT, "uint")) => Self::UnsignedInteger(item.read()),
+            Some((NS_VT, "variant")) => Self::Variant(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -1742,8 +1742,8 @@ impl<X: UserData> BasicStringWith<X> {
 }
 
 impl crate::Read for BasicString {
-    fn read(element: &Element) -> Self {
-        read::basic_string(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::basic_string_from_item(item)
     }
 }
 
@@ -1780,8 +1780,8 @@ impl<X: UserData> BinaryBlobWith<X> {
 }
 
 impl crate::Read for BinaryBlob {
-    fn read(element: &Element) -> Self {
-        read::binary_blob(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::binary_blob_from_item(item)
     }
 }
 
@@ -1818,8 +1818,8 @@ impl<X: UserData> BinaryBlobObjectWith<X> {
 }
 
 impl crate::Read for BinaryBlobObject {
-    fn read(element: &Element) -> Self {
-        read::binary_blob_object(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::binary_blob_object_from_item(item)
     }
 }
 
@@ -1856,8 +1856,8 @@ impl<X: UserData> BinaryStorageWith<X> {
 }
 
 impl crate::Read for BinaryStorage {
-    fn read(element: &Element) -> Self {
-        read::binary_storage(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::binary_storage_from_item(item)
     }
 }
 
@@ -1894,8 +1894,8 @@ impl<X: UserData> BinaryStorageObjectWith<X> {
 }
 
 impl crate::Read for BinaryStorageObject {
-    fn read(element: &Element) -> Self {
-        read::binary_storage_object(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::binary_storage_object_from_item(item)
     }
 }
 
@@ -1932,8 +1932,8 @@ impl<X: UserData> BinaryStreamWith<X> {
 }
 
 impl crate::Read for BinaryStream {
-    fn read(element: &Element) -> Self {
-        read::binary_stream(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::binary_stream_from_item(item)
     }
 }
 
@@ -1970,8 +1970,8 @@ impl<X: UserData> BinaryStreamObjectWith<X> {
 }
 
 impl crate::Read for BinaryStreamObject {
-    fn read(element: &Element) -> Self {
-        read::binary_stream_object(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::binary_stream_object_from_item(item)
     }
 }
 
@@ -2010,8 +2010,8 @@ impl<X: UserData> BinaryVersionedStreamWith<X> {
 }
 
 impl crate::Read for BinaryVersionedStream {
-    fn read(element: &Element) -> Self {
-        read::binary_versioned_stream(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::binary_versioned_stream_from_item(item)
     }
 }
 
@@ -2048,8 +2048,8 @@ impl<X: UserData> BooleanWith<X> {
 }
 
 impl crate::Read for Boolean {
-    fn read(element: &Element) -> Self {
-        read::boolean(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::boolean_from_item(item)
     }
 }
 
@@ -2086,8 +2086,8 @@ impl<X: UserData> ClassIDWith<X> {
 }
 
 impl crate::Read for ClassID {
-    fn read(element: &Element) -> Self {
-        read::class_id(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::class_id_from_item(item)
     }
 }
 
@@ -2124,8 +2124,8 @@ impl<X: UserData> CurrencyWith<X> {
 }
 
 impl crate::Read for Currency {
-    fn read(element: &Element) -> Self {
-        read::currency(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::currency_from_item(item)
     }
 }
 
@@ -2185,8 +2185,8 @@ impl<X: UserData> DateAndTimeWith<X> {
 }
 
 impl crate::Read for DateAndTime {
-    fn read(element: &Element) -> Self {
-        read::date_and_time(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::date_and_time_from_item(item)
     }
 }
 
@@ -2223,8 +2223,8 @@ impl<X: UserData> DecimalWith<X> {
 }
 
 impl crate::Read for Decimal {
-    fn read(element: &Element) -> Self {
-        read::decimal(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::decimal_from_item(item)
     }
 }
 
@@ -2257,8 +2257,8 @@ impl<X: UserData> EmptyWith<X> {
 }
 
 impl crate::Read for Empty {
-    fn read(element: &Element) -> Self {
-        read::empty(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::empty_from_item(item)
     }
 }
 
@@ -2295,8 +2295,8 @@ impl<X: UserData> ErrorStatusCodeWith<X> {
 }
 
 impl crate::Read for ErrorStatusCode {
-    fn read(element: &Element) -> Self {
-        read::error_status_code(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::error_status_code_from_item(item)
     }
 }
 
@@ -2356,8 +2356,8 @@ impl<X: UserData> FileTimeWith<X> {
 }
 
 impl crate::Read for FileTime {
-    fn read(element: &Element) -> Self {
-        read::file_time(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::file_time_from_item(item)
     }
 }
 
@@ -2394,8 +2394,8 @@ impl<X: UserData> I1With<X> {
 }
 
 impl crate::Read for I1 {
-    fn read(element: &Element) -> Self {
-        read::i1(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::i1_from_item(item)
     }
 }
 
@@ -2432,8 +2432,8 @@ impl<X: UserData> I2With<X> {
 }
 
 impl crate::Read for I2 {
-    fn read(element: &Element) -> Self {
-        read::i2(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::i2_from_item(item)
     }
 }
 
@@ -2470,8 +2470,8 @@ impl<X: UserData> I4With<X> {
 }
 
 impl crate::Read for I4 {
-    fn read(element: &Element) -> Self {
-        read::i4(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::i4_from_item(item)
     }
 }
 
@@ -2508,8 +2508,8 @@ impl<X: UserData> I8With<X> {
 }
 
 impl crate::Read for I8 {
-    fn read(element: &Element) -> Self {
-        read::i8(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::i8_from_item(item)
     }
 }
 
@@ -2546,8 +2546,8 @@ impl<X: UserData> IntegerWith<X> {
 }
 
 impl crate::Read for Integer {
-    fn read(element: &Element) -> Self {
-        read::integer(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::integer_from_item(item)
     }
 }
 
@@ -2584,8 +2584,8 @@ impl<X: UserData> LpstrWith<X> {
 }
 
 impl crate::Read for Lpstr {
-    fn read(element: &Element) -> Self {
-        read::lpstr(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::lpstr_from_item(item)
     }
 }
 
@@ -2622,8 +2622,8 @@ impl<X: UserData> LpwstrWith<X> {
 }
 
 impl crate::Read for Lpwstr {
-    fn read(element: &Element) -> Self {
-        read::lpwstr(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::lpwstr_from_item(item)
     }
 }
 
@@ -2656,8 +2656,8 @@ impl<X: UserData> NullWith<X> {
 }
 
 impl crate::Read for Null {
-    fn read(element: &Element) -> Self {
-        read::null(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::null_from_item(item)
     }
 }
 
@@ -2694,8 +2694,8 @@ impl<X: UserData> R4With<X> {
 }
 
 impl crate::Read for R4 {
-    fn read(element: &Element) -> Self {
-        read::r4(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::r4_from_item(item)
     }
 }
 
@@ -2732,8 +2732,8 @@ impl<X: UserData> R8With<X> {
 }
 
 impl crate::Read for R8 {
-    fn read(element: &Element) -> Self {
-        read::r8(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::r8_from_item(item)
     }
 }
 
@@ -2770,8 +2770,8 @@ impl<X: UserData> Ui1With<X> {
 }
 
 impl crate::Read for Ui1 {
-    fn read(element: &Element) -> Self {
-        read::ui1(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::ui1_from_item(item)
     }
 }
 
@@ -2808,8 +2808,8 @@ impl<X: UserData> Ui2With<X> {
 }
 
 impl crate::Read for Ui2 {
-    fn read(element: &Element) -> Self {
-        read::ui2(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::ui2_from_item(item)
     }
 }
 
@@ -2846,8 +2846,8 @@ impl<X: UserData> Ui4With<X> {
 }
 
 impl crate::Read for Ui4 {
-    fn read(element: &Element) -> Self {
-        read::ui4(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::ui4_from_item(item)
     }
 }
 
@@ -2884,8 +2884,8 @@ impl<X: UserData> Ui8With<X> {
 }
 
 impl crate::Read for Ui8 {
-    fn read(element: &Element) -> Self {
-        read::ui8(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::ui8_from_item(item)
     }
 }
 
@@ -2922,8 +2922,8 @@ impl<X: UserData> UnsignedIntegerWith<X> {
 }
 
 impl crate::Read for UnsignedInteger {
-    fn read(element: &Element) -> Self {
-        read::unsigned_integer(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::unsigned_integer_from_item(item)
     }
 }
 
@@ -2960,8 +2960,8 @@ impl<X: UserData> VariantWith<X> {
 }
 
 impl crate::Read for Variant {
-    fn read(element: &Element) -> Self {
-        read::variant(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::variant_from_item(item)
     }
 }
 
@@ -3042,43 +3042,43 @@ impl crate::Read for VariantContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match crate::name(element) {
-            Some((NS_VT, "array")) => Self::Array(crate::read(element)),
-            Some((NS_VT, "bstr")) => Self::BasicString(crate::read(element)),
-            Some((NS_VT, "blob")) => Self::BinaryBlob(crate::read(element)),
-            Some((NS_VT, "oblob")) => Self::BinaryBlobObject(crate::read(element)),
-            Some((NS_VT, "storage")) => Self::BinaryStorage(crate::read(element)),
-            Some((NS_VT, "ostorage")) => Self::BinaryStorageObject(crate::read(element)),
-            Some((NS_VT, "stream")) => Self::BinaryStream(crate::read(element)),
-            Some((NS_VT, "ostream")) => Self::BinaryStreamObject(crate::read(element)),
-            Some((NS_VT, "vstream")) => Self::BinaryVersionedStream(crate::read(element)),
-            Some((NS_VT, "bool")) => Self::Boolean(crate::read(element)),
-            Some((NS_VT, "clsid")) => Self::ClassID(crate::read(element)),
-            Some((NS_VT, "cy")) => Self::Currency(crate::read(element)),
-            Some((NS_VT, "date")) => Self::DateAndTime(crate::read(element)),
-            Some((NS_VT, "decimal")) => Self::Decimal(crate::read(element)),
-            Some((NS_VT, "empty")) => Self::Empty(crate::read(element)),
-            Some((NS_VT, "error")) => Self::ErrorStatusCode(crate::read(element)),
-            Some((NS_VT, "filetime")) => Self::FileTime(crate::read(element)),
-            Some((NS_VT, "i1")) => Self::I1(crate::read(element)),
-            Some((NS_VT, "i2")) => Self::I2(crate::read(element)),
-            Some((NS_VT, "i4")) => Self::I4(crate::read(element)),
-            Some((NS_VT, "i8")) => Self::I8(crate::read(element)),
-            Some((NS_VT, "int")) => Self::Integer(crate::read(element)),
-            Some((NS_VT, "lpstr")) => Self::Lpstr(crate::read(element)),
-            Some((NS_VT, "lpwstr")) => Self::Lpwstr(crate::read(element)),
-            Some((NS_VT, "null")) => Self::Null(crate::read(element)),
-            Some((NS_VT, "r4")) => Self::R4(crate::read(element)),
-            Some((NS_VT, "r8")) => Self::R8(crate::read(element)),
-            Some((NS_VT, "ui1")) => Self::Ui1(crate::read(element)),
-            Some((NS_VT, "ui2")) => Self::Ui2(crate::read(element)),
-            Some((NS_VT, "ui4")) => Self::Ui4(crate::read(element)),
-            Some((NS_VT, "ui8")) => Self::Ui8(crate::read(element)),
-            Some((NS_VT, "uint")) => Self::UnsignedInteger(crate::read(element)),
-            Some((NS_VT, "variant")) => Self::Variant(crate::read(element)),
-            Some((NS_VT, "vector")) => Self::Vector(crate::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: crate::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_VT, "array")) => Self::Array(item.read()),
+            Some((NS_VT, "bstr")) => Self::BasicString(item.read()),
+            Some((NS_VT, "blob")) => Self::BinaryBlob(item.read()),
+            Some((NS_VT, "oblob")) => Self::BinaryBlobObject(item.read()),
+            Some((NS_VT, "storage")) => Self::BinaryStorage(item.read()),
+            Some((NS_VT, "ostorage")) => Self::BinaryStorageObject(item.read()),
+            Some((NS_VT, "stream")) => Self::BinaryStream(item.read()),
+            Some((NS_VT, "ostream")) => Self::BinaryStreamObject(item.read()),
+            Some((NS_VT, "vstream")) => Self::BinaryVersionedStream(item.read()),
+            Some((NS_VT, "bool")) => Self::Boolean(item.read()),
+            Some((NS_VT, "clsid")) => Self::ClassID(item.read()),
+            Some((NS_VT, "cy")) => Self::Currency(item.read()),
+            Some((NS_VT, "date")) => Self::DateAndTime(item.read()),
+            Some((NS_VT, "decimal")) => Self::Decimal(item.read()),
+            Some((NS_VT, "empty")) => Self::Empty(item.read()),
+            Some((NS_VT, "error")) => Self::ErrorStatusCode(item.read()),
+            Some((NS_VT, "filetime")) => Self::FileTime(item.read()),
+            Some((NS_VT, "i1")) => Self::I1(item.read()),
+            Some((NS_VT, "i2")) => Self::I2(item.read()),
+            Some((NS_VT, "i4")) => Self::I4(item.read()),
+            Some((NS_VT, "i8")) => Self::I8(item.read()),
+            Some((NS_VT, "int")) => Self::Integer(item.read()),
+            Some((NS_VT, "lpstr")) => Self::Lpstr(item.read()),
+            Some((NS_VT, "lpwstr")) => Self::Lpwstr(item.read()),
+            Some((NS_VT, "null")) => Self::Null(item.read()),
+            Some((NS_VT, "r4")) => Self::R4(item.read()),
+            Some((NS_VT, "r8")) => Self::R8(item.read()),
+            Some((NS_VT, "ui1")) => Self::Ui1(item.read()),
+            Some((NS_VT, "ui2")) => Self::Ui2(item.read()),
+            Some((NS_VT, "ui4")) => Self::Ui4(item.read()),
+            Some((NS_VT, "ui8")) => Self::Ui8(item.read()),
+            Some((NS_VT, "uint")) => Self::UnsignedInteger(item.read()),
+            Some((NS_VT, "variant")) => Self::Variant(item.read()),
+            Some((NS_VT, "vector")) => Self::Vector(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -3355,8 +3355,8 @@ impl<X: UserData> VectorWith<X> {
 }
 
 impl crate::Read for Vector {
-    fn read(element: &Element) -> Self {
-        read::vector(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::vector_from_item(item)
     }
 }
 
@@ -3478,29 +3478,29 @@ impl crate::Read for VectorContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match crate::name(element) {
-            Some((NS_VT, "bstr")) => Self::BasicString(crate::read(element)),
-            Some((NS_VT, "bool")) => Self::Boolean(crate::read(element)),
-            Some((NS_VT, "clsid")) => Self::ClassID(crate::read(element)),
-            Some((NS_VT, "cy")) => Self::Currency(crate::read(element)),
-            Some((NS_VT, "date")) => Self::DateAndTime(crate::read(element)),
-            Some((NS_VT, "error")) => Self::ErrorStatusCode(crate::read(element)),
-            Some((NS_VT, "filetime")) => Self::FileTime(crate::read(element)),
-            Some((NS_VT, "i1")) => Self::I1(crate::read(element)),
-            Some((NS_VT, "i2")) => Self::I2(crate::read(element)),
-            Some((NS_VT, "i4")) => Self::I4(crate::read(element)),
-            Some((NS_VT, "i8")) => Self::I8(crate::read(element)),
-            Some((NS_VT, "lpstr")) => Self::Lpstr(crate::read(element)),
-            Some((NS_VT, "lpwstr")) => Self::Lpwstr(crate::read(element)),
-            Some((NS_VT, "r4")) => Self::R4(crate::read(element)),
-            Some((NS_VT, "r8")) => Self::R8(crate::read(element)),
-            Some((NS_VT, "ui1")) => Self::Ui1(crate::read(element)),
-            Some((NS_VT, "ui2")) => Self::Ui2(crate::read(element)),
-            Some((NS_VT, "ui4")) => Self::Ui4(crate::read(element)),
-            Some((NS_VT, "ui8")) => Self::Ui8(crate::read(element)),
-            Some((NS_VT, "variant")) => Self::Variant(crate::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: crate::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_VT, "bstr")) => Self::BasicString(item.read()),
+            Some((NS_VT, "bool")) => Self::Boolean(item.read()),
+            Some((NS_VT, "clsid")) => Self::ClassID(item.read()),
+            Some((NS_VT, "cy")) => Self::Currency(item.read()),
+            Some((NS_VT, "date")) => Self::DateAndTime(item.read()),
+            Some((NS_VT, "error")) => Self::ErrorStatusCode(item.read()),
+            Some((NS_VT, "filetime")) => Self::FileTime(item.read()),
+            Some((NS_VT, "i1")) => Self::I1(item.read()),
+            Some((NS_VT, "i2")) => Self::I2(item.read()),
+            Some((NS_VT, "i4")) => Self::I4(item.read()),
+            Some((NS_VT, "i8")) => Self::I8(item.read()),
+            Some((NS_VT, "lpstr")) => Self::Lpstr(item.read()),
+            Some((NS_VT, "lpwstr")) => Self::Lpwstr(item.read()),
+            Some((NS_VT, "r4")) => Self::R4(item.read()),
+            Some((NS_VT, "r8")) => Self::R8(item.read()),
+            Some((NS_VT, "ui1")) => Self::Ui1(item.read()),
+            Some((NS_VT, "ui2")) => Self::Ui2(item.read()),
+            Some((NS_VT, "ui4")) => Self::Ui4(item.read()),
+            Some((NS_VT, "ui8")) => Self::Ui8(item.read()),
+            Some((NS_VT, "variant")) => Self::Variant(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }

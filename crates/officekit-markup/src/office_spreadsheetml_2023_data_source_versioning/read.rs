@@ -221,8 +221,27 @@ use officekit_xml::element::Element;
 /// Read `xxdsv:lastEditFeature` into a `LastEditFeature`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn last_edit_feature(element: &Element) -> super::LastEditFeature {
+    last_edit_feature_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xxdsv:lastEditFeature` into a `LastEditFeature` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn last_edit_feature_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::LastEditFeature {
+    last_edit_feature_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xxdsv:lastEditFeature` into a `LastEditFeature` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn last_edit_feature_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::LastEditFeature {
     let mut node = super::LastEditFeature::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::LAST_EDIT_FEATURE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::LAST_EDIT_FEATURE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -235,9 +254,27 @@ pub fn last_edit_feature(element: &Element) -> super::LastEditFeature {
 /// Read `xxdsv:lastRefreshFeature` into a `LastRefreshFeature`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn last_refresh_feature(element: &Element) -> super::LastRefreshFeature {
+    last_refresh_feature_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xxdsv:lastRefreshFeature` into a `LastRefreshFeature` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn last_refresh_feature_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::LastRefreshFeature {
+    last_refresh_feature_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xxdsv:lastRefreshFeature` into a `LastRefreshFeature` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn last_refresh_feature_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::LastRefreshFeature {
     let mut node = super::LastRefreshFeature::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::LAST_REFRESH_FEATURE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::LAST_REFRESH_FEATURE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -250,8 +287,25 @@ pub fn last_refresh_feature(element: &Element) -> super::LastRefreshFeature {
 /// Read `xxdsv:requiredFeature` into a `RequiredFeature`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn required_feature(element: &Element) -> super::RequiredFeature {
+    required_feature_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xxdsv:requiredFeature` into a `RequiredFeature` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn required_feature_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RequiredFeature {
+    required_feature_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xxdsv:requiredFeature` into a `RequiredFeature` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn required_feature_from_item(item: officekit_markup_base::Item<'_>) -> super::RequiredFeature {
     let mut node = super::RequiredFeature::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::REQUIRED_FEATURE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::REQUIRED_FEATURE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -264,8 +318,24 @@ pub fn required_feature(element: &Element) -> super::RequiredFeature {
 /// Read `xxdsv:versionInfo` into a `VersionInfo`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn version_info(element: &Element) -> super::VersionInfo {
+    version_info_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xxdsv:versionInfo` into a `VersionInfo` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn version_info_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::VersionInfo {
+    version_info_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xxdsv:versionInfo` into a `VersionInfo` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn version_info_from_item(item: officekit_markup_base::Item<'_>) -> super::VersionInfo {
     let mut node = super::VersionInfo::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::VERSION_INFO_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::VERSION_INFO_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.required_feature),

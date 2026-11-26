@@ -222,7 +222,6 @@ pub mod read;
 pub mod write;
 
 use crate::UserData;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
 const NS_PVML: Option<NamespaceId> = Some(87);
@@ -299,8 +298,8 @@ impl<X: UserData> InkAnnotationFlagWith<X> {
 }
 
 impl crate::Read for InkAnnotationFlag {
-    fn read(element: &Element) -> Self {
-        read::ink_annotation_flag(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::ink_annotation_flag_from_item(item)
     }
 }
 
@@ -337,8 +336,8 @@ impl<X: UserData> VMLDiagramTextWith<X> {
 }
 
 impl crate::Read for VMLDiagramText {
-    fn read(element: &Element) -> Self {
-        read::vml_diagram_text(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::vml_diagram_text_from_item(item)
     }
 }
 

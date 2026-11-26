@@ -221,8 +221,24 @@ use officekit_xml::element::Element;
 /// Read `xlmsforms:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlmsforms:extLst` into a `ExtLst` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlmsforms:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -235,8 +251,24 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `xlmsforms:msForm` into a `MsForm`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ms_form(element: &Element) -> super::MsForm {
+    ms_form_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlmsforms:msForm` into a `MsForm` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ms_form_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::MsForm {
+    ms_form_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlmsforms:msForm` into a `MsForm` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ms_form_from_item(item: officekit_markup_base::Item<'_>) -> super::MsForm {
     let mut node = super::MsForm::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::MS_FORM_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::MS_FORM_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -255,8 +287,24 @@ pub fn ms_form(element: &Element) -> super::MsForm {
 /// Read `xlmsforms:question` into a `Question`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn question(element: &Element) -> super::Question {
+    question_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlmsforms:question` into a `Question` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn question_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Question {
+    question_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlmsforms:question` into a `Question` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn question_from_item(item: officekit_markup_base::Item<'_>) -> super::Question {
     let mut node = super::Question::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::QUESTION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::QUESTION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -271,8 +319,27 @@ pub fn question(element: &Element) -> super::Question {
 /// Read `xlmsforms:syncedQuestionId` into a `SyncedQuestionId`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn synced_question_id(element: &Element) -> super::SyncedQuestionId {
+    synced_question_id_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlmsforms:syncedQuestionId` into a `SyncedQuestionId` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn synced_question_id_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SyncedQuestionId {
+    synced_question_id_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlmsforms:syncedQuestionId` into a `SyncedQuestionId` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn synced_question_id_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SyncedQuestionId {
     let mut node = super::SyncedQuestionId::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SYNCED_QUESTION_ID_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SYNCED_QUESTION_ID_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);

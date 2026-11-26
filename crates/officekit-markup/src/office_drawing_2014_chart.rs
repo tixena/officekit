@@ -227,7 +227,6 @@ use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::chart;
 use officekit_markup_core::drawing;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -1541,8 +1540,8 @@ impl<X: UserData> Bubble3DWith<X> {
 }
 
 impl officekit_markup_base::Read for Bubble3D {
-    fn read(element: &Element) -> Self {
-        read::bubble3d(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bubble3d_from_item(item)
     }
 }
 
@@ -1603,8 +1602,8 @@ impl<X: UserData> CategoryFilterExceptionWith<X> {
 }
 
 impl officekit_markup_base::Read for CategoryFilterException {
-    fn read(element: &Element) -> Self {
-        read::category_filter_exception(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::category_filter_exception_from_item(item)
     }
 }
 
@@ -1641,8 +1640,8 @@ impl<X: UserData> CategoryFilterExceptionsWith<X> {
 }
 
 impl officekit_markup_base::Read for CategoryFilterExceptions {
-    fn read(element: &Element) -> Self {
-        read::category_filter_exceptions(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::category_filter_exceptions_from_item(item)
     }
 }
 
@@ -1687,8 +1686,8 @@ impl<X: UserData> DLblWith<X> {
 }
 
 impl officekit_markup_base::Read for DLbl {
-    fn read(element: &Element) -> Self {
-        read::d_lbl(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::d_lbl_from_item(item)
     }
 }
 
@@ -1725,8 +1724,8 @@ impl<X: UserData> DatapointuniqueidmapWith<X> {
 }
 
 impl officekit_markup_base::Read for Datapointuniqueidmap {
-    fn read(element: &Element) -> Self {
-        read::datapointuniqueidmap(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::datapointuniqueidmap_from_item(item)
     }
 }
 
@@ -1763,8 +1762,8 @@ impl<X: UserData> ExplosionWith<X> {
 }
 
 impl officekit_markup_base::Read for Explosion {
-    fn read(element: &Element) -> Self {
-        read::explosion(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::explosion_from_item(item)
     }
 }
 
@@ -1801,8 +1800,8 @@ impl<X: UserData> FilteredLitCacheMultiLvlStrFilteredLiteralCacheWith<X> {
 }
 
 impl officekit_markup_base::Read for FilteredLitCacheMultiLvlStrFilteredLiteralCache {
-    fn read(element: &Element) -> Self {
-        read::filtered_lit_cache_multi_lvl_str_filtered_literal_cache(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::filtered_lit_cache_multi_lvl_str_filtered_literal_cache_from_item(item)
     }
 }
 
@@ -1840,8 +1839,8 @@ impl<X: UserData> FilteredLitCacheNumFilteredLiteralCacheWith<X> {
 }
 
 impl officekit_markup_base::Read for FilteredLitCacheNumFilteredLiteralCache {
-    fn read(element: &Element) -> Self {
-        read::filtered_lit_cache_num_filtered_literal_cache(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::filtered_lit_cache_num_filtered_literal_cache_from_item(item)
     }
 }
 
@@ -1878,8 +1877,8 @@ impl<X: UserData> FilteredLitCacheStrFilteredLiteralCacheWith<X> {
 }
 
 impl officekit_markup_base::Read for FilteredLitCacheStrFilteredLiteralCache {
-    fn read(element: &Element) -> Self {
-        read::filtered_lit_cache_str_filtered_literal_cache(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::filtered_lit_cache_str_filtered_literal_cache_from_item(item)
     }
 }
 
@@ -1916,8 +1915,8 @@ impl<X: UserData> InvertIfNegativeWith<X> {
 }
 
 impl officekit_markup_base::Read for InvertIfNegative {
-    fn read(element: &Element) -> Self {
-        read::invert_if_negative(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::invert_if_negative_from_item(item)
     }
 }
 
@@ -1954,8 +1953,8 @@ impl<X: UserData> LiteralDataChartWith<X> {
 }
 
 impl officekit_markup_base::Read for LiteralDataChart {
-    fn read(element: &Element) -> Self {
-        read::literal_data_chart(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::literal_data_chart_from_item(item)
     }
 }
 
@@ -2004,8 +2003,8 @@ impl<X: UserData> MarkerWith<X> {
 }
 
 impl officekit_markup_base::Read for Marker {
-    fn read(element: &Element) -> Self {
-        read::marker(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::marker_from_item(item)
     }
 }
 
@@ -2050,8 +2049,8 @@ impl<X: UserData> MultiLvlStrCacheWith<X> {
 }
 
 impl officekit_markup_base::Read for MultiLvlStrCache {
-    fn read(element: &Element) -> Self {
-        read::multi_lvl_str_cache(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::multi_lvl_str_cache_from_item(item)
     }
 }
 
@@ -2100,8 +2099,8 @@ impl<X: UserData> NumCacheWith<X> {
 }
 
 impl officekit_markup_base::Read for NumCache {
-    fn read(element: &Element) -> Self {
-        read::num_cache(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::num_cache_from_item(item)
     }
 }
 
@@ -2138,8 +2137,8 @@ impl<X: UserData> PivotOptions16With<X> {
 }
 
 impl officekit_markup_base::Read for PivotOptions16 {
-    fn read(element: &Element) -> Self {
-        read::pivot_options16(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pivot_options16_from_item(item)
     }
 }
 
@@ -2180,8 +2179,8 @@ impl<X: UserData> PtentryWith<X> {
 }
 
 impl officekit_markup_base::Read for Ptentry {
-    fn read(element: &Element) -> Self {
-        read::ptentry(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ptentry_from_item(item)
     }
 }
 
@@ -2218,8 +2217,8 @@ impl<X: UserData> PtidxWith<X> {
 }
 
 impl officekit_markup_base::Read for Ptidx {
-    fn read(element: &Element) -> Self {
-        read::ptidx(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ptidx_from_item(item)
     }
 }
 
@@ -2256,8 +2255,8 @@ impl<X: UserData> ShowExpandCollapseFieldButtonsWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowExpandCollapseFieldButtons {
-    fn read(element: &Element) -> Self {
-        read::show_expand_collapse_field_buttons(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_expand_collapse_field_buttons_from_item(item)
     }
 }
 
@@ -2326,8 +2325,8 @@ impl<X: UserData> SpPrWith<X> {
 }
 
 impl officekit_markup_base::Read for SpPr {
-    fn read(element: &Element) -> Self {
-        read::sp_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sp_pr_from_item(item)
     }
 }
 
@@ -2372,8 +2371,8 @@ impl<X: UserData> StrCacheWith<X> {
 }
 
 impl officekit_markup_base::Read for StrCache {
-    fn read(element: &Element) -> Self {
-        read::str_cache(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::str_cache_from_item(item)
     }
 }
 
@@ -2406,8 +2405,8 @@ impl<X: UserData> UniqueIDWith<X> {
 }
 
 impl officekit_markup_base::Read for UniqueID {
-    fn read(element: &Element) -> Self {
-        read::unique_id(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::unique_id_from_item(item)
     }
 }
 
@@ -2440,8 +2439,8 @@ impl<X: UserData> UniqueIdWith<X> {
 }
 
 impl officekit_markup_base::Read for UniqueId {
-    fn read(element: &Element) -> Self {
-        read::unique_id_2(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::unique_id_2_from_item(item)
     }
 }
 

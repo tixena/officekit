@@ -222,7 +222,6 @@ pub mod read;
 pub mod write;
 
 use crate::UserData;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
 const NS_X15AC: Option<NamespaceId> = Some(123);
@@ -279,8 +278,8 @@ impl<X: UserData> AbsPathWith<X> {
 }
 
 impl crate::Read for AbsPath {
-    fn read(element: &Element) -> Self {
-        read::abs_path(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::abs_path_from_item(item)
     }
 }
 

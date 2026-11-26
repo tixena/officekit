@@ -221,8 +221,20 @@ use officekit_xml::element::Element;
 /// Read `xne:f` into a `F`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn f(element: &Element) -> super::F {
+    f_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xne:f` into a `F` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn f_from_events(start: Element, events: &dyn crate::EventSource) -> super::F {
+    f_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xne:f` into a `F` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn f_from_item(item: crate::Item<'_>) -> super::F {
     let mut node = super::F::default();
-    let mut reader = crate::Reader::new(element, &super::F_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::F_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -235,8 +247,20 @@ pub fn f(element: &Element) -> super::F {
 /// Read `xne:sqref` into a `Sqref`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sqref(element: &Element) -> super::Sqref {
+    sqref_from_item(crate::Item::Tree(element))
+}
+
+/// Read `xne:sqref` into a `Sqref` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sqref_from_events(start: Element, events: &dyn crate::EventSource) -> super::Sqref {
+    sqref_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `xne:sqref` into a `Sqref` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sqref_from_item(item: crate::Item<'_>) -> super::Sqref {
     let mut node = super::Sqref::default();
-    let mut reader = crate::Reader::new(element, &super::SQREF_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SQREF_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);

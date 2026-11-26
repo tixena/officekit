@@ -221,8 +221,25 @@ use officekit_xml::element::Element;
 /// Read `xnsv:columnFilter` into a `ColumnFilter`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn column_filter(element: &Element) -> super::ColumnFilter {
+    column_filter_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xnsv:columnFilter` into a `ColumnFilter` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn column_filter_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ColumnFilter {
+    column_filter_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xnsv:columnFilter` into a `ColumnFilter` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn column_filter_from_item(item: officekit_markup_base::Item<'_>) -> super::ColumnFilter {
     let mut node = super::ColumnFilter::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COLUMN_FILTER_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COLUMN_FILTER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.col_id),
@@ -240,8 +257,23 @@ pub fn column_filter(element: &Element) -> super::ColumnFilter {
 /// Read `xnsv:dxf` into a `Dxf`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dxf(element: &Element) -> super::Dxf {
+    dxf_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xnsv:dxf` into a `Dxf` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dxf_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Dxf {
+    dxf_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xnsv:dxf` into a `Dxf` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dxf_from_item(item: officekit_markup_base::Item<'_>) -> super::Dxf {
     let mut node = super::Dxf::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DXF_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DXF_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.font),
@@ -261,8 +293,23 @@ pub fn dxf(element: &Element) -> super::Dxf {
 /// Read `xnsv:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xnsv:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xnsv:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -275,8 +322,23 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `xnsv:filter` into a `Filter`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn filter(element: &Element) -> super::Filter {
+    filter_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xnsv:filter` into a `Filter` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn filter_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Filter {
+    filter_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xnsv:filter` into a `Filter` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn filter_from_item(item: officekit_markup_base::Item<'_>) -> super::Filter {
     let mut node = super::Filter::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::FILTER_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::FILTER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.col_id),
@@ -293,8 +355,25 @@ pub fn filter(element: &Element) -> super::Filter {
 /// Read `xnsv:namedSheetView` into a `NamedSheetView`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn named_sheet_view(element: &Element) -> super::NamedSheetView {
+    named_sheet_view_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xnsv:namedSheetView` into a `NamedSheetView` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn named_sheet_view_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NamedSheetView {
+    named_sheet_view_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xnsv:namedSheetView` into a `NamedSheetView` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn named_sheet_view_from_item(item: officekit_markup_base::Item<'_>) -> super::NamedSheetView {
     let mut node = super::NamedSheetView::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NAMED_SHEET_VIEW_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NAMED_SHEET_VIEW_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.name),
@@ -311,8 +390,27 @@ pub fn named_sheet_view(element: &Element) -> super::NamedSheetView {
 /// Read `xnsv:namedSheetViews` into a `NamedSheetViews`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn named_sheet_views(element: &Element) -> super::NamedSheetViews {
+    named_sheet_views_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xnsv:namedSheetViews` into a `NamedSheetViews` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn named_sheet_views_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NamedSheetViews {
+    named_sheet_views_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xnsv:namedSheetViews` into a `NamedSheetViews` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn named_sheet_views_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NamedSheetViews {
     let mut node = super::NamedSheetViews::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NAMED_SHEET_VIEWS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NAMED_SHEET_VIEWS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.named_sheet_view),
@@ -327,8 +425,24 @@ pub fn named_sheet_views(element: &Element) -> super::NamedSheetViews {
 /// Read `xnsv:nsvFilter` into a `NsvFilter`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nsv_filter(element: &Element) -> super::NsvFilter {
+    nsv_filter_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xnsv:nsvFilter` into a `NsvFilter` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn nsv_filter_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NsvFilter {
+    nsv_filter_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xnsv:nsvFilter` into a `NsvFilter` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn nsv_filter_from_item(item: officekit_markup_base::Item<'_>) -> super::NsvFilter {
     let mut node = super::NsvFilter::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NSV_FILTER_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NSV_FILTER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.filter_id),
@@ -347,8 +461,27 @@ pub fn nsv_filter(element: &Element) -> super::NsvFilter {
 /// Read `xnsv:richSortCondition` into a `RichSortCondition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_sort_condition(element: &Element) -> super::RichSortCondition {
+    rich_sort_condition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xnsv:richSortCondition` into a `RichSortCondition` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rich_sort_condition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RichSortCondition {
+    rich_sort_condition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xnsv:richSortCondition` into a `RichSortCondition` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rich_sort_condition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::RichSortCondition {
     let mut node = super::RichSortCondition::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::RICH_SORT_CONDITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::RICH_SORT_CONDITION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.rich_sort_key),
@@ -369,8 +502,25 @@ pub fn rich_sort_condition(element: &Element) -> super::RichSortCondition {
 /// Read `xnsv:sortCondition` into a `SortCondition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sort_condition(element: &Element) -> super::SortCondition {
+    sort_condition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xnsv:sortCondition` into a `SortCondition` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sort_condition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SortCondition {
+    sort_condition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xnsv:sortCondition` into a `SortCondition` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sort_condition_from_item(item: officekit_markup_base::Item<'_>) -> super::SortCondition {
     let mut node = super::SortCondition::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SORT_CONDITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SORT_CONDITION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.descending),
@@ -390,8 +540,24 @@ pub fn sort_condition(element: &Element) -> super::SortCondition {
 /// Read `xnsv:sortRule` into a `SortRule`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sort_rule(element: &Element) -> super::SortRule {
+    sort_rule_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xnsv:sortRule` into a `SortRule` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sort_rule_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SortRule {
+    sort_rule_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xnsv:sortRule` into a `SortRule` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sort_rule_from_item(item: officekit_markup_base::Item<'_>) -> super::SortRule {
     let mut node = super::SortRule::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SORT_RULE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SORT_RULE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.col_id),
@@ -414,8 +580,24 @@ pub fn sort_rule_content(element: &Element) -> super::SortRuleContent {
 /// Read `xnsv:sortRules` into a `SortRules`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sort_rules(element: &Element) -> super::SortRules {
+    sort_rules_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xnsv:sortRules` into a `SortRules` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sort_rules_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SortRules {
+    sort_rules_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xnsv:sortRules` into a `SortRules` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sort_rules_from_item(item: officekit_markup_base::Item<'_>) -> super::SortRules {
     let mut node = super::SortRules::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SORT_RULES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SORT_RULES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.sort_method),

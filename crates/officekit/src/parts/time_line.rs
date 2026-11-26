@@ -349,6 +349,7 @@
 use crate::parts::part_root::{self, PartRoot};
 #[cfg(feature = "transitional")]
 use crate::transitional::Transitional as _;
+use officekit_markup::Item;
 use officekit_markup::office_spreadsheetml_2010_11_main;
 #[cfg(feature = "strict")]
 use officekit_strict::Strict as _;
@@ -373,6 +374,11 @@ pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::TIMELINE;
 
 impl PartRoot for office_spreadsheetml_2010_11_main::Timelines {
     const LOCAL_NAME: &'static str = "timelines";
+
+    fn from_part(root: Item<'_>) -> Result<Self, String> {
+        super::check_root(root.element(), 122, Self::LOCAL_NAME)?;
+        Ok(office_spreadsheetml_2010_11_main::read::timelines_from_item(root))
+    }
 
     fn from_tree(root: &Element) -> Result<Self, String> {
         super::check_root(root, 122, Self::LOCAL_NAME)?;

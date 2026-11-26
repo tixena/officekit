@@ -221,8 +221,24 @@ use officekit_xml::element::Element;
 /// Read `mso14:backstage` into a `Backstage`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn backstage(element: &Element) -> super::Backstage {
+    backstage_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:backstage` into a `Backstage` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn backstage_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Backstage {
+    backstage_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:backstage` into a `Backstage` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn backstage_from_item(item: officekit_markup_base::Item<'_>) -> super::Backstage {
     let mut node = super::Backstage::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BACKSTAGE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BACKSTAGE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.on_show),
@@ -256,8 +272,24 @@ pub fn backstage_menu_group(element: &Element) -> super::BackstageMenuGroupConte
 /// Read `mso14:bottomItems` into a `BottomItems`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bottom_items(element: &Element) -> super::BottomItems {
+    bottom_items_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:bottomItems` into a `BottomItems` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bottom_items_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BottomItems {
+    bottom_items_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:bottomItems` into a `BottomItems` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bottom_items_from_item(item: officekit_markup_base::Item<'_>) -> super::BottomItems {
     let mut node = super::BottomItems::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BOTTOM_ITEMS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BOTTOM_ITEMS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -276,8 +308,23 @@ pub fn r#box(element: &Element) -> super::BoxContent {
 /// Read `mso14:box` into a `BoxBox`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn box_box(element: &Element) -> super::BoxBox {
+    box_box_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:box` into a `BoxBox` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn box_box_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BoxBox {
+    box_box_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:box` into a `BoxBox` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn box_box_from_item(item: officekit_markup_base::Item<'_>) -> super::BoxBox {
     let mut node = super::BoxBox::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BOX_BOX_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BOX_BOX_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -303,11 +350,30 @@ pub fn box_box(element: &Element) -> super::BoxBox {
 pub fn button_backstage_fast_command_button(
     element: &Element,
 ) -> super::ButtonBackstageFastCommandButton {
+    button_backstage_fast_command_button_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:button` into a `ButtonBackstageFastCommandButton` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn button_backstage_fast_command_button_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ButtonBackstageFastCommandButton {
+    button_backstage_fast_command_button_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `mso14:button` into a `ButtonBackstageFastCommandButton` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn button_backstage_fast_command_button_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ButtonBackstageFastCommandButton {
     let mut node = super::ButtonBackstageFastCommandButton::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::BUTTON_BACKSTAGE_FAST_COMMAND_BUTTON_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::BUTTON_BACKSTAGE_FAST_COMMAND_BUTTON_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id_mso),
@@ -341,9 +407,28 @@ pub fn button_backstage_fast_command_button(
 /// Read `mso14:button` into a `ButtonBackstageGroupButton`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn button_backstage_group_button(element: &Element) -> super::ButtonBackstageGroupButton {
+    button_backstage_group_button_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:button` into a `ButtonBackstageGroupButton` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn button_backstage_group_button_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ButtonBackstageGroupButton {
+    button_backstage_group_button_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:button` into a `ButtonBackstageGroupButton` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn button_backstage_group_button_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ButtonBackstageGroupButton {
     let mut node = super::ButtonBackstageGroupButton::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::BUTTON_BACKSTAGE_GROUP_BUTTON_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::BUTTON_BACKSTAGE_GROUP_BUTTON_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.expand),
@@ -378,9 +463,28 @@ pub fn button_backstage_group_button(element: &Element) -> super::ButtonBackstag
 /// Read `mso14:button` into a `ButtonBackstageMenuButton`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn button_backstage_menu_button(element: &Element) -> super::ButtonBackstageMenuButton {
+    button_backstage_menu_button_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:button` into a `ButtonBackstageMenuButton` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn button_backstage_menu_button_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ButtonBackstageMenuButton {
+    button_backstage_menu_button_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:button` into a `ButtonBackstageMenuButton` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn button_backstage_menu_button_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ButtonBackstageMenuButton {
     let mut node = super::ButtonBackstageMenuButton::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::BUTTON_BACKSTAGE_MENU_BUTTON_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::BUTTON_BACKSTAGE_MENU_BUTTON_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.description),
@@ -411,9 +515,28 @@ pub fn button_backstage_menu_button(element: &Element) -> super::ButtonBackstage
 /// Read `mso14:button` into a `ButtonBackstageRegularButton`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn button_backstage_regular_button(element: &Element) -> super::ButtonBackstageRegularButton {
+    button_backstage_regular_button_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:button` into a `ButtonBackstageRegularButton` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn button_backstage_regular_button_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ButtonBackstageRegularButton {
+    button_backstage_regular_button_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:button` into a `ButtonBackstageRegularButton` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn button_backstage_regular_button_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ButtonBackstageRegularButton {
     let mut node = super::ButtonBackstageRegularButton::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::BUTTON_BACKSTAGE_REGULAR_BUTTON_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::BUTTON_BACKSTAGE_REGULAR_BUTTON_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.screentip),
@@ -446,8 +569,24 @@ pub fn button_backstage_regular_button(element: &Element) -> super::ButtonBackst
 /// Read `mso14:button` into a `ButtonButton`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn button_button(element: &Element) -> super::ButtonButton {
+    button_button_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:button` into a `ButtonButton` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn button_button_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ButtonButton {
+    button_button_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:button` into a `ButtonButton` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn button_button_from_item(item: officekit_markup_base::Item<'_>) -> super::ButtonButton {
     let mut node = super::ButtonButton::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BUTTON_BUTTON_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BUTTON_BUTTON_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.size),
@@ -492,9 +631,27 @@ pub fn button_button(element: &Element) -> super::ButtonButton {
 /// Read `mso14:button` into a `ButtonButtonRegular`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn button_button_regular(element: &Element) -> super::ButtonButtonRegular {
+    button_button_regular_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:button` into a `ButtonButtonRegular` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn button_button_regular_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ButtonButtonRegular {
+    button_button_regular_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:button` into a `ButtonButtonRegular` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn button_button_regular_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ButtonButtonRegular {
     let mut node = super::ButtonButtonRegular::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::BUTTON_BUTTON_REGULAR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BUTTON_BUTTON_REGULAR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.on_action),
@@ -537,8 +694,24 @@ pub fn button_button_regular(element: &Element) -> super::ButtonButtonRegular {
 /// Read `mso14:buttonGroup` into a `ButtonGroup`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn button_group(element: &Element) -> super::ButtonGroup {
+    button_group_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:buttonGroup` into a `ButtonGroup` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn button_group_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ButtonGroup {
+    button_group_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:buttonGroup` into a `ButtonGroup` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn button_group_from_item(item: officekit_markup_base::Item<'_>) -> super::ButtonGroup {
     let mut node = super::ButtonGroup::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BUTTON_GROUP_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BUTTON_GROUP_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -567,9 +740,27 @@ pub fn button_group_content(element: &Element) -> super::ButtonGroupContent {
 /// Read `mso14:button` into a `ButtonVisibleButton`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn button_visible_button(element: &Element) -> super::ButtonVisibleButton {
+    button_visible_button_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:button` into a `ButtonVisibleButton` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn button_visible_button_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ButtonVisibleButton {
+    button_visible_button_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:button` into a `ButtonVisibleButton` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn button_visible_button_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ButtonVisibleButton {
     let mut node = super::ButtonVisibleButton::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::BUTTON_VISIBLE_BUTTON_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BUTTON_VISIBLE_BUTTON_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.on_action),
@@ -612,11 +803,28 @@ pub fn button_visible_button(element: &Element) -> super::ButtonVisibleButton {
 pub fn category_task_form_group_category(
     element: &Element,
 ) -> super::CategoryTaskFormGroupCategory {
+    category_task_form_group_category_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:category` into a `CategoryTaskFormGroupCategory` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn category_task_form_group_category_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CategoryTaskFormGroupCategory {
+    category_task_form_group_category_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:category` into a `CategoryTaskFormGroupCategory` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn category_task_form_group_category_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CategoryTaskFormGroupCategory {
     let mut node = super::CategoryTaskFormGroupCategory::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::CATEGORY_TASK_FORM_GROUP_CATEGORY_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::CATEGORY_TASK_FORM_GROUP_CATEGORY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -642,9 +850,28 @@ pub fn category_task_form_group_category(
 /// Read `mso14:category` into a `CategoryTaskGroupCategory`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn category_task_group_category(element: &Element) -> super::CategoryTaskGroupCategory {
+    category_task_group_category_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:category` into a `CategoryTaskGroupCategory` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn category_task_group_category_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CategoryTaskGroupCategory {
+    category_task_group_category_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:category` into a `CategoryTaskGroupCategory` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn category_task_group_category_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CategoryTaskGroupCategory {
     let mut node = super::CategoryTaskGroupCategory::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::CATEGORY_TASK_GROUP_CATEGORY_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::CATEGORY_TASK_GROUP_CATEGORY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -670,9 +897,28 @@ pub fn category_task_group_category(element: &Element) -> super::CategoryTaskGro
 /// Read `mso14:checkBox` into a `CheckBoxBackstageCheckBox`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn check_box_backstage_check_box(element: &Element) -> super::CheckBoxBackstageCheckBox {
+    check_box_backstage_check_box_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:checkBox` into a `CheckBoxBackstageCheckBox` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn check_box_backstage_check_box_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CheckBoxBackstageCheckBox {
+    check_box_backstage_check_box_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:checkBox` into a `CheckBoxBackstageCheckBox` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn check_box_backstage_check_box_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CheckBoxBackstageCheckBox {
     let mut node = super::CheckBoxBackstageCheckBox::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::CHECK_BOX_BACKSTAGE_CHECK_BOX_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::CHECK_BOX_BACKSTAGE_CHECK_BOX_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.expand),
@@ -707,11 +953,28 @@ pub fn check_box_backstage_check_box(element: &Element) -> super::CheckBoxBackst
 pub fn check_box_backstage_menu_check_box(
     element: &Element,
 ) -> super::CheckBoxBackstageMenuCheckBox {
+    check_box_backstage_menu_check_box_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:checkBox` into a `CheckBoxBackstageMenuCheckBox` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn check_box_backstage_menu_check_box_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CheckBoxBackstageMenuCheckBox {
+    check_box_backstage_menu_check_box_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:checkBox` into a `CheckBoxBackstageMenuCheckBox` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn check_box_backstage_menu_check_box_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CheckBoxBackstageMenuCheckBox {
     let mut node = super::CheckBoxBackstageMenuCheckBox::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::CHECK_BOX_BACKSTAGE_MENU_CHECK_BOX_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::CHECK_BOX_BACKSTAGE_MENU_CHECK_BOX_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.description),
@@ -739,8 +1002,27 @@ pub fn check_box_backstage_menu_check_box(
 /// Read `mso14:checkBox` into a `CheckBoxCheckBox`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn check_box_check_box(element: &Element) -> super::CheckBoxCheckBox {
+    check_box_check_box_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:checkBox` into a `CheckBoxCheckBox` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn check_box_check_box_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CheckBoxCheckBox {
+    check_box_check_box_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:checkBox` into a `CheckBoxCheckBox` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn check_box_check_box_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CheckBoxCheckBox {
     let mut node = super::CheckBoxCheckBox::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CHECK_BOX_CHECK_BOX_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CHECK_BOX_CHECK_BOX_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.get_pressed),
@@ -777,9 +1059,28 @@ pub fn check_box_check_box(element: &Element) -> super::CheckBoxCheckBox {
 /// Read `mso14:comboBox` into a `ComboBoxBackstageComboBox`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn combo_box_backstage_combo_box(element: &Element) -> super::ComboBoxBackstageComboBox {
+    combo_box_backstage_combo_box_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:comboBox` into a `ComboBoxBackstageComboBox` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn combo_box_backstage_combo_box_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ComboBoxBackstageComboBox {
+    combo_box_backstage_combo_box_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:comboBox` into a `ComboBoxBackstageComboBox` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn combo_box_backstage_combo_box_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ComboBoxBackstageComboBox {
     let mut node = super::ComboBoxBackstageComboBox::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::COMBO_BOX_BACKSTAGE_COMBO_BOX_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::COMBO_BOX_BACKSTAGE_COMBO_BOX_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -812,8 +1113,27 @@ pub fn combo_box_backstage_combo_box(element: &Element) -> super::ComboBoxBackst
 /// Read `mso14:comboBox` into a `ComboBoxComboBox`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn combo_box_combo_box(element: &Element) -> super::ComboBoxComboBox {
+    combo_box_combo_box_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:comboBox` into a `ComboBoxComboBox` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn combo_box_combo_box_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ComboBoxComboBox {
+    combo_box_combo_box_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:comboBox` into a `ComboBoxComboBox` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn combo_box_combo_box_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ComboBoxComboBox {
     let mut node = super::ComboBoxComboBox::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COMBO_BOX_COMBO_BOX_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMBO_BOX_COMBO_BOX_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.show_item_image),
@@ -866,8 +1186,23 @@ pub fn combo_box_combo_box(element: &Element) -> super::ComboBoxComboBox {
 /// Read `mso14:command` into a `Command`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn command(element: &Element) -> super::Command {
+    command_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:command` into a `Command` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn command_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Command {
+    command_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:command` into a `Command` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn command_from_item(item: officekit_markup_base::Item<'_>) -> super::Command {
     let mut node = super::Command::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COMMAND_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMMAND_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.on_action),
@@ -884,8 +1219,24 @@ pub fn command(element: &Element) -> super::Command {
 /// Read `mso14:commands` into a `Commands`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn commands(element: &Element) -> super::Commands {
+    commands_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:commands` into a `Commands` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn commands_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Commands {
+    commands_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:commands` into a `Commands` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn commands_from_item(item: officekit_markup_base::Item<'_>) -> super::Commands {
     let mut node = super::Commands::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COMMANDS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMMANDS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.command);
@@ -898,8 +1249,24 @@ pub fn commands(element: &Element) -> super::Commands {
 /// Read `mso14:contextMenu` into a `ContextMenu`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn context_menu(element: &Element) -> super::ContextMenu {
+    context_menu_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:contextMenu` into a `ContextMenu` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn context_menu_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ContextMenu {
+    context_menu_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:contextMenu` into a `ContextMenu` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn context_menu_from_item(item: officekit_markup_base::Item<'_>) -> super::ContextMenu {
     let mut node = super::ContextMenu::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CONTEXT_MENU_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CONTEXT_MENU_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id_mso),
@@ -920,8 +1287,25 @@ pub fn context_menu_content(element: &Element) -> super::ContextMenuContent {
 /// Read `mso14:contextMenus` into a `ContextMenus`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn context_menus(element: &Element) -> super::ContextMenus {
+    context_menus_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:contextMenus` into a `ContextMenus` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn context_menus_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ContextMenus {
+    context_menus_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:contextMenus` into a `ContextMenus` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn context_menus_from_item(item: officekit_markup_base::Item<'_>) -> super::ContextMenus {
     let mut node = super::ContextMenus::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CONTEXT_MENUS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CONTEXT_MENUS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.context_menu);
@@ -934,8 +1318,25 @@ pub fn context_menus(element: &Element) -> super::ContextMenus {
 /// Read `mso14:contextualTabs` into a `ContextualTabs`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn contextual_tabs(element: &Element) -> super::ContextualTabs {
+    contextual_tabs_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:contextualTabs` into a `ContextualTabs` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn contextual_tabs_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ContextualTabs {
+    contextual_tabs_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:contextualTabs` into a `ContextualTabs` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn contextual_tabs_from_item(item: officekit_markup_base::Item<'_>) -> super::ContextualTabs {
     let mut node = super::ContextualTabs::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CONTEXTUAL_TABS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CONTEXTUAL_TABS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.tab_set);
@@ -948,9 +1349,27 @@ pub fn contextual_tabs(element: &Element) -> super::ContextualTabs {
 /// Read `mso14:control` into a `ControlControlClone`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn control_control_clone(element: &Element) -> super::ControlControlClone {
+    control_control_clone_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:control` into a `ControlControlClone` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn control_control_clone_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ControlControlClone {
+    control_control_clone_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:control` into a `ControlControlClone` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn control_control_clone_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ControlControlClone {
     let mut node = super::ControlControlClone::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::CONTROL_CONTROL_CLONE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CONTROL_CONTROL_CLONE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.size),
@@ -993,9 +1412,28 @@ pub fn control_control_clone(element: &Element) -> super::ControlControlClone {
 /// Read `mso14:control` into a `ControlControlCloneQat`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn control_control_clone_qat(element: &Element) -> super::ControlControlCloneQat {
+    control_control_clone_qat_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:control` into a `ControlControlCloneQat` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn control_control_clone_qat_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ControlControlCloneQat {
+    control_control_clone_qat_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:control` into a `ControlControlCloneQat` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn control_control_clone_qat_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ControlControlCloneQat {
     let mut node = super::ControlControlCloneQat::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::CONTROL_CONTROL_CLONE_QAT_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::CONTROL_CONTROL_CLONE_QAT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -1038,9 +1476,28 @@ pub fn control_control_clone_qat(element: &Element) -> super::ControlControlClon
 /// Read `mso14:control` into a `ControlControlCloneRegular`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn control_control_clone_regular(element: &Element) -> super::ControlControlCloneRegular {
+    control_control_clone_regular_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:control` into a `ControlControlCloneRegular` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn control_control_clone_regular_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ControlControlCloneRegular {
+    control_control_clone_regular_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:control` into a `ControlControlCloneRegular` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn control_control_clone_regular_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ControlControlCloneRegular {
     let mut node = super::ControlControlCloneRegular::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::CONTROL_CONTROL_CLONE_REGULAR_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::CONTROL_CONTROL_CLONE_REGULAR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id_q),
@@ -1079,8 +1536,24 @@ pub fn control_control_clone_regular(element: &Element) -> super::ControlControl
 /// Read `mso14:customUI` into a `CustomUI`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_ui(element: &Element) -> super::CustomUI {
+    custom_ui_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:customUI` into a `CustomUI` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_ui_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CustomUI {
+    custom_ui_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:customUI` into a `CustomUI` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_ui_from_item(item: officekit_markup_base::Item<'_>) -> super::CustomUI {
     let mut node = super::CustomUI::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOM_UI_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CUSTOM_UI_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.on_load),
@@ -1099,8 +1572,27 @@ pub fn custom_ui(element: &Element) -> super::CustomUI {
 /// Read `mso14:dialogBoxLauncher` into a `DialogBoxLauncher`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dialog_box_launcher(element: &Element) -> super::DialogBoxLauncher {
+    dialog_box_launcher_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:dialogBoxLauncher` into a `DialogBoxLauncher` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dialog_box_launcher_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DialogBoxLauncher {
+    dialog_box_launcher_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:dialogBoxLauncher` into a `DialogBoxLauncher` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dialog_box_launcher_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::DialogBoxLauncher {
     let mut node = super::DialogBoxLauncher::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DIALOG_BOX_LAUNCHER_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DIALOG_BOX_LAUNCHER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.button_button_regular);
@@ -1113,8 +1605,27 @@ pub fn dialog_box_launcher(element: &Element) -> super::DialogBoxLauncher {
 /// Read `mso14:documentControls` into a `DocumentControls`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_controls(element: &Element) -> super::DocumentControls {
+    document_controls_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:documentControls` into a `DocumentControls` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn document_controls_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DocumentControls {
+    document_controls_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:documentControls` into a `DocumentControls` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn document_controls_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::DocumentControls {
     let mut node = super::DocumentControls::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DOCUMENT_CONTROLS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DOCUMENT_CONTROLS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -1127,9 +1638,28 @@ pub fn document_controls(element: &Element) -> super::DocumentControls {
 /// Read `mso14:dropDown` into a `DropDownBackstageDropDown`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drop_down_backstage_drop_down(element: &Element) -> super::DropDownBackstageDropDown {
+    drop_down_backstage_drop_down_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:dropDown` into a `DropDownBackstageDropDown` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drop_down_backstage_drop_down_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DropDownBackstageDropDown {
+    drop_down_backstage_drop_down_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:dropDown` into a `DropDownBackstageDropDown` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drop_down_backstage_drop_down_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::DropDownBackstageDropDown {
     let mut node = super::DropDownBackstageDropDown::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::DROP_DOWN_BACKSTAGE_DROP_DOWN_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::DROP_DOWN_BACKSTAGE_DROP_DOWN_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -1166,9 +1696,28 @@ pub fn drop_down_backstage_drop_down(element: &Element) -> super::DropDownBackst
 /// Read `mso14:dropDown` into a `DropDownDropDownRegular`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drop_down_drop_down_regular(element: &Element) -> super::DropDownDropDownRegular {
+    drop_down_drop_down_regular_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:dropDown` into a `DropDownDropDownRegular` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drop_down_drop_down_regular_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DropDownDropDownRegular {
+    drop_down_drop_down_regular_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:dropDown` into a `DropDownDropDownRegular` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drop_down_drop_down_regular_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::DropDownDropDownRegular {
     let mut node = super::DropDownDropDownRegular::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::DROP_DOWN_DROP_DOWN_REGULAR_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::DROP_DOWN_DROP_DOWN_REGULAR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.on_action),
@@ -1222,9 +1771,28 @@ pub fn drop_down_drop_down_regular(element: &Element) -> super::DropDownDropDown
 /// Read `mso14:dynamicMenu` into a `DynamicMenuDynamicMenu`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dynamic_menu_dynamic_menu(element: &Element) -> super::DynamicMenuDynamicMenu {
+    dynamic_menu_dynamic_menu_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:dynamicMenu` into a `DynamicMenuDynamicMenu` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dynamic_menu_dynamic_menu_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DynamicMenuDynamicMenu {
+    dynamic_menu_dynamic_menu_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:dynamicMenu` into a `DynamicMenuDynamicMenu` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dynamic_menu_dynamic_menu_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::DynamicMenuDynamicMenu {
     let mut node = super::DynamicMenuDynamicMenu::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::DYNAMIC_MENU_DYNAMIC_MENU_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::DYNAMIC_MENU_DYNAMIC_MENU_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.size),
@@ -1272,11 +1840,28 @@ pub fn dynamic_menu_dynamic_menu(element: &Element) -> super::DynamicMenuDynamic
 pub fn dynamic_menu_dynamic_menu_regular(
     element: &Element,
 ) -> super::DynamicMenuDynamicMenuRegular {
+    dynamic_menu_dynamic_menu_regular_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:dynamicMenu` into a `DynamicMenuDynamicMenuRegular` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dynamic_menu_dynamic_menu_regular_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DynamicMenuDynamicMenuRegular {
+    dynamic_menu_dynamic_menu_regular_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:dynamicMenu` into a `DynamicMenuDynamicMenuRegular` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dynamic_menu_dynamic_menu_regular_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::DynamicMenuDynamicMenuRegular {
     let mut node = super::DynamicMenuDynamicMenuRegular::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::DYNAMIC_MENU_DYNAMIC_MENU_REGULAR_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::DYNAMIC_MENU_DYNAMIC_MENU_REGULAR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.description),
@@ -1320,9 +1905,28 @@ pub fn dynamic_menu_dynamic_menu_regular(
 /// Read `mso14:editBox` into a `EditBoxBackstageEditBox`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn edit_box_backstage_edit_box(element: &Element) -> super::EditBoxBackstageEditBox {
+    edit_box_backstage_edit_box_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:editBox` into a `EditBoxBackstageEditBox` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn edit_box_backstage_edit_box_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::EditBoxBackstageEditBox {
+    edit_box_backstage_edit_box_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:editBox` into a `EditBoxBackstageEditBox` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn edit_box_backstage_edit_box_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::EditBoxBackstageEditBox {
     let mut node = super::EditBoxBackstageEditBox::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::EDIT_BOX_BACKSTAGE_EDIT_BOX_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::EDIT_BOX_BACKSTAGE_EDIT_BOX_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -1352,8 +1956,24 @@ pub fn edit_box_backstage_edit_box(element: &Element) -> super::EditBoxBackstage
 /// Read `mso14:editBox` into a `EditBoxEditBox`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn edit_box_edit_box(element: &Element) -> super::EditBoxEditBox {
+    edit_box_edit_box_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:editBox` into a `EditBoxEditBox` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn edit_box_edit_box_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::EditBoxEditBox {
+    edit_box_edit_box_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:editBox` into a `EditBoxEditBox` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn edit_box_edit_box_from_item(item: officekit_markup_base::Item<'_>) -> super::EditBoxEditBox {
     let mut node = super::EditBoxEditBox::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EDIT_BOX_EDIT_BOX_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EDIT_BOX_EDIT_BOX_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.enabled),
@@ -1397,8 +2017,24 @@ pub fn edit_box_edit_box(element: &Element) -> super::EditBoxEditBox {
 /// Read `mso14:firstColumn` into a `FirstColumn`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn first_column(element: &Element) -> super::FirstColumn {
+    first_column_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:firstColumn` into a `FirstColumn` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn first_column_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::FirstColumn {
+    first_column_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:firstColumn` into a `FirstColumn` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn first_column_from_item(item: officekit_markup_base::Item<'_>) -> super::FirstColumn {
     let mut node = super::FirstColumn::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::FIRST_COLUMN_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::FIRST_COLUMN_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -1411,8 +2047,24 @@ pub fn first_column(element: &Element) -> super::FirstColumn {
 /// Read `mso14:gallery` into a `GalleryGallery`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn gallery_gallery(element: &Element) -> super::GalleryGallery {
+    gallery_gallery_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:gallery` into a `GalleryGallery` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn gallery_gallery_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::GalleryGallery {
+    gallery_gallery_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:gallery` into a `GalleryGallery` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn gallery_gallery_from_item(item: officekit_markup_base::Item<'_>) -> super::GalleryGallery {
     let mut node = super::GalleryGallery::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::GALLERY_GALLERY_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::GALLERY_GALLERY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.size),
@@ -1478,9 +2130,27 @@ pub fn gallery_gallery(element: &Element) -> super::GalleryGallery {
 /// Read `mso14:gallery` into a `GalleryGalleryRegular`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn gallery_gallery_regular(element: &Element) -> super::GalleryGalleryRegular {
+    gallery_gallery_regular_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:gallery` into a `GalleryGalleryRegular` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn gallery_gallery_regular_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::GalleryGalleryRegular {
+    gallery_gallery_regular_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:gallery` into a `GalleryGalleryRegular` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn gallery_gallery_regular_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::GalleryGalleryRegular {
     let mut node = super::GalleryGalleryRegular::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::GALLERY_GALLERY_REGULAR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::GALLERY_GALLERY_REGULAR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.description),
@@ -1550,9 +2220,27 @@ pub fn group(element: &Element) -> super::GroupContent {
 /// Read `mso14:group` into a `GroupBackstageGroup`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_backstage_group(element: &Element) -> super::GroupBackstageGroup {
+    group_backstage_group_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:group` into a `GroupBackstageGroup` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn group_backstage_group_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::GroupBackstageGroup {
+    group_backstage_group_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:group` into a `GroupBackstageGroup` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn group_backstage_group_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::GroupBackstageGroup {
     let mut node = super::GroupBackstageGroup::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::GROUP_BACKSTAGE_GROUP_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::GROUP_BACKSTAGE_GROUP_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -1586,8 +2274,24 @@ pub fn group_backstage_group(element: &Element) -> super::GroupBackstageGroup {
 /// Read `mso14:groupBox` into a `GroupBox`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_box(element: &Element) -> super::GroupBox {
+    group_box_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:groupBox` into a `GroupBox` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn group_box_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::GroupBox {
+    group_box_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:groupBox` into a `GroupBox` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn group_box_from_item(item: officekit_markup_base::Item<'_>) -> super::GroupBox {
     let mut node = super::GroupBox::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::GROUP_BOX_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::GROUP_BOX_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -1613,8 +2317,24 @@ pub fn group_controls(element: &Element) -> super::GroupControlsContent {
 /// Read `mso14:group` into a `GroupGroup`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_group(element: &Element) -> super::GroupGroup {
+    group_group_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:group` into a `GroupGroup` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn group_group_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::GroupGroup {
+    group_group_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:group` into a `GroupGroup` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn group_group_from_item(item: officekit_markup_base::Item<'_>) -> super::GroupGroup {
     let mut node = super::GroupGroup::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::GROUP_GROUP_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::GROUP_GROUP_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -1652,8 +2372,24 @@ pub fn group_group(element: &Element) -> super::GroupGroup {
 /// Read `mso14:hyperlink` into a `Hyperlink`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hyperlink(element: &Element) -> super::Hyperlink {
+    hyperlink_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:hyperlink` into a `Hyperlink` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn hyperlink_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Hyperlink {
+    hyperlink_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:hyperlink` into a `Hyperlink` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn hyperlink_from_item(item: officekit_markup_base::Item<'_>) -> super::Hyperlink {
     let mut node = super::Hyperlink::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::HYPERLINK_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::HYPERLINK_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -1689,8 +2425,25 @@ pub fn hyperlink(element: &Element) -> super::Hyperlink {
 /// Read `mso14:imageControl` into a `ImageControl`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn image_control(element: &Element) -> super::ImageControl {
+    image_control_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:imageControl` into a `ImageControl` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn image_control_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ImageControl {
+    image_control_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:imageControl` into a `ImageControl` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn image_control_from_item(item: officekit_markup_base::Item<'_>) -> super::ImageControl {
     let mut node = super::ImageControl::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::IMAGE_CONTROL_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::IMAGE_CONTROL_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -1715,7 +2468,25 @@ pub fn image_control(element: &Element) -> super::ImageControl {
 /// Read `mso14:item` into a `ItemBackstageItem`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn item_backstage_item(element: &Element) -> super::ItemBackstageItem {
-    let reader = officekit_markup_base::Reader::new(element, &super::ITEM_BACKSTAGE_ITEM_SHAPE);
+    item_backstage_item_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:item` into a `ItemBackstageItem` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn item_backstage_item_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ItemBackstageItem {
+    item_backstage_item_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:item` into a `ItemBackstageItem` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn item_backstage_item_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ItemBackstageItem {
+    let reader = officekit_markup_base::Reader::of(item, &super::ITEM_BACKSTAGE_ITEM_SHAPE);
     super::ItemBackstageItem {
         user_data: (),
         unknown: reader.finish(),
@@ -1725,8 +2496,23 @@ pub fn item_backstage_item(element: &Element) -> super::ItemBackstageItem {
 /// Read `mso14:item` into a `ItemItem`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn item_item(element: &Element) -> super::ItemItem {
+    item_item_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:item` into a `ItemItem` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn item_item_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ItemItem {
+    item_item_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:item` into a `ItemItem` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn item_item_from_item(item: officekit_markup_base::Item<'_>) -> super::ItemItem {
     let mut node = super::ItemItem::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::ITEM_ITEM_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ITEM_ITEM_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -1747,9 +2533,30 @@ pub fn item_item(element: &Element) -> super::ItemItem {
 pub fn label_control_backstage_label_control(
     element: &Element,
 ) -> super::LabelControlBackstageLabelControl {
+    label_control_backstage_label_control_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:labelControl` into a `LabelControlBackstageLabelControl` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn label_control_backstage_label_control_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::LabelControlBackstageLabelControl {
+    label_control_backstage_label_control_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `mso14:labelControl` into a `LabelControlBackstageLabelControl` from an element, or from
+/// its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn label_control_backstage_label_control_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::LabelControlBackstageLabelControl {
     let mut node = super::LabelControlBackstageLabelControl::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::LABEL_CONTROL_BACKSTAGE_LABEL_CONTROL_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -1776,9 +2583,28 @@ pub fn label_control_backstage_label_control(
 /// Read `mso14:labelControl` into a `LabelControlLabelControl`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn label_control_label_control(element: &Element) -> super::LabelControlLabelControl {
+    label_control_label_control_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:labelControl` into a `LabelControlLabelControl` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn label_control_label_control_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::LabelControlLabelControl {
+    label_control_label_control_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:labelControl` into a `LabelControlLabelControl` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn label_control_label_control_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::LabelControlLabelControl {
     let mut node = super::LabelControlLabelControl::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::LABEL_CONTROL_LABEL_CONTROL_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::LABEL_CONTROL_LABEL_CONTROL_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -1811,8 +2637,25 @@ pub fn label_control_label_control(element: &Element) -> super::LabelControlLabe
 /// Read `mso14:layoutContainer` into a `LayoutContainer`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn layout_container(element: &Element) -> super::LayoutContainer {
+    layout_container_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:layoutContainer` into a `LayoutContainer` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn layout_container_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::LayoutContainer {
+    layout_container_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:layoutContainer` into a `LayoutContainer` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn layout_container_from_item(item: officekit_markup_base::Item<'_>) -> super::LayoutContainer {
     let mut node = super::LayoutContainer::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::LAYOUT_CONTAINER_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::LAYOUT_CONTAINER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -1838,9 +2681,28 @@ pub fn menu(element: &Element) -> super::MenuContent {
 /// Read `mso14:menu` into a `MenuBackstagePrimaryMenu`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_backstage_primary_menu(element: &Element) -> super::MenuBackstagePrimaryMenu {
+    menu_backstage_primary_menu_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:menu` into a `MenuBackstagePrimaryMenu` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_backstage_primary_menu_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::MenuBackstagePrimaryMenu {
+    menu_backstage_primary_menu_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:menu` into a `MenuBackstagePrimaryMenu` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_backstage_primary_menu_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::MenuBackstagePrimaryMenu {
     let mut node = super::MenuBackstagePrimaryMenu::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::MENU_BACKSTAGE_PRIMARY_MENU_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::MENU_BACKSTAGE_PRIMARY_MENU_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.screentip),
@@ -1872,9 +2734,27 @@ pub fn menu_backstage_primary_menu(element: &Element) -> super::MenuBackstagePri
 /// Read `mso14:menu` into a `MenuBackstageSubMenu`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_backstage_sub_menu(element: &Element) -> super::MenuBackstageSubMenu {
+    menu_backstage_sub_menu_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:menu` into a `MenuBackstageSubMenu` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_backstage_sub_menu_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::MenuBackstageSubMenu {
+    menu_backstage_sub_menu_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:menu` into a `MenuBackstageSubMenu` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_backstage_sub_menu_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::MenuBackstageSubMenu {
     let mut node = super::MenuBackstageSubMenu::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::MENU_BACKSTAGE_SUB_MENU_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::MENU_BACKSTAGE_SUB_MENU_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.description),
@@ -1904,8 +2784,24 @@ pub fn menu_backstage_sub_menu(element: &Element) -> super::MenuBackstageSubMenu
 /// Read `mso14:menuGroup` into a `MenuGroup`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_group(element: &Element) -> super::MenuGroup {
+    menu_group_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:menuGroup` into a `MenuGroup` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_group_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::MenuGroup {
+    menu_group_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:menuGroup` into a `MenuGroup` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_group_from_item(item: officekit_markup_base::Item<'_>) -> super::MenuGroup {
     let mut node = super::MenuGroup::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::MENU_GROUP_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::MENU_GROUP_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -1925,8 +2821,23 @@ pub fn menu_group(element: &Element) -> super::MenuGroup {
 /// Read `mso14:menu` into a `MenuMenu`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_menu(element: &Element) -> super::MenuMenu {
+    menu_menu_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:menu` into a `MenuMenu` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_menu_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::MenuMenu {
+    menu_menu_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:menu` into a `MenuMenu` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_menu_from_item(item: officekit_markup_base::Item<'_>) -> super::MenuMenu {
     let mut node = super::MenuMenu::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::MENU_MENU_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::MENU_MENU_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.size),
@@ -1972,8 +2883,26 @@ pub fn menu_menu(element: &Element) -> super::MenuMenu {
 /// Read `mso14:menu` into a `MenuMenuRegular`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_menu_regular(element: &Element) -> super::MenuMenuRegular {
+    menu_menu_regular_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:menu` into a `MenuMenuRegular` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_menu_regular_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::MenuMenuRegular {
+    menu_menu_regular_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:menu` into a `MenuMenuRegular` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_menu_regular_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::MenuMenuRegular {
     let mut node = super::MenuMenuRegular::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::MENU_MENU_REGULAR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::MENU_MENU_REGULAR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.item_size),
@@ -2017,8 +2946,24 @@ pub fn menu_menu_regular(element: &Element) -> super::MenuMenuRegular {
 /// Read `mso14:menu` into a `MenuMenuRoot`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_menu_root(element: &Element) -> super::MenuMenuRoot {
+    menu_menu_root_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:menu` into a `MenuMenuRoot` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_menu_root_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::MenuMenuRoot {
+    menu_menu_root_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:menu` into a `MenuMenuRoot` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_menu_root_from_item(item: officekit_markup_base::Item<'_>) -> super::MenuMenuRoot {
     let mut node = super::MenuMenuRoot::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::MENU_MENU_ROOT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::MENU_MENU_ROOT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.title),
@@ -2035,9 +2980,26 @@ pub fn menu_menu_root(element: &Element) -> super::MenuMenuRoot {
 /// Read `mso14:menu` into a `MenuMenuWithTitle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_menu_with_title(element: &Element) -> super::MenuMenuWithTitle {
+    menu_menu_with_title_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:menu` into a `MenuMenuWithTitle` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_menu_with_title_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::MenuMenuWithTitle {
+    menu_menu_with_title_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:menu` into a `MenuMenuWithTitle` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_menu_with_title_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::MenuMenuWithTitle {
     let mut node = super::MenuMenuWithTitle::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::MENU_MENU_WITH_TITLE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::MENU_MENU_WITH_TITLE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -2081,9 +3043,28 @@ pub fn menu_menu_with_title(element: &Element) -> super::MenuMenuWithTitle {
 /// Read `mso14:menuSeparator` into a `MenuSeparatorMenuSeparator`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_separator_menu_separator(element: &Element) -> super::MenuSeparatorMenuSeparator {
+    menu_separator_menu_separator_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:menuSeparator` into a `MenuSeparatorMenuSeparator` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_separator_menu_separator_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::MenuSeparatorMenuSeparator {
+    menu_separator_menu_separator_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:menuSeparator` into a `MenuSeparatorMenuSeparator` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_separator_menu_separator_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::MenuSeparatorMenuSeparator {
     let mut node = super::MenuSeparatorMenuSeparator::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::MENU_SEPARATOR_MENU_SEPARATOR_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::MENU_SEPARATOR_MENU_SEPARATOR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -2107,9 +3088,30 @@ pub fn menu_separator_menu_separator(element: &Element) -> super::MenuSeparatorM
 pub fn menu_separator_menu_separator_no_title(
     element: &Element,
 ) -> super::MenuSeparatorMenuSeparatorNoTitle {
+    menu_separator_menu_separator_no_title_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:menuSeparator` into a `MenuSeparatorMenuSeparatorNoTitle` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_separator_menu_separator_no_title_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::MenuSeparatorMenuSeparatorNoTitle {
+    menu_separator_menu_separator_no_title_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `mso14:menuSeparator` into a `MenuSeparatorMenuSeparatorNoTitle` from an element, or from
+/// its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn menu_separator_menu_separator_no_title_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::MenuSeparatorMenuSeparatorNoTitle {
     let mut node = super::MenuSeparatorMenuSeparatorNoTitle::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::MENU_SEPARATOR_MENU_SEPARATOR_NO_TITLE_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -2137,8 +3139,24 @@ pub fn menu_with_title(element: &Element) -> super::MenuWithTitleContent {
 /// Read `mso14:primaryItem` into a `PrimaryItem`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn primary_item(element: &Element) -> super::PrimaryItem {
+    primary_item_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:primaryItem` into a `PrimaryItem` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn primary_item_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PrimaryItem {
+    primary_item_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:primaryItem` into a `PrimaryItem` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn primary_item_from_item(item: officekit_markup_base::Item<'_>) -> super::PrimaryItem {
     let mut node = super::PrimaryItem::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PRIMARY_ITEM_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PRIMARY_ITEM_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -2157,8 +3175,23 @@ pub fn primary_item_content(element: &Element) -> super::PrimaryItemContent {
 /// Read `mso14:qat` into a `Qat`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn qat(element: &Element) -> super::Qat {
+    qat_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:qat` into a `Qat` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn qat_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Qat {
+    qat_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:qat` into a `Qat` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn qat_from_item(item: officekit_markup_base::Item<'_>) -> super::Qat {
     let mut node = super::Qat::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::QAT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::QAT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.shared_controls),
@@ -2180,7 +3213,23 @@ pub fn quick_access_toolbar_items(element: &Element) -> super::QuickAccessToolba
 /// Read `mso14:radioButton` into a `RadioButton`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn radio_button(element: &Element) -> super::RadioButton {
-    let reader = officekit_markup_base::Reader::new(element, &super::RADIO_BUTTON_SHAPE);
+    radio_button_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:radioButton` into a `RadioButton` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn radio_button_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RadioButton {
+    radio_button_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:radioButton` into a `RadioButton` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn radio_button_from_item(item: officekit_markup_base::Item<'_>) -> super::RadioButton {
+    let reader = officekit_markup_base::Reader::of(item, &super::RADIO_BUTTON_SHAPE);
     super::RadioButton {
         user_data: (),
         unknown: reader.finish(),
@@ -2190,8 +3239,24 @@ pub fn radio_button(element: &Element) -> super::RadioButton {
 /// Read `mso14:radioGroup` into a `RadioGroup`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn radio_group(element: &Element) -> super::RadioGroup {
+    radio_group_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:radioGroup` into a `RadioGroup` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn radio_group_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RadioGroup {
+    radio_group_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:radioGroup` into a `RadioGroup` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn radio_group_from_item(item: officekit_markup_base::Item<'_>) -> super::RadioGroup {
     let mut node = super::RadioGroup::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::RADIO_GROUP_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::RADIO_GROUP_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -2223,8 +3288,23 @@ pub fn radio_group(element: &Element) -> super::RadioGroup {
 /// Read `mso14:ribbon` into a `Ribbon`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ribbon(element: &Element) -> super::Ribbon {
+    ribbon_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:ribbon` into a `Ribbon` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ribbon_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Ribbon {
+    ribbon_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:ribbon` into a `Ribbon` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ribbon_from_item(item: officekit_markup_base::Item<'_>) -> super::Ribbon {
     let mut node = super::Ribbon::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::RIBBON_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::RIBBON_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.start_from_scratch),
@@ -2245,8 +3325,25 @@ pub fn ribbon_content(element: &Element) -> super::RibbonContent {
 /// Read `mso14:secondColumn` into a `SecondColumn`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn second_column(element: &Element) -> super::SecondColumn {
+    second_column_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:secondColumn` into a `SecondColumn` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn second_column_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SecondColumn {
+    second_column_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:secondColumn` into a `SecondColumn` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn second_column_from_item(item: officekit_markup_base::Item<'_>) -> super::SecondColumn {
     let mut node = super::SecondColumn::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SECOND_COLUMN_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SECOND_COLUMN_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -2259,8 +3356,24 @@ pub fn second_column(element: &Element) -> super::SecondColumn {
 /// Read `mso14:separator` into a `Separator`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn separator(element: &Element) -> super::Separator {
+    separator_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:separator` into a `Separator` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn separator_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Separator {
+    separator_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:separator` into a `Separator` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn separator_from_item(item: officekit_markup_base::Item<'_>) -> super::Separator {
     let mut node = super::Separator::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SEPARATOR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SEPARATOR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -2282,8 +3395,25 @@ pub fn separator(element: &Element) -> super::Separator {
 /// Read `mso14:sharedControls` into a `SharedControls`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shared_controls(element: &Element) -> super::SharedControls {
+    shared_controls_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:sharedControls` into a `SharedControls` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shared_controls_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SharedControls {
+    shared_controls_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:sharedControls` into a `SharedControls` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shared_controls_from_item(item: officekit_markup_base::Item<'_>) -> super::SharedControls {
     let mut node = super::SharedControls::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SHARED_CONTROLS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SHARED_CONTROLS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -2308,9 +3438,28 @@ pub fn split_button(element: &Element) -> super::SplitButtonContent {
 /// Read `mso14:splitButton` into a `SplitButtonSplitButton`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn split_button_split_button(element: &Element) -> super::SplitButtonSplitButton {
+    split_button_split_button_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:splitButton` into a `SplitButtonSplitButton` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn split_button_split_button_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SplitButtonSplitButton {
+    split_button_split_button_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:splitButton` into a `SplitButtonSplitButton` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn split_button_split_button_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SplitButtonSplitButton {
     let mut node = super::SplitButtonSplitButton::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::SPLIT_BUTTON_SPLIT_BUTTON_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::SPLIT_BUTTON_SPLIT_BUTTON_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.size),
@@ -2345,11 +3494,28 @@ pub fn split_button_split_button(element: &Element) -> super::SplitButtonSplitBu
 pub fn split_button_split_button_regular(
     element: &Element,
 ) -> super::SplitButtonSplitButtonRegular {
+    split_button_split_button_regular_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:splitButton` into a `SplitButtonSplitButtonRegular` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn split_button_split_button_regular_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SplitButtonSplitButtonRegular {
+    split_button_split_button_regular_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:splitButton` into a `SplitButtonSplitButtonRegular` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn split_button_split_button_regular_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SplitButtonSplitButtonRegular {
     let mut node = super::SplitButtonSplitButtonRegular::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::SPLIT_BUTTON_SPLIT_BUTTON_REGULAR_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::SPLIT_BUTTON_SPLIT_BUTTON_REGULAR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.enabled),
@@ -2382,11 +3548,30 @@ pub fn split_button_split_button_regular(
 pub fn split_button_split_button_with_title(
     element: &Element,
 ) -> super::SplitButtonSplitButtonWithTitle {
+    split_button_split_button_with_title_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:splitButton` into a `SplitButtonSplitButtonWithTitle` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn split_button_split_button_with_title_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SplitButtonSplitButtonWithTitle {
+    split_button_split_button_with_title_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `mso14:splitButton` into a `SplitButtonSplitButtonWithTitle` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn split_button_split_button_with_title_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SplitButtonSplitButtonWithTitle {
     let mut node = super::SplitButtonSplitButtonWithTitle::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::SPLIT_BUTTON_SPLIT_BUTTON_WITH_TITLE_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::SPLIT_BUTTON_SPLIT_BUTTON_WITH_TITLE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.enabled),
@@ -2417,8 +3602,26 @@ pub fn split_button_split_button_with_title(
 /// Read `mso14:tab` into a `TabBackstageTab`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tab_backstage_tab(element: &Element) -> super::TabBackstageTab {
+    tab_backstage_tab_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:tab` into a `TabBackstageTab` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tab_backstage_tab_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TabBackstageTab {
+    tab_backstage_tab_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:tab` into a `TabBackstageTab` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tab_backstage_tab_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::TabBackstageTab {
     let mut node = super::TabBackstageTab::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TAB_BACKSTAGE_TAB_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TAB_BACKSTAGE_TAB_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -2456,8 +3659,23 @@ pub fn tab_backstage_tab(element: &Element) -> super::TabBackstageTab {
 /// Read `mso14:tabSet` into a `TabSet`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tab_set(element: &Element) -> super::TabSet {
+    tab_set_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:tabSet` into a `TabSet` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tab_set_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TabSet {
+    tab_set_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:tabSet` into a `TabSet` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tab_set_from_item(item: officekit_markup_base::Item<'_>) -> super::TabSet {
     let mut node = super::TabSet::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TAB_SET_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TAB_SET_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id_mso),
@@ -2474,8 +3692,23 @@ pub fn tab_set(element: &Element) -> super::TabSet {
 /// Read `mso14:tab` into a `TabTab`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tab_tab(element: &Element) -> super::TabTab {
+    tab_tab_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:tab` into a `TabTab` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tab_tab_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TabTab {
+    tab_tab_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:tab` into a `TabTab` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tab_tab_from_item(item: officekit_markup_base::Item<'_>) -> super::TabTab {
     let mut node = super::TabTab::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TAB_TAB_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TAB_TAB_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -2503,8 +3736,23 @@ pub fn tab_tab(element: &Element) -> super::TabTab {
 /// Read `mso14:tabs` into a `Tabs`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tabs(element: &Element) -> super::Tabs {
+    tabs_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:tabs` into a `Tabs` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tabs_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Tabs {
+    tabs_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:tabs` into a `Tabs` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tabs_from_item(item: officekit_markup_base::Item<'_>) -> super::Tabs {
     let mut node = super::Tabs::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TABS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TABS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.tab_tab);
@@ -2517,8 +3765,25 @@ pub fn tabs(element: &Element) -> super::Tabs {
 /// Read `mso14:taskFormGroup` into a `TaskFormGroup`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn task_form_group(element: &Element) -> super::TaskFormGroup {
+    task_form_group_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:taskFormGroup` into a `TaskFormGroup` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn task_form_group_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TaskFormGroup {
+    task_form_group_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:taskFormGroup` into a `TaskFormGroup` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn task_form_group_from_item(item: officekit_markup_base::Item<'_>) -> super::TaskFormGroup {
     let mut node = super::TaskFormGroup::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TASK_FORM_GROUP_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TASK_FORM_GROUP_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -2545,8 +3810,24 @@ pub fn task_form_group(element: &Element) -> super::TaskFormGroup {
 /// Read `mso14:taskGroup` into a `TaskGroup`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn task_group(element: &Element) -> super::TaskGroup {
+    task_group_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:taskGroup` into a `TaskGroup` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn task_group_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TaskGroup {
+    task_group_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:taskGroup` into a `TaskGroup` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn task_group_from_item(item: officekit_markup_base::Item<'_>) -> super::TaskGroup {
     let mut node = super::TaskGroup::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TASK_GROUP_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TASK_GROUP_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -2577,9 +3858,28 @@ pub fn task_group(element: &Element) -> super::TaskGroup {
 /// Read `mso14:task` into a `TaskTaskFormGroupTask`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn task_task_form_group_task(element: &Element) -> super::TaskTaskFormGroupTask {
+    task_task_form_group_task_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:task` into a `TaskTaskFormGroupTask` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn task_task_form_group_task_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TaskTaskFormGroupTask {
+    task_task_form_group_task_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:task` into a `TaskTaskFormGroupTask` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn task_task_form_group_task_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::TaskTaskFormGroupTask {
     let mut node = super::TaskTaskFormGroupTask::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::TASK_TASK_FORM_GROUP_TASK_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::TASK_TASK_FORM_GROUP_TASK_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -2614,9 +3914,26 @@ pub fn task_task_form_group_task(element: &Element) -> super::TaskTaskFormGroupT
 /// Read `mso14:task` into a `TaskTaskGroupTask`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn task_task_group_task(element: &Element) -> super::TaskTaskGroupTask {
+    task_task_group_task_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:task` into a `TaskTaskGroupTask` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn task_task_group_task_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TaskTaskGroupTask {
+    task_task_group_task_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:task` into a `TaskTaskGroupTask` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn task_task_group_task_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::TaskTaskGroupTask {
     let mut node = super::TaskTaskGroupTask::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::TASK_TASK_GROUP_TASK_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TASK_TASK_GROUP_TASK_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -2654,9 +3971,30 @@ pub fn task_task_group_task(element: &Element) -> super::TaskTaskGroupTask {
 pub fn toggle_button_backstage_menu_toggle_button(
     element: &Element,
 ) -> super::ToggleButtonBackstageMenuToggleButton {
+    toggle_button_backstage_menu_toggle_button_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:toggleButton` into a `ToggleButtonBackstageMenuToggleButton` from its start tag and
+/// the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn toggle_button_backstage_menu_toggle_button_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ToggleButtonBackstageMenuToggleButton {
+    toggle_button_backstage_menu_toggle_button_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `mso14:toggleButton` into a `ToggleButtonBackstageMenuToggleButton` from an element, or
+/// from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn toggle_button_backstage_menu_toggle_button_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ToggleButtonBackstageMenuToggleButton {
     let mut node = super::ToggleButtonBackstageMenuToggleButton::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::TOGGLE_BUTTON_BACKSTAGE_MENU_TOGGLE_BUTTON_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -2689,9 +4027,28 @@ pub fn toggle_button_backstage_menu_toggle_button(
 /// Read `mso14:toggleButton` into a `ToggleButtonToggleButton`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn toggle_button_toggle_button(element: &Element) -> super::ToggleButtonToggleButton {
+    toggle_button_toggle_button_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:toggleButton` into a `ToggleButtonToggleButton` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn toggle_button_toggle_button_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ToggleButtonToggleButton {
+    toggle_button_toggle_button_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:toggleButton` into a `ToggleButtonToggleButton` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn toggle_button_toggle_button_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ToggleButtonToggleButton {
     let mut node = super::ToggleButtonToggleButton::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::TOGGLE_BUTTON_TOGGLE_BUTTON_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::TOGGLE_BUTTON_TOGGLE_BUTTON_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.size),
@@ -2739,11 +4096,30 @@ pub fn toggle_button_toggle_button(element: &Element) -> super::ToggleButtonTogg
 pub fn toggle_button_toggle_button_regular(
     element: &Element,
 ) -> super::ToggleButtonToggleButtonRegular {
+    toggle_button_toggle_button_regular_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:toggleButton` into a `ToggleButtonToggleButtonRegular` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn toggle_button_toggle_button_regular_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ToggleButtonToggleButtonRegular {
+    toggle_button_toggle_button_regular_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `mso14:toggleButton` into a `ToggleButtonToggleButtonRegular` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn toggle_button_toggle_button_regular_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ToggleButtonToggleButtonRegular {
     let mut node = super::ToggleButtonToggleButtonRegular::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::TOGGLE_BUTTON_TOGGLE_BUTTON_REGULAR_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::TOGGLE_BUTTON_TOGGLE_BUTTON_REGULAR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.get_pressed),
@@ -2789,11 +4165,30 @@ pub fn toggle_button_toggle_button_regular(
 pub fn toggle_button_visible_toggle_button(
     element: &Element,
 ) -> super::ToggleButtonVisibleToggleButton {
+    toggle_button_visible_toggle_button_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:toggleButton` into a `ToggleButtonVisibleToggleButton` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn toggle_button_visible_toggle_button_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ToggleButtonVisibleToggleButton {
+    toggle_button_visible_toggle_button_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `mso14:toggleButton` into a `ToggleButtonVisibleToggleButton` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn toggle_button_visible_toggle_button_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ToggleButtonVisibleToggleButton {
     let mut node = super::ToggleButtonVisibleToggleButton::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::TOGGLE_BUTTON_VISIBLE_TOGGLE_BUTTON_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::TOGGLE_BUTTON_VISIBLE_TOGGLE_BUTTON_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.get_pressed),
@@ -2835,8 +4230,24 @@ pub fn toggle_button_visible_toggle_button(
 /// Read `mso14:topItems` into a `TopItems`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn top_items(element: &Element) -> super::TopItems {
+    top_items_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `mso14:topItems` into a `TopItems` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn top_items_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TopItems {
+    top_items_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `mso14:topItems` into a `TopItems` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn top_items_from_item(item: officekit_markup_base::Item<'_>) -> super::TopItems {
     let mut node = super::TopItems::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TOP_ITEMS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TOP_ITEMS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);

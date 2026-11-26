@@ -221,8 +221,24 @@ use officekit_xml::element::Element;
 /// Read `p202:designPr` into a `DesignPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn design_pr(element: &Element) -> super::DesignPr {
+    design_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p202:designPr` into a `DesignPr` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn design_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DesignPr {
+    design_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p202:designPr` into a `DesignPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn design_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::DesignPr {
     let mut node = super::DesignPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DESIGN_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DESIGN_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.edt_design_elem),
@@ -238,8 +254,24 @@ pub fn design_pr(element: &Element) -> super::DesignPr {
 /// Read `p202:designTag` into a `DesignTag`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn design_tag(element: &Element) -> super::DesignTag {
+    design_tag_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p202:designTag` into a `DesignTag` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn design_tag_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DesignTag {
+    design_tag_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p202:designTag` into a `DesignTag` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn design_tag_from_item(item: officekit_markup_base::Item<'_>) -> super::DesignTag {
     let mut node = super::DesignTag::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DESIGN_TAG_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DESIGN_TAG_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.name),
@@ -254,8 +286,25 @@ pub fn design_tag(element: &Element) -> super::DesignTag {
 /// Read `p202:designTagLst` into a `DesignTagLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn design_tag_lst(element: &Element) -> super::DesignTagLst {
+    design_tag_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p202:designTagLst` into a `DesignTagLst` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn design_tag_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DesignTagLst {
+    design_tag_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p202:designTagLst` into a `DesignTagLst` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn design_tag_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::DesignTagLst {
     let mut node = super::DesignTagLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DESIGN_TAG_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DESIGN_TAG_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.design_tag);
@@ -268,8 +317,23 @@ pub fn design_tag_lst(element: &Element) -> super::DesignTagLst {
 /// Read `p202:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p202:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p202:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);

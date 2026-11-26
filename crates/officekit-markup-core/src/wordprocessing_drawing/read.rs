@@ -221,9 +221,28 @@ use officekit_xml::element::Element;
 /// Read `wp:posOffset` into a `AbsolutePositionOffset`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn absolute_position_offset(element: &Element) -> super::AbsolutePositionOffset {
+    absolute_position_offset_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:posOffset` into a `AbsolutePositionOffset` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn absolute_position_offset_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AbsolutePositionOffset {
+    absolute_position_offset_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:posOffset` into a `AbsolutePositionOffset` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn absolute_position_offset_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::AbsolutePositionOffset {
     let mut node = super::AbsolutePositionOffset::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::ABSOLUTE_POSITION_OFFSET_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::ABSOLUTE_POSITION_OFFSET_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -244,9 +263,30 @@ pub fn anchor(element: &Element) -> super::AnchorContent {
 pub fn anchor_for_floating_drawing_ml_object(
     element: &Element,
 ) -> super::AnchorForFloatingDrawingMLObject {
+    anchor_for_floating_drawing_ml_object_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:anchor` into a `AnchorForFloatingDrawingMLObject` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn anchor_for_floating_drawing_ml_object_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AnchorForFloatingDrawingMLObject {
+    anchor_for_floating_drawing_ml_object_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `wp:anchor` into a `AnchorForFloatingDrawingMLObject` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn anchor_for_floating_drawing_ml_object_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::AnchorForFloatingDrawingMLObject {
     let mut node = super::AnchorForFloatingDrawingMLObject::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::ANCHOR_FOR_FLOATING_DRAWING_ML_OBJECT_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -285,9 +325,26 @@ pub fn anchor_for_floating_drawing_ml_object(
 /// Read `wp:bg` into a `BackgroundFormatting`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn background_formatting(element: &Element) -> super::BackgroundFormatting {
+    background_formatting_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:bg` into a `BackgroundFormatting` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn background_formatting_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BackgroundFormatting {
+    background_formatting_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:bg` into a `BackgroundFormatting` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn background_formatting_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::BackgroundFormatting {
     let mut node = super::BackgroundFormatting::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::BACKGROUND_FORMATTING_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BACKGROUND_FORMATTING_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.fill_properties_content),
@@ -302,8 +359,24 @@ pub fn background_formatting(element: &Element) -> super::BackgroundFormatting {
 /// Read `wp:bodyPr` into a `BodyProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn body_properties(element: &Element) -> super::BodyProperties {
+    body_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:bodyPr` into a `BodyProperties` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn body_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BodyProperties {
+    body_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:bodyPr` into a `BodyProperties` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn body_properties_from_item(item: officekit_markup_base::Item<'_>) -> super::BodyProperties {
     let mut node = super::BodyProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BODY_PROPERTIES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BODY_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.rot),
@@ -342,9 +415,30 @@ pub fn body_properties(element: &Element) -> super::BodyProperties {
 pub fn common_drawing_ml_non_visual_properties(
     element: &Element,
 ) -> super::CommonDrawingMLNonVisualProperties {
+    common_drawing_ml_non_visual_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:cNvGraphicFramePr` into a `CommonDrawingMLNonVisualProperties` from its start tag and
+/// the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn common_drawing_ml_non_visual_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CommonDrawingMLNonVisualProperties {
+    common_drawing_ml_non_visual_properties_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `wp:cNvGraphicFramePr` into a `CommonDrawingMLNonVisualProperties` from an element, or from
+/// its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn common_drawing_ml_non_visual_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CommonDrawingMLNonVisualProperties {
     let mut node = super::CommonDrawingMLNonVisualProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::COMMON_DRAWING_ML_NON_VISUAL_PROPERTIES_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -361,8 +455,24 @@ pub fn common_drawing_ml_non_visual_properties(
 /// Read `wp:contentPart` into a `ContentPart`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn content_part(element: &Element) -> super::ContentPart {
+    content_part_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:contentPart` into a `ContentPart` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn content_part_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ContentPart {
+    content_part_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:contentPart` into a `ContentPart` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn content_part_from_item(item: officekit_markup_base::Item<'_>) -> super::ContentPart {
     let mut node = super::ContentPart::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CONTENT_PART_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CONTENT_PART_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bw_mode),
@@ -388,11 +498,30 @@ pub fn drawing_canvas(element: &Element) -> super::DrawingCanvasContent {
 pub fn drawing_object_non_visual_properties(
     element: &Element,
 ) -> super::DrawingObjectNonVisualProperties {
+    drawing_object_non_visual_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:docPr` into a `DrawingObjectNonVisualProperties` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drawing_object_non_visual_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DrawingObjectNonVisualProperties {
+    drawing_object_non_visual_properties_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `wp:docPr` into a `DrawingObjectNonVisualProperties` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drawing_object_non_visual_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::DrawingObjectNonVisualProperties {
     let mut node = super::DrawingObjectNonVisualProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::DRAWING_OBJECT_NON_VISUAL_PROPERTIES_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::DRAWING_OBJECT_NON_VISUAL_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -413,8 +542,26 @@ pub fn drawing_object_non_visual_properties(
 /// Read `wp:extent` into a `DrawingObjectSize`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drawing_object_size(element: &Element) -> super::DrawingObjectSize {
+    drawing_object_size_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:extent` into a `DrawingObjectSize` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drawing_object_size_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DrawingObjectSize {
+    drawing_object_size_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:extent` into a `DrawingObjectSize` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drawing_object_size_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::DrawingObjectSize {
     let mut node = super::DrawingObjectSize::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DRAWING_OBJECT_SIZE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DRAWING_OBJECT_SIZE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.cx),
@@ -429,8 +576,24 @@ pub fn drawing_object_size(element: &Element) -> super::DrawingObjectSize {
 /// Read `wp:extLst` into a `ExtensionList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn extension_list(element: &Element) -> super::ExtensionList {
+    extension_list_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:extLst` into a `ExtensionList` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn extension_list_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtensionList {
+    extension_list_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:extLst` into a `ExtensionList` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn extension_list_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtensionList {
     let mut node = super::ExtensionList::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXTENSION_LIST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXTENSION_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -443,9 +606,28 @@ pub fn extension_list(element: &Element) -> super::ExtensionList {
 /// Read `wp:graphicFrame` into a `GraphicalObjectContainer`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn graphical_object_container(element: &Element) -> super::GraphicalObjectContainer {
+    graphical_object_container_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:graphicFrame` into a `GraphicalObjectContainer` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn graphical_object_container_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::GraphicalObjectContainer {
+    graphical_object_container_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:graphicFrame` into a `GraphicalObjectContainer` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn graphical_object_container_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::GraphicalObjectContainer {
     let mut node = super::GraphicalObjectContainer::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::GRAPHICAL_OBJECT_CONTAINER_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::GRAPHICAL_OBJECT_CONTAINER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.non_visual_drawing_properties),
@@ -463,8 +645,23 @@ pub fn graphical_object_container(element: &Element) -> super::GraphicalObjectCo
 /// Read `wp:grpSp` into a `GroupShape`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_shape(element: &Element) -> super::GroupShape {
+    group_shape_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:grpSp` into a `GroupShape` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn group_shape_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::GroupShape {
+    group_shape_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:grpSp` into a `GroupShape` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn group_shape_from_item(item: officekit_markup_base::Item<'_>) -> super::GroupShape {
     let mut node = super::GroupShape::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::GROUP_SHAPE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::GROUP_SHAPE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.non_visual_drawing_properties),
@@ -488,9 +685,27 @@ pub fn group_shape_content(element: &Element) -> super::GroupShapeContent {
 /// Read `wp:grpSpPr` into a `GroupShapeProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_shape_properties(element: &Element) -> super::GroupShapeProperties {
+    group_shape_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:grpSpPr` into a `GroupShapeProperties` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn group_shape_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::GroupShapeProperties {
+    group_shape_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:grpSpPr` into a `GroupShapeProperties` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn group_shape_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::GroupShapeProperties {
     let mut node = super::GroupShapeProperties::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::GROUP_SHAPE_PROPERTIES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::GROUP_SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bw_mode),
@@ -509,9 +724,27 @@ pub fn group_shape_properties(element: &Element) -> super::GroupShapeProperties 
 /// Read `wp:positionH` into a `HorizontalPositioning`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn horizontal_positioning(element: &Element) -> super::HorizontalPositioning {
+    horizontal_positioning_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:positionH` into a `HorizontalPositioning` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn horizontal_positioning_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::HorizontalPositioning {
+    horizontal_positioning_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:positionH` into a `HorizontalPositioning` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn horizontal_positioning_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::HorizontalPositioning {
     let mut node = super::HorizontalPositioning::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::HORIZONTAL_POSITIONING_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::HORIZONTAL_POSITIONING_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.relative_from),
@@ -533,9 +766,28 @@ pub fn horizontal_positioning_content(element: &Element) -> super::HorizontalPos
 /// Read `wp:inline` into a `InlineDrawingMLObject`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn inline_drawing_ml_object(element: &Element) -> super::InlineDrawingMLObject {
+    inline_drawing_ml_object_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:inline` into a `InlineDrawingMLObject` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn inline_drawing_ml_object_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::InlineDrawingMLObject {
+    inline_drawing_ml_object_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:inline` into a `InlineDrawingMLObject` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn inline_drawing_ml_object_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::InlineDrawingMLObject {
     let mut node = super::InlineDrawingMLObject::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::INLINE_DRAWING_ML_OBJECT_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::INLINE_DRAWING_ML_OBJECT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.dist_t),
@@ -559,7 +811,23 @@ pub fn inline_drawing_ml_object(element: &Element) -> super::InlineDrawingMLObje
 /// Read `wp:wrapNone` into a `NoTextWrapping`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn no_text_wrapping(element: &Element) -> super::NoTextWrapping {
-    let reader = officekit_markup_base::Reader::new(element, &super::NO_TEXT_WRAPPING_SHAPE);
+    no_text_wrapping_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:wrapNone` into a `NoTextWrapping` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn no_text_wrapping_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NoTextWrapping {
+    no_text_wrapping_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:wrapNone` into a `NoTextWrapping` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn no_text_wrapping_from_item(item: officekit_markup_base::Item<'_>) -> super::NoTextWrapping {
+    let reader = officekit_markup_base::Reader::of(item, &super::NO_TEXT_WRAPPING_SHAPE);
     super::NoTextWrapping {
         user_data: (),
         unknown: reader.finish(),
@@ -571,9 +839,32 @@ pub fn no_text_wrapping(element: &Element) -> super::NoTextWrapping {
 pub fn non_visual_connector_shape_drawing_properties(
     element: &Element,
 ) -> super::NonVisualConnectorShapeDrawingProperties {
-    let mut node = super::NonVisualConnectorShapeDrawingProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(
+    non_visual_connector_shape_drawing_properties_from_item(officekit_markup_base::Item::Tree(
         element,
+    ))
+}
+
+/// Read `wp:cNvCnPr` into a `NonVisualConnectorShapeDrawingProperties` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_connector_shape_drawing_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualConnectorShapeDrawingProperties {
+    non_visual_connector_shape_drawing_properties_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `wp:cNvCnPr` into a `NonVisualConnectorShapeDrawingProperties` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_connector_shape_drawing_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualConnectorShapeDrawingProperties {
+    let mut node = super::NonVisualConnectorShapeDrawingProperties::default();
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -594,9 +885,30 @@ pub fn non_visual_connector_shape_drawing_properties(
 pub fn non_visual_content_part_drawing_properties(
     element: &Element,
 ) -> super::NonVisualContentPartDrawingProperties {
+    non_visual_content_part_drawing_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:cNvContentPartPr` into a `NonVisualContentPartDrawingProperties` from its start tag and
+/// the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_content_part_drawing_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualContentPartDrawingProperties {
+    non_visual_content_part_drawing_properties_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `wp:cNvContentPartPr` into a `NonVisualContentPartDrawingProperties` from an element, or
+/// from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_content_part_drawing_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualContentPartDrawingProperties {
     let mut node = super::NonVisualContentPartDrawingProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::NON_VISUAL_CONTENT_PART_DRAWING_PROPERTIES_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -614,9 +926,28 @@ pub fn non_visual_content_part_drawing_properties(
 /// Read `wp:cNvPr` into a `NonVisualDrawingProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawingProperties {
+    non_visual_drawing_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:cNvPr` into a `NonVisualDrawingProperties` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_drawing_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualDrawingProperties {
+    non_visual_drawing_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:cNvPr` into a `NonVisualDrawingProperties` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_drawing_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualDrawingProperties {
     let mut node = super::NonVisualDrawingProperties::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -639,9 +970,30 @@ pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawi
 pub fn non_visual_drawing_properties_for_a_shape(
     element: &Element,
 ) -> super::NonVisualDrawingPropertiesForAShape {
+    non_visual_drawing_properties_for_a_shape_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:cNvSpPr` into a `NonVisualDrawingPropertiesForAShape` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_drawing_properties_for_a_shape_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualDrawingPropertiesForAShape {
+    non_visual_drawing_properties_for_a_shape_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `wp:cNvSpPr` into a `NonVisualDrawingPropertiesForAShape` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_drawing_properties_for_a_shape_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualDrawingPropertiesForAShape {
     let mut node = super::NonVisualDrawingPropertiesForAShape::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::NON_VISUAL_DRAWING_PROPERTIES_FOR_A_SHAPE_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -661,9 +1013,32 @@ pub fn non_visual_drawing_properties_for_a_shape(
 pub fn non_visual_graphic_frame_drawing_properties(
     element: &Element,
 ) -> super::NonVisualGraphicFrameDrawingProperties {
-    let mut node = super::NonVisualGraphicFrameDrawingProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(
+    non_visual_graphic_frame_drawing_properties_from_item(officekit_markup_base::Item::Tree(
         element,
+    ))
+}
+
+/// Read `wp:cNvFrPr` into a `NonVisualGraphicFrameDrawingProperties` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_graphic_frame_drawing_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualGraphicFrameDrawingProperties {
+    non_visual_graphic_frame_drawing_properties_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `wp:cNvFrPr` into a `NonVisualGraphicFrameDrawingProperties` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_graphic_frame_drawing_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualGraphicFrameDrawingProperties {
+    let mut node = super::NonVisualGraphicFrameDrawingProperties::default();
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -682,9 +1057,30 @@ pub fn non_visual_graphic_frame_drawing_properties(
 pub fn non_visual_group_shape_drawing_properties(
     element: &Element,
 ) -> super::NonVisualGroupShapeDrawingProperties {
+    non_visual_group_shape_drawing_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:cNvGrpSpPr` into a `NonVisualGroupShapeDrawingProperties` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_group_shape_drawing_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NonVisualGroupShapeDrawingProperties {
+    non_visual_group_shape_drawing_properties_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `wp:cNvGrpSpPr` into a `NonVisualGroupShapeDrawingProperties` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn non_visual_group_shape_drawing_properties_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NonVisualGroupShapeDrawingProperties {
     let mut node = super::NonVisualGroupShapeDrawingProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -701,8 +1097,27 @@ pub fn non_visual_group_shape_drawing_properties(
 /// Read `wp:nvContentPartPr` into a `NvContentPartPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nv_content_part_pr(element: &Element) -> super::NvContentPartPr {
+    nv_content_part_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:nvContentPartPr` into a `NvContentPartPr` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn nv_content_part_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NvContentPartPr {
+    nv_content_part_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:nvContentPartPr` into a `NvContentPartPr` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn nv_content_part_pr_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NvContentPartPr {
     let mut node = super::NvContentPartPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NV_CONTENT_PART_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NV_CONTENT_PART_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.non_visual_drawing_properties),
@@ -717,9 +1132,28 @@ pub fn nv_content_part_pr(element: &Element) -> super::NvContentPartPr {
 /// Read `wp:effectExtent` into a `ObjectExtentsIncludingEffects`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn object_extents_including_effects(element: &Element) -> super::ObjectExtentsIncludingEffects {
+    object_extents_including_effects_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:effectExtent` into a `ObjectExtentsIncludingEffects` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn object_extents_including_effects_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ObjectExtentsIncludingEffects {
+    object_extents_including_effects_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:effectExtent` into a `ObjectExtentsIncludingEffects` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn object_extents_including_effects_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ObjectExtentsIncludingEffects {
     let mut node = super::ObjectExtentsIncludingEffects::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::OBJECT_EXTENTS_INCLUDING_EFFECTS_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::OBJECT_EXTENTS_INCLUDING_EFFECTS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.l),
@@ -736,9 +1170,28 @@ pub fn object_extents_including_effects(element: &Element) -> super::ObjectExten
 /// Read `wp:align` into a `RelativeHorizontalAlignment`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn relative_horizontal_alignment(element: &Element) -> super::RelativeHorizontalAlignment {
+    relative_horizontal_alignment_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:align` into a `RelativeHorizontalAlignment` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn relative_horizontal_alignment_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RelativeHorizontalAlignment {
+    relative_horizontal_alignment_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:align` into a `RelativeHorizontalAlignment` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn relative_horizontal_alignment_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::RelativeHorizontalAlignment {
     let mut node = super::RelativeHorizontalAlignment::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::RELATIVE_HORIZONTAL_ALIGNMENT_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::RELATIVE_HORIZONTAL_ALIGNMENT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -751,9 +1204,28 @@ pub fn relative_horizontal_alignment(element: &Element) -> super::RelativeHorizo
 /// Read `wp:align` into a `RelativeVerticalAlignment`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn relative_vertical_alignment(element: &Element) -> super::RelativeVerticalAlignment {
+    relative_vertical_alignment_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:align` into a `RelativeVerticalAlignment` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn relative_vertical_alignment_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RelativeVerticalAlignment {
+    relative_vertical_alignment_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:align` into a `RelativeVerticalAlignment` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn relative_vertical_alignment_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::RelativeVerticalAlignment {
     let mut node = super::RelativeVerticalAlignment::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::RELATIVE_VERTICAL_ALIGNMENT_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::RELATIVE_VERTICAL_ALIGNMENT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -766,9 +1238,28 @@ pub fn relative_vertical_alignment(element: &Element) -> super::RelativeVertical
 /// Read `wp:txbxContent` into a `RichTextBoxContentContainer`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_text_box_content_container(element: &Element) -> super::RichTextBoxContentContainer {
+    rich_text_box_content_container_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:txbxContent` into a `RichTextBoxContentContainer` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rich_text_box_content_container_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RichTextBoxContentContainer {
+    rich_text_box_content_container_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:txbxContent` into a `RichTextBoxContentContainer` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rich_text_box_content_container_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::RichTextBoxContentContainer {
     let mut node = super::RichTextBoxContentContainer::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::RICH_TEXT_BOX_CONTENT_CONTAINER_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::RICH_TEXT_BOX_CONTENT_CONTAINER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -788,8 +1279,24 @@ pub fn shape_non_visual_properties(element: &Element) -> super::ShapeNonVisualPr
 /// Read `wp:spPr` into a `ShapeProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_properties(element: &Element) -> super::ShapeProperties {
+    shape_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:spPr` into a `ShapeProperties` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ShapeProperties {
+    shape_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:spPr` into a `ShapeProperties` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_properties_from_item(item: officekit_markup_base::Item<'_>) -> super::ShapeProperties {
     let mut node = super::ShapeProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_PROPERTIES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bw_mode),
@@ -811,8 +1318,23 @@ pub fn shape_properties(element: &Element) -> super::ShapeProperties {
 /// Read `wp:style` into a `ShapeStyle`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_style(element: &Element) -> super::ShapeStyle {
+    shape_style_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:style` into a `ShapeStyle` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_style_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ShapeStyle {
+    shape_style_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:style` into a `ShapeStyle` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shape_style_from_item(item: officekit_markup_base::Item<'_>) -> super::ShapeStyle {
     let mut node = super::ShapeStyle::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_STYLE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SHAPE_STYLE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.line_reference),
@@ -835,9 +1357,28 @@ pub fn shape_text(element: &Element) -> super::ShapeTextContent {
 /// Read `wp:simplePos` into a `SimplePositioningCoordinates`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn simple_positioning_coordinates(element: &Element) -> super::SimplePositioningCoordinates {
+    simple_positioning_coordinates_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:simplePos` into a `SimplePositioningCoordinates` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn simple_positioning_coordinates_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SimplePositioningCoordinates {
+    simple_positioning_coordinates_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:simplePos` into a `SimplePositioningCoordinates` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn simple_positioning_coordinates_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SimplePositioningCoordinates {
     let mut node = super::SimplePositioningCoordinates::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::SIMPLE_POSITIONING_COORDINATES_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::SIMPLE_POSITIONING_COORDINATES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.x),
@@ -852,8 +1393,24 @@ pub fn simple_positioning_coordinates(element: &Element) -> super::SimplePositio
 /// Read `wp:wrapSquare` into a `SquareWrapping`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn square_wrapping(element: &Element) -> super::SquareWrapping {
+    square_wrapping_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:wrapSquare` into a `SquareWrapping` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn square_wrapping_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SquareWrapping {
+    square_wrapping_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:wrapSquare` into a `SquareWrapping` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn square_wrapping_from_item(item: officekit_markup_base::Item<'_>) -> super::SquareWrapping {
     let mut node = super::SquareWrapping::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SQUARE_WRAPPING_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SQUARE_WRAPPING_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.wrap_text),
@@ -874,9 +1431,30 @@ pub fn square_wrapping(element: &Element) -> super::SquareWrapping {
 pub fn textual_contents_of_shape_linked_txbx(
     element: &Element,
 ) -> super::TextualContentsOfShapeLinkedTxbx {
+    textual_contents_of_shape_linked_txbx_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:linkedTxbx` into a `TextualContentsOfShapeLinkedTxbx` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn textual_contents_of_shape_linked_txbx_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TextualContentsOfShapeLinkedTxbx {
+    textual_contents_of_shape_linked_txbx_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `wp:linkedTxbx` into a `TextualContentsOfShapeLinkedTxbx` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn textual_contents_of_shape_linked_txbx_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::TextualContentsOfShapeLinkedTxbx {
     let mut node = super::TextualContentsOfShapeLinkedTxbx::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::TEXTUAL_CONTENTS_OF_SHAPE_LINKED_TXBX_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -894,9 +1472,28 @@ pub fn textual_contents_of_shape_linked_txbx(
 /// Read `wp:txbx` into a `TextualContentsOfShapeTxbx`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn textual_contents_of_shape_txbx(element: &Element) -> super::TextualContentsOfShapeTxbx {
+    textual_contents_of_shape_txbx_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:txbx` into a `TextualContentsOfShapeTxbx` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn textual_contents_of_shape_txbx_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TextualContentsOfShapeTxbx {
+    textual_contents_of_shape_txbx_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:txbx` into a `TextualContentsOfShapeTxbx` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn textual_contents_of_shape_txbx_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::TextualContentsOfShapeTxbx {
     let mut node = super::TextualContentsOfShapeTxbx::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::TEXTUAL_CONTENTS_OF_SHAPE_TXBX_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::TEXTUAL_CONTENTS_OF_SHAPE_TXBX_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -912,8 +1509,25 @@ pub fn textual_contents_of_shape_txbx(element: &Element) -> super::TextualConten
 /// Read `wp:wrapThrough` into a `ThroughWrapping`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn through_wrapping(element: &Element) -> super::ThroughWrapping {
+    through_wrapping_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:wrapThrough` into a `ThroughWrapping` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn through_wrapping_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ThroughWrapping {
+    through_wrapping_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:wrapThrough` into a `ThroughWrapping` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn through_wrapping_from_item(item: officekit_markup_base::Item<'_>) -> super::ThroughWrapping {
     let mut node = super::ThroughWrapping::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::THROUGH_WRAPPING_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::THROUGH_WRAPPING_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.wrap_text),
@@ -930,8 +1544,24 @@ pub fn through_wrapping(element: &Element) -> super::ThroughWrapping {
 /// Read `wp:wrapTight` into a `TightWrapping`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tight_wrapping(element: &Element) -> super::TightWrapping {
+    tight_wrapping_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:wrapTight` into a `TightWrapping` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tight_wrapping_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TightWrapping {
+    tight_wrapping_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:wrapTight` into a `TightWrapping` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tight_wrapping_from_item(item: officekit_markup_base::Item<'_>) -> super::TightWrapping {
     let mut node = super::TightWrapping::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TIGHT_WRAPPING_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TIGHT_WRAPPING_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.wrap_text),
@@ -948,9 +1578,27 @@ pub fn tight_wrapping(element: &Element) -> super::TightWrapping {
 /// Read `wp:wrapTopAndBottom` into a `TopAndBottomWrapping`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn top_and_bottom_wrapping(element: &Element) -> super::TopAndBottomWrapping {
+    top_and_bottom_wrapping_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:wrapTopAndBottom` into a `TopAndBottomWrapping` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn top_and_bottom_wrapping_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TopAndBottomWrapping {
+    top_and_bottom_wrapping_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:wrapTopAndBottom` into a `TopAndBottomWrapping` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn top_and_bottom_wrapping_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::TopAndBottomWrapping {
     let mut node = super::TopAndBottomWrapping::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::TOP_AND_BOTTOM_WRAPPING_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TOP_AND_BOTTOM_WRAPPING_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.dist_t),
@@ -966,9 +1614,27 @@ pub fn top_and_bottom_wrapping(element: &Element) -> super::TopAndBottomWrapping
 /// Read `wp:positionV` into a `VerticalPositioning`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn vertical_positioning(element: &Element) -> super::VerticalPositioning {
+    vertical_positioning_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:positionV` into a `VerticalPositioning` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn vertical_positioning_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::VerticalPositioning {
+    vertical_positioning_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:positionV` into a `VerticalPositioning` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn vertical_positioning_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::VerticalPositioning {
     let mut node = super::VerticalPositioning::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::VERTICAL_POSITIONING_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::VERTICAL_POSITIONING_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.relative_from),
@@ -989,9 +1655,26 @@ pub fn vertical_positioning_content(element: &Element) -> super::VerticalPositio
 /// Read `wp:whole` into a `WholeE2OFormatting`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn whole_e2o_formatting(element: &Element) -> super::WholeE2OFormatting {
+    whole_e2o_formatting_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:whole` into a `WholeE2OFormatting` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn whole_e2o_formatting_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::WholeE2OFormatting {
+    whole_e2o_formatting_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:whole` into a `WholeE2OFormatting` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn whole_e2o_formatting_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::WholeE2OFormatting {
     let mut node = super::WholeE2OFormatting::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::WHOLE_E2O_FORMATTING_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::WHOLE_E2O_FORMATTING_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.outline),
@@ -1006,9 +1689,28 @@ pub fn whole_e2o_formatting(element: &Element) -> super::WholeE2OFormatting {
 /// Read `wp:wpc` into a `WordprocessingMLDrawingCanvas`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wordprocessing_ml_drawing_canvas(element: &Element) -> super::WordprocessingMLDrawingCanvas {
+    wordprocessing_ml_drawing_canvas_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:wpc` into a `WordprocessingMLDrawingCanvas` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wordprocessing_ml_drawing_canvas_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::WordprocessingMLDrawingCanvas {
+    wordprocessing_ml_drawing_canvas_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:wpc` into a `WordprocessingMLDrawingCanvas` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wordprocessing_ml_drawing_canvas_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::WordprocessingMLDrawingCanvas {
     let mut node = super::WordprocessingMLDrawingCanvas::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::WORDPROCESSING_ML_DRAWING_CANVAS_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::WORDPROCESSING_ML_DRAWING_CANVAS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.background_formatting),
@@ -1025,9 +1727,26 @@ pub fn wordprocessing_ml_drawing_canvas(element: &Element) -> super::Wordprocess
 /// Read `wp:wsp` into a `WordprocessingMLShape`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wordprocessing_ml_shape(element: &Element) -> super::WordprocessingMLShape {
+    wordprocessing_ml_shape_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:wsp` into a `WordprocessingMLShape` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wordprocessing_ml_shape_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::WordprocessingMLShape {
+    wordprocessing_ml_shape_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:wsp` into a `WordprocessingMLShape` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wordprocessing_ml_shape_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::WordprocessingMLShape {
     let mut node = super::WordprocessingMLShape::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::WORDPROCESSING_ML_SHAPE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::WORDPROCESSING_ML_SHAPE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.normal_east_asian_flow),
@@ -1048,9 +1767,28 @@ pub fn wordprocessing_ml_shape(element: &Element) -> super::WordprocessingMLShap
 /// Read `wp:wgp` into a `WordprocessingMLShapeGroup`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wordprocessing_ml_shape_group(element: &Element) -> super::WordprocessingMLShapeGroup {
+    wordprocessing_ml_shape_group_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:wgp` into a `WordprocessingMLShapeGroup` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wordprocessing_ml_shape_group_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::WordprocessingMLShapeGroup {
+    wordprocessing_ml_shape_group_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:wgp` into a `WordprocessingMLShapeGroup` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wordprocessing_ml_shape_group_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::WordprocessingMLShapeGroup {
     let mut node = super::WordprocessingMLShapeGroup::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::WORDPROCESSING_ML_SHAPE_GROUP_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::WORDPROCESSING_ML_SHAPE_GROUP_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.non_visual_drawing_properties),
@@ -1068,8 +1806,25 @@ pub fn wordprocessing_ml_shape_group(element: &Element) -> super::Wordprocessing
 /// Read `wp:wrapPolygon` into a `WrappingPolygon`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wrapping_polygon(element: &Element) -> super::WrappingPolygon {
+    wrapping_polygon_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:wrapPolygon` into a `WrappingPolygon` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wrapping_polygon_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::WrappingPolygon {
+    wrapping_polygon_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:wrapPolygon` into a `WrappingPolygon` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wrapping_polygon_from_item(item: officekit_markup_base::Item<'_>) -> super::WrappingPolygon {
     let mut node = super::WrappingPolygon::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::WRAPPING_POLYGON_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::WRAPPING_POLYGON_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.edited),
@@ -1087,11 +1842,28 @@ pub fn wrapping_polygon(element: &Element) -> super::WrappingPolygon {
 pub fn wrapping_polygon_line_end_position(
     element: &Element,
 ) -> super::WrappingPolygonLineEndPosition {
+    wrapping_polygon_line_end_position_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:lineTo` into a `WrappingPolygonLineEndPosition` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wrapping_polygon_line_end_position_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::WrappingPolygonLineEndPosition {
+    wrapping_polygon_line_end_position_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:lineTo` into a `WrappingPolygonLineEndPosition` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wrapping_polygon_line_end_position_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::WrappingPolygonLineEndPosition {
     let mut node = super::WrappingPolygonLineEndPosition::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
-        &super::WRAPPING_POLYGON_LINE_END_POSITION_SHAPE,
-    );
+    let mut reader =
+        officekit_markup_base::Reader::of(item, &super::WRAPPING_POLYGON_LINE_END_POSITION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.x),
@@ -1106,9 +1878,26 @@ pub fn wrapping_polygon_line_end_position(
 /// Read `wp:start` into a `WrappingPolygonStart`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wrapping_polygon_start(element: &Element) -> super::WrappingPolygonStart {
+    wrapping_polygon_start_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:start` into a `WrappingPolygonStart` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wrapping_polygon_start_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::WrappingPolygonStart {
+    wrapping_polygon_start_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:start` into a `WrappingPolygonStart` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn wrapping_polygon_start_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::WrappingPolygonStart {
     let mut node = super::WrappingPolygonStart::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::WRAPPING_POLYGON_START_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::WRAPPING_POLYGON_START_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.x),
@@ -1123,8 +1912,23 @@ pub fn wrapping_polygon_start(element: &Element) -> super::WrappingPolygonStart 
 /// Read `wp:xfrm` into a `Xfrm`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn xfrm(element: &Element) -> super::Xfrm {
+    xfrm_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wp:xfrm` into a `Xfrm` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn xfrm_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Xfrm {
+    xfrm_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wp:xfrm` into a `Xfrm` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn xfrm_from_item(item: officekit_markup_base::Item<'_>) -> super::Xfrm {
     let mut node = super::Xfrm::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::XFRM_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::XFRM_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.rot),

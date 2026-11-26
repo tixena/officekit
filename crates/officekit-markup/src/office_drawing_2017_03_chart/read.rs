@@ -221,9 +221,27 @@ use officekit_xml::element::Element;
 /// Read `c16r3:dataDisplayOptions16` into a `DataDisplayOptions16`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_display_options16(element: &Element) -> super::DataDisplayOptions16 {
+    data_display_options16_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16r3:dataDisplayOptions16` into a `DataDisplayOptions16` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn data_display_options16_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DataDisplayOptions16 {
+    data_display_options16_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16r3:dataDisplayOptions16` into a `DataDisplayOptions16` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn data_display_options16_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::DataDisplayOptions16 {
     let mut node = super::DataDisplayOptions16::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::DATA_DISPLAY_OPTIONS16_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DATA_DISPLAY_OPTIONS16_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.disp_na_as_blank);
@@ -236,8 +254,25 @@ pub fn data_display_options16(element: &Element) -> super::DataDisplayOptions16 
 /// Read `c16r3:dispNaAsBlank` into a `DispNaAsBlank`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn disp_na_as_blank(element: &Element) -> super::DispNaAsBlank {
+    disp_na_as_blank_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c16r3:dispNaAsBlank` into a `DispNaAsBlank` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn disp_na_as_blank_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DispNaAsBlank {
+    disp_na_as_blank_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c16r3:dispNaAsBlank` into a `DispNaAsBlank` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn disp_na_as_blank_from_item(item: officekit_markup_base::Item<'_>) -> super::DispNaAsBlank {
     let mut node = super::DispNaAsBlank::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DISP_NA_AS_BLANK_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DISP_NA_AS_BLANK_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);

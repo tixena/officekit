@@ -222,7 +222,6 @@ pub mod read;
 pub mod write;
 
 use officekit_markup_base::UserData;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -594,8 +593,8 @@ impl<X: UserData> DropZoneCategoriesWith<X> {
 }
 
 impl officekit_markup_base::Read for DropZoneCategories {
-    fn read(element: &Element) -> Self {
-        read::drop_zone_categories(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drop_zone_categories_from_item(item)
     }
 }
 
@@ -628,8 +627,8 @@ impl<X: UserData> DropZoneDataWith<X> {
 }
 
 impl officekit_markup_base::Read for DropZoneData {
-    fn read(element: &Element) -> Self {
-        read::drop_zone_data(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drop_zone_data_from_item(item)
     }
 }
 
@@ -662,8 +661,8 @@ impl<X: UserData> DropZoneFilterWith<X> {
 }
 
 impl officekit_markup_base::Read for DropZoneFilter {
-    fn read(element: &Element) -> Self {
-        read::drop_zone_filter(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drop_zone_filter_from_item(item)
     }
 }
 
@@ -696,8 +695,8 @@ impl<X: UserData> DropZoneSeriesWith<X> {
 }
 
 impl officekit_markup_base::Read for DropZoneSeries {
-    fn read(element: &Element) -> Self {
-        read::drop_zone_series(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drop_zone_series_from_item(item)
     }
 }
 
@@ -730,8 +729,8 @@ impl<X: UserData> DropZonesVisibleWith<X> {
 }
 
 impl officekit_markup_base::Read for DropZonesVisible {
-    fn read(element: &Element) -> Self {
-        read::drop_zones_visible(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drop_zones_visible_from_item(item)
     }
 }
 
@@ -764,8 +763,8 @@ impl<X: UserData> InSketchModeWith<X> {
 }
 
 impl officekit_markup_base::Read for InSketchMode {
-    fn read(element: &Element) -> Self {
-        read::in_sketch_mode(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::in_sketch_mode_from_item(item)
     }
 }
 
@@ -802,8 +801,8 @@ impl<X: UserData> InvertSolidFillFmtWith<X> {
 }
 
 impl officekit_markup_base::Read for InvertSolidFillFmt {
-    fn read(element: &Element) -> Self {
-        read::invert_solid_fill_fmt(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::invert_solid_fill_fmt_from_item(item)
     }
 }
 
@@ -856,8 +855,8 @@ impl<X: UserData> PivotOptionsWith<X> {
 }
 
 impl officekit_markup_base::Read for PivotOptions {
-    fn read(element: &Element) -> Self {
-        read::pivot_options(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pivot_options_from_item(item)
     }
 }
 
@@ -894,8 +893,8 @@ impl<X: UserData> ShowSketchBtnWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowSketchBtn {
-    fn read(element: &Element) -> Self {
-        read::show_sketch_btn(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_sketch_btn_from_item(item)
     }
 }
 
@@ -936,8 +935,8 @@ impl<X: UserData> SketchOptionsWith<X> {
 }
 
 impl officekit_markup_base::Read for SketchOptions {
-    fn read(element: &Element) -> Self {
-        read::sketch_options(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sketch_options_from_item(item)
     }
 }
 
@@ -1006,8 +1005,8 @@ impl<X: UserData> SpPrWith<X> {
 }
 
 impl officekit_markup_base::Read for SpPr {
-    fn read(element: &Element) -> Self {
-        read::sp_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sp_pr_from_item(item)
     }
 }
 
@@ -1044,8 +1043,8 @@ impl<X: UserData> StyleWith<X> {
 }
 
 impl officekit_markup_base::Read for Style {
-    fn read(element: &Element) -> Self {
-        read::style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::style_from_item(item)
     }
 }
 

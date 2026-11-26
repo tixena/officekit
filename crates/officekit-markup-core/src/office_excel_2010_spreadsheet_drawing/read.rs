@@ -221,9 +221,27 @@ use officekit_xml::element::Element;
 /// Read `xdr14:cNvContentPartPr` into a `CNvContentPartPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_content_part_pr(element: &Element) -> super::CNvContentPartPr {
+    c_nv_content_part_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xdr14:cNvContentPartPr` into a `CNvContentPartPr` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_content_part_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CNvContentPartPr {
+    c_nv_content_part_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xdr14:cNvContentPartPr` into a `CNvContentPartPr` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_content_part_pr_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CNvContentPartPr {
     let mut node = super::CNvContentPartPr::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::C_NV_CONTENT_PART_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::C_NV_CONTENT_PART_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.is_comment),
@@ -239,8 +257,23 @@ pub fn c_nv_content_part_pr(element: &Element) -> super::CNvContentPartPr {
 /// Read `xdr14:cNvPr` into a `CNvPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_pr(element: &Element) -> super::CNvPr {
+    c_nv_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xdr14:cNvPr` into a `CNvPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CNvPr {
+    c_nv_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xdr14:cNvPr` into a `CNvPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::CNvPr {
     let mut node = super::CNvPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::C_NV_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -261,8 +294,24 @@ pub fn c_nv_pr(element: &Element) -> super::CNvPr {
 /// Read `xdr14:contentPart` into a `ContentPart`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn content_part(element: &Element) -> super::ContentPart {
+    content_part_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xdr14:contentPart` into a `ContentPart` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn content_part_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ContentPart {
+    content_part_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xdr14:contentPart` into a `ContentPart` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn content_part_from_item(item: officekit_markup_base::Item<'_>) -> super::ContentPart {
     let mut node = super::ContentPart::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CONTENT_PART_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CONTENT_PART_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -281,8 +330,23 @@ pub fn content_part(element: &Element) -> super::ContentPart {
 /// Read `xdr14:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xdr14:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xdr14:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -295,8 +359,27 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `xdr14:nvContentPartPr` into a `NvContentPartPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nv_content_part_pr(element: &Element) -> super::NvContentPartPr {
+    nv_content_part_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xdr14:nvContentPartPr` into a `NvContentPartPr` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn nv_content_part_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NvContentPartPr {
+    nv_content_part_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xdr14:nvContentPartPr` into a `NvContentPartPr` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn nv_content_part_pr_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NvContentPartPr {
     let mut node = super::NvContentPartPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NV_CONTENT_PART_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NV_CONTENT_PART_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.c_nv_pr),
@@ -311,8 +394,23 @@ pub fn nv_content_part_pr(element: &Element) -> super::NvContentPartPr {
 /// Read `xdr14:nvPr` into a `NvPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nv_pr(element: &Element) -> super::NvPr {
+    nv_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xdr14:nvPr` into a `NvPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn nv_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NvPr {
+    nv_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xdr14:nvPr` into a `NvPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn nv_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::NvPr {
     let mut node = super::NvPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NV_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NV_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r#macro),
@@ -327,8 +425,23 @@ pub fn nv_pr(element: &Element) -> super::NvPr {
 /// Read `xdr14:xfrm` into a `Xfrm`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn xfrm(element: &Element) -> super::Xfrm {
+    xfrm_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xdr14:xfrm` into a `Xfrm` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn xfrm_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Xfrm {
+    xfrm_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xdr14:xfrm` into a `Xfrm` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn xfrm_from_item(item: officekit_markup_base::Item<'_>) -> super::Xfrm {
     let mut node = super::Xfrm::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::XFRM_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::XFRM_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.rot),

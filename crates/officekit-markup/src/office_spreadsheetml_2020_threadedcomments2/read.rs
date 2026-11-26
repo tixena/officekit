@@ -221,8 +221,24 @@ use officekit_xml::element::Element;
 /// Read `xltc2:checksum` into a `Checksum`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn checksum(element: &Element) -> super::Checksum {
+    checksum_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xltc2:checksum` into a `Checksum` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn checksum_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Checksum {
+    checksum_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xltc2:checksum` into a `Checksum` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn checksum_from_item(item: officekit_markup_base::Item<'_>) -> super::Checksum {
     let mut node = super::Checksum::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CHECKSUM_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CHECKSUM_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -235,8 +251,23 @@ pub fn checksum(element: &Element) -> super::Checksum {
 /// Read `xltc2:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xltc2:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xltc2:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -249,8 +280,24 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `xltc2:hyperlink` into a `Hyperlink`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hyperlink(element: &Element) -> super::Hyperlink {
+    hyperlink_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xltc2:hyperlink` into a `Hyperlink` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn hyperlink_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Hyperlink {
+    hyperlink_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xltc2:hyperlink` into a `Hyperlink` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn hyperlink_from_item(item: officekit_markup_base::Item<'_>) -> super::Hyperlink {
     let mut node = super::Hyperlink::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::HYPERLINK_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::HYPERLINK_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.start_index),

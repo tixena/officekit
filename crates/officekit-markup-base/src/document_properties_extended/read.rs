@@ -221,8 +221,25 @@ use officekit_xml::element::Element;
 /// Read `ap:Application` into a `ApplicationName`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn application_name(element: &Element) -> super::ApplicationName {
+    application_name_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:Application` into a `ApplicationName` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn application_name_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ApplicationName {
+    application_name_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:Application` into a `ApplicationName` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn application_name_from_item(item: crate::Item<'_>) -> super::ApplicationName {
     let mut node = super::ApplicationName::default();
-    let mut reader = crate::Reader::new(element, &super::APPLICATION_NAME_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::APPLICATION_NAME_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -237,9 +254,27 @@ pub fn application_name(element: &Element) -> super::ApplicationName {
 pub fn application_specific_file_properties(
     element: &Element,
 ) -> super::ApplicationSpecificFileProperties {
+    application_specific_file_properties_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:Properties` into a `ApplicationSpecificFileProperties` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn application_specific_file_properties_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ApplicationSpecificFileProperties {
+    application_specific_file_properties_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:Properties` into a `ApplicationSpecificFileProperties` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn application_specific_file_properties_from_item(
+    item: crate::Item<'_>,
+) -> super::ApplicationSpecificFileProperties {
     let mut node = super::ApplicationSpecificFileProperties::default();
-    let mut reader =
-        crate::Reader::new(element, &super::APPLICATION_SPECIFIC_FILE_PROPERTIES_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::APPLICATION_SPECIFIC_FILE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -261,8 +296,25 @@ pub fn application_specific_file_properties_content(
 /// Read `ap:AppVersion` into a `ApplicationVersion`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn application_version(element: &Element) -> super::ApplicationVersion {
+    application_version_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:AppVersion` into a `ApplicationVersion` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn application_version_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ApplicationVersion {
+    application_version_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:AppVersion` into a `ApplicationVersion` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn application_version_from_item(item: crate::Item<'_>) -> super::ApplicationVersion {
     let mut node = super::ApplicationVersion::default();
-    let mut reader = crate::Reader::new(element, &super::APPLICATION_VERSION_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::APPLICATION_VERSION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -275,8 +327,25 @@ pub fn application_version(element: &Element) -> super::ApplicationVersion {
 /// Read `ap:CharactersWithSpaces` into a `CharactersWithSpaces`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn characters_with_spaces(element: &Element) -> super::CharactersWithSpaces {
+    characters_with_spaces_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:CharactersWithSpaces` into a `CharactersWithSpaces` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn characters_with_spaces_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::CharactersWithSpaces {
+    characters_with_spaces_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:CharactersWithSpaces` into a `CharactersWithSpaces` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn characters_with_spaces_from_item(item: crate::Item<'_>) -> super::CharactersWithSpaces {
     let mut node = super::CharactersWithSpaces::default();
-    let mut reader = crate::Reader::new(element, &super::CHARACTERS_WITH_SPACES_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::CHARACTERS_WITH_SPACES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -289,8 +358,24 @@ pub fn characters_with_spaces(element: &Element) -> super::CharactersWithSpaces 
 /// Read `ap:DigSig` into a `DigitalSignature`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn digital_signature(element: &Element) -> super::DigitalSignature {
+    digital_signature_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:DigSig` into a `DigitalSignature` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn digital_signature_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::DigitalSignature {
+    digital_signature_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:DigSig` into a `DigitalSignature` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn digital_signature_from_item(item: crate::Item<'_>) -> super::DigitalSignature {
     let mut node = super::DigitalSignature::default();
-    let mut reader = crate::Reader::new(element, &super::DIGITAL_SIGNATURE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::DIGITAL_SIGNATURE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.binary_blob);
@@ -303,8 +388,25 @@ pub fn digital_signature(element: &Element) -> super::DigitalSignature {
 /// Read `ap:DocSecurity` into a `DocumentSecurity`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_security(element: &Element) -> super::DocumentSecurity {
+    document_security_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:DocSecurity` into a `DocumentSecurity` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn document_security_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::DocumentSecurity {
+    document_security_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:DocSecurity` into a `DocumentSecurity` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn document_security_from_item(item: crate::Item<'_>) -> super::DocumentSecurity {
     let mut node = super::DocumentSecurity::default();
-    let mut reader = crate::Reader::new(element, &super::DOCUMENT_SECURITY_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::DOCUMENT_SECURITY_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -317,8 +419,24 @@ pub fn document_security(element: &Element) -> super::DocumentSecurity {
 /// Read `ap:HeadingPairs` into a `HeadingPairs`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn heading_pairs(element: &Element) -> super::HeadingPairs {
+    heading_pairs_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:HeadingPairs` into a `HeadingPairs` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn heading_pairs_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::HeadingPairs {
+    heading_pairs_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:HeadingPairs` into a `HeadingPairs` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn heading_pairs_from_item(item: crate::Item<'_>) -> super::HeadingPairs {
     let mut node = super::HeadingPairs::default();
-    let mut reader = crate::Reader::new(element, &super::HEADING_PAIRS_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::HEADING_PAIRS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.vector);
@@ -331,8 +449,24 @@ pub fn heading_pairs(element: &Element) -> super::HeadingPairs {
 /// Read `ap:HLinks` into a `HyperlinkList`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hyperlink_list(element: &Element) -> super::HyperlinkList {
+    hyperlink_list_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:HLinks` into a `HyperlinkList` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn hyperlink_list_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::HyperlinkList {
+    hyperlink_list_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:HLinks` into a `HyperlinkList` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn hyperlink_list_from_item(item: crate::Item<'_>) -> super::HyperlinkList {
     let mut node = super::HyperlinkList::default();
-    let mut reader = crate::Reader::new(element, &super::HYPERLINK_LIST_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::HYPERLINK_LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.vector);
@@ -345,8 +479,25 @@ pub fn hyperlink_list(element: &Element) -> super::HyperlinkList {
 /// Read `ap:HyperlinksChanged` into a `HyperlinksChanged`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hyperlinks_changed(element: &Element) -> super::HyperlinksChanged {
+    hyperlinks_changed_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:HyperlinksChanged` into a `HyperlinksChanged` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn hyperlinks_changed_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::HyperlinksChanged {
+    hyperlinks_changed_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:HyperlinksChanged` into a `HyperlinksChanged` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn hyperlinks_changed_from_item(item: crate::Item<'_>) -> super::HyperlinksChanged {
     let mut node = super::HyperlinksChanged::default();
-    let mut reader = crate::Reader::new(element, &super::HYPERLINKS_CHANGED_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::HYPERLINKS_CHANGED_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -359,8 +510,27 @@ pub fn hyperlinks_changed(element: &Element) -> super::HyperlinksChanged {
 /// Read `ap:PresentationFormat` into a `IntendedFormatOfPresentation`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn intended_format_of_presentation(element: &Element) -> super::IntendedFormatOfPresentation {
+    intended_format_of_presentation_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:PresentationFormat` into a `IntendedFormatOfPresentation` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn intended_format_of_presentation_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::IntendedFormatOfPresentation {
+    intended_format_of_presentation_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:PresentationFormat` into a `IntendedFormatOfPresentation` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn intended_format_of_presentation_from_item(
+    item: crate::Item<'_>,
+) -> super::IntendedFormatOfPresentation {
     let mut node = super::IntendedFormatOfPresentation::default();
-    let mut reader = crate::Reader::new(element, &super::INTENDED_FORMAT_OF_PRESENTATION_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::INTENDED_FORMAT_OF_PRESENTATION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -373,8 +543,25 @@ pub fn intended_format_of_presentation(element: &Element) -> super::IntendedForm
 /// Read `ap:LinksUpToDate` into a `LinksUpToDate`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn links_up_to_date(element: &Element) -> super::LinksUpToDate {
+    links_up_to_date_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:LinksUpToDate` into a `LinksUpToDate` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn links_up_to_date_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::LinksUpToDate {
+    links_up_to_date_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:LinksUpToDate` into a `LinksUpToDate` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn links_up_to_date_from_item(item: crate::Item<'_>) -> super::LinksUpToDate {
     let mut node = super::LinksUpToDate::default();
-    let mut reader = crate::Reader::new(element, &super::LINKS_UP_TO_DATE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::LINKS_UP_TO_DATE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -387,8 +574,24 @@ pub fn links_up_to_date(element: &Element) -> super::LinksUpToDate {
 /// Read `ap:Company` into a `NameOfCompany`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn name_of_company(element: &Element) -> super::NameOfCompany {
+    name_of_company_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:Company` into a `NameOfCompany` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn name_of_company_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::NameOfCompany {
+    name_of_company_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:Company` into a `NameOfCompany` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn name_of_company_from_item(item: crate::Item<'_>) -> super::NameOfCompany {
     let mut node = super::NameOfCompany::default();
-    let mut reader = crate::Reader::new(element, &super::NAME_OF_COMPANY_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::NAME_OF_COMPANY_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -401,8 +604,25 @@ pub fn name_of_company(element: &Element) -> super::NameOfCompany {
 /// Read `ap:Template` into a `NameOfDocumentTemplate`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn name_of_document_template(element: &Element) -> super::NameOfDocumentTemplate {
+    name_of_document_template_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:Template` into a `NameOfDocumentTemplate` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn name_of_document_template_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::NameOfDocumentTemplate {
+    name_of_document_template_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:Template` into a `NameOfDocumentTemplate` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn name_of_document_template_from_item(item: crate::Item<'_>) -> super::NameOfDocumentTemplate {
     let mut node = super::NameOfDocumentTemplate::default();
-    let mut reader = crate::Reader::new(element, &super::NAME_OF_DOCUMENT_TEMPLATE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::NAME_OF_DOCUMENT_TEMPLATE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -415,8 +635,24 @@ pub fn name_of_document_template(element: &Element) -> super::NameOfDocumentTemp
 /// Read `ap:Manager` into a `NameOfManager`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn name_of_manager(element: &Element) -> super::NameOfManager {
+    name_of_manager_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:Manager` into a `NameOfManager` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn name_of_manager_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::NameOfManager {
+    name_of_manager_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:Manager` into a `NameOfManager` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn name_of_manager_from_item(item: crate::Item<'_>) -> super::NameOfManager {
     let mut node = super::NameOfManager::default();
-    let mut reader = crate::Reader::new(element, &super::NAME_OF_MANAGER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::NAME_OF_MANAGER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -429,8 +665,25 @@ pub fn name_of_manager(element: &Element) -> super::NameOfManager {
 /// Read `ap:HiddenSlides` into a `NumberOfHiddenSlides`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn number_of_hidden_slides(element: &Element) -> super::NumberOfHiddenSlides {
+    number_of_hidden_slides_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:HiddenSlides` into a `NumberOfHiddenSlides` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn number_of_hidden_slides_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::NumberOfHiddenSlides {
+    number_of_hidden_slides_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:HiddenSlides` into a `NumberOfHiddenSlides` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn number_of_hidden_slides_from_item(item: crate::Item<'_>) -> super::NumberOfHiddenSlides {
     let mut node = super::NumberOfHiddenSlides::default();
-    let mut reader = crate::Reader::new(element, &super::NUMBER_OF_HIDDEN_SLIDES_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::NUMBER_OF_HIDDEN_SLIDES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -443,8 +696,24 @@ pub fn number_of_hidden_slides(element: &Element) -> super::NumberOfHiddenSlides
 /// Read `ap:Lines` into a `NumberOfLines`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn number_of_lines(element: &Element) -> super::NumberOfLines {
+    number_of_lines_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:Lines` into a `NumberOfLines` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn number_of_lines_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::NumberOfLines {
+    number_of_lines_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:Lines` into a `NumberOfLines` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn number_of_lines_from_item(item: crate::Item<'_>) -> super::NumberOfLines {
     let mut node = super::NumberOfLines::default();
-    let mut reader = crate::Reader::new(element, &super::NUMBER_OF_LINES_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::NUMBER_OF_LINES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -459,8 +728,27 @@ pub fn number_of_lines(element: &Element) -> super::NumberOfLines {
 pub fn number_of_slides_containing_notes(
     element: &Element,
 ) -> super::NumberOfSlidesContainingNotes {
+    number_of_slides_containing_notes_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:Notes` into a `NumberOfSlidesContainingNotes` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn number_of_slides_containing_notes_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::NumberOfSlidesContainingNotes {
+    number_of_slides_containing_notes_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:Notes` into a `NumberOfSlidesContainingNotes` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn number_of_slides_containing_notes_from_item(
+    item: crate::Item<'_>,
+) -> super::NumberOfSlidesContainingNotes {
     let mut node = super::NumberOfSlidesContainingNotes::default();
-    let mut reader = crate::Reader::new(element, &super::NUMBER_OF_SLIDES_CONTAINING_NOTES_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::NUMBER_OF_SLIDES_CONTAINING_NOTES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -473,8 +761,24 @@ pub fn number_of_slides_containing_notes(
 /// Read `ap:TitlesOfParts` into a `PartTitles`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn part_titles(element: &Element) -> super::PartTitles {
+    part_titles_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:TitlesOfParts` into a `PartTitles` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn part_titles_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::PartTitles {
+    part_titles_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:TitlesOfParts` into a `PartTitles` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn part_titles_from_item(item: crate::Item<'_>) -> super::PartTitles {
     let mut node = super::PartTitles::default();
-    let mut reader = crate::Reader::new(element, &super::PART_TITLES_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::PART_TITLES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.vector);
@@ -487,8 +791,25 @@ pub fn part_titles(element: &Element) -> super::PartTitles {
 /// Read `ap:HyperlinkBase` into a `RelativeHyperlinkBase`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn relative_hyperlink_base(element: &Element) -> super::RelativeHyperlinkBase {
+    relative_hyperlink_base_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:HyperlinkBase` into a `RelativeHyperlinkBase` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn relative_hyperlink_base_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::RelativeHyperlinkBase {
+    relative_hyperlink_base_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:HyperlinkBase` into a `RelativeHyperlinkBase` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn relative_hyperlink_base_from_item(item: crate::Item<'_>) -> super::RelativeHyperlinkBase {
     let mut node = super::RelativeHyperlinkBase::default();
-    let mut reader = crate::Reader::new(element, &super::RELATIVE_HYPERLINK_BASE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::RELATIVE_HYPERLINK_BASE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -501,8 +822,24 @@ pub fn relative_hyperlink_base(element: &Element) -> super::RelativeHyperlinkBas
 /// Read `ap:SharedDoc` into a `SharedDocument`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shared_document(element: &Element) -> super::SharedDocument {
+    shared_document_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:SharedDoc` into a `SharedDocument` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shared_document_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::SharedDocument {
+    shared_document_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:SharedDoc` into a `SharedDocument` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn shared_document_from_item(item: crate::Item<'_>) -> super::SharedDocument {
     let mut node = super::SharedDocument::default();
-    let mut reader = crate::Reader::new(element, &super::SHARED_DOCUMENT_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SHARED_DOCUMENT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -515,8 +852,25 @@ pub fn shared_document(element: &Element) -> super::SharedDocument {
 /// Read `ap:Slides` into a `SlidesMetadataElement`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slides_metadata_element(element: &Element) -> super::SlidesMetadataElement {
+    slides_metadata_element_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:Slides` into a `SlidesMetadataElement` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slides_metadata_element_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::SlidesMetadataElement {
+    slides_metadata_element_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:Slides` into a `SlidesMetadataElement` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn slides_metadata_element_from_item(item: crate::Item<'_>) -> super::SlidesMetadataElement {
     let mut node = super::SlidesMetadataElement::default();
-    let mut reader = crate::Reader::new(element, &super::SLIDES_METADATA_ELEMENT_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::SLIDES_METADATA_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -529,8 +883,25 @@ pub fn slides_metadata_element(element: &Element) -> super::SlidesMetadataElemen
 /// Read `ap:ScaleCrop` into a `ThumbnailDisplayMode`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn thumbnail_display_mode(element: &Element) -> super::ThumbnailDisplayMode {
+    thumbnail_display_mode_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:ScaleCrop` into a `ThumbnailDisplayMode` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn thumbnail_display_mode_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::ThumbnailDisplayMode {
+    thumbnail_display_mode_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:ScaleCrop` into a `ThumbnailDisplayMode` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn thumbnail_display_mode_from_item(item: crate::Item<'_>) -> super::ThumbnailDisplayMode {
     let mut node = super::ThumbnailDisplayMode::default();
-    let mut reader = crate::Reader::new(element, &super::THUMBNAIL_DISPLAY_MODE_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::THUMBNAIL_DISPLAY_MODE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -543,8 +914,27 @@ pub fn thumbnail_display_mode(element: &Element) -> super::ThumbnailDisplayMode 
 /// Read `ap:TotalTime` into a `TotalEditTimeMetadataElement`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn total_edit_time_metadata_element(element: &Element) -> super::TotalEditTimeMetadataElement {
+    total_edit_time_metadata_element_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:TotalTime` into a `TotalEditTimeMetadataElement` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn total_edit_time_metadata_element_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::TotalEditTimeMetadataElement {
+    total_edit_time_metadata_element_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:TotalTime` into a `TotalEditTimeMetadataElement` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn total_edit_time_metadata_element_from_item(
+    item: crate::Item<'_>,
+) -> super::TotalEditTimeMetadataElement {
     let mut node = super::TotalEditTimeMetadataElement::default();
-    let mut reader = crate::Reader::new(element, &super::TOTAL_EDIT_TIME_METADATA_ELEMENT_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::TOTAL_EDIT_TIME_METADATA_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -557,8 +947,27 @@ pub fn total_edit_time_metadata_element(element: &Element) -> super::TotalEditTi
 /// Read `ap:Characters` into a `TotalNumberOfCharacters`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn total_number_of_characters(element: &Element) -> super::TotalNumberOfCharacters {
+    total_number_of_characters_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:Characters` into a `TotalNumberOfCharacters` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn total_number_of_characters_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::TotalNumberOfCharacters {
+    total_number_of_characters_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:Characters` into a `TotalNumberOfCharacters` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn total_number_of_characters_from_item(
+    item: crate::Item<'_>,
+) -> super::TotalNumberOfCharacters {
     let mut node = super::TotalNumberOfCharacters::default();
-    let mut reader = crate::Reader::new(element, &super::TOTAL_NUMBER_OF_CHARACTERS_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::TOTAL_NUMBER_OF_CHARACTERS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -571,8 +980,27 @@ pub fn total_number_of_characters(element: &Element) -> super::TotalNumberOfChar
 /// Read `ap:MMClips` into a `TotalNumberOfMultimediaClips`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn total_number_of_multimedia_clips(element: &Element) -> super::TotalNumberOfMultimediaClips {
+    total_number_of_multimedia_clips_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:MMClips` into a `TotalNumberOfMultimediaClips` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn total_number_of_multimedia_clips_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::TotalNumberOfMultimediaClips {
+    total_number_of_multimedia_clips_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:MMClips` into a `TotalNumberOfMultimediaClips` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn total_number_of_multimedia_clips_from_item(
+    item: crate::Item<'_>,
+) -> super::TotalNumberOfMultimediaClips {
     let mut node = super::TotalNumberOfMultimediaClips::default();
-    let mut reader = crate::Reader::new(element, &super::TOTAL_NUMBER_OF_MULTIMEDIA_CLIPS_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::TOTAL_NUMBER_OF_MULTIMEDIA_CLIPS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -585,8 +1013,24 @@ pub fn total_number_of_multimedia_clips(element: &Element) -> super::TotalNumber
 /// Read `ap:Pages` into a `TotalNumberOfPages`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn total_number_of_pages(element: &Element) -> super::TotalNumberOfPages {
+    total_number_of_pages_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:Pages` into a `TotalNumberOfPages` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn total_number_of_pages_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::TotalNumberOfPages {
+    total_number_of_pages_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:Pages` into a `TotalNumberOfPages` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn total_number_of_pages_from_item(item: crate::Item<'_>) -> super::TotalNumberOfPages {
     let mut node = super::TotalNumberOfPages::default();
-    let mut reader = crate::Reader::new(element, &super::TOTAL_NUMBER_OF_PAGES_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::TOTAL_NUMBER_OF_PAGES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -599,8 +1043,27 @@ pub fn total_number_of_pages(element: &Element) -> super::TotalNumberOfPages {
 /// Read `ap:Paragraphs` into a `TotalNumberOfParagraphs`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn total_number_of_paragraphs(element: &Element) -> super::TotalNumberOfParagraphs {
+    total_number_of_paragraphs_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:Paragraphs` into a `TotalNumberOfParagraphs` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn total_number_of_paragraphs_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::TotalNumberOfParagraphs {
+    total_number_of_paragraphs_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:Paragraphs` into a `TotalNumberOfParagraphs` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn total_number_of_paragraphs_from_item(
+    item: crate::Item<'_>,
+) -> super::TotalNumberOfParagraphs {
     let mut node = super::TotalNumberOfParagraphs::default();
-    let mut reader = crate::Reader::new(element, &super::TOTAL_NUMBER_OF_PARAGRAPHS_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::TOTAL_NUMBER_OF_PARAGRAPHS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -613,8 +1076,20 @@ pub fn total_number_of_paragraphs(element: &Element) -> super::TotalNumberOfPara
 /// Read `ap:Words` into a `WordCount`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn word_count(element: &Element) -> super::WordCount {
+    word_count_from_item(crate::Item::Tree(element))
+}
+
+/// Read `ap:Words` into a `WordCount` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn word_count_from_events(start: Element, events: &dyn crate::EventSource) -> super::WordCount {
+    word_count_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `ap:Words` into a `WordCount` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn word_count_from_item(item: crate::Item<'_>) -> super::WordCount {
     let mut node = super::WordCount::default();
-    let mut reader = crate::Reader::new(element, &super::WORD_COUNT_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::WORD_COUNT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);

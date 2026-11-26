@@ -225,7 +225,6 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -554,8 +553,8 @@ impl<X: UserData> CacheVersionInfoWith<X> {
 }
 
 impl officekit_markup_base::Read for CacheVersionInfo {
-    fn read(element: &Element) -> Self {
-        read::cache_version_info(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cache_version_info_from_item(item)
     }
 }
 
@@ -592,8 +591,8 @@ impl<X: UserData> LastRefreshFeatureWith<X> {
 }
 
 impl officekit_markup_base::Read for LastRefreshFeature {
-    fn read(element: &Element) -> Self {
-        read::last_refresh_feature(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::last_refresh_feature_from_item(item)
     }
 }
 
@@ -630,8 +629,8 @@ impl<X: UserData> LastUpdateFeatureWith<X> {
 }
 
 impl officekit_markup_base::Read for LastUpdateFeature {
-    fn read(element: &Element) -> Self {
-        read::last_update_feature(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::last_update_feature_from_item(item)
     }
 }
 
@@ -672,8 +671,8 @@ impl<X: UserData> PivotVersionInfoWith<X> {
 }
 
 impl officekit_markup_base::Read for PivotVersionInfo {
-    fn read(element: &Element) -> Self {
-        read::pivot_version_info(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pivot_version_info_from_item(item)
     }
 }
 
@@ -710,8 +709,8 @@ impl<X: UserData> RequiredFeatureWith<X> {
 }
 
 impl officekit_markup_base::Read for RequiredFeature {
-    fn read(element: &Element) -> Self {
-        read::required_feature(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::required_feature_from_item(item)
     }
 }
 

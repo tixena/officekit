@@ -221,7 +221,24 @@ use officekit_xml::element::Element;
 /// Read `w10:anchorlock` into a `AnchorLocationIsLocked`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn anchor_location_is_locked(element: &Element) -> super::AnchorLocationIsLocked {
-    let reader = crate::Reader::new(element, &super::ANCHOR_LOCATION_IS_LOCKED_SHAPE);
+    anchor_location_is_locked_from_item(crate::Item::Tree(element))
+}
+
+/// Read `w10:anchorlock` into a `AnchorLocationIsLocked` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn anchor_location_is_locked_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::AnchorLocationIsLocked {
+    anchor_location_is_locked_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `w10:anchorlock` into a `AnchorLocationIsLocked` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn anchor_location_is_locked_from_item(item: crate::Item<'_>) -> super::AnchorLocationIsLocked {
+    let reader = crate::Reader::of(item, &super::ANCHOR_LOCATION_IS_LOCKED_SHAPE);
     super::AnchorLocationIsLocked {
         user_data: (),
         unknown: reader.finish(),
@@ -231,8 +248,24 @@ pub fn anchor_location_is_locked(element: &Element) -> super::AnchorLocationIsLo
 /// Read `w10:borderbottom` into a `BottomBorder`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bottom_border(element: &Element) -> super::BottomBorder {
+    bottom_border_from_item(crate::Item::Tree(element))
+}
+
+/// Read `w10:borderbottom` into a `BottomBorder` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bottom_border_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::BottomBorder {
+    bottom_border_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `w10:borderbottom` into a `BottomBorder` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bottom_border_from_item(item: crate::Item<'_>) -> super::BottomBorder {
     let mut node = super::BottomBorder::default();
-    let mut reader = crate::Reader::new(element, &super::BOTTOM_BORDER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::BOTTOM_BORDER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r#type),
@@ -248,8 +281,24 @@ pub fn bottom_border(element: &Element) -> super::BottomBorder {
 /// Read `w10:borderleft` into a `LeftBorder`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn left_border(element: &Element) -> super::LeftBorder {
+    left_border_from_item(crate::Item::Tree(element))
+}
+
+/// Read `w10:borderleft` into a `LeftBorder` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn left_border_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::LeftBorder {
+    left_border_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `w10:borderleft` into a `LeftBorder` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn left_border_from_item(item: crate::Item<'_>) -> super::LeftBorder {
     let mut node = super::LeftBorder::default();
-    let mut reader = crate::Reader::new(element, &super::LEFT_BORDER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::LEFT_BORDER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r#type),
@@ -265,8 +314,24 @@ pub fn left_border(element: &Element) -> super::LeftBorder {
 /// Read `w10:borderright` into a `RightBorder`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn right_border(element: &Element) -> super::RightBorder {
+    right_border_from_item(crate::Item::Tree(element))
+}
+
+/// Read `w10:borderright` into a `RightBorder` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn right_border_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::RightBorder {
+    right_border_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `w10:borderright` into a `RightBorder` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn right_border_from_item(item: crate::Item<'_>) -> super::RightBorder {
     let mut node = super::RightBorder::default();
-    let mut reader = crate::Reader::new(element, &super::RIGHT_BORDER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::RIGHT_BORDER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r#type),
@@ -282,8 +347,23 @@ pub fn right_border(element: &Element) -> super::RightBorder {
 /// Read `w10:wrap` into a `TextWrapping`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_wrapping(element: &Element) -> super::TextWrapping {
+    text_wrapping_from_item(crate::Item::Tree(element))
+}
+
+/// Read `w10:wrap` into a `TextWrapping` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn text_wrapping_from_events(
+    start: Element,
+    events: &dyn crate::EventSource,
+) -> super::TextWrapping {
+    text_wrapping_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `w10:wrap` into a `TextWrapping` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn text_wrapping_from_item(item: crate::Item<'_>) -> super::TextWrapping {
     let mut node = super::TextWrapping::default();
-    let mut reader = crate::Reader::new(element, &super::TEXT_WRAPPING_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::TEXT_WRAPPING_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r#type),
@@ -300,8 +380,21 @@ pub fn text_wrapping(element: &Element) -> super::TextWrapping {
 /// Read `w10:bordertop` into a `TopBorder`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn top_border(element: &Element) -> super::TopBorder {
+    top_border_from_item(crate::Item::Tree(element))
+}
+
+/// Read `w10:bordertop` into a `TopBorder` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn top_border_from_events(start: Element, events: &dyn crate::EventSource) -> super::TopBorder {
+    top_border_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `w10:bordertop` into a `TopBorder` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn top_border_from_item(item: crate::Item<'_>) -> super::TopBorder {
     let mut node = super::TopBorder::default();
-    let mut reader = crate::Reader::new(element, &super::TOP_BORDER_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::TOP_BORDER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r#type),

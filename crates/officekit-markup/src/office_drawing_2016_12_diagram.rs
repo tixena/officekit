@@ -226,7 +226,6 @@ pub mod write;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -472,8 +471,8 @@ impl<X: UserData> LstStyleWith<X> {
 }
 
 impl officekit_markup_base::Read for LstStyle {
-    fn read(element: &Element) -> Self {
-        read::lst_style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::lst_style_from_item(item)
     }
 }
 
@@ -542,8 +541,8 @@ impl<X: UserData> SpPrWith<X> {
 }
 
 impl officekit_markup_base::Read for SpPr {
-    fn read(element: &Element) -> Self {
-        read::sp_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sp_pr_from_item(item)
     }
 }
 

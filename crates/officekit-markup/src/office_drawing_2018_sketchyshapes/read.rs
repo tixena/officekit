@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `ask:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `ask:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `ask:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -235,7 +250,26 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `ask:lineSketchCurved` into a `LineSketchCurved`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line_sketch_curved(element: &Element) -> super::LineSketchCurved {
-    let reader = officekit_markup_base::Reader::new(element, &super::LINE_SKETCH_CURVED_SHAPE);
+    line_sketch_curved_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `ask:lineSketchCurved` into a `LineSketchCurved` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn line_sketch_curved_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::LineSketchCurved {
+    line_sketch_curved_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `ask:lineSketchCurved` into a `LineSketchCurved` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn line_sketch_curved_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::LineSketchCurved {
+    let reader = officekit_markup_base::Reader::of(item, &super::LINE_SKETCH_CURVED_SHAPE);
     super::LineSketchCurved {
         user_data: (),
         unknown: reader.finish(),
@@ -245,7 +279,26 @@ pub fn line_sketch_curved(element: &Element) -> super::LineSketchCurved {
 /// Read `ask:lineSketchFreehand` into a `LineSketchFreehand`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line_sketch_freehand(element: &Element) -> super::LineSketchFreehand {
-    let reader = officekit_markup_base::Reader::new(element, &super::LINE_SKETCH_FREEHAND_SHAPE);
+    line_sketch_freehand_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `ask:lineSketchFreehand` into a `LineSketchFreehand` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn line_sketch_freehand_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::LineSketchFreehand {
+    line_sketch_freehand_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `ask:lineSketchFreehand` into a `LineSketchFreehand` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn line_sketch_freehand_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::LineSketchFreehand {
+    let reader = officekit_markup_base::Reader::of(item, &super::LINE_SKETCH_FREEHAND_SHAPE);
     super::LineSketchFreehand {
         user_data: (),
         unknown: reader.finish(),
@@ -255,7 +308,24 @@ pub fn line_sketch_freehand(element: &Element) -> super::LineSketchFreehand {
 /// Read `ask:lineSketchNone` into a `LineSketchNone`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line_sketch_none(element: &Element) -> super::LineSketchNone {
-    let reader = officekit_markup_base::Reader::new(element, &super::LINE_SKETCH_NONE_SHAPE);
+    line_sketch_none_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `ask:lineSketchNone` into a `LineSketchNone` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn line_sketch_none_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::LineSketchNone {
+    line_sketch_none_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `ask:lineSketchNone` into a `LineSketchNone` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn line_sketch_none_from_item(item: officekit_markup_base::Item<'_>) -> super::LineSketchNone {
+    let reader = officekit_markup_base::Reader::of(item, &super::LINE_SKETCH_NONE_SHAPE);
     super::LineSketchNone {
         user_data: (),
         unknown: reader.finish(),
@@ -265,7 +335,26 @@ pub fn line_sketch_none(element: &Element) -> super::LineSketchNone {
 /// Read `ask:lineSketchScribble` into a `LineSketchScribble`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line_sketch_scribble(element: &Element) -> super::LineSketchScribble {
-    let reader = officekit_markup_base::Reader::new(element, &super::LINE_SKETCH_SCRIBBLE_SHAPE);
+    line_sketch_scribble_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `ask:lineSketchScribble` into a `LineSketchScribble` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn line_sketch_scribble_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::LineSketchScribble {
+    line_sketch_scribble_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `ask:lineSketchScribble` into a `LineSketchScribble` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn line_sketch_scribble_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::LineSketchScribble {
+    let reader = officekit_markup_base::Reader::of(item, &super::LINE_SKETCH_SCRIBBLE_SHAPE);
     super::LineSketchScribble {
         user_data: (),
         unknown: reader.finish(),
@@ -275,9 +364,27 @@ pub fn line_sketch_scribble(element: &Element) -> super::LineSketchScribble {
 /// Read `ask:lineSketchStyleProps` into a `LineSketchStyleProps`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line_sketch_style_props(element: &Element) -> super::LineSketchStyleProps {
+    line_sketch_style_props_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `ask:lineSketchStyleProps` into a `LineSketchStyleProps` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn line_sketch_style_props_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::LineSketchStyleProps {
+    line_sketch_style_props_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `ask:lineSketchStyleProps` into a `LineSketchStyleProps` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn line_sketch_style_props_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::LineSketchStyleProps {
     let mut node = super::LineSketchStyleProps::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::LINE_SKETCH_STYLE_PROPS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::LINE_SKETCH_STYLE_PROPS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.sd),
@@ -302,8 +409,23 @@ pub fn line_sketch_type_properties(element: &Element) -> super::LineSketchTypePr
 /// Read `ask:seed` into a `Seed`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn seed(element: &Element) -> super::Seed {
+    seed_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `ask:seed` into a `Seed` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn seed_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Seed {
+    seed_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `ask:seed` into a `Seed` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn seed_from_item(item: officekit_markup_base::Item<'_>) -> super::Seed {
     let mut node = super::Seed::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SEED_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SEED_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -316,8 +438,23 @@ pub fn seed(element: &Element) -> super::Seed {
 /// Read `ask:type` into a `Type`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r#type(element: &Element) -> super::Type {
+    type_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `ask:type` into a `Type` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn type_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Type {
+    type_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `ask:type` into a `Type` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn type_from_item(item: officekit_markup_base::Item<'_>) -> super::Type {
     let mut node = super::Type::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TYPE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TYPE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);

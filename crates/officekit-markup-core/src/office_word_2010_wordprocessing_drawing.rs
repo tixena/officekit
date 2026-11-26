@@ -222,7 +222,6 @@ pub mod read;
 pub mod write;
 
 use officekit_markup_base::UserData;
-use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
 
@@ -479,8 +478,8 @@ impl<X: UserData> PctHeightWith<X> {
 }
 
 impl officekit_markup_base::Read for PctHeight {
-    fn read(element: &Element) -> Self {
-        read::pct_height(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pct_height_from_item(item)
     }
 }
 
@@ -517,8 +516,8 @@ impl<X: UserData> PctPosHOffsetWith<X> {
 }
 
 impl officekit_markup_base::Read for PctPosHOffset {
-    fn read(element: &Element) -> Self {
-        read::pct_pos_h_offset(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pct_pos_h_offset_from_item(item)
     }
 }
 
@@ -555,8 +554,8 @@ impl<X: UserData> PctPosVOffsetWith<X> {
 }
 
 impl officekit_markup_base::Read for PctPosVOffset {
-    fn read(element: &Element) -> Self {
-        read::pct_pos_v_offset(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pct_pos_v_offset_from_item(item)
     }
 }
 
@@ -593,8 +592,8 @@ impl<X: UserData> PctWidthWith<X> {
 }
 
 impl officekit_markup_base::Read for PctWidth {
-    fn read(element: &Element) -> Self {
-        read::pct_width(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pct_width_from_item(item)
     }
 }
 
@@ -773,8 +772,8 @@ impl<X: UserData> SizeRelHWith<X> {
 }
 
 impl officekit_markup_base::Read for SizeRelH {
-    fn read(element: &Element) -> Self {
-        read::size_rel_h(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::size_rel_h_from_item(item)
     }
 }
 
@@ -815,8 +814,8 @@ impl<X: UserData> SizeRelVWith<X> {
 }
 
 impl officekit_markup_base::Read for SizeRelV {
-    fn read(element: &Element) -> Self {
-        read::size_rel_v(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::size_rel_v_from_item(item)
     }
 }
 

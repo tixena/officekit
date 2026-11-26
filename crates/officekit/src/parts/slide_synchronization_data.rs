@@ -350,6 +350,7 @@
 use crate::parts::part_root::{self, PartRoot};
 #[cfg(feature = "transitional")]
 use crate::transitional::Transitional as _;
+use officekit_markup::Item;
 use officekit_markup::presentation;
 #[cfg(feature = "strict")]
 use officekit_strict::Strict as _;
@@ -375,6 +376,11 @@ pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::SLIDE_UPDATE_I
 
 impl PartRoot for presentation::SlideSynchronizationProperties {
     const LOCAL_NAME: &'static str = "sldSyncPr";
+
+    fn from_part(root: Item<'_>) -> Result<Self, String> {
+        super::check_root(root.element(), 64, Self::LOCAL_NAME)?;
+        Ok(presentation::read::slide_synchronization_properties_from_item(root))
+    }
 
     fn from_tree(root: &Element) -> Result<Self, String> {
         super::check_root(root, 64, Self::LOCAL_NAME)?;

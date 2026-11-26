@@ -221,8 +221,25 @@ use officekit_xml::element::Element;
 /// Read `a1611:picAttrSrcUrl` into a `PicAttrSrcUrl`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pic_attr_src_url(element: &Element) -> super::PicAttrSrcUrl {
+    pic_attr_src_url_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `a1611:picAttrSrcUrl` into a `PicAttrSrcUrl` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pic_attr_src_url_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PicAttrSrcUrl {
+    pic_attr_src_url_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `a1611:picAttrSrcUrl` into a `PicAttrSrcUrl` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pic_attr_src_url_from_item(item: officekit_markup_base::Item<'_>) -> super::PicAttrSrcUrl {
     let mut node = super::PicAttrSrcUrl::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PIC_ATTR_SRC_URL_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PIC_ATTR_SRC_URL_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.id);

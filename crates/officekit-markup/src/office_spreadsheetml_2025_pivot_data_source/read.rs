@@ -221,9 +221,27 @@ use officekit_xml::element::Element;
 /// Read `xlpds:pivotCacheDataSource` into a `PivotCacheDataSource`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_cache_data_source(element: &Element) -> super::PivotCacheDataSource {
+    pivot_cache_data_source_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlpds:pivotCacheDataSource` into a `PivotCacheDataSource` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pivot_cache_data_source_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PivotCacheDataSource {
+    pivot_cache_data_source_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlpds:pivotCacheDataSource` into a `PivotCacheDataSource` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pivot_cache_data_source_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PivotCacheDataSource {
     let mut node = super::PivotCacheDataSource::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PIVOT_CACHE_DATA_SOURCE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PIVOT_CACHE_DATA_SOURCE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r#ref),

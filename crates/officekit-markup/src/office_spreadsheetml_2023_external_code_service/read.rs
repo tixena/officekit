@@ -221,9 +221,27 @@ use officekit_xml::element::Element;
 /// Read `xlecs:externalCodeService` into a `ExternalCodeService`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn external_code_service(element: &Element) -> super::ExternalCodeService {
+    external_code_service_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlecs:externalCodeService` into a `ExternalCodeService` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn external_code_service_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExternalCodeService {
+    external_code_service_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlecs:externalCodeService` into a `ExternalCodeService` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn external_code_service_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ExternalCodeService {
     let mut node = super::ExternalCodeService::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::EXTERNAL_CODE_SERVICE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXTERNAL_CODE_SERVICE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.auto_show),

@@ -226,7 +226,6 @@ pub mod write;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
-use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::values::ValueError;
@@ -588,8 +587,8 @@ impl<X: UserData> BackgroundPrWith<X> {
 }
 
 impl officekit_markup_base::Read for BackgroundPr {
-    fn read(element: &Element) -> Self {
-        read::background_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::background_pr_from_item(item)
     }
 }
 
@@ -626,8 +625,8 @@ impl<X: UserData> NonVisualGroupPropsWith<X> {
 }
 
 impl officekit_markup_base::Read for NonVisualGroupProps {
-    fn read(element: &Element) -> Self {
-        read::non_visual_group_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::non_visual_group_props_from_item(item)
     }
 }
 
@@ -668,8 +667,8 @@ impl<X: UserData> ObjectPrWith<X> {
 }
 
 impl officekit_markup_base::Read for ObjectPr {
-    fn read(element: &Element) -> Self {
-        read::object_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::object_pr_from_item(item)
     }
 }
 
@@ -728,8 +727,8 @@ impl<X: UserData> SignatureLineWith<X> {
 }
 
 impl officekit_markup_base::Read for SignatureLine {
-    fn read(element: &Element) -> Self {
-        read::signature_line(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::signature_line_from_item(item)
     }
 }
 

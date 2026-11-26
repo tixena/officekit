@@ -226,7 +226,7 @@ pub mod write;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -767,8 +767,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -801,8 +801,8 @@ impl<X: UserData> LineSketchCurvedWith<X> {
 }
 
 impl officekit_markup_base::Read for LineSketchCurved {
-    fn read(element: &Element) -> Self {
-        read::line_sketch_curved(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::line_sketch_curved_from_item(item)
     }
 }
 
@@ -835,8 +835,8 @@ impl<X: UserData> LineSketchFreehandWith<X> {
 }
 
 impl officekit_markup_base::Read for LineSketchFreehand {
-    fn read(element: &Element) -> Self {
-        read::line_sketch_freehand(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::line_sketch_freehand_from_item(item)
     }
 }
 
@@ -869,8 +869,8 @@ impl<X: UserData> LineSketchNoneWith<X> {
 }
 
 impl officekit_markup_base::Read for LineSketchNone {
-    fn read(element: &Element) -> Self {
-        read::line_sketch_none(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::line_sketch_none_from_item(item)
     }
 }
 
@@ -903,8 +903,8 @@ impl<X: UserData> LineSketchScribbleWith<X> {
 }
 
 impl officekit_markup_base::Read for LineSketchScribble {
-    fn read(element: &Element) -> Self {
-        read::line_sketch_scribble(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::line_sketch_scribble_from_item(item)
     }
 }
 
@@ -957,8 +957,8 @@ impl<X: UserData> LineSketchStylePropsWith<X> {
 }
 
 impl officekit_markup_base::Read for LineSketchStyleProps {
-    fn read(element: &Element) -> Self {
-        read::line_sketch_style_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::line_sketch_style_props_from_item(item)
     }
 }
 
@@ -999,21 +999,13 @@ impl officekit_markup_base::Read for LineSketchTypePropertiesContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_ASK, "lineSketchCurved")) => {
-                Self::LineSketchCurved(officekit_markup_base::read(element))
-            }
-            Some((NS_ASK, "lineSketchFreehand")) => {
-                Self::LineSketchFreehand(officekit_markup_base::read(element))
-            }
-            Some((NS_ASK, "lineSketchNone")) => {
-                Self::LineSketchNone(officekit_markup_base::read(element))
-            }
-            Some((NS_ASK, "lineSketchScribble")) => {
-                Self::LineSketchScribble(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_ASK, "lineSketchCurved")) => Self::LineSketchCurved(item.read()),
+            Some((NS_ASK, "lineSketchFreehand")) => Self::LineSketchFreehand(item.read()),
+            Some((NS_ASK, "lineSketchNone")) => Self::LineSketchNone(item.read()),
+            Some((NS_ASK, "lineSketchScribble")) => Self::LineSketchScribble(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -1056,8 +1048,8 @@ impl<X: UserData> SeedWith<X> {
 }
 
 impl officekit_markup_base::Read for Seed {
-    fn read(element: &Element) -> Self {
-        read::seed(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::seed_from_item(item)
     }
 }
 
@@ -1094,8 +1086,8 @@ impl<X: UserData> TypeWith<X> {
 }
 
 impl officekit_markup_base::Read for Type {
-    fn read(element: &Element) -> Self {
-        read::r#type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::type_from_item(item)
     }
 }
 

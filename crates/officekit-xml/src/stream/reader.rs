@@ -1,5 +1,6 @@
 //! `PartReader`: one part's XML read forward as events, and the element it is
-//! on loaded whole as the generic tree.
+//! on loaded whole as the generic tree. [`ReadEvents`] is what reads a part forward,
+//! `PartReader` or a filter over it.
 
 use core::mem;
 use std::io::BufRead;
@@ -26,6 +27,27 @@ pub enum PartEvent {
     Node(Node),
     /// An element's start: the element with its attributes and declarations, and no children.
     Start(Element),
+}
+
+/// A part read forward as events: a [`PartReader`], or a filter over one, as markup
+/// compatibility's [`Processed`](crate::mc::Processed).
+pub trait ReadEvents {
+    /// The element `start` began, with everything up to its end, read from [`Self::event`].
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Self::event`], and [`XmlError::Malformed`] when the part ends inside
+    /// the element.
+    fn element(&mut self, start: Element) -> Result<Element, XmlError> {
+        whole(self, start)
+    }
+
+    /// The next event; `None` at the end of the part.
+    ///
+    /// # Errors
+    ///
+    /// Why the part cannot be read on.
+    fn event(&mut self) -> Result<Option<PartEvent>, XmlError>;
 }
 
 /// Reads a part's XML forward as events, and loads the element it is on, with
@@ -71,26 +93,7 @@ impl<R: BufRead> PartReader<R> {
     /// The errors of [`Self::read_event`], and [`XmlError::Malformed`] when
     /// the part ends inside the element.
     pub fn read_element(&mut self, start: Element) -> Result<Element, XmlError> {
-        let mut element = start;
-        let mut open: Vec<Element> = Vec::new();
-        while let Some(event) = self.read_event()? {
-            let node = match event {
-                PartEvent::Declaration(_) => continue,
-                PartEvent::End => match open.pop() {
-                    Some(done) => Node::Element(done),
-                    None => return Ok(element),
-                },
-                PartEvent::Node(node) => node,
-                PartEvent::Start(child) => {
-                    open.push(child);
-                    continue;
-                }
-            };
-            open.last_mut().unwrap_or(&mut element).children.push(node);
-        }
-        Err(XmlError::Malformed(
-            "the part ends inside an element".to_owned(),
-        ))
+        whole(self, start)
     }
 
     /// The next event; `None` at the end of the part.
@@ -172,4 +175,37 @@ impl<R: BufRead> PartReader<R> {
     fn take_text(&mut self) -> Option<PartEvent> {
         (!self.text.is_empty()).then(|| PartEvent::Node(Node::Text(mem::take(&mut self.text))))
     }
+}
+
+impl<R: BufRead> ReadEvents for PartReader<R> {
+    fn event(&mut self) -> Result<Option<PartEvent>, XmlError> {
+        self.read_event()
+    }
+}
+
+/// The element `start` began, read from `events` up to its end.
+fn whole<E>(events: &mut E, start: Element) -> Result<Element, XmlError>
+where
+    E: ReadEvents + ?Sized,
+{
+    let mut element = start;
+    let mut open: Vec<Element> = Vec::new();
+    while let Some(event) = events.event()? {
+        let node = match event {
+            PartEvent::Declaration(_) => continue,
+            PartEvent::End => match open.pop() {
+                Some(done) => Node::Element(done),
+                None => return Ok(element),
+            },
+            PartEvent::Node(node) => node,
+            PartEvent::Start(child) => {
+                open.push(child);
+                continue;
+            }
+        };
+        open.last_mut().unwrap_or(&mut element).children.push(node);
+    }
+    Err(XmlError::Malformed(
+        "the part ends inside an element".to_owned(),
+    ))
 }

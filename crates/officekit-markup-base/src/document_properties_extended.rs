@@ -222,7 +222,7 @@ pub mod read;
 pub mod write;
 
 use crate::UserData;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::NamespaceId;
 
 const NS_AP: Option<NamespaceId> = Some(16);
@@ -1093,8 +1093,8 @@ impl<X: UserData> ApplicationNameWith<X> {
 }
 
 impl crate::Read for ApplicationName {
-    fn read(element: &Element) -> Self {
-        read::application_name(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::application_name_from_item(item)
     }
 }
 
@@ -1131,8 +1131,8 @@ impl<X: UserData> ApplicationSpecificFilePropertiesWith<X> {
 }
 
 impl crate::Read for ApplicationSpecificFileProperties {
-    fn read(element: &Element) -> Self {
-        read::application_specific_file_properties(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::application_specific_file_properties_from_item(item)
     }
 }
 
@@ -1172,40 +1172,36 @@ impl crate::Read for ApplicationSpecificFilePropertiesContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match crate::name(element) {
-            Some((NS_AP, "Application")) => Self::ApplicationName(crate::read(element)),
-            Some((NS_AP, "AppVersion")) => Self::ApplicationVersion(crate::read(element)),
-            Some((NS_AP, "CharactersWithSpaces")) => {
-                Self::CharactersWithSpaces(crate::read(element))
-            }
-            Some((NS_AP, "DigSig")) => Self::DigitalSignature(crate::read(element)),
-            Some((NS_AP, "DocSecurity")) => Self::DocumentSecurity(crate::read(element)),
-            Some((NS_AP, "HeadingPairs")) => Self::HeadingPairs(crate::read(element)),
-            Some((NS_AP, "HLinks")) => Self::HyperlinkList(crate::read(element)),
-            Some((NS_AP, "HyperlinksChanged")) => Self::HyperlinksChanged(crate::read(element)),
-            Some((NS_AP, "PresentationFormat")) => {
-                Self::IntendedFormatOfPresentation(crate::read(element))
-            }
-            Some((NS_AP, "LinksUpToDate")) => Self::LinksUpToDate(crate::read(element)),
-            Some((NS_AP, "Company")) => Self::NameOfCompany(crate::read(element)),
-            Some((NS_AP, "Template")) => Self::NameOfDocumentTemplate(crate::read(element)),
-            Some((NS_AP, "Manager")) => Self::NameOfManager(crate::read(element)),
-            Some((NS_AP, "HiddenSlides")) => Self::NumberOfHiddenSlides(crate::read(element)),
-            Some((NS_AP, "Lines")) => Self::NumberOfLines(crate::read(element)),
-            Some((NS_AP, "Notes")) => Self::NumberOfSlidesContainingNotes(crate::read(element)),
-            Some((NS_AP, "TitlesOfParts")) => Self::PartTitles(crate::read(element)),
-            Some((NS_AP, "HyperlinkBase")) => Self::RelativeHyperlinkBase(crate::read(element)),
-            Some((NS_AP, "SharedDoc")) => Self::SharedDocument(crate::read(element)),
-            Some((NS_AP, "Slides")) => Self::SlidesMetadataElement(crate::read(element)),
-            Some((NS_AP, "ScaleCrop")) => Self::ThumbnailDisplayMode(crate::read(element)),
-            Some((NS_AP, "TotalTime")) => Self::TotalEditTimeMetadataElement(crate::read(element)),
-            Some((NS_AP, "Characters")) => Self::TotalNumberOfCharacters(crate::read(element)),
-            Some((NS_AP, "MMClips")) => Self::TotalNumberOfMultimediaClips(crate::read(element)),
-            Some((NS_AP, "Pages")) => Self::TotalNumberOfPages(crate::read(element)),
-            Some((NS_AP, "Paragraphs")) => Self::TotalNumberOfParagraphs(crate::read(element)),
-            Some((NS_AP, "Words")) => Self::WordCount(crate::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: crate::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_AP, "Application")) => Self::ApplicationName(item.read()),
+            Some((NS_AP, "AppVersion")) => Self::ApplicationVersion(item.read()),
+            Some((NS_AP, "CharactersWithSpaces")) => Self::CharactersWithSpaces(item.read()),
+            Some((NS_AP, "DigSig")) => Self::DigitalSignature(item.read()),
+            Some((NS_AP, "DocSecurity")) => Self::DocumentSecurity(item.read()),
+            Some((NS_AP, "HeadingPairs")) => Self::HeadingPairs(item.read()),
+            Some((NS_AP, "HLinks")) => Self::HyperlinkList(item.read()),
+            Some((NS_AP, "HyperlinksChanged")) => Self::HyperlinksChanged(item.read()),
+            Some((NS_AP, "PresentationFormat")) => Self::IntendedFormatOfPresentation(item.read()),
+            Some((NS_AP, "LinksUpToDate")) => Self::LinksUpToDate(item.read()),
+            Some((NS_AP, "Company")) => Self::NameOfCompany(item.read()),
+            Some((NS_AP, "Template")) => Self::NameOfDocumentTemplate(item.read()),
+            Some((NS_AP, "Manager")) => Self::NameOfManager(item.read()),
+            Some((NS_AP, "HiddenSlides")) => Self::NumberOfHiddenSlides(item.read()),
+            Some((NS_AP, "Lines")) => Self::NumberOfLines(item.read()),
+            Some((NS_AP, "Notes")) => Self::NumberOfSlidesContainingNotes(item.read()),
+            Some((NS_AP, "TitlesOfParts")) => Self::PartTitles(item.read()),
+            Some((NS_AP, "HyperlinkBase")) => Self::RelativeHyperlinkBase(item.read()),
+            Some((NS_AP, "SharedDoc")) => Self::SharedDocument(item.read()),
+            Some((NS_AP, "Slides")) => Self::SlidesMetadataElement(item.read()),
+            Some((NS_AP, "ScaleCrop")) => Self::ThumbnailDisplayMode(item.read()),
+            Some((NS_AP, "TotalTime")) => Self::TotalEditTimeMetadataElement(item.read()),
+            Some((NS_AP, "Characters")) => Self::TotalNumberOfCharacters(item.read()),
+            Some((NS_AP, "MMClips")) => Self::TotalNumberOfMultimediaClips(item.read()),
+            Some((NS_AP, "Pages")) => Self::TotalNumberOfPages(item.read()),
+            Some((NS_AP, "Paragraphs")) => Self::TotalNumberOfParagraphs(item.read()),
+            Some((NS_AP, "Words")) => Self::WordCount(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -1271,8 +1267,8 @@ impl<X: UserData> ApplicationVersionWith<X> {
 }
 
 impl crate::Read for ApplicationVersion {
-    fn read(element: &Element) -> Self {
-        read::application_version(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::application_version_from_item(item)
     }
 }
 
@@ -1309,8 +1305,8 @@ impl<X: UserData> CharactersWithSpacesWith<X> {
 }
 
 impl crate::Read for CharactersWithSpaces {
-    fn read(element: &Element) -> Self {
-        read::characters_with_spaces(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::characters_with_spaces_from_item(item)
     }
 }
 
@@ -1347,8 +1343,8 @@ impl<X: UserData> DigitalSignatureWith<X> {
 }
 
 impl crate::Read for DigitalSignature {
-    fn read(element: &Element) -> Self {
-        read::digital_signature(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::digital_signature_from_item(item)
     }
 }
 
@@ -1385,8 +1381,8 @@ impl<X: UserData> DocumentSecurityWith<X> {
 }
 
 impl crate::Read for DocumentSecurity {
-    fn read(element: &Element) -> Self {
-        read::document_security(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::document_security_from_item(item)
     }
 }
 
@@ -1423,8 +1419,8 @@ impl<X: UserData> HeadingPairsWith<X> {
 }
 
 impl crate::Read for HeadingPairs {
-    fn read(element: &Element) -> Self {
-        read::heading_pairs(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::heading_pairs_from_item(item)
     }
 }
 
@@ -1461,8 +1457,8 @@ impl<X: UserData> HyperlinkListWith<X> {
 }
 
 impl crate::Read for HyperlinkList {
-    fn read(element: &Element) -> Self {
-        read::hyperlink_list(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::hyperlink_list_from_item(item)
     }
 }
 
@@ -1499,8 +1495,8 @@ impl<X: UserData> HyperlinksChangedWith<X> {
 }
 
 impl crate::Read for HyperlinksChanged {
-    fn read(element: &Element) -> Self {
-        read::hyperlinks_changed(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::hyperlinks_changed_from_item(item)
     }
 }
 
@@ -1537,8 +1533,8 @@ impl<X: UserData> IntendedFormatOfPresentationWith<X> {
 }
 
 impl crate::Read for IntendedFormatOfPresentation {
-    fn read(element: &Element) -> Self {
-        read::intended_format_of_presentation(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::intended_format_of_presentation_from_item(item)
     }
 }
 
@@ -1575,8 +1571,8 @@ impl<X: UserData> LinksUpToDateWith<X> {
 }
 
 impl crate::Read for LinksUpToDate {
-    fn read(element: &Element) -> Self {
-        read::links_up_to_date(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::links_up_to_date_from_item(item)
     }
 }
 
@@ -1613,8 +1609,8 @@ impl<X: UserData> NameOfCompanyWith<X> {
 }
 
 impl crate::Read for NameOfCompany {
-    fn read(element: &Element) -> Self {
-        read::name_of_company(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::name_of_company_from_item(item)
     }
 }
 
@@ -1651,8 +1647,8 @@ impl<X: UserData> NameOfDocumentTemplateWith<X> {
 }
 
 impl crate::Read for NameOfDocumentTemplate {
-    fn read(element: &Element) -> Self {
-        read::name_of_document_template(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::name_of_document_template_from_item(item)
     }
 }
 
@@ -1689,8 +1685,8 @@ impl<X: UserData> NameOfManagerWith<X> {
 }
 
 impl crate::Read for NameOfManager {
-    fn read(element: &Element) -> Self {
-        read::name_of_manager(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::name_of_manager_from_item(item)
     }
 }
 
@@ -1727,8 +1723,8 @@ impl<X: UserData> NumberOfHiddenSlidesWith<X> {
 }
 
 impl crate::Read for NumberOfHiddenSlides {
-    fn read(element: &Element) -> Self {
-        read::number_of_hidden_slides(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::number_of_hidden_slides_from_item(item)
     }
 }
 
@@ -1765,8 +1761,8 @@ impl<X: UserData> NumberOfLinesWith<X> {
 }
 
 impl crate::Read for NumberOfLines {
-    fn read(element: &Element) -> Self {
-        read::number_of_lines(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::number_of_lines_from_item(item)
     }
 }
 
@@ -1803,8 +1799,8 @@ impl<X: UserData> NumberOfSlidesContainingNotesWith<X> {
 }
 
 impl crate::Read for NumberOfSlidesContainingNotes {
-    fn read(element: &Element) -> Self {
-        read::number_of_slides_containing_notes(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::number_of_slides_containing_notes_from_item(item)
     }
 }
 
@@ -1841,8 +1837,8 @@ impl<X: UserData> PartTitlesWith<X> {
 }
 
 impl crate::Read for PartTitles {
-    fn read(element: &Element) -> Self {
-        read::part_titles(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::part_titles_from_item(item)
     }
 }
 
@@ -1879,8 +1875,8 @@ impl<X: UserData> RelativeHyperlinkBaseWith<X> {
 }
 
 impl crate::Read for RelativeHyperlinkBase {
-    fn read(element: &Element) -> Self {
-        read::relative_hyperlink_base(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::relative_hyperlink_base_from_item(item)
     }
 }
 
@@ -1917,8 +1913,8 @@ impl<X: UserData> SharedDocumentWith<X> {
 }
 
 impl crate::Read for SharedDocument {
-    fn read(element: &Element) -> Self {
-        read::shared_document(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::shared_document_from_item(item)
     }
 }
 
@@ -1955,8 +1951,8 @@ impl<X: UserData> SlidesMetadataElementWith<X> {
 }
 
 impl crate::Read for SlidesMetadataElement {
-    fn read(element: &Element) -> Self {
-        read::slides_metadata_element(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::slides_metadata_element_from_item(item)
     }
 }
 
@@ -1993,8 +1989,8 @@ impl<X: UserData> ThumbnailDisplayModeWith<X> {
 }
 
 impl crate::Read for ThumbnailDisplayMode {
-    fn read(element: &Element) -> Self {
-        read::thumbnail_display_mode(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::thumbnail_display_mode_from_item(item)
     }
 }
 
@@ -2031,8 +2027,8 @@ impl<X: UserData> TotalEditTimeMetadataElementWith<X> {
 }
 
 impl crate::Read for TotalEditTimeMetadataElement {
-    fn read(element: &Element) -> Self {
-        read::total_edit_time_metadata_element(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::total_edit_time_metadata_element_from_item(item)
     }
 }
 
@@ -2069,8 +2065,8 @@ impl<X: UserData> TotalNumberOfCharactersWith<X> {
 }
 
 impl crate::Read for TotalNumberOfCharacters {
-    fn read(element: &Element) -> Self {
-        read::total_number_of_characters(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::total_number_of_characters_from_item(item)
     }
 }
 
@@ -2107,8 +2103,8 @@ impl<X: UserData> TotalNumberOfMultimediaClipsWith<X> {
 }
 
 impl crate::Read for TotalNumberOfMultimediaClips {
-    fn read(element: &Element) -> Self {
-        read::total_number_of_multimedia_clips(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::total_number_of_multimedia_clips_from_item(item)
     }
 }
 
@@ -2145,8 +2141,8 @@ impl<X: UserData> TotalNumberOfPagesWith<X> {
 }
 
 impl crate::Read for TotalNumberOfPages {
-    fn read(element: &Element) -> Self {
-        read::total_number_of_pages(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::total_number_of_pages_from_item(item)
     }
 }
 
@@ -2183,8 +2179,8 @@ impl<X: UserData> TotalNumberOfParagraphsWith<X> {
 }
 
 impl crate::Read for TotalNumberOfParagraphs {
-    fn read(element: &Element) -> Self {
-        read::total_number_of_paragraphs(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::total_number_of_paragraphs_from_item(item)
     }
 }
 
@@ -2221,8 +2217,8 @@ impl<X: UserData> WordCountWith<X> {
 }
 
 impl crate::Read for WordCount {
-    fn read(element: &Element) -> Self {
-        read::word_count(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::word_count_from_item(item)
     }
 }
 

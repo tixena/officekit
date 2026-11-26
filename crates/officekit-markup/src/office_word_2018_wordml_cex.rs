@@ -226,7 +226,6 @@ pub mod write;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_base::common_simple_types;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -454,8 +453,8 @@ impl<X: UserData> CommentExtensibleWith<X> {
 }
 
 impl officekit_markup_base::Read for CommentExtensible {
-    fn read(element: &Element) -> Self {
-        read::comment_extensible(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::comment_extensible_from_item(item)
     }
 }
 
@@ -496,8 +495,8 @@ impl<X: UserData> CommentsExtensibleWith<X> {
 }
 
 impl officekit_markup_base::Read for CommentsExtensible {
-    fn read(element: &Element) -> Self {
-        read::comments_extensible(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::comments_extensible_from_item(item)
     }
 }
 
@@ -534,8 +533,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 

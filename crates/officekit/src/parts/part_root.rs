@@ -4,12 +4,16 @@
 //! [`Package`] and [`store`] writes one back in a conformance class. Every generated part module
 //! calls them with its own root.
 
+use officekit_markup::{Events, Item};
 use officekit_xml::conformance::ConformanceClass;
-use officekit_xml::element::{Document, Element};
+use officekit_xml::element::{Document, Element, XmlError};
 use officekit_xml::error::WriteError;
+use officekit_xml::mc::Processed;
 use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::{DECLARATION, OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::parse::utf8_of;
+use officekit_xml::stream::reader::PartReader;
 use officekit_xml::write::WriteOptions;
 
 #[cfg(test)]
@@ -19,7 +23,8 @@ mod tests;
 /// package and the typed tree.
 ///
 /// A root names its tag in [`LOCAL_NAME`](Self::LOCAL_NAME), reads itself from a generic element
-/// with [`from_tree`](Self::from_tree), and writes itself as one in a class with
+/// with [`from_tree`](Self::from_tree) or from the part's events with
+/// [`from_part`](Self::from_part), and writes itself as one in a class with
 /// [`to_tree`](Self::to_tree).
 ///
 /// ```
@@ -80,6 +85,17 @@ pub trait PartRoot: Sized {
     /// The root's tag, checked on load.
     const LOCAL_NAME: &'static str;
 
+    /// Build the typed root from the part's root element: its start tag and the events after it,
+    /// or the whole element when it is empty. The default reads the element whole and calls
+    /// [`from_tree`](Self::from_tree).
+    ///
+    /// # Errors
+    ///
+    /// A description of the first element or value the typed root cannot hold.
+    fn from_part(root: Item<'_>) -> Result<Self, String> {
+        Self::from_tree(&root.into_element())
+    }
+
     /// Build the typed root from the part's tree.
     ///
     /// # Errors
@@ -99,6 +115,9 @@ pub trait PartRoot: Sized {
 /// Any part's typed root by part name; the root's tag must be
 /// `R::LOCAL_NAME`.
 ///
+/// The part is read forward into the typed root through [`PartRoot::from_part`], markup
+/// compatibility applied as `options` says, with no generic tree of the part.
+///
 /// # Errors
 ///
 /// The errors of [`Package::load_tree`], and
@@ -108,18 +127,38 @@ pub fn load<R>(package: &Package, name: &PartName, options: OpenOptions) -> Resu
 where
     R: PartRoot,
 {
-    let document = package.load_tree(name, options)?;
-    if document.root.name.local != R::LOCAL_NAME {
+    let xml = |error| PackageError::Xml {
+        error,
+        part: name.clone(),
+    };
+    let bytes = package.part_bytes(name)?;
+    let text = utf8_of(&bytes).map_err(xml)?;
+    let mut reader = PartReader::new(text.as_ref());
+    let mut processed = Processed::new(&mut reader, options.markup_compatibility);
+    let events = Events::new(&mut processed);
+    let Some(root) = events.root() else {
+        let error = events
+            .finish()
+            .err()
+            .unwrap_or_else(|| XmlError::Malformed("no root element".to_owned()));
+        return Err(xml(error));
+    };
+    if root.element().name.local != R::LOCAL_NAME {
+        let reason = format!(
+            "the root is <{}>, not <{}>",
+            root.element().name.local,
+            R::LOCAL_NAME
+        );
+        drop(root);
+        events.finish().map_err(xml)?;
         return Err(PackageError::Read {
             part: name.clone(),
-            reason: format!(
-                "the root is <{}>, not <{}>",
-                document.root.name.local,
-                R::LOCAL_NAME
-            ),
+            reason,
         });
     }
-    R::from_tree(&document.root).map_err(|reason| PackageError::Read {
+    let typed = R::from_part(root);
+    events.finish().map_err(xml)?;
+    typed.map_err(|reason| PackageError::Read {
         part: name.clone(),
         reason,
     })

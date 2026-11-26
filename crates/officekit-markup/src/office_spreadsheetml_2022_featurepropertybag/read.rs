@@ -221,8 +221,20 @@ use officekit_xml::element::Element;
 /// Read `xfpb:a` into a `A`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn a(element: &Element) -> super::A {
+    a_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:a` into a `A` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn a_from_events(start: Element, events: &dyn officekit_markup_base::EventSource) -> super::A {
+    a_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:a` into a `A` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn a_from_item(item: officekit_markup_base::Item<'_>) -> super::A {
     let mut node = super::A::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::A_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::A_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.k),
@@ -243,9 +255,26 @@ pub fn array_feature_property(element: &Element) -> super::ArrayFeaturePropertyC
 /// Read `xfpb:b` into a `BBoolFeatureProperty`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn b_bool_feature_property(element: &Element) -> super::BBoolFeatureProperty {
+    b_bool_feature_property_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:b` into a `BBoolFeatureProperty` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn b_bool_feature_property_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BBoolFeatureProperty {
+    b_bool_feature_property_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:b` into a `BBoolFeatureProperty` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn b_bool_feature_property_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::BBoolFeatureProperty {
     let mut node = super::BBoolFeatureProperty::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::B_BOOL_FEATURE_PROPERTY_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::B_BOOL_FEATURE_PROPERTY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.k),
@@ -260,8 +289,23 @@ pub fn b_bool_feature_property(element: &Element) -> super::BBoolFeatureProperty
 /// Read `xfpb:b` into a `BBoolean`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn b_boolean(element: &Element) -> super::BBoolean {
+    b_boolean_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:b` into a `BBoolean` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn b_boolean_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BBoolean {
+    b_boolean_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:b` into a `BBoolean` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn b_boolean_from_item(item: officekit_markup_base::Item<'_>) -> super::BBoolean {
     let mut node = super::BBoolean::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::B_BOOLEAN_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::B_BOOLEAN_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -274,8 +318,23 @@ pub fn b_boolean(element: &Element) -> super::BBoolean {
 /// Read `xfpb:bag` into a `Bag`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bag(element: &Element) -> super::Bag {
+    bag_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:bag` into a `Bag` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bag_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Bag {
+    bag_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:bag` into a `Bag` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bag_from_item(item: officekit_markup_base::Item<'_>) -> super::Bag {
     let mut node = super::Bag::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BAG_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BAG_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r#type),
@@ -293,8 +352,23 @@ pub fn bag(element: &Element) -> super::Bag {
 /// Read `xfpb:bagExt` into a `BagExt`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bag_ext(element: &Element) -> super::BagExt {
+    bag_ext_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:bagExt` into a `BagExt` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bag_ext_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BagExt {
+    bag_ext_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:bagExt` into a `BagExt` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bag_ext_from_item(item: officekit_markup_base::Item<'_>) -> super::BagExt {
     let mut node = super::BagExt::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BAG_EXT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BAG_EXT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.lst);
@@ -307,9 +381,28 @@ pub fn bag_ext(element: &Element) -> super::BagExt {
 /// Read `xfpb:bagId` into a `BagIdBagFeatureProperty`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bag_id_bag_feature_property(element: &Element) -> super::BagIdBagFeatureProperty {
+    bag_id_bag_feature_property_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:bagId` into a `BagIdBagFeatureProperty` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bag_id_bag_feature_property_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BagIdBagFeatureProperty {
+    bag_id_bag_feature_property_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:bagId` into a `BagIdBagFeatureProperty` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bag_id_bag_feature_property_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::BagIdBagFeatureProperty {
     let mut node = super::BagIdBagFeatureProperty::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::BAG_ID_BAG_FEATURE_PROPERTY_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::BAG_ID_BAG_FEATURE_PROPERTY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.k),
@@ -324,8 +417,26 @@ pub fn bag_id_bag_feature_property(element: &Element) -> super::BagIdBagFeatureP
 /// Read `xfpb:bagId` into a `BagIdUnsignedInt`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bag_id_unsigned_int(element: &Element) -> super::BagIdUnsignedInt {
+    bag_id_unsigned_int_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:bagId` into a `BagIdUnsignedInt` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bag_id_unsigned_int_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BagIdUnsignedInt {
+    bag_id_unsigned_int_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:bagId` into a `BagIdUnsignedInt` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bag_id_unsigned_int_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::BagIdUnsignedInt {
     let mut node = super::BagIdUnsignedInt::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BAG_ID_UNSIGNED_INT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BAG_ID_UNSIGNED_INT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -338,8 +449,27 @@ pub fn bag_id_unsigned_int(element: &Element) -> super::BagIdUnsignedInt {
 /// Read `xfpb:columnBodyRevDxf` into a `ColumnBodyRevDxf`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn column_body_rev_dxf(element: &Element) -> super::ColumnBodyRevDxf {
+    column_body_rev_dxf_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:columnBodyRevDxf` into a `ColumnBodyRevDxf` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn column_body_rev_dxf_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ColumnBodyRevDxf {
+    column_body_rev_dxf_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:columnBodyRevDxf` into a `ColumnBodyRevDxf` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn column_body_rev_dxf_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ColumnBodyRevDxf {
     let mut node = super::ColumnBodyRevDxf::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COLUMN_BODY_REV_DXF_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COLUMN_BODY_REV_DXF_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.fpbs),
@@ -354,9 +484,27 @@ pub fn column_body_rev_dxf(element: &Element) -> super::ColumnBodyRevDxf {
 /// Read `xfpb:columnHeaderRevDxf` into a `ColumnHeaderRevDxf`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn column_header_rev_dxf(element: &Element) -> super::ColumnHeaderRevDxf {
+    column_header_rev_dxf_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:columnHeaderRevDxf` into a `ColumnHeaderRevDxf` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn column_header_rev_dxf_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ColumnHeaderRevDxf {
+    column_header_rev_dxf_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:columnHeaderRevDxf` into a `ColumnHeaderRevDxf` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn column_header_rev_dxf_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ColumnHeaderRevDxf {
     let mut node = super::ColumnHeaderRevDxf::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::COLUMN_HEADER_REV_DXF_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COLUMN_HEADER_REV_DXF_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.fpbs),
@@ -371,9 +519,27 @@ pub fn column_header_rev_dxf(element: &Element) -> super::ColumnHeaderRevDxf {
 /// Read `xfpb:columnTotalsRevDxf` into a `ColumnTotalsRevDxf`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn column_totals_rev_dxf(element: &Element) -> super::ColumnTotalsRevDxf {
+    column_totals_rev_dxf_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:columnTotalsRevDxf` into a `ColumnTotalsRevDxf` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn column_totals_rev_dxf_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ColumnTotalsRevDxf {
+    column_totals_rev_dxf_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:columnTotalsRevDxf` into a `ColumnTotalsRevDxf` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn column_totals_rev_dxf_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ColumnTotalsRevDxf {
     let mut node = super::ColumnTotalsRevDxf::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::COLUMN_TOTALS_REV_DXF_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COLUMN_TOTALS_REV_DXF_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.fpbs),
@@ -388,9 +554,28 @@ pub fn column_totals_rev_dxf(element: &Element) -> super::ColumnTotalsRevDxf {
 /// Read `xfpb:d` into a `DDecimalFeatureProperty`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn d_decimal_feature_property(element: &Element) -> super::DDecimalFeatureProperty {
+    d_decimal_feature_property_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:d` into a `DDecimalFeatureProperty` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn d_decimal_feature_property_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DDecimalFeatureProperty {
+    d_decimal_feature_property_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:d` into a `DDecimalFeatureProperty` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn d_decimal_feature_property_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::DDecimalFeatureProperty {
     let mut node = super::DDecimalFeatureProperty::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::D_DECIMAL_FEATURE_PROPERTY_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::D_DECIMAL_FEATURE_PROPERTY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.k),
@@ -405,8 +590,23 @@ pub fn d_decimal_feature_property(element: &Element) -> super::DDecimalFeaturePr
 /// Read `xfpb:d` into a `DDouble`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn d_double(element: &Element) -> super::DDouble {
+    d_double_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:d` into a `DDouble` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn d_double_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DDouble {
+    d_double_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:d` into a `DDouble` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn d_double_from_item(item: officekit_markup_base::Item<'_>) -> super::DDouble {
     let mut node = super::DDouble::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::D_DOUBLE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::D_DOUBLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -419,8 +619,24 @@ pub fn d_double(element: &Element) -> super::DDouble {
 /// Read `xfpb:dataRevDxf` into a `DataRevDxf`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_rev_dxf(element: &Element) -> super::DataRevDxf {
+    data_rev_dxf_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:dataRevDxf` into a `DataRevDxf` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn data_rev_dxf_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DataRevDxf {
+    data_rev_dxf_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:dataRevDxf` into a `DataRevDxf` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn data_rev_dxf_from_item(item: officekit_markup_base::Item<'_>) -> super::DataRevDxf {
     let mut node = super::DataRevDxf::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_REV_DXF_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DATA_REV_DXF_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.fpbs),
@@ -435,8 +651,23 @@ pub fn data_rev_dxf(element: &Element) -> super::DataRevDxf {
 /// Read `xfpb:dxf` into a `Dxf`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dxf(element: &Element) -> super::Dxf {
+    dxf_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:dxf` into a `Dxf` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dxf_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Dxf {
+    dxf_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:dxf` into a `Dxf` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dxf_from_item(item: officekit_markup_base::Item<'_>) -> super::Dxf {
     let mut node = super::Dxf::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DXF_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DXF_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.font),
@@ -456,8 +687,25 @@ pub fn dxf(element: &Element) -> super::Dxf {
 /// Read `xfpb:DXFComplement` into a `DXFComplement`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dxf_complement(element: &Element) -> super::DXFComplement {
+    dxf_complement_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:DXFComplement` into a `DXFComplement` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dxf_complement_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DXFComplement {
+    dxf_complement_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:DXFComplement` into a `DXFComplement` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dxf_complement_from_item(item: officekit_markup_base::Item<'_>) -> super::DXFComplement {
     let mut node = super::DXFComplement::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DXF_COMPLEMENT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DXF_COMPLEMENT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.i);
@@ -470,8 +718,23 @@ pub fn dxf_complement(element: &Element) -> super::DXFComplement {
 /// Read `xfpb:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -490,9 +753,27 @@ pub fn feature_property_bag(element: &Element) -> super::FeaturePropertyBagConte
 /// Read `xfpb:FeaturePropertyBags` into a `FeaturePropertyBags`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn feature_property_bags(element: &Element) -> super::FeaturePropertyBags {
+    feature_property_bags_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:FeaturePropertyBags` into a `FeaturePropertyBags` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn feature_property_bags_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::FeaturePropertyBags {
+    feature_property_bags_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:FeaturePropertyBags` into a `FeaturePropertyBags` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn feature_property_bags_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::FeaturePropertyBags {
     let mut node = super::FeaturePropertyBags::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::FEATURE_PROPERTY_BAGS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::FEATURE_PROPERTY_BAGS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.count),
@@ -509,8 +790,23 @@ pub fn feature_property_bags(element: &Element) -> super::FeaturePropertyBags {
 /// Read `xfpb:fpbs` into a `Fpbs`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn fpbs(element: &Element) -> super::Fpbs {
+    fpbs_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:fpbs` into a `Fpbs` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn fpbs_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Fpbs {
+    fpbs_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:fpbs` into a `Fpbs` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn fpbs_from_item(item: officekit_markup_base::Item<'_>) -> super::Fpbs {
     let mut node = super::Fpbs::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::FPBS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::FPBS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.bag_ext),
@@ -526,9 +822,28 @@ pub fn fpbs(element: &Element) -> super::Fpbs {
 /// Read `xfpb:headerRowBorderRevDxf` into a `HeaderRowBorderRevDxf`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn header_row_border_rev_dxf(element: &Element) -> super::HeaderRowBorderRevDxf {
+    header_row_border_rev_dxf_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:headerRowBorderRevDxf` into a `HeaderRowBorderRevDxf` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn header_row_border_rev_dxf_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::HeaderRowBorderRevDxf {
+    header_row_border_rev_dxf_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:headerRowBorderRevDxf` into a `HeaderRowBorderRevDxf` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn header_row_border_rev_dxf_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::HeaderRowBorderRevDxf {
     let mut node = super::HeaderRowBorderRevDxf::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::HEADER_ROW_BORDER_REV_DXF_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::HEADER_ROW_BORDER_REV_DXF_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.fpbs),
@@ -543,8 +858,27 @@ pub fn header_row_border_rev_dxf(element: &Element) -> super::HeaderRowBorderRev
 /// Read `xfpb:headerRowRevDxf` into a `HeaderRowRevDxf`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn header_row_rev_dxf(element: &Element) -> super::HeaderRowRevDxf {
+    header_row_rev_dxf_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:headerRowRevDxf` into a `HeaderRowRevDxf` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn header_row_rev_dxf_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::HeaderRowRevDxf {
+    header_row_rev_dxf_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:headerRowRevDxf` into a `HeaderRowRevDxf` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn header_row_rev_dxf_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::HeaderRowRevDxf {
     let mut node = super::HeaderRowRevDxf::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::HEADER_ROW_REV_DXF_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::HEADER_ROW_REV_DXF_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.fpbs),
@@ -559,9 +893,26 @@ pub fn header_row_rev_dxf(element: &Element) -> super::HeaderRowRevDxf {
 /// Read `xfpb:i` into a `IIntFeatureProperty`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn i_int_feature_property(element: &Element) -> super::IIntFeatureProperty {
+    i_int_feature_property_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:i` into a `IIntFeatureProperty` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn i_int_feature_property_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::IIntFeatureProperty {
+    i_int_feature_property_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:i` into a `IIntFeatureProperty` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn i_int_feature_property_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::IIntFeatureProperty {
     let mut node = super::IIntFeatureProperty::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::I_INT_FEATURE_PROPERTY_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::I_INT_FEATURE_PROPERTY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.k),
@@ -576,8 +927,23 @@ pub fn i_int_feature_property(element: &Element) -> super::IIntFeatureProperty {
 /// Read `xfpb:i` into a `IInteger`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn i_integer(element: &Element) -> super::IInteger {
+    i_integer_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:i` into a `IInteger` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn i_integer_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::IInteger {
+    i_integer_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:i` into a `IInteger` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn i_integer_from_item(item: officekit_markup_base::Item<'_>) -> super::IInteger {
     let mut node = super::IInteger::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::I_INTEGER_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::I_INTEGER_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -590,9 +956,28 @@ pub fn i_integer(element: &Element) -> super::IInteger {
 /// Read `xfpb:rel` into a `RelRelFeatureProperty`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rel_rel_feature_property(element: &Element) -> super::RelRelFeatureProperty {
+    rel_rel_feature_property_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:rel` into a `RelRelFeatureProperty` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rel_rel_feature_property_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RelRelFeatureProperty {
+    rel_rel_feature_property_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:rel` into a `RelRelFeatureProperty` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rel_rel_feature_property_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::RelRelFeatureProperty {
     let mut node = super::RelRelFeatureProperty::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::REL_REL_FEATURE_PROPERTY_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::REL_REL_FEATURE_PROPERTY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.k),
@@ -607,8 +992,23 @@ pub fn rel_rel_feature_property(element: &Element) -> super::RelRelFeatureProper
 /// Read `xfpb:rel` into a `RelString`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rel_string(element: &Element) -> super::RelString {
+    rel_string_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:rel` into a `RelString` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rel_string_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RelString {
+    rel_string_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:rel` into a `RelString` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rel_string_from_item(item: officekit_markup_base::Item<'_>) -> super::RelString {
     let mut node = super::RelString::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::REL_STRING_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::REL_STRING_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -621,8 +1021,23 @@ pub fn rel_string(element: &Element) -> super::RelString {
 /// Read `xfpb:revdxf` into a `Revdxf`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn revdxf(element: &Element) -> super::Revdxf {
+    revdxf_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:revdxf` into a `Revdxf` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn revdxf_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Revdxf {
+    revdxf_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:revdxf` into a `Revdxf` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn revdxf_from_item(item: officekit_markup_base::Item<'_>) -> super::Revdxf {
     let mut node = super::Revdxf::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::REVDXF_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::REVDXF_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.fpbs),
@@ -637,8 +1052,23 @@ pub fn revdxf(element: &Element) -> super::Revdxf {
 /// Read `xfpb:s` into a `SString`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn s_string(element: &Element) -> super::SString {
+    s_string_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:s` into a `SString` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn s_string_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SString {
+    s_string_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:s` into a `SString` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn s_string_from_item(item: officekit_markup_base::Item<'_>) -> super::SString {
     let mut node = super::SString::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::S_STRING_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::S_STRING_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);
@@ -651,9 +1081,27 @@ pub fn s_string(element: &Element) -> super::SString {
 /// Read `xfpb:s` into a `SStringFeatureProperty`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn s_string_feature_property(element: &Element) -> super::SStringFeatureProperty {
+    s_string_feature_property_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:s` into a `SStringFeatureProperty` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn s_string_feature_property_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SStringFeatureProperty {
+    s_string_feature_property_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:s` into a `SStringFeatureProperty` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn s_string_feature_property_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SStringFeatureProperty {
     let mut node = super::SStringFeatureProperty::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::S_STRING_FEATURE_PROPERTY_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::S_STRING_FEATURE_PROPERTY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.k),
@@ -668,9 +1116,27 @@ pub fn s_string_feature_property(element: &Element) -> super::SStringFeatureProp
 /// Read `xfpb:tableBorderRevDxf` into a `TableBorderRevDxf`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_border_rev_dxf(element: &Element) -> super::TableBorderRevDxf {
+    table_border_rev_dxf_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:tableBorderRevDxf` into a `TableBorderRevDxf` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn table_border_rev_dxf_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TableBorderRevDxf {
+    table_border_rev_dxf_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:tableBorderRevDxf` into a `TableBorderRevDxf` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn table_border_rev_dxf_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::TableBorderRevDxf {
     let mut node = super::TableBorderRevDxf::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::TABLE_BORDER_REV_DXF_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TABLE_BORDER_REV_DXF_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.fpbs),
@@ -685,9 +1151,28 @@ pub fn table_border_rev_dxf(element: &Element) -> super::TableBorderRevDxf {
 /// Read `xfpb:totalsRowBorderRevDxf` into a `TotalsRowBorderRevDxf`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn totals_row_border_rev_dxf(element: &Element) -> super::TotalsRowBorderRevDxf {
+    totals_row_border_rev_dxf_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:totalsRowBorderRevDxf` into a `TotalsRowBorderRevDxf` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn totals_row_border_rev_dxf_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TotalsRowBorderRevDxf {
+    totals_row_border_rev_dxf_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:totalsRowBorderRevDxf` into a `TotalsRowBorderRevDxf` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn totals_row_border_rev_dxf_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::TotalsRowBorderRevDxf {
     let mut node = super::TotalsRowBorderRevDxf::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::TOTALS_ROW_BORDER_REV_DXF_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::TOTALS_ROW_BORDER_REV_DXF_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.fpbs),
@@ -702,8 +1187,27 @@ pub fn totals_row_border_rev_dxf(element: &Element) -> super::TotalsRowBorderRev
 /// Read `xfpb:totalsRowRevDxf` into a `TotalsRowRevDxf`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn totals_row_rev_dxf(element: &Element) -> super::TotalsRowRevDxf {
+    totals_row_rev_dxf_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:totalsRowRevDxf` into a `TotalsRowRevDxf` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn totals_row_rev_dxf_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TotalsRowRevDxf {
+    totals_row_rev_dxf_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:totalsRowRevDxf` into a `TotalsRowRevDxf` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn totals_row_rev_dxf_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::TotalsRowRevDxf {
     let mut node = super::TotalsRowRevDxf::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TOTALS_ROW_REV_DXF_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TOTALS_ROW_REV_DXF_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.fpbs),
@@ -718,8 +1222,25 @@ pub fn totals_row_rev_dxf(element: &Element) -> super::TotalsRowRevDxf {
 /// Read `xfpb:xfComplement` into a `XfComplement`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn xf_complement(element: &Element) -> super::XfComplement {
+    xf_complement_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xfpb:xfComplement` into a `XfComplement` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn xf_complement_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::XfComplement {
+    xf_complement_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xfpb:xfComplement` into a `XfComplement` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn xf_complement_from_item(item: officekit_markup_base::Item<'_>) -> super::XfComplement {
     let mut node = super::XfComplement::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::XF_COMPLEMENT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::XF_COMPLEMENT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.i);

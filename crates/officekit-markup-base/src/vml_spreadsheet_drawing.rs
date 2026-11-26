@@ -222,7 +222,7 @@ pub mod read;
 pub mod write;
 
 use crate::UserData;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
 
@@ -2307,8 +2307,8 @@ impl<X: UserData> AnchorWith<X> {
 }
 
 impl crate::Read for Anchor {
-    fn read(element: &Element) -> Self {
-        read::anchor(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::anchor_from_item(item)
     }
 }
 
@@ -2349,8 +2349,8 @@ impl<X: UserData> AttachedObjectDataWith<X> {
 }
 
 impl crate::Read for AttachedObjectData {
-    fn read(element: &Element) -> Self {
-        read::attached_object_data(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::attached_object_data_from_item(item)
     }
 }
 
@@ -2398,76 +2398,76 @@ impl crate::Read for AttachedObjectDataContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match crate::name(element) {
-            Some((NS_XVML, "Anchor")) => Self::Anchor(crate::read(element)),
-            Some((NS_XVML, "AutoFill")) => Self::AutoFill(crate::read(element)),
-            Some((NS_XVML, "AutoLine")) => Self::AutoLine(crate::read(element)),
-            Some((NS_XVML, "AutoPict")) => Self::AutomaticallySize(crate::read(element)),
-            Some((NS_XVML, "LCT")) => Self::CallbackType(crate::read(element)),
-            Some((NS_XVML, "FmlaPict")) => Self::CameraSourceRange(crate::read(element)),
-            Some((NS_XVML, "Camera")) => Self::CameraTool(crate::read(element)),
-            Some((NS_XVML, "Cancel")) => Self::CancelButton(crate::read(element)),
-            Some((NS_XVML, "Checked")) => Self::Checked(crate::read(element)),
-            Some((NS_XVML, "CF")) => Self::ClipboardFormat(crate::read(element)),
-            Some((NS_XVML, "Column")) => Self::CommentColumnTarget(crate::read(element)),
-            Some((NS_XVML, "Row")) => Self::CommentRowTarget(crate::read(element)),
-            Some((NS_XVML, "Visible")) => Self::CommentVisibilityToggle(crate::read(element)),
-            Some((NS_XVML, "ColHidden")) => Self::CommentsColumnIsHidden(crate::read(element)),
-            Some((NS_XVML, "RowHidden")) => Self::CommentsRowIsHidden(crate::read(element)),
-            Some((NS_XVML, "Default")) => Self::DefaultButton(crate::read(element)),
-            Some((NS_XVML, "DefaultSize")) => Self::DefaultSizeToggle(crate::read(element)),
-            Some((NS_XVML, "NoThreeD")) => Self::Disable3DNoThreeD(crate::read(element)),
-            Some((NS_XVML, "NoThreeD2")) => Self::Disable3DNoThreeD2(crate::read(element)),
-            Some((NS_XVML, "Dismiss")) => Self::DismissButton(crate::read(element)),
-            Some((NS_XVML, "Colored")) => Self::DropdownColorToggle(crate::read(element)),
-            Some((NS_XVML, "DropLines")) => Self::DropdownMaximumLines(crate::read(element)),
-            Some((NS_XVML, "DropStyle")) => Self::DropdownStyle(crate::read(element)),
-            Some((NS_XVML, "DDE")) => Self::DynamicDataExchange(crate::read(element)),
-            Some((NS_XVML, "MapOCX")) => Self::EmbeddedControl(crate::read(element)),
-            Some((NS_XVML, "JustLastX")) => Self::FarEastAlignmentToggle(crate::read(element)),
-            Some((NS_XVML, "FirstButton")) => Self::FirstRadioButton(crate::read(element)),
-            Some((NS_XVML, "AutoScale")) => Self::FontAutoScale(crate::read(element)),
-            Some((NS_XVML, "ScriptExtended")) => Self::HTMLScriptAttributes(crate::read(element)),
-            Some((NS_XVML, "ScriptLanguage")) => Self::HTMLScriptLanguage(crate::read(element)),
-            Some((NS_XVML, "ScriptLocation")) => Self::HTMLScriptLocation(crate::read(element)),
-            Some((NS_XVML, "ScriptText")) => Self::HTMLScriptText(crate::read(element)),
-            Some((NS_XVML, "Help")) => Self::HelpButton(crate::read(element)),
-            Some((NS_XVML, "TextHAlign")) => Self::HorizontalTextAlignment(crate::read(element)),
-            Some((NS_XVML, "FmlaLink")) => Self::LinkedFormula(crate::read(element)),
-            Some((NS_XVML, "FmlaGroup")) => Self::LinkedFormulaGroupBox(crate::read(element)),
-            Some((NS_XVML, "FmlaRange")) => Self::ListItemsSourceRange(crate::read(element)),
-            Some((NS_XVML, "Locked")) => Self::LockToggle(crate::read(element)),
-            Some((NS_XVML, "Disabled")) => Self::MacroDisableToggle(crate::read(element)),
-            Some((NS_XVML, "WidthMin")) => Self::MinimumWidth(crate::read(element)),
-            Some((NS_XVML, "MoveWithCells")) => Self::MoveWithCells(crate::read(element)),
-            Some((NS_XVML, "MultiLine")) => Self::MultiLine(crate::read(element)),
-            Some((NS_XVML, "MultiSel")) => Self::MultipleSelections(crate::read(element)),
-            Some((NS_XVML, "ListItem")) => Self::NonLinkedListItem(crate::read(element)),
-            Some((NS_XVML, "SecretEdit")) => Self::PasswordEdit(crate::read(element)),
-            Some((NS_XVML, "Accel")) => Self::PrimaryKeyboardAccelerator(crate::read(element)),
-            Some((NS_XVML, "PrintObject")) => Self::PrintToggle(crate::read(element)),
-            Some((NS_XVML, "RecalcAlways")) => Self::RecalculationToggle(crate::read(element)),
-            Some((NS_XVML, "FmlaMacro")) => Self::ReferenceToCustomFunction(crate::read(element)),
-            Some((NS_XVML, "SizeWithCells")) => Self::ResizeWithCells(crate::read(element)),
-            Some((NS_XVML, "Inc")) => Self::ScrollBarIncrement(crate::read(element)),
-            Some((NS_XVML, "Max")) => Self::ScrollBarMaximum(crate::read(element)),
-            Some((NS_XVML, "Min")) => Self::ScrollBarMinimum(crate::read(element)),
-            Some((NS_XVML, "Horiz")) => Self::ScrollBarOrientation(crate::read(element)),
-            Some((NS_XVML, "Page")) => Self::ScrollBarPageIncrement(crate::read(element)),
-            Some((NS_XVML, "Val")) => Self::ScrollBarPosition(crate::read(element)),
-            Some((NS_XVML, "Dx")) => Self::ScrollBarWidth(crate::read(element)),
-            Some((NS_XVML, "Accel2")) => Self::SecondaryKeyboardAccelerator(crate::read(element)),
-            Some((NS_XVML, "Sel")) => Self::SelectedEntry(crate::read(element)),
-            Some((NS_XVML, "SelType")) => Self::SelectionType(crate::read(element)),
-            Some((NS_XVML, "FmlaTxbx")) => Self::TextFormula(crate::read(element)),
-            Some((NS_XVML, "LockText")) => Self::TextLock(crate::read(element)),
-            Some((NS_XVML, "UIObj")) => Self::UIObjectToggle(crate::read(element)),
-            Some((NS_XVML, "ValidIds")) => Self::ValidID(crate::read(element)),
-            Some((NS_XVML, "VTEdit")) => Self::ValidationType(crate::read(element)),
-            Some((NS_XVML, "VScroll")) => Self::VerticalScroll(crate::read(element)),
-            Some((NS_XVML, "TextVAlign")) => Self::VerticalTextAlignment(crate::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: crate::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_XVML, "Anchor")) => Self::Anchor(item.read()),
+            Some((NS_XVML, "AutoFill")) => Self::AutoFill(item.read()),
+            Some((NS_XVML, "AutoLine")) => Self::AutoLine(item.read()),
+            Some((NS_XVML, "AutoPict")) => Self::AutomaticallySize(item.read()),
+            Some((NS_XVML, "LCT")) => Self::CallbackType(item.read()),
+            Some((NS_XVML, "FmlaPict")) => Self::CameraSourceRange(item.read()),
+            Some((NS_XVML, "Camera")) => Self::CameraTool(item.read()),
+            Some((NS_XVML, "Cancel")) => Self::CancelButton(item.read()),
+            Some((NS_XVML, "Checked")) => Self::Checked(item.read()),
+            Some((NS_XVML, "CF")) => Self::ClipboardFormat(item.read()),
+            Some((NS_XVML, "Column")) => Self::CommentColumnTarget(item.read()),
+            Some((NS_XVML, "Row")) => Self::CommentRowTarget(item.read()),
+            Some((NS_XVML, "Visible")) => Self::CommentVisibilityToggle(item.read()),
+            Some((NS_XVML, "ColHidden")) => Self::CommentsColumnIsHidden(item.read()),
+            Some((NS_XVML, "RowHidden")) => Self::CommentsRowIsHidden(item.read()),
+            Some((NS_XVML, "Default")) => Self::DefaultButton(item.read()),
+            Some((NS_XVML, "DefaultSize")) => Self::DefaultSizeToggle(item.read()),
+            Some((NS_XVML, "NoThreeD")) => Self::Disable3DNoThreeD(item.read()),
+            Some((NS_XVML, "NoThreeD2")) => Self::Disable3DNoThreeD2(item.read()),
+            Some((NS_XVML, "Dismiss")) => Self::DismissButton(item.read()),
+            Some((NS_XVML, "Colored")) => Self::DropdownColorToggle(item.read()),
+            Some((NS_XVML, "DropLines")) => Self::DropdownMaximumLines(item.read()),
+            Some((NS_XVML, "DropStyle")) => Self::DropdownStyle(item.read()),
+            Some((NS_XVML, "DDE")) => Self::DynamicDataExchange(item.read()),
+            Some((NS_XVML, "MapOCX")) => Self::EmbeddedControl(item.read()),
+            Some((NS_XVML, "JustLastX")) => Self::FarEastAlignmentToggle(item.read()),
+            Some((NS_XVML, "FirstButton")) => Self::FirstRadioButton(item.read()),
+            Some((NS_XVML, "AutoScale")) => Self::FontAutoScale(item.read()),
+            Some((NS_XVML, "ScriptExtended")) => Self::HTMLScriptAttributes(item.read()),
+            Some((NS_XVML, "ScriptLanguage")) => Self::HTMLScriptLanguage(item.read()),
+            Some((NS_XVML, "ScriptLocation")) => Self::HTMLScriptLocation(item.read()),
+            Some((NS_XVML, "ScriptText")) => Self::HTMLScriptText(item.read()),
+            Some((NS_XVML, "Help")) => Self::HelpButton(item.read()),
+            Some((NS_XVML, "TextHAlign")) => Self::HorizontalTextAlignment(item.read()),
+            Some((NS_XVML, "FmlaLink")) => Self::LinkedFormula(item.read()),
+            Some((NS_XVML, "FmlaGroup")) => Self::LinkedFormulaGroupBox(item.read()),
+            Some((NS_XVML, "FmlaRange")) => Self::ListItemsSourceRange(item.read()),
+            Some((NS_XVML, "Locked")) => Self::LockToggle(item.read()),
+            Some((NS_XVML, "Disabled")) => Self::MacroDisableToggle(item.read()),
+            Some((NS_XVML, "WidthMin")) => Self::MinimumWidth(item.read()),
+            Some((NS_XVML, "MoveWithCells")) => Self::MoveWithCells(item.read()),
+            Some((NS_XVML, "MultiLine")) => Self::MultiLine(item.read()),
+            Some((NS_XVML, "MultiSel")) => Self::MultipleSelections(item.read()),
+            Some((NS_XVML, "ListItem")) => Self::NonLinkedListItem(item.read()),
+            Some((NS_XVML, "SecretEdit")) => Self::PasswordEdit(item.read()),
+            Some((NS_XVML, "Accel")) => Self::PrimaryKeyboardAccelerator(item.read()),
+            Some((NS_XVML, "PrintObject")) => Self::PrintToggle(item.read()),
+            Some((NS_XVML, "RecalcAlways")) => Self::RecalculationToggle(item.read()),
+            Some((NS_XVML, "FmlaMacro")) => Self::ReferenceToCustomFunction(item.read()),
+            Some((NS_XVML, "SizeWithCells")) => Self::ResizeWithCells(item.read()),
+            Some((NS_XVML, "Inc")) => Self::ScrollBarIncrement(item.read()),
+            Some((NS_XVML, "Max")) => Self::ScrollBarMaximum(item.read()),
+            Some((NS_XVML, "Min")) => Self::ScrollBarMinimum(item.read()),
+            Some((NS_XVML, "Horiz")) => Self::ScrollBarOrientation(item.read()),
+            Some((NS_XVML, "Page")) => Self::ScrollBarPageIncrement(item.read()),
+            Some((NS_XVML, "Val")) => Self::ScrollBarPosition(item.read()),
+            Some((NS_XVML, "Dx")) => Self::ScrollBarWidth(item.read()),
+            Some((NS_XVML, "Accel2")) => Self::SecondaryKeyboardAccelerator(item.read()),
+            Some((NS_XVML, "Sel")) => Self::SelectedEntry(item.read()),
+            Some((NS_XVML, "SelType")) => Self::SelectionType(item.read()),
+            Some((NS_XVML, "FmlaTxbx")) => Self::TextFormula(item.read()),
+            Some((NS_XVML, "LockText")) => Self::TextLock(item.read()),
+            Some((NS_XVML, "UIObj")) => Self::UIObjectToggle(item.read()),
+            Some((NS_XVML, "ValidIds")) => Self::ValidID(item.read()),
+            Some((NS_XVML, "VTEdit")) => Self::ValidationType(item.read()),
+            Some((NS_XVML, "VScroll")) => Self::VerticalScroll(item.read()),
+            Some((NS_XVML, "TextVAlign")) => Self::VerticalTextAlignment(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -2573,8 +2573,8 @@ impl<X: UserData> AutoFillWith<X> {
 }
 
 impl crate::Read for AutoFill {
-    fn read(element: &Element) -> Self {
-        read::auto_fill(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::auto_fill_from_item(item)
     }
 }
 
@@ -2611,8 +2611,8 @@ impl<X: UserData> AutoLineWith<X> {
 }
 
 impl crate::Read for AutoLine {
-    fn read(element: &Element) -> Self {
-        read::auto_line(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::auto_line_from_item(item)
     }
 }
 
@@ -2649,8 +2649,8 @@ impl<X: UserData> AutomaticallySizeWith<X> {
 }
 
 impl crate::Read for AutomaticallySize {
-    fn read(element: &Element) -> Self {
-        read::automatically_size(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::automatically_size_from_item(item)
     }
 }
 
@@ -2687,8 +2687,8 @@ impl<X: UserData> CallbackTypeWith<X> {
 }
 
 impl crate::Read for CallbackType {
-    fn read(element: &Element) -> Self {
-        read::callback_type(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::callback_type_from_item(item)
     }
 }
 
@@ -2725,8 +2725,8 @@ impl<X: UserData> CameraSourceRangeWith<X> {
 }
 
 impl crate::Read for CameraSourceRange {
-    fn read(element: &Element) -> Self {
-        read::camera_source_range(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::camera_source_range_from_item(item)
     }
 }
 
@@ -2763,8 +2763,8 @@ impl<X: UserData> CameraToolWith<X> {
 }
 
 impl crate::Read for CameraTool {
-    fn read(element: &Element) -> Self {
-        read::camera_tool(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::camera_tool_from_item(item)
     }
 }
 
@@ -2801,8 +2801,8 @@ impl<X: UserData> CancelButtonWith<X> {
 }
 
 impl crate::Read for CancelButton {
-    fn read(element: &Element) -> Self {
-        read::cancel_button(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::cancel_button_from_item(item)
     }
 }
 
@@ -2839,8 +2839,8 @@ impl<X: UserData> CheckedWith<X> {
 }
 
 impl crate::Read for Checked {
-    fn read(element: &Element) -> Self {
-        read::checked(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::checked_from_item(item)
     }
 }
 
@@ -2877,8 +2877,8 @@ impl<X: UserData> ClipboardFormatWith<X> {
 }
 
 impl crate::Read for ClipboardFormat {
-    fn read(element: &Element) -> Self {
-        read::clipboard_format(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::clipboard_format_from_item(item)
     }
 }
 
@@ -2915,8 +2915,8 @@ impl<X: UserData> CommentColumnTargetWith<X> {
 }
 
 impl crate::Read for CommentColumnTarget {
-    fn read(element: &Element) -> Self {
-        read::comment_column_target(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::comment_column_target_from_item(item)
     }
 }
 
@@ -2953,8 +2953,8 @@ impl<X: UserData> CommentRowTargetWith<X> {
 }
 
 impl crate::Read for CommentRowTarget {
-    fn read(element: &Element) -> Self {
-        read::comment_row_target(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::comment_row_target_from_item(item)
     }
 }
 
@@ -2991,8 +2991,8 @@ impl<X: UserData> CommentVisibilityToggleWith<X> {
 }
 
 impl crate::Read for CommentVisibilityToggle {
-    fn read(element: &Element) -> Self {
-        read::comment_visibility_toggle(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::comment_visibility_toggle_from_item(item)
     }
 }
 
@@ -3029,8 +3029,8 @@ impl<X: UserData> CommentsColumnIsHiddenWith<X> {
 }
 
 impl crate::Read for CommentsColumnIsHidden {
-    fn read(element: &Element) -> Self {
-        read::comments_column_is_hidden(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::comments_column_is_hidden_from_item(item)
     }
 }
 
@@ -3067,8 +3067,8 @@ impl<X: UserData> CommentsRowIsHiddenWith<X> {
 }
 
 impl crate::Read for CommentsRowIsHidden {
-    fn read(element: &Element) -> Self {
-        read::comments_row_is_hidden(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::comments_row_is_hidden_from_item(item)
     }
 }
 
@@ -3105,8 +3105,8 @@ impl<X: UserData> DefaultButtonWith<X> {
 }
 
 impl crate::Read for DefaultButton {
-    fn read(element: &Element) -> Self {
-        read::default_button(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::default_button_from_item(item)
     }
 }
 
@@ -3143,8 +3143,8 @@ impl<X: UserData> DefaultSizeToggleWith<X> {
 }
 
 impl crate::Read for DefaultSizeToggle {
-    fn read(element: &Element) -> Self {
-        read::default_size_toggle(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::default_size_toggle_from_item(item)
     }
 }
 
@@ -3181,8 +3181,8 @@ impl<X: UserData> Disable3DNoThreeDWith<X> {
 }
 
 impl crate::Read for Disable3DNoThreeD {
-    fn read(element: &Element) -> Self {
-        read::disable3d_no_three_d(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::disable3d_no_three_d_from_item(item)
     }
 }
 
@@ -3219,8 +3219,8 @@ impl<X: UserData> Disable3DNoThreeD2With<X> {
 }
 
 impl crate::Read for Disable3DNoThreeD2 {
-    fn read(element: &Element) -> Self {
-        read::disable3d_no_three_d2(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::disable3d_no_three_d2_from_item(item)
     }
 }
 
@@ -3257,8 +3257,8 @@ impl<X: UserData> DismissButtonWith<X> {
 }
 
 impl crate::Read for DismissButton {
-    fn read(element: &Element) -> Self {
-        read::dismiss_button(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::dismiss_button_from_item(item)
     }
 }
 
@@ -3295,8 +3295,8 @@ impl<X: UserData> DropdownColorToggleWith<X> {
 }
 
 impl crate::Read for DropdownColorToggle {
-    fn read(element: &Element) -> Self {
-        read::dropdown_color_toggle(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::dropdown_color_toggle_from_item(item)
     }
 }
 
@@ -3333,8 +3333,8 @@ impl<X: UserData> DropdownMaximumLinesWith<X> {
 }
 
 impl crate::Read for DropdownMaximumLines {
-    fn read(element: &Element) -> Self {
-        read::dropdown_maximum_lines(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::dropdown_maximum_lines_from_item(item)
     }
 }
 
@@ -3371,8 +3371,8 @@ impl<X: UserData> DropdownStyleWith<X> {
 }
 
 impl crate::Read for DropdownStyle {
-    fn read(element: &Element) -> Self {
-        read::dropdown_style(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::dropdown_style_from_item(item)
     }
 }
 
@@ -3409,8 +3409,8 @@ impl<X: UserData> DynamicDataExchangeWith<X> {
 }
 
 impl crate::Read for DynamicDataExchange {
-    fn read(element: &Element) -> Self {
-        read::dynamic_data_exchange(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::dynamic_data_exchange_from_item(item)
     }
 }
 
@@ -3447,8 +3447,8 @@ impl<X: UserData> EmbeddedControlWith<X> {
 }
 
 impl crate::Read for EmbeddedControl {
-    fn read(element: &Element) -> Self {
-        read::embedded_control(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::embedded_control_from_item(item)
     }
 }
 
@@ -3485,8 +3485,8 @@ impl<X: UserData> FarEastAlignmentToggleWith<X> {
 }
 
 impl crate::Read for FarEastAlignmentToggle {
-    fn read(element: &Element) -> Self {
-        read::far_east_alignment_toggle(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::far_east_alignment_toggle_from_item(item)
     }
 }
 
@@ -3523,8 +3523,8 @@ impl<X: UserData> FirstRadioButtonWith<X> {
 }
 
 impl crate::Read for FirstRadioButton {
-    fn read(element: &Element) -> Self {
-        read::first_radio_button(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::first_radio_button_from_item(item)
     }
 }
 
@@ -3561,8 +3561,8 @@ impl<X: UserData> FontAutoScaleWith<X> {
 }
 
 impl crate::Read for FontAutoScale {
-    fn read(element: &Element) -> Self {
-        read::font_auto_scale(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::font_auto_scale_from_item(item)
     }
 }
 
@@ -3599,8 +3599,8 @@ impl<X: UserData> HTMLScriptAttributesWith<X> {
 }
 
 impl crate::Read for HTMLScriptAttributes {
-    fn read(element: &Element) -> Self {
-        read::html_script_attributes(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::html_script_attributes_from_item(item)
     }
 }
 
@@ -3637,8 +3637,8 @@ impl<X: UserData> HTMLScriptLanguageWith<X> {
 }
 
 impl crate::Read for HTMLScriptLanguage {
-    fn read(element: &Element) -> Self {
-        read::html_script_language(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::html_script_language_from_item(item)
     }
 }
 
@@ -3675,8 +3675,8 @@ impl<X: UserData> HTMLScriptLocationWith<X> {
 }
 
 impl crate::Read for HTMLScriptLocation {
-    fn read(element: &Element) -> Self {
-        read::html_script_location(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::html_script_location_from_item(item)
     }
 }
 
@@ -3713,8 +3713,8 @@ impl<X: UserData> HTMLScriptTextWith<X> {
 }
 
 impl crate::Read for HTMLScriptText {
-    fn read(element: &Element) -> Self {
-        read::html_script_text(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::html_script_text_from_item(item)
     }
 }
 
@@ -3751,8 +3751,8 @@ impl<X: UserData> HelpButtonWith<X> {
 }
 
 impl crate::Read for HelpButton {
-    fn read(element: &Element) -> Self {
-        read::help_button(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::help_button_from_item(item)
     }
 }
 
@@ -3789,8 +3789,8 @@ impl<X: UserData> HorizontalTextAlignmentWith<X> {
 }
 
 impl crate::Read for HorizontalTextAlignment {
-    fn read(element: &Element) -> Self {
-        read::horizontal_text_alignment(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::horizontal_text_alignment_from_item(item)
     }
 }
 
@@ -3827,8 +3827,8 @@ impl<X: UserData> LinkedFormulaWith<X> {
 }
 
 impl crate::Read for LinkedFormula {
-    fn read(element: &Element) -> Self {
-        read::linked_formula(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::linked_formula_from_item(item)
     }
 }
 
@@ -3865,8 +3865,8 @@ impl<X: UserData> LinkedFormulaGroupBoxWith<X> {
 }
 
 impl crate::Read for LinkedFormulaGroupBox {
-    fn read(element: &Element) -> Self {
-        read::linked_formula_group_box(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::linked_formula_group_box_from_item(item)
     }
 }
 
@@ -3903,8 +3903,8 @@ impl<X: UserData> ListItemsSourceRangeWith<X> {
 }
 
 impl crate::Read for ListItemsSourceRange {
-    fn read(element: &Element) -> Self {
-        read::list_items_source_range(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::list_items_source_range_from_item(item)
     }
 }
 
@@ -3941,8 +3941,8 @@ impl<X: UserData> LockToggleWith<X> {
 }
 
 impl crate::Read for LockToggle {
-    fn read(element: &Element) -> Self {
-        read::lock_toggle(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::lock_toggle_from_item(item)
     }
 }
 
@@ -3979,8 +3979,8 @@ impl<X: UserData> MacroDisableToggleWith<X> {
 }
 
 impl crate::Read for MacroDisableToggle {
-    fn read(element: &Element) -> Self {
-        read::macro_disable_toggle(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::macro_disable_toggle_from_item(item)
     }
 }
 
@@ -4017,8 +4017,8 @@ impl<X: UserData> MinimumWidthWith<X> {
 }
 
 impl crate::Read for MinimumWidth {
-    fn read(element: &Element) -> Self {
-        read::minimum_width(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::minimum_width_from_item(item)
     }
 }
 
@@ -4055,8 +4055,8 @@ impl<X: UserData> MoveWithCellsWith<X> {
 }
 
 impl crate::Read for MoveWithCells {
-    fn read(element: &Element) -> Self {
-        read::move_with_cells(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::move_with_cells_from_item(item)
     }
 }
 
@@ -4093,8 +4093,8 @@ impl<X: UserData> MultiLineWith<X> {
 }
 
 impl crate::Read for MultiLine {
-    fn read(element: &Element) -> Self {
-        read::multi_line(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::multi_line_from_item(item)
     }
 }
 
@@ -4131,8 +4131,8 @@ impl<X: UserData> MultipleSelectionsWith<X> {
 }
 
 impl crate::Read for MultipleSelections {
-    fn read(element: &Element) -> Self {
-        read::multiple_selections(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::multiple_selections_from_item(item)
     }
 }
 
@@ -4169,8 +4169,8 @@ impl<X: UserData> NonLinkedListItemWith<X> {
 }
 
 impl crate::Read for NonLinkedListItem {
-    fn read(element: &Element) -> Self {
-        read::non_linked_list_item(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::non_linked_list_item_from_item(item)
     }
 }
 
@@ -4273,8 +4273,8 @@ impl<X: UserData> PasswordEditWith<X> {
 }
 
 impl crate::Read for PasswordEdit {
-    fn read(element: &Element) -> Self {
-        read::password_edit(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::password_edit_from_item(item)
     }
 }
 
@@ -4311,8 +4311,8 @@ impl<X: UserData> PrimaryKeyboardAcceleratorWith<X> {
 }
 
 impl crate::Read for PrimaryKeyboardAccelerator {
-    fn read(element: &Element) -> Self {
-        read::primary_keyboard_accelerator(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::primary_keyboard_accelerator_from_item(item)
     }
 }
 
@@ -4349,8 +4349,8 @@ impl<X: UserData> PrintToggleWith<X> {
 }
 
 impl crate::Read for PrintToggle {
-    fn read(element: &Element) -> Self {
-        read::print_toggle(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::print_toggle_from_item(item)
     }
 }
 
@@ -4387,8 +4387,8 @@ impl<X: UserData> RecalculationToggleWith<X> {
 }
 
 impl crate::Read for RecalculationToggle {
-    fn read(element: &Element) -> Self {
-        read::recalculation_toggle(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::recalculation_toggle_from_item(item)
     }
 }
 
@@ -4425,8 +4425,8 @@ impl<X: UserData> ReferenceToCustomFunctionWith<X> {
 }
 
 impl crate::Read for ReferenceToCustomFunction {
-    fn read(element: &Element) -> Self {
-        read::reference_to_custom_function(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::reference_to_custom_function_from_item(item)
     }
 }
 
@@ -4463,8 +4463,8 @@ impl<X: UserData> ResizeWithCellsWith<X> {
 }
 
 impl crate::Read for ResizeWithCells {
-    fn read(element: &Element) -> Self {
-        read::resize_with_cells(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::resize_with_cells_from_item(item)
     }
 }
 
@@ -4501,8 +4501,8 @@ impl<X: UserData> ScrollBarIncrementWith<X> {
 }
 
 impl crate::Read for ScrollBarIncrement {
-    fn read(element: &Element) -> Self {
-        read::scroll_bar_increment(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::scroll_bar_increment_from_item(item)
     }
 }
 
@@ -4539,8 +4539,8 @@ impl<X: UserData> ScrollBarMaximumWith<X> {
 }
 
 impl crate::Read for ScrollBarMaximum {
-    fn read(element: &Element) -> Self {
-        read::scroll_bar_maximum(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::scroll_bar_maximum_from_item(item)
     }
 }
 
@@ -4577,8 +4577,8 @@ impl<X: UserData> ScrollBarMinimumWith<X> {
 }
 
 impl crate::Read for ScrollBarMinimum {
-    fn read(element: &Element) -> Self {
-        read::scroll_bar_minimum(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::scroll_bar_minimum_from_item(item)
     }
 }
 
@@ -4615,8 +4615,8 @@ impl<X: UserData> ScrollBarOrientationWith<X> {
 }
 
 impl crate::Read for ScrollBarOrientation {
-    fn read(element: &Element) -> Self {
-        read::scroll_bar_orientation(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::scroll_bar_orientation_from_item(item)
     }
 }
 
@@ -4653,8 +4653,8 @@ impl<X: UserData> ScrollBarPageIncrementWith<X> {
 }
 
 impl crate::Read for ScrollBarPageIncrement {
-    fn read(element: &Element) -> Self {
-        read::scroll_bar_page_increment(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::scroll_bar_page_increment_from_item(item)
     }
 }
 
@@ -4691,8 +4691,8 @@ impl<X: UserData> ScrollBarPositionWith<X> {
 }
 
 impl crate::Read for ScrollBarPosition {
-    fn read(element: &Element) -> Self {
-        read::scroll_bar_position(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::scroll_bar_position_from_item(item)
     }
 }
 
@@ -4729,8 +4729,8 @@ impl<X: UserData> ScrollBarWidthWith<X> {
 }
 
 impl crate::Read for ScrollBarWidth {
-    fn read(element: &Element) -> Self {
-        read::scroll_bar_width(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::scroll_bar_width_from_item(item)
     }
 }
 
@@ -4767,8 +4767,8 @@ impl<X: UserData> SecondaryKeyboardAcceleratorWith<X> {
 }
 
 impl crate::Read for SecondaryKeyboardAccelerator {
-    fn read(element: &Element) -> Self {
-        read::secondary_keyboard_accelerator(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::secondary_keyboard_accelerator_from_item(item)
     }
 }
 
@@ -4805,8 +4805,8 @@ impl<X: UserData> SelectedEntryWith<X> {
 }
 
 impl crate::Read for SelectedEntry {
-    fn read(element: &Element) -> Self {
-        read::selected_entry(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::selected_entry_from_item(item)
     }
 }
 
@@ -4843,8 +4843,8 @@ impl<X: UserData> SelectionTypeWith<X> {
 }
 
 impl crate::Read for SelectionType {
-    fn read(element: &Element) -> Self {
-        read::selection_type(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::selection_type_from_item(item)
     }
 }
 
@@ -4881,8 +4881,8 @@ impl<X: UserData> TextFormulaWith<X> {
 }
 
 impl crate::Read for TextFormula {
-    fn read(element: &Element) -> Self {
-        read::text_formula(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::text_formula_from_item(item)
     }
 }
 
@@ -4919,8 +4919,8 @@ impl<X: UserData> TextLockWith<X> {
 }
 
 impl crate::Read for TextLock {
-    fn read(element: &Element) -> Self {
-        read::text_lock(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::text_lock_from_item(item)
     }
 }
 
@@ -4957,8 +4957,8 @@ impl<X: UserData> UIObjectToggleWith<X> {
 }
 
 impl crate::Read for UIObjectToggle {
-    fn read(element: &Element) -> Self {
-        read::ui_object_toggle(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::ui_object_toggle_from_item(item)
     }
 }
 
@@ -4995,8 +4995,8 @@ impl<X: UserData> ValidIDWith<X> {
 }
 
 impl crate::Read for ValidID {
-    fn read(element: &Element) -> Self {
-        read::valid_id(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::valid_id_from_item(item)
     }
 }
 
@@ -5033,8 +5033,8 @@ impl<X: UserData> ValidationTypeWith<X> {
 }
 
 impl crate::Read for ValidationType {
-    fn read(element: &Element) -> Self {
-        read::validation_type(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::validation_type_from_item(item)
     }
 }
 
@@ -5071,8 +5071,8 @@ impl<X: UserData> VerticalScrollWith<X> {
 }
 
 impl crate::Read for VerticalScroll {
-    fn read(element: &Element) -> Self {
-        read::vertical_scroll(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::vertical_scroll_from_item(item)
     }
 }
 
@@ -5109,8 +5109,8 @@ impl<X: UserData> VerticalTextAlignmentWith<X> {
 }
 
 impl crate::Read for VerticalTextAlignment {
-    fn read(element: &Element) -> Self {
-        read::vertical_text_alignment(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::vertical_text_alignment_from_item(item)
     }
 }
 

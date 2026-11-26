@@ -222,7 +222,6 @@ pub mod read;
 pub mod write;
 
 use officekit_markup_base::UserData;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -520,8 +519,8 @@ impl<X: UserData> NonVisualDrawingPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for NonVisualDrawingProperties {
-    fn read(element: &Element) -> Self {
-        read::non_visual_drawing_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::non_visual_drawing_properties_from_item(item)
     }
 }
 
@@ -566,8 +565,8 @@ impl<X: UserData> NonVisualPictureDrawingPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for NonVisualPictureDrawingProperties {
-    fn read(element: &Element) -> Self {
-        read::non_visual_picture_drawing_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::non_visual_picture_drawing_properties_from_item(item)
     }
 }
 
@@ -608,8 +607,8 @@ impl<X: UserData> NonVisualPicturePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for NonVisualPictureProperties {
-    fn read(element: &Element) -> Self {
-        read::non_visual_picture_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::non_visual_picture_properties_from_item(item)
     }
 }
 
@@ -662,8 +661,8 @@ impl<X: UserData> PictureWith<X> {
 }
 
 impl officekit_markup_base::Read for Picture {
-    fn read(element: &Element) -> Self {
-        read::picture(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::picture_from_item(item)
     }
 }
 
@@ -714,8 +713,8 @@ impl<X: UserData> PictureFillWith<X> {
 }
 
 impl officekit_markup_base::Read for PictureFill {
-    fn read(element: &Element) -> Self {
-        read::picture_fill(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::picture_fill_from_item(item)
     }
 }
 
@@ -784,8 +783,8 @@ impl<X: UserData> ShapePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for ShapeProperties {
-    fn read(element: &Element) -> Self {
-        read::shape_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shape_properties_from_item(item)
     }
 }
 

@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `xlwcv:version` into a `Version`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn version(element: &Element) -> super::Version {
+    version_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlwcv:version` into a `Version` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn version_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Version {
+    version_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlwcv:version` into a `Version` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn version_from_item(item: officekit_markup_base::Item<'_>) -> super::Version {
     let mut node = super::Version::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::VERSION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::VERSION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.warn_below_version),

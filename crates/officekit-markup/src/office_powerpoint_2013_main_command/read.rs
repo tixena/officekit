@@ -221,8 +221,27 @@ use officekit_xml::element::Element;
 /// Read `pc:animEffectMkLst` into a `AnimEffectMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn anim_effect_mk_lst(element: &Element) -> super::AnimEffectMkLst {
+    anim_effect_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:animEffectMkLst` into a `AnimEffectMkLst` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn anim_effect_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AnimEffectMkLst {
+    anim_effect_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:animEffectMkLst` into a `AnimEffectMkLst` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn anim_effect_mk_lst_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::AnimEffectMkLst {
     let mut node = super::AnimEffectMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::ANIM_EFFECT_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ANIM_EFFECT_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -235,9 +254,28 @@ pub fn anim_effect_mk_lst(element: &Element) -> super::AnimEffectMkLst {
 /// Read `pc:animEffectParentMkLst` into a `AnimEffectParentMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn anim_effect_parent_mk_lst(element: &Element) -> super::AnimEffectParentMkLst {
+    anim_effect_parent_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:animEffectParentMkLst` into a `AnimEffectParentMkLst` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn anim_effect_parent_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AnimEffectParentMkLst {
+    anim_effect_parent_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:animEffectParentMkLst` into a `AnimEffectParentMkLst` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn anim_effect_parent_mk_lst_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::AnimEffectParentMkLst {
     let mut node = super::AnimEffectParentMkLst::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::ANIM_EFFECT_PARENT_MK_LST_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::ANIM_EFFECT_PARENT_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -250,8 +288,24 @@ pub fn anim_effect_parent_mk_lst(element: &Element) -> super::AnimEffectParentMk
 /// Read `pc:cXmlMkLst` into a `CXmlMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_xml_mk_lst(element: &Element) -> super::CXmlMkLst {
+    c_xml_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:cXmlMkLst` into a `CXmlMkLst` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_xml_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CXmlMkLst {
+    c_xml_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:cXmlMkLst` into a `CXmlMkLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_xml_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::CXmlMkLst {
     let mut node = super::CXmlMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::C_XML_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::C_XML_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -264,8 +318,25 @@ pub fn c_xml_mk_lst(element: &Element) -> super::CXmlMkLst {
 /// Read `pc:cmAuthorMkLst` into a `CmAuthorMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cm_author_mk_lst(element: &Element) -> super::CmAuthorMkLst {
+    cm_author_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:cmAuthorMkLst` into a `CmAuthorMkLst` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn cm_author_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CmAuthorMkLst {
+    cm_author_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:cmAuthorMkLst` into a `CmAuthorMkLst` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn cm_author_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::CmAuthorMkLst {
     let mut node = super::CmAuthorMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CM_AUTHOR_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CM_AUTHOR_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -278,8 +349,23 @@ pub fn cm_author_mk_lst(element: &Element) -> super::CmAuthorMkLst {
 /// Read `pc:cmMkLst` into a `CmMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cm_mk_lst(element: &Element) -> super::CmMkLst {
+    cm_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:cmMkLst` into a `CmMkLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn cm_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CmMkLst {
+    cm_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:cmMkLst` into a `CmMkLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn cm_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::CmMkLst {
     let mut node = super::CmMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CM_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CM_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -292,8 +378,25 @@ pub fn cm_mk_lst(element: &Element) -> super::CmMkLst {
 /// Read `pc:custShowMkLst` into a `CustShowMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cust_show_mk_lst(element: &Element) -> super::CustShowMkLst {
+    cust_show_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:custShowMkLst` into a `CustShowMkLst` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn cust_show_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CustShowMkLst {
+    cust_show_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:custShowMkLst` into a `CustShowMkLst` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn cust_show_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::CustShowMkLst {
     let mut node = super::CustShowMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CUST_SHOW_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CUST_SHOW_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -306,8 +409,25 @@ pub fn cust_show_mk_lst(element: &Element) -> super::CustShowMkLst {
 /// Read `pc:designTagMkLst` into a `DesignTagMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn design_tag_mk_lst(element: &Element) -> super::DesignTagMkLst {
+    design_tag_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:designTagMkLst` into a `DesignTagMkLst` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn design_tag_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DesignTagMkLst {
+    design_tag_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:designTagMkLst` into a `DesignTagMkLst` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn design_tag_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::DesignTagMkLst {
     let mut node = super::DesignTagMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DESIGN_TAG_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DESIGN_TAG_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -320,7 +440,22 @@ pub fn design_tag_mk_lst(element: &Element) -> super::DesignTagMkLst {
 /// Read `pc:docMk` into a `DocMk`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn doc_mk(element: &Element) -> super::DocMk {
-    let reader = officekit_markup_base::Reader::new(element, &super::DOC_MK_SHAPE);
+    doc_mk_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:docMk` into a `DocMk` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn doc_mk_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DocMk {
+    doc_mk_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:docMk` into a `DocMk` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn doc_mk_from_item(item: officekit_markup_base::Item<'_>) -> super::DocMk {
+    let reader = officekit_markup_base::Reader::of(item, &super::DOC_MK_SHAPE);
     super::DocMk {
         user_data: (),
         unknown: reader.finish(),
@@ -330,8 +465,23 @@ pub fn doc_mk(element: &Element) -> super::DocMk {
 /// Read `pc:docMkLst` into a `DocMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn doc_mk_lst(element: &Element) -> super::DocMkLst {
+    doc_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:docMkLst` into a `DocMkLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn doc_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DocMkLst {
+    doc_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:docMkLst` into a `DocMkLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn doc_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::DocMkLst {
     let mut node = super::DocMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DOC_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DOC_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -344,8 +494,24 @@ pub fn doc_mk_lst(element: &Element) -> super::DocMkLst {
 /// Read `pc:handoutMkLst` into a `HandoutMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn handout_mk_lst(element: &Element) -> super::HandoutMkLst {
+    handout_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:handoutMkLst` into a `HandoutMkLst` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn handout_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::HandoutMkLst {
+    handout_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:handoutMkLst` into a `HandoutMkLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn handout_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::HandoutMkLst {
     let mut node = super::HandoutMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::HANDOUT_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::HANDOUT_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -358,8 +524,27 @@ pub fn handout_mk_lst(element: &Element) -> super::HandoutMkLst {
 /// Read `pc:notesMasterMkLst` into a `NotesMasterMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_master_mk_lst(element: &Element) -> super::NotesMasterMkLst {
+    notes_master_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:notesMasterMkLst` into a `NotesMasterMkLst` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_master_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NotesMasterMkLst {
+    notes_master_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:notesMasterMkLst` into a `NotesMasterMkLst` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_master_mk_lst_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::NotesMasterMkLst {
     let mut node = super::NotesMasterMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NOTES_MASTER_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NOTES_MASTER_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -372,8 +557,24 @@ pub fn notes_master_mk_lst(element: &Element) -> super::NotesMasterMkLst {
 /// Read `pc:notesMkLst` into a `NotesMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_mk_lst(element: &Element) -> super::NotesMkLst {
+    notes_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:notesMkLst` into a `NotesMkLst` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NotesMkLst {
+    notes_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:notesMkLst` into a `NotesMkLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::NotesMkLst {
     let mut node = super::NotesMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NOTES_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NOTES_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -386,8 +587,25 @@ pub fn notes_mk_lst(element: &Element) -> super::NotesMkLst {
 /// Read `pc:notesTxtMkLst` into a `NotesTxtMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_txt_mk_lst(element: &Element) -> super::NotesTxtMkLst {
+    notes_txt_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:notesTxtMkLst` into a `NotesTxtMkLst` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_txt_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NotesTxtMkLst {
+    notes_txt_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:notesTxtMkLst` into a `NotesTxtMkLst` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn notes_txt_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::NotesTxtMkLst {
     let mut node = super::NotesTxtMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NOTES_TXT_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NOTES_TXT_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -400,9 +618,27 @@ pub fn notes_txt_mk_lst(element: &Element) -> super::NotesTxtMkLst {
 /// Read `pc:sectionLnkObjMkLst` into a `SectionLnkObjMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn section_lnk_obj_mk_lst(element: &Element) -> super::SectionLnkObjMkLst {
+    section_lnk_obj_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:sectionLnkObjMkLst` into a `SectionLnkObjMkLst` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn section_lnk_obj_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SectionLnkObjMkLst {
+    section_lnk_obj_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:sectionLnkObjMkLst` into a `SectionLnkObjMkLst` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn section_lnk_obj_mk_lst_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SectionLnkObjMkLst {
     let mut node = super::SectionLnkObjMkLst::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::SECTION_LNK_OBJ_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SECTION_LNK_OBJ_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -415,8 +651,24 @@ pub fn section_lnk_obj_mk_lst(element: &Element) -> super::SectionLnkObjMkLst {
 /// Read `pc:sectionMkLst` into a `SectionMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn section_mk_lst(element: &Element) -> super::SectionMkLst {
+    section_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:sectionMkLst` into a `SectionMkLst` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn section_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SectionMkLst {
+    section_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:sectionMkLst` into a `SectionMkLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn section_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::SectionMkLst {
     let mut node = super::SectionMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SECTION_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SECTION_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -429,8 +681,24 @@ pub fn section_mk_lst(element: &Element) -> super::SectionMkLst {
 /// Read `pc:sldBaseMkLst` into a `SldBaseMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sld_base_mk_lst(element: &Element) -> super::SldBaseMkLst {
+    sld_base_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:sldBaseMkLst` into a `SldBaseMkLst` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sld_base_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SldBaseMkLst {
+    sld_base_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:sldBaseMkLst` into a `SldBaseMkLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sld_base_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::SldBaseMkLst {
     let mut node = super::SldBaseMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SLD_BASE_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SLD_BASE_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -443,8 +711,25 @@ pub fn sld_base_mk_lst(element: &Element) -> super::SldBaseMkLst {
 /// Read `pc:sldLayoutMkLst` into a `SldLayoutMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sld_layout_mk_lst(element: &Element) -> super::SldLayoutMkLst {
+    sld_layout_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:sldLayoutMkLst` into a `SldLayoutMkLst` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sld_layout_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SldLayoutMkLst {
+    sld_layout_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:sldLayoutMkLst` into a `SldLayoutMkLst` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sld_layout_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::SldLayoutMkLst {
     let mut node = super::SldLayoutMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SLD_LAYOUT_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SLD_LAYOUT_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -457,8 +742,25 @@ pub fn sld_layout_mk_lst(element: &Element) -> super::SldLayoutMkLst {
 /// Read `pc:sldMasterMkLst` into a `SldMasterMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sld_master_mk_lst(element: &Element) -> super::SldMasterMkLst {
+    sld_master_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:sldMasterMkLst` into a `SldMasterMkLst` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sld_master_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SldMasterMkLst {
+    sld_master_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:sldMasterMkLst` into a `SldMasterMkLst` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sld_master_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::SldMasterMkLst {
     let mut node = super::SldMasterMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SLD_MASTER_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SLD_MASTER_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -471,8 +773,23 @@ pub fn sld_master_mk_lst(element: &Element) -> super::SldMasterMkLst {
 /// Read `pc:sldMk` into a `SldMk`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sld_mk(element: &Element) -> super::SldMk {
+    sld_mk_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:sldMk` into a `SldMk` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sld_mk_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SldMk {
+    sld_mk_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:sldMk` into a `SldMk` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sld_mk_from_item(item: officekit_markup_base::Item<'_>) -> super::SldMk {
     let mut node = super::SldMk::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SLD_MK_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SLD_MK_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.c_id),
@@ -487,8 +804,23 @@ pub fn sld_mk(element: &Element) -> super::SldMk {
 /// Read `pc:sldMkLst` into a `SldMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sld_mk_lst(element: &Element) -> super::SldMkLst {
+    sld_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:sldMkLst` into a `SldMkLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sld_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SldMkLst {
+    sld_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:sldMkLst` into a `SldMkLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sld_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::SldMkLst {
     let mut node = super::SldMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SLD_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SLD_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.doc_mk),
@@ -504,8 +836,24 @@ pub fn sld_mk_lst(element: &Element) -> super::SldMkLst {
 /// Read `pc:sldPosMkLst` into a `SldPosMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sld_pos_mk_lst(element: &Element) -> super::SldPosMkLst {
+    sld_pos_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:sldPosMkLst` into a `SldPosMkLst` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sld_pos_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SldPosMkLst {
+    sld_pos_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:sldPosMkLst` into a `SldPosMkLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sld_pos_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::SldPosMkLst {
     let mut node = super::SldPosMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SLD_POS_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SLD_POS_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -518,8 +866,23 @@ pub fn sld_pos_mk_lst(element: &Element) -> super::SldPosMkLst {
 /// Read `pc:tagMkLst` into a `TagMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tag_mk_lst(element: &Element) -> super::TagMkLst {
+    tag_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:tagMkLst` into a `TagMkLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tag_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TagMkLst {
+    tag_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:tagMkLst` into a `TagMkLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tag_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::TagMkLst {
     let mut node = super::TagMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TAG_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TAG_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -532,8 +895,24 @@ pub fn tag_mk_lst(element: &Element) -> super::TagMkLst {
 /// Read `pc:tkAppMkLst` into a `TkAppMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tk_app_mk_lst(element: &Element) -> super::TkAppMkLst {
+    tk_app_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:tkAppMkLst` into a `TkAppMkLst` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tk_app_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TkAppMkLst {
+    tk_app_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:tkAppMkLst` into a `TkAppMkLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tk_app_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::TkAppMkLst {
     let mut node = super::TkAppMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TK_APP_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TK_APP_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -546,8 +925,23 @@ pub fn tk_app_mk_lst(element: &Element) -> super::TkAppMkLst {
 /// Read `pc:tocMkLst` into a `TocMkLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn toc_mk_lst(element: &Element) -> super::TocMkLst {
+    toc_mk_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `pc:tocMkLst` into a `TocMkLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn toc_mk_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TocMkLst {
+    toc_mk_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `pc:tocMkLst` into a `TocMkLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn toc_mk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::TocMkLst {
     let mut node = super::TocMkLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TOC_MK_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TOC_MK_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);

@@ -225,7 +225,7 @@ use core::mem;
 use officekit_markup_base::UserData;
 use officekit_markup_base::common_simple_types;
 use officekit_markup_base::custom_xml_schema_properties;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::{DateTime, Measure, ValueError};
 
@@ -28366,8 +28366,8 @@ impl<X: UserData> AbsolutePositionTabCharacterWith<X> {
 }
 
 impl officekit_markup_base::Read for AbsolutePositionTabCharacter {
-    fn read(element: &Element) -> Self {
-        read::absolute_position_tab_character(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::absolute_position_tab_character_from_item(item)
     }
 }
 
@@ -28541,8 +28541,8 @@ impl<X: UserData> AbstractNumberingDefinitionWith<X> {
 }
 
 impl officekit_markup_base::Read for AbstractNumberingDefinition {
-    fn read(element: &Element) -> Self {
-        read::abstract_numbering_definition(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::abstract_numbering_definition_from_item(item)
     }
 }
 
@@ -28579,8 +28579,8 @@ impl<X: UserData> AbstractNumberingDefinitionIdentifierWith<X> {
 }
 
 impl officekit_markup_base::Read for AbstractNumberingDefinitionIdentifier {
-    fn read(element: &Element) -> Self {
-        read::abstract_numbering_definition_identifier(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::abstract_numbering_definition_identifier_from_item(item)
     }
 }
 
@@ -28617,8 +28617,8 @@ impl<X: UserData> AbstractNumberingDefinitionReferenceWith<X> {
 }
 
 impl officekit_markup_base::Read for AbstractNumberingDefinitionReference {
-    fn read(element: &Element) -> Self {
-        read::abstract_numbering_definition_reference(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::abstract_numbering_definition_reference_from_item(item)
     }
 }
 
@@ -28655,8 +28655,8 @@ impl<X: UserData> AbstractNumberingDefinitionTypeWith<X> {
 }
 
 impl officekit_markup_base::Read for AbstractNumberingDefinitionType {
-    fn read(element: &Element) -> Self {
-        read::abstract_numbering_definition_type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::abstract_numbering_definition_type_from_item(item)
     }
 }
 
@@ -28693,8 +28693,8 @@ impl<X: UserData> AddDocumentGridLinePitchWith<X> {
 }
 
 impl officekit_markup_base::Read for AddDocumentGridLinePitch {
-    fn read(element: &Element) -> Self {
-        read::add_document_grid_line_pitch(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::add_document_grid_line_pitch_from_item(item)
     }
 }
 
@@ -28731,8 +28731,8 @@ impl<X: UserData> AddSpaceBelowUnderlinedTextWith<X> {
 }
 
 impl officekit_markup_base::Read for AddSpaceBelowUnderlinedText {
-    fn read(element: &Element) -> Self {
-        read::add_space_below_underlined_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::add_space_below_underlined_text_from_item(item)
     }
 }
 
@@ -28769,8 +28769,8 @@ impl<X: UserData> AdjustSpacingEastAsianTextNumbersWith<X> {
 }
 
 impl officekit_markup_base::Read for AdjustSpacingEastAsianTextNumbers {
-    fn read(element: &Element) -> Self {
-        read::adjust_spacing_east_asian_text_numbers(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::adjust_spacing_east_asian_text_numbers_from_item(item)
     }
 }
 
@@ -28807,8 +28807,8 @@ impl<X: UserData> AdjustSpacingLatinEastAsianTextWith<X> {
 }
 
 impl officekit_markup_base::Read for AdjustSpacingLatinEastAsianText {
-    fn read(element: &Element) -> Self {
-        read::adjust_spacing_latin_east_asian_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::adjust_spacing_latin_east_asian_text_from_item(item)
     }
 }
 
@@ -28845,8 +28845,8 @@ impl<X: UserData> AlignParagraphAndTableBordersWith<X> {
 }
 
 impl officekit_markup_base::Read for AlignParagraphAndTableBorders {
-    fn read(element: &Element) -> Self {
-        read::align_paragraph_and_table_borders(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::align_paragraph_and_table_borders_from_item(item)
     }
 }
 
@@ -28883,8 +28883,8 @@ impl<X: UserData> AlignTableRowsIndependentlyWith<X> {
 }
 
 impl officekit_markup_base::Read for AlignTableRowsIndependently {
-    fn read(element: &Element) -> Self {
-        read::align_table_rows_independently(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::align_table_rows_independently_from_item(item)
     }
 }
 
@@ -28921,8 +28921,8 @@ impl<X: UserData> AllowAutomaticFormattingOverrideWith<X> {
 }
 
 impl officekit_markup_base::Read for AllowAutomaticFormattingOverride {
-    fn read(element: &Element) -> Self {
-        read::allow_automatic_formatting_override(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::allow_automatic_formatting_override_from_item(item)
     }
 }
 
@@ -28959,8 +28959,8 @@ impl<X: UserData> AllowContextualSpacingOfParagraphsInTablesWith<X> {
 }
 
 impl officekit_markup_base::Read for AllowContextualSpacingOfParagraphsInTables {
-    fn read(element: &Element) -> Self {
-        read::allow_contextual_spacing_of_paragraphs_in_tables(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::allow_contextual_spacing_of_paragraphs_in_tables_from_item(item)
     }
 }
 
@@ -28997,8 +28997,8 @@ impl<X: UserData> AllowFirstLastLineDisplayWith<X> {
 }
 
 impl officekit_markup_base::Read for AllowFirstLastLineDisplay {
-    fn read(element: &Element) -> Self {
-        read::allow_first_last_line_display(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::allow_first_last_line_display_from_item(item)
     }
 }
 
@@ -29035,8 +29035,8 @@ impl<X: UserData> AllowLineBreakingAtCharacterLevelWith<X> {
 }
 
 impl officekit_markup_base::Read for AllowLineBreakingAtCharacterLevel {
-    fn read(element: &Element) -> Self {
-        read::allow_line_breaking_at_character_level(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::allow_line_breaking_at_character_level_from_item(item)
     }
 }
 
@@ -29073,8 +29073,8 @@ impl<X: UserData> AllowPNGAsGraphicFormatWith<X> {
 }
 
 impl officekit_markup_base::Read for AllowPNGAsGraphicFormat {
-    fn read(element: &Element) -> Self {
-        read::allow_png_as_graphic_format(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::allow_png_as_graphic_format_from_item(item)
     }
 }
 
@@ -29111,8 +29111,8 @@ impl<X: UserData> AllowPunctuationExtendPastTextExtentsWith<X> {
 }
 
 impl officekit_markup_base::Read for AllowPunctuationExtendPastTextExtents {
-    fn read(element: &Element) -> Self {
-        read::allow_punctuation_extend_past_text_extents(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::allow_punctuation_extend_past_text_extents_from_item(item)
     }
 }
 
@@ -29149,8 +29149,8 @@ impl<X: UserData> AllowSavingDocumentAsXMLFileWith<X> {
 }
 
 impl officekit_markup_base::Read for AllowSavingDocumentAsXMLFile {
-    fn read(element: &Element) -> Self {
-        read::allow_saving_document_as_xml_file(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::allow_saving_document_as_xml_file_from_item(item)
     }
 }
 
@@ -29187,8 +29187,8 @@ impl<X: UserData> AllowTableRowsToWrapInlineObjectsIndependentlyWith<X> {
 }
 
 impl officekit_markup_base::Read for AllowTableRowsToWrapInlineObjectsIndependently {
-    fn read(element: &Element) -> Self {
-        read::allow_table_rows_to_wrap_inline_objects_independently(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::allow_table_rows_to_wrap_inline_objects_independently_from_item(item)
     }
 }
 
@@ -29226,8 +29226,8 @@ impl<X: UserData> AllowTablesToAutoFitIntoPageMarginsWith<X> {
 }
 
 impl officekit_markup_base::Read for AllowTablesToAutoFitIntoPageMargins {
-    fn read(element: &Element) -> Self {
-        read::allow_tables_to_auto_fit_into_page_margins(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::allow_tables_to_auto_fit_into_page_margins_from_item(item)
     }
 }
 
@@ -29264,8 +29264,8 @@ impl<X: UserData> AlternateNamesForFontWith<X> {
 }
 
 impl officekit_markup_base::Read for AlternateNamesForFont {
-    fn read(element: &Element) -> Self {
-        read::alternate_names_for_font(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::alternate_names_for_font_from_item(item)
     }
 }
 
@@ -29302,8 +29302,8 @@ impl<X: UserData> AlternateStyleNamesWith<X> {
 }
 
 impl officekit_markup_base::Read for AlternateStyleNames {
-    fn read(element: &Element) -> Self {
-        read::alternate_style_names(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::alternate_style_names_from_item(item)
     }
 }
 
@@ -29340,8 +29340,8 @@ impl<X: UserData> AlwaysMergeEmptyNamespaceWith<X> {
 }
 
 impl officekit_markup_base::Read for AlwaysMergeEmptyNamespace {
-    fn read(element: &Element) -> Self {
-        read::always_merge_empty_namespace(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::always_merge_empty_namespace_from_item(item)
     }
 }
 
@@ -29378,8 +29378,8 @@ impl<X: UserData> AlwaysShowPlaceholderTextWith<X> {
 }
 
 impl officekit_markup_base::Read for AlwaysShowPlaceholderText {
-    fn read(element: &Element) -> Self {
-        read::always_show_placeholder_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::always_show_placeholder_text_from_item(item)
     }
 }
 
@@ -29416,8 +29416,8 @@ impl<X: UserData> AlwaysUseFixedWidthForHangulCharactersWith<X> {
 }
 
 impl officekit_markup_base::Read for AlwaysUseFixedWidthForHangulCharacters {
-    fn read(element: &Element) -> Self {
-        read::always_use_fixed_width_for_hangul_characters(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::always_use_fixed_width_for_hangul_characters_from_item(item)
     }
 }
 
@@ -29458,8 +29458,8 @@ impl<X: UserData> AnchorForImportedExternalContentWith<X> {
 }
 
 impl officekit_markup_base::Read for AnchorForImportedExternalContent {
-    fn read(element: &Element) -> Self {
-        read::anchor_for_imported_external_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::anchor_for_imported_external_content_from_item(item)
     }
 }
 
@@ -29496,8 +29496,8 @@ impl<X: UserData> AnchorForSubdocumentLocationWith<X> {
 }
 
 impl officekit_markup_base::Read for AnchorForSubdocumentLocation {
-    fn read(element: &Element) -> Self {
-        read::anchor_for_subdocument_location(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::anchor_for_subdocument_location_from_item(item)
     }
 }
 
@@ -29534,8 +29534,8 @@ impl<X: UserData> AnimatedTextEffectWith<X> {
 }
 
 impl officekit_markup_base::Read for AnimatedTextEffect {
-    fn read(element: &Element) -> Self {
-        read::animated_text_effect(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::animated_text_effect_from_item(item)
     }
 }
 
@@ -29626,8 +29626,8 @@ impl<X: UserData> AssociatedHTMLDivIDWith<X> {
 }
 
 impl officekit_markup_base::Read for AssociatedHTMLDivID {
-    fn read(element: &Element) -> Self {
-        read::associated_html_div_id(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::associated_html_div_id_from_item(item)
     }
 }
 
@@ -29666,8 +29666,8 @@ impl<X: UserData> AssociatedHelpTextWith<X> {
 }
 
 impl officekit_markup_base::Read for AssociatedHelpText {
-    fn read(element: &Element) -> Self {
-        read::associated_help_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::associated_help_text_from_item(item)
     }
 }
 
@@ -29704,8 +29704,8 @@ impl<X: UserData> AssociatedOutlineLevelWith<X> {
 }
 
 impl officekit_markup_base::Read for AssociatedOutlineLevel {
-    fn read(element: &Element) -> Self {
-        read::associated_outline_level(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::associated_outline_level_from_item(item)
     }
 }
 
@@ -29742,8 +29742,8 @@ impl<X: UserData> AssociatedParagraphStyleNameWith<X> {
 }
 
 impl officekit_markup_base::Read for AssociatedParagraphStyleName {
-    fn read(element: &Element) -> Self {
-        read::associated_paragraph_style_name(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::associated_paragraph_style_name_from_item(item)
     }
 }
 
@@ -29782,8 +29782,8 @@ impl<X: UserData> AssociatedStatusTextWith<X> {
 }
 
 impl officekit_markup_base::Read for AssociatedStatusText {
-    fn read(element: &Element) -> Self {
-        read::associated_status_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::associated_status_text_from_item(item)
     }
 }
 
@@ -29820,8 +29820,8 @@ impl<X: UserData> AttachedCustomXMLSchemaWith<X> {
 }
 
 impl officekit_markup_base::Read for AttachedCustomXMLSchema {
-    fn read(element: &Element) -> Self {
-        read::attached_custom_xml_schema(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::attached_custom_xml_schema_from_item(item)
     }
 }
 
@@ -29858,8 +29858,8 @@ impl<X: UserData> AttachedDocumentTemplateWith<X> {
 }
 
 impl officekit_markup_base::Read for AttachedDocumentTemplate {
-    fn read(element: &Element) -> Self {
-        read::attached_document_template(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::attached_document_template_from_item(item)
     }
 }
 
@@ -29896,8 +29896,8 @@ impl<X: UserData> AutoSpaceLikeWord95With<X> {
 }
 
 impl officekit_markup_base::Read for AutoSpaceLikeWord95 {
-    fn read(element: &Element) -> Self {
-        read::auto_space_like_word95(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::auto_space_like_word95_from_item(item)
     }
 }
 
@@ -29934,8 +29934,8 @@ impl<X: UserData> AutofitToFirstFixedWidthCellWith<X> {
 }
 
 impl officekit_markup_base::Read for AutofitToFirstFixedWidthCell {
-    fn read(element: &Element) -> Self {
-        read::autofit_to_first_fixed_width_cell(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::autofit_to_first_fixed_width_cell_from_item(item)
     }
 }
 
@@ -30027,8 +30027,8 @@ impl<X: UserData> AutomaticCaptioningSettingsWith<X> {
 }
 
 impl officekit_markup_base::Read for AutomaticCaptioningSettings {
-    fn read(element: &Element) -> Self {
-        read::automatic_captioning_settings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::automatic_captioning_settings_from_item(item)
     }
 }
 
@@ -30065,8 +30065,8 @@ impl<X: UserData> AutomaticallyAdjustRightIndentWith<X> {
 }
 
 impl officekit_markup_base::Read for AutomaticallyAdjustRightIndent {
-    fn read(element: &Element) -> Self {
-        read::automatically_adjust_right_indent(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::automatically_adjust_right_indent_from_item(item)
     }
 }
 
@@ -30103,8 +30103,8 @@ impl<X: UserData> AutomaticallyHyphenateDocumentContentsWhenDisplayedWith<X> {
 }
 
 impl officekit_markup_base::Read for AutomaticallyHyphenateDocumentContentsWhenDisplayed {
-    fn read(element: &Element) -> Self {
-        read::automatically_hyphenate_document_contents_when_displayed(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::automatically_hyphenate_document_contents_when_displayed_from_item(item)
     }
 }
 
@@ -30142,8 +30142,8 @@ impl<X: UserData> AutomaticallyMergeUserFormattingWith<X> {
 }
 
 impl officekit_markup_base::Read for AutomaticallyMergeUserFormatting {
-    fn read(element: &Element) -> Self {
-        read::automatically_merge_user_formatting(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::automatically_merge_user_formatting_from_item(item)
     }
 }
 
@@ -30180,8 +30180,8 @@ impl<X: UserData> AutomaticallyRecalculateFieldsOnOpenWith<X> {
 }
 
 impl officekit_markup_base::Read for AutomaticallyRecalculateFieldsOnOpen {
-    fn read(element: &Element) -> Self {
-        read::automatically_recalculate_fields_on_open(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::automatically_recalculate_fields_on_open_from_item(item)
     }
 }
 
@@ -30218,8 +30218,8 @@ impl<X: UserData> AutomaticallySizeFormFieldWith<X> {
 }
 
 impl officekit_markup_base::Read for AutomaticallySizeFormField {
-    fn read(element: &Element) -> Self {
-        read::automatically_size_form_field(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::automatically_size_form_field_from_item(item)
     }
 }
 
@@ -30256,8 +30256,8 @@ impl<X: UserData> AutomaticallyUpdateStylesFromDocumentTemplateWith<X> {
 }
 
 impl officekit_markup_base::Read for AutomaticallyUpdateStylesFromDocumentTemplate {
-    fn read(element: &Element) -> Self {
-        read::automatically_update_styles_from_document_template(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::automatically_update_styles_from_document_template_from_item(item)
     }
 }
 
@@ -30295,8 +30295,8 @@ impl<X: UserData> BalanceSingleByteDoubleByteWidthWith<X> {
 }
 
 impl officekit_markup_base::Read for BalanceSingleByteDoubleByteWidth {
-    fn read(element: &Element) -> Self {
-        read::balance_single_byte_double_byte_width(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::balance_single_byte_double_byte_width_from_item(item)
     }
 }
 
@@ -30329,8 +30329,8 @@ impl<X: UserData> BibliographyStructuredDocumentTagWith<X> {
 }
 
 impl officekit_markup_base::Read for BibliographyStructuredDocumentTag {
-    fn read(element: &Element) -> Self {
-        read::bibliography_structured_document_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bibliography_structured_document_tag_from_item(item)
     }
 }
 
@@ -30422,8 +30422,8 @@ impl<X: UserData> BidirectionalEmbeddingLevelWith<X> {
 }
 
 impl officekit_markup_base::Read for BidirectionalEmbeddingLevel {
-    fn read(element: &Element) -> Self {
-        read::bidirectional_embedding_level(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bidirectional_embedding_level_from_item(item)
     }
 }
 
@@ -30464,8 +30464,8 @@ impl<X: UserData> BidirectionalOverrideWith<X> {
 }
 
 impl officekit_markup_base::Read for BidirectionalOverride {
-    fn read(element: &Element) -> Self {
-        read::bidirectional_override(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bidirectional_override_from_item(item)
     }
 }
 
@@ -30511,10 +30511,70 @@ impl officekit_markup_base::Read for BlockContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        read_block_1(element)
-            .or_else(|| read_block_2(element))
-            .unwrap_or_else(|| Self::Other(Node::Element(element.clone())))
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "altChunk")) => Self::AnchorForImportedExternalContent(item.read()),
+            Some((NS_W, "customXml")) => Self::BlockLevelCustomXMLElement(item.read()),
+            Some((NS_W, "sdt")) => Self::BlockLevelStructuredDocumentTag(item.read()),
+            Some((NS_W, "bookmarkEnd")) => Self::BookmarkEnd(item.read()),
+            Some((NS_W, "bookmarkStart")) => Self::BookmarkStart(item.read()),
+            Some((NS_W, "commentRangeEnd")) => Self::CommentAnchorRangeEnd(item.read()),
+            Some((NS_W, "commentRangeStart")) => Self::CommentAnchorRangeStart(item.read()),
+            Some((NS_W14, "conflictDel")) => Self::ConflictDelRunTrackChange(item.read()),
+            Some((NS_W14, "conflictIns")) => Self::ConflictInsRunTrackChange(item.read()),
+            Some((NS_W, "customXmlDelRangeEnd")) => Self::CustomXMLMarkupDeletionEnd(item.read()),
+            Some((NS_W, "customXmlDelRangeStart")) => {
+                Self::CustomXMLMarkupDeletionStart(item.read())
+            }
+            Some((NS_W, "customXmlInsRangeEnd")) => Self::CustomXMLMarkupInsertionEnd(item.read()),
+            Some((NS_W, "customXmlInsRangeStart")) => {
+                Self::CustomXMLMarkupInsertionStart(item.read())
+            }
+            Some((NS_W, "customXmlMoveFromRangeEnd")) => {
+                Self::CustomXMLMarkupMoveSourceEnd(item.read())
+            }
+            Some((NS_W, "customXmlMoveFromRangeStart")) => {
+                Self::CustomXMLMarkupMoveSourceStart(item.read())
+            }
+            Some((NS_W14, "customXmlConflictDelRangeEnd")) => {
+                Self::CustomXmlConflictDelRangeEnd(item.read())
+            }
+            Some((NS_W14, "customXmlConflictDelRangeStart")) => {
+                Self::CustomXmlConflictDelRangeStart(item.read())
+            }
+            Some((NS_W14, "customXmlConflictInsRangeEnd")) => {
+                Self::CustomXmlConflictInsRangeEnd(item.read())
+            }
+            Some((NS_W14, "customXmlConflictInsRangeStart")) => {
+                Self::CustomXmlConflictInsRangeStart(item.read())
+            }
+            Some((NS_W, "customXmlMoveToRangeEnd")) => Self::CustomXmlMoveToRangeEnd(item.read()),
+            Some((NS_W, "customXmlMoveToRangeStart")) => {
+                Self::CustomXmlMoveToRangeStart(item.read())
+            }
+            Some((NS_W, "del")) => Self::DeletedRunContent(item.read()),
+            Some((NS_W, "ins")) => Self::InsertedRunContent(item.read()),
+            Some((NS_W, "moveToRangeEnd")) => {
+                Self::MoveDestinationLocationContainerEnd(item.read())
+            }
+            Some((NS_W, "moveToRangeStart")) => {
+                Self::MoveDestinationLocationContainerStart(item.read())
+            }
+            Some((NS_W, "moveTo")) => Self::MoveDestinationRunContent(item.read()),
+            Some((NS_W, "moveFromRangeEnd")) => Self::MoveSourceLocationContainerEnd(item.read()),
+            Some((NS_W, "moveFromRangeStart")) => {
+                Self::MoveSourceLocationContainerStart(item.read())
+            }
+            Some((NS_W, "moveFrom")) => Self::MoveSourceRunContent(item.read()),
+            Some((NS_M, "oMath")) => Self::OfficeMath(item.read()),
+            Some((NS_M, "oMathPara")) => Self::OfficeMathParagraph(item.read()),
+            Some((NS_W, "p")) => Self::Paragraph(item.read()),
+            Some((NS_W, "proofErr")) => Self::ProofingErrorAnchor(item.read()),
+            Some((NS_W, "permEnd")) => Self::RangePermissionEnd(item.read()),
+            Some((NS_W, "permStart")) => Self::RangePermissionStart(item.read()),
+            Some((NS_W, "tbl")) => Self::Table(item.read()),
+            _ => Self::Other(item.into_node()),
+        }
     }
 }
 
@@ -30915,8 +30975,8 @@ impl<X: UserData> BlockLevelCustomXMLElementWith<X> {
 }
 
 impl officekit_markup_base::Read for BlockLevelCustomXMLElement {
-    fn read(element: &Element) -> Self {
-        read::block_level_custom_xml_element(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::block_level_custom_xml_element_from_item(item)
     }
 }
 
@@ -30977,8 +31037,8 @@ impl<X: UserData> BlockLevelStructuredDocumentTagWith<X> {
 }
 
 impl officekit_markup_base::Read for BlockLevelStructuredDocumentTag {
-    fn read(element: &Element) -> Self {
-        read::block_level_structured_document_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::block_level_structured_document_tag_from_item(item)
     }
 }
 
@@ -31015,8 +31075,8 @@ impl<X: UserData> BlockLevelStructuredDocumentTagContentWith<X> {
 }
 
 impl officekit_markup_base::Read for BlockLevelStructuredDocumentTagContent {
-    fn read(element: &Element) -> Self {
-        read::block_level_structured_document_tag_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::block_level_structured_document_tag_content_from_item(item)
     }
 }
 
@@ -31053,8 +31113,8 @@ impl<X: UserData> BoldWith<X> {
 }
 
 impl officekit_markup_base::Read for Bold {
-    fn read(element: &Element) -> Self {
-        read::bold(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bold_from_item(item)
     }
 }
 
@@ -31095,8 +31155,8 @@ impl<X: UserData> BoldItalicFontStyleEmbeddingWith<X> {
 }
 
 impl officekit_markup_base::Read for BoldItalicFontStyleEmbedding {
-    fn read(element: &Element) -> Self {
-        read::bold_italic_font_style_embedding(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bold_italic_font_style_embedding_from_item(item)
     }
 }
 
@@ -31137,8 +31197,8 @@ impl<X: UserData> BoldStyleFontStyleEmbeddingWith<X> {
 }
 
 impl officekit_markup_base::Read for BoldStyleFontStyleEmbedding {
-    fn read(element: &Element) -> Self {
-        read::bold_style_font_style_embedding(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bold_style_font_style_embedding_from_item(item)
     }
 }
 
@@ -31175,8 +31235,8 @@ impl<X: UserData> BookFoldPrintingWith<X> {
 }
 
 impl officekit_markup_base::Read for BookFoldPrinting {
-    fn read(element: &Element) -> Self {
-        read::book_fold_printing(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::book_fold_printing_from_item(item)
     }
 }
 
@@ -31215,8 +31275,8 @@ impl<X: UserData> BookmarkEndWith<X> {
 }
 
 impl officekit_markup_base::Read for BookmarkEnd {
-    fn read(element: &Element) -> Self {
-        read::bookmark_end(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bookmark_end_from_item(item)
     }
 }
 
@@ -31261,8 +31321,8 @@ impl<X: UserData> BookmarkStartWith<X> {
 }
 
 impl officekit_markup_base::Read for BookmarkStart {
-    fn read(element: &Element) -> Self {
-        read::bookmark_start(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bookmark_start_from_item(item)
     }
 }
 
@@ -31561,8 +31621,8 @@ impl<X: UserData> BottomBorderWith<X> {
 }
 
 impl officekit_markup_base::Read for BottomBorder {
-    fn read(element: &Element) -> Self {
-        read::bottom_border(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bottom_border_from_item(item)
     }
 }
 
@@ -31599,8 +31659,8 @@ impl<X: UserData> BottomMarginForHTMLDivWith<X> {
 }
 
 impl officekit_markup_base::Read for BottomMarginForHTMLDiv {
-    fn read(element: &Element) -> Self {
-        read::bottom_margin_for_html_div(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bottom_margin_for_html_div_from_item(item)
     }
 }
 
@@ -31639,8 +31699,8 @@ impl<X: UserData> BreakWith<X> {
 }
 
 impl officekit_markup_base::Read for Break {
-    fn read(element: &Element) -> Self {
-        read::r#break(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::break_from_item(item)
     }
 }
 
@@ -31727,8 +31787,8 @@ impl<X: UserData> BuiltInDocumentPartWith<X> {
 }
 
 impl officekit_markup_base::Read for BuiltInDocumentPart {
-    fn read(element: &Element) -> Self {
-        read::built_in_document_part(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::built_in_document_part_from_item(item)
     }
 }
 
@@ -31773,8 +31833,8 @@ impl<X: UserData> BuiltInDocumentPartStructuredDocumentTagWith<X> {
 }
 
 impl officekit_markup_base::Read for BuiltInDocumentPartStructuredDocumentTag {
-    fn read(element: &Element) -> Self {
-        read::built_in_document_part_structured_document_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::built_in_document_part_structured_document_tag_from_item(item)
     }
 }
 
@@ -31815,8 +31875,8 @@ impl<X: UserData> CaptionSettingsWith<X> {
 }
 
 impl officekit_markup_base::Read for CaptionSettings {
-    fn read(element: &Element) -> Self {
-        read::caption_settings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::caption_settings_from_item(item)
     }
 }
 
@@ -31849,8 +31909,8 @@ impl<X: UserData> CarriageReturnWith<X> {
 }
 
 impl officekit_markup_base::Read for CarriageReturn {
-    fn read(element: &Element) -> Self {
-        read::carriage_return(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::carriage_return_from_item(item)
     }
 }
 
@@ -31897,8 +31957,8 @@ impl<X: UserData> CellLevelCustomXMLElementWith<X> {
 }
 
 impl officekit_markup_base::Read for CellLevelCustomXMLElement {
-    fn read(element: &Element) -> Self {
-        read::cell_level_custom_xml_element(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cell_level_custom_xml_element_from_item(item)
     }
 }
 
@@ -31959,8 +32019,8 @@ impl<X: UserData> CellLevelStructuredDocumentTagWith<X> {
 }
 
 impl officekit_markup_base::Read for CellLevelStructuredDocumentTag {
-    fn read(element: &Element) -> Self {
-        read::cell_level_structured_document_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cell_level_structured_document_tag_from_item(item)
     }
 }
 
@@ -31997,8 +32057,8 @@ impl<X: UserData> CellLevelStructuredDocumentTagContentWith<X> {
 }
 
 impl officekit_markup_base::Read for CellLevelStructuredDocumentTagContent {
-    fn read(element: &Element) -> Self {
-        read::cell_level_structured_document_tag_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cell_level_structured_document_tag_content_from_item(item)
     }
 }
 
@@ -32036,18 +32096,12 @@ impl officekit_markup_base::Read for CellMarkupContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "cellDel")) => {
-                Self::TableCellDeletion(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "cellIns")) => {
-                Self::TableCellInsertion(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "cellMerge")) => {
-                Self::VerticallyMergedSplitTableCells(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "cellDel")) => Self::TableCellDeletion(item.read()),
+            Some((NS_W, "cellIns")) => Self::TableCellInsertion(item.read()),
+            Some((NS_W, "cellMerge")) => Self::VerticallyMergedSplitTableCells(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -32145,8 +32199,8 @@ impl<X: UserData> CharacterLevelWhitespaceCompressionWith<X> {
 }
 
 impl officekit_markup_base::Read for CharacterLevelWhitespaceCompression {
-    fn read(element: &Element) -> Self {
-        read::character_level_whitespace_compression(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::character_level_whitespace_compression_from_item(item)
     }
 }
 
@@ -32245,8 +32299,8 @@ impl<X: UserData> CharacterSetSupportedByFontWith<X> {
 }
 
 impl officekit_markup_base::Read for CharacterSetSupportedByFont {
-    fn read(element: &Element) -> Self {
-        read::character_set_supported_by_font(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::character_set_supported_by_font_from_item(item)
     }
 }
 
@@ -32283,8 +32337,8 @@ impl<X: UserData> CharacterSpacingAdjustmentWith<X> {
 }
 
 impl officekit_markup_base::Read for CharacterSpacingAdjustment {
-    fn read(element: &Element) -> Self {
-        read::character_spacing_adjustment(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::character_spacing_adjustment_from_item(item)
     }
 }
 
@@ -32323,8 +32377,8 @@ impl<X: UserData> CharactersWhichCannotBeginALineWith<X> {
 }
 
 impl officekit_markup_base::Read for CharactersWhichCannotBeginALine {
-    fn read(element: &Element) -> Self {
-        read::characters_which_cannot_begin_a_line(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::characters_which_cannot_begin_a_line_from_item(item)
     }
 }
 
@@ -32363,8 +32417,8 @@ impl<X: UserData> CharactersWhichCannotEndALineWith<X> {
 }
 
 impl officekit_markup_base::Read for CharactersWhichCannotEndALine {
-    fn read(element: &Element) -> Self {
-        read::characters_which_cannot_end_a_line(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::characters_which_cannot_end_a_line_from_item(item)
     }
 }
 
@@ -32409,8 +32463,8 @@ impl<X: UserData> CheckboxFormFieldPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for CheckboxFormFieldProperties {
-    fn read(element: &Element) -> Self {
-        read::checkbox_form_field_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::checkbox_form_field_properties_from_item(item)
     }
 }
 
@@ -32453,15 +32507,11 @@ impl officekit_markup_base::Read for CheckboxFormFieldPropertiesContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "sizeAuto")) => {
-                Self::AutomaticallySizeFormField(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "size")) => {
-                Self::CheckboxFormFieldSize(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "sizeAuto")) => Self::AutomaticallySizeFormField(item.read()),
+            Some((NS_W, "size")) => Self::CheckboxFormFieldSize(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -32502,8 +32552,8 @@ impl<X: UserData> CheckboxFormFieldSizeWith<X> {
 }
 
 impl officekit_markup_base::Read for CheckboxFormFieldSize {
-    fn read(element: &Element) -> Self {
-        read::checkbox_form_field_size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::checkbox_form_field_size_from_item(item)
     }
 }
 
@@ -32540,8 +32590,8 @@ impl<X: UserData> CheckboxFormFieldStateWith<X> {
 }
 
 impl officekit_markup_base::Read for CheckboxFormFieldState {
-    fn read(element: &Element) -> Self {
-        read::checkbox_form_field_state(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::checkbox_form_field_state_from_item(item)
     }
 }
 
@@ -32578,8 +32628,8 @@ impl<X: UserData> ChildDivElementsWith<X> {
 }
 
 impl officekit_markup_base::Read for ChildDivElements {
-    fn read(element: &Element) -> Self {
-        read::child_div_elements(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::child_div_elements_from_item(item)
     }
 }
 
@@ -32612,8 +32662,8 @@ impl<X: UserData> CitationStructuredDocumentTagWith<X> {
 }
 
 impl officekit_markup_base::Read for CitationStructuredDocumentTag {
-    fn read(element: &Element) -> Self {
-        read::citation_structured_document_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::citation_structured_document_tag_from_item(item)
     }
 }
 
@@ -32650,8 +32700,8 @@ impl<X: UserData> ClickAndTypeStyleWith<X> {
 }
 
 impl officekit_markup_base::Read for ClickAndTypeStyle {
-    fn read(element: &Element) -> Self {
-        read::click_and_type_style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::click_and_type_style_from_item(item)
     }
 }
 
@@ -32719,8 +32769,8 @@ impl<X: UserData> ColumnContainingEMailAddressWith<X> {
 }
 
 impl officekit_markup_base::Read for ColumnContainingEMailAddress {
-    fn read(element: &Element) -> Self {
-        read::column_containing_e_mail_address(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::column_containing_e_mail_address_from_item(item)
     }
 }
 
@@ -32767,8 +32817,8 @@ impl<X: UserData> ColumnDefinitionsWith<X> {
 }
 
 impl officekit_markup_base::Read for ColumnDefinitions {
-    fn read(element: &Element) -> Self {
-        read::column_definitions(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::column_definitions_from_item(item)
     }
 }
 
@@ -32805,8 +32855,8 @@ impl<X: UserData> ColumnDelimiterForDataSourceWith<X> {
 }
 
 impl officekit_markup_base::Read for ColumnDelimiterForDataSource {
-    fn read(element: &Element) -> Self {
-        read::column_delimiter_for_data_source(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::column_delimiter_for_data_source_from_item(item)
     }
 }
 
@@ -32845,8 +32895,8 @@ impl<X: UserData> ComboBoxListItemWith<X> {
 }
 
 impl officekit_markup_base::Read for ComboBoxListItem {
-    fn read(element: &Element) -> Self {
-        read::combo_box_list_item(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::combo_box_list_item_from_item(item)
     }
 }
 
@@ -32887,8 +32937,8 @@ impl<X: UserData> ComboBoxStructuredDocumentTagWith<X> {
 }
 
 impl officekit_markup_base::Read for ComboBoxStructuredDocumentTag {
-    fn read(element: &Element) -> Self {
-        read::combo_box_structured_document_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::combo_box_structured_document_tag_from_item(item)
     }
 }
 
@@ -32927,8 +32977,8 @@ impl<X: UserData> CommentAnchorRangeEndWith<X> {
 }
 
 impl officekit_markup_base::Read for CommentAnchorRangeEnd {
-    fn read(element: &Element) -> Self {
-        read::comment_anchor_range_end(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::comment_anchor_range_end_from_item(item)
     }
 }
 
@@ -32967,8 +33017,8 @@ impl<X: UserData> CommentAnchorRangeStartWith<X> {
 }
 
 impl officekit_markup_base::Read for CommentAnchorRangeStart {
-    fn read(element: &Element) -> Self {
-        read::comment_anchor_range_start(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::comment_anchor_range_start_from_item(item)
     }
 }
 
@@ -33017,8 +33067,8 @@ impl<X: UserData> CommentContentWith<X> {
 }
 
 impl officekit_markup_base::Read for CommentContent {
-    fn read(element: &Element) -> Self {
-        read::comment_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::comment_content_from_item(item)
     }
 }
 
@@ -33055,8 +33105,8 @@ impl<X: UserData> CommentContentReferenceMarkWith<X> {
 }
 
 impl officekit_markup_base::Read for CommentContentReferenceMark {
-    fn read(element: &Element) -> Self {
-        read::comment_content_reference_mark(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::comment_content_reference_mark_from_item(item)
     }
 }
 
@@ -33089,8 +33139,8 @@ impl<X: UserData> CommentInformationBlockWith<X> {
 }
 
 impl officekit_markup_base::Read for CommentInformationBlock {
-    fn read(element: &Element) -> Self {
-        read::comment_information_block(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::comment_information_block_from_item(item)
     }
 }
 
@@ -33127,8 +33177,8 @@ impl<X: UserData> CommentsCollectionWith<X> {
 }
 
 impl officekit_markup_base::Read for CommentsCollection {
-    fn read(element: &Element) -> Self {
-        read::comments_collection(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::comments_collection_from_item(item)
     }
 }
 
@@ -33163,8 +33213,8 @@ impl<X: UserData> CompatibilitySettingsWith<X> {
 }
 
 impl officekit_markup_base::Read for CompatibilitySettings {
-    fn read(element: &Element) -> Self {
-        read::compatibility_settings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::compatibility_settings_from_item(item)
     }
 }
 
@@ -33209,8 +33259,8 @@ impl<X: UserData> ComplexFieldCharacterWith<X> {
 }
 
 impl officekit_markup_base::Read for ComplexFieldCharacter {
-    fn read(element: &Element) -> Self {
-        read::complex_field_character(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::complex_field_character_from_item(item)
     }
 }
 
@@ -33250,16 +33300,12 @@ impl officekit_markup_base::Read for ComplexFieldCharacterContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "fldData")) => Self::CustomFieldData(officekit_markup_base::read(element)),
-            Some((NS_W, "ffData")) => {
-                Self::FormFieldProperties(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "numberingChange")) => {
-                Self::PreviousNumberingFieldProperties(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "fldData")) => Self::CustomFieldData(item.read()),
+            Some((NS_W, "ffData")) => Self::FormFieldProperties(item.read()),
+            Some((NS_W, "numberingChange")) => Self::PreviousNumberingFieldProperties(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -33355,8 +33401,8 @@ impl<X: UserData> ComplexScriptBoldWith<X> {
 }
 
 impl officekit_markup_base::Read for ComplexScriptBold {
-    fn read(element: &Element) -> Self {
-        read::complex_script_bold(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::complex_script_bold_from_item(item)
     }
 }
 
@@ -33393,8 +33439,8 @@ impl<X: UserData> ComplexScriptFontSizeWith<X> {
 }
 
 impl officekit_markup_base::Read for ComplexScriptFontSize {
-    fn read(element: &Element) -> Self {
-        read::complex_script_font_size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::complex_script_font_size_from_item(item)
     }
 }
 
@@ -33431,8 +33477,8 @@ impl<X: UserData> ComplexScriptItalicsWith<X> {
 }
 
 impl officekit_markup_base::Read for ComplexScriptItalics {
-    fn read(element: &Element) -> Self {
-        read::complex_script_italics(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::complex_script_italics_from_item(item)
     }
 }
 
@@ -33469,8 +33515,8 @@ impl<X: UserData> CompressPunctuationAtStartOfLineWith<X> {
 }
 
 impl officekit_markup_base::Read for CompressPunctuationAtStartOfLine {
-    fn read(element: &Element) -> Self {
-        read::compress_punctuation_at_start_of_line(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::compress_punctuation_at_start_of_line_from_item(item)
     }
 }
 
@@ -33592,15 +33638,11 @@ impl officekit_markup_base::Read for ConflictChangeContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W14, "conflictDel")) => {
-                Self::ConflictDelTrackChange(officekit_markup_base::read(element))
-            }
-            Some((NS_W14, "conflictIns")) => {
-                Self::ConflictInsTrackChange(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W14, "conflictDel")) => Self::ConflictDelTrackChange(item.read()),
+            Some((NS_W14, "conflictIns")) => Self::ConflictInsTrackChange(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -33641,8 +33683,8 @@ impl<X: UserData> ContentBetweenNumberingSymbolAndTextWith<X> {
 }
 
 impl officekit_markup_base::Read for ContentBetweenNumberingSymbolAndText {
-    fn read(element: &Element) -> Self {
-        read::content_between_numbering_symbol_and_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::content_between_numbering_symbol_and_text_from_item(item)
     }
 }
 
@@ -33687,10 +33729,69 @@ impl officekit_markup_base::Read for ContentBlockContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        read_content_block_1(element)
-            .or_else(|| read_content_block_2(element))
-            .unwrap_or_else(|| Self::Other(Node::Element(element.clone())))
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "customXml")) => Self::BlockLevelCustomXMLElement(item.read()),
+            Some((NS_W, "sdt")) => Self::BlockLevelStructuredDocumentTag(item.read()),
+            Some((NS_W, "bookmarkEnd")) => Self::BookmarkEnd(item.read()),
+            Some((NS_W, "bookmarkStart")) => Self::BookmarkStart(item.read()),
+            Some((NS_W, "commentRangeEnd")) => Self::CommentAnchorRangeEnd(item.read()),
+            Some((NS_W, "commentRangeStart")) => Self::CommentAnchorRangeStart(item.read()),
+            Some((NS_W14, "conflictDel")) => Self::ConflictDelRunTrackChange(item.read()),
+            Some((NS_W14, "conflictIns")) => Self::ConflictInsRunTrackChange(item.read()),
+            Some((NS_W, "customXmlDelRangeEnd")) => Self::CustomXMLMarkupDeletionEnd(item.read()),
+            Some((NS_W, "customXmlDelRangeStart")) => {
+                Self::CustomXMLMarkupDeletionStart(item.read())
+            }
+            Some((NS_W, "customXmlInsRangeEnd")) => Self::CustomXMLMarkupInsertionEnd(item.read()),
+            Some((NS_W, "customXmlInsRangeStart")) => {
+                Self::CustomXMLMarkupInsertionStart(item.read())
+            }
+            Some((NS_W, "customXmlMoveFromRangeEnd")) => {
+                Self::CustomXMLMarkupMoveSourceEnd(item.read())
+            }
+            Some((NS_W, "customXmlMoveFromRangeStart")) => {
+                Self::CustomXMLMarkupMoveSourceStart(item.read())
+            }
+            Some((NS_W14, "customXmlConflictDelRangeEnd")) => {
+                Self::CustomXmlConflictDelRangeEnd(item.read())
+            }
+            Some((NS_W14, "customXmlConflictDelRangeStart")) => {
+                Self::CustomXmlConflictDelRangeStart(item.read())
+            }
+            Some((NS_W14, "customXmlConflictInsRangeEnd")) => {
+                Self::CustomXmlConflictInsRangeEnd(item.read())
+            }
+            Some((NS_W14, "customXmlConflictInsRangeStart")) => {
+                Self::CustomXmlConflictInsRangeStart(item.read())
+            }
+            Some((NS_W, "customXmlMoveToRangeEnd")) => Self::CustomXmlMoveToRangeEnd(item.read()),
+            Some((NS_W, "customXmlMoveToRangeStart")) => {
+                Self::CustomXmlMoveToRangeStart(item.read())
+            }
+            Some((NS_W, "del")) => Self::DeletedRunContent(item.read()),
+            Some((NS_W, "ins")) => Self::InsertedRunContent(item.read()),
+            Some((NS_W, "moveToRangeEnd")) => {
+                Self::MoveDestinationLocationContainerEnd(item.read())
+            }
+            Some((NS_W, "moveToRangeStart")) => {
+                Self::MoveDestinationLocationContainerStart(item.read())
+            }
+            Some((NS_W, "moveTo")) => Self::MoveDestinationRunContent(item.read()),
+            Some((NS_W, "moveFromRangeEnd")) => Self::MoveSourceLocationContainerEnd(item.read()),
+            Some((NS_W, "moveFromRangeStart")) => {
+                Self::MoveSourceLocationContainerStart(item.read())
+            }
+            Some((NS_W, "moveFrom")) => Self::MoveSourceRunContent(item.read()),
+            Some((NS_M, "oMath")) => Self::OfficeMath(item.read()),
+            Some((NS_M, "oMathPara")) => Self::OfficeMathParagraph(item.read()),
+            Some((NS_W, "p")) => Self::Paragraph(item.read()),
+            Some((NS_W, "proofErr")) => Self::ProofingErrorAnchor(item.read()),
+            Some((NS_W, "permEnd")) => Self::RangePermissionEnd(item.read()),
+            Some((NS_W, "permStart")) => Self::RangePermissionStart(item.read()),
+            Some((NS_W, "tbl")) => Self::Table(item.read()),
+            _ => Self::Other(item.into_node()),
+        }
     }
 }
 
@@ -33837,10 +33938,68 @@ impl officekit_markup_base::Read for ContentCellContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        read_content_cell_1(element)
-            .or_else(|| read_content_cell_2(element))
-            .unwrap_or_else(|| Self::Other(Node::Element(element.clone())))
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "bookmarkEnd")) => Self::BookmarkEnd(item.read()),
+            Some((NS_W, "bookmarkStart")) => Self::BookmarkStart(item.read()),
+            Some((NS_W, "customXml")) => Self::CellLevelCustomXMLElement(item.read()),
+            Some((NS_W, "sdt")) => Self::CellLevelStructuredDocumentTag(item.read()),
+            Some((NS_W, "commentRangeEnd")) => Self::CommentAnchorRangeEnd(item.read()),
+            Some((NS_W, "commentRangeStart")) => Self::CommentAnchorRangeStart(item.read()),
+            Some((NS_W14, "conflictDel")) => Self::ConflictDelRunTrackChange(item.read()),
+            Some((NS_W14, "conflictIns")) => Self::ConflictInsRunTrackChange(item.read()),
+            Some((NS_W, "customXmlDelRangeEnd")) => Self::CustomXMLMarkupDeletionEnd(item.read()),
+            Some((NS_W, "customXmlDelRangeStart")) => {
+                Self::CustomXMLMarkupDeletionStart(item.read())
+            }
+            Some((NS_W, "customXmlInsRangeEnd")) => Self::CustomXMLMarkupInsertionEnd(item.read()),
+            Some((NS_W, "customXmlInsRangeStart")) => {
+                Self::CustomXMLMarkupInsertionStart(item.read())
+            }
+            Some((NS_W, "customXmlMoveFromRangeEnd")) => {
+                Self::CustomXMLMarkupMoveSourceEnd(item.read())
+            }
+            Some((NS_W, "customXmlMoveFromRangeStart")) => {
+                Self::CustomXMLMarkupMoveSourceStart(item.read())
+            }
+            Some((NS_W14, "customXmlConflictDelRangeEnd")) => {
+                Self::CustomXmlConflictDelRangeEnd(item.read())
+            }
+            Some((NS_W14, "customXmlConflictDelRangeStart")) => {
+                Self::CustomXmlConflictDelRangeStart(item.read())
+            }
+            Some((NS_W14, "customXmlConflictInsRangeEnd")) => {
+                Self::CustomXmlConflictInsRangeEnd(item.read())
+            }
+            Some((NS_W14, "customXmlConflictInsRangeStart")) => {
+                Self::CustomXmlConflictInsRangeStart(item.read())
+            }
+            Some((NS_W, "customXmlMoveToRangeEnd")) => Self::CustomXmlMoveToRangeEnd(item.read()),
+            Some((NS_W, "customXmlMoveToRangeStart")) => {
+                Self::CustomXmlMoveToRangeStart(item.read())
+            }
+            Some((NS_W, "del")) => Self::DeletedRunContent(item.read()),
+            Some((NS_W, "ins")) => Self::InsertedRunContent(item.read()),
+            Some((NS_W, "moveToRangeEnd")) => {
+                Self::MoveDestinationLocationContainerEnd(item.read())
+            }
+            Some((NS_W, "moveToRangeStart")) => {
+                Self::MoveDestinationLocationContainerStart(item.read())
+            }
+            Some((NS_W, "moveTo")) => Self::MoveDestinationRunContent(item.read()),
+            Some((NS_W, "moveFromRangeEnd")) => Self::MoveSourceLocationContainerEnd(item.read()),
+            Some((NS_W, "moveFromRangeStart")) => {
+                Self::MoveSourceLocationContainerStart(item.read())
+            }
+            Some((NS_W, "moveFrom")) => Self::MoveSourceRunContent(item.read()),
+            Some((NS_M, "oMath")) => Self::OfficeMath(item.read()),
+            Some((NS_M, "oMathPara")) => Self::OfficeMathParagraph(item.read()),
+            Some((NS_W, "proofErr")) => Self::ProofingErrorAnchor(item.read()),
+            Some((NS_W, "permEnd")) => Self::RangePermissionEnd(item.read()),
+            Some((NS_W, "permStart")) => Self::RangePermissionStart(item.read()),
+            Some((NS_W, "tc")) => Self::TableCell(item.read()),
+            _ => Self::Other(item.into_node()),
+        }
     }
 }
 
@@ -33978,8 +34137,8 @@ impl<X: UserData> ContentPartWith<X> {
 }
 
 impl officekit_markup_base::Read for ContentPart {
-    fn read(element: &Element) -> Self {
-        read::content_part(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::content_part_from_item(item)
     }
 }
 
@@ -34024,10 +34183,68 @@ impl officekit_markup_base::Read for ContentRowContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        read_content_row_1(element)
-            .or_else(|| read_content_row_2(element))
-            .unwrap_or_else(|| Self::Other(Node::Element(element.clone())))
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "bookmarkEnd")) => Self::BookmarkEnd(item.read()),
+            Some((NS_W, "bookmarkStart")) => Self::BookmarkStart(item.read()),
+            Some((NS_W, "commentRangeEnd")) => Self::CommentAnchorRangeEnd(item.read()),
+            Some((NS_W, "commentRangeStart")) => Self::CommentAnchorRangeStart(item.read()),
+            Some((NS_W14, "conflictDel")) => Self::ConflictDelRunTrackChange(item.read()),
+            Some((NS_W14, "conflictIns")) => Self::ConflictInsRunTrackChange(item.read()),
+            Some((NS_W, "customXmlDelRangeEnd")) => Self::CustomXMLMarkupDeletionEnd(item.read()),
+            Some((NS_W, "customXmlDelRangeStart")) => {
+                Self::CustomXMLMarkupDeletionStart(item.read())
+            }
+            Some((NS_W, "customXmlInsRangeEnd")) => Self::CustomXMLMarkupInsertionEnd(item.read()),
+            Some((NS_W, "customXmlInsRangeStart")) => {
+                Self::CustomXMLMarkupInsertionStart(item.read())
+            }
+            Some((NS_W, "customXmlMoveFromRangeEnd")) => {
+                Self::CustomXMLMarkupMoveSourceEnd(item.read())
+            }
+            Some((NS_W, "customXmlMoveFromRangeStart")) => {
+                Self::CustomXMLMarkupMoveSourceStart(item.read())
+            }
+            Some((NS_W14, "customXmlConflictDelRangeEnd")) => {
+                Self::CustomXmlConflictDelRangeEnd(item.read())
+            }
+            Some((NS_W14, "customXmlConflictDelRangeStart")) => {
+                Self::CustomXmlConflictDelRangeStart(item.read())
+            }
+            Some((NS_W14, "customXmlConflictInsRangeEnd")) => {
+                Self::CustomXmlConflictInsRangeEnd(item.read())
+            }
+            Some((NS_W14, "customXmlConflictInsRangeStart")) => {
+                Self::CustomXmlConflictInsRangeStart(item.read())
+            }
+            Some((NS_W, "customXmlMoveToRangeEnd")) => Self::CustomXmlMoveToRangeEnd(item.read()),
+            Some((NS_W, "customXmlMoveToRangeStart")) => {
+                Self::CustomXmlMoveToRangeStart(item.read())
+            }
+            Some((NS_W, "del")) => Self::DeletedRunContent(item.read()),
+            Some((NS_W, "ins")) => Self::InsertedRunContent(item.read()),
+            Some((NS_W, "moveToRangeEnd")) => {
+                Self::MoveDestinationLocationContainerEnd(item.read())
+            }
+            Some((NS_W, "moveToRangeStart")) => {
+                Self::MoveDestinationLocationContainerStart(item.read())
+            }
+            Some((NS_W, "moveTo")) => Self::MoveDestinationRunContent(item.read()),
+            Some((NS_W, "moveFromRangeEnd")) => Self::MoveSourceLocationContainerEnd(item.read()),
+            Some((NS_W, "moveFromRangeStart")) => {
+                Self::MoveSourceLocationContainerStart(item.read())
+            }
+            Some((NS_W, "moveFrom")) => Self::MoveSourceRunContent(item.read()),
+            Some((NS_M, "oMath")) => Self::OfficeMath(item.read()),
+            Some((NS_M, "oMathPara")) => Self::OfficeMathParagraph(item.read()),
+            Some((NS_W, "proofErr")) => Self::ProofingErrorAnchor(item.read()),
+            Some((NS_W, "permEnd")) => Self::RangePermissionEnd(item.read()),
+            Some((NS_W, "permStart")) => Self::RangePermissionStart(item.read()),
+            Some((NS_W, "customXml")) => Self::RowLevelCustomXMLElement(item.read()),
+            Some((NS_W, "sdt")) => Self::RowLevelStructuredDocumentTag(item.read()),
+            Some((NS_W, "tr")) => Self::TableRow(item.read()),
+            _ => Self::Other(item.into_node()),
+        }
     }
 }
 
@@ -34169,8 +34386,8 @@ impl<X: UserData> ContentsOfGlossaryDocumentEntryWith<X> {
 }
 
 impl officekit_markup_base::Read for ContentsOfGlossaryDocumentEntry {
-    fn read(element: &Element) -> Self {
-        read::contents_of_glossary_document_entry(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::contents_of_glossary_document_entry_from_item(item)
     }
 }
 
@@ -34203,8 +34420,8 @@ impl<X: UserData> ContinuationSeparatorMarkWith<X> {
 }
 
 impl officekit_markup_base::Read for ContinuationSeparatorMark {
-    fn read(element: &Element) -> Self {
-        read::continuation_separator_mark(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::continuation_separator_mark_from_item(item)
     }
 }
 
@@ -34241,8 +34458,8 @@ impl<X: UserData> CurrentContentsArePlaceholderTextWith<X> {
 }
 
 impl officekit_markup_base::Read for CurrentContentsArePlaceholderText {
-    fn read(element: &Element) -> Self {
-        read::current_contents_are_placeholder_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::current_contents_are_placeholder_text_from_item(item)
     }
 }
 
@@ -34283,8 +34500,8 @@ impl<X: UserData> CustomCompatibilitySettingWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomCompatibilitySetting {
-    fn read(element: &Element) -> Self {
-        read::custom_compatibility_setting(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_compatibility_setting_from_item(item)
     }
 }
 
@@ -34323,8 +34540,8 @@ impl<X: UserData> CustomFieldDataWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomFieldData {
-    fn read(element: &Element) -> Self {
-        read::custom_field_data(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_field_data_from_item(item)
     }
 }
 
@@ -34365,8 +34582,8 @@ impl<X: UserData> CustomTabStopWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomTabStop {
-    fn read(element: &Element) -> Self {
-        read::custom_tab_stop(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_tab_stop_from_item(item)
     }
 }
 
@@ -34520,8 +34737,8 @@ impl<X: UserData> CustomXMLAttributeWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomXMLAttribute {
-    fn read(element: &Element) -> Self {
-        read::custom_xml_attribute(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_xml_attribute_from_item(item)
     }
 }
 
@@ -34558,8 +34775,8 @@ impl<X: UserData> CustomXMLDataDateStorageFormatWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomXMLDataDateStorageFormat {
-    fn read(element: &Element) -> Self {
-        read::custom_xml_data_date_storage_format(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_xml_data_date_storage_format_from_item(item)
     }
 }
 
@@ -34596,8 +34813,8 @@ impl<X: UserData> CustomXMLElementPlaceholderTextWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomXMLElementPlaceholderText {
-    fn read(element: &Element) -> Self {
-        read::custom_xml_element_placeholder_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_xml_element_placeholder_text_from_item(item)
     }
 }
 
@@ -34638,8 +34855,8 @@ impl<X: UserData> CustomXMLElementPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomXMLElementProperties {
-    fn read(element: &Element) -> Self {
-        read::custom_xml_element_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_xml_element_properties_from_item(item)
     }
 }
 
@@ -34676,8 +34893,8 @@ impl<X: UserData> CustomXMLMarkupDeletionEndWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomXMLMarkupDeletionEnd {
-    fn read(element: &Element) -> Self {
-        read::custom_xml_markup_deletion_end(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_xml_markup_deletion_end_from_item(item)
     }
 }
 
@@ -34718,8 +34935,8 @@ impl<X: UserData> CustomXMLMarkupDeletionStartWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomXMLMarkupDeletionStart {
-    fn read(element: &Element) -> Self {
-        read::custom_xml_markup_deletion_start(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_xml_markup_deletion_start_from_item(item)
     }
 }
 
@@ -34756,8 +34973,8 @@ impl<X: UserData> CustomXMLMarkupInsertionEndWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomXMLMarkupInsertionEnd {
-    fn read(element: &Element) -> Self {
-        read::custom_xml_markup_insertion_end(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_xml_markup_insertion_end_from_item(item)
     }
 }
 
@@ -34798,8 +35015,8 @@ impl<X: UserData> CustomXMLMarkupInsertionStartWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomXMLMarkupInsertionStart {
-    fn read(element: &Element) -> Self {
-        read::custom_xml_markup_insertion_start(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_xml_markup_insertion_start_from_item(item)
     }
 }
 
@@ -34836,8 +35053,8 @@ impl<X: UserData> CustomXMLMarkupMoveSourceEndWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomXMLMarkupMoveSourceEnd {
-    fn read(element: &Element) -> Self {
-        read::custom_xml_markup_move_source_end(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_xml_markup_move_source_end_from_item(item)
     }
 }
 
@@ -34878,8 +35095,8 @@ impl<X: UserData> CustomXMLMarkupMoveSourceStartWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomXMLMarkupMoveSourceStart {
-    fn read(element: &Element) -> Self {
-        read::custom_xml_markup_move_source_start(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_xml_markup_move_source_start_from_item(item)
     }
 }
 
@@ -34918,8 +35135,8 @@ impl<X: UserData> CustomXSLTransformWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomXSLTransform {
-    fn read(element: &Element) -> Self {
-        read::custom_xsl_transform(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_xsl_transform_from_item(item)
     }
 }
 
@@ -34956,8 +35173,8 @@ impl<X: UserData> CustomXmlMoveToRangeEndWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomXmlMoveToRangeEnd {
-    fn read(element: &Element) -> Self {
-        read::custom_xml_move_to_range_end(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_xml_move_to_range_end_from_item(item)
     }
 }
 
@@ -34998,8 +35215,8 @@ impl<X: UserData> CustomXmlMoveToRangeStartWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomXmlMoveToRangeStart {
-    fn read(element: &Element) -> Self {
-        read::custom_xml_move_to_range_start(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_xml_move_to_range_start_from_item(item)
     }
 }
 
@@ -35044,8 +35261,8 @@ impl<X: UserData> DataAboutSingleDataSourceRecordWith<X> {
 }
 
 impl officekit_markup_base::Read for DataAboutSingleDataSourceRecord {
-    fn read(element: &Element) -> Self {
-        read::data_about_single_data_source_record(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_about_single_data_source_record_from_item(item)
     }
 }
 
@@ -35082,8 +35299,8 @@ impl<X: UserData> DataForHTMLBlockquoteElementWith<X> {
 }
 
 impl officekit_markup_base::Read for DataForHTMLBlockquoteElement {
-    fn read(element: &Element) -> Self {
-        read::data_for_html_blockquote_element(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_for_html_blockquote_element_from_item(item)
     }
 }
 
@@ -35120,8 +35337,8 @@ impl<X: UserData> DataForHTMLBodyElementWith<X> {
 }
 
 impl officekit_markup_base::Read for DataForHTMLBodyElement {
-    fn read(element: &Element) -> Self {
-        read::data_for_html_body_element(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_for_html_body_element_from_item(item)
     }
 }
 
@@ -35158,8 +35375,8 @@ impl<X: UserData> DataSourceConnectionStringWith<X> {
 }
 
 impl officekit_markup_base::Read for DataSourceConnectionString {
-    fn read(element: &Element) -> Self {
-        read::data_source_connection_string(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_source_connection_string_from_item(item)
     }
 }
 
@@ -35196,8 +35413,8 @@ impl<X: UserData> DataSourceFilePathWith<X> {
 }
 
 impl officekit_markup_base::Read for DataSourceFilePath {
-    fn read(element: &Element) -> Self {
-        read::data_source_file_path(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_source_file_path_from_item(item)
     }
 }
 
@@ -35234,8 +35451,8 @@ impl<X: UserData> DataSourceTableNameWith<X> {
 }
 
 impl officekit_markup_base::Read for DataSourceTableName {
-    fn read(element: &Element) -> Self {
-        read::data_source_table_name(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_source_table_name_from_item(item)
     }
 }
 
@@ -35272,8 +35489,8 @@ impl<X: UserData> DataSourceTypeWith<X> {
 }
 
 impl officekit_markup_base::Read for DataSourceType {
-    fn read(element: &Element) -> Self {
-        read::data_source_type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_source_type_from_item(item)
     }
 }
 
@@ -35306,8 +35523,8 @@ impl<X: UserData> DateBlockLongDayFormatWith<X> {
 }
 
 impl officekit_markup_base::Read for DateBlockLongDayFormat {
-    fn read(element: &Element) -> Self {
-        read::date_block_long_day_format(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::date_block_long_day_format_from_item(item)
     }
 }
 
@@ -35340,8 +35557,8 @@ impl<X: UserData> DateBlockLongMonthFormatWith<X> {
 }
 
 impl officekit_markup_base::Read for DateBlockLongMonthFormat {
-    fn read(element: &Element) -> Self {
-        read::date_block_long_month_format(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::date_block_long_month_format_from_item(item)
     }
 }
 
@@ -35374,8 +35591,8 @@ impl<X: UserData> DateBlockLongYearFormatWith<X> {
 }
 
 impl officekit_markup_base::Read for DateBlockLongYearFormat {
-    fn read(element: &Element) -> Self {
-        read::date_block_long_year_format(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::date_block_long_year_format_from_item(item)
     }
 }
 
@@ -35408,8 +35625,8 @@ impl<X: UserData> DateBlockShortDayFormatWith<X> {
 }
 
 impl officekit_markup_base::Read for DateBlockShortDayFormat {
-    fn read(element: &Element) -> Self {
-        read::date_block_short_day_format(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::date_block_short_day_format_from_item(item)
     }
 }
 
@@ -35442,8 +35659,8 @@ impl<X: UserData> DateBlockShortMonthFormatWith<X> {
 }
 
 impl officekit_markup_base::Read for DateBlockShortMonthFormat {
-    fn read(element: &Element) -> Self {
-        read::date_block_short_month_format(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::date_block_short_month_format_from_item(item)
     }
 }
 
@@ -35476,8 +35693,8 @@ impl<X: UserData> DateBlockShortYearFormatWith<X> {
 }
 
 impl officekit_markup_base::Read for DateBlockShortYearFormat {
-    fn read(element: &Element) -> Self {
-        read::date_block_short_year_format(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::date_block_short_year_format_from_item(item)
     }
 }
 
@@ -35514,8 +35731,8 @@ impl<X: UserData> DateDisplayMaskWith<X> {
 }
 
 impl officekit_markup_base::Read for DateDisplayMask {
-    fn read(element: &Element) -> Self {
-        read::date_display_mask(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::date_display_mask_from_item(item)
     }
 }
 
@@ -35552,8 +35769,8 @@ impl<X: UserData> DatePickerCalendarTypeWith<X> {
 }
 
 impl officekit_markup_base::Read for DatePickerCalendarType {
-    fn read(element: &Element) -> Self {
-        read::date_picker_calendar_type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::date_picker_calendar_type_from_item(item)
     }
 }
 
@@ -35660,8 +35877,8 @@ impl<X: UserData> DateStructuredDocumentTagWith<X> {
 }
 
 impl officekit_markup_base::Read for DateStructuredDocumentTag {
-    fn read(element: &Element) -> Self {
-        read::date_structured_document_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::date_structured_document_tag_from_item(item)
     }
 }
 
@@ -35721,8 +35938,8 @@ impl<X: UserData> DefaultCheckboxFormFieldStateWith<X> {
 }
 
 impl officekit_markup_base::Read for DefaultCheckboxFormFieldState {
-    fn read(element: &Element) -> Self {
-        read::default_checkbox_form_field_state(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::default_checkbox_form_field_state_from_item(item)
     }
 }
 
@@ -35759,8 +35976,8 @@ impl<X: UserData> DefaultDropDownListItemIndexWith<X> {
 }
 
 impl officekit_markup_base::Read for DefaultDropDownListItemIndex {
-    fn read(element: &Element) -> Self {
-        read::default_drop_down_list_item_index(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::default_drop_down_list_item_index_from_item(item)
     }
 }
 
@@ -35797,8 +36014,8 @@ impl<X: UserData> DefaultParagraphPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for DefaultParagraphProperties {
-    fn read(element: &Element) -> Self {
-        read::default_paragraph_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::default_paragraph_properties_from_item(item)
     }
 }
 
@@ -35835,8 +36052,8 @@ impl<X: UserData> DefaultPropertiesForVMLObjectsInHeaderAndFooterWith<X> {
 }
 
 impl officekit_markup_base::Read for DefaultPropertiesForVMLObjectsInHeaderAndFooter {
-    fn read(element: &Element) -> Self {
-        read::default_properties_for_vml_objects_in_header_and_footer(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::default_properties_for_vml_objects_in_header_and_footer_from_item(item)
     }
 }
 
@@ -35874,8 +36091,8 @@ impl<X: UserData> DefaultPropertiesForVMLObjectsInMainDocumentWith<X> {
 }
 
 impl officekit_markup_base::Read for DefaultPropertiesForVMLObjectsInMainDocument {
-    fn read(element: &Element) -> Self {
-        read::default_properties_for_vml_objects_in_main_document(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::default_properties_for_vml_objects_in_main_document_from_item(item)
     }
 }
 
@@ -35913,8 +36130,8 @@ impl<X: UserData> DefaultRunPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for DefaultRunProperties {
-    fn read(element: &Element) -> Self {
-        read::default_run_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::default_run_properties_from_item(item)
     }
 }
 
@@ -35951,8 +36168,8 @@ impl<X: UserData> DefaultTableStyleWith<X> {
 }
 
 impl officekit_markup_base::Read for DefaultTableStyle {
-    fn read(element: &Element) -> Self {
-        read::default_table_style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::default_table_style_from_item(item)
     }
 }
 
@@ -35989,8 +36206,8 @@ impl<X: UserData> DefaultTextBoxFormFieldStringWith<X> {
 }
 
 impl officekit_markup_base::Read for DefaultTextBoxFormFieldString {
-    fn read(element: &Element) -> Self {
-        read::default_text_box_form_field_string(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::default_text_box_form_field_string_from_item(item)
     }
 }
 
@@ -36035,8 +36252,8 @@ impl<X: UserData> DelWith<X> {
 }
 
 impl officekit_markup_base::Read for Del {
-    fn read(element: &Element) -> Self {
-        read::del(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::del_from_item(item)
     }
 }
 
@@ -36075,8 +36292,8 @@ impl<X: UserData> DeletedFieldCodeWith<X> {
 }
 
 impl officekit_markup_base::Read for DeletedFieldCode {
-    fn read(element: &Element) -> Self {
-        read::deleted_field_code(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::deleted_field_code_from_item(item)
     }
 }
 
@@ -36123,8 +36340,8 @@ impl<X: UserData> DeletedMathControlCharacterWith<X> {
 }
 
 impl officekit_markup_base::Read for DeletedMathControlCharacter {
-    fn read(element: &Element) -> Self {
-        read::deleted_math_control_character(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::deleted_math_control_character_from_item(item)
     }
 }
 
@@ -36169,8 +36386,8 @@ impl<X: UserData> DeletedRunContentWith<X> {
 }
 
 impl officekit_markup_base::Read for DeletedRunContent {
-    fn read(element: &Element) -> Self {
-        read::deleted_run_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::deleted_run_content_from_item(item)
     }
 }
 
@@ -36211,8 +36428,8 @@ impl<X: UserData> DeletedTableRowWith<X> {
 }
 
 impl officekit_markup_base::Read for DeletedTableRow {
-    fn read(element: &Element) -> Self {
-        read::deleted_table_row(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::deleted_table_row_from_item(item)
     }
 }
 
@@ -36251,8 +36468,8 @@ impl<X: UserData> DeletedTextWith<X> {
 }
 
 impl officekit_markup_base::Read for DeletedText {
-    fn read(element: &Element) -> Self {
-        read::deleted_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::deleted_text_from_item(item)
     }
 }
 
@@ -36289,8 +36506,8 @@ impl<X: UserData> DescriptionForEntryWith<X> {
 }
 
 impl officekit_markup_base::Read for DescriptionForEntry {
-    fn read(element: &Element) -> Self {
-        read::description_for_entry(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::description_for_entry_from_item(item)
     }
 }
 
@@ -36327,8 +36544,8 @@ impl<X: UserData> DifferentEvenOddPageHeadersAndFootersWith<X> {
 }
 
 impl officekit_markup_base::Read for DifferentEvenOddPageHeadersAndFooters {
-    fn read(element: &Element) -> Self {
-        read::different_even_odd_page_headers_and_footers(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::different_even_odd_page_headers_and_footers_from_item(item)
     }
 }
 
@@ -36365,8 +36582,8 @@ impl<X: UserData> DifferentFirstPageHeadersAndFootersWith<X> {
 }
 
 impl officekit_markup_base::Read for DifferentFirstPageHeadersAndFooters {
-    fn read(element: &Element) -> Self {
-        read::different_first_page_headers_and_footers(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::different_first_page_headers_and_footers_from_item(item)
     }
 }
 
@@ -36405,8 +36622,8 @@ impl<X: UserData> DisableFeaturesNotSupportedWith<X> {
 }
 
 impl officekit_markup_base::Read for DisableFeaturesNotSupported {
-    fn read(element: &Element) -> Self {
-        read::disable_features_not_supported(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::disable_features_not_supported_from_item(item)
     }
 }
 
@@ -36494,8 +36711,8 @@ impl<X: UserData> DisplayAllCharactersAsCapitalLettersWith<X> {
 }
 
 impl officekit_markup_base::Read for DisplayAllCharactersAsCapitalLetters {
-    fn read(element: &Element) -> Self {
-        read::display_all_characters_as_capital_letters(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::display_all_characters_as_capital_letters_from_item(item)
     }
 }
 
@@ -36532,8 +36749,8 @@ impl<X: UserData> DisplayAllLevelsUsingArabicNumeralsWith<X> {
 }
 
 impl officekit_markup_base::Read for DisplayAllLevelsUsingArabicNumerals {
-    fn read(element: &Element) -> Self {
-        read::display_all_levels_using_arabic_numerals(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::display_all_levels_using_arabic_numerals_from_item(item)
     }
 }
 
@@ -36570,8 +36787,8 @@ impl<X: UserData> DisplayBackgroundShapeWith<X> {
 }
 
 impl officekit_markup_base::Read for DisplayBackgroundShape {
-    fn read(element: &Element) -> Self {
-        read::display_background_shape(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::display_background_shape_from_item(item)
     }
 }
 
@@ -36608,8 +36825,8 @@ impl<X: UserData> DisplayBackslashAsYenSignWith<X> {
 }
 
 impl officekit_markup_base::Read for DisplayBackslashAsYenSign {
-    fn read(element: &Element) -> Self {
-        read::display_backslash_as_yen_sign(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::display_backslash_as_yen_sign_from_item(item)
     }
 }
 
@@ -36646,8 +36863,8 @@ impl<X: UserData> DisplayCharacterOutlineWith<X> {
 }
 
 impl officekit_markup_base::Read for DisplayCharacterOutline {
-    fn read(element: &Element) -> Self {
-        read::display_character_outline(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::display_character_outline_from_item(item)
     }
 }
 
@@ -36684,8 +36901,8 @@ impl<X: UserData> DisplayPageColumnBreaksPresentInFramesWith<X> {
 }
 
 impl officekit_markup_base::Read for DisplayPageColumnBreaksPresentInFrames {
-    fn read(element: &Element) -> Self {
-        read::display_page_column_breaks_present_in_frames(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::display_page_column_breaks_present_in_frames_from_item(item)
     }
 }
 
@@ -36722,8 +36939,8 @@ impl<X: UserData> DistanceBetweenAutomaticTabStopsWith<X> {
 }
 
 impl officekit_markup_base::Read for DistanceBetweenAutomaticTabStops {
-    fn read(element: &Element) -> Self {
-        read::distance_between_automatic_tab_stops(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::distance_between_automatic_tab_stops_from_item(item)
     }
 }
 
@@ -36760,8 +36977,8 @@ impl<X: UserData> DistanceBetweenHorizontalGridlinesWith<X> {
 }
 
 impl officekit_markup_base::Read for DistanceBetweenHorizontalGridlines {
-    fn read(element: &Element) -> Self {
-        read::distance_between_horizontal_gridlines(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::distance_between_horizontal_gridlines_from_item(item)
     }
 }
 
@@ -36798,8 +37015,8 @@ impl<X: UserData> DistanceBetweenPhoneticGuideTextWith<X> {
 }
 
 impl officekit_markup_base::Read for DistanceBetweenPhoneticGuideText {
-    fn read(element: &Element) -> Self {
-        read::distance_between_phonetic_guide_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::distance_between_phonetic_guide_text_from_item(item)
     }
 }
 
@@ -36836,8 +37053,8 @@ impl<X: UserData> DistanceBetweenVerticalGridlinesWith<X> {
 }
 
 impl officekit_markup_base::Read for DistanceBetweenVerticalGridlines {
-    fn read(element: &Element) -> Self {
-        read::distance_between_vertical_gridlines(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::distance_between_vertical_gridlines_from_item(item)
     }
 }
 
@@ -36874,8 +37091,8 @@ impl<X: UserData> DoNotAddLeadingBetweenLinesOfTextWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotAddLeadingBetweenLinesOfText {
-    fn read(element: &Element) -> Self {
-        read::do_not_add_leading_between_lines_of_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_add_leading_between_lines_of_text_from_item(item)
     }
 }
 
@@ -36912,8 +37129,8 @@ impl<X: UserData> DoNotAllowFloatingTablesToBreakAcrossPagesWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotAllowFloatingTablesToBreakAcrossPages {
-    fn read(element: &Element) -> Self {
-        read::do_not_allow_floating_tables_to_break_across_pages(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_allow_floating_tables_to_break_across_pages_from_item(item)
     }
 }
 
@@ -36951,8 +37168,8 @@ impl<X: UserData> DoNotAutofitConstrainedTablesWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotAutofitConstrainedTables {
-    fn read(element: &Element) -> Self {
-        read::do_not_autofit_constrained_tables(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_autofit_constrained_tables_from_item(item)
     }
 }
 
@@ -36989,8 +37206,8 @@ impl<X: UserData> DoNotAutomaticallyCompressImagesWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotAutomaticallyCompressImages {
-    fn read(element: &Element) -> Self {
-        read::do_not_automatically_compress_images(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_automatically_compress_images_from_item(item)
     }
 }
 
@@ -37027,8 +37244,8 @@ impl<X: UserData> DoNotBalanceTextColumnsWithinASectionWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotBalanceTextColumnsWithinASection {
-    fn read(element: &Element) -> Self {
-        read::do_not_balance_text_columns_within_a_section(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_balance_text_columns_within_a_section_from_item(item)
     }
 }
 
@@ -37065,8 +37282,8 @@ impl<X: UserData> DoNotBreakConstrainedForcedTableWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotBreakConstrainedForcedTable {
-    fn read(element: &Element) -> Self {
-        read::do_not_break_constrained_forced_table(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_break_constrained_forced_table_from_item(item)
     }
 }
 
@@ -37103,8 +37320,8 @@ impl<X: UserData> DoNotBypassEastAsianComplexScriptLayoutCodeWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotBypassEastAsianComplexScriptLayoutCode {
-    fn read(element: &Element) -> Self {
-        read::do_not_bypass_east_asian_complex_script_layout_code(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_bypass_east_asian_complex_script_layout_code_from_item(item)
     }
 }
 
@@ -37142,8 +37359,8 @@ impl<X: UserData> DoNotCenterContentOnLinesWithExactLineHeightWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotCenterContentOnLinesWithExactLineHeight {
-    fn read(element: &Element) -> Self {
-        read::do_not_center_content_on_lines_with_exact_line_height(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_center_content_on_lines_with_exact_line_height_from_item(item)
     }
 }
 
@@ -37181,8 +37398,8 @@ impl<X: UserData> DoNotCheckSpellingOrGrammarWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotCheckSpellingOrGrammar {
-    fn read(element: &Element) -> Self {
-        read::do_not_check_spelling_or_grammar(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_check_spelling_or_grammar_from_item(item)
     }
 }
 
@@ -37219,8 +37436,8 @@ impl<X: UserData> DoNotCreateCustomTabStopForHangingIndentWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotCreateCustomTabStopForHangingIndent {
-    fn read(element: &Element) -> Self {
-        read::do_not_create_custom_tab_stop_for_hanging_indent(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_create_custom_tab_stop_for_hanging_indent_from_item(item)
     }
 }
 
@@ -37257,8 +37474,8 @@ impl<X: UserData> DoNotDisplayFramesetSplittersWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotDisplayFramesetSplitters {
-    fn read(element: &Element) -> Self {
-        read::do_not_display_frameset_splitters(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_display_frameset_splitters_from_item(item)
     }
 }
 
@@ -37295,8 +37512,8 @@ impl<X: UserData> DoNotDisplayGrammaticalErrorsWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotDisplayGrammaticalErrors {
-    fn read(element: &Element) -> Self {
-        read::do_not_display_grammatical_errors(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_display_grammatical_errors_from_item(item)
     }
 }
 
@@ -37333,8 +37550,8 @@ impl<X: UserData> DoNotDisplayPageBoundariesWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotDisplayPageBoundaries {
-    fn read(element: &Element) -> Self {
-        read::do_not_display_page_boundaries(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_display_page_boundaries_from_item(item)
     }
 }
 
@@ -37371,8 +37588,8 @@ impl<X: UserData> DoNotDisplaySpellingErrorsWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotDisplaySpellingErrors {
-    fn read(element: &Element) -> Self {
-        read::do_not_display_spelling_errors(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_display_spelling_errors_from_item(item)
     }
 }
 
@@ -37409,8 +37626,8 @@ impl<X: UserData> DoNotHyphenateCapitalLettersWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotHyphenateCapitalLetters {
-    fn read(element: &Element) -> Self {
-        read::do_not_hyphenate_capital_letters(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_hyphenate_capital_letters_from_item(item)
     }
 }
 
@@ -37447,8 +37664,8 @@ impl<X: UserData> DoNotIncludeSubdocsInStatsWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotIncludeSubdocsInStats {
-    fn read(element: &Element) -> Self {
-        read::do_not_include_subdocs_in_stats(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_include_subdocs_in_stats_from_item(item)
     }
 }
 
@@ -37485,8 +37702,8 @@ impl<X: UserData> DoNotIncreaseLineHeightForRaisedLoweredTextWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotIncreaseLineHeightForRaisedLoweredText {
-    fn read(element: &Element) -> Self {
-        read::do_not_increase_line_height_for_raised_lowered_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_increase_line_height_for_raised_lowered_text_from_item(item)
     }
 }
 
@@ -37524,8 +37741,8 @@ impl<X: UserData> DoNotPlaceSupportingFilesWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotPlaceSupportingFiles {
-    fn read(element: &Element) -> Self {
-        read::do_not_place_supporting_files(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_place_supporting_files_from_item(item)
     }
 }
 
@@ -37562,8 +37779,8 @@ impl<X: UserData> DoNotRelyOnCSSWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotRelyOnCSS {
-    fn read(element: &Element) -> Self {
-        read::do_not_rely_on_css(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_rely_on_css_from_item(item)
     }
 }
 
@@ -37600,8 +37817,8 @@ impl<X: UserData> DoNotShowFormFieldIndicatorWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotShowFormFieldIndicator {
-    fn read(element: &Element) -> Self {
-        read::do_not_show_form_field_indicator(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_show_form_field_indicator_from_item(item)
     }
 }
 
@@ -37638,8 +37855,8 @@ impl<X: UserData> DoNotShowInvalidMarkupIndicatorWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotShowInvalidMarkupIndicator {
-    fn read(element: &Element) -> Self {
-        read::do_not_show_invalid_markup_indicator(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_show_invalid_markup_indicator_from_item(item)
     }
 }
 
@@ -37676,8 +37893,8 @@ impl<X: UserData> DoNotSnapToDocumentGridInTableCellsWithObjectsWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotSnapToDocumentGridInTableCellsWithObjects {
-    fn read(element: &Element) -> Self {
-        read::do_not_snap_to_document_grid_in_table_cells_with_objects(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_snap_to_document_grid_in_table_cells_with_objects_from_item(item)
     }
 }
 
@@ -37715,8 +37932,8 @@ impl<X: UserData> DoNotSuppressBlankLinesWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotSuppressBlankLines {
-    fn read(element: &Element) -> Self {
-        read::do_not_suppress_blank_lines(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_suppress_blank_lines_from_item(item)
     }
 }
 
@@ -37753,8 +37970,8 @@ impl<X: UserData> DoNotSuppressIndentationWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotSuppressIndentation {
-    fn read(element: &Element) -> Self {
-        read::do_not_suppress_indentation(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_suppress_indentation_from_item(item)
     }
 }
 
@@ -37791,8 +38008,8 @@ impl<X: UserData> DoNotSuppressParagraphBordersWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotSuppressParagraphBorders {
-    fn read(element: &Element) -> Self {
-        read::do_not_suppress_paragraph_borders(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_suppress_paragraph_borders_from_item(item)
     }
 }
 
@@ -37829,8 +38046,8 @@ impl<X: UserData> DoNotTrackFormattingWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotTrackFormatting {
-    fn read(element: &Element) -> Self {
-        read::do_not_track_formatting(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_track_formatting_from_item(item)
     }
 }
 
@@ -37867,8 +38084,8 @@ impl<X: UserData> DoNotUseEastAsianBreakRulesWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotUseEastAsianBreakRules {
-    fn read(element: &Element) -> Self {
-        read::do_not_use_east_asian_break_rules(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_use_east_asian_break_rules_from_item(item)
     }
 }
 
@@ -37905,8 +38122,8 @@ impl<X: UserData> DoNotUseFileNamesWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotUseFileNames {
-    fn read(element: &Element) -> Self {
-        read::do_not_use_file_names(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_use_file_names_from_item(item)
     }
 }
 
@@ -37943,8 +38160,8 @@ impl<X: UserData> DoNotUseHTMLParagraphAutoSpacingWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotUseHTMLParagraphAutoSpacing {
-    fn read(element: &Element) -> Self {
-        read::do_not_use_html_paragraph_auto_spacing(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_use_html_paragraph_auto_spacing_from_item(item)
     }
 }
 
@@ -37981,8 +38198,8 @@ impl<X: UserData> DoNotUseIndentAsNumberingTabStopWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotUseIndentAsNumberingTabStop {
-    fn read(element: &Element) -> Self {
-        read::do_not_use_indent_as_numbering_tab_stop(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_use_indent_as_numbering_tab_stop_from_item(item)
     }
 }
 
@@ -38019,8 +38236,8 @@ impl<X: UserData> DoNotUseMarginsForDrawingGridOriginWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotUseMarginsForDrawingGridOrigin {
-    fn read(element: &Element) -> Self {
-        read::do_not_use_margins_for_drawing_grid_origin(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_use_margins_for_drawing_grid_origin_from_item(item)
     }
 }
 
@@ -38057,8 +38274,8 @@ impl<X: UserData> DoNotUseMoveSyntaxWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotUseMoveSyntax {
-    fn read(element: &Element) -> Self {
-        read::do_not_use_move_syntax(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_use_move_syntax_from_item(item)
     }
 }
 
@@ -38095,8 +38312,8 @@ impl<X: UserData> DoNotValidateAgainstSchemaWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotValidateAgainstSchema {
-    fn read(element: &Element) -> Self {
-        read::do_not_validate_against_schema(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_validate_against_schema_from_item(item)
     }
 }
 
@@ -38133,8 +38350,8 @@ impl<X: UserData> DoNotVertAlignCellWithSpWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotVertAlignCellWithSp {
-    fn read(element: &Element) -> Self {
-        read::do_not_vert_align_cell_with_sp(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_vert_align_cell_with_sp_from_item(item)
     }
 }
 
@@ -38171,8 +38388,8 @@ impl<X: UserData> DoNotWrapTextWithPunctWith<X> {
 }
 
 impl officekit_markup_base::Read for DoNotWrapTextWithPunct {
-    fn read(element: &Element) -> Self {
-        read::do_not_wrap_text_with_punct(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::do_not_wrap_text_with_punct_from_item(item)
     }
 }
 
@@ -38217,8 +38434,8 @@ impl<X: UserData> DocumentWith<X> {
 }
 
 impl officekit_markup_base::Read for Document {
-    fn read(element: &Element) -> Self {
-        read::document(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_from_item(item)
     }
 }
 
@@ -38269,8 +38486,8 @@ impl<X: UserData> DocumentBackgroundWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentBackground {
-    fn read(element: &Element) -> Self {
-        read::document_background(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_background_from_item(item)
     }
 }
 
@@ -38311,8 +38528,8 @@ impl<X: UserData> DocumentBodyWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentBody {
-    fn read(element: &Element) -> Self {
-        read::document_body(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_body_from_item(item)
     }
 }
 
@@ -38349,8 +38566,8 @@ impl<X: UserData> DocumentClassificationWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentClassification {
-    fn read(element: &Element) -> Self {
-        read::document_classification(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_classification_from_item(item)
     }
 }
 
@@ -38391,8 +38608,8 @@ impl<X: UserData> DocumentDefaultParagraphAndRunPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentDefaultParagraphAndRunProperties {
-    fn read(element: &Element) -> Self {
-        read::document_default_paragraph_and_run_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_default_paragraph_and_run_properties_from_item(item)
     }
 }
 
@@ -38465,8 +38682,8 @@ impl<X: UserData> DocumentEditingRestrictionsWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentEditingRestrictions {
-    fn read(element: &Element) -> Self {
-        read::document_editing_restrictions(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_editing_restrictions_from_item(item)
     }
 }
 
@@ -38503,8 +38720,8 @@ impl<X: UserData> DocumentEndnotesWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentEndnotes {
-    fn read(element: &Element) -> Self {
-        read::document_endnotes(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_endnotes_from_item(item)
     }
 }
 
@@ -38543,8 +38760,8 @@ impl<X: UserData> DocumentFinalSectionPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentFinalSectionProperties {
-    fn read(element: &Element) -> Self {
-        read::document_final_section_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_final_section_properties_from_item(item)
     }
 }
 
@@ -38581,8 +38798,8 @@ impl<X: UserData> DocumentFootnotesWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentFootnotes {
-    fn read(element: &Element) -> Self {
-        read::document_footnotes(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_footnotes_from_item(item)
     }
 }
 
@@ -38623,8 +38840,8 @@ impl<X: UserData> DocumentGridWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentGrid {
-    fn read(element: &Element) -> Self {
-        read::document_grid(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_grid_from_item(item)
     }
 }
 
@@ -38661,8 +38878,8 @@ impl<X: UserData> DocumentGridInterLineParagraphSpacingWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentGridInterLineParagraphSpacing {
-    fn read(element: &Element) -> Self {
-        read::document_grid_inter_line_paragraph_spacing(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_grid_inter_line_paragraph_spacing_from_item(item)
     }
 }
 
@@ -38750,8 +38967,8 @@ impl<X: UserData> DocumentPartCategoryFilterWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentPartCategoryFilter {
-    fn read(element: &Element) -> Self {
-        read::document_part_category_filter(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_part_category_filter_from_item(item)
     }
 }
 
@@ -38788,8 +39005,8 @@ impl<X: UserData> DocumentPartGalleryFilterWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentPartGalleryFilter {
-    fn read(element: &Element) -> Self {
-        read::document_part_gallery_filter(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_part_gallery_filter_from_item(item)
     }
 }
 
@@ -38834,8 +39051,8 @@ impl<X: UserData> DocumentPartGalleryStructuredDocumentTagWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentPartGalleryStructuredDocumentTag {
-    fn read(element: &Element) -> Self {
-        read::document_part_gallery_structured_document_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_part_gallery_structured_document_tag_from_item(item)
     }
 }
 
@@ -38872,8 +39089,8 @@ impl<X: UserData> DocumentPartReferenceWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentPartReference {
-    fn read(element: &Element) -> Self {
-        read::document_part_reference(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_part_reference_from_item(item)
     }
 }
 
@@ -38959,8 +39176,8 @@ impl<X: UserData> DocumentSettingsWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentSettings {
-    fn read(element: &Element) -> Self {
-        read::document_settings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_settings_from_item(item)
     }
 }
 
@@ -38997,8 +39214,8 @@ impl<X: UserData> DocumentVariablesWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentVariables {
-    fn read(element: &Element) -> Self {
-        read::document_variables(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_variables_from_item(item)
     }
 }
 
@@ -39035,8 +39252,8 @@ impl<X: UserData> DocumentViewSettingWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentViewSetting {
-    fn read(element: &Element) -> Self {
-        read::document_view_setting(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_view_setting_from_item(item)
     }
 }
 
@@ -39144,8 +39361,8 @@ impl<X: UserData> DocumentWideEndnotePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentWideEndnoteProperties {
-    fn read(element: &Element) -> Self {
-        read::document_wide_endnote_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_wide_endnote_properties_from_item(item)
     }
 }
 
@@ -39200,8 +39417,8 @@ impl<X: UserData> DocumentWideFootnotePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentWideFootnoteProperties {
-    fn read(element: &Element) -> Self {
-        read::document_wide_footnote_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_wide_footnote_properties_from_item(item)
     }
 }
 
@@ -39238,8 +39455,8 @@ impl<X: UserData> DontJustifySoftLineBreakLinesWith<X> {
 }
 
 impl officekit_markup_base::Read for DontJustifySoftLineBreakLines {
-    fn read(element: &Element) -> Self {
-        read::dont_justify_soft_line_break_lines(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::dont_justify_soft_line_break_lines_from_item(item)
     }
 }
 
@@ -39276,8 +39493,8 @@ impl<X: UserData> DontWrapCellContentWith<X> {
 }
 
 impl officekit_markup_base::Read for DontWrapCellContent {
-    fn read(element: &Element) -> Self {
-        read::dont_wrap_cell_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::dont_wrap_cell_content_from_item(item)
     }
 }
 
@@ -39314,8 +39531,8 @@ impl<X: UserData> DoubleStrikethroughWith<X> {
 }
 
 impl officekit_markup_base::Read for DoubleStrikethrough {
-    fn read(element: &Element) -> Self {
-        read::double_strikethrough(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::double_strikethrough_from_item(item)
     }
 }
 
@@ -39352,8 +39569,8 @@ impl<X: UserData> DrawingGridHorizontalGridUnitSizeWith<X> {
 }
 
 impl officekit_markup_base::Read for DrawingGridHorizontalGridUnitSize {
-    fn read(element: &Element) -> Self {
-        read::drawing_grid_horizontal_grid_unit_size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drawing_grid_horizontal_grid_unit_size_from_item(item)
     }
 }
 
@@ -39390,8 +39607,8 @@ impl<X: UserData> DrawingGridHorizontalOriginPointWith<X> {
 }
 
 impl officekit_markup_base::Read for DrawingGridHorizontalOriginPoint {
-    fn read(element: &Element) -> Self {
-        read::drawing_grid_horizontal_origin_point(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drawing_grid_horizontal_origin_point_from_item(item)
     }
 }
 
@@ -39428,8 +39645,8 @@ impl<X: UserData> DrawingGridVerticalGridUnitSizeWith<X> {
 }
 
 impl officekit_markup_base::Read for DrawingGridVerticalGridUnitSize {
-    fn read(element: &Element) -> Self {
-        read::drawing_grid_vertical_grid_unit_size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drawing_grid_vertical_grid_unit_size_from_item(item)
     }
 }
 
@@ -39466,8 +39683,8 @@ impl<X: UserData> DrawingGridVerticalOriginPointWith<X> {
 }
 
 impl officekit_markup_base::Read for DrawingGridVerticalOriginPoint {
-    fn read(element: &Element) -> Self {
-        read::drawing_grid_vertical_origin_point(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drawing_grid_vertical_origin_point_from_item(item)
     }
 }
 
@@ -39504,8 +39721,8 @@ impl<X: UserData> DrawingMLObjectWith<X> {
 }
 
 impl officekit_markup_base::Read for DrawingMLObject {
-    fn read(element: &Element) -> Self {
-        read::drawing_ml_object(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drawing_ml_object_from_item(item)
     }
 }
 
@@ -39542,15 +39759,13 @@ impl officekit_markup_base::Read for DrawingObjectContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_WP, "anchor")) => Self::AnchorForFloatingDrawingMLObject(Box::new(
-                officekit_markup_base::read(element),
-            )),
-            Some((NS_WP, "inline")) => {
-                Self::InlineDrawingMLObject(officekit_markup_base::read(element))
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_WP, "anchor")) => {
+                Self::AnchorForFloatingDrawingMLObject(Box::new(item.read()))
             }
-            _ => Self::Other(Node::Element(element.clone())),
+            Some((NS_WP, "inline")) => Self::InlineDrawingMLObject(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -39591,8 +39806,8 @@ impl<X: UserData> DropDownListEntryWith<X> {
 }
 
 impl officekit_markup_base::Read for DropDownListEntry {
-    fn read(element: &Element) -> Self {
-        read::drop_down_list_entry(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drop_down_list_entry_from_item(item)
     }
 }
 
@@ -39637,8 +39852,8 @@ impl<X: UserData> DropDownListFormFieldPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for DropDownListFormFieldProperties {
-    fn read(element: &Element) -> Self {
-        read::drop_down_list_form_field_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drop_down_list_form_field_properties_from_item(item)
     }
 }
 
@@ -39675,8 +39890,8 @@ impl<X: UserData> DropDownListSelectionWith<X> {
 }
 
 impl officekit_markup_base::Read for DropDownListSelection {
-    fn read(element: &Element) -> Self {
-        read::drop_down_list_selection(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drop_down_list_selection_from_item(item)
     }
 }
 
@@ -39717,8 +39932,8 @@ impl<X: UserData> DropDownListStructuredDocumentTagWith<X> {
 }
 
 impl officekit_markup_base::Read for DropDownListStructuredDocumentTag {
-    fn read(element: &Element) -> Self {
-        read::drop_down_list_structured_document_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drop_down_list_structured_document_tag_from_item(item)
     }
 }
 
@@ -39755,8 +39970,8 @@ impl<X: UserData> EMailMessageCompositionStyleWith<X> {
 }
 
 impl officekit_markup_base::Read for EMailMessageCompositionStyle {
-    fn read(element: &Element) -> Self {
-        read::e_mail_message_composition_style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::e_mail_message_composition_style_from_item(item)
     }
 }
 
@@ -39793,8 +40008,8 @@ impl<X: UserData> EMailMessageReplyStyleWith<X> {
 }
 
 impl officekit_markup_base::Read for EMailMessageReplyStyle {
-    fn read(element: &Element) -> Self {
-        read::e_mail_message_reply_style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::e_mail_message_reply_style_from_item(item)
     }
 }
 
@@ -39831,8 +40046,8 @@ impl<X: UserData> EMailMessageTextStyleWith<X> {
 }
 
 impl officekit_markup_base::Read for EMailMessageTextStyle {
-    fn read(element: &Element) -> Self {
-        read::e_mail_message_text_style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::e_mail_message_text_style_from_item(item)
     }
 }
 
@@ -39869,8 +40084,8 @@ impl<X: UserData> EastAsianTypographyRulesWith<X> {
 }
 
 impl officekit_markup_base::Read for EastAsianTypographyRules {
-    fn read(element: &Element) -> Self {
-        read::east_asian_typography_rules(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::east_asian_typography_rules_from_item(item)
     }
 }
 
@@ -39915,8 +40130,8 @@ impl<X: UserData> EastAsianTypographySettingsWith<X> {
 }
 
 impl officekit_markup_base::Read for EastAsianTypographySettings {
-    fn read(element: &Element) -> Self {
-        read::east_asian_typography_settings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::east_asian_typography_settings_from_item(item)
     }
 }
 
@@ -39976,8 +40191,8 @@ impl<X: UserData> EmbedCommonSystemFontsWith<X> {
 }
 
 impl officekit_markup_base::Read for EmbedCommonSystemFonts {
-    fn read(element: &Element) -> Self {
-        read::embed_common_system_fonts(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::embed_common_system_fonts_from_item(item)
     }
 }
 
@@ -40014,8 +40229,8 @@ impl<X: UserData> EmbedTrueTypeFontsWith<X> {
 }
 
 impl officekit_markup_base::Read for EmbedTrueTypeFonts {
-    fn read(element: &Element) -> Self {
-        read::embed_true_type_fonts(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::embed_true_type_fonts_from_item(item)
     }
 }
 
@@ -40056,8 +40271,8 @@ impl<X: UserData> EmbeddedControlWith<X> {
 }
 
 impl officekit_markup_base::Read for EmbeddedControl {
-    fn read(element: &Element) -> Self {
-        read::embedded_control(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::embedded_control_from_item(item)
     }
 }
 
@@ -40110,8 +40325,8 @@ impl<X: UserData> EmbeddedObjectWith<X> {
 }
 
 impl officekit_markup_base::Read for EmbeddedObject {
-    fn read(element: &Element) -> Self {
-        read::embedded_object(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::embedded_object_from_item(item)
     }
 }
 
@@ -40152,17 +40367,13 @@ impl officekit_markup_base::Read for EmbeddedObjectContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "control")) => Self::EmbeddedControl(officekit_markup_base::read(element)),
-            Some((NS_W, "objectEmbed")) => {
-                Self::EmbeddedObjectProperties(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "movie")) => Self::EmbeddedVideo(officekit_markup_base::read(element)),
-            Some((NS_W, "objectLink")) => {
-                Self::LinkedObjectProperties(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "control")) => Self::EmbeddedControl(item.read()),
+            Some((NS_W, "objectEmbed")) => Self::EmbeddedObjectProperties(item.read()),
+            Some((NS_W, "movie")) => Self::EmbeddedVideo(item.read()),
+            Some((NS_W, "objectLink")) => Self::LinkedObjectProperties(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -40213,8 +40424,8 @@ impl<X: UserData> EmbeddedObjectPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for EmbeddedObjectProperties {
-    fn read(element: &Element) -> Self {
-        read::embedded_object_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::embedded_object_properties_from_item(item)
     }
 }
 
@@ -40355,8 +40566,8 @@ impl<X: UserData> EmbeddedVideoWith<X> {
 }
 
 impl officekit_markup_base::Read for EmbeddedVideo {
-    fn read(element: &Element) -> Self {
-        read::embedded_video(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::embedded_video_from_item(item)
     }
 }
 
@@ -40393,8 +40604,8 @@ impl<X: UserData> EmbossingWith<X> {
 }
 
 impl officekit_markup_base::Read for Embossing {
-    fn read(element: &Element) -> Self {
-        read::embossing(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::embossing_from_item(item)
     }
 }
 
@@ -40431,8 +40642,8 @@ impl<X: UserData> EmphasisMarkWith<X> {
 }
 
 impl officekit_markup_base::Read for EmphasisMark {
-    fn read(element: &Element) -> Self {
-        read::emphasis_mark(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::emphasis_mark_from_item(item)
     }
 }
 
@@ -40527,8 +40738,8 @@ impl<X: UserData> EndnoteContentWith<X> {
 }
 
 impl officekit_markup_base::Read for EndnoteContent {
-    fn read(element: &Element) -> Self {
-        read::endnote_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::endnote_content_from_item(item)
     }
 }
 
@@ -40565,8 +40776,8 @@ impl<X: UserData> EndnotePlacementWith<X> {
 }
 
 impl officekit_markup_base::Read for EndnotePlacement {
-    fn read(element: &Element) -> Self {
-        read::endnote_placement(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::endnote_placement_from_item(item)
     }
 }
 
@@ -40658,8 +40869,8 @@ impl<X: UserData> EndnoteReferenceWith<X> {
 }
 
 impl officekit_markup_base::Read for EndnoteReference {
-    fn read(element: &Element) -> Self {
-        read::endnote_reference(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::endnote_reference_from_item(item)
     }
 }
 
@@ -40692,8 +40903,8 @@ impl<X: UserData> EndnoteReferenceMarkWith<X> {
 }
 
 impl officekit_markup_base::Read for EndnoteReferenceMark {
-    fn read(element: &Element) -> Self {
-        read::endnote_reference_mark(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::endnote_reference_mark_from_item(item)
     }
 }
 
@@ -40734,8 +40945,8 @@ impl<X: UserData> EntryCategorizationWith<X> {
 }
 
 impl officekit_markup_base::Read for EntryCategorization {
-    fn read(element: &Element) -> Self {
-        read::entry_categorization(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::entry_categorization_from_item(item)
     }
 }
 
@@ -40861,8 +41072,8 @@ impl<X: UserData> EntryIDWith<X> {
 }
 
 impl officekit_markup_base::Read for EntryID {
-    fn read(element: &Element) -> Self {
-        read::entry_id(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::entry_id_from_item(item)
     }
 }
 
@@ -40899,8 +41110,8 @@ impl<X: UserData> EntryInsertionBehaviorWith<X> {
 }
 
 impl officekit_markup_base::Read for EntryInsertionBehavior {
-    fn read(element: &Element) -> Self {
-        read::entry_insertion_behavior(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::entry_insertion_behavior_from_item(item)
     }
 }
 
@@ -40937,8 +41148,8 @@ impl<X: UserData> EntryInsertionBehaviorsWith<X> {
 }
 
 impl officekit_markup_base::Read for EntryInsertionBehaviors {
-    fn read(element: &Element) -> Self {
-        read::entry_insertion_behaviors(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::entry_insertion_behaviors_from_item(item)
     }
 }
 
@@ -40977,8 +41188,8 @@ impl<X: UserData> EntryNameWith<X> {
 }
 
 impl officekit_markup_base::Read for EntryName {
-    fn read(element: &Element) -> Self {
-        read::entry_name(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::entry_name_from_item(item)
     }
 }
 
@@ -41015,8 +41226,8 @@ impl<X: UserData> EntryTypeWith<X> {
 }
 
 impl officekit_markup_base::Read for EntryType {
-    fn read(element: &Element) -> Self {
-        read::entry_type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::entry_type_from_item(item)
     }
 }
 
@@ -41057,8 +41268,8 @@ impl<X: UserData> EntryTypesWith<X> {
 }
 
 impl officekit_markup_base::Read for EntryTypes {
-    fn read(element: &Element) -> Self {
-        read::entry_types(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::entry_types_from_item(item)
     }
 }
 
@@ -41091,8 +41302,8 @@ impl<X: UserData> EquationStructuredDocumentTagWith<X> {
 }
 
 impl officekit_markup_base::Read for EquationStructuredDocumentTag {
-    fn read(element: &Element) -> Self {
-        read::equation_structured_document_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::equation_structured_document_tag_from_item(item)
     }
 }
 
@@ -41129,8 +41340,8 @@ impl<X: UserData> ExecuteOnFormFieldEntryWith<X> {
 }
 
 impl officekit_markup_base::Read for ExecuteOnFormFieldEntry {
-    fn read(element: &Element) -> Self {
-        read::execute_on_form_field_entry(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::execute_on_form_field_entry_from_item(item)
     }
 }
 
@@ -41167,8 +41378,8 @@ impl<X: UserData> ExecuteOnFormFieldExitWith<X> {
 }
 
 impl officekit_markup_base::Read for ExecuteOnFormFieldExit {
-    fn read(element: &Element) -> Self {
-        read::execute_on_form_field_exit(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::execute_on_form_field_exit_from_item(item)
     }
 }
 
@@ -41205,8 +41416,8 @@ impl<X: UserData> ExpandedCompressedTextWith<X> {
 }
 
 impl officekit_markup_base::Read for ExpandedCompressedText {
-    fn read(element: &Element) -> Self {
-        read::expanded_compressed_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::expanded_compressed_text_from_item(item)
     }
 }
 
@@ -41243,8 +41454,8 @@ impl<X: UserData> ExternalContentImportPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for ExternalContentImportProperties {
-    fn read(element: &Element) -> Self {
-        read::external_content_import_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::external_content_import_properties_from_item(item)
     }
 }
 
@@ -41302,8 +41513,8 @@ impl<X: UserData> ExternalDataSourceMergeFieldMappingWith<X> {
 }
 
 impl officekit_markup_base::Read for ExternalDataSourceMergeFieldMapping {
-    fn read(element: &Element) -> Self {
-        read::external_data_source_merge_field_mapping(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::external_data_source_merge_field_mapping_from_item(item)
     }
 }
 
@@ -41342,8 +41553,8 @@ impl<X: UserData> FieldCodeWith<X> {
 }
 
 impl officekit_markup_base::Read for FieldCode {
-    fn read(element: &Element) -> Self {
-        read::field_code(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::field_code_from_item(item)
     }
 }
 
@@ -41380,8 +41591,8 @@ impl<X: UserData> FirstRowContainsColumnNamesWith<X> {
 }
 
 impl officekit_markup_base::Read for FirstRowContainsColumnNames {
-    fn read(element: &Element) -> Self {
-        read::first_row_contains_column_names(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::first_row_contains_column_names_from_item(item)
     }
 }
 
@@ -41418,8 +41629,8 @@ impl<X: UserData> FitTextWithinCellWith<X> {
 }
 
 impl officekit_markup_base::Read for FitTextWithinCell {
-    fn read(element: &Element) -> Self {
-        read::fit_text_within_cell(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::fit_text_within_cell_from_item(item)
     }
 }
 
@@ -41456,8 +41667,8 @@ impl<X: UserData> FitToExpandedWidthWhenPerformingFullJustificationWith<X> {
 }
 
 impl officekit_markup_base::Read for FitToExpandedWidthWhenPerformingFullJustification {
-    fn read(element: &Element) -> Self {
-        read::fit_to_expanded_width_when_performing_full_justification(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::fit_to_expanded_width_when_performing_full_justification_from_item(item)
     }
 }
 
@@ -41495,8 +41706,8 @@ impl<X: UserData> FloatingTableAllowsOverlapWith<X> {
 }
 
 impl officekit_markup_base::Read for FloatingTableAllowsOverlap {
-    fn read(element: &Element) -> Self {
-        read::floating_table_allows_overlap(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::floating_table_allows_overlap_from_item(item)
     }
 }
 
@@ -41551,8 +41762,8 @@ impl<X: UserData> FloatingTablePositioningWith<X> {
 }
 
 impl officekit_markup_base::Read for FloatingTablePositioning {
-    fn read(element: &Element) -> Self {
-        read::floating_table_positioning(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::floating_table_positioning_from_item(item)
     }
 }
 
@@ -41589,8 +41800,8 @@ impl<X: UserData> FontFamilyWith<X> {
 }
 
 impl officekit_markup_base::Read for FontFamily {
-    fn read(element: &Element) -> Self {
-        read::font_family(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::font_family_from_item(item)
     }
 }
 
@@ -41680,8 +41891,8 @@ impl<X: UserData> FontKerningWith<X> {
 }
 
 impl officekit_markup_base::Read for FontKerning {
-    fn read(element: &Element) -> Self {
-        read::font_kerning(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::font_kerning_from_item(item)
     }
 }
 
@@ -41718,8 +41929,8 @@ impl<X: UserData> FontPitchWith<X> {
 }
 
 impl officekit_markup_base::Read for FontPitch {
-    fn read(element: &Element) -> Self {
-        read::font_pitch(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::font_pitch_from_item(item)
     }
 }
 
@@ -41806,8 +42017,8 @@ impl<X: UserData> FontTableRootElementWith<X> {
 }
 
 impl officekit_markup_base::Read for FontTableRootElement {
-    fn read(element: &Element) -> Self {
-        read::font_table_root_element(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::font_table_root_element_from_item(item)
     }
 }
 
@@ -41893,8 +42104,8 @@ impl<X: UserData> FooterWith<X> {
 }
 
 impl officekit_markup_base::Read for Footer {
-    fn read(element: &Element) -> Self {
-        read::footer(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::footer_from_item(item)
     }
 }
 
@@ -41933,8 +42144,8 @@ impl<X: UserData> FooterReferenceWith<X> {
 }
 
 impl officekit_markup_base::Read for FooterReference {
-    fn read(element: &Element) -> Self {
-        read::footer_reference(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::footer_reference_from_item(item)
     }
 }
 
@@ -41971,8 +42182,8 @@ impl<X: UserData> FootnoteAndEndnoteNumberingRestartLocationWith<X> {
 }
 
 impl officekit_markup_base::Read for FootnoteAndEndnoteNumberingRestartLocation {
-    fn read(element: &Element) -> Self {
-        read::footnote_and_endnote_numbering_restart_location(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::footnote_and_endnote_numbering_restart_location_from_item(item)
     }
 }
 
@@ -42009,8 +42220,8 @@ impl<X: UserData> FootnoteAndEndnoteNumberingStartingValueWith<X> {
 }
 
 impl officekit_markup_base::Read for FootnoteAndEndnoteNumberingStartingValue {
-    fn read(element: &Element) -> Self {
-        read::footnote_and_endnote_numbering_starting_value(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::footnote_and_endnote_numbering_starting_value_from_item(item)
     }
 }
 
@@ -42053,8 +42264,8 @@ impl<X: UserData> FootnoteContentWith<X> {
 }
 
 impl officekit_markup_base::Read for FootnoteContent {
-    fn read(element: &Element) -> Self {
-        read::footnote_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::footnote_content_from_item(item)
     }
 }
 
@@ -42143,8 +42354,8 @@ impl<X: UserData> FootnoteEndnoteSeparatorMarkWith<X> {
 }
 
 impl officekit_markup_base::Read for FootnoteEndnoteSeparatorMark {
-    fn read(element: &Element) -> Self {
-        read::footnote_endnote_separator_mark(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::footnote_endnote_separator_mark_from_item(item)
     }
 }
 
@@ -42232,8 +42443,8 @@ impl<X: UserData> FootnotePlacementWith<X> {
 }
 
 impl officekit_markup_base::Read for FootnotePlacement {
-    fn read(element: &Element) -> Self {
-        read::footnote_placement(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::footnote_placement_from_item(item)
     }
 }
 
@@ -42327,8 +42538,8 @@ impl<X: UserData> FootnoteReferenceWith<X> {
 }
 
 impl officekit_markup_base::Read for FootnoteReference {
-    fn read(element: &Element) -> Self {
-        read::footnote_reference(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::footnote_reference_from_item(item)
     }
 }
 
@@ -42361,8 +42572,8 @@ impl<X: UserData> FootnoteReferenceMarkWith<X> {
 }
 
 impl officekit_markup_base::Read for FootnoteReferenceMark {
-    fn read(element: &Element) -> Self {
-        read::footnote_reference_mark(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::footnote_reference_mark_from_item(item)
     }
 }
 
@@ -42399,8 +42610,8 @@ impl<X: UserData> ForgetLastTabAlignmentWith<X> {
 }
 
 impl officekit_markup_base::Read for ForgetLastTabAlignment {
-    fn read(element: &Element) -> Self {
-        read::forget_last_tab_alignment(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::forget_last_tab_alignment_from_item(item)
     }
 }
 
@@ -42437,8 +42648,8 @@ impl<X: UserData> FormFieldEnabledWith<X> {
 }
 
 impl officekit_markup_base::Read for FormFieldEnabled {
-    fn read(element: &Element) -> Self {
-        read::form_field_enabled(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::form_field_enabled_from_item(item)
     }
 }
 
@@ -42475,8 +42686,8 @@ impl<X: UserData> FormFieldNameWith<X> {
 }
 
 impl officekit_markup_base::Read for FormFieldName {
-    fn read(element: &Element) -> Self {
-        read::form_field_name(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::form_field_name_from_item(item)
     }
 }
 
@@ -42536,8 +42747,8 @@ impl<X: UserData> FormFieldPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for FormFieldProperties {
-    fn read(element: &Element) -> Self {
-        read::form_field_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::form_field_properties_from_item(item)
     }
 }
 
@@ -42606,41 +42817,23 @@ impl officekit_markup_base::Read for FormFieldPropertiesContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "helpText")) => {
-                Self::AssociatedHelpText(officekit_markup_base::read(element))
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "helpText")) => Self::AssociatedHelpText(item.read()),
+            Some((NS_W, "statusText")) => Self::AssociatedStatusText(item.read()),
+            Some((NS_W, "checkBox")) => Self::CheckboxFormFieldProperties(item.read()),
+            Some((NS_W, "ddList")) => Self::DropDownListFormFieldProperties(item.read()),
+            Some((NS_W, "entryMacro")) => Self::ExecuteOnFormFieldEntry(item.read()),
+            Some((NS_W, "exitMacro")) => Self::ExecuteOnFormFieldExit(item.read()),
+            Some((NS_W, "enabled")) => Self::FormFieldEnabled(item.read()),
+            Some((NS_W, "name")) => Self::FormFieldName(item.read()),
+            Some((NS_W, "calcOnExit")) => Self::RecalculateFieldsWhenModified(item.read()),
+            Some((NS_W, "label")) => Self::StructuredDocumentTagLabel(item.read()),
+            Some((NS_W, "tabIndex")) => {
+                Self::StructuredDocumentTagNavigationOrderIndex(item.read())
             }
-            Some((NS_W, "statusText")) => {
-                Self::AssociatedStatusText(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "checkBox")) => {
-                Self::CheckboxFormFieldProperties(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "ddList")) => {
-                Self::DropDownListFormFieldProperties(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "entryMacro")) => {
-                Self::ExecuteOnFormFieldEntry(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "exitMacro")) => {
-                Self::ExecuteOnFormFieldExit(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "enabled")) => Self::FormFieldEnabled(officekit_markup_base::read(element)),
-            Some((NS_W, "name")) => Self::FormFieldName(officekit_markup_base::read(element)),
-            Some((NS_W, "calcOnExit")) => {
-                Self::RecalculateFieldsWhenModified(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "label")) => {
-                Self::StructuredDocumentTagLabel(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "tabIndex")) => Self::StructuredDocumentTagNavigationOrderIndex(
-                officekit_markup_base::read(element),
-            ),
-            Some((NS_W, "textInput")) => {
-                Self::TextBoxFormFieldProperties(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+            Some((NS_W, "textInput")) => Self::TextBoxFormFieldProperties(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -42714,8 +42907,8 @@ impl<X: UserData> FrameCannotBeResizedWith<X> {
 }
 
 impl officekit_markup_base::Read for FrameCannotBeResized {
-    fn read(element: &Element) -> Self {
-        read::frame_cannot_be_resized(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::frame_cannot_be_resized_from_item(item)
     }
 }
 
@@ -42752,8 +42945,8 @@ impl<X: UserData> FrameLongDescriptionWith<X> {
 }
 
 impl officekit_markup_base::Read for FrameLongDescription {
-    fn read(element: &Element) -> Self {
-        read::frame_long_description(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::frame_long_description_from_item(item)
     }
 }
 
@@ -42790,8 +42983,8 @@ impl<X: UserData> FrameOrFramesetTitleWith<X> {
 }
 
 impl officekit_markup_base::Read for FrameOrFramesetTitle {
-    fn read(element: &Element) -> Self {
-        read::frame_or_frameset_title(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::frame_or_frameset_title_from_item(item)
     }
 }
 
@@ -42882,8 +43075,8 @@ impl<X: UserData> FrameSizeWith<X> {
 }
 
 impl officekit_markup_base::Read for FrameSize {
-    fn read(element: &Element) -> Self {
-        read::frame_size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::frame_size_from_item(item)
     }
 }
 
@@ -42918,15 +43111,11 @@ impl officekit_markup_base::Read for FramesetDefinitionContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "frameset")) => {
-                Self::NestedFramesetDefinition(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "frame")) => {
-                Self::SingleFrameProperties(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "frameset")) => Self::NestedFramesetDefinition(item.read()),
+            Some((NS_W, "frame")) => Self::SingleFrameProperties(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -42967,8 +43156,8 @@ impl<X: UserData> FramesetLayoutWith<X> {
 }
 
 impl officekit_markup_base::Read for FramesetLayout {
-    fn read(element: &Element) -> Self {
-        read::frameset_layout(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::frameset_layout_from_item(item)
     }
 }
 
@@ -43059,8 +43248,8 @@ impl<X: UserData> FramesetSplitterBorderStyleWith<X> {
 }
 
 impl officekit_markup_base::Read for FramesetSplitterBorderStyle {
-    fn read(element: &Element) -> Self {
-        read::frameset_splitter_border_style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::frameset_splitter_border_style_from_item(item)
     }
 }
 
@@ -43109,8 +43298,8 @@ impl<X: UserData> FramesetSplitterPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for FramesetSplitterProperties {
-    fn read(element: &Element) -> Self {
-        read::frameset_splitter_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::frameset_splitter_properties_from_item(item)
     }
 }
 
@@ -43147,8 +43336,8 @@ impl<X: UserData> FramesetSplitterWidthWith<X> {
 }
 
 impl officekit_markup_base::Read for FramesetSplitterWidth {
-    fn read(element: &Element) -> Self {
-        read::frameset_splitter_width(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::frameset_splitter_width_from_item(item)
     }
 }
 
@@ -43191,8 +43380,8 @@ impl<X: UserData> FreezeDocumentLayoutWith<X> {
 }
 
 impl officekit_markup_base::Read for FreezeDocumentLayout {
-    fn read(element: &Element) -> Self {
-        read::freeze_document_layout(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::freeze_document_layout_from_item(item)
     }
 }
 
@@ -43229,8 +43418,8 @@ impl<X: UserData> FriendlyNameWith<X> {
 }
 
 impl officekit_markup_base::Read for FriendlyName {
-    fn read(element: &Element) -> Self {
-        read::friendly_name(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::friendly_name_from_item(item)
     }
 }
 
@@ -43267,8 +43456,8 @@ impl<X: UserData> GalleryAssociatedWithEntryWith<X> {
 }
 
 impl officekit_markup_base::Read for GalleryAssociatedWithEntry {
-    fn read(element: &Element) -> Self {
-        read::gallery_associated_with_entry(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::gallery_associated_with_entry_from_item(item)
     }
 }
 
@@ -43305,8 +43494,8 @@ impl<X: UserData> GenerateThumbnailForDocumentOnSaveWith<X> {
 }
 
 impl officekit_markup_base::Read for GenerateThumbnailForDocumentOnSave {
-    fn read(element: &Element) -> Self {
-        read::generate_thumbnail_for_document_on_save(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::generate_thumbnail_for_document_on_save_from_item(item)
     }
 }
 
@@ -43347,8 +43536,8 @@ impl<X: UserData> GlossaryDocumentEntryWith<X> {
 }
 
 impl officekit_markup_base::Read for GlossaryDocumentEntry {
-    fn read(element: &Element) -> Self {
-        read::glossary_document_entry(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::glossary_document_entry_from_item(item)
     }
 }
 
@@ -43385,8 +43574,8 @@ impl<X: UserData> GlossaryDocumentEntryPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for GlossaryDocumentEntryProperties {
-    fn read(element: &Element) -> Self {
-        read::glossary_document_entry_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::glossary_document_entry_properties_from_item(item)
     }
 }
 
@@ -43444,24 +43633,16 @@ impl officekit_markup_base::Read for GlossaryDocumentEntryPropertiesContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "style")) => {
-                Self::AssociatedParagraphStyleName(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "description")) => {
-                Self::DescriptionForEntry(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "category")) => {
-                Self::EntryCategorization(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "guid")) => Self::EntryID(officekit_markup_base::read(element)),
-            Some((NS_W, "behaviors")) => {
-                Self::EntryInsertionBehaviors(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "name")) => Self::EntryName(officekit_markup_base::read(element)),
-            Some((NS_W, "types")) => Self::EntryTypes(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "style")) => Self::AssociatedParagraphStyleName(item.read()),
+            Some((NS_W, "description")) => Self::DescriptionForEntry(item.read()),
+            Some((NS_W, "category")) => Self::EntryCategorization(item.read()),
+            Some((NS_W, "guid")) => Self::EntryID(item.read()),
+            Some((NS_W, "behaviors")) => Self::EntryInsertionBehaviors(item.read()),
+            Some((NS_W, "name")) => Self::EntryName(item.read()),
+            Some((NS_W, "types")) => Self::EntryTypes(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -43511,8 +43692,8 @@ impl<X: UserData> GlossaryDocumentRootElementWith<X> {
 }
 
 impl officekit_markup_base::Read for GlossaryDocumentRootElement {
-    fn read(element: &Element) -> Self {
-        read::glossary_document_root_element(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::glossary_document_root_element_from_item(item)
     }
 }
 
@@ -43559,8 +43740,8 @@ impl<X: UserData> GrammarCheckingSettingsWith<X> {
 }
 
 impl officekit_markup_base::Read for GrammarCheckingSettings {
-    fn read(element: &Element) -> Self {
-        read::grammar_checking_settings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::grammar_checking_settings_from_item(item)
     }
 }
 
@@ -43597,8 +43778,8 @@ impl<X: UserData> GridColumnDefinitionWith<X> {
 }
 
 impl officekit_markup_base::Read for GridColumnDefinition {
-    fn read(element: &Element) -> Self {
-        read::grid_column_definition(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::grid_column_definition_from_item(item)
     }
 }
 
@@ -43635,8 +43816,8 @@ impl<X: UserData> GridColumnsAfterLastCellWith<X> {
 }
 
 impl officekit_markup_base::Read for GridColumnsAfterLastCell {
-    fn read(element: &Element) -> Self {
-        read::grid_columns_after_last_cell(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::grid_columns_after_last_cell_from_item(item)
     }
 }
 
@@ -43673,8 +43854,8 @@ impl<X: UserData> GridColumnsBeforeFirstCellWith<X> {
 }
 
 impl officekit_markup_base::Read for GridColumnsBeforeFirstCell {
-    fn read(element: &Element) -> Self {
-        read::grid_columns_before_first_cell(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::grid_columns_before_first_cell_from_item(item)
     }
 }
 
@@ -43711,8 +43892,8 @@ impl<X: UserData> GridColumnsSpannedWith<X> {
 }
 
 impl officekit_markup_base::Read for GridColumnsSpanned {
-    fn read(element: &Element) -> Self {
-        read::grid_columns_spanned(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::grid_columns_spanned_from_item(item)
     }
 }
 
@@ -43745,8 +43926,8 @@ impl<X: UserData> GroupStructuredDocumentTagWith<X> {
 }
 
 impl officekit_markup_base::Read for GroupStructuredDocumentTag {
-    fn read(element: &Element) -> Self {
-        read::group_structured_document_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::group_structured_document_tag_from_item(item)
     }
 }
 
@@ -43783,8 +43964,8 @@ impl<X: UserData> GutterOnRightSideOfPageWith<X> {
 }
 
 impl officekit_markup_base::Read for GutterOnRightSideOfPage {
-    fn read(element: &Element) -> Self {
-        read::gutter_on_right_side_of_page(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::gutter_on_right_side_of_page_from_item(item)
     }
 }
 
@@ -43821,8 +44002,8 @@ impl<X: UserData> HeaderWith<X> {
 }
 
 impl officekit_markup_base::Read for Header {
-    fn read(element: &Element) -> Self {
-        read::header(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::header_from_item(item)
     }
 }
 
@@ -43859,8 +44040,8 @@ impl<X: UserData> HeaderCellReferenceWith<X> {
 }
 
 impl officekit_markup_base::Read for HeaderCellReference {
-    fn read(element: &Element) -> Self {
-        read::header_cell_reference(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::header_cell_reference_from_item(item)
     }
 }
 
@@ -43897,8 +44078,8 @@ impl<X: UserData> HeaderCellsAssociatedWithTableCellWith<X> {
 }
 
 impl officekit_markup_base::Read for HeaderCellsAssociatedWithTableCell {
-    fn read(element: &Element) -> Self {
-        read::header_cells_associated_with_table_cell(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::header_cells_associated_with_table_cell_from_item(item)
     }
 }
 
@@ -43935,8 +44116,8 @@ impl<X: UserData> HeaderDefinitionFilePathWith<X> {
 }
 
 impl officekit_markup_base::Read for HeaderDefinitionFilePath {
-    fn read(element: &Element) -> Self {
-        read::header_definition_file_path(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::header_definition_file_path_from_item(item)
     }
 }
 
@@ -44025,8 +44206,8 @@ impl<X: UserData> HeaderReferenceWith<X> {
 }
 
 impl officekit_markup_base::Read for HeaderReference {
-    fn read(element: &Element) -> Self {
-        read::header_reference(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::header_reference_from_item(item)
     }
 }
 
@@ -44235,8 +44416,8 @@ impl<X: UserData> HiddenTableRowMarkerWith<X> {
 }
 
 impl officekit_markup_base::Read for HiddenTableRowMarker {
-    fn read(element: &Element) -> Self {
-        read::hidden_table_row_marker(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hidden_table_row_marker_from_item(item)
     }
 }
 
@@ -44273,8 +44454,8 @@ impl<X: UserData> HiddenTextWith<X> {
 }
 
 impl officekit_markup_base::Read for HiddenText {
-    fn read(element: &Element) -> Self {
-        read::hidden_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hidden_text_from_item(item)
     }
 }
 
@@ -44311,8 +44492,8 @@ impl<X: UserData> HideStyleFromMainUserInterfaceWith<X> {
 }
 
 impl officekit_markup_base::Read for HideStyleFromMainUserInterface {
-    fn read(element: &Element) -> Self {
-        read::hide_style_from_main_user_interface(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hide_style_from_main_user_interface_from_item(item)
     }
 }
 
@@ -44462,8 +44643,8 @@ impl<X: UserData> HorizontallyMergedCellWith<X> {
 }
 
 impl officekit_markup_base::Read for HorizontallyMergedCell {
-    fn read(element: &Element) -> Self {
-        read::horizontally_merged_cell(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::horizontally_merged_cell_from_item(item)
     }
 }
 
@@ -44514,8 +44695,8 @@ impl<X: UserData> HyperlinkWith<X> {
 }
 
 impl officekit_markup_base::Read for Hyperlink {
-    fn read(element: &Element) -> Self {
-        read::hyperlink(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hyperlink_from_item(item)
     }
 }
 
@@ -44552,8 +44733,8 @@ impl<X: UserData> HyphenationZoneWith<X> {
 }
 
 impl officekit_markup_base::Read for HyphenationZone {
-    fn read(element: &Element) -> Self {
-        read::hyphenation_zone(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hyphenation_zone_from_item(item)
     }
 }
 
@@ -44590,8 +44771,8 @@ impl<X: UserData> IgnoreEndOfCellMarkerWith<X> {
 }
 
 impl officekit_markup_base::Read for IgnoreEndOfCellMarker {
-    fn read(element: &Element) -> Self {
-        read::ignore_end_of_cell_marker(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ignore_end_of_cell_marker_from_item(item)
     }
 }
 
@@ -44628,8 +44809,8 @@ impl<X: UserData> IgnoreExactLineHeightForLastLineOnPageWith<X> {
 }
 
 impl officekit_markup_base::Read for IgnoreExactLineHeightForLastLineOnPage {
-    fn read(element: &Element) -> Self {
-        read::ignore_exact_line_height_for_last_line_on_page(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ignore_exact_line_height_for_last_line_on_page_from_item(item)
     }
 }
 
@@ -44666,8 +44847,8 @@ impl<X: UserData> IgnoreMinimumLineHeightForFirstLineOnPageWith<X> {
 }
 
 impl officekit_markup_base::Read for IgnoreMinimumLineHeightForFirstLineOnPage {
-    fn read(element: &Element) -> Self {
-        read::ignore_minimum_line_height_for_first_line_on_page(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ignore_minimum_line_height_for_first_line_on_page_from_item(item)
     }
 }
 
@@ -44705,8 +44886,8 @@ impl<X: UserData> IgnoreMixedContentWith<X> {
 }
 
 impl officekit_markup_base::Read for IgnoreMixedContent {
-    fn read(element: &Element) -> Self {
-        read::ignore_mixed_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ignore_mixed_content_from_item(item)
     }
 }
 
@@ -44743,8 +44924,8 @@ impl<X: UserData> IgnorePageBreakFromContinuousSectionBreakWith<X> {
 }
 
 impl officekit_markup_base::Read for IgnorePageBreakFromContinuousSectionBreak {
-    fn read(element: &Element) -> Self {
-        read::ignore_page_break_from_continuous_section_break(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ignore_page_break_from_continuous_section_break_from_item(item)
     }
 }
 
@@ -44781,8 +44962,8 @@ impl<X: UserData> IgnoreSpacingAboveAndBelowWith<X> {
 }
 
 impl officekit_markup_base::Read for IgnoreSpacingAboveAndBelow {
-    fn read(element: &Element) -> Self {
-        read::ignore_spacing_above_and_below(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ignore_spacing_above_and_below_from_item(item)
     }
 }
 
@@ -44819,8 +45000,8 @@ impl<X: UserData> IgnoreTextWrappingAroundObjectsAtBottomOfPageWith<X> {
 }
 
 impl officekit_markup_base::Read for IgnoreTextWrappingAroundObjectsAtBottomOfPage {
-    fn read(element: &Element) -> Self {
-        read::ignore_text_wrapping_around_objects_at_bottom_of_page(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ignore_text_wrapping_around_objects_at_bottom_of_page_from_item(item)
     }
 }
 
@@ -44858,8 +45039,8 @@ impl<X: UserData> IgnoreVerticalAlignmentInTextboxesWith<X> {
 }
 
 impl officekit_markup_base::Read for IgnoreVerticalAlignmentInTextboxes {
-    fn read(element: &Element) -> Self {
-        read::ignore_vertical_alignment_in_textboxes(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ignore_vertical_alignment_in_textboxes_from_item(item)
     }
 }
 
@@ -44896,8 +45077,8 @@ impl<X: UserData> ImprintingWith<X> {
 }
 
 impl officekit_markup_base::Read for Imprinting {
-    fn read(element: &Element) -> Self {
-        read::imprinting(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::imprinting_from_item(item)
     }
 }
 
@@ -44934,8 +45115,8 @@ impl<X: UserData> InclusionExclusionDataForDataSourceWith<X> {
 }
 
 impl officekit_markup_base::Read for InclusionExclusionDataForDataSource {
-    fn read(element: &Element) -> Self {
-        read::inclusion_exclusion_data_for_data_source(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::inclusion_exclusion_data_for_data_source_from_item(item)
     }
 }
 
@@ -44972,8 +45153,8 @@ impl<X: UserData> IndexOfColumnBeingMappedWith<X> {
 }
 
 impl officekit_markup_base::Read for IndexOfColumnBeingMapped {
-    fn read(element: &Element) -> Self {
-        read::index_of_column_being_mapped(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::index_of_column_being_mapped_from_item(item)
     }
 }
 
@@ -45010,8 +45191,8 @@ impl<X: UserData> InformationAboutHTMLDivElementsWith<X> {
 }
 
 impl officekit_markup_base::Read for InformationAboutHTMLDivElements {
-    fn read(element: &Element) -> Self {
-        read::information_about_html_div_elements(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::information_about_html_div_elements_from_item(item)
     }
 }
 
@@ -45080,8 +45261,8 @@ impl<X: UserData> InformationAboutSingleHTMLDivElementWith<X> {
 }
 
 impl officekit_markup_base::Read for InformationAboutSingleHTMLDivElement {
-    fn read(element: &Element) -> Self {
-        read::information_about_single_html_div_element(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::information_about_single_html_div_element_from_item(item)
     }
 }
 
@@ -45128,8 +45309,8 @@ impl<X: UserData> InlineLevelCustomXMLElementWith<X> {
 }
 
 impl officekit_markup_base::Read for InlineLevelCustomXMLElement {
-    fn read(element: &Element) -> Self {
-        read::inline_level_custom_xml_element(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::inline_level_custom_xml_element_from_item(item)
     }
 }
 
@@ -45176,8 +45357,8 @@ impl<X: UserData> InlineLevelSmartTagWith<X> {
 }
 
 impl officekit_markup_base::Read for InlineLevelSmartTag {
-    fn read(element: &Element) -> Self {
-        read::inline_level_smart_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::inline_level_smart_tag_from_item(item)
     }
 }
 
@@ -45238,8 +45419,8 @@ impl<X: UserData> InlineLevelStructuredDocumentTagWith<X> {
 }
 
 impl officekit_markup_base::Read for InlineLevelStructuredDocumentTag {
-    fn read(element: &Element) -> Self {
-        read::inline_level_structured_document_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::inline_level_structured_document_tag_from_item(item)
     }
 }
 
@@ -45276,8 +45457,8 @@ impl<X: UserData> InlineLevelStructuredDocumentTagContentWith<X> {
 }
 
 impl officekit_markup_base::Read for InlineLevelStructuredDocumentTagContent {
-    fn read(element: &Element) -> Self {
-        read::inline_level_structured_document_tag_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::inline_level_structured_document_tag_content_from_item(item)
     }
 }
 
@@ -45324,8 +45505,8 @@ impl<X: UserData> InsertedMathControlCharacterWith<X> {
 }
 
 impl officekit_markup_base::Read for InsertedMathControlCharacter {
-    fn read(element: &Element) -> Self {
-        read::inserted_math_control_character(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::inserted_math_control_character_from_item(item)
     }
 }
 
@@ -45358,11 +45539,11 @@ impl officekit_markup_base::Read for InsertedMathControlCharacterContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "del")) => Self::Del(officekit_markup_base::read(element)),
-            Some((NS_W, "rPr")) => Self::RunProperties(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "del")) => Self::Del(item.read()),
+            Some((NS_W, "rPr")) => Self::RunProperties(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -45411,8 +45592,8 @@ impl<X: UserData> InsertedRunContentWith<X> {
 }
 
 impl officekit_markup_base::Read for InsertedRunContent {
-    fn read(element: &Element) -> Self {
-        read::inserted_run_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::inserted_run_content_from_item(item)
     }
 }
 
@@ -45453,8 +45634,8 @@ impl<X: UserData> InsertedTableRowWith<X> {
 }
 
 impl officekit_markup_base::Read for InsertedTableRow {
-    fn read(element: &Element) -> Self {
-        read::inserted_table_row(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::inserted_table_row_from_item(item)
     }
 }
 
@@ -45545,8 +45726,8 @@ impl<X: UserData> InvalidatedFieldCacheWith<X> {
 }
 
 impl officekit_markup_base::Read for InvalidatedFieldCache {
-    fn read(element: &Element) -> Self {
-        read::invalidated_field_cache(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::invalidated_field_cache_from_item(item)
     }
 }
 
@@ -45587,8 +45768,8 @@ impl<X: UserData> ItalicFontStyleEmbeddingWith<X> {
 }
 
 impl officekit_markup_base::Read for ItalicFontStyleEmbedding {
-    fn read(element: &Element) -> Self {
-        read::italic_font_style_embedding(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::italic_font_style_embedding_from_item(item)
     }
 }
 
@@ -45625,8 +45806,8 @@ impl<X: UserData> ItalicsWith<X> {
 }
 
 impl officekit_markup_base::Read for Italics {
-    fn read(element: &Element) -> Self {
-        read::italics(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::italics_from_item(item)
     }
 }
 
@@ -45663,8 +45844,8 @@ impl<X: UserData> JustificationWith<X> {
 }
 
 impl officekit_markup_base::Read for Justification {
-    fn read(element: &Element) -> Self {
-        read::justification(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::justification_from_item(item)
     }
 }
 
@@ -45701,8 +45882,8 @@ impl<X: UserData> KeepAllLinesOnOnePageWith<X> {
 }
 
 impl officekit_markup_base::Read for KeepAllLinesOnOnePage {
-    fn read(element: &Element) -> Self {
-        read::keep_all_lines_on_one_page(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::keep_all_lines_on_one_page_from_item(item)
     }
 }
 
@@ -45739,8 +45920,8 @@ impl<X: UserData> KeepParagraphWithNextParagraphWith<X> {
 }
 
 impl officekit_markup_base::Read for KeepParagraphWithNextParagraph {
-    fn read(element: &Element) -> Self {
-        read::keep_paragraph_with_next_paragraph(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::keep_paragraph_with_next_paragraph_from_item(item)
     }
 }
 
@@ -45777,8 +45958,8 @@ impl<X: UserData> KeepSourceFormattingOnImportWith<X> {
 }
 
 impl officekit_markup_base::Read for KeepSourceFormattingOnImport {
-    fn read(element: &Element) -> Self {
-        read::keep_source_formatting_on_import(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::keep_source_formatting_on_import_from_item(item)
     }
 }
 
@@ -45815,8 +45996,8 @@ impl<X: UserData> LanguageIDForPhoneticGuideWith<X> {
 }
 
 impl officekit_markup_base::Read for LanguageIDForPhoneticGuide {
-    fn read(element: &Element) -> Self {
-        read::language_id_for_phonetic_guide(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::language_id_for_phonetic_guide_from_item(item)
     }
 }
 
@@ -45857,8 +46038,8 @@ impl<X: UserData> LanguagesForRunContentWith<X> {
 }
 
 impl officekit_markup_base::Read for LanguagesForRunContent {
-    fn read(element: &Element) -> Self {
-        read::languages_for_run_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::languages_for_run_content_from_item(item)
     }
 }
 
@@ -45895,8 +46076,8 @@ impl<X: UserData> LastReviewedAbstractNumberingDefinitionWith<X> {
 }
 
 impl officekit_markup_base::Read for LastReviewedAbstractNumberingDefinition {
-    fn read(element: &Element) -> Self {
-        read::last_reviewed_abstract_numbering_definition(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::last_reviewed_abstract_numbering_definition_from_item(item)
     }
 }
 
@@ -45943,8 +46124,8 @@ impl<X: UserData> LatentStyleExceptionWith<X> {
 }
 
 impl officekit_markup_base::Read for LatentStyleException {
-    fn read(element: &Element) -> Self {
-        read::latent_style_exception(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::latent_style_exception_from_item(item)
     }
 }
 
@@ -45995,8 +46176,8 @@ impl<X: UserData> LatentStyleInformationWith<X> {
 }
 
 impl officekit_markup_base::Read for LatentStyleInformation {
-    fn read(element: &Element) -> Self {
-        read::latent_style_information(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::latent_style_information_from_item(item)
     }
 }
 
@@ -46033,8 +46214,8 @@ impl<X: UserData> LayoutRawTableWidthWith<X> {
 }
 
 impl officekit_markup_base::Read for LayoutRawTableWidth {
-    fn read(element: &Element) -> Self {
-        read::layout_raw_table_width(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::layout_raw_table_width_from_item(item)
     }
 }
 
@@ -46071,8 +46252,8 @@ impl<X: UserData> LeftAndRightMarginForFrameWith<X> {
 }
 
 impl officekit_markup_base::Read for LeftAndRightMarginForFrame {
-    fn read(element: &Element) -> Self {
-        read::left_and_right_margin_for_frame(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::left_and_right_margin_for_frame_from_item(item)
     }
 }
 
@@ -46127,8 +46308,8 @@ impl<X: UserData> LeftBorderWith<X> {
 }
 
 impl officekit_markup_base::Read for LeftBorder {
-    fn read(element: &Element) -> Self {
-        read::left_border(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::left_border_from_item(item)
     }
 }
 
@@ -46165,8 +46346,8 @@ impl<X: UserData> LeftMarginForHTMLDivWith<X> {
 }
 
 impl officekit_markup_base::Read for LeftMarginForHTMLDiv {
-    fn read(element: &Element) -> Self {
-        read::left_margin_for_html_div(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::left_margin_for_html_div_from_item(item)
     }
 }
 
@@ -46219,8 +46400,8 @@ impl<X: UserData> LeftParagraphBorderWith<X> {
 }
 
 impl officekit_markup_base::Read for LeftParagraphBorder {
-    fn read(element: &Element) -> Self {
-        read::left_paragraph_border(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::left_paragraph_border_from_item(item)
     }
 }
 
@@ -46259,8 +46440,8 @@ impl<X: UserData> LeftParagraphBorderTblWidthWith<X> {
 }
 
 impl officekit_markup_base::Read for LeftParagraphBorderTblWidth {
-    fn read(element: &Element) -> Self {
-        read::left_paragraph_border_tbl_width(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::left_paragraph_border_tbl_width_from_item(item)
     }
 }
 
@@ -46297,8 +46478,8 @@ impl<X: UserData> LegacyEthiopicAmharicLineBreakingRulesWith<X> {
 }
 
 impl officekit_markup_base::Read for LegacyEthiopicAmharicLineBreakingRules {
-    fn read(element: &Element) -> Self {
-        read::legacy_ethiopic_amharic_line_breaking_rules(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::legacy_ethiopic_amharic_line_breaking_rules_from_item(item)
     }
 }
 
@@ -46339,8 +46520,8 @@ impl<X: UserData> LegacyNumberingLevelPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for LegacyNumberingLevelProperties {
-    fn read(element: &Element) -> Self {
-        read::legacy_numbering_level_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::legacy_numbering_level_properties_from_item(item)
     }
 }
 
@@ -46492,8 +46673,8 @@ impl<X: UserData> LineNumberingSettingsWith<X> {
 }
 
 impl officekit_markup_base::Read for LineNumberingSettings {
-    fn read(element: &Element) -> Self {
-        read::line_numbering_settings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::line_numbering_settings_from_item(item)
     }
 }
 
@@ -46584,8 +46765,8 @@ impl<X: UserData> LineWrapLikeWord6With<X> {
 }
 
 impl officekit_markup_base::Read for LineWrapLikeWord6 {
-    fn read(element: &Element) -> Self {
-        read::line_wrap_like_word6(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::line_wrap_like_word6_from_item(item)
     }
 }
 
@@ -46622,8 +46803,8 @@ impl<X: UserData> LineWrapTrailingSpacesWith<X> {
 }
 
 impl officekit_markup_base::Read for LineWrapTrailingSpaces {
-    fn read(element: &Element) -> Self {
-        read::line_wrap_trailing_spaces(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::line_wrap_trailing_spaces_from_item(item)
     }
 }
 
@@ -46660,8 +46841,8 @@ impl<X: UserData> LinkToExternalQueryFileWith<X> {
 }
 
 impl officekit_markup_base::Read for LinkToExternalQueryFile {
-    fn read(element: &Element) -> Self {
-        read::link_to_external_query_file(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::link_to_external_query_file_from_item(item)
     }
 }
 
@@ -46710,8 +46891,8 @@ impl<X: UserData> LinkedObjectPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for LinkedObjectProperties {
-    fn read(element: &Element) -> Self {
-        read::linked_object_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::linked_object_properties_from_item(item)
     }
 }
 
@@ -46748,8 +46929,8 @@ impl<X: UserData> LinkedStyleReferenceWith<X> {
 }
 
 impl officekit_markup_base::Read for LinkedStyleReference {
-    fn read(element: &Element) -> Self {
-        read::linked_style_reference(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::linked_style_reference_from_item(item)
     }
 }
 
@@ -46786,8 +46967,8 @@ impl<X: UserData> ListOfGlossaryDocumentEntriesWith<X> {
 }
 
 impl officekit_markup_base::Read for ListOfGlossaryDocumentEntries {
-    fn read(element: &Element) -> Self {
-        read::list_of_glossary_document_entries(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::list_of_glossary_document_entries_from_item(item)
     }
 }
 
@@ -46824,8 +47005,8 @@ impl<X: UserData> ListSeparatorForFieldCodeEvaluationWith<X> {
 }
 
 impl officekit_markup_base::Read for ListSeparatorForFieldCodeEvaluation {
-    fn read(element: &Element) -> Self {
-        read::list_separator_for_field_code_evaluation(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::list_separator_for_field_code_evaluation_from_item(item)
     }
 }
 
@@ -46862,8 +47043,8 @@ impl<X: UserData> LockingSettingWith<X> {
 }
 
 impl officekit_markup_base::Read for LockingSetting {
-    fn read(element: &Element) -> Self {
-        read::locking_setting(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::locking_setting_from_item(item)
     }
 }
 
@@ -47004,8 +47185,8 @@ impl<X: UserData> MagnificationSettingWith<X> {
 }
 
 impl officekit_markup_base::Read for MagnificationSetting {
-    fn read(element: &Element) -> Self {
-        read::magnification_setting(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::magnification_setting_from_item(item)
     }
 }
 
@@ -47042,8 +47223,8 @@ impl<X: UserData> MailMergeErrorReportingSettingWith<X> {
 }
 
 impl officekit_markup_base::Read for MailMergeErrorReportingSetting {
-    fn read(element: &Element) -> Self {
-        read::mail_merge_error_reporting_setting(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::mail_merge_error_reporting_setting_from_item(item)
     }
 }
 
@@ -47201,8 +47382,8 @@ impl<X: UserData> MailMergeSettingsWith<X> {
 }
 
 impl officekit_markup_base::Read for MailMergeSettings {
-    fn read(element: &Element) -> Self {
-        read::mail_merge_settings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::mail_merge_settings_from_item(item)
     }
 }
 
@@ -47239,8 +47420,8 @@ impl<X: UserData> MaintainLinkToExistingFileWith<X> {
 }
 
 impl officekit_markup_base::Read for MaintainLinkToExistingFile {
-    fn read(element: &Element) -> Self {
-        read::maintain_link_to_existing_file(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::maintain_link_to_existing_file_from_item(item)
     }
 }
 
@@ -47279,8 +47460,8 @@ impl<X: UserData> ManualRunWidthWith<X> {
 }
 
 impl officekit_markup_base::Read for ManualRunWidth {
-    fn read(element: &Element) -> Self {
-        read::manual_run_width(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::manual_run_width_from_item(item)
     }
 }
 
@@ -47317,8 +47498,8 @@ impl<X: UserData> MaximumNumberOfConsecutivelyHyphenatedLinesWith<X> {
 }
 
 impl officekit_markup_base::Read for MaximumNumberOfConsecutivelyHyphenatedLines {
-    fn read(element: &Element) -> Self {
-        read::maximum_number_of_consecutively_hyphenated_lines(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::maximum_number_of_consecutively_hyphenated_lines_from_item(item)
     }
 }
 
@@ -47503,8 +47684,8 @@ impl<X: UserData> MergeFieldMappingWith<X> {
 }
 
 impl officekit_markup_base::Read for MergeFieldMapping {
-    fn read(element: &Element) -> Self {
-        read::merge_field_mapping(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::merge_field_mapping_from_item(item)
     }
 }
 
@@ -47643,8 +47824,8 @@ impl<X: UserData> MergedDocumentDestinationWith<X> {
 }
 
 impl officekit_markup_base::Read for MergedDocumentDestination {
-    fn read(element: &Element) -> Self {
-        read::merged_document_destination(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::merged_document_destination_from_item(item)
     }
 }
 
@@ -47736,8 +47917,8 @@ impl<X: UserData> MergedDocumentToEMailAttachmentWith<X> {
 }
 
 impl officekit_markup_base::Read for MergedDocumentToEMailAttachment {
-    fn read(element: &Element) -> Self {
-        read::merged_document_to_e_mail_attachment(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::merged_document_to_e_mail_attachment_from_item(item)
     }
 }
 
@@ -47774,8 +47955,8 @@ impl<X: UserData> MergedEMailOrFaxSubjectLineWith<X> {
 }
 
 impl officekit_markup_base::Read for MergedEMailOrFaxSubjectLine {
-    fn read(element: &Element) -> Self {
-        read::merged_e_mail_or_fax_subject_line(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::merged_e_mail_or_fax_subject_line_from_item(item)
     }
 }
 
@@ -47812,8 +47993,8 @@ impl<X: UserData> MirrorPageMarginsWith<X> {
 }
 
 impl officekit_markup_base::Read for MirrorPageMargins {
-    fn read(element: &Element) -> Self {
-        read::mirror_page_margins(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::mirror_page_margins_from_item(item)
     }
 }
 
@@ -47852,8 +48033,8 @@ impl<X: UserData> MoveDestinationLocationContainerEndWith<X> {
 }
 
 impl officekit_markup_base::Read for MoveDestinationLocationContainerEnd {
-    fn read(element: &Element) -> Self {
-        read::move_destination_location_container_end(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::move_destination_location_container_end_from_item(item)
     }
 }
 
@@ -47902,8 +48083,8 @@ impl<X: UserData> MoveDestinationLocationContainerStartWith<X> {
 }
 
 impl officekit_markup_base::Read for MoveDestinationLocationContainerStart {
-    fn read(element: &Element) -> Self {
-        read::move_destination_location_container_start(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::move_destination_location_container_start_from_item(item)
     }
 }
 
@@ -47944,8 +48125,8 @@ impl<X: UserData> MoveDestinationParagraphWith<X> {
 }
 
 impl officekit_markup_base::Read for MoveDestinationParagraph {
-    fn read(element: &Element) -> Self {
-        read::move_destination_paragraph(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::move_destination_paragraph_from_item(item)
     }
 }
 
@@ -47990,8 +48171,8 @@ impl<X: UserData> MoveDestinationRunContentWith<X> {
 }
 
 impl officekit_markup_base::Read for MoveDestinationRunContent {
-    fn read(element: &Element) -> Self {
-        read::move_destination_run_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::move_destination_run_content_from_item(item)
     }
 }
 
@@ -48030,8 +48211,8 @@ impl<X: UserData> MoveSourceLocationContainerEndWith<X> {
 }
 
 impl officekit_markup_base::Read for MoveSourceLocationContainerEnd {
-    fn read(element: &Element) -> Self {
-        read::move_source_location_container_end(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::move_source_location_container_end_from_item(item)
     }
 }
 
@@ -48080,8 +48261,8 @@ impl<X: UserData> MoveSourceLocationContainerStartWith<X> {
 }
 
 impl officekit_markup_base::Read for MoveSourceLocationContainerStart {
-    fn read(element: &Element) -> Self {
-        read::move_source_location_container_start(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::move_source_location_container_start_from_item(item)
     }
 }
 
@@ -48122,8 +48303,8 @@ impl<X: UserData> MoveSourceParagraphWith<X> {
 }
 
 impl officekit_markup_base::Read for MoveSourceParagraph {
-    fn read(element: &Element) -> Self {
-        read::move_source_paragraph(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::move_source_paragraph_from_item(item)
     }
 }
 
@@ -48168,8 +48349,8 @@ impl<X: UserData> MoveSourceRunContentWith<X> {
 }
 
 impl officekit_markup_base::Read for MoveSourceRunContent {
-    fn read(element: &Element) -> Self {
-        read::move_source_run_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::move_source_run_content_from_item(item)
     }
 }
 
@@ -48222,8 +48403,8 @@ impl<X: UserData> NestedFramesetDefinitionWith<X> {
 }
 
 impl officekit_markup_base::Read for NestedFramesetDefinition {
-    fn read(element: &Element) -> Self {
-        read::nested_frameset_definition(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::nested_frameset_definition_from_item(item)
     }
 }
 
@@ -48260,8 +48441,8 @@ impl<X: UserData> NeverKernPunctuationCharactersWith<X> {
 }
 
 impl officekit_markup_base::Read for NeverKernPunctuationCharacters {
-    fn read(element: &Element) -> Self {
-        read::never_kern_punctuation_characters(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::never_kern_punctuation_characters_from_item(item)
     }
 }
 
@@ -48294,8 +48475,8 @@ impl<X: UserData> NonBreakingHyphenCharacterWith<X> {
 }
 
 impl officekit_markup_base::Read for NonBreakingHyphenCharacter {
-    fn read(element: &Element) -> Self {
-        read::non_breaking_hyphen_character(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::non_breaking_hyphen_character_from_item(item)
     }
 }
 
@@ -48332,8 +48513,8 @@ impl<X: UserData> NonComplexScriptFontSizeWith<X> {
 }
 
 impl officekit_markup_base::Read for NonComplexScriptFontSize {
-    fn read(element: &Element) -> Self {
-        read::non_complex_script_font_size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::non_complex_script_font_size_from_item(item)
     }
 }
 
@@ -48370,8 +48551,8 @@ impl<X: UserData> NotATrueTypeOutlineFontWith<X> {
 }
 
 impl officekit_markup_base::Read for NotATrueTypeOutlineFont {
-    fn read(element: &Element) -> Self {
-        read::not_a_true_type_outline_font(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::not_a_true_type_outline_font_from_item(item)
     }
 }
 
@@ -48408,8 +48589,8 @@ impl<X: UserData> NumberOfColumnsInColumnBandWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberOfColumnsInColumnBand {
-    fn read(element: &Element) -> Self {
-        read::number_of_columns_in_column_band(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::number_of_columns_in_column_band_from_item(item)
     }
 }
 
@@ -48446,8 +48627,8 @@ impl<X: UserData> NumberOfPagesPerBookletWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberOfPagesPerBooklet {
-    fn read(element: &Element) -> Self {
-        read::number_of_pages_per_booklet(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::number_of_pages_per_booklet_from_item(item)
     }
 }
 
@@ -48484,8 +48665,8 @@ impl<X: UserData> NumberOfRowsInRowBandWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberOfRowsInRowBand {
-    fn read(element: &Element) -> Self {
-        read::number_of_rows_in_row_band(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::number_of_rows_in_row_band_from_item(item)
     }
 }
 
@@ -48530,8 +48711,8 @@ impl<X: UserData> NumberingDefinitionInstanceWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberingDefinitionInstance {
-    fn read(element: &Element) -> Self {
-        read::numbering_definition_instance(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::numbering_definition_instance_from_item(item)
     }
 }
 
@@ -48568,8 +48749,8 @@ impl<X: UserData> NumberingDefinitionInstanceReferenceNumIdWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberingDefinitionInstanceReferenceNumId {
-    fn read(element: &Element) -> Self {
-        read::numbering_definition_instance_reference_num_id(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::numbering_definition_instance_reference_num_id_from_item(item)
     }
 }
 
@@ -48619,8 +48800,8 @@ impl<X: UserData> NumberingDefinitionInstanceReferenceNumPrWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberingDefinitionInstanceReferenceNumPr {
-    fn read(element: &Element) -> Self {
-        read::numbering_definition_instance_reference_num_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::numbering_definition_instance_reference_num_pr_from_item(item)
     }
 }
 
@@ -48724,8 +48905,8 @@ impl<X: UserData> NumberingDefinitionsWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberingDefinitions {
-    fn read(element: &Element) -> Self {
-        read::numbering_definitions(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::numbering_definitions_from_item(item)
     }
 }
 
@@ -48764,8 +48945,8 @@ impl<X: UserData> NumberingFormatWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberingFormat {
-    fn read(element: &Element) -> Self {
-        read::numbering_format(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::numbering_format_from_item(item)
     }
 }
 
@@ -48810,8 +48991,8 @@ impl<X: UserData> NumberingLevelDefinitionOverrideWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberingLevelDefinitionOverride {
-    fn read(element: &Element) -> Self {
-        read::numbering_level_definition_override(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::numbering_level_definition_override_from_item(item)
     }
 }
 
@@ -48903,8 +49084,8 @@ impl<X: UserData> NumberingLevelOverrideDefinitionWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberingLevelOverrideDefinition {
-    fn read(element: &Element) -> Self {
-        read::numbering_level_override_definition(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::numbering_level_override_definition_from_item(item)
     }
 }
 
@@ -48941,8 +49122,8 @@ impl<X: UserData> NumberingLevelReferenceWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberingLevelReference {
-    fn read(element: &Element) -> Self {
-        read::numbering_level_reference(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::numbering_level_reference_from_item(item)
     }
 }
 
@@ -48979,8 +49160,8 @@ impl<X: UserData> NumberingLevelStartingValueOverrideWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberingLevelStartingValueOverride {
-    fn read(element: &Element) -> Self {
-        read::numbering_level_starting_value_override(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::numbering_level_starting_value_override_from_item(item)
     }
 }
 
@@ -49019,8 +49200,8 @@ impl<X: UserData> NumberingLevelTextWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberingLevelText {
-    fn read(element: &Element) -> Self {
-        read::numbering_level_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::numbering_level_text_from_item(item)
     }
 }
 
@@ -49057,8 +49238,8 @@ impl<X: UserData> NumberingStyleDefinitionWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberingStyleDefinition {
-    fn read(element: &Element) -> Self {
-        read::numbering_style_definition(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::numbering_style_definition_from_item(item)
     }
 }
 
@@ -49095,8 +49276,8 @@ impl<X: UserData> NumberingStyleReferenceWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberingStyleReference {
-    fn read(element: &Element) -> Self {
-        read::numbering_style_reference(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::numbering_style_reference_from_item(item)
     }
 }
 
@@ -49133,8 +49314,8 @@ impl<X: UserData> NumberingTemplateCodeWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberingTemplateCode {
-    fn read(element: &Element) -> Self {
-        read::numbering_template_code(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::numbering_template_code_from_item(item)
     }
 }
 
@@ -49171,8 +49352,8 @@ impl<X: UserData> ODSODataSourceFilePathWith<X> {
 }
 
 impl officekit_markup_base::Read for ODSODataSourceFilePath {
-    fn read(element: &Element) -> Self {
-        read::odso_data_source_file_path(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::odso_data_source_file_path_from_item(item)
     }
 }
 
@@ -49209,8 +49390,8 @@ impl<X: UserData> ODSODataSourceTypeWith<X> {
 }
 
 impl officekit_markup_base::Read for ODSODataSourceType {
-    fn read(element: &Element) -> Self {
-        read::odso_data_source_type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::odso_data_source_type_from_item(item)
     }
 }
 
@@ -49275,8 +49456,8 @@ impl<X: UserData> OfficeDataSourceObjectSettingsWith<X> {
 }
 
 impl officekit_markup_base::Read for OfficeDataSourceObjectSettings {
-    fn read(element: &Element) -> Self {
-        read::office_data_source_object_settings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::office_data_source_object_settings_from_item(item)
     }
 }
 
@@ -49313,8 +49494,8 @@ impl<X: UserData> OfficeOpenXMLMathWith<X> {
 }
 
 impl officekit_markup_base::Read for OfficeOpenXMLMath {
-    fn read(element: &Element) -> Self {
-        read::office_open_xml_math(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::office_open_xml_math_from_item(item)
     }
 }
 
@@ -49351,8 +49532,8 @@ impl<X: UserData> OnlyAllowEditingOfFormFieldsWith<X> {
 }
 
 impl officekit_markup_base::Read for OnlyAllowEditingOfFormFields {
-    fn read(element: &Element) -> Self {
-        read::only_allow_editing_of_form_fields(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::only_allow_editing_of_form_fields_from_item(item)
     }
 }
 
@@ -49389,8 +49570,8 @@ impl<X: UserData> OnlyExpandCondenseTextByWholePointsWith<X> {
 }
 
 impl officekit_markup_base::Read for OnlyExpandCondenseTextByWholePoints {
-    fn read(element: &Element) -> Self {
-        read::only_expand_condense_text_by_whole_points(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::only_expand_condense_text_by_whole_points_from_item(item)
     }
 }
 
@@ -49427,8 +49608,8 @@ impl<X: UserData> OnlyPrintFormFieldContentWith<X> {
 }
 
 impl officekit_markup_base::Read for OnlyPrintFormFieldContent {
-    fn read(element: &Element) -> Self {
-        read::only_print_form_field_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::only_print_form_field_content_from_item(item)
     }
 }
 
@@ -49465,8 +49646,8 @@ impl<X: UserData> OnlySaveCustomXMLMarkupWith<X> {
 }
 
 impl officekit_markup_base::Read for OnlySaveCustomXMLMarkup {
-    fn read(element: &Element) -> Self {
-        read::only_save_custom_xml_markup(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::only_save_custom_xml_markup_from_item(item)
     }
 }
 
@@ -49503,8 +49684,8 @@ impl<X: UserData> OnlySaveFormFieldContentWith<X> {
 }
 
 impl officekit_markup_base::Read for OnlySaveFormFieldContent {
-    fn read(element: &Element) -> Self {
-        read::only_save_form_field_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::only_save_form_field_content_from_item(item)
     }
 }
 
@@ -49537,8 +49718,8 @@ impl<X: UserData> OptionalHyphenCharacterWith<X> {
 }
 
 impl officekit_markup_base::Read for OptionalHyphenCharacter {
-    fn read(element: &Element) -> Self {
-        read::optional_hyphen_character(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::optional_hyphen_character_from_item(item)
     }
 }
 
@@ -49575,8 +49756,8 @@ impl<X: UserData> OptionalUserInterfaceSortingOrderWith<X> {
 }
 
 impl officekit_markup_base::Read for OptionalUserInterfaceSortingOrder {
-    fn read(element: &Element) -> Self {
-        read::optional_user_interface_sorting_order(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::optional_user_interface_sorting_order_from_item(item)
     }
 }
 
@@ -49613,8 +49794,8 @@ impl<X: UserData> OriginalDocumentRevisionSaveIDWith<X> {
 }
 
 impl officekit_markup_base::Read for OriginalDocumentRevisionSaveID {
-    fn read(element: &Element) -> Self {
-        read::original_document_revision_save_id(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::original_document_revision_save_id_from_item(item)
     }
 }
 
@@ -49651,8 +49832,8 @@ impl<X: UserData> OutputEncodingWith<X> {
 }
 
 impl officekit_markup_base::Read for OutputEncoding {
-    fn read(element: &Element) -> Self {
-        read::output_encoding(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::output_encoding_from_item(item)
     }
 }
 
@@ -49743,8 +49924,8 @@ impl<X: UserData> PageBorderExcludesFooterWith<X> {
 }
 
 impl officekit_markup_base::Read for PageBorderExcludesFooter {
-    fn read(element: &Element) -> Self {
-        read::page_border_excludes_footer(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::page_border_excludes_footer_from_item(item)
     }
 }
 
@@ -49781,8 +49962,8 @@ impl<X: UserData> PageBorderExcludesHeaderWith<X> {
 }
 
 impl officekit_markup_base::Read for PageBorderExcludesHeader {
-    fn read(element: &Element) -> Self {
-        read::page_border_excludes_header(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::page_border_excludes_header_from_item(item)
     }
 }
 
@@ -49941,8 +50122,8 @@ impl<X: UserData> PageBordersWith<X> {
 }
 
 impl officekit_markup_base::Read for PageBorders {
-    fn read(element: &Element) -> Self {
-        read::page_borders(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::page_borders_from_item(item)
     }
 }
 
@@ -49991,8 +50172,8 @@ impl<X: UserData> PageMarginsWith<X> {
 }
 
 impl officekit_markup_base::Read for PageMargins {
-    fn read(element: &Element) -> Self {
-        read::page_margins(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::page_margins_from_item(item)
     }
 }
 
@@ -50025,8 +50206,8 @@ impl<X: UserData> PageNumberBlockWith<X> {
 }
 
 impl officekit_markup_base::Read for PageNumberBlock {
-    fn read(element: &Element) -> Self {
-        read::page_number_block(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::page_number_block_from_item(item)
     }
 }
 
@@ -50069,8 +50250,8 @@ impl<X: UserData> PageNumberingSettingsWith<X> {
 }
 
 impl officekit_markup_base::Read for PageNumberingSettings {
-    fn read(element: &Element) -> Self {
-        read::page_numbering_settings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::page_numbering_settings_from_item(item)
     }
 }
 
@@ -50166,8 +50347,8 @@ impl<X: UserData> PageSizeWith<X> {
 }
 
 impl officekit_markup_base::Read for PageSize {
-    fn read(element: &Element) -> Self {
-        read::page_size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::page_size_from_item(item)
     }
 }
 
@@ -50204,8 +50385,8 @@ impl<X: UserData> Panose1TypefaceClassificationNumberWith<X> {
 }
 
 impl officekit_markup_base::Read for Panose1TypefaceClassificationNumber {
-    fn read(element: &Element) -> Self {
-        read::panose1typeface_classification_number(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::panose1typeface_classification_number_from_item(item)
     }
 }
 
@@ -50244,8 +50425,8 @@ impl<X: UserData> PaperSourceInformationWith<X> {
 }
 
 impl officekit_markup_base::Read for PaperSourceInformation {
-    fn read(element: &Element) -> Self {
-        read::paper_source_information(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paper_source_information_from_item(item)
     }
 }
 
@@ -50304,8 +50485,8 @@ impl<X: UserData> ParagraphWith<X> {
 }
 
 impl officekit_markup_base::Read for Paragraph {
-    fn read(element: &Element) -> Self {
-        read::paragraph(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_from_item(item)
     }
 }
 
@@ -50342,8 +50523,8 @@ impl<X: UserData> ParagraphAlignmentWith<X> {
 }
 
 impl officekit_markup_base::Read for ParagraphAlignment {
-    fn read(element: &Element) -> Self {
-        read::paragraph_alignment(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_alignment_from_item(item)
     }
 }
 
@@ -50396,8 +50577,8 @@ impl<X: UserData> ParagraphBorderAboveIdenticalParagraphsWith<X> {
 }
 
 impl officekit_markup_base::Read for ParagraphBorderAboveIdenticalParagraphs {
-    fn read(element: &Element) -> Self {
-        read::paragraph_border_above_identical_paragraphs(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_border_above_identical_paragraphs_from_item(item)
     }
 }
 
@@ -50436,8 +50617,8 @@ impl<X: UserData> ParagraphBorderAboveIdenticalParagraphsTblWidthWith<X> {
 }
 
 impl officekit_markup_base::Read for ParagraphBorderAboveIdenticalParagraphsTblWidth {
-    fn read(element: &Element) -> Self {
-        read::paragraph_border_above_identical_paragraphs_tbl_width(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_border_above_identical_paragraphs_tbl_width_from_item(item)
     }
 }
 
@@ -50491,8 +50672,8 @@ impl<X: UserData> ParagraphBorderBelowIdenticalParagraphsWith<X> {
 }
 
 impl officekit_markup_base::Read for ParagraphBorderBelowIdenticalParagraphs {
-    fn read(element: &Element) -> Self {
-        read::paragraph_border_below_identical_paragraphs(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_border_below_identical_paragraphs_from_item(item)
     }
 }
 
@@ -50531,8 +50712,8 @@ impl<X: UserData> ParagraphBorderBelowIdenticalParagraphsTblWidthWith<X> {
 }
 
 impl officekit_markup_base::Read for ParagraphBorderBelowIdenticalParagraphsTblWidth {
-    fn read(element: &Element) -> Self {
-        read::paragraph_border_below_identical_paragraphs_tbl_width(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_border_below_identical_paragraphs_tbl_width_from_item(item)
     }
 }
 
@@ -50586,8 +50767,8 @@ impl<X: UserData> ParagraphBorderBetweenFacingPagesWith<X> {
 }
 
 impl officekit_markup_base::Read for ParagraphBorderBetweenFacingPages {
-    fn read(element: &Element) -> Self {
-        read::paragraph_border_between_facing_pages(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_border_between_facing_pages_from_item(item)
     }
 }
 
@@ -50640,8 +50821,8 @@ impl<X: UserData> ParagraphBorderBetweenIdenticalParagraphsWith<X> {
 }
 
 impl officekit_markup_base::Read for ParagraphBorderBetweenIdenticalParagraphs {
-    fn read(element: &Element) -> Self {
-        read::paragraph_border_between_identical_paragraphs(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_border_between_identical_paragraphs_from_item(item)
     }
 }
 
@@ -50701,8 +50882,8 @@ impl<X: UserData> ParagraphBordersWith<X> {
 }
 
 impl officekit_markup_base::Read for ParagraphBorders {
-    fn read(element: &Element) -> Self {
-        read::paragraph_borders(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_borders_from_item(item)
     }
 }
 
@@ -50763,8 +50944,8 @@ impl<X: UserData> ParagraphConditionalFormattingWith<X> {
 }
 
 impl officekit_markup_base::Read for ParagraphConditionalFormatting {
-    fn read(element: &Element) -> Self {
-        read::paragraph_conditional_formatting(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_conditional_formatting_from_item(item)
     }
 }
 
@@ -50811,10 +50992,74 @@ impl officekit_markup_base::Read for ParagraphContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        read_paragraph_content_1(element)
-            .or_else(|| read_paragraph_content_2(element))
-            .unwrap_or_else(|| Self::Other(Node::Element(element.clone())))
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "subDoc")) => Self::AnchorForSubdocumentLocation(item.read()),
+            Some((NS_W, "dir")) => Self::BidirectionalEmbeddingLevel(item.read()),
+            Some((NS_W, "bdo")) => Self::BidirectionalOverride(item.read()),
+            Some((NS_W, "bookmarkEnd")) => Self::BookmarkEnd(item.read()),
+            Some((NS_W, "bookmarkStart")) => Self::BookmarkStart(item.read()),
+            Some((NS_W, "commentRangeEnd")) => Self::CommentAnchorRangeEnd(item.read()),
+            Some((NS_W, "commentRangeStart")) => Self::CommentAnchorRangeStart(item.read()),
+            Some((NS_W14, "conflictDel")) => Self::ConflictDelRunTrackChange(item.read()),
+            Some((NS_W14, "conflictIns")) => Self::ConflictInsRunTrackChange(item.read()),
+            Some((NS_W, "customXmlDelRangeEnd")) => Self::CustomXMLMarkupDeletionEnd(item.read()),
+            Some((NS_W, "customXmlDelRangeStart")) => {
+                Self::CustomXMLMarkupDeletionStart(item.read())
+            }
+            Some((NS_W, "customXmlInsRangeEnd")) => Self::CustomXMLMarkupInsertionEnd(item.read()),
+            Some((NS_W, "customXmlInsRangeStart")) => {
+                Self::CustomXMLMarkupInsertionStart(item.read())
+            }
+            Some((NS_W, "customXmlMoveFromRangeEnd")) => {
+                Self::CustomXMLMarkupMoveSourceEnd(item.read())
+            }
+            Some((NS_W, "customXmlMoveFromRangeStart")) => {
+                Self::CustomXMLMarkupMoveSourceStart(item.read())
+            }
+            Some((NS_W14, "customXmlConflictDelRangeEnd")) => {
+                Self::CustomXmlConflictDelRangeEnd(item.read())
+            }
+            Some((NS_W14, "customXmlConflictDelRangeStart")) => {
+                Self::CustomXmlConflictDelRangeStart(item.read())
+            }
+            Some((NS_W14, "customXmlConflictInsRangeEnd")) => {
+                Self::CustomXmlConflictInsRangeEnd(item.read())
+            }
+            Some((NS_W14, "customXmlConflictInsRangeStart")) => {
+                Self::CustomXmlConflictInsRangeStart(item.read())
+            }
+            Some((NS_W, "customXmlMoveToRangeEnd")) => Self::CustomXmlMoveToRangeEnd(item.read()),
+            Some((NS_W, "customXmlMoveToRangeStart")) => {
+                Self::CustomXmlMoveToRangeStart(item.read())
+            }
+            Some((NS_W, "del")) => Self::DeletedRunContent(item.read()),
+            Some((NS_W, "hyperlink")) => Self::Hyperlink(item.read()),
+            Some((NS_W, "customXml")) => Self::InlineLevelCustomXMLElement(item.read()),
+            Some((NS_W, "smartTag")) => Self::InlineLevelSmartTag(item.read()),
+            Some((NS_W, "sdt")) => Self::InlineLevelStructuredDocumentTag(item.read()),
+            Some((NS_W, "ins")) => Self::InsertedRunContent(item.read()),
+            Some((NS_W, "moveToRangeEnd")) => {
+                Self::MoveDestinationLocationContainerEnd(item.read())
+            }
+            Some((NS_W, "moveToRangeStart")) => {
+                Self::MoveDestinationLocationContainerStart(item.read())
+            }
+            Some((NS_W, "moveTo")) => Self::MoveDestinationRunContent(item.read()),
+            Some((NS_W, "moveFromRangeEnd")) => Self::MoveSourceLocationContainerEnd(item.read()),
+            Some((NS_W, "moveFromRangeStart")) => {
+                Self::MoveSourceLocationContainerStart(item.read())
+            }
+            Some((NS_W, "moveFrom")) => Self::MoveSourceRunContent(item.read()),
+            Some((NS_M, "oMath")) => Self::OfficeMath(item.read()),
+            Some((NS_M, "oMathPara")) => Self::OfficeMathParagraph(item.read()),
+            Some((NS_W, "proofErr")) => Self::ProofingErrorAnchor(item.read()),
+            Some((NS_W, "permEnd")) => Self::RangePermissionEnd(item.read()),
+            Some((NS_W, "permStart")) => Self::RangePermissionStart(item.read()),
+            Some((NS_W, "fldSimple")) => Self::SimpleField(item.read()),
+            Some((NS_W, "r")) => Self::TextRun(item.read()),
+            _ => Self::Other(item.into_node()),
+        }
     }
 }
 
@@ -51070,8 +51315,8 @@ impl<X: UserData> ParagraphIndentationWith<X> {
 }
 
 impl officekit_markup_base::Read for ParagraphIndentation {
-    fn read(element: &Element) -> Self {
-        read::paragraph_indentation(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_indentation_from_item(item)
     }
 }
 
@@ -51108,8 +51353,8 @@ impl<X: UserData> ParagraphMarkIsAlwaysHiddenWith<X> {
 }
 
 impl officekit_markup_base::Read for ParagraphMarkIsAlwaysHidden {
-    fn read(element: &Element) -> Self {
-        read::paragraph_mark_is_always_hidden(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_mark_is_always_hidden_from_item(item)
     }
 }
 
@@ -51156,8 +51401,8 @@ impl<X: UserData> ParagraphMarkRunPropertiesRevisionWith<X> {
 }
 
 impl officekit_markup_base::Read for ParagraphMarkRunPropertiesRevision {
-    fn read(element: &Element) -> Self {
-        read::paragraph_mark_run_properties_revision(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_mark_run_properties_revision_from_item(item)
     }
 }
 
@@ -51190,8 +51435,8 @@ impl<X: UserData> ParagraphPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for ParagraphProperties {
-    fn read(element: &Element) -> Self {
-        read::paragraph_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_properties_from_item(item)
     }
 }
 
@@ -51224,8 +51469,8 @@ impl<X: UserData> ParagraphPropertiesPPrGeneralWith<X> {
 }
 
 impl officekit_markup_base::Read for ParagraphPropertiesPPrGeneral {
-    fn read(element: &Element) -> Self {
-        read::paragraph_properties_p_pr_general(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_properties_p_pr_general_from_item(item)
     }
 }
 
@@ -51278,8 +51523,8 @@ impl<X: UserData> ParagraphShadingWith<X> {
 }
 
 impl officekit_markup_base::Read for ParagraphShading {
-    fn read(element: &Element) -> Self {
-        read::paragraph_shading(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_shading_from_item(item)
     }
 }
 
@@ -51316,8 +51561,8 @@ impl<X: UserData> ParagraphTextFlowDirectionWith<X> {
 }
 
 impl officekit_markup_base::Read for ParagraphTextFlowDirection {
-    fn read(element: &Element) -> Self {
-        read::paragraph_text_flow_direction(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::paragraph_text_flow_direction_from_item(item)
     }
 }
 
@@ -51354,8 +51599,8 @@ impl<X: UserData> ParentStyleIDWith<X> {
 }
 
 impl officekit_markup_base::Read for ParentStyleID {
-    fn read(element: &Element) -> Self {
-        read::parent_style_id(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::parent_style_id_from_item(item)
     }
 }
 
@@ -51426,8 +51671,8 @@ impl<X: UserData> PercentageOfDocumentToUseWith<X> {
 }
 
 impl officekit_markup_base::Read for PercentageOfDocumentToUse {
-    fn read(element: &Element) -> Self {
-        read::percentage_of_document_to_use(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::percentage_of_document_to_use_from_item(item)
     }
 }
 
@@ -51495,8 +51740,8 @@ impl<X: UserData> PhoneticGuideWith<X> {
 }
 
 impl officekit_markup_base::Read for PhoneticGuide {
-    fn read(element: &Element) -> Self {
-        read::phonetic_guide(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::phonetic_guide_from_item(item)
     }
 }
 
@@ -51533,8 +51778,8 @@ impl<X: UserData> PhoneticGuideBaseTextWith<X> {
 }
 
 impl officekit_markup_base::Read for PhoneticGuideBaseText {
-    fn read(element: &Element) -> Self {
-        read::phonetic_guide_base_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::phonetic_guide_base_text_from_item(item)
     }
 }
 
@@ -51571,8 +51816,8 @@ impl<X: UserData> PhoneticGuideBaseTextFontSizeWith<X> {
 }
 
 impl officekit_markup_base::Read for PhoneticGuideBaseTextFontSize {
-    fn read(element: &Element) -> Self {
-        read::phonetic_guide_base_text_font_size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::phonetic_guide_base_text_font_size_from_item(item)
     }
 }
 
@@ -51616,95 +51861,65 @@ impl officekit_markup_base::Read for PhoneticGuideContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "bookmarkEnd")) => Self::BookmarkEnd(officekit_markup_base::read(element)),
-            Some((NS_W, "bookmarkStart")) => {
-                Self::BookmarkStart(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "commentRangeEnd")) => {
-                Self::CommentAnchorRangeEnd(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "commentRangeStart")) => {
-                Self::CommentAnchorRangeStart(officekit_markup_base::read(element))
-            }
-            Some((NS_W14, "conflictDel")) => {
-                Self::ConflictDelRunTrackChange(officekit_markup_base::read(element))
-            }
-            Some((NS_W14, "conflictIns")) => {
-                Self::ConflictInsRunTrackChange(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "customXmlDelRangeEnd")) => {
-                Self::CustomXMLMarkupDeletionEnd(officekit_markup_base::read(element))
-            }
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "bookmarkEnd")) => Self::BookmarkEnd(item.read()),
+            Some((NS_W, "bookmarkStart")) => Self::BookmarkStart(item.read()),
+            Some((NS_W, "commentRangeEnd")) => Self::CommentAnchorRangeEnd(item.read()),
+            Some((NS_W, "commentRangeStart")) => Self::CommentAnchorRangeStart(item.read()),
+            Some((NS_W14, "conflictDel")) => Self::ConflictDelRunTrackChange(item.read()),
+            Some((NS_W14, "conflictIns")) => Self::ConflictInsRunTrackChange(item.read()),
+            Some((NS_W, "customXmlDelRangeEnd")) => Self::CustomXMLMarkupDeletionEnd(item.read()),
             Some((NS_W, "customXmlDelRangeStart")) => {
-                Self::CustomXMLMarkupDeletionStart(officekit_markup_base::read(element))
+                Self::CustomXMLMarkupDeletionStart(item.read())
             }
-            Some((NS_W, "customXmlInsRangeEnd")) => {
-                Self::CustomXMLMarkupInsertionEnd(officekit_markup_base::read(element))
-            }
+            Some((NS_W, "customXmlInsRangeEnd")) => Self::CustomXMLMarkupInsertionEnd(item.read()),
             Some((NS_W, "customXmlInsRangeStart")) => {
-                Self::CustomXMLMarkupInsertionStart(officekit_markup_base::read(element))
+                Self::CustomXMLMarkupInsertionStart(item.read())
             }
             Some((NS_W, "customXmlMoveFromRangeEnd")) => {
-                Self::CustomXMLMarkupMoveSourceEnd(officekit_markup_base::read(element))
+                Self::CustomXMLMarkupMoveSourceEnd(item.read())
             }
             Some((NS_W, "customXmlMoveFromRangeStart")) => {
-                Self::CustomXMLMarkupMoveSourceStart(officekit_markup_base::read(element))
+                Self::CustomXMLMarkupMoveSourceStart(item.read())
             }
             Some((NS_W14, "customXmlConflictDelRangeEnd")) => {
-                Self::CustomXmlConflictDelRangeEnd(officekit_markup_base::read(element))
+                Self::CustomXmlConflictDelRangeEnd(item.read())
             }
             Some((NS_W14, "customXmlConflictDelRangeStart")) => {
-                Self::CustomXmlConflictDelRangeStart(officekit_markup_base::read(element))
+                Self::CustomXmlConflictDelRangeStart(item.read())
             }
             Some((NS_W14, "customXmlConflictInsRangeEnd")) => {
-                Self::CustomXmlConflictInsRangeEnd(officekit_markup_base::read(element))
+                Self::CustomXmlConflictInsRangeEnd(item.read())
             }
             Some((NS_W14, "customXmlConflictInsRangeStart")) => {
-                Self::CustomXmlConflictInsRangeStart(officekit_markup_base::read(element))
+                Self::CustomXmlConflictInsRangeStart(item.read())
             }
-            Some((NS_W, "customXmlMoveToRangeEnd")) => {
-                Self::CustomXmlMoveToRangeEnd(officekit_markup_base::read(element))
-            }
+            Some((NS_W, "customXmlMoveToRangeEnd")) => Self::CustomXmlMoveToRangeEnd(item.read()),
             Some((NS_W, "customXmlMoveToRangeStart")) => {
-                Self::CustomXmlMoveToRangeStart(officekit_markup_base::read(element))
+                Self::CustomXmlMoveToRangeStart(item.read())
             }
-            Some((NS_W, "del")) => Self::DeletedRunContent(officekit_markup_base::read(element)),
-            Some((NS_W, "ins")) => Self::InsertedRunContent(officekit_markup_base::read(element)),
+            Some((NS_W, "del")) => Self::DeletedRunContent(item.read()),
+            Some((NS_W, "ins")) => Self::InsertedRunContent(item.read()),
             Some((NS_W, "moveToRangeEnd")) => {
-                Self::MoveDestinationLocationContainerEnd(officekit_markup_base::read(element))
+                Self::MoveDestinationLocationContainerEnd(item.read())
             }
             Some((NS_W, "moveToRangeStart")) => {
-                Self::MoveDestinationLocationContainerStart(officekit_markup_base::read(element))
+                Self::MoveDestinationLocationContainerStart(item.read())
             }
-            Some((NS_W, "moveTo")) => {
-                Self::MoveDestinationRunContent(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "moveFromRangeEnd")) => {
-                Self::MoveSourceLocationContainerEnd(officekit_markup_base::read(element))
-            }
+            Some((NS_W, "moveTo")) => Self::MoveDestinationRunContent(item.read()),
+            Some((NS_W, "moveFromRangeEnd")) => Self::MoveSourceLocationContainerEnd(item.read()),
             Some((NS_W, "moveFromRangeStart")) => {
-                Self::MoveSourceLocationContainerStart(officekit_markup_base::read(element))
+                Self::MoveSourceLocationContainerStart(item.read())
             }
-            Some((NS_W, "moveFrom")) => {
-                Self::MoveSourceRunContent(officekit_markup_base::read(element))
-            }
-            Some((NS_M, "oMath")) => Self::OfficeMath(officekit_markup_base::read(element)),
-            Some((NS_M, "oMathPara")) => {
-                Self::OfficeMathParagraph(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "proofErr")) => {
-                Self::ProofingErrorAnchor(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "permEnd")) => {
-                Self::RangePermissionEnd(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "permStart")) => {
-                Self::RangePermissionStart(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "r")) => Self::TextRun(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+            Some((NS_W, "moveFrom")) => Self::MoveSourceRunContent(item.read()),
+            Some((NS_M, "oMath")) => Self::OfficeMath(item.read()),
+            Some((NS_M, "oMathPara")) => Self::OfficeMathParagraph(item.read()),
+            Some((NS_W, "proofErr")) => Self::ProofingErrorAnchor(item.read()),
+            Some((NS_W, "permEnd")) => Self::RangePermissionEnd(item.read()),
+            Some((NS_W, "permStart")) => Self::RangePermissionStart(item.read()),
+            Some((NS_W, "r")) => Self::TextRun(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -51861,8 +52076,8 @@ impl<X: UserData> PhoneticGuidePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for PhoneticGuideProperties {
-    fn read(element: &Element) -> Self {
-        read::phonetic_guide_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::phonetic_guide_properties_from_item(item)
     }
 }
 
@@ -51899,8 +52114,8 @@ impl<X: UserData> PhoneticGuideTextWith<X> {
 }
 
 impl officekit_markup_base::Read for PhoneticGuideText {
-    fn read(element: &Element) -> Self {
-        read::phonetic_guide_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::phonetic_guide_text_from_item(item)
     }
 }
 
@@ -51937,8 +52152,8 @@ impl<X: UserData> PhoneticGuideTextAlignmentWith<X> {
 }
 
 impl officekit_markup_base::Read for PhoneticGuideTextAlignment {
-    fn read(element: &Element) -> Self {
-        read::phonetic_guide_text_alignment(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::phonetic_guide_text_alignment_from_item(item)
     }
 }
 
@@ -51975,8 +52190,8 @@ impl<X: UserData> PhoneticGuideTextFontSizeWith<X> {
 }
 
 impl officekit_markup_base::Read for PhoneticGuideTextFontSize {
-    fn read(element: &Element) -> Self {
-        read::phonetic_guide_text_font_size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::phonetic_guide_text_font_size_from_item(item)
     }
 }
 
@@ -52017,8 +52232,8 @@ impl<X: UserData> PictureNumberingSymbolDefinitionWith<X> {
 }
 
 impl officekit_markup_base::Read for PictureNumberingSymbolDefinition {
-    fn read(element: &Element) -> Self {
-        read::picture_numbering_symbol_definition(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::picture_numbering_symbol_definition_from_item(item)
     }
 }
 
@@ -52059,11 +52274,11 @@ impl officekit_markup_base::Read for PictureNumberingSymbolDefinitionContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "drawing")) => Self::DrawingMLObject(officekit_markup_base::read(element)),
-            Some((NS_W, "pict")) => Self::VMLObject(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "drawing")) => Self::DrawingMLObject(item.read()),
+            Some((NS_W, "pict")) => Self::VMLObject(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -52104,8 +52319,8 @@ impl<X: UserData> PictureNumberingSymbolDefinitionReferenceWith<X> {
 }
 
 impl officekit_markup_base::Read for PictureNumberingSymbolDefinitionReference {
-    fn read(element: &Element) -> Self {
-        read::picture_numbering_symbol_definition_reference(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::picture_numbering_symbol_definition_reference_from_item(item)
     }
 }
 
@@ -52138,8 +52353,8 @@ impl<X: UserData> PictureStructuredDocumentTagWith<X> {
 }
 
 impl officekit_markup_base::Read for PictureStructuredDocumentTag {
-    fn read(element: &Element) -> Self {
-        read::picture_structured_document_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::picture_structured_document_tag_from_item(item)
     }
 }
 
@@ -52176,8 +52391,8 @@ impl<X: UserData> PixelsPerInchForGraphicsImagesWith<X> {
 }
 
 impl officekit_markup_base::Read for PixelsPerInchForGraphicsImages {
-    fn read(element: &Element) -> Self {
-        read::pixels_per_inch_for_graphics_images(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pixels_per_inch_for_graphics_images_from_item(item)
     }
 }
 
@@ -52214,8 +52429,8 @@ impl<X: UserData> PlaceholderTextShouldBeResavedWith<X> {
 }
 
 impl officekit_markup_base::Read for PlaceholderTextShouldBeResaved {
-    fn read(element: &Element) -> Self {
-        read::placeholder_text_should_be_resaved(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::placeholder_text_should_be_resaved_from_item(item)
     }
 }
 
@@ -52252,8 +52467,8 @@ impl<X: UserData> PlainTextStructuredDocumentTagWith<X> {
 }
 
 impl officekit_markup_base::Read for PlainTextStructuredDocumentTag {
-    fn read(element: &Element) -> Self {
-        read::plain_text_structured_document_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::plain_text_structured_document_tag_from_item(item)
     }
 }
 
@@ -52290,8 +52505,8 @@ impl<X: UserData> PositionGutterAtTopOfPageWith<X> {
 }
 
 impl officekit_markup_base::Read for PositionGutterAtTopOfPage {
-    fn read(element: &Element) -> Self {
-        read::position_gutter_at_top_of_page(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::position_gutter_at_top_of_page_from_item(item)
     }
 }
 
@@ -52324,8 +52539,8 @@ impl<X: UserData> PositionOfLastCalculatedPageBreakWith<X> {
 }
 
 impl officekit_markup_base::Read for PositionOfLastCalculatedPageBreak {
-    fn read(element: &Element) -> Self {
-        read::position_of_last_calculated_page_break(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::position_of_last_calculated_page_break_from_item(item)
     }
 }
 
@@ -52362,8 +52577,8 @@ impl<X: UserData> PredefinedMergeFieldNameWith<X> {
 }
 
 impl officekit_markup_base::Read for PredefinedMergeFieldName {
-    fn read(element: &Element) -> Self {
-        read::predefined_merge_field_name(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::predefined_merge_field_name_from_item(item)
     }
 }
 
@@ -52402,8 +52617,8 @@ impl<X: UserData> PreferredTableCellWidthWith<X> {
 }
 
 impl officekit_markup_base::Read for PreferredTableCellWidth {
-    fn read(element: &Element) -> Self {
-        read::preferred_table_cell_width(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::preferred_table_cell_width_from_item(item)
     }
 }
 
@@ -52442,8 +52657,8 @@ impl<X: UserData> PreferredTableWidthWith<X> {
 }
 
 impl officekit_markup_base::Read for PreferredTableWidth {
-    fn read(element: &Element) -> Self {
-        read::preferred_table_width(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::preferred_table_width_from_item(item)
     }
 }
 
@@ -52482,8 +52697,8 @@ impl<X: UserData> PreferredWidthAfterTableRowWith<X> {
 }
 
 impl officekit_markup_base::Read for PreferredWidthAfterTableRow {
-    fn read(element: &Element) -> Self {
-        read::preferred_width_after_table_row(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::preferred_width_after_table_row_from_item(item)
     }
 }
 
@@ -52522,8 +52737,8 @@ impl<X: UserData> PreferredWidthBeforeTableRowWith<X> {
 }
 
 impl officekit_markup_base::Read for PreferredWidthBeforeTableRow {
-    fn read(element: &Element) -> Self {
-        read::preferred_width_before_table_row(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::preferred_width_before_table_row_from_item(item)
     }
 }
 
@@ -52560,8 +52775,8 @@ impl<X: UserData> PreventModificationOfThemesPartWith<X> {
 }
 
 impl officekit_markup_base::Read for PreventModificationOfThemesPart {
-    fn read(element: &Element) -> Self {
-        read::prevent_modification_of_themes_part(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::prevent_modification_of_themes_part_from_item(item)
     }
 }
 
@@ -52598,8 +52813,8 @@ impl<X: UserData> PreventReplacementOfStylesPartWith<X> {
 }
 
 impl officekit_markup_base::Read for PreventReplacementOfStylesPart {
-    fn read(element: &Element) -> Self {
-        read::prevent_replacement_of_styles_part(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::prevent_replacement_of_styles_part_from_item(item)
     }
 }
 
@@ -52636,8 +52851,8 @@ impl<X: UserData> PreventTextFramesFromOverlappingWith<X> {
 }
 
 impl officekit_markup_base::Read for PreventTextFramesFromOverlapping {
-    fn read(element: &Element) -> Self {
-        read::prevent_text_frames_from_overlapping(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::prevent_text_frames_from_overlapping_from_item(item)
     }
 }
 
@@ -52682,8 +52897,8 @@ impl<X: UserData> PreviousNumberingFieldPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for PreviousNumberingFieldProperties {
-    fn read(element: &Element) -> Self {
-        read::previous_numbering_field_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::previous_numbering_field_properties_from_item(item)
     }
 }
 
@@ -52788,8 +53003,8 @@ impl<X: UserData> PreviousParagraphMarkRunPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for PreviousParagraphMarkRunProperties {
-    fn read(element: &Element) -> Self {
-        read::previous_paragraph_mark_run_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::previous_paragraph_mark_run_properties_from_item(item)
     }
 }
 
@@ -52822,8 +53037,8 @@ impl<X: UserData> PreviousParagraphPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for PreviousParagraphProperties {
-    fn read(element: &Element) -> Self {
-        read::previous_paragraph_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::previous_paragraph_properties_from_item(item)
     }
 }
 
@@ -52908,8 +53123,8 @@ impl<X: UserData> PreviousRunPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for PreviousRunProperties {
-    fn read(element: &Element) -> Self {
-        read::previous_run_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::previous_run_properties_from_item(item)
     }
 }
 
@@ -52947,8 +53162,8 @@ impl<X: UserData> PreviousSectionPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for PreviousSectionProperties {
-    fn read(element: &Element) -> Self {
-        read::previous_section_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::previous_section_properties_from_item(item)
     }
 }
 
@@ -53041,8 +53256,8 @@ impl<X: UserData> PreviousTableCellPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for PreviousTableCellProperties {
-    fn read(element: &Element) -> Self {
-        read::previous_table_cell_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::previous_table_cell_properties_from_item(item)
     }
 }
 
@@ -53079,8 +53294,8 @@ impl<X: UserData> PreviousTableGridWith<X> {
 }
 
 impl officekit_markup_base::Read for PreviousTableGrid {
-    fn read(element: &Element) -> Self {
-        read::previous_table_grid(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::previous_table_grid_from_item(item)
     }
 }
 
@@ -53150,8 +53365,8 @@ impl<X: UserData> PreviousTableLevelPropertyExceptionsWith<X> {
 }
 
 impl officekit_markup_base::Read for PreviousTableLevelPropertyExceptions {
-    fn read(element: &Element) -> Self {
-        read::previous_table_level_property_exceptions(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::previous_table_level_property_exceptions_from_item(item)
     }
 }
 
@@ -53253,8 +53468,8 @@ impl<X: UserData> PreviousTablePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for PreviousTableProperties {
-    fn read(element: &Element) -> Self {
-        read::previous_table_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::previous_table_properties_from_item(item)
     }
 }
 
@@ -53291,8 +53506,8 @@ impl<X: UserData> PreviousTableRowPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for PreviousTableRowProperties {
-    fn read(element: &Element) -> Self {
-        read::previous_table_row_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::previous_table_row_properties_from_item(item)
     }
 }
 
@@ -53329,8 +53544,8 @@ impl<X: UserData> PrimaryStyleWith<X> {
 }
 
 impl officekit_markup_base::Read for PrimaryStyle {
-    fn read(element: &Element) -> Self {
-        read::primary_style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::primary_style_from_item(item)
     }
 }
 
@@ -53367,8 +53582,8 @@ impl<X: UserData> PrimaryStyleNameWith<X> {
 }
 
 impl officekit_markup_base::Read for PrimaryStyleName {
-    fn read(element: &Element) -> Self {
-        read::primary_style_name(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::primary_style_name_from_item(item)
     }
 }
 
@@ -53405,8 +53620,8 @@ impl<X: UserData> PrintBodyTextBeforeHeaderFooterContentsWith<X> {
 }
 
 impl officekit_markup_base::Read for PrintBodyTextBeforeHeaderFooterContents {
-    fn read(element: &Element) -> Self {
-        read::print_body_text_before_header_footer_contents(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::print_body_text_before_header_footer_contents_from_item(item)
     }
 }
 
@@ -53443,8 +53658,8 @@ impl<X: UserData> PrintColorsAsBlackAndWhiteWithoutDitheringWith<X> {
 }
 
 impl officekit_markup_base::Read for PrintColorsAsBlackAndWhiteWithoutDithering {
-    fn read(element: &Element) -> Self {
-        read::print_colors_as_black_and_white_without_dithering(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::print_colors_as_black_and_white_without_dithering_from_item(item)
     }
 }
 
@@ -53482,8 +53697,8 @@ impl<X: UserData> PrintFractionalCharacterWidthsWith<X> {
 }
 
 impl officekit_markup_base::Read for PrintFractionalCharacterWidths {
-    fn read(element: &Element) -> Self {
-        read::print_fractional_character_widths(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::print_fractional_character_widths_from_item(item)
     }
 }
 
@@ -53520,8 +53735,8 @@ impl<X: UserData> PrintPostScriptCodesWithDocumentTextWith<X> {
 }
 
 impl officekit_markup_base::Read for PrintPostScriptCodesWithDocumentText {
-    fn read(element: &Element) -> Self {
-        read::print_post_script_codes_with_document_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::print_post_script_codes_with_document_text_from_item(item)
     }
 }
 
@@ -53558,8 +53773,8 @@ impl<X: UserData> PrintTwoPagesPerSheetWith<X> {
 }
 
 impl officekit_markup_base::Read for PrintTwoPagesPerSheet {
-    fn read(element: &Element) -> Self {
-        read::print_two_pages_per_sheet(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::print_two_pages_per_sheet_from_item(item)
     }
 }
 
@@ -53596,8 +53811,8 @@ impl<X: UserData> ProgrammaticTagWith<X> {
 }
 
 impl officekit_markup_base::Read for ProgrammaticTag {
-    fn read(element: &Element) -> Self {
-        read::programmatic_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::programmatic_tag_from_item(item)
     }
 }
 
@@ -53634,8 +53849,8 @@ impl<X: UserData> ProofingErrorAnchorWith<X> {
 }
 
 impl officekit_markup_base::Read for ProofingErrorAnchor {
-    fn read(element: &Element) -> Self {
-        read::proofing_error_anchor(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::proofing_error_anchor_from_item(item)
     }
 }
 
@@ -53815,8 +54030,8 @@ impl<X: UserData> PropertiesForASingleFontWith<X> {
 }
 
 impl officekit_markup_base::Read for PropertiesForASingleFont {
-    fn read(element: &Element) -> Self {
-        read::properties_for_a_single_font(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::properties_for_a_single_font_from_item(item)
     }
 }
 
@@ -53853,8 +54068,8 @@ impl<X: UserData> QueryForDataSourceRecordsWith<X> {
 }
 
 impl officekit_markup_base::Read for QueryForDataSourceRecords {
-    fn read(element: &Element) -> Self {
-        read::query_for_data_source_records(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::query_for_data_source_records_from_item(item)
     }
 }
 
@@ -53891,8 +54106,8 @@ impl<X: UserData> RadixPointForFieldCodeEvaluationWith<X> {
 }
 
 impl officekit_markup_base::Read for RadixPointForFieldCodeEvaluation {
-    fn read(element: &Element) -> Self {
-        read::radix_point_for_field_code_evaluation(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::radix_point_for_field_code_evaluation_from_item(item)
     }
 }
 
@@ -53979,67 +54194,53 @@ impl officekit_markup_base::Read for RangeMarkupContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "bookmarkEnd")) => Self::BookmarkEnd(officekit_markup_base::read(element)),
-            Some((NS_W, "bookmarkStart")) => {
-                Self::BookmarkStart(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "commentRangeEnd")) => {
-                Self::CommentAnchorRangeEnd(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "commentRangeStart")) => {
-                Self::CommentAnchorRangeStart(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "customXmlDelRangeEnd")) => {
-                Self::CustomXMLMarkupDeletionEnd(officekit_markup_base::read(element))
-            }
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "bookmarkEnd")) => Self::BookmarkEnd(item.read()),
+            Some((NS_W, "bookmarkStart")) => Self::BookmarkStart(item.read()),
+            Some((NS_W, "commentRangeEnd")) => Self::CommentAnchorRangeEnd(item.read()),
+            Some((NS_W, "commentRangeStart")) => Self::CommentAnchorRangeStart(item.read()),
+            Some((NS_W, "customXmlDelRangeEnd")) => Self::CustomXMLMarkupDeletionEnd(item.read()),
             Some((NS_W, "customXmlDelRangeStart")) => {
-                Self::CustomXMLMarkupDeletionStart(officekit_markup_base::read(element))
+                Self::CustomXMLMarkupDeletionStart(item.read())
             }
-            Some((NS_W, "customXmlInsRangeEnd")) => {
-                Self::CustomXMLMarkupInsertionEnd(officekit_markup_base::read(element))
-            }
+            Some((NS_W, "customXmlInsRangeEnd")) => Self::CustomXMLMarkupInsertionEnd(item.read()),
             Some((NS_W, "customXmlInsRangeStart")) => {
-                Self::CustomXMLMarkupInsertionStart(officekit_markup_base::read(element))
+                Self::CustomXMLMarkupInsertionStart(item.read())
             }
             Some((NS_W, "customXmlMoveFromRangeEnd")) => {
-                Self::CustomXMLMarkupMoveSourceEnd(officekit_markup_base::read(element))
+                Self::CustomXMLMarkupMoveSourceEnd(item.read())
             }
             Some((NS_W, "customXmlMoveFromRangeStart")) => {
-                Self::CustomXMLMarkupMoveSourceStart(officekit_markup_base::read(element))
+                Self::CustomXMLMarkupMoveSourceStart(item.read())
             }
             Some((NS_W14, "customXmlConflictDelRangeEnd")) => {
-                Self::CustomXmlConflictDelRangeEnd(officekit_markup_base::read(element))
+                Self::CustomXmlConflictDelRangeEnd(item.read())
             }
             Some((NS_W14, "customXmlConflictDelRangeStart")) => {
-                Self::CustomXmlConflictDelRangeStart(officekit_markup_base::read(element))
+                Self::CustomXmlConflictDelRangeStart(item.read())
             }
             Some((NS_W14, "customXmlConflictInsRangeEnd")) => {
-                Self::CustomXmlConflictInsRangeEnd(officekit_markup_base::read(element))
+                Self::CustomXmlConflictInsRangeEnd(item.read())
             }
             Some((NS_W14, "customXmlConflictInsRangeStart")) => {
-                Self::CustomXmlConflictInsRangeStart(officekit_markup_base::read(element))
+                Self::CustomXmlConflictInsRangeStart(item.read())
             }
-            Some((NS_W, "customXmlMoveToRangeEnd")) => {
-                Self::CustomXmlMoveToRangeEnd(officekit_markup_base::read(element))
-            }
+            Some((NS_W, "customXmlMoveToRangeEnd")) => Self::CustomXmlMoveToRangeEnd(item.read()),
             Some((NS_W, "customXmlMoveToRangeStart")) => {
-                Self::CustomXmlMoveToRangeStart(officekit_markup_base::read(element))
+                Self::CustomXmlMoveToRangeStart(item.read())
             }
             Some((NS_W, "moveToRangeEnd")) => {
-                Self::MoveDestinationLocationContainerEnd(officekit_markup_base::read(element))
+                Self::MoveDestinationLocationContainerEnd(item.read())
             }
             Some((NS_W, "moveToRangeStart")) => {
-                Self::MoveDestinationLocationContainerStart(officekit_markup_base::read(element))
+                Self::MoveDestinationLocationContainerStart(item.read())
             }
-            Some((NS_W, "moveFromRangeEnd")) => {
-                Self::MoveSourceLocationContainerEnd(officekit_markup_base::read(element))
-            }
+            Some((NS_W, "moveFromRangeEnd")) => Self::MoveSourceLocationContainerEnd(item.read()),
             Some((NS_W, "moveFromRangeStart")) => {
-                Self::MoveSourceLocationContainerStart(officekit_markup_base::read(element))
+                Self::MoveSourceLocationContainerStart(item.read())
             }
-            _ => Self::Other(Node::Element(element.clone())),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -54158,8 +54359,8 @@ impl<X: UserData> RangePermissionEndWith<X> {
 }
 
 impl officekit_markup_base::Read for RangePermissionEnd {
-    fn read(element: &Element) -> Self {
-        read::range_permission_end(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::range_permission_end_from_item(item)
     }
 }
 
@@ -54206,8 +54407,8 @@ impl<X: UserData> RangePermissionStartWith<X> {
 }
 
 impl officekit_markup_base::Read for RangePermissionStart {
-    fn read(element: &Element) -> Self {
-        read::range_permission_start(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::range_permission_start_from_item(item)
     }
 }
 
@@ -54244,8 +54445,8 @@ impl<X: UserData> RecalculateFieldsWhenModifiedWith<X> {
 }
 
 impl officekit_markup_base::Read for RecalculateFieldsWhenModified {
-    fn read(element: &Element) -> Self {
-        read::recalculate_fields_when_modified(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::recalculate_fields_when_modified_from_item(item)
     }
 }
 
@@ -54282,8 +54483,8 @@ impl<X: UserData> RecommendWebPageFormatWith<X> {
 }
 
 impl officekit_markup_base::Read for RecommendWebPageFormat {
-    fn read(element: &Element) -> Self {
-        read::recommend_web_page_format(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::recommend_web_page_format_from_item(item)
     }
 }
 
@@ -54320,8 +54521,8 @@ impl<X: UserData> RecordCurrentlyDisplayedInMergedDocumentWith<X> {
 }
 
 impl officekit_markup_base::Read for RecordCurrentlyDisplayedInMergedDocument {
-    fn read(element: &Element) -> Self {
-        read::record_currently_displayed_in_merged_document(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::record_currently_displayed_in_merged_document_from_item(item)
     }
 }
 
@@ -54358,8 +54559,8 @@ impl<X: UserData> RecordIsIncludedInMailMergeWith<X> {
 }
 
 impl officekit_markup_base::Read for RecordIsIncludedInMailMerge {
-    fn read(element: &Element) -> Self {
-        read::record_is_included_in_mail_merge(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::record_is_included_in_mail_merge_from_item(item)
     }
 }
 
@@ -54396,8 +54597,8 @@ impl<X: UserData> ReferenceToInclusionExclusionDataWith<X> {
 }
 
 impl officekit_markup_base::Read for ReferenceToInclusionExclusionData {
-    fn read(element: &Element) -> Self {
-        read::reference_to_inclusion_exclusion_data(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::reference_to_inclusion_exclusion_data_from_item(item)
     }
 }
 
@@ -54434,8 +54635,8 @@ impl<X: UserData> ReferenceToPrinterSettingsDataWith<X> {
 }
 
 impl officekit_markup_base::Read for ReferenceToPrinterSettingsData {
-    fn read(element: &Element) -> Self {
-        read::reference_to_printer_settings_data(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::reference_to_printer_settings_data_from_item(item)
     }
 }
 
@@ -54472,8 +54673,8 @@ impl<X: UserData> ReferencedCharacterStyleWith<X> {
 }
 
 impl officekit_markup_base::Read for ReferencedCharacterStyle {
-    fn read(element: &Element) -> Self {
-        read::referenced_character_style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::referenced_character_style_from_item(item)
     }
 }
 
@@ -54510,8 +54711,8 @@ impl<X: UserData> ReferencedParagraphStyleWith<X> {
 }
 
 impl officekit_markup_base::Read for ReferencedParagraphStyle {
-    fn read(element: &Element) -> Self {
-        read::referenced_paragraph_style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::referenced_paragraph_style_from_item(item)
     }
 }
 
@@ -54548,8 +54749,8 @@ impl<X: UserData> ReferencedTableStyleWith<X> {
 }
 
 impl officekit_markup_base::Read for ReferencedTableStyle {
-    fn read(element: &Element) -> Self {
-        read::referenced_table_style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::referenced_table_style_from_item(item)
     }
 }
 
@@ -54590,8 +54791,8 @@ impl<X: UserData> RegularFontStyleEmbeddingWith<X> {
 }
 
 impl officekit_markup_base::Read for RegularFontStyleEmbedding {
-    fn read(element: &Element) -> Self {
-        read::regular_font_style_embedding(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::regular_font_style_embedding_from_item(item)
     }
 }
 
@@ -54628,8 +54829,8 @@ impl<X: UserData> RemoveDateAndTimeFromAnnotationsWith<X> {
 }
 
 impl officekit_markup_base::Read for RemoveDateAndTimeFromAnnotations {
-    fn read(element: &Element) -> Self {
-        read::remove_date_and_time_from_annotations(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::remove_date_and_time_from_annotations_from_item(item)
     }
 }
 
@@ -54666,8 +54867,8 @@ impl<X: UserData> RemovePersonalInformationWith<X> {
 }
 
 impl officekit_markup_base::Read for RemovePersonalInformation {
-    fn read(element: &Element) -> Self {
-        read::remove_personal_information(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::remove_personal_information_from_item(item)
     }
 }
 
@@ -54704,8 +54905,8 @@ impl<X: UserData> RemoveSemiHiddenPropertyWith<X> {
 }
 
 impl officekit_markup_base::Read for RemoveSemiHiddenProperty {
-    fn read(element: &Element) -> Self {
-        read::remove_semi_hidden_property(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::remove_semi_hidden_property_from_item(item)
     }
 }
 
@@ -54742,8 +54943,8 @@ impl<X: UserData> RemoveSmartTagsWhenSavingWith<X> {
 }
 
 impl officekit_markup_base::Read for RemoveSmartTagsWhenSaving {
-    fn read(element: &Element) -> Self {
-        read::remove_smart_tags_when_saving(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::remove_smart_tags_when_saving_from_item(item)
     }
 }
 
@@ -54780,8 +54981,8 @@ impl<X: UserData> RemoveStructuredDocumentTagWhenEditedWith<X> {
 }
 
 impl officekit_markup_base::Read for RemoveStructuredDocumentTagWhenEdited {
-    fn read(element: &Element) -> Self {
-        read::remove_structured_document_tag_when_edited(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::remove_structured_document_tag_when_edited_from_item(item)
     }
 }
 
@@ -54818,8 +55019,8 @@ impl<X: UserData> RepeatTableRowWith<X> {
 }
 
 impl officekit_markup_base::Read for RepeatTableRow {
-    fn read(element: &Element) -> Self {
-        read::repeat_table_row(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::repeat_table_row_from_item(item)
     }
 }
 
@@ -54856,8 +55057,8 @@ impl<X: UserData> RequireExactSizeDuringFontSubstitutionWith<X> {
 }
 
 impl officekit_markup_base::Read for RequireExactSizeDuringFontSubstitution {
-    fn read(element: &Element) -> Self {
-        read::require_exact_size_during_font_substitution(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::require_exact_size_during_font_substitution_from_item(item)
     }
 }
 
@@ -54894,8 +55095,8 @@ impl<X: UserData> RestartNumberingLevelSymbolWith<X> {
 }
 
 impl officekit_markup_base::Read for RestartNumberingLevelSymbol {
-    fn read(element: &Element) -> Self {
-        read::restart_numbering_level_symbol(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::restart_numbering_level_symbol_from_item(item)
     }
 }
 
@@ -54932,8 +55133,8 @@ impl<X: UserData> ReverseBookFoldPrintingWith<X> {
 }
 
 impl officekit_markup_base::Read for ReverseBookFoldPrinting {
-    fn read(element: &Element) -> Self {
-        read::reverse_book_fold_printing(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::reverse_book_fold_printing_from_item(item)
     }
 }
 
@@ -54970,8 +55171,8 @@ impl<X: UserData> RevisionIdentifierForStyleDefinitionWith<X> {
 }
 
 impl officekit_markup_base::Read for RevisionIdentifierForStyleDefinition {
-    fn read(element: &Element) -> Self {
-        read::revision_identifier_for_style_definition(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::revision_identifier_for_style_definition_from_item(item)
     }
 }
 
@@ -55018,8 +55219,8 @@ impl<X: UserData> RevisionInformationForParagraphPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for RevisionInformationForParagraphProperties {
-    fn read(element: &Element) -> Self {
-        read::revision_information_for_paragraph_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::revision_information_for_paragraph_properties_from_item(item)
     }
 }
 
@@ -55066,8 +55267,8 @@ impl<X: UserData> RevisionInformationForRunPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for RevisionInformationForRunProperties {
-    fn read(element: &Element) -> Self {
-        read::revision_information_for_run_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::revision_information_for_run_properties_from_item(item)
     }
 }
 
@@ -55114,8 +55315,8 @@ impl<X: UserData> RevisionInformationForSectionPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for RevisionInformationForSectionProperties {
-    fn read(element: &Element) -> Self {
-        read::revision_information_for_section_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::revision_information_for_section_properties_from_item(item)
     }
 }
 
@@ -55162,8 +55363,8 @@ impl<X: UserData> RevisionInformationForTableCellPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for RevisionInformationForTableCellProperties {
-    fn read(element: &Element) -> Self {
-        read::revision_information_for_table_cell_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::revision_information_for_table_cell_properties_from_item(item)
     }
 }
 
@@ -55211,8 +55412,8 @@ impl<X: UserData> RevisionInformationForTableLevelPropertyExceptionsWith<X> {
 }
 
 impl officekit_markup_base::Read for RevisionInformationForTableLevelPropertyExceptions {
-    fn read(element: &Element) -> Self {
-        read::revision_information_for_table_level_property_exceptions(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::revision_information_for_table_level_property_exceptions_from_item(item)
     }
 }
 
@@ -55260,8 +55461,8 @@ impl<X: UserData> RevisionInformationForTablePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for RevisionInformationForTableProperties {
-    fn read(element: &Element) -> Self {
-        read::revision_information_for_table_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::revision_information_for_table_properties_from_item(item)
     }
 }
 
@@ -55308,8 +55509,8 @@ impl<X: UserData> RevisionInformationForTableRowPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for RevisionInformationForTableRowProperties {
-    fn read(element: &Element) -> Self {
-        read::revision_information_for_table_row_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::revision_information_for_table_row_properties_from_item(item)
     }
 }
 
@@ -55350,8 +55551,8 @@ impl<X: UserData> RevisionSaveIDValuesWith<X> {
 }
 
 impl officekit_markup_base::Read for RevisionSaveIDValues {
-    fn read(element: &Element) -> Self {
-        read::revision_save_id_values(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::revision_save_id_values_from_item(item)
     }
 }
 
@@ -55388,8 +55589,8 @@ impl<X: UserData> RichTextBoxContentContainerWith<X> {
 }
 
 impl officekit_markup_base::Read for RichTextBoxContentContainer {
-    fn read(element: &Element) -> Self {
-        read::rich_text_box_content_container(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rich_text_box_content_container_from_item(item)
     }
 }
 
@@ -55422,8 +55623,8 @@ impl<X: UserData> RichTextStructuredDocumentTagWith<X> {
 }
 
 impl officekit_markup_base::Read for RichTextStructuredDocumentTag {
-    fn read(element: &Element) -> Self {
-        read::rich_text_structured_document_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rich_text_structured_document_tag_from_item(item)
     }
 }
 
@@ -55478,8 +55679,8 @@ impl<X: UserData> RightBorderWith<X> {
 }
 
 impl officekit_markup_base::Read for RightBorder {
-    fn read(element: &Element) -> Self {
-        read::right_border(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::right_border_from_item(item)
     }
 }
 
@@ -55516,8 +55717,8 @@ impl<X: UserData> RightMarginForHTMLDivWith<X> {
 }
 
 impl officekit_markup_base::Read for RightMarginForHTMLDiv {
-    fn read(element: &Element) -> Self {
-        read::right_margin_for_html_div(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::right_margin_for_html_div_from_item(item)
     }
 }
 
@@ -55570,8 +55771,8 @@ impl<X: UserData> RightParagraphBorderWith<X> {
 }
 
 impl officekit_markup_base::Read for RightParagraphBorder {
-    fn read(element: &Element) -> Self {
-        read::right_paragraph_border(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::right_paragraph_border_from_item(item)
     }
 }
 
@@ -55610,8 +55811,8 @@ impl<X: UserData> RightParagraphBorderTblWidthWith<X> {
 }
 
 impl officekit_markup_base::Read for RightParagraphBorderTblWidth {
-    fn read(element: &Element) -> Self {
-        read::right_paragraph_border_tbl_width(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::right_paragraph_border_tbl_width_from_item(item)
     }
 }
 
@@ -55648,8 +55849,8 @@ impl<X: UserData> RightToLeftParagraphLayoutWith<X> {
 }
 
 impl officekit_markup_base::Read for RightToLeftParagraphLayout {
-    fn read(element: &Element) -> Self {
-        read::right_to_left_paragraph_layout(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::right_to_left_paragraph_layout_from_item(item)
     }
 }
 
@@ -55686,8 +55887,8 @@ impl<X: UserData> RightToLeftTextWith<X> {
 }
 
 impl officekit_markup_base::Read for RightToLeftText {
-    fn read(element: &Element) -> Self {
-        read::right_to_left_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::right_to_left_text_from_item(item)
     }
 }
 
@@ -55734,8 +55935,8 @@ impl<X: UserData> RowLevelCustomXMLElementWith<X> {
 }
 
 impl officekit_markup_base::Read for RowLevelCustomXMLElement {
-    fn read(element: &Element) -> Self {
-        read::row_level_custom_xml_element(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::row_level_custom_xml_element_from_item(item)
     }
 }
 
@@ -55796,8 +55997,8 @@ impl<X: UserData> RowLevelStructuredDocumentTagWith<X> {
 }
 
 impl officekit_markup_base::Read for RowLevelStructuredDocumentTag {
-    fn read(element: &Element) -> Self {
-        read::row_level_structured_document_tag(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::row_level_structured_document_tag_from_item(item)
     }
 }
 
@@ -55834,8 +56035,8 @@ impl<X: UserData> RowLevelStructuredDocumentTagContentWith<X> {
 }
 
 impl officekit_markup_base::Read for RowLevelStructuredDocumentTagContent {
-    fn read(element: &Element) -> Self {
-        read::row_level_structured_document_tag_content(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::row_level_structured_document_tag_content_from_item(item)
     }
 }
 
@@ -55878,8 +56079,8 @@ impl<X: UserData> RunContentColorWith<X> {
 }
 
 impl officekit_markup_base::Read for RunContentColor {
-    fn read(element: &Element) -> Self {
-        read::run_content_color(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::run_content_color_from_item(item)
     }
 }
 
@@ -55932,8 +56133,8 @@ impl<X: UserData> RunFontsWith<X> {
 }
 
 impl officekit_markup_base::Read for RunFonts {
-    fn read(element: &Element) -> Self {
-        read::run_fonts(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::run_fonts_from_item(item)
     }
 }
 
@@ -56022,8 +56223,8 @@ impl<X: UserData> RunPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for RunProperties {
-    fn read(element: &Element) -> Self {
-        read::run_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::run_properties_from_item(item)
     }
 }
 
@@ -56066,84 +56267,48 @@ impl officekit_markup_base::Read for RunPropertiesContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "effect")) => {
-                Self::AnimatedTextEffect(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "b")) => Self::Bold(officekit_markup_base::read(element)),
-            Some((NS_W, "spacing")) => {
-                Self::CharacterSpacingAdjustment(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "bCs")) => Self::ComplexScriptBold(officekit_markup_base::read(element)),
-            Some((NS_W, "szCs")) => {
-                Self::ComplexScriptFontSize(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "iCs")) => Self::ComplexScriptItalics(officekit_markup_base::read(element)),
-            Some((NS_W, "caps")) => {
-                Self::DisplayAllCharactersAsCapitalLetters(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "outline")) => {
-                Self::DisplayCharacterOutline(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "noProof")) => {
-                Self::DoNotCheckSpellingOrGrammar(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "snapToGrid")) => {
-                Self::DocumentGridInterLineParagraphSpacing(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "dstrike")) => {
-                Self::DoubleStrikethrough(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "eastAsianLayout")) => {
-                Self::EastAsianTypographySettings(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "emboss")) => Self::Embossing(officekit_markup_base::read(element)),
-            Some((NS_W, "em")) => Self::EmphasisMark(officekit_markup_base::read(element)),
-            Some((NS_W, "w")) => Self::ExpandedCompressedText(officekit_markup_base::read(element)),
-            Some((NS_W, "kern")) => Self::FontKerning(officekit_markup_base::read(element)),
-            Some((NS_W, "vanish")) => Self::HiddenText(officekit_markup_base::read(element)),
-            Some((NS_W, "imprint")) => Self::Imprinting(officekit_markup_base::read(element)),
-            Some((NS_W, "i")) => Self::Italics(officekit_markup_base::read(element)),
-            Some((NS_W, "lang")) => {
-                Self::LanguagesForRunContent(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "fitText")) => Self::ManualRunWidth(officekit_markup_base::read(element)),
-            Some((NS_W, "sz")) => {
-                Self::NonComplexScriptFontSize(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "oMath")) => Self::OfficeOpenXMLMath(officekit_markup_base::read(element)),
-            Some((NS_W, "specVanish")) => {
-                Self::ParagraphMarkIsAlwaysHidden(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "shd")) => Self::ParagraphShading(officekit_markup_base::read(element)),
-            Some((NS_W, "rStyle")) => {
-                Self::ReferencedCharacterStyle(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "rtl")) => Self::RightToLeftText(officekit_markup_base::read(element)),
-            Some((NS_W, "color")) => Self::RunContentColor(officekit_markup_base::read(element)),
-            Some((NS_W, "rFonts")) => Self::RunFonts(officekit_markup_base::read(element)),
-            Some((NS_W, "shadow")) => Self::Shadow(officekit_markup_base::read(element)),
-            Some((NS_W, "strike")) => {
-                Self::SingleStrikethrough(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "smallCaps")) => Self::SmallCaps(officekit_markup_base::read(element)),
-            Some((NS_W, "vertAlign")) => {
-                Self::SubscriptSuperscriptText(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "bdr")) => Self::TextBorder(officekit_markup_base::read(element)),
-            Some((NS_W, "highlight")) => {
-                Self::TextHighlighting(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "u")) => Self::Underline(officekit_markup_base::read(element)),
-            Some((NS_W, "cs")) => {
-                Self::UseComplexScriptFormattingOnRun(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "position")) => {
-                Self::VerticallyRaisedOrLoweredText(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "webHidden")) => Self::WebHiddenText(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "effect")) => Self::AnimatedTextEffect(item.read()),
+            Some((NS_W, "b")) => Self::Bold(item.read()),
+            Some((NS_W, "spacing")) => Self::CharacterSpacingAdjustment(item.read()),
+            Some((NS_W, "bCs")) => Self::ComplexScriptBold(item.read()),
+            Some((NS_W, "szCs")) => Self::ComplexScriptFontSize(item.read()),
+            Some((NS_W, "iCs")) => Self::ComplexScriptItalics(item.read()),
+            Some((NS_W, "caps")) => Self::DisplayAllCharactersAsCapitalLetters(item.read()),
+            Some((NS_W, "outline")) => Self::DisplayCharacterOutline(item.read()),
+            Some((NS_W, "noProof")) => Self::DoNotCheckSpellingOrGrammar(item.read()),
+            Some((NS_W, "snapToGrid")) => Self::DocumentGridInterLineParagraphSpacing(item.read()),
+            Some((NS_W, "dstrike")) => Self::DoubleStrikethrough(item.read()),
+            Some((NS_W, "eastAsianLayout")) => Self::EastAsianTypographySettings(item.read()),
+            Some((NS_W, "emboss")) => Self::Embossing(item.read()),
+            Some((NS_W, "em")) => Self::EmphasisMark(item.read()),
+            Some((NS_W, "w")) => Self::ExpandedCompressedText(item.read()),
+            Some((NS_W, "kern")) => Self::FontKerning(item.read()),
+            Some((NS_W, "vanish")) => Self::HiddenText(item.read()),
+            Some((NS_W, "imprint")) => Self::Imprinting(item.read()),
+            Some((NS_W, "i")) => Self::Italics(item.read()),
+            Some((NS_W, "lang")) => Self::LanguagesForRunContent(item.read()),
+            Some((NS_W, "fitText")) => Self::ManualRunWidth(item.read()),
+            Some((NS_W, "sz")) => Self::NonComplexScriptFontSize(item.read()),
+            Some((NS_W, "oMath")) => Self::OfficeOpenXMLMath(item.read()),
+            Some((NS_W, "specVanish")) => Self::ParagraphMarkIsAlwaysHidden(item.read()),
+            Some((NS_W, "shd")) => Self::ParagraphShading(item.read()),
+            Some((NS_W, "rStyle")) => Self::ReferencedCharacterStyle(item.read()),
+            Some((NS_W, "rtl")) => Self::RightToLeftText(item.read()),
+            Some((NS_W, "color")) => Self::RunContentColor(item.read()),
+            Some((NS_W, "rFonts")) => Self::RunFonts(item.read()),
+            Some((NS_W, "shadow")) => Self::Shadow(item.read()),
+            Some((NS_W, "strike")) => Self::SingleStrikethrough(item.read()),
+            Some((NS_W, "smallCaps")) => Self::SmallCaps(item.read()),
+            Some((NS_W, "vertAlign")) => Self::SubscriptSuperscriptText(item.read()),
+            Some((NS_W, "bdr")) => Self::TextBorder(item.read()),
+            Some((NS_W, "highlight")) => Self::TextHighlighting(item.read()),
+            Some((NS_W, "u")) => Self::Underline(item.read()),
+            Some((NS_W, "cs")) => Self::UseComplexScriptFormattingOnRun(item.read()),
+            Some((NS_W, "position")) => Self::VerticallyRaisedOrLoweredText(item.read()),
+            Some((NS_W, "webHidden")) => Self::WebHiddenText(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -56293,8 +56458,8 @@ impl<X: UserData> RunPropertiesForTheParagraphMarkWith<X> {
 }
 
 impl officekit_markup_base::Read for RunPropertiesForTheParagraphMark {
-    fn read(element: &Element) -> Self {
-        read::run_properties_for_the_paragraph_mark(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::run_properties_for_the_paragraph_mark_from_item(item)
     }
 }
 
@@ -56331,8 +56496,8 @@ impl<X: UserData> SaveSmartTagDataWith<X> {
 }
 
 impl officekit_markup_base::Read for SaveSmartTagData {
-    fn read(element: &Element) -> Self {
-        read::save_smart_tag_data(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::save_smart_tag_data_from_item(item)
     }
 }
 
@@ -56369,8 +56534,8 @@ impl<X: UserData> SaveThroughCustomXSLTransformWith<X> {
 }
 
 impl officekit_markup_base::Read for SaveThroughCustomXSLTransform {
-    fn read(element: &Element) -> Self {
-        read::save_through_custom_xsl_transform(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::save_through_custom_xsl_transform_from_item(item)
     }
 }
 
@@ -56434,8 +56599,8 @@ impl<X: UserData> ScrollbarDisplayOptionWith<X> {
 }
 
 impl officekit_markup_base::Read for ScrollbarDisplayOption {
-    fn read(element: &Element) -> Self {
-        read::scrollbar_display_option(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::scrollbar_display_option_from_item(item)
     }
 }
 
@@ -56470,15 +56635,11 @@ impl officekit_markup_base::Read for SectionPropertiesContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "footerReference")) => {
-                Self::FooterReference(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "headerReference")) => {
-                Self::HeaderReference(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "footerReference")) => Self::FooterReference(item.read()),
+            Some((NS_W, "headerReference")) => Self::HeaderReference(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -56519,8 +56680,8 @@ impl<X: UserData> SectionTypeWith<X> {
 }
 
 impl officekit_markup_base::Read for SectionType {
-    fn read(element: &Element) -> Self {
-        read::section_type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::section_type_from_item(item)
     }
 }
 
@@ -56571,8 +56732,8 @@ impl<X: UserData> SectionWideEndnotePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for SectionWideEndnoteProperties {
-    fn read(element: &Element) -> Self {
-        read::section_wide_endnote_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::section_wide_endnote_properties_from_item(item)
     }
 }
 
@@ -56623,8 +56784,8 @@ impl<X: UserData> SectionWideFootnotePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for SectionWideFootnoteProperties {
-    fn read(element: &Element) -> Self {
-        read::section_wide_footnote_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::section_wide_footnote_properties_from_item(item)
     }
 }
 
@@ -56661,8 +56822,8 @@ impl<X: UserData> SelectFldWithFirstOrLastCharWith<X> {
 }
 
 impl officekit_markup_base::Read for SelectFldWithFirstOrLastChar {
-    fn read(element: &Element) -> Self {
-        read::select_fld_with_first_or_last_char(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::select_fld_with_first_or_last_char_from_item(item)
     }
 }
 
@@ -56713,8 +56874,8 @@ impl<X: UserData> SetOfBordersForHTMLDivWith<X> {
 }
 
 impl officekit_markup_base::Read for SetOfBordersForHTMLDiv {
-    fn read(element: &Element) -> Self {
-        read::set_of_borders_for_html_div(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::set_of_borders_for_html_div_from_item(item)
     }
 }
 
@@ -56751,8 +56912,8 @@ impl<X: UserData> SetOfCustomTabStopsWith<X> {
 }
 
 impl officekit_markup_base::Read for SetOfCustomTabStops {
-    fn read(element: &Element) -> Self {
-        read::set_of_custom_tab_stops(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::set_of_custom_tab_stops_from_item(item)
     }
 }
 
@@ -56874,8 +57035,8 @@ impl<X: UserData> ShadowWith<X> {
 }
 
 impl officekit_markup_base::Read for Shadow {
-    fn read(element: &Element) -> Self {
-        read::shadow(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shadow_from_item(item)
     }
 }
 
@@ -56912,8 +57073,8 @@ impl<X: UserData> ShowEMailMessageHeaderWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowEMailMessageHeader {
-    fn read(element: &Element) -> Self {
-        read::show_e_mail_message_header(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_e_mail_message_header_from_item(item)
     }
 }
 
@@ -56950,8 +57111,8 @@ impl<X: UserData> ShowXMLTagsWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowXMLTags {
-    fn read(element: &Element) -> Self {
-        read::show_xml_tags(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_xml_tags_from_item(item)
     }
 }
 
@@ -57072,8 +57233,8 @@ impl<X: UserData> SimpleFieldWith<X> {
 }
 
 impl officekit_markup_base::Read for SimpleField {
-    fn read(element: &Element) -> Self {
-        read::simple_field(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::simple_field_from_item(item)
     }
 }
 
@@ -57112,8 +57273,8 @@ impl<X: UserData> SingleAutomaticCaptioningSettingWith<X> {
 }
 
 impl officekit_markup_base::Read for SingleAutomaticCaptioningSetting {
-    fn read(element: &Element) -> Self {
-        read::single_automatic_captioning_setting(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::single_automatic_captioning_setting_from_item(item)
     }
 }
 
@@ -57162,8 +57323,8 @@ impl<X: UserData> SingleCaptionTypeDefinitionWith<X> {
 }
 
 impl officekit_markup_base::Read for SingleCaptionTypeDefinition {
-    fn read(element: &Element) -> Self {
-        read::single_caption_type_definition(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::single_caption_type_definition_from_item(item)
     }
 }
 
@@ -57202,8 +57363,8 @@ impl<X: UserData> SingleColumnDefinitionWith<X> {
 }
 
 impl officekit_markup_base::Read for SingleColumnDefinition {
-    fn read(element: &Element) -> Self {
-        read::single_column_definition(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::single_column_definition_from_item(item)
     }
 }
 
@@ -57242,8 +57403,8 @@ impl<X: UserData> SingleDocumentVariableWith<X> {
 }
 
 impl officekit_markup_base::Read for SingleDocumentVariable {
-    fn read(element: &Element) -> Self {
-        read::single_document_variable(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::single_document_variable_from_item(item)
     }
 }
 
@@ -57316,8 +57477,8 @@ impl<X: UserData> SingleFramePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for SingleFrameProperties {
-    fn read(element: &Element) -> Self {
-        read::single_frame_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::single_frame_properties_from_item(item)
     }
 }
 
@@ -57354,8 +57515,8 @@ impl<X: UserData> SingleStrikethroughWith<X> {
 }
 
 impl officekit_markup_base::Read for SingleStrikethrough {
-    fn read(element: &Element) -> Self {
-        read::single_strikethrough(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::single_strikethrough_from_item(item)
     }
 }
 
@@ -57416,8 +57577,8 @@ impl<X: UserData> SingleTableCellMarginsWith<X> {
 }
 
 impl officekit_markup_base::Read for SingleTableCellMargins {
-    fn read(element: &Element) -> Self {
-        read::single_table_cell_margins(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::single_table_cell_margins_from_item(item)
     }
 }
 
@@ -57454,8 +57615,8 @@ impl<X: UserData> SmallCapsWith<X> {
 }
 
 impl officekit_markup_base::Read for SmallCaps {
-    fn read(element: &Element) -> Self {
-        read::small_caps(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::small_caps_from_item(item)
     }
 }
 
@@ -57492,8 +57653,8 @@ impl<X: UserData> SmartTagPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for SmartTagProperties {
-    fn read(element: &Element) -> Self {
-        read::smart_tag_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::smart_tag_properties_from_item(item)
     }
 }
 
@@ -57530,8 +57691,8 @@ impl<X: UserData> SourceDocumentTypeWith<X> {
 }
 
 impl officekit_markup_base::Read for SourceDocumentType {
-    fn read(element: &Element) -> Self {
-        read::source_document_type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::source_document_type_from_item(item)
     }
 }
 
@@ -57625,8 +57786,8 @@ impl<X: UserData> SourceFileForFrameWith<X> {
 }
 
 impl officekit_markup_base::Read for SourceFileForFrame {
-    fn read(element: &Element) -> Self {
-        read::source_file_for_frame(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::source_file_for_frame_from_item(item)
     }
 }
 
@@ -57677,8 +57838,8 @@ impl<X: UserData> SpacingBetweenLinesAndAboveBelowParagraphWith<X> {
 }
 
 impl officekit_markup_base::Read for SpacingBetweenLinesAndAboveBelowParagraph {
-    fn read(element: &Element) -> Self {
-        read::spacing_between_lines_and_above_below_paragraph(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::spacing_between_lines_and_above_below_paragraph_from_item(item)
     }
 }
 
@@ -57715,8 +57876,8 @@ impl<X: UserData> SpecialEndnoteListWith<X> {
 }
 
 impl officekit_markup_base::Read for SpecialEndnoteList {
-    fn read(element: &Element) -> Self {
-        read::special_endnote_list(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::special_endnote_list_from_item(item)
     }
 }
 
@@ -57753,8 +57914,8 @@ impl<X: UserData> SpecialFootnoteListWith<X> {
 }
 
 impl officekit_markup_base::Read for SpecialFootnoteList {
-    fn read(element: &Element) -> Self {
-        read::special_footnote_list(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::special_footnote_list_from_item(item)
     }
 }
 
@@ -57793,8 +57954,8 @@ impl<X: UserData> SpellingAndGrammaticalCheckingStateWith<X> {
 }
 
 impl officekit_markup_base::Read for SpellingAndGrammaticalCheckingState {
-    fn read(element: &Element) -> Self {
-        read::spelling_and_grammatical_checking_state(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::spelling_and_grammatical_checking_state_from_item(item)
     }
 }
 
@@ -57831,8 +57992,8 @@ impl<X: UserData> SplitPgBreakAndParaMarkWith<X> {
 }
 
 impl officekit_markup_base::Read for SplitPgBreakAndParaMark {
-    fn read(element: &Element) -> Self {
-        read::split_pg_break_and_para_mark(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::split_pg_break_and_para_mark_from_item(item)
     }
 }
 
@@ -58364,8 +58525,8 @@ impl<X: UserData> StartParagraphOnNextPageWith<X> {
 }
 
 impl officekit_markup_base::Read for StartParagraphOnNextPage {
-    fn read(element: &Element) -> Self {
-        read::start_paragraph_on_next_page(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::start_paragraph_on_next_page_from_item(item)
     }
 }
 
@@ -58402,8 +58563,8 @@ impl<X: UserData> StartingValueWith<X> {
 }
 
 impl officekit_markup_base::Read for StartingValue {
-    fn read(element: &Element) -> Self {
-        read::starting_value(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::starting_value_from_item(item)
     }
 }
 
@@ -58463,8 +58624,8 @@ impl<X: UserData> StrictKinsokuRulesWith<X> {
 }
 
 impl officekit_markup_base::Read for StrictKinsokuRules {
-    fn read(element: &Element) -> Self {
-        read::strict_kinsoku_rules(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::strict_kinsoku_rules_from_item(item)
     }
 }
 
@@ -58501,8 +58662,8 @@ impl<X: UserData> StructuredDocumentTagEndCharacterPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for StructuredDocumentTagEndCharacterProperties {
-    fn read(element: &Element) -> Self {
-        read::structured_document_tag_end_character_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::structured_document_tag_end_character_properties_from_item(item)
     }
 }
 
@@ -58539,8 +58700,8 @@ impl<X: UserData> StructuredDocumentTagLabelWith<X> {
 }
 
 impl officekit_markup_base::Read for StructuredDocumentTagLabel {
-    fn read(element: &Element) -> Self {
-        read::structured_document_tag_label(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::structured_document_tag_label_from_item(item)
     }
 }
 
@@ -58577,8 +58738,8 @@ impl<X: UserData> StructuredDocumentTagNavigationOrderIndexWith<X> {
 }
 
 impl officekit_markup_base::Read for StructuredDocumentTagNavigationOrderIndex {
-    fn read(element: &Element) -> Self {
-        read::structured_document_tag_navigation_order_index(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::structured_document_tag_navigation_order_index_from_item(item)
     }
 }
 
@@ -58615,8 +58776,8 @@ impl<X: UserData> StructuredDocumentTagPlaceholderTextWith<X> {
 }
 
 impl officekit_markup_base::Read for StructuredDocumentTagPlaceholderText {
-    fn read(element: &Element) -> Self {
-        read::structured_document_tag_placeholder_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::structured_document_tag_placeholder_text_from_item(item)
     }
 }
 
@@ -58720,8 +58881,8 @@ impl<X: UserData> StructuredDocumentTagPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for StructuredDocumentTagProperties {
-    fn read(element: &Element) -> Self {
-        read::structured_document_tag_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::structured_document_tag_properties_from_item(item)
     }
 }
 
@@ -58824,55 +58985,29 @@ impl officekit_markup_base::Read for StructuredDocumentTagPropertiesContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "bibliography")) => {
-                Self::BibliographyStructuredDocumentTag(officekit_markup_base::read(element))
-            }
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "bibliography")) => Self::BibliographyStructuredDocumentTag(item.read()),
             Some((NS_W, "docPartObj")) => {
-                Self::BuiltInDocumentPartStructuredDocumentTag(officekit_markup_base::read(element))
+                Self::BuiltInDocumentPartStructuredDocumentTag(item.read())
             }
-            Some((NS_W14, "checkbox")) => Self::Checkbox(officekit_markup_base::read(element)),
-            Some((NS_W, "citation")) => {
-                Self::CitationStructuredDocumentTag(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "comboBox")) => {
-                Self::ComboBoxStructuredDocumentTag(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "date")) => {
-                Self::DateStructuredDocumentTag(officekit_markup_base::read(element))
-            }
+            Some((NS_W14, "checkbox")) => Self::Checkbox(item.read()),
+            Some((NS_W, "citation")) => Self::CitationStructuredDocumentTag(item.read()),
+            Some((NS_W, "comboBox")) => Self::ComboBoxStructuredDocumentTag(item.read()),
+            Some((NS_W, "date")) => Self::DateStructuredDocumentTag(item.read()),
             Some((NS_W, "docPartList")) => {
-                Self::DocumentPartGalleryStructuredDocumentTag(officekit_markup_base::read(element))
+                Self::DocumentPartGalleryStructuredDocumentTag(item.read())
             }
-            Some((NS_W, "dropDownList")) => {
-                Self::DropDownListStructuredDocumentTag(officekit_markup_base::read(element))
-            }
-            Some((NS_W14, "entityPicker")) => {
-                Self::EntityPicker(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "equation")) => {
-                Self::EquationStructuredDocumentTag(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "group")) => {
-                Self::GroupStructuredDocumentTag(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "picture")) => {
-                Self::PictureStructuredDocumentTag(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "text")) => {
-                Self::PlainTextStructuredDocumentTag(officekit_markup_base::read(element))
-            }
-            Some((NS_W15, "repeatingSection")) => {
-                Self::RepeatingSection(officekit_markup_base::read(element))
-            }
-            Some((NS_W15, "repeatingSectionItem")) => {
-                Self::RepeatingSectionItem(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "richText")) => {
-                Self::RichTextStructuredDocumentTag(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+            Some((NS_W, "dropDownList")) => Self::DropDownListStructuredDocumentTag(item.read()),
+            Some((NS_W14, "entityPicker")) => Self::EntityPicker(item.read()),
+            Some((NS_W, "equation")) => Self::EquationStructuredDocumentTag(item.read()),
+            Some((NS_W, "group")) => Self::GroupStructuredDocumentTag(item.read()),
+            Some((NS_W, "picture")) => Self::PictureStructuredDocumentTag(item.read()),
+            Some((NS_W, "text")) => Self::PlainTextStructuredDocumentTag(item.read()),
+            Some((NS_W15, "repeatingSection")) => Self::RepeatingSection(item.read()),
+            Some((NS_W15, "repeatingSectionItem")) => Self::RepeatingSectionItem(item.read()),
+            Some((NS_W, "richText")) => Self::RichTextStructuredDocumentTag(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -58927,8 +59062,8 @@ impl<X: UserData> StyleCannotBeAppliedWith<X> {
 }
 
 impl officekit_markup_base::Read for StyleCannotBeApplied {
-    fn read(element: &Element) -> Self {
-        read::style_cannot_be_applied(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::style_cannot_be_applied_from_item(item)
     }
 }
 
@@ -58985,8 +59120,8 @@ impl<X: UserData> StyleConditionalTableFormattingPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for StyleConditionalTableFormattingProperties {
-    fn read(element: &Element) -> Self {
-        read::style_conditional_table_formatting_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::style_conditional_table_formatting_properties_from_item(item)
     }
 }
 
@@ -59025,8 +59160,8 @@ impl<X: UserData> StyleDefinitionWith<X> {
 }
 
 impl officekit_markup_base::Read for StyleDefinition {
-    fn read(element: &Element) -> Self {
-        read::style_definition(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::style_definition_from_item(item)
     }
 }
 
@@ -59072,8 +59207,8 @@ impl<X: UserData> StyleDefinitionsWith<X> {
 }
 
 impl officekit_markup_base::Read for StyleDefinitions {
-    fn read(element: &Element) -> Self {
-        read::style_definitions(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::style_definitions_from_item(item)
     }
 }
 
@@ -59110,8 +59245,8 @@ impl<X: UserData> StyleForNextParagraphWith<X> {
 }
 
 impl officekit_markup_base::Read for StyleForNextParagraph {
-    fn read(element: &Element) -> Self {
-        read::style_for_next_paragraph(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::style_for_next_paragraph_from_item(item)
     }
 }
 
@@ -59258,8 +59393,8 @@ impl<X: UserData> SubscriptSuperscriptTextWith<X> {
 }
 
 impl officekit_markup_base::Read for SubscriptSuperscriptText {
-    fn read(element: &Element) -> Self {
-        read::subscript_superscript_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::subscript_superscript_text_from_item(item)
     }
 }
 
@@ -59296,8 +59431,8 @@ impl<X: UserData> SubsetFontsWhenEmbeddingWith<X> {
 }
 
 impl officekit_markup_base::Read for SubsetFontsWhenEmbedding {
-    fn read(element: &Element) -> Self {
-        read::subset_fonts_when_embedding(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::subset_fonts_when_embedding_from_item(item)
     }
 }
 
@@ -59364,8 +59499,8 @@ impl<X: UserData> SuggestedFilteringWith<X> {
 }
 
 impl officekit_markup_base::Read for SuggestedFiltering {
-    fn read(element: &Element) -> Self {
-        read::suggested_filtering(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::suggested_filtering_from_item(item)
     }
 }
 
@@ -59402,8 +59537,8 @@ impl<X: UserData> SuggestedSortingWith<X> {
 }
 
 impl officekit_markup_base::Read for SuggestedSorting {
-    fn read(element: &Element) -> Self {
-        read::suggested_sorting(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::suggested_sorting_from_item(item)
     }
 }
 
@@ -59444,8 +59579,8 @@ impl<X: UserData> SupplementarySmartTagInformationWith<X> {
 }
 
 impl officekit_markup_base::Read for SupplementarySmartTagInformation {
-    fn read(element: &Element) -> Self {
-        read::supplementary_smart_tag_information(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::supplementary_smart_tag_information_from_item(item)
     }
 }
 
@@ -59492,8 +59627,8 @@ impl<X: UserData> SupportedUnicodeSubrangesAndCodePagesWith<X> {
 }
 
 impl officekit_markup_base::Read for SupportedUnicodeSubrangesAndCodePages {
-    fn read(element: &Element) -> Self {
-        read::supported_unicode_subranges_and_code_pages(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::supported_unicode_subranges_and_code_pages_from_item(item)
     }
 }
 
@@ -59530,8 +59665,8 @@ impl<X: UserData> SuppressEndnotesInDocumentWith<X> {
 }
 
 impl officekit_markup_base::Read for SuppressEndnotesInDocument {
-    fn read(element: &Element) -> Self {
-        read::suppress_endnotes_in_document(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::suppress_endnotes_in_document_from_item(item)
     }
 }
 
@@ -59568,8 +59703,8 @@ impl<X: UserData> SuppressHyphenationForParagraphWith<X> {
 }
 
 impl officekit_markup_base::Read for SuppressHyphenationForParagraph {
-    fn read(element: &Element) -> Self {
-        read::suppress_hyphenation_for_paragraph(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::suppress_hyphenation_for_paragraph_from_item(item)
     }
 }
 
@@ -59606,8 +59741,8 @@ impl<X: UserData> SuppressLineNumbersForParagraphWith<X> {
 }
 
 impl officekit_markup_base::Read for SuppressLineNumbersForParagraph {
-    fn read(element: &Element) -> Self {
-        read::suppress_line_numbers_for_paragraph(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::suppress_line_numbers_for_paragraph_from_item(item)
     }
 }
 
@@ -59644,8 +59779,8 @@ impl<X: UserData> SuppressSpBfAfterPgBrkWith<X> {
 }
 
 impl officekit_markup_base::Read for SuppressSpBfAfterPgBrk {
-    fn read(element: &Element) -> Self {
-        read::suppress_sp_bf_after_pg_brk(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::suppress_sp_bf_after_pg_brk_from_item(item)
     }
 }
 
@@ -59682,8 +59817,8 @@ impl<X: UserData> SuppressTopSpacingWith<X> {
 }
 
 impl officekit_markup_base::Read for SuppressTopSpacing {
-    fn read(element: &Element) -> Self {
-        read::suppress_top_spacing(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::suppress_top_spacing_from_item(item)
     }
 }
 
@@ -59720,8 +59855,8 @@ impl<X: UserData> SwapParagraphBordersOnOddNumberedPagesWith<X> {
 }
 
 impl officekit_markup_base::Read for SwapParagraphBordersOnOddNumberedPages {
-    fn read(element: &Element) -> Self {
-        read::swap_paragraph_borders_on_odd_numbered_pages(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::swap_paragraph_borders_on_odd_numbered_pages_from_item(item)
     }
 }
 
@@ -59760,8 +59895,8 @@ impl<X: UserData> SymbolCharacterWith<X> {
 }
 
 impl officekit_markup_base::Read for SymbolCharacter {
-    fn read(element: &Element) -> Self {
-        read::symbol_character(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::symbol_character_from_item(item)
     }
 }
 
@@ -59794,8 +59929,8 @@ impl<X: UserData> TabCharacterWith<X> {
 }
 
 impl officekit_markup_base::Read for TabCharacter {
-    fn read(element: &Element) -> Self {
-        read::tab_character(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tab_character_from_item(item)
     }
 }
 
@@ -59844,8 +59979,8 @@ impl<X: UserData> TableWith<X> {
 }
 
 impl officekit_markup_base::Read for Table {
-    fn read(element: &Element) -> Self {
-        read::table(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_from_item(item)
     }
 }
 
@@ -59882,8 +60017,8 @@ impl<X: UserData> TableAlignmentExceptionWith<X> {
 }
 
 impl officekit_markup_base::Read for TableAlignmentException {
-    fn read(element: &Element) -> Self {
-        read::table_alignment_exception(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_alignment_exception_from_item(item)
     }
 }
 
@@ -60002,8 +60137,8 @@ impl<X: UserData> TableBordersWith<X> {
 }
 
 impl officekit_markup_base::Read for TableBorders {
-    fn read(element: &Element) -> Self {
-        read::table_borders(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_borders_from_item(item)
     }
 }
 
@@ -60040,8 +60175,8 @@ impl<X: UserData> TableCaptionWith<X> {
 }
 
 impl officekit_markup_base::Read for TableCaption {
-    fn read(element: &Element) -> Self {
-        read::table_caption(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_caption_from_item(item)
     }
 }
 
@@ -60086,8 +60221,8 @@ impl<X: UserData> TableCellWith<X> {
 }
 
 impl officekit_markup_base::Read for TableCell {
-    fn read(element: &Element) -> Self {
-        read::table_cell(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_cell_from_item(item)
     }
 }
 
@@ -60162,8 +60297,8 @@ impl<X: UserData> TableCellBordersWith<X> {
 }
 
 impl officekit_markup_base::Read for TableCellBorders {
-    fn read(element: &Element) -> Self {
-        read::table_cell_borders(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_cell_borders_from_item(item)
     }
 }
 
@@ -60204,8 +60339,8 @@ impl<X: UserData> TableCellDeletionWith<X> {
 }
 
 impl officekit_markup_base::Read for TableCellDeletion {
-    fn read(element: &Element) -> Self {
-        read::table_cell_deletion(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_cell_deletion_from_item(item)
     }
 }
 
@@ -60246,8 +60381,8 @@ impl<X: UserData> TableCellInsertionWith<X> {
 }
 
 impl officekit_markup_base::Read for TableCellInsertion {
-    fn read(element: &Element) -> Self {
-        read::table_cell_insertion(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_cell_insertion_from_item(item)
     }
 }
 
@@ -60300,8 +60435,8 @@ impl<X: UserData> TableCellLeadingEdgeBorderWith<X> {
 }
 
 impl officekit_markup_base::Read for TableCellLeadingEdgeBorder {
-    fn read(element: &Element) -> Self {
-        read::table_cell_leading_edge_border(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_cell_leading_edge_border_from_item(item)
     }
 }
 
@@ -60340,8 +60475,8 @@ impl<X: UserData> TableCellLeadingEdgeBorderTblWidthWith<X> {
 }
 
 impl officekit_markup_base::Read for TableCellLeadingEdgeBorderTblWidth {
-    fn read(element: &Element) -> Self {
-        read::table_cell_leading_edge_border_tbl_width(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_cell_leading_edge_border_tbl_width_from_item(item)
     }
 }
 
@@ -60402,8 +60537,8 @@ impl<X: UserData> TableCellMarginExceptionsWith<X> {
 }
 
 impl officekit_markup_base::Read for TableCellMarginExceptions {
-    fn read(element: &Element) -> Self {
-        read::table_cell_margin_exceptions(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_cell_margin_exceptions_from_item(item)
     }
 }
 
@@ -60500,8 +60635,8 @@ impl<X: UserData> TableCellPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for TableCellProperties {
-    fn read(element: &Element) -> Self {
-        read::table_cell_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_cell_properties_from_item(item)
     }
 }
 
@@ -60554,8 +60689,8 @@ impl<X: UserData> TableCellTrailingMarginExceptionWith<X> {
 }
 
 impl officekit_markup_base::Read for TableCellTrailingMarginException {
-    fn read(element: &Element) -> Self {
-        read::table_cell_trailing_margin_exception(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_cell_trailing_margin_exception_from_item(item)
     }
 }
 
@@ -60594,8 +60729,8 @@ impl<X: UserData> TableCellTrailingMarginExceptionTblWidthWith<X> {
 }
 
 impl officekit_markup_base::Read for TableCellTrailingMarginExceptionTblWidth {
-    fn read(element: &Element) -> Self {
-        read::table_cell_trailing_margin_exception_tbl_width(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_cell_trailing_margin_exception_tbl_width_from_item(item)
     }
 }
 
@@ -60632,8 +60767,8 @@ impl<X: UserData> TableCellVerticalAlignmentWith<X> {
 }
 
 impl officekit_markup_base::Read for TableCellVerticalAlignment {
-    fn read(element: &Element) -> Self {
-        read::table_cell_vertical_alignment(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_cell_vertical_alignment_from_item(item)
     }
 }
 
@@ -60721,8 +60856,8 @@ impl<X: UserData> TableDescriptionWith<X> {
 }
 
 impl officekit_markup_base::Read for TableDescription {
-    fn read(element: &Element) -> Self {
-        read::table_description(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_description_from_item(item)
     }
 }
 
@@ -60763,8 +60898,8 @@ impl<X: UserData> TableGridWith<X> {
 }
 
 impl officekit_markup_base::Read for TableGrid {
-    fn read(element: &Element) -> Self {
-        read::table_grid(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_grid_from_item(item)
     }
 }
 
@@ -60805,8 +60940,8 @@ impl<X: UserData> TableGridColumnRevisionInformationWith<X> {
 }
 
 impl officekit_markup_base::Read for TableGridColumnRevisionInformation {
-    fn read(element: &Element) -> Self {
-        read::table_grid_column_revision_information(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_grid_column_revision_information_from_item(item)
     }
 }
 
@@ -60845,8 +60980,8 @@ impl<X: UserData> TableIndentFromLeadingMarginWith<X> {
 }
 
 impl officekit_markup_base::Read for TableIndentFromLeadingMargin {
-    fn read(element: &Element) -> Self {
-        read::table_indent_from_leading_margin(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_indent_from_leading_margin_from_item(item)
     }
 }
 
@@ -60899,8 +61034,8 @@ impl<X: UserData> TableInsideHorizontalEdgesBorderWith<X> {
 }
 
 impl officekit_markup_base::Read for TableInsideHorizontalEdgesBorder {
-    fn read(element: &Element) -> Self {
-        read::table_inside_horizontal_edges_border(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_inside_horizontal_edges_border_from_item(item)
     }
 }
 
@@ -60953,8 +61088,8 @@ impl<X: UserData> TableInsideVerticalEdgesBorderWith<X> {
 }
 
 impl officekit_markup_base::Read for TableInsideVerticalEdgesBorder {
-    fn read(element: &Element) -> Self {
-        read::table_inside_vertical_edges_border(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_inside_vertical_edges_border_from_item(item)
     }
 }
 
@@ -60991,8 +61126,8 @@ impl<X: UserData> TableLayoutWith<X> {
 }
 
 impl officekit_markup_base::Read for TableLayout {
-    fn read(element: &Element) -> Self {
-        read::table_layout(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_layout_from_item(item)
     }
 }
 
@@ -61115,8 +61250,8 @@ impl<X: UserData> TableLevelPropertyExceptionsWith<X> {
 }
 
 impl officekit_markup_base::Read for TableLevelPropertyExceptions {
-    fn read(element: &Element) -> Self {
-        read::table_level_property_exceptions(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_level_property_exceptions_from_item(item)
     }
 }
 
@@ -61271,8 +61406,8 @@ impl<X: UserData> TablePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for TableProperties {
-    fn read(element: &Element) -> Self {
-        read::table_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_properties_from_item(item)
     }
 }
 
@@ -61331,8 +61466,8 @@ impl<X: UserData> TableRowWith<X> {
 }
 
 impl officekit_markup_base::Read for TableRow {
-    fn read(element: &Element) -> Self {
-        read::table_row(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_row_from_item(item)
     }
 }
 
@@ -61369,8 +61504,8 @@ impl<X: UserData> TableRowCannotBreakAcrossPagesWith<X> {
 }
 
 impl officekit_markup_base::Read for TableRowCannotBreakAcrossPages {
-    fn read(element: &Element) -> Self {
-        read::table_row_cannot_break_across_pages(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_row_cannot_break_across_pages_from_item(item)
     }
 }
 
@@ -61409,8 +61544,8 @@ impl<X: UserData> TableRowCellSpacingWith<X> {
 }
 
 impl officekit_markup_base::Read for TableRowCellSpacing {
-    fn read(element: &Element) -> Self {
-        read::table_row_cell_spacing(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_row_cell_spacing_from_item(item)
     }
 }
 
@@ -61449,8 +61584,8 @@ impl<X: UserData> TableRowHeightWith<X> {
 }
 
 impl officekit_markup_base::Read for TableRowHeight {
-    fn read(element: &Element) -> Self {
-        read::table_row_height(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_row_height_from_item(item)
     }
 }
 
@@ -61503,8 +61638,8 @@ impl<X: UserData> TableRowPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for TableRowProperties {
-    fn read(element: &Element) -> Self {
-        read::table_row_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_row_properties_from_item(item)
     }
 }
 
@@ -61571,41 +61706,21 @@ impl officekit_markup_base::Read for TableRowPropertiesContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "divId")) => {
-                Self::AssociatedHTMLDivID(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "gridAfter")) => {
-                Self::GridColumnsAfterLastCell(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "gridBefore")) => {
-                Self::GridColumnsBeforeFirstCell(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "hidden")) => {
-                Self::HiddenTableRowMarker(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "cnfStyle")) => {
-                Self::ParagraphConditionalFormatting(Box::new(officekit_markup_base::read(element)))
-            }
-            Some((NS_W, "wAfter")) => {
-                Self::PreferredWidthAfterTableRow(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "wBefore")) => {
-                Self::PreferredWidthBeforeTableRow(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "tblHeader")) => Self::RepeatTableRow(officekit_markup_base::read(element)),
-            Some((NS_W, "jc")) => {
-                Self::TableAlignmentException(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "cantSplit")) => {
-                Self::TableRowCannotBreakAcrossPages(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "tblCellSpacing")) => {
-                Self::TableRowCellSpacing(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "trHeight")) => Self::TableRowHeight(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "divId")) => Self::AssociatedHTMLDivID(item.read()),
+            Some((NS_W, "gridAfter")) => Self::GridColumnsAfterLastCell(item.read()),
+            Some((NS_W, "gridBefore")) => Self::GridColumnsBeforeFirstCell(item.read()),
+            Some((NS_W, "hidden")) => Self::HiddenTableRowMarker(item.read()),
+            Some((NS_W, "cnfStyle")) => Self::ParagraphConditionalFormatting(Box::new(item.read())),
+            Some((NS_W, "wAfter")) => Self::PreferredWidthAfterTableRow(item.read()),
+            Some((NS_W, "wBefore")) => Self::PreferredWidthBeforeTableRow(item.read()),
+            Some((NS_W, "tblHeader")) => Self::RepeatTableRow(item.read()),
+            Some((NS_W, "jc")) => Self::TableAlignmentException(item.read()),
+            Some((NS_W, "cantSplit")) => Self::TableRowCannotBreakAcrossPages(item.read()),
+            Some((NS_W, "tblCellSpacing")) => Self::TableRowCellSpacing(item.read()),
+            Some((NS_W, "trHeight")) => Self::TableRowHeight(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -61668,8 +61783,8 @@ impl<X: UserData> TableStyleConditionalFormattingSettingsExceptionWith<X> {
 }
 
 impl officekit_markup_base::Read for TableStyleConditionalFormattingSettingsException {
-    fn read(element: &Element) -> Self {
-        read::table_style_conditional_formatting_settings_exception(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::table_style_conditional_formatting_settings_exception_from_item(item)
     }
 }
 
@@ -61758,8 +61873,8 @@ impl<X: UserData> TargetScreenSizeForWebPageWith<X> {
 }
 
 impl officekit_markup_base::Read for TargetScreenSizeForWebPage {
-    fn read(element: &Element) -> Self {
-        read::target_screen_size_for_web_page(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::target_screen_size_for_web_page_from_item(item)
     }
 }
 
@@ -61860,8 +61975,8 @@ impl<X: UserData> TextWith<X> {
 }
 
 impl officekit_markup_base::Read for Text {
-    fn read(element: &Element) -> Self {
-        read::text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::text_from_item(item)
     }
 }
 
@@ -61914,8 +62029,8 @@ impl<X: UserData> TextBorderWith<X> {
 }
 
 impl officekit_markup_base::Read for TextBorder {
-    fn read(element: &Element) -> Self {
-        read::text_border(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::text_border_from_item(item)
     }
 }
 
@@ -61952,8 +62067,8 @@ impl<X: UserData> TextBoxFormFieldFormattingWith<X> {
 }
 
 impl officekit_markup_base::Read for TextBoxFormFieldFormatting {
-    fn read(element: &Element) -> Self {
-        read::text_box_form_field_formatting(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::text_box_form_field_formatting_from_item(item)
     }
 }
 
@@ -61990,8 +62105,8 @@ impl<X: UserData> TextBoxFormFieldMaximumLengthWith<X> {
 }
 
 impl officekit_markup_base::Read for TextBoxFormFieldMaximumLength {
-    fn read(element: &Element) -> Self {
-        read::text_box_form_field_maximum_length(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::text_box_form_field_maximum_length_from_item(item)
     }
 }
 
@@ -62040,8 +62155,8 @@ impl<X: UserData> TextBoxFormFieldPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for TextBoxFormFieldProperties {
-    fn read(element: &Element) -> Self {
-        read::text_box_form_field_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::text_box_form_field_properties_from_item(item)
     }
 }
 
@@ -62078,8 +62193,8 @@ impl<X: UserData> TextBoxFormFieldTypeWith<X> {
 }
 
 impl officekit_markup_base::Read for TextBoxFormFieldType {
-    fn read(element: &Element) -> Self {
-        read::text_box_form_field_type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::text_box_form_field_type_from_item(item)
     }
 }
 
@@ -62278,8 +62393,8 @@ impl<X: UserData> TextFramePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for TextFrameProperties {
-    fn read(element: &Element) -> Self {
-        read::text_frame_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::text_frame_properties_from_item(item)
     }
 }
 
@@ -62384,8 +62499,8 @@ impl<X: UserData> TextHighlightingWith<X> {
 }
 
 impl officekit_markup_base::Read for TextHighlighting {
-    fn read(element: &Element) -> Self {
-        read::text_highlighting(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::text_highlighting_from_item(item)
     }
 }
 
@@ -62434,8 +62549,8 @@ impl<X: UserData> TextRunWith<X> {
 }
 
 impl officekit_markup_base::Read for TextRun {
-    fn read(element: &Element) -> Self {
-        read::text_run(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::text_run_from_item(item)
     }
 }
 
@@ -62543,82 +62658,44 @@ impl officekit_markup_base::Read for TextRunContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_W, "ptab")) => {
-                Self::AbsolutePositionTabCharacter(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "br")) => Self::Break(officekit_markup_base::read(element)),
-            Some((NS_W, "cr")) => Self::CarriageReturn(officekit_markup_base::read(element)),
-            Some((NS_W, "commentReference")) => {
-                Self::CommentContentReferenceMark(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "annotationRef")) => {
-                Self::CommentInformationBlock(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "fldChar")) => {
-                Self::ComplexFieldCharacter(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "contentPart")) => Self::ContentPart(officekit_markup_base::read(element)),
-            Some((NS_W, "continuationSeparator")) => {
-                Self::ContinuationSeparatorMark(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "dayLong")) => {
-                Self::DateBlockLongDayFormat(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "monthLong")) => {
-                Self::DateBlockLongMonthFormat(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "yearLong")) => {
-                Self::DateBlockLongYearFormat(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "dayShort")) => {
-                Self::DateBlockShortDayFormat(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "monthShort")) => {
-                Self::DateBlockShortMonthFormat(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "yearShort")) => {
-                Self::DateBlockShortYearFormat(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "delInstrText")) => {
-                Self::DeletedFieldCode(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "delText")) => Self::DeletedText(officekit_markup_base::read(element)),
-            Some((NS_W, "drawing")) => Self::DrawingMLObject(officekit_markup_base::read(element)),
-            Some((NS_W, "object")) => Self::EmbeddedObject(officekit_markup_base::read(element)),
-            Some((NS_W, "endnoteReference")) => {
-                Self::EndnoteReference(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "endnoteRef")) => {
-                Self::EndnoteReferenceMark(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "instrText")) => Self::FieldCode(officekit_markup_base::read(element)),
-            Some((NS_W, "separator")) => {
-                Self::FootnoteEndnoteSeparatorMark(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "footnoteReference")) => {
-                Self::FootnoteReference(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "footnoteRef")) => {
-                Self::FootnoteReferenceMark(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "noBreakHyphen")) => {
-                Self::NonBreakingHyphenCharacter(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "softHyphen")) => {
-                Self::OptionalHyphenCharacter(officekit_markup_base::read(element))
-            }
-            Some((NS_W, "pgNum")) => Self::PageNumberBlock(officekit_markup_base::read(element)),
-            Some((NS_W, "ruby")) => Self::PhoneticGuide(officekit_markup_base::read(element)),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_W, "ptab")) => Self::AbsolutePositionTabCharacter(item.read()),
+            Some((NS_W, "br")) => Self::Break(item.read()),
+            Some((NS_W, "cr")) => Self::CarriageReturn(item.read()),
+            Some((NS_W, "commentReference")) => Self::CommentContentReferenceMark(item.read()),
+            Some((NS_W, "annotationRef")) => Self::CommentInformationBlock(item.read()),
+            Some((NS_W, "fldChar")) => Self::ComplexFieldCharacter(item.read()),
+            Some((NS_W, "contentPart")) => Self::ContentPart(item.read()),
+            Some((NS_W, "continuationSeparator")) => Self::ContinuationSeparatorMark(item.read()),
+            Some((NS_W, "dayLong")) => Self::DateBlockLongDayFormat(item.read()),
+            Some((NS_W, "monthLong")) => Self::DateBlockLongMonthFormat(item.read()),
+            Some((NS_W, "yearLong")) => Self::DateBlockLongYearFormat(item.read()),
+            Some((NS_W, "dayShort")) => Self::DateBlockShortDayFormat(item.read()),
+            Some((NS_W, "monthShort")) => Self::DateBlockShortMonthFormat(item.read()),
+            Some((NS_W, "yearShort")) => Self::DateBlockShortYearFormat(item.read()),
+            Some((NS_W, "delInstrText")) => Self::DeletedFieldCode(item.read()),
+            Some((NS_W, "delText")) => Self::DeletedText(item.read()),
+            Some((NS_W, "drawing")) => Self::DrawingMLObject(item.read()),
+            Some((NS_W, "object")) => Self::EmbeddedObject(item.read()),
+            Some((NS_W, "endnoteReference")) => Self::EndnoteReference(item.read()),
+            Some((NS_W, "endnoteRef")) => Self::EndnoteReferenceMark(item.read()),
+            Some((NS_W, "instrText")) => Self::FieldCode(item.read()),
+            Some((NS_W, "separator")) => Self::FootnoteEndnoteSeparatorMark(item.read()),
+            Some((NS_W, "footnoteReference")) => Self::FootnoteReference(item.read()),
+            Some((NS_W, "footnoteRef")) => Self::FootnoteReferenceMark(item.read()),
+            Some((NS_W, "noBreakHyphen")) => Self::NonBreakingHyphenCharacter(item.read()),
+            Some((NS_W, "softHyphen")) => Self::OptionalHyphenCharacter(item.read()),
+            Some((NS_W, "pgNum")) => Self::PageNumberBlock(item.read()),
+            Some((NS_W, "ruby")) => Self::PhoneticGuide(item.read()),
             Some((NS_W, "lastRenderedPageBreak")) => {
-                Self::PositionOfLastCalculatedPageBreak(officekit_markup_base::read(element))
+                Self::PositionOfLastCalculatedPageBreak(item.read())
             }
-            Some((NS_W, "sym")) => Self::SymbolCharacter(officekit_markup_base::read(element)),
-            Some((NS_W, "tab")) => Self::TabCharacter(officekit_markup_base::read(element)),
-            Some((NS_W, "t")) => Self::Text(officekit_markup_base::read(element)),
-            Some((NS_W, "pict")) => Self::VMLObject(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+            Some((NS_W, "sym")) => Self::SymbolCharacter(item.read()),
+            Some((NS_W, "tab")) => Self::TabCharacter(item.read()),
+            Some((NS_W, "t")) => Self::Text(item.read()),
+            Some((NS_W, "pict")) => Self::VMLObject(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -62836,8 +62913,8 @@ impl<X: UserData> TextboxTightWrapWith<X> {
 }
 
 impl officekit_markup_base::Read for TextboxTightWrap {
-    fn read(element: &Element) -> Self {
-        read::textbox_tight_wrap(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::textbox_tight_wrap_from_item(item)
     }
 }
 
@@ -62960,8 +63037,8 @@ impl<X: UserData> ThemeColorMappingsWith<X> {
 }
 
 impl officekit_markup_base::Read for ThemeColorMappings {
-    fn read(element: &Element) -> Self {
-        read::theme_color_mappings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::theme_color_mappings_from_item(item)
     }
 }
 
@@ -63120,8 +63197,8 @@ impl<X: UserData> ThemeFontLanguagesWith<X> {
 }
 
 impl officekit_markup_base::Read for ThemeFontLanguages {
-    fn read(element: &Element) -> Self {
-        read::theme_font_languages(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::theme_font_languages_from_item(item)
     }
 }
 
@@ -63214,8 +63291,8 @@ impl<X: UserData> TopAndBottomMarginForFrameWith<X> {
 }
 
 impl officekit_markup_base::Read for TopAndBottomMarginForFrame {
-    fn read(element: &Element) -> Self {
-        read::top_and_bottom_margin_for_frame(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::top_and_bottom_margin_for_frame_from_item(item)
     }
 }
 
@@ -63274,8 +63351,8 @@ impl<X: UserData> TopBorderWith<X> {
 }
 
 impl officekit_markup_base::Read for TopBorder {
-    fn read(element: &Element) -> Self {
-        read::top_border(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::top_border_from_item(item)
     }
 }
 
@@ -63328,8 +63405,8 @@ impl<X: UserData> TopLeftBottomRightDiagonalBorderWith<X> {
 }
 
 impl officekit_markup_base::Read for TopLeftBottomRightDiagonalBorder {
-    fn read(element: &Element) -> Self {
-        read::top_left_bottom_right_diagonal_border(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::top_left_bottom_right_diagonal_border_from_item(item)
     }
 }
 
@@ -63366,8 +63443,8 @@ impl<X: UserData> TopMarginForHTMLDivWith<X> {
 }
 
 impl officekit_markup_base::Read for TopMarginForHTMLDiv {
-    fn read(element: &Element) -> Self {
-        read::top_margin_for_html_div(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::top_margin_for_html_div_from_item(item)
     }
 }
 
@@ -63420,8 +63497,8 @@ impl<X: UserData> TopRightBottomLeftDiagonalBorderWith<X> {
 }
 
 impl officekit_markup_base::Read for TopRightBottomLeftDiagonalBorder {
-    fn read(element: &Element) -> Self {
-        read::top_right_bottom_left_diagonal_border(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::top_right_bottom_left_diagonal_border_from_item(item)
     }
 }
 
@@ -63458,8 +63535,8 @@ impl<X: UserData> TrackRevisionsToDocumentWith<X> {
 }
 
 impl officekit_markup_base::Read for TrackRevisionsToDocument {
-    fn read(element: &Element) -> Self {
-        read::track_revisions_to_document(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::track_revisions_to_document_from_item(item)
     }
 }
 
@@ -63509,10 +63586,91 @@ impl officekit_markup_base::Read for TrackedRunContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        read_tracked_run_1(element)
-            .or_else(|| read_tracked_run_2(element))
-            .unwrap_or_else(|| Self::Other(Node::Element(element.clone())))
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_M, "acc")) => Self::Accent(item.read()),
+            Some((NS_M, "eqArr")) => Self::ArrayObject(item.read()),
+            Some((NS_M, "bar")) => Self::Bar(item.read()),
+            Some((NS_W, "dir")) => Self::BidirectionalEmbeddingLevel(item.read()),
+            Some((NS_W, "bdo")) => Self::BidirectionalOverride(item.read()),
+            Some((NS_W, "bookmarkEnd")) => Self::BookmarkEnd(item.read()),
+            Some((NS_W, "bookmarkStart")) => Self::BookmarkStart(item.read()),
+            Some((NS_M, "borderBox")) => Self::BorderBoxObject(item.read()),
+            Some((NS_M, "box")) => Self::BoxObject(item.read()),
+            Some((NS_W, "commentRangeEnd")) => Self::CommentAnchorRangeEnd(item.read()),
+            Some((NS_W, "commentRangeStart")) => Self::CommentAnchorRangeStart(item.read()),
+            Some((NS_W14, "conflictDel")) => Self::ConflictDelRunTrackChange(item.read()),
+            Some((NS_W14, "conflictIns")) => Self::ConflictInsRunTrackChange(item.read()),
+            Some((NS_W, "customXmlDelRangeEnd")) => Self::CustomXMLMarkupDeletionEnd(item.read()),
+            Some((NS_W, "customXmlDelRangeStart")) => {
+                Self::CustomXMLMarkupDeletionStart(item.read())
+            }
+            Some((NS_W, "customXmlInsRangeEnd")) => Self::CustomXMLMarkupInsertionEnd(item.read()),
+            Some((NS_W, "customXmlInsRangeStart")) => {
+                Self::CustomXMLMarkupInsertionStart(item.read())
+            }
+            Some((NS_W, "customXmlMoveFromRangeEnd")) => {
+                Self::CustomXMLMarkupMoveSourceEnd(item.read())
+            }
+            Some((NS_W, "customXmlMoveFromRangeStart")) => {
+                Self::CustomXMLMarkupMoveSourceStart(item.read())
+            }
+            Some((NS_W14, "customXmlConflictDelRangeEnd")) => {
+                Self::CustomXmlConflictDelRangeEnd(item.read())
+            }
+            Some((NS_W14, "customXmlConflictDelRangeStart")) => {
+                Self::CustomXmlConflictDelRangeStart(item.read())
+            }
+            Some((NS_W14, "customXmlConflictInsRangeEnd")) => {
+                Self::CustomXmlConflictInsRangeEnd(item.read())
+            }
+            Some((NS_W14, "customXmlConflictInsRangeStart")) => {
+                Self::CustomXmlConflictInsRangeStart(item.read())
+            }
+            Some((NS_W, "customXmlMoveToRangeEnd")) => Self::CustomXmlMoveToRangeEnd(item.read()),
+            Some((NS_W, "customXmlMoveToRangeStart")) => {
+                Self::CustomXmlMoveToRangeStart(item.read())
+            }
+            Some((NS_W, "del")) => Self::DeletedRunContent(item.read()),
+            Some((NS_M, "d")) => Self::DelimiterObject(item.read()),
+            Some((NS_M, "f")) => Self::FractionObject(item.read()),
+            Some((NS_M, "func")) => Self::FunctionApplyObject(item.read()),
+            Some((NS_M, "groupChr")) => Self::GroupCharacterObject(item.read()),
+            Some((NS_W, "customXml")) => Self::InlineLevelCustomXMLElement(item.read()),
+            Some((NS_W, "smartTag")) => Self::InlineLevelSmartTag(item.read()),
+            Some((NS_W, "sdt")) => Self::InlineLevelStructuredDocumentTag(item.read()),
+            Some((NS_W, "ins")) => Self::InsertedRunContent(item.read()),
+            Some((NS_M, "limLow")) => Self::LowerLimitObject(item.read()),
+            Some((NS_M, "m")) => Self::MatrixObject(item.read()),
+            Some((NS_W, "moveToRangeEnd")) => {
+                Self::MoveDestinationLocationContainerEnd(item.read())
+            }
+            Some((NS_W, "moveToRangeStart")) => {
+                Self::MoveDestinationLocationContainerStart(item.read())
+            }
+            Some((NS_W, "moveTo")) => Self::MoveDestinationRunContent(item.read()),
+            Some((NS_W, "moveFromRangeEnd")) => Self::MoveSourceLocationContainerEnd(item.read()),
+            Some((NS_W, "moveFromRangeStart")) => {
+                Self::MoveSourceLocationContainerStart(item.read())
+            }
+            Some((NS_W, "moveFrom")) => Self::MoveSourceRunContent(item.read()),
+            Some((NS_M, "nary")) => Self::Nary(item.read()),
+            Some((NS_M, "oMath")) => Self::OfficeMath(item.read()),
+            Some((NS_M, "oMathPara")) => Self::OfficeMathParagraph(item.read()),
+            Some((NS_M, "phant")) => Self::PhantomObject(item.read()),
+            Some((NS_M, "sPre")) => Self::PreSubSuperscriptObject(item.read()),
+            Some((NS_W, "proofErr")) => Self::ProofingErrorAnchor(item.read()),
+            Some((NS_M, "rad")) => Self::RadicalObject(item.read()),
+            Some((NS_W, "permEnd")) => Self::RangePermissionEnd(item.read()),
+            Some((NS_W, "permStart")) => Self::RangePermissionStart(item.read()),
+            Some((NS_M, "r")) => Self::Run(item.read()),
+            Some((NS_M, "sSubSup")) => Self::SubSuperscriptObject(item.read()),
+            Some((NS_M, "sSub")) => Self::SubscriptObject(item.read()),
+            Some((NS_M, "sSup")) => Self::SuperscriptObject(item.read()),
+            Some((NS_W, "r")) => Self::TextRun(item.read()),
+            Some((NS_M, "limUpp")) => Self::UpperLimitObject(item.read()),
+            _ => Self::Other(item.into_node()),
+        }
     }
 }
 
@@ -63763,8 +63921,8 @@ impl<X: UserData> TreatBackslashQuotationDelimiterAsTwoQuotationMarksWith<X> {
 }
 
 impl officekit_markup_base::Read for TreatBackslashQuotationDelimiterAsTwoQuotationMarks {
-    fn read(element: &Element) -> Self {
-        read::treat_backslash_quotation_delimiter_as_two_quotation_marks(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::treat_backslash_quotation_delimiter_as_two_quotation_marks_from_item(item)
     }
 }
 
@@ -63802,8 +63960,8 @@ impl<X: UserData> TruncateFontHeightsLikeWP6With<X> {
 }
 
 impl officekit_markup_base::Read for TruncateFontHeightsLikeWP6 {
-    fn read(element: &Element) -> Self {
-        read::truncate_font_heights_like_wp6(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::truncate_font_heights_like_wp6_from_item(item)
     }
 }
 
@@ -63919,8 +64077,8 @@ impl<X: UserData> UDLConnectionStringWith<X> {
 }
 
 impl officekit_markup_base::Read for UDLConnectionString {
-    fn read(element: &Element) -> Self {
-        read::udl_connection_string(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::udl_connection_string_from_item(item)
     }
 }
 
@@ -63965,8 +64123,8 @@ impl<X: UserData> UnderlineWith<X> {
 }
 
 impl officekit_markup_base::Read for Underline {
-    fn read(element: &Element) -> Self {
-        read::underline(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::underline_from_item(item)
     }
 }
 
@@ -64003,8 +64161,8 @@ impl<X: UserData> UnderlineAllTrailingSpacesWith<X> {
 }
 
 impl officekit_markup_base::Read for UnderlineAllTrailingSpaces {
-    fn read(element: &Element) -> Self {
-        read::underline_all_trailing_spaces(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::underline_all_trailing_spaces_from_item(item)
     }
 }
 
@@ -64041,8 +64199,8 @@ impl<X: UserData> UnderlineFollowingCharacterFollowingNumberingWith<X> {
 }
 
 impl officekit_markup_base::Read for UnderlineFollowingCharacterFollowingNumbering {
-    fn read(element: &Element) -> Self {
-        read::underline_following_character_following_numbering(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::underline_following_character_following_numbering_from_item(item)
     }
 }
 
@@ -64145,8 +64303,8 @@ impl<X: UserData> UniqueIDWith<X> {
 }
 
 impl officekit_markup_base::Read for UniqueID {
-    fn read(element: &Element) -> Self {
-        read::unique_id(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::unique_id_from_item(item)
     }
 }
 
@@ -64183,8 +64341,8 @@ impl<X: UserData> UniqueValueForRecordWith<X> {
 }
 
 impl officekit_markup_base::Read for UniqueValueForRecord {
-    fn read(element: &Element) -> Self {
-        read::unique_value_for_record(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::unique_value_for_record_from_item(item)
     }
 }
 
@@ -64217,8 +64375,8 @@ impl<X: UserData> UpgradeDocumentOnOpenWith<X> {
 }
 
 impl officekit_markup_base::Read for UpgradeDocumentOnOpen {
-    fn read(element: &Element) -> Self {
-        read::upgrade_document_on_open(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::upgrade_document_on_open_from_item(item)
     }
 }
 
@@ -64255,8 +64413,8 @@ impl<X: UserData> UseANSIKerningPairsFromFontsWith<X> {
 }
 
 impl officekit_markup_base::Read for UseANSIKerningPairsFromFonts {
-    fn read(element: &Element) -> Self {
-        read::use_ansi_kerning_pairs_from_fonts(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::use_ansi_kerning_pairs_from_fonts_from_item(item)
     }
 }
 
@@ -64293,8 +64451,8 @@ impl<X: UserData> UseAltKinsokuLineBreakRulesWith<X> {
 }
 
 impl officekit_markup_base::Read for UseAltKinsokuLineBreakRules {
-    fn read(element: &Element) -> Self {
-        read::use_alt_kinsoku_line_break_rules(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::use_alt_kinsoku_line_break_rules_from_item(item)
     }
 }
 
@@ -64331,8 +64489,8 @@ impl<X: UserData> UseCachedParagraphInformationForColumnBalancingWith<X> {
 }
 
 impl officekit_markup_base::Read for UseCachedParagraphInformationForColumnBalancing {
-    fn read(element: &Element) -> Self {
-        read::use_cached_paragraph_information_for_column_balancing(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::use_cached_paragraph_information_for_column_balancing_from_item(item)
     }
 }
 
@@ -64370,8 +64528,8 @@ impl<X: UserData> UseComplexScriptFormattingOnRunWith<X> {
 }
 
 impl officekit_markup_base::Read for UseComplexScriptFormattingOnRun {
-    fn read(element: &Element) -> Self {
-        read::use_complex_script_formatting_on_run(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::use_complex_script_formatting_on_run_from_item(item)
     }
 }
 
@@ -64408,8 +64566,8 @@ impl<X: UserData> UseCountryBasedAddressFieldOrderingWith<X> {
 }
 
 impl officekit_markup_base::Read for UseCountryBasedAddressFieldOrdering {
-    fn read(element: &Element) -> Self {
-        read::use_country_based_address_field_ordering(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::use_country_based_address_field_ordering_from_item(item)
     }
 }
 
@@ -64446,8 +64604,8 @@ impl<X: UserData> UseIncorrectInterCharacterSpacingRulesWith<X> {
 }
 
 impl officekit_markup_base::Read for UseIncorrectInterCharacterSpacingRules {
-    fn read(element: &Element) -> Self {
-        read::use_incorrect_inter_character_spacing_rules(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::use_incorrect_inter_character_spacing_rules_from_item(item)
     }
 }
 
@@ -64484,8 +64642,8 @@ impl<X: UserData> UseLeftRightIndentsAsInsideOutsideIndentsWith<X> {
 }
 
 impl officekit_markup_base::Read for UseLeftRightIndentsAsInsideOutsideIndents {
-    fn read(element: &Element) -> Self {
-        read::use_left_right_indents_as_inside_outside_indents(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::use_left_right_indents_as_inside_outside_indents_from_item(item)
     }
 }
 
@@ -64522,8 +64680,8 @@ impl<X: UserData> UseNormalStyleForListWith<X> {
 }
 
 impl officekit_markup_base::Read for UseNormalStyleForList {
-    fn read(element: &Element) -> Self {
-        read::use_normal_style_for_list(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::use_normal_style_for_list_from_item(item)
     }
 }
 
@@ -64560,8 +64718,8 @@ impl<X: UserData> UsePrinterMetricsToDisplayDocumentsWith<X> {
 }
 
 impl officekit_markup_base::Read for UsePrinterMetricsToDisplayDocuments {
-    fn read(element: &Element) -> Self {
-        read::use_printer_metrics_to_display_documents(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::use_printer_metrics_to_display_documents_from_item(item)
     }
 }
 
@@ -64598,8 +64756,8 @@ impl<X: UserData> UseSingleBorderforContiguousCellsWith<X> {
 }
 
 impl officekit_markup_base::Read for UseSingleBorderforContiguousCells {
-    fn read(element: &Element) -> Self {
-        read::use_single_borderfor_contiguous_cells(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::use_single_borderfor_contiguous_cells_from_item(item)
     }
 }
 
@@ -64636,8 +64794,8 @@ impl<X: UserData> UseSpecificSmallCapsAlgorithmWith<X> {
 }
 
 impl officekit_markup_base::Read for UseSpecificSmallCapsAlgorithm {
-    fn read(element: &Element) -> Self {
-        read::use_specific_small_caps_algorithm(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::use_specific_small_caps_algorithm_from_item(item)
     }
 }
 
@@ -64674,8 +64832,8 @@ impl<X: UserData> UseSpecificSpaceWidthWith<X> {
 }
 
 impl officekit_markup_base::Read for UseSpecificSpaceWidth {
-    fn read(element: &Element) -> Self {
-        read::use_specific_space_width(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::use_specific_space_width_from_item(item)
     }
 }
 
@@ -64712,8 +64870,8 @@ impl<X: UserData> UseStaticTextLeadingWith<X> {
 }
 
 impl officekit_markup_base::Read for UseStaticTextLeading {
-    fn read(element: &Element) -> Self {
-        read::use_static_text_leading(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::use_static_text_leading_from_item(item)
     }
 }
 
@@ -64750,8 +64908,8 @@ impl<X: UserData> UseWord2002TableStyleRulesWith<X> {
 }
 
 impl officekit_markup_base::Read for UseWord2002TableStyleRules {
-    fn read(element: &Element) -> Self {
-        read::use_word2002table_style_rules(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::use_word2002table_style_rules_from_item(item)
     }
 }
 
@@ -64788,8 +64946,8 @@ impl<X: UserData> UtilizeVMLWhenSavingAsWebPageWith<X> {
 }
 
 impl officekit_markup_base::Read for UtilizeVMLWhenSavingAsWebPage {
-    fn read(element: &Element) -> Self {
-        read::utilize_vml_when_saving_as_web_page(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::utilize_vml_when_saving_as_web_page_from_item(item)
     }
 }
 
@@ -64838,8 +64996,8 @@ impl<X: UserData> VMLObjectWith<X> {
 }
 
 impl officekit_markup_base::Read for VMLObject {
-    fn read(element: &Element) -> Self {
-        read::vml_object(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::vml_object_from_item(item)
     }
 }
 
@@ -64981,8 +65139,8 @@ impl<X: UserData> VerticalCharacterAlignmentOnLineWith<X> {
 }
 
 impl officekit_markup_base::Read for VerticalCharacterAlignmentOnLine {
-    fn read(element: &Element) -> Self {
-        read::vertical_character_alignment_on_line(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::vertical_character_alignment_on_line_from_item(item)
     }
 }
 
@@ -65075,8 +65233,8 @@ impl<X: UserData> VerticallyMergedCellWith<X> {
 }
 
 impl officekit_markup_base::Read for VerticallyMergedCell {
-    fn read(element: &Element) -> Self {
-        read::vertically_merged_cell(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::vertically_merged_cell_from_item(item)
     }
 }
 
@@ -65123,8 +65281,8 @@ impl<X: UserData> VerticallyMergedSplitTableCellsWith<X> {
 }
 
 impl officekit_markup_base::Read for VerticallyMergedSplitTableCells {
-    fn read(element: &Element) -> Self {
-        read::vertically_merged_split_table_cells(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::vertically_merged_split_table_cells_from_item(item)
     }
 }
 
@@ -65161,8 +65319,8 @@ impl<X: UserData> VerticallyRaisedOrLoweredTextWith<X> {
 }
 
 impl officekit_markup_base::Read for VerticallyRaisedOrLoweredText {
-    fn read(element: &Element) -> Self {
-        read::vertically_raised_or_lowered_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::vertically_raised_or_lowered_text_from_item(item)
     }
 }
 
@@ -65199,8 +65357,8 @@ impl<X: UserData> ViewMergedDataWithinDocumentWith<X> {
 }
 
 impl officekit_markup_base::Read for ViewMergedDataWithinDocument {
-    fn read(element: &Element) -> Self {
-        read::view_merged_data_within_document(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::view_merged_data_within_document_from_item(item)
     }
 }
 
@@ -65245,8 +65403,8 @@ impl<X: UserData> VisibilityOfAnnotationTypesWith<X> {
 }
 
 impl officekit_markup_base::Read for VisibilityOfAnnotationTypes {
-    fn read(element: &Element) -> Self {
-        read::visibility_of_annotation_types(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::visibility_of_annotation_types_from_item(item)
     }
 }
 
@@ -65283,8 +65441,8 @@ impl<X: UserData> VisuallyRightToLeftTableWith<X> {
 }
 
 impl officekit_markup_base::Read for VisuallyRightToLeftTable {
-    fn read(element: &Element) -> Self {
-        read::visually_right_to_left_table(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::visually_right_to_left_table_from_item(item)
     }
 }
 
@@ -65324,75 +65482,49 @@ impl officekit_markup_base::Read for VmlElementContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_V, "arc")) => Self::ArcSegment(officekit_markup_base::read(element)),
-            Some((NS_V, "curve")) => Self::BezierCurve(officekit_markup_base::read(element)),
-            Some((NS_O, "callout")) => Self::Callout(officekit_markup_base::read(element)),
-            Some((NS_O, "complex")) => Self::Complex(officekit_markup_base::read(element)),
-            Some((NS_O, "signatureline")) => {
-                Self::DigitalSignatureLine(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "background")) => {
-                Self::DocumentBackground(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "OLEObject")) => {
-                Self::EmbeddedOLEObject(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "extrusion")) => Self::Extrusion(officekit_markup_base::read(element)),
-            Some((NS_V, "imagedata")) => Self::ImageData(officekit_markup_base::read(element)),
-            Some((NS_V, "image")) => Self::ImageFile(officekit_markup_base::read(element)),
-            Some((NS_O, "ink")) => Self::Ink(officekit_markup_base::read(element)),
-            Some((NS_V, "line")) => Self::Line(officekit_markup_base::read(element)),
-            Some((NS_V, "stroke")) => {
-                Self::LineStrokeSettings(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "polyline")) => {
-                Self::MultiplePathLine(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "shapedefaults")) => {
-                Self::NewShapeDefaults(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "oval")) => Self::Oval(officekit_markup_base::read(element)),
-            Some((NS_V, "rect")) => Self::Rectangle(officekit_markup_base::read(element)),
-            Some((NS_V, "roundrect")) => {
-                Self::RoundedRectangle(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "formulas")) => Self::SetOfFormulas(officekit_markup_base::read(element)),
-            Some((NS_V, "handles")) => Self::SetOfHandles(officekit_markup_base::read(element)),
-            Some((NS_V, "shadow")) => Self::ShadowEffect(officekit_markup_base::read(element)),
-            Some((NS_O, "clippath")) => {
-                Self::ShapeClippingPath(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "shape")) => Self::ShapeDefinition(officekit_markup_base::read(element)),
-            Some((NS_O, "fill")) => {
-                Self::ShapeFillExtendedProperties(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "fill")) => Self::ShapeFillProperties(officekit_markup_base::read(element)),
-            Some((NS_V, "group")) => Self::ShapeGroup(officekit_markup_base::read(element)),
-            Some((NS_O, "shapelayout")) => {
-                Self::ShapeLayoutProperties(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "path")) => Self::ShapePath(officekit_markup_base::read(element)),
-            Some((NS_O, "lock")) => Self::ShapeProtections(officekit_markup_base::read(element)),
-            Some((NS_V, "shapetype")) => Self::ShapeTemplate(officekit_markup_base::read(element)),
-            Some((NS_O, "skew")) => Self::SkewTransform(officekit_markup_base::read(element)),
-            Some((NS_O, "equationxml")) => {
-                Self::StorageForAlternateMathContent(officekit_markup_base::read(element))
-            }
-            Some((NS_V, "textbox")) => Self::TextBox(officekit_markup_base::read(element)),
-            Some((NS_O, "bottom")) => {
-                Self::TextBoxBottomStroke(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "column")) => {
-                Self::TextBoxInteriorStroke(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "left")) => Self::TextBoxLeftStroke(officekit_markup_base::read(element)),
-            Some((NS_O, "right")) => Self::TextBoxRightStroke(officekit_markup_base::read(element)),
-            Some((NS_O, "top")) => Self::TextBoxTopStroke(officekit_markup_base::read(element)),
-            Some((NS_V, "textpath")) => Self::TextLayoutPath(officekit_markup_base::read(element)),
-            Some((NS_O, "diagram")) => Self::VMLDiagram(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_V, "arc")) => Self::ArcSegment(item.read()),
+            Some((NS_V, "curve")) => Self::BezierCurve(item.read()),
+            Some((NS_O, "callout")) => Self::Callout(item.read()),
+            Some((NS_O, "complex")) => Self::Complex(item.read()),
+            Some((NS_O, "signatureline")) => Self::DigitalSignatureLine(item.read()),
+            Some((NS_V, "background")) => Self::DocumentBackground(item.read()),
+            Some((NS_O, "OLEObject")) => Self::EmbeddedOLEObject(item.read()),
+            Some((NS_O, "extrusion")) => Self::Extrusion(item.read()),
+            Some((NS_V, "imagedata")) => Self::ImageData(item.read()),
+            Some((NS_V, "image")) => Self::ImageFile(item.read()),
+            Some((NS_O, "ink")) => Self::Ink(item.read()),
+            Some((NS_V, "line")) => Self::Line(item.read()),
+            Some((NS_V, "stroke")) => Self::LineStrokeSettings(item.read()),
+            Some((NS_V, "polyline")) => Self::MultiplePathLine(item.read()),
+            Some((NS_O, "shapedefaults")) => Self::NewShapeDefaults(item.read()),
+            Some((NS_V, "oval")) => Self::Oval(item.read()),
+            Some((NS_V, "rect")) => Self::Rectangle(item.read()),
+            Some((NS_V, "roundrect")) => Self::RoundedRectangle(item.read()),
+            Some((NS_V, "formulas")) => Self::SetOfFormulas(item.read()),
+            Some((NS_V, "handles")) => Self::SetOfHandles(item.read()),
+            Some((NS_V, "shadow")) => Self::ShadowEffect(item.read()),
+            Some((NS_O, "clippath")) => Self::ShapeClippingPath(item.read()),
+            Some((NS_V, "shape")) => Self::ShapeDefinition(item.read()),
+            Some((NS_O, "fill")) => Self::ShapeFillExtendedProperties(item.read()),
+            Some((NS_V, "fill")) => Self::ShapeFillProperties(item.read()),
+            Some((NS_V, "group")) => Self::ShapeGroup(item.read()),
+            Some((NS_O, "shapelayout")) => Self::ShapeLayoutProperties(item.read()),
+            Some((NS_V, "path")) => Self::ShapePath(item.read()),
+            Some((NS_O, "lock")) => Self::ShapeProtections(item.read()),
+            Some((NS_V, "shapetype")) => Self::ShapeTemplate(item.read()),
+            Some((NS_O, "skew")) => Self::SkewTransform(item.read()),
+            Some((NS_O, "equationxml")) => Self::StorageForAlternateMathContent(item.read()),
+            Some((NS_V, "textbox")) => Self::TextBox(item.read()),
+            Some((NS_O, "bottom")) => Self::TextBoxBottomStroke(item.read()),
+            Some((NS_O, "column")) => Self::TextBoxInteriorStroke(item.read()),
+            Some((NS_O, "left")) => Self::TextBoxLeftStroke(item.read()),
+            Some((NS_O, "right")) => Self::TextBoxRightStroke(item.read()),
+            Some((NS_O, "top")) => Self::TextBoxTopStroke(item.read()),
+            Some((NS_V, "textpath")) => Self::TextLayoutPath(item.read()),
+            Some((NS_O, "diagram")) => Self::VMLDiagram(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -65627,46 +65759,28 @@ impl officekit_markup_base::Read for VmlOfficeDrawingElementContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_O, "callout")) => Self::Callout(officekit_markup_base::read(element)),
-            Some((NS_O, "complex")) => Self::Complex(officekit_markup_base::read(element)),
-            Some((NS_O, "signatureline")) => {
-                Self::DigitalSignatureLine(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "OLEObject")) => {
-                Self::EmbeddedOLEObject(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "extrusion")) => Self::Extrusion(officekit_markup_base::read(element)),
-            Some((NS_O, "ink")) => Self::Ink(officekit_markup_base::read(element)),
-            Some((NS_O, "shapedefaults")) => {
-                Self::NewShapeDefaults(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "clippath")) => {
-                Self::ShapeClippingPath(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "fill")) => {
-                Self::ShapeFillExtendedProperties(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "shapelayout")) => {
-                Self::ShapeLayoutProperties(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "lock")) => Self::ShapeProtections(officekit_markup_base::read(element)),
-            Some((NS_O, "skew")) => Self::SkewTransform(officekit_markup_base::read(element)),
-            Some((NS_O, "equationxml")) => {
-                Self::StorageForAlternateMathContent(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "bottom")) => {
-                Self::TextBoxBottomStroke(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "column")) => {
-                Self::TextBoxInteriorStroke(officekit_markup_base::read(element))
-            }
-            Some((NS_O, "left")) => Self::TextBoxLeftStroke(officekit_markup_base::read(element)),
-            Some((NS_O, "right")) => Self::TextBoxRightStroke(officekit_markup_base::read(element)),
-            Some((NS_O, "top")) => Self::TextBoxTopStroke(officekit_markup_base::read(element)),
-            Some((NS_O, "diagram")) => Self::VMLDiagram(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_O, "callout")) => Self::Callout(item.read()),
+            Some((NS_O, "complex")) => Self::Complex(item.read()),
+            Some((NS_O, "signatureline")) => Self::DigitalSignatureLine(item.read()),
+            Some((NS_O, "OLEObject")) => Self::EmbeddedOLEObject(item.read()),
+            Some((NS_O, "extrusion")) => Self::Extrusion(item.read()),
+            Some((NS_O, "ink")) => Self::Ink(item.read()),
+            Some((NS_O, "shapedefaults")) => Self::NewShapeDefaults(item.read()),
+            Some((NS_O, "clippath")) => Self::ShapeClippingPath(item.read()),
+            Some((NS_O, "fill")) => Self::ShapeFillExtendedProperties(item.read()),
+            Some((NS_O, "shapelayout")) => Self::ShapeLayoutProperties(item.read()),
+            Some((NS_O, "lock")) => Self::ShapeProtections(item.read()),
+            Some((NS_O, "skew")) => Self::SkewTransform(item.read()),
+            Some((NS_O, "equationxml")) => Self::StorageForAlternateMathContent(item.read()),
+            Some((NS_O, "bottom")) => Self::TextBoxBottomStroke(item.read()),
+            Some((NS_O, "column")) => Self::TextBoxInteriorStroke(item.read()),
+            Some((NS_O, "left")) => Self::TextBoxLeftStroke(item.read()),
+            Some((NS_O, "right")) => Self::TextBoxRightStroke(item.read()),
+            Some((NS_O, "top")) => Self::TextBoxTopStroke(item.read()),
+            Some((NS_O, "diagram")) => Self::VMLDiagram(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -65724,8 +65838,8 @@ impl<X: UserData> WebHiddenTextWith<X> {
 }
 
 impl officekit_markup_base::Read for WebHiddenText {
-    fn read(element: &Element) -> Self {
-        read::web_hidden_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::web_hidden_text_from_item(item)
     }
 }
 
@@ -65810,8 +65924,8 @@ impl<X: UserData> WebPageSettingsWith<X> {
 }
 
 impl officekit_markup_base::Read for WebPageSettings {
-    fn read(element: &Element) -> Self {
-        read::web_page_settings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::web_page_settings_from_item(item)
     }
 }
 
@@ -65880,8 +65994,8 @@ impl<X: UserData> WriteProtectionWith<X> {
 }
 
 impl officekit_markup_base::Read for WriteProtection {
-    fn read(element: &Element) -> Self {
-        read::write_protection(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::write_protection_from_item(item)
     }
 }
 
@@ -65922,8 +66036,8 @@ impl<X: UserData> XMLMappingWith<X> {
 }
 
 impl officekit_markup_base::Read for XMLMapping {
-    fn read(element: &Element) -> Self {
-        read::xml_mapping(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xml_mapping_from_item(item)
     }
 }
 
@@ -67060,784 +67174,6 @@ fn into_user_data_style_definition_2<X, Y>(
     );
     node.r#type = mem::take(&mut from.r#type);
     node.unknown = mem::take(&mut from.unknown);
-}
-
-fn read_paragraph_content_1(element: &Element) -> Option<ParagraphContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_W, "subDoc")) => {
-            ParagraphContent::AnchorForSubdocumentLocation(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "dir")) => {
-            ParagraphContent::BidirectionalEmbeddingLevel(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "bdo")) => {
-            ParagraphContent::BidirectionalOverride(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "bookmarkEnd")) => {
-            ParagraphContent::BookmarkEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "bookmarkStart")) => {
-            ParagraphContent::BookmarkStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "commentRangeEnd")) => {
-            ParagraphContent::CommentAnchorRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "commentRangeStart")) => {
-            ParagraphContent::CommentAnchorRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "conflictDel")) => {
-            ParagraphContent::ConflictDelRunTrackChange(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "conflictIns")) => {
-            ParagraphContent::ConflictInsRunTrackChange(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlDelRangeEnd")) => {
-            ParagraphContent::CustomXMLMarkupDeletionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlDelRangeStart")) => {
-            ParagraphContent::CustomXMLMarkupDeletionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlInsRangeEnd")) => {
-            ParagraphContent::CustomXMLMarkupInsertionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlInsRangeStart")) => {
-            ParagraphContent::CustomXMLMarkupInsertionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveFromRangeEnd")) => {
-            ParagraphContent::CustomXMLMarkupMoveSourceEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveFromRangeStart")) => {
-            ParagraphContent::CustomXMLMarkupMoveSourceStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictDelRangeEnd")) => {
-            ParagraphContent::CustomXmlConflictDelRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictDelRangeStart")) => {
-            ParagraphContent::CustomXmlConflictDelRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictInsRangeEnd")) => {
-            ParagraphContent::CustomXmlConflictInsRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictInsRangeStart")) => {
-            ParagraphContent::CustomXmlConflictInsRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveToRangeEnd")) => {
-            ParagraphContent::CustomXmlMoveToRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveToRangeStart")) => {
-            ParagraphContent::CustomXmlMoveToRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "del")) => {
-            ParagraphContent::DeletedRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "hyperlink")) => {
-            ParagraphContent::Hyperlink(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXml")) => {
-            ParagraphContent::InlineLevelCustomXMLElement(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "smartTag")) => {
-            ParagraphContent::InlineLevelSmartTag(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "sdt")) => {
-            ParagraphContent::InlineLevelStructuredDocumentTag(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "ins")) => {
-            ParagraphContent::InsertedRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveToRangeEnd")) => ParagraphContent::MoveDestinationLocationContainerEnd(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_W, "moveToRangeStart")) => {
-            ParagraphContent::MoveDestinationLocationContainerStart(officekit_markup_base::read(
-                element,
-            ))
-        }
-        _ => return None,
-    };
-    Some(item)
-}
-
-fn read_paragraph_content_2(element: &Element) -> Option<ParagraphContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_W, "moveTo")) => {
-            ParagraphContent::MoveDestinationRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveFromRangeEnd")) => {
-            ParagraphContent::MoveSourceLocationContainerEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveFromRangeStart")) => {
-            ParagraphContent::MoveSourceLocationContainerStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveFrom")) => {
-            ParagraphContent::MoveSourceRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "oMath")) => ParagraphContent::OfficeMath(officekit_markup_base::read(element)),
-        Some((NS_M, "oMathPara")) => {
-            ParagraphContent::OfficeMathParagraph(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "proofErr")) => {
-            ParagraphContent::ProofingErrorAnchor(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "permEnd")) => {
-            ParagraphContent::RangePermissionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "permStart")) => {
-            ParagraphContent::RangePermissionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "fldSimple")) => {
-            ParagraphContent::SimpleField(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "r")) => ParagraphContent::TextRun(officekit_markup_base::read(element)),
-        _ => return None,
-    };
-    Some(item)
-}
-
-fn read_block_1(element: &Element) -> Option<BlockContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_W, "altChunk")) => {
-            BlockContent::AnchorForImportedExternalContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXml")) => {
-            BlockContent::BlockLevelCustomXMLElement(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "sdt")) => {
-            BlockContent::BlockLevelStructuredDocumentTag(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "bookmarkEnd")) => {
-            BlockContent::BookmarkEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "bookmarkStart")) => {
-            BlockContent::BookmarkStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "commentRangeEnd")) => {
-            BlockContent::CommentAnchorRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "commentRangeStart")) => {
-            BlockContent::CommentAnchorRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "conflictDel")) => {
-            BlockContent::ConflictDelRunTrackChange(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "conflictIns")) => {
-            BlockContent::ConflictInsRunTrackChange(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlDelRangeEnd")) => {
-            BlockContent::CustomXMLMarkupDeletionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlDelRangeStart")) => {
-            BlockContent::CustomXMLMarkupDeletionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlInsRangeEnd")) => {
-            BlockContent::CustomXMLMarkupInsertionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlInsRangeStart")) => {
-            BlockContent::CustomXMLMarkupInsertionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveFromRangeEnd")) => {
-            BlockContent::CustomXMLMarkupMoveSourceEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveFromRangeStart")) => {
-            BlockContent::CustomXMLMarkupMoveSourceStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictDelRangeEnd")) => {
-            BlockContent::CustomXmlConflictDelRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictDelRangeStart")) => {
-            BlockContent::CustomXmlConflictDelRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictInsRangeEnd")) => {
-            BlockContent::CustomXmlConflictInsRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictInsRangeStart")) => {
-            BlockContent::CustomXmlConflictInsRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveToRangeEnd")) => {
-            BlockContent::CustomXmlMoveToRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveToRangeStart")) => {
-            BlockContent::CustomXmlMoveToRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "del")) => {
-            BlockContent::DeletedRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "ins")) => {
-            BlockContent::InsertedRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveToRangeEnd")) => {
-            BlockContent::MoveDestinationLocationContainerEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveToRangeStart")) => BlockContent::MoveDestinationLocationContainerStart(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_W, "moveTo")) => {
-            BlockContent::MoveDestinationRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveFromRangeEnd")) => {
-            BlockContent::MoveSourceLocationContainerEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveFromRangeStart")) => {
-            BlockContent::MoveSourceLocationContainerStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveFrom")) => {
-            BlockContent::MoveSourceRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "oMath")) => BlockContent::OfficeMath(officekit_markup_base::read(element)),
-        _ => return None,
-    };
-    Some(item)
-}
-
-fn read_block_2(element: &Element) -> Option<BlockContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_M, "oMathPara")) => {
-            BlockContent::OfficeMathParagraph(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "p")) => BlockContent::Paragraph(officekit_markup_base::read(element)),
-        Some((NS_W, "proofErr")) => {
-            BlockContent::ProofingErrorAnchor(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "permEnd")) => {
-            BlockContent::RangePermissionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "permStart")) => {
-            BlockContent::RangePermissionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "tbl")) => BlockContent::Table(officekit_markup_base::read(element)),
-        _ => return None,
-    };
-    Some(item)
-}
-
-fn read_content_block_1(element: &Element) -> Option<ContentBlockContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_W, "customXml")) => {
-            ContentBlockContent::BlockLevelCustomXMLElement(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "sdt")) => ContentBlockContent::BlockLevelStructuredDocumentTag(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_W, "bookmarkEnd")) => {
-            ContentBlockContent::BookmarkEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "bookmarkStart")) => {
-            ContentBlockContent::BookmarkStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "commentRangeEnd")) => {
-            ContentBlockContent::CommentAnchorRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "commentRangeStart")) => {
-            ContentBlockContent::CommentAnchorRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "conflictDel")) => {
-            ContentBlockContent::ConflictDelRunTrackChange(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "conflictIns")) => {
-            ContentBlockContent::ConflictInsRunTrackChange(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlDelRangeEnd")) => {
-            ContentBlockContent::CustomXMLMarkupDeletionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlDelRangeStart")) => {
-            ContentBlockContent::CustomXMLMarkupDeletionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlInsRangeEnd")) => {
-            ContentBlockContent::CustomXMLMarkupInsertionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlInsRangeStart")) => {
-            ContentBlockContent::CustomXMLMarkupInsertionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveFromRangeEnd")) => {
-            ContentBlockContent::CustomXMLMarkupMoveSourceEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveFromRangeStart")) => {
-            ContentBlockContent::CustomXMLMarkupMoveSourceStart(officekit_markup_base::read(
-                element,
-            ))
-        }
-        Some((NS_W14, "customXmlConflictDelRangeEnd")) => {
-            ContentBlockContent::CustomXmlConflictDelRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictDelRangeStart")) => {
-            ContentBlockContent::CustomXmlConflictDelRangeStart(officekit_markup_base::read(
-                element,
-            ))
-        }
-        Some((NS_W14, "customXmlConflictInsRangeEnd")) => {
-            ContentBlockContent::CustomXmlConflictInsRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictInsRangeStart")) => {
-            ContentBlockContent::CustomXmlConflictInsRangeStart(officekit_markup_base::read(
-                element,
-            ))
-        }
-        Some((NS_W, "customXmlMoveToRangeEnd")) => {
-            ContentBlockContent::CustomXmlMoveToRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveToRangeStart")) => {
-            ContentBlockContent::CustomXmlMoveToRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "del")) => {
-            ContentBlockContent::DeletedRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "ins")) => {
-            ContentBlockContent::InsertedRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveToRangeEnd")) => ContentBlockContent::MoveDestinationLocationContainerEnd(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_W, "moveToRangeStart")) => {
-            ContentBlockContent::MoveDestinationLocationContainerStart(officekit_markup_base::read(
-                element,
-            ))
-        }
-        Some((NS_W, "moveTo")) => {
-            ContentBlockContent::MoveDestinationRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveFromRangeEnd")) => ContentBlockContent::MoveSourceLocationContainerEnd(
-            officekit_markup_base::read(element),
-        ),
-        _ => return None,
-    };
-    Some(item)
-}
-
-fn read_content_block_2(element: &Element) -> Option<ContentBlockContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_W, "moveFromRangeStart")) => {
-            ContentBlockContent::MoveSourceLocationContainerStart(officekit_markup_base::read(
-                element,
-            ))
-        }
-        Some((NS_W, "moveFrom")) => {
-            ContentBlockContent::MoveSourceRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "oMath")) => {
-            ContentBlockContent::OfficeMath(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "oMathPara")) => {
-            ContentBlockContent::OfficeMathParagraph(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "p")) => ContentBlockContent::Paragraph(officekit_markup_base::read(element)),
-        Some((NS_W, "proofErr")) => {
-            ContentBlockContent::ProofingErrorAnchor(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "permEnd")) => {
-            ContentBlockContent::RangePermissionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "permStart")) => {
-            ContentBlockContent::RangePermissionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "tbl")) => ContentBlockContent::Table(officekit_markup_base::read(element)),
-        _ => return None,
-    };
-    Some(item)
-}
-
-fn read_content_cell_1(element: &Element) -> Option<ContentCellContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_W, "bookmarkEnd")) => {
-            ContentCellContent::BookmarkEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "bookmarkStart")) => {
-            ContentCellContent::BookmarkStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXml")) => {
-            ContentCellContent::CellLevelCustomXMLElement(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "sdt")) => {
-            ContentCellContent::CellLevelStructuredDocumentTag(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "commentRangeEnd")) => {
-            ContentCellContent::CommentAnchorRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "commentRangeStart")) => {
-            ContentCellContent::CommentAnchorRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "conflictDel")) => {
-            ContentCellContent::ConflictDelRunTrackChange(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "conflictIns")) => {
-            ContentCellContent::ConflictInsRunTrackChange(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlDelRangeEnd")) => {
-            ContentCellContent::CustomXMLMarkupDeletionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlDelRangeStart")) => {
-            ContentCellContent::CustomXMLMarkupDeletionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlInsRangeEnd")) => {
-            ContentCellContent::CustomXMLMarkupInsertionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlInsRangeStart")) => {
-            ContentCellContent::CustomXMLMarkupInsertionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveFromRangeEnd")) => {
-            ContentCellContent::CustomXMLMarkupMoveSourceEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveFromRangeStart")) => {
-            ContentCellContent::CustomXMLMarkupMoveSourceStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictDelRangeEnd")) => {
-            ContentCellContent::CustomXmlConflictDelRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictDelRangeStart")) => {
-            ContentCellContent::CustomXmlConflictDelRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictInsRangeEnd")) => {
-            ContentCellContent::CustomXmlConflictInsRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictInsRangeStart")) => {
-            ContentCellContent::CustomXmlConflictInsRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveToRangeEnd")) => {
-            ContentCellContent::CustomXmlMoveToRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveToRangeStart")) => {
-            ContentCellContent::CustomXmlMoveToRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "del")) => {
-            ContentCellContent::DeletedRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "ins")) => {
-            ContentCellContent::InsertedRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveToRangeEnd")) => ContentCellContent::MoveDestinationLocationContainerEnd(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_W, "moveToRangeStart")) => {
-            ContentCellContent::MoveDestinationLocationContainerStart(officekit_markup_base::read(
-                element,
-            ))
-        }
-        Some((NS_W, "moveTo")) => {
-            ContentCellContent::MoveDestinationRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveFromRangeEnd")) => {
-            ContentCellContent::MoveSourceLocationContainerEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveFromRangeStart")) => ContentCellContent::MoveSourceLocationContainerStart(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_W, "moveFrom")) => {
-            ContentCellContent::MoveSourceRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "oMath")) => {
-            ContentCellContent::OfficeMath(officekit_markup_base::read(element))
-        }
-        _ => return None,
-    };
-    Some(item)
-}
-
-fn read_content_cell_2(element: &Element) -> Option<ContentCellContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_M, "oMathPara")) => {
-            ContentCellContent::OfficeMathParagraph(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "proofErr")) => {
-            ContentCellContent::ProofingErrorAnchor(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "permEnd")) => {
-            ContentCellContent::RangePermissionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "permStart")) => {
-            ContentCellContent::RangePermissionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "tc")) => ContentCellContent::TableCell(officekit_markup_base::read(element)),
-        _ => return None,
-    };
-    Some(item)
-}
-
-fn read_content_row_1(element: &Element) -> Option<ContentRowContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_W, "bookmarkEnd")) => {
-            ContentRowContent::BookmarkEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "bookmarkStart")) => {
-            ContentRowContent::BookmarkStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "commentRangeEnd")) => {
-            ContentRowContent::CommentAnchorRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "commentRangeStart")) => {
-            ContentRowContent::CommentAnchorRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "conflictDel")) => {
-            ContentRowContent::ConflictDelRunTrackChange(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "conflictIns")) => {
-            ContentRowContent::ConflictInsRunTrackChange(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlDelRangeEnd")) => {
-            ContentRowContent::CustomXMLMarkupDeletionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlDelRangeStart")) => {
-            ContentRowContent::CustomXMLMarkupDeletionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlInsRangeEnd")) => {
-            ContentRowContent::CustomXMLMarkupInsertionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlInsRangeStart")) => {
-            ContentRowContent::CustomXMLMarkupInsertionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveFromRangeEnd")) => {
-            ContentRowContent::CustomXMLMarkupMoveSourceEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveFromRangeStart")) => {
-            ContentRowContent::CustomXMLMarkupMoveSourceStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictDelRangeEnd")) => {
-            ContentRowContent::CustomXmlConflictDelRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictDelRangeStart")) => {
-            ContentRowContent::CustomXmlConflictDelRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictInsRangeEnd")) => {
-            ContentRowContent::CustomXmlConflictInsRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictInsRangeStart")) => {
-            ContentRowContent::CustomXmlConflictInsRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveToRangeEnd")) => {
-            ContentRowContent::CustomXmlMoveToRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveToRangeStart")) => {
-            ContentRowContent::CustomXmlMoveToRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "del")) => {
-            ContentRowContent::DeletedRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "ins")) => {
-            ContentRowContent::InsertedRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveToRangeEnd")) => ContentRowContent::MoveDestinationLocationContainerEnd(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_W, "moveToRangeStart")) => {
-            ContentRowContent::MoveDestinationLocationContainerStart(officekit_markup_base::read(
-                element,
-            ))
-        }
-        Some((NS_W, "moveTo")) => {
-            ContentRowContent::MoveDestinationRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveFromRangeEnd")) => {
-            ContentRowContent::MoveSourceLocationContainerEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveFromRangeStart")) => ContentRowContent::MoveSourceLocationContainerStart(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_W, "moveFrom")) => {
-            ContentRowContent::MoveSourceRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "oMath")) => {
-            ContentRowContent::OfficeMath(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "oMathPara")) => {
-            ContentRowContent::OfficeMathParagraph(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "proofErr")) => {
-            ContentRowContent::ProofingErrorAnchor(officekit_markup_base::read(element))
-        }
-        _ => return None,
-    };
-    Some(item)
-}
-
-fn read_content_row_2(element: &Element) -> Option<ContentRowContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_W, "permEnd")) => {
-            ContentRowContent::RangePermissionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "permStart")) => {
-            ContentRowContent::RangePermissionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXml")) => {
-            ContentRowContent::RowLevelCustomXMLElement(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "sdt")) => {
-            ContentRowContent::RowLevelStructuredDocumentTag(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "tr")) => ContentRowContent::TableRow(officekit_markup_base::read(element)),
-        _ => return None,
-    };
-    Some(item)
-}
-
-fn read_tracked_run_1(element: &Element) -> Option<TrackedRunContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_M, "acc")) => TrackedRunContent::Accent(officekit_markup_base::read(element)),
-        Some((NS_M, "eqArr")) => {
-            TrackedRunContent::ArrayObject(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "bar")) => TrackedRunContent::Bar(officekit_markup_base::read(element)),
-        Some((NS_W, "dir")) => {
-            TrackedRunContent::BidirectionalEmbeddingLevel(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "bdo")) => {
-            TrackedRunContent::BidirectionalOverride(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "bookmarkEnd")) => {
-            TrackedRunContent::BookmarkEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "bookmarkStart")) => {
-            TrackedRunContent::BookmarkStart(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "borderBox")) => {
-            TrackedRunContent::BorderBoxObject(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "box")) => TrackedRunContent::BoxObject(officekit_markup_base::read(element)),
-        Some((NS_W, "commentRangeEnd")) => {
-            TrackedRunContent::CommentAnchorRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "commentRangeStart")) => {
-            TrackedRunContent::CommentAnchorRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "conflictDel")) => {
-            TrackedRunContent::ConflictDelRunTrackChange(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "conflictIns")) => {
-            TrackedRunContent::ConflictInsRunTrackChange(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlDelRangeEnd")) => {
-            TrackedRunContent::CustomXMLMarkupDeletionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlDelRangeStart")) => {
-            TrackedRunContent::CustomXMLMarkupDeletionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlInsRangeEnd")) => {
-            TrackedRunContent::CustomXMLMarkupInsertionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlInsRangeStart")) => {
-            TrackedRunContent::CustomXMLMarkupInsertionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveFromRangeEnd")) => {
-            TrackedRunContent::CustomXMLMarkupMoveSourceEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveFromRangeStart")) => {
-            TrackedRunContent::CustomXMLMarkupMoveSourceStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictDelRangeEnd")) => {
-            TrackedRunContent::CustomXmlConflictDelRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictDelRangeStart")) => {
-            TrackedRunContent::CustomXmlConflictDelRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictInsRangeEnd")) => {
-            TrackedRunContent::CustomXmlConflictInsRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W14, "customXmlConflictInsRangeStart")) => {
-            TrackedRunContent::CustomXmlConflictInsRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveToRangeEnd")) => {
-            TrackedRunContent::CustomXmlMoveToRangeEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXmlMoveToRangeStart")) => {
-            TrackedRunContent::CustomXmlMoveToRangeStart(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "del")) => {
-            TrackedRunContent::DeletedRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "d")) => {
-            TrackedRunContent::DelimiterObject(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "f")) => {
-            TrackedRunContent::FractionObject(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "func")) => {
-            TrackedRunContent::FunctionApplyObject(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "groupChr")) => {
-            TrackedRunContent::GroupCharacterObject(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "customXml")) => {
-            TrackedRunContent::InlineLevelCustomXMLElement(officekit_markup_base::read(element))
-        }
-        _ => return None,
-    };
-    Some(item)
-}
-
-fn read_tracked_run_2(element: &Element) -> Option<TrackedRunContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_W, "smartTag")) => {
-            TrackedRunContent::InlineLevelSmartTag(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "sdt")) => TrackedRunContent::InlineLevelStructuredDocumentTag(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_W, "ins")) => {
-            TrackedRunContent::InsertedRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "limLow")) => {
-            TrackedRunContent::LowerLimitObject(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "m")) => TrackedRunContent::MatrixObject(officekit_markup_base::read(element)),
-        Some((NS_W, "moveToRangeEnd")) => TrackedRunContent::MoveDestinationLocationContainerEnd(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_W, "moveToRangeStart")) => {
-            TrackedRunContent::MoveDestinationLocationContainerStart(officekit_markup_base::read(
-                element,
-            ))
-        }
-        Some((NS_W, "moveTo")) => {
-            TrackedRunContent::MoveDestinationRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveFromRangeEnd")) => {
-            TrackedRunContent::MoveSourceLocationContainerEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "moveFromRangeStart")) => TrackedRunContent::MoveSourceLocationContainerStart(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_W, "moveFrom")) => {
-            TrackedRunContent::MoveSourceRunContent(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "nary")) => TrackedRunContent::Nary(officekit_markup_base::read(element)),
-        Some((NS_M, "oMath")) => {
-            TrackedRunContent::OfficeMath(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "oMathPara")) => {
-            TrackedRunContent::OfficeMathParagraph(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "phant")) => {
-            TrackedRunContent::PhantomObject(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "sPre")) => {
-            TrackedRunContent::PreSubSuperscriptObject(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "proofErr")) => {
-            TrackedRunContent::ProofingErrorAnchor(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "rad")) => {
-            TrackedRunContent::RadicalObject(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "permEnd")) => {
-            TrackedRunContent::RangePermissionEnd(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "permStart")) => {
-            TrackedRunContent::RangePermissionStart(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "r")) => TrackedRunContent::Run(officekit_markup_base::read(element)),
-        Some((NS_M, "sSubSup")) => {
-            TrackedRunContent::SubSuperscriptObject(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "sSub")) => {
-            TrackedRunContent::SubscriptObject(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "sSup")) => {
-            TrackedRunContent::SuperscriptObject(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "r")) => TrackedRunContent::TextRun(officekit_markup_base::read(element)),
-        Some((NS_M, "limUpp")) => {
-            TrackedRunContent::UpperLimitObject(officekit_markup_base::read(element))
-        }
-        _ => return None,
-    };
-    Some(item)
 }
 
 fn paragraph_content_into_phonetic_guide_content_1(

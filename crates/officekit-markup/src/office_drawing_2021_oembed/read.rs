@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `aoe:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `aoe:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `aoe:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -235,8 +250,24 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `aoe:oembedShared` into a `OembedShared`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn oembed_shared(element: &Element) -> super::OembedShared {
+    oembed_shared_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `aoe:oembedShared` into a `OembedShared` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn oembed_shared_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::OembedShared {
+    oembed_shared_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `aoe:oembedShared` into a `OembedShared` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn oembed_shared_from_item(item: officekit_markup_base::Item<'_>) -> super::OembedShared {
     let mut node = super::OembedShared::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::OEMBED_SHARED_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::OEMBED_SHARED_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.src_url),

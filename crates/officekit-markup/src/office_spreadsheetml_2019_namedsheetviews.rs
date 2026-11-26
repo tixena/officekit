@@ -227,7 +227,7 @@ use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::office_spreadsheetml_2009_9_main;
 use officekit_markup_core::spreadsheet;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -1034,8 +1034,8 @@ impl<X: UserData> ColumnFilterWith<X> {
 }
 
 impl officekit_markup_base::Read for ColumnFilter {
-    fn read(element: &Element) -> Self {
-        read::column_filter(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::column_filter_from_item(item)
     }
 }
 
@@ -1096,8 +1096,8 @@ impl<X: UserData> DxfWith<X> {
 }
 
 impl officekit_markup_base::Read for Dxf {
-    fn read(element: &Element) -> Self {
-        read::dxf(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::dxf_from_item(item)
     }
 }
 
@@ -1134,8 +1134,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -1180,8 +1180,8 @@ impl<X: UserData> FilterWith<X> {
 }
 
 impl officekit_markup_base::Read for Filter {
-    fn read(element: &Element) -> Self {
-        read::filter(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::filter_from_item(item)
     }
 }
 
@@ -1228,8 +1228,8 @@ impl<X: UserData> NamedSheetViewWith<X> {
 }
 
 impl officekit_markup_base::Read for NamedSheetView {
-    fn read(element: &Element) -> Self {
-        read::named_sheet_view(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::named_sheet_view_from_item(item)
     }
 }
 
@@ -1270,8 +1270,8 @@ impl<X: UserData> NamedSheetViewsWith<X> {
 }
 
 impl officekit_markup_base::Read for NamedSheetViews {
-    fn read(element: &Element) -> Self {
-        read::named_sheet_views(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::named_sheet_views_from_item(item)
     }
 }
 
@@ -1324,8 +1324,8 @@ impl<X: UserData> NsvFilterWith<X> {
 }
 
 impl officekit_markup_base::Read for NsvFilter {
-    fn read(element: &Element) -> Self {
-        read::nsv_filter(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::nsv_filter_from_item(item)
     }
 }
 
@@ -1376,8 +1376,8 @@ impl<X: UserData> RichSortConditionWith<X> {
 }
 
 impl officekit_markup_base::Read for RichSortCondition {
-    fn read(element: &Element) -> Self {
-        read::rich_sort_condition(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rich_sort_condition_from_item(item)
     }
 }
 
@@ -1426,8 +1426,8 @@ impl<X: UserData> SortConditionWith<X> {
 }
 
 impl officekit_markup_base::Read for SortCondition {
-    fn read(element: &Element) -> Self {
-        read::sort_condition(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sort_condition_from_item(item)
     }
 }
 
@@ -1474,8 +1474,8 @@ impl<X: UserData> SortRuleWith<X> {
 }
 
 impl officekit_markup_base::Read for SortRule {
-    fn read(element: &Element) -> Self {
-        read::sort_rule(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sort_rule_from_item(item)
     }
 }
 
@@ -1508,15 +1508,11 @@ impl officekit_markup_base::Read for SortRuleContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_XNSV, "richSortCondition")) => {
-                Self::RichSortCondition(officekit_markup_base::read(element))
-            }
-            Some((NS_XNSV, "sortCondition")) => {
-                Self::SortCondition(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_XNSV, "richSortCondition")) => Self::RichSortCondition(item.read()),
+            Some((NS_XNSV, "sortCondition")) => Self::SortCondition(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -1567,8 +1563,8 @@ impl<X: UserData> SortRulesWith<X> {
 }
 
 impl officekit_markup_base::Read for SortRules {
-    fn read(element: &Element) -> Self {
-        read::sort_rules(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sort_rules_from_item(item)
     }
 }
 

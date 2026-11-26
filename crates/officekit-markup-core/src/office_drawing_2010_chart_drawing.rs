@@ -222,7 +222,6 @@ pub mod read;
 pub mod write;
 
 use officekit_markup_base::UserData;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -509,8 +508,8 @@ impl<X: UserData> CNvContentPartPrWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvContentPartPr {
-    fn read(element: &Element) -> Self {
-        read::c_nv_content_part_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_content_part_pr_from_item(item)
     }
 }
 
@@ -567,8 +566,8 @@ impl<X: UserData> CNvPrWith<X> {
 }
 
 impl officekit_markup_base::Read for CNvPr {
-    fn read(element: &Element) -> Self {
-        read::c_nv_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_nv_pr_from_item(item)
     }
 }
 
@@ -623,8 +622,8 @@ impl<X: UserData> ContentPartWith<X> {
 }
 
 impl officekit_markup_base::Read for ContentPart {
-    fn read(element: &Element) -> Self {
-        read::content_part(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::content_part_from_item(item)
     }
 }
 
@@ -661,8 +660,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -703,8 +702,8 @@ impl<X: UserData> NvContentPartPrWith<X> {
 }
 
 impl officekit_markup_base::Read for NvContentPartPr {
-    fn read(element: &Element) -> Self {
-        read::nv_content_part_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::nv_content_part_pr_from_item(item)
     }
 }
 
@@ -743,8 +742,8 @@ impl<X: UserData> NvPrWith<X> {
 }
 
 impl officekit_markup_base::Read for NvPr {
-    fn read(element: &Element) -> Self {
-        read::nv_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::nv_pr_from_item(item)
     }
 }
 
@@ -793,8 +792,8 @@ impl<X: UserData> XfrmWith<X> {
 }
 
 impl officekit_markup_base::Read for Xfrm {
-    fn read(element: &Element) -> Self {
-        read::xfrm(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xfrm_from_item(item)
     }
 }
 

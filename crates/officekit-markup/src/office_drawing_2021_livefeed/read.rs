@@ -221,8 +221,25 @@ use officekit_xml::element::Element;
 /// Read `alf:backgroundProps` into a `BackgroundProps`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn background_props(element: &Element) -> super::BackgroundProps {
+    background_props_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `alf:backgroundProps` into a `BackgroundProps` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn background_props_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BackgroundProps {
+    background_props_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `alf:backgroundProps` into a `BackgroundProps` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn background_props_from_item(item: officekit_markup_base::Item<'_>) -> super::BackgroundProps {
     let mut node = super::BackgroundProps::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BACKGROUND_PROPS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BACKGROUND_PROPS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.content),
@@ -237,8 +254,23 @@ pub fn background_props(element: &Element) -> super::BackgroundProps {
 /// Read `alf:Blur` into a `Blur`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn blur(element: &Element) -> super::Blur {
+    blur_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `alf:Blur` into a `Blur` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn blur_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Blur {
+    blur_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `alf:Blur` into a `Blur` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn blur_from_item(item: officekit_markup_base::Item<'_>) -> super::Blur {
     let mut node = super::Blur::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BLUR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BLUR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.ext_lst);
@@ -251,8 +283,23 @@ pub fn blur(element: &Element) -> super::Blur {
 /// Read `alf:Custom` into a `Custom`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom(element: &Element) -> super::Custom {
+    custom_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `alf:Custom` into a `Custom` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Custom {
+    custom_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `alf:Custom` into a `Custom` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_from_item(item: officekit_markup_base::Item<'_>) -> super::Custom {
     let mut node = super::Custom::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOM_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CUSTOM_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.ext_lst);
@@ -265,8 +312,23 @@ pub fn custom(element: &Element) -> super::Custom {
 /// Read `alf:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `alf:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `alf:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -288,8 +350,25 @@ pub fn live_feed_background_properties(
 /// Read `alf:liveFeedProps` into a `LiveFeedProps`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn live_feed_props(element: &Element) -> super::LiveFeedProps {
+    live_feed_props_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `alf:liveFeedProps` into a `LiveFeedProps` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn live_feed_props_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::LiveFeedProps {
+    live_feed_props_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `alf:liveFeedProps` into a `LiveFeedProps` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn live_feed_props_from_item(item: officekit_markup_base::Item<'_>) -> super::LiveFeedProps {
     let mut node = super::LiveFeedProps::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::LIVE_FEED_PROPS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::LIVE_FEED_PROPS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.background_props),
@@ -304,8 +383,23 @@ pub fn live_feed_props(element: &Element) -> super::LiveFeedProps {
 /// Read `alf:Normal` into a `Normal`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn normal(element: &Element) -> super::Normal {
+    normal_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `alf:Normal` into a `Normal` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn normal_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Normal {
+    normal_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `alf:Normal` into a `Normal` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn normal_from_item(item: officekit_markup_base::Item<'_>) -> super::Normal {
     let mut node = super::Normal::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NORMAL_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NORMAL_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.ext_lst);
@@ -318,8 +412,23 @@ pub fn normal(element: &Element) -> super::Normal {
 /// Read `alf:Removed` into a `Removed`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn removed(element: &Element) -> super::Removed {
+    removed_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `alf:Removed` into a `Removed` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn removed_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Removed {
+    removed_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `alf:Removed` into a `Removed` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn removed_from_item(item: officekit_markup_base::Item<'_>) -> super::Removed {
     let mut node = super::Removed::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::REMOVED_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::REMOVED_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.ext_lst);

@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `w16cur:ext` into a `Ext`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext(element: &Element) -> super::Ext {
+    ext_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `w16cur:ext` into a `Ext` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Ext {
+    ext_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `w16cur:ext` into a `Ext` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_from_item(item: officekit_markup_base::Item<'_>) -> super::Ext {
     let mut node = super::Ext::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.uri),

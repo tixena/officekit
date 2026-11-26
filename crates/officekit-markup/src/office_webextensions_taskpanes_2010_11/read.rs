@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `wetp:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wetp:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wetp:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -235,8 +250,24 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `wetp:taskpane` into a `Taskpane`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn taskpane(element: &Element) -> super::Taskpane {
+    taskpane_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wetp:taskpane` into a `Taskpane` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn taskpane_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Taskpane {
+    taskpane_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wetp:taskpane` into a `Taskpane` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn taskpane_from_item(item: officekit_markup_base::Item<'_>) -> super::Taskpane {
     let mut node = super::Taskpane::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TASKPANE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TASKPANE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.dockstate),
@@ -256,8 +287,24 @@ pub fn taskpane(element: &Element) -> super::Taskpane {
 /// Read `wetp:taskpanes` into a `Taskpanes`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn taskpanes(element: &Element) -> super::Taskpanes {
+    taskpanes_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wetp:taskpanes` into a `Taskpanes` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn taskpanes_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Taskpanes {
+    taskpanes_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wetp:taskpanes` into a `Taskpanes` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn taskpanes_from_item(item: officekit_markup_base::Item<'_>) -> super::Taskpanes {
     let mut node = super::Taskpanes::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TASKPANES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TASKPANES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.taskpane);
@@ -270,8 +317,25 @@ pub fn taskpanes(element: &Element) -> super::Taskpanes {
 /// Read `wetp:webextensionref` into a `Webextensionref`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn webextensionref(element: &Element) -> super::Webextensionref {
+    webextensionref_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `wetp:webextensionref` into a `Webextensionref` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn webextensionref_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Webextensionref {
+    webextensionref_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `wetp:webextensionref` into a `Webextensionref` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn webextensionref_from_item(item: officekit_markup_base::Item<'_>) -> super::Webextensionref {
     let mut node = super::Webextensionref::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::WEBEXTENSIONREF_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::WEBEXTENSIONREF_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.id);

@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `xlrvrel:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrvrel:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrvrel:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -235,8 +250,23 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `xlrvrel:rel` into a `Rel`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rel(element: &Element) -> super::Rel {
+    rel_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrvrel:rel` into a `Rel` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rel_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Rel {
+    rel_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrvrel:rel` into a `Rel` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rel_from_item(item: officekit_markup_base::Item<'_>) -> super::Rel {
     let mut node = super::Rel::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::REL_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::REL_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.id);
@@ -249,8 +279,25 @@ pub fn rel(element: &Element) -> super::Rel {
 /// Read `xlrvrel:richValueRels` into a `RichValueRels`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_value_rels(element: &Element) -> super::RichValueRels {
+    rich_value_rels_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrvrel:richValueRels` into a `RichValueRels` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rich_value_rels_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RichValueRels {
+    rich_value_rels_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrvrel:richValueRels` into a `RichValueRels` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rich_value_rels_from_item(item: officekit_markup_base::Item<'_>) -> super::RichValueRels {
     let mut node = super::RichValueRels::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::RICH_VALUE_RELS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::RICH_VALUE_RELS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.rel),

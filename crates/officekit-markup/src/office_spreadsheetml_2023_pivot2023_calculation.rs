@@ -225,7 +225,6 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::values::ValueError;
@@ -764,8 +763,8 @@ impl<X: UserData> AggregationInfoWith<X> {
 }
 
 impl officekit_markup_base::Read for AggregationInfo {
-    fn read(element: &Element) -> Self {
-        read::aggregation_info(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::aggregation_info_from_item(item)
     }
 }
 
@@ -874,8 +873,8 @@ impl<X: UserData> FeatureSupportInfoWith<X> {
 }
 
 impl officekit_markup_base::Read for FeatureSupportInfo {
-    fn read(element: &Element) -> Self {
-        read::feature_support_info(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::feature_support_info_from_item(item)
     }
 }
 
@@ -912,8 +911,8 @@ impl<X: UserData> PivotAreaReferenceSubtotalsWith<X> {
 }
 
 impl officekit_markup_base::Read for PivotAreaReferenceSubtotals {
-    fn read(element: &Element) -> Self {
-        read::pivot_area_reference_subtotals(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pivot_area_reference_subtotals_from_item(item)
     }
 }
 
@@ -950,8 +949,8 @@ impl<X: UserData> PivotFieldSubtotalLineItemsWith<X> {
 }
 
 impl officekit_markup_base::Read for PivotFieldSubtotalLineItems {
-    fn read(element: &Element) -> Self {
-        read::pivot_field_subtotal_line_items(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pivot_field_subtotal_line_items_from_item(item)
     }
 }
 
@@ -988,8 +987,8 @@ impl<X: UserData> PivotFieldSubtotalsWith<X> {
 }
 
 impl officekit_markup_base::Read for PivotFieldSubtotals {
-    fn read(element: &Element) -> Self {
-        read::pivot_field_subtotals(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pivot_field_subtotals_from_item(item)
     }
 }
 
@@ -1022,8 +1021,8 @@ impl<X: UserData> SubtotalLineItemWith<X> {
 }
 
 impl officekit_markup_base::Read for SubtotalLineItem {
-    fn read(element: &Element) -> Self {
-        read::subtotal_line_item(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::subtotal_line_item_from_item(item)
     }
 }
 
@@ -1056,8 +1055,8 @@ impl<X: UserData> SubtotalPivotItemSubtotalWith<X> {
 }
 
 impl officekit_markup_base::Read for SubtotalPivotItemSubtotal {
-    fn read(element: &Element) -> Self {
-        read::subtotal_pivot_item_subtotal(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::subtotal_pivot_item_subtotal_from_item(item)
     }
 }
 
@@ -1094,8 +1093,8 @@ impl<X: UserData> SubtotalPivotSubtotalTypeWith<X> {
 }
 
 impl officekit_markup_base::Read for SubtotalPivotSubtotalType {
-    fn read(element: &Element) -> Self {
-        read::subtotal_pivot_subtotal_type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::subtotal_pivot_subtotal_type_from_item(item)
     }
 }
 

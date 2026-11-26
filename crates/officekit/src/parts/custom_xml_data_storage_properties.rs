@@ -350,6 +350,7 @@
 use crate::parts::part_root::{self, PartRoot};
 #[cfg(feature = "transitional")]
 use crate::transitional::Transitional as _;
+use officekit_markup::Item;
 use officekit_markup::custom_xml_data_properties;
 #[cfg(feature = "strict")]
 use officekit_strict::Strict as _;
@@ -375,6 +376,11 @@ pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::CUSTOM_XML_PRO
 
 impl PartRoot for custom_xml_data_properties::CustomXMLDataProperties {
     const LOCAL_NAME: &'static str = "datastoreItem";
+
+    fn from_part(root: Item<'_>) -> Result<Self, String> {
+        super::check_root(root.element(), 46, Self::LOCAL_NAME)?;
+        Ok(custom_xml_data_properties::read::custom_xml_data_properties_from_item(root))
+    }
 
     fn from_tree(root: &Element) -> Result<Self, String> {
         super::check_root(root, 46, Self::LOCAL_NAME)?;

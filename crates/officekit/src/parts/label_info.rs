@@ -349,6 +349,7 @@
 use crate::parts::part_root::{self, PartRoot};
 #[cfg(feature = "transitional")]
 use crate::transitional::Transitional as _;
+use officekit_markup::Item;
 use officekit_markup::office_2020_mip_label_metadata;
 #[cfg(feature = "strict")]
 use officekit_strict::Strict as _;
@@ -373,6 +374,13 @@ pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::CLASSIFICATION
 
 impl PartRoot for office_2020_mip_label_metadata::LabelList {
     const LOCAL_NAME: &'static str = "labelList";
+
+    fn from_part(root: Item<'_>) -> Result<Self, String> {
+        super::check_root(root.element(), 31, Self::LOCAL_NAME)?;
+        Ok(office_2020_mip_label_metadata::read::label_list_from_item(
+            root,
+        ))
+    }
 
     fn from_tree(root: &Element) -> Result<Self, String> {
         super::check_root(root, 31, Self::LOCAL_NAME)?;

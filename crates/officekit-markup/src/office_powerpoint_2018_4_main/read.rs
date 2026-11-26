@@ -221,8 +221,25 @@ use officekit_xml::element::Element;
 /// Read `p184:classification` into a `Classification`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn classification(element: &Element) -> super::Classification {
+    classification_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p184:classification` into a `Classification` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn classification_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Classification {
+    classification_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p184:classification` into a `Classification` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn classification_from_item(item: officekit_markup_base::Item<'_>) -> super::Classification {
     let mut node = super::Classification::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CLASSIFICATION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CLASSIFICATION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);

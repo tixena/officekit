@@ -225,7 +225,6 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::values::ValueError;
@@ -356,8 +355,8 @@ impl<X: UserData> ClassificationWith<X> {
 }
 
 impl officekit_markup_base::Read for Classification {
-    fn read(element: &Element) -> Self {
-        read::classification(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::classification_from_item(item)
     }
 }
 

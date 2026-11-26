@@ -222,7 +222,6 @@ pub mod read;
 pub mod write;
 
 use crate::UserData;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
 const NS_XNE: Option<NamespaceId> = Some(149);
@@ -303,8 +302,8 @@ impl<X: UserData> FWith<X> {
 }
 
 impl crate::Read for F {
-    fn read(element: &Element) -> Self {
-        read::f(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::f_from_item(item)
     }
 }
 
@@ -341,8 +340,8 @@ impl<X: UserData> SqrefWith<X> {
 }
 
 impl crate::Read for Sqref {
-    fn read(element: &Element) -> Self {
-        read::sqref(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::sqref_from_item(item)
     }
 }
 

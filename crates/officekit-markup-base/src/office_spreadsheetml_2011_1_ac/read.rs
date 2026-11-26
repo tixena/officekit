@@ -221,8 +221,20 @@ use officekit_xml::element::Element;
 /// Read `x12ac:list` into a `List`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list(element: &Element) -> super::List {
+    list_from_item(crate::Item::Tree(element))
+}
+
+/// Read `x12ac:list` into a `List` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_from_events(start: Element, events: &dyn crate::EventSource) -> super::List {
+    list_from_item(crate::Item::Events(start, events))
+}
+
+/// Read `x12ac:list` into a `List` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn list_from_item(item: crate::Item<'_>) -> super::List {
     let mut node = super::List::default();
-    let mut reader = crate::Reader::new(element, &super::LIST_SHAPE);
+    let mut reader = crate::Reader::of(item, &super::LIST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);

@@ -221,7 +221,26 @@ use officekit_xml::element::Element;
 /// Read `c14:dropZoneCategories` into a `DropZoneCategories`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drop_zone_categories(element: &Element) -> super::DropZoneCategories {
-    let reader = officekit_markup_base::Reader::new(element, &super::DROP_ZONE_CATEGORIES_SHAPE);
+    drop_zone_categories_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c14:dropZoneCategories` into a `DropZoneCategories` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drop_zone_categories_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DropZoneCategories {
+    drop_zone_categories_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c14:dropZoneCategories` into a `DropZoneCategories` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drop_zone_categories_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::DropZoneCategories {
+    let reader = officekit_markup_base::Reader::of(item, &super::DROP_ZONE_CATEGORIES_SHAPE);
     super::DropZoneCategories {
         user_data: (),
         unknown: reader.finish(),
@@ -231,7 +250,23 @@ pub fn drop_zone_categories(element: &Element) -> super::DropZoneCategories {
 /// Read `c14:dropZoneData` into a `DropZoneData`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drop_zone_data(element: &Element) -> super::DropZoneData {
-    let reader = officekit_markup_base::Reader::new(element, &super::DROP_ZONE_DATA_SHAPE);
+    drop_zone_data_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c14:dropZoneData` into a `DropZoneData` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drop_zone_data_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DropZoneData {
+    drop_zone_data_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c14:dropZoneData` into a `DropZoneData` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drop_zone_data_from_item(item: officekit_markup_base::Item<'_>) -> super::DropZoneData {
+    let reader = officekit_markup_base::Reader::of(item, &super::DROP_ZONE_DATA_SHAPE);
     super::DropZoneData {
         user_data: (),
         unknown: reader.finish(),
@@ -241,7 +276,24 @@ pub fn drop_zone_data(element: &Element) -> super::DropZoneData {
 /// Read `c14:dropZoneFilter` into a `DropZoneFilter`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drop_zone_filter(element: &Element) -> super::DropZoneFilter {
-    let reader = officekit_markup_base::Reader::new(element, &super::DROP_ZONE_FILTER_SHAPE);
+    drop_zone_filter_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c14:dropZoneFilter` into a `DropZoneFilter` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drop_zone_filter_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DropZoneFilter {
+    drop_zone_filter_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c14:dropZoneFilter` into a `DropZoneFilter` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drop_zone_filter_from_item(item: officekit_markup_base::Item<'_>) -> super::DropZoneFilter {
+    let reader = officekit_markup_base::Reader::of(item, &super::DROP_ZONE_FILTER_SHAPE);
     super::DropZoneFilter {
         user_data: (),
         unknown: reader.finish(),
@@ -251,7 +303,24 @@ pub fn drop_zone_filter(element: &Element) -> super::DropZoneFilter {
 /// Read `c14:dropZoneSeries` into a `DropZoneSeries`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drop_zone_series(element: &Element) -> super::DropZoneSeries {
-    let reader = officekit_markup_base::Reader::new(element, &super::DROP_ZONE_SERIES_SHAPE);
+    drop_zone_series_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c14:dropZoneSeries` into a `DropZoneSeries` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drop_zone_series_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DropZoneSeries {
+    drop_zone_series_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c14:dropZoneSeries` into a `DropZoneSeries` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drop_zone_series_from_item(item: officekit_markup_base::Item<'_>) -> super::DropZoneSeries {
+    let reader = officekit_markup_base::Reader::of(item, &super::DROP_ZONE_SERIES_SHAPE);
     super::DropZoneSeries {
         user_data: (),
         unknown: reader.finish(),
@@ -261,7 +330,26 @@ pub fn drop_zone_series(element: &Element) -> super::DropZoneSeries {
 /// Read `c14:dropZonesVisible` into a `DropZonesVisible`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drop_zones_visible(element: &Element) -> super::DropZonesVisible {
-    let reader = officekit_markup_base::Reader::new(element, &super::DROP_ZONES_VISIBLE_SHAPE);
+    drop_zones_visible_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c14:dropZonesVisible` into a `DropZonesVisible` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drop_zones_visible_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DropZonesVisible {
+    drop_zones_visible_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c14:dropZonesVisible` into a `DropZonesVisible` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drop_zones_visible_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::DropZonesVisible {
+    let reader = officekit_markup_base::Reader::of(item, &super::DROP_ZONES_VISIBLE_SHAPE);
     super::DropZonesVisible {
         user_data: (),
         unknown: reader.finish(),
@@ -271,7 +359,23 @@ pub fn drop_zones_visible(element: &Element) -> super::DropZonesVisible {
 /// Read `c14:inSketchMode` into a `InSketchMode`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn in_sketch_mode(element: &Element) -> super::InSketchMode {
-    let reader = officekit_markup_base::Reader::new(element, &super::IN_SKETCH_MODE_SHAPE);
+    in_sketch_mode_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c14:inSketchMode` into a `InSketchMode` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn in_sketch_mode_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::InSketchMode {
+    in_sketch_mode_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c14:inSketchMode` into a `InSketchMode` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn in_sketch_mode_from_item(item: officekit_markup_base::Item<'_>) -> super::InSketchMode {
+    let reader = officekit_markup_base::Reader::of(item, &super::IN_SKETCH_MODE_SHAPE);
     super::InSketchMode {
         user_data: (),
         unknown: reader.finish(),
@@ -281,9 +385,27 @@ pub fn in_sketch_mode(element: &Element) -> super::InSketchMode {
 /// Read `c14:invertSolidFillFmt` into a `InvertSolidFillFmt`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn invert_solid_fill_fmt(element: &Element) -> super::InvertSolidFillFmt {
+    invert_solid_fill_fmt_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c14:invertSolidFillFmt` into a `InvertSolidFillFmt` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn invert_solid_fill_fmt_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::InvertSolidFillFmt {
+    invert_solid_fill_fmt_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c14:invertSolidFillFmt` into a `InvertSolidFillFmt` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn invert_solid_fill_fmt_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::InvertSolidFillFmt {
     let mut node = super::InvertSolidFillFmt::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::INVERT_SOLID_FILL_FMT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::INVERT_SOLID_FILL_FMT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.sp_pr);
@@ -296,8 +418,24 @@ pub fn invert_solid_fill_fmt(element: &Element) -> super::InvertSolidFillFmt {
 /// Read `c14:pivotOptions` into a `PivotOptions`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_options(element: &Element) -> super::PivotOptions {
+    pivot_options_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c14:pivotOptions` into a `PivotOptions` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pivot_options_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PivotOptions {
+    pivot_options_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c14:pivotOptions` into a `PivotOptions` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pivot_options_from_item(item: officekit_markup_base::Item<'_>) -> super::PivotOptions {
     let mut node = super::PivotOptions::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::PIVOT_OPTIONS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PIVOT_OPTIONS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.drop_zone_filter),
@@ -315,8 +453,25 @@ pub fn pivot_options(element: &Element) -> super::PivotOptions {
 /// Read `c14:showSketchBtn` into a `ShowSketchBtn`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn show_sketch_btn(element: &Element) -> super::ShowSketchBtn {
+    show_sketch_btn_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c14:showSketchBtn` into a `ShowSketchBtn` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn show_sketch_btn_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ShowSketchBtn {
+    show_sketch_btn_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c14:showSketchBtn` into a `ShowSketchBtn` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn show_sketch_btn_from_item(item: officekit_markup_base::Item<'_>) -> super::ShowSketchBtn {
     let mut node = super::ShowSketchBtn::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SHOW_SKETCH_BTN_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SHOW_SKETCH_BTN_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);
@@ -329,8 +484,25 @@ pub fn show_sketch_btn(element: &Element) -> super::ShowSketchBtn {
 /// Read `c14:sketchOptions` into a `SketchOptions`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sketch_options(element: &Element) -> super::SketchOptions {
+    sketch_options_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c14:sketchOptions` into a `SketchOptions` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sketch_options_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SketchOptions {
+    sketch_options_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c14:sketchOptions` into a `SketchOptions` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sketch_options_from_item(item: officekit_markup_base::Item<'_>) -> super::SketchOptions {
     let mut node = super::SketchOptions::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SKETCH_OPTIONS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SKETCH_OPTIONS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.in_sketch_mode),
@@ -345,8 +517,23 @@ pub fn sketch_options(element: &Element) -> super::SketchOptions {
 /// Read `c14:spPr` into a `SpPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sp_pr(element: &Element) -> super::SpPr {
+    sp_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c14:spPr` into a `SpPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sp_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SpPr {
+    sp_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c14:spPr` into a `SpPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sp_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::SpPr {
     let mut node = super::SpPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SP_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SP_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bw_mode),
@@ -368,8 +555,23 @@ pub fn sp_pr(element: &Element) -> super::SpPr {
 /// Read `c14:style` into a `Style`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style(element: &Element) -> super::Style {
+    style_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `c14:style` into a `Style` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn style_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Style {
+    style_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `c14:style` into a `Style` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn style_from_item(item: officekit_markup_base::Item<'_>) -> super::Style {
     let mut node = super::Style::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::STYLE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::STYLE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);

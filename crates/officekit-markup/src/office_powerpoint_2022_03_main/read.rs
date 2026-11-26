@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `p223:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p223:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p223:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -235,8 +250,24 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `p223:instance` into a `Instance`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn instance(element: &Element) -> super::Instance {
+    instance_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p223:instance` into a `Instance` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn instance_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Instance {
+    instance_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p223:instance` into a `Instance` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn instance_from_item(item: officekit_markup_base::Item<'_>) -> super::Instance {
     let mut node = super::Instance::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::INSTANCE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::INSTANCE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.time),
@@ -252,8 +283,24 @@ pub fn instance(element: &Element) -> super::Instance {
 /// Read `p223:reactions` into a `Reactions`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn reactions(element: &Element) -> super::Reactions {
+    reactions_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p223:reactions` into a `Reactions` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn reactions_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Reactions {
+    reactions_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p223:reactions` into a `Reactions` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn reactions_from_item(item: officekit_markup_base::Item<'_>) -> super::Reactions {
     let mut node = super::Reactions::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::REACTIONS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::REACTIONS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.rxn);
@@ -266,8 +313,23 @@ pub fn reactions(element: &Element) -> super::Reactions {
 /// Read `p223:rxn` into a `Rxn`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rxn(element: &Element) -> super::Rxn {
+    rxn_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p223:rxn` into a `Rxn` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rxn_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Rxn {
+    rxn_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p223:rxn` into a `Rxn` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rxn_from_item(item: officekit_markup_base::Item<'_>) -> super::Rxn {
     let mut node = super::Rxn::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::RXN_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::RXN_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r#type),

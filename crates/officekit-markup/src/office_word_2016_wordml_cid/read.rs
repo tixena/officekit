@@ -221,8 +221,24 @@ use officekit_xml::element::Element;
 /// Read `w16cid:commentId` into a `CommentId`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_id(element: &Element) -> super::CommentId {
+    comment_id_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `w16cid:commentId` into a `CommentId` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_id_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CommentId {
+    comment_id_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `w16cid:commentId` into a `CommentId` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comment_id_from_item(item: officekit_markup_base::Item<'_>) -> super::CommentId {
     let mut node = super::CommentId::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENT_ID_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMMENT_ID_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.para_id),
@@ -237,8 +253,25 @@ pub fn comment_id(element: &Element) -> super::CommentId {
 /// Read `w16cid:commentsIds` into a `CommentsIds`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comments_ids(element: &Element) -> super::CommentsIds {
+    comments_ids_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `w16cid:commentsIds` into a `CommentsIds` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comments_ids_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CommentsIds {
+    comments_ids_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `w16cid:commentsIds` into a `CommentsIds` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn comments_ids_from_item(item: officekit_markup_base::Item<'_>) -> super::CommentsIds {
     let mut node = super::CommentsIds::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENTS_IDS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::COMMENTS_IDS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.comment_id);

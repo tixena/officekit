@@ -224,7 +224,7 @@ pub mod write;
 use core::mem;
 use officekit_markup_base::UserData;
 use officekit_markup_base::common_simple_types;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
 
@@ -9951,8 +9951,8 @@ impl<X: UserData> ApplyToEndWith<X> {
 }
 
 impl officekit_markup_base::Read for ApplyToEnd {
-    fn read(element: &Element) -> Self {
-        read::apply_to_end(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::apply_to_end_from_item(item)
     }
 }
 
@@ -9989,8 +9989,8 @@ impl<X: UserData> ApplyToFrontWith<X> {
 }
 
 impl officekit_markup_base::Read for ApplyToFront {
-    fn read(element: &Element) -> Self {
-        read::apply_to_front(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::apply_to_front_from_item(item)
     }
 }
 
@@ -10027,8 +10027,8 @@ impl<X: UserData> ApplyToSidesWith<X> {
 }
 
 impl officekit_markup_base::Read for ApplyToSides {
-    fn read(element: &Element) -> Self {
-        read::apply_to_sides(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::apply_to_sides_from_item(item)
     }
 }
 
@@ -10093,8 +10093,8 @@ impl<X: UserData> Area3DChartWith<X> {
 }
 
 impl officekit_markup_base::Read for Area3DChart {
-    fn read(element: &Element) -> Self {
-        read::area3d_chart(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::area3d_chart_from_item(item)
     }
 }
 
@@ -10175,8 +10175,8 @@ impl<X: UserData> AreaChartSeriesWith<X> {
 }
 
 impl officekit_markup_base::Read for AreaChartSeries {
-    fn read(element: &Element) -> Self {
-        read::area_chart_series(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::area_chart_series_from_item(item)
     }
 }
 
@@ -10237,8 +10237,8 @@ impl<X: UserData> AreaChartsWith<X> {
 }
 
 impl officekit_markup_base::Read for AreaCharts {
-    fn read(element: &Element) -> Self {
-        read::area_charts(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::area_charts_from_item(item)
     }
 }
 
@@ -10275,8 +10275,8 @@ impl<X: UserData> AutoTitleIsDeletedWith<X> {
 }
 
 impl officekit_markup_base::Read for AutoTitleIsDeleted {
-    fn read(element: &Element) -> Self {
-        read::auto_title_is_deleted(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::auto_title_is_deleted_from_item(item)
     }
 }
 
@@ -10313,8 +10313,8 @@ impl<X: UserData> AutomaticCategoryAxisWith<X> {
 }
 
 impl officekit_markup_base::Read for AutomaticCategoryAxis {
-    fn read(element: &Element) -> Self {
-        read::automatic_category_axis(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::automatic_category_axis_from_item(item)
     }
 }
 
@@ -10347,11 +10347,11 @@ impl officekit_markup_base::Read for AxisCrossingContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_C, "crosses")) => Self::Crosses(officekit_markup_base::read(element)),
-            Some((NS_C, "crossesAt")) => Self::CrossingValue(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_C, "crosses")) => Self::Crosses(item.read()),
+            Some((NS_C, "crossesAt")) => Self::CrossingValue(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -10405,16 +10405,14 @@ impl officekit_markup_base::Read for AxisDataSourceContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_C, "multiLvlStrRef")) => {
-                Self::MultiLevelStringReference(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "numLit")) => Self::NumberLiteral(officekit_markup_base::read(element)),
-            Some((NS_C, "numRef")) => Self::NumberReference(officekit_markup_base::read(element)),
-            Some((NS_C, "strLit")) => Self::StringLiteral(officekit_markup_base::read(element)),
-            Some((NS_C, "strRef")) => Self::StringReference(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_C, "multiLvlStrRef")) => Self::MultiLevelStringReference(item.read()),
+            Some((NS_C, "numLit")) => Self::NumberLiteral(item.read()),
+            Some((NS_C, "numRef")) => Self::NumberReference(item.read()),
+            Some((NS_C, "strLit")) => Self::StringLiteral(item.read()),
+            Some((NS_C, "strRef")) => Self::StringReference(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -10489,8 +10487,8 @@ impl<X: UserData> AxisIDWith<X> {
 }
 
 impl officekit_markup_base::Read for AxisID {
-    fn read(element: &Element) -> Self {
-        read::axis_id(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::axis_id_from_item(item)
     }
 }
 
@@ -10527,8 +10525,8 @@ impl<X: UserData> AxisOrientationWith<X> {
 }
 
 impl officekit_markup_base::Read for AxisOrientation {
-    fn read(element: &Element) -> Self {
-        read::axis_orientation(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::axis_orientation_from_item(item)
     }
 }
 
@@ -10565,8 +10563,8 @@ impl<X: UserData> AxisPositionWith<X> {
 }
 
 impl officekit_markup_base::Read for AxisPosition {
-    fn read(element: &Element) -> Self {
-        read::axis_position(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::axis_position_from_item(item)
     }
 }
 
@@ -10638,8 +10636,8 @@ impl<X: UserData> BackWallWith<X> {
 }
 
 impl officekit_markup_base::Read for BackWall {
-    fn read(element: &Element) -> Self {
-        read::back_wall(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::back_wall_from_item(item)
     }
 }
 
@@ -10676,8 +10674,8 @@ impl<X: UserData> BackwardWith<X> {
 }
 
 impl officekit_markup_base::Read for Backward {
-    fn read(element: &Element) -> Self {
-        read::backward(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::backward_from_item(item)
     }
 }
 
@@ -10718,8 +10716,8 @@ impl<X: UserData> BandFormatWith<X> {
 }
 
 impl officekit_markup_base::Read for BandFormat {
-    fn read(element: &Element) -> Self {
-        read::band_format(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::band_format_from_item(item)
     }
 }
 
@@ -10756,8 +10754,8 @@ impl<X: UserData> BandFormatsWith<X> {
 }
 
 impl officekit_markup_base::Read for BandFormats {
-    fn read(element: &Element) -> Self {
-        read::band_formats(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::band_formats_from_item(item)
     }
 }
 
@@ -10830,8 +10828,8 @@ impl<X: UserData> Bar3DChartWith<X> {
 }
 
 impl officekit_markup_base::Read for Bar3DChart {
-    fn read(element: &Element) -> Self {
-        read::bar3d_chart(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bar3d_chart_from_item(item)
     }
 }
 
@@ -10920,8 +10918,8 @@ impl<X: UserData> BarChartSeriesWith<X> {
 }
 
 impl officekit_markup_base::Read for BarChartSeries {
-    fn read(element: &Element) -> Self {
-        read::bar_chart_series(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bar_chart_series_from_item(item)
     }
 }
 
@@ -10994,8 +10992,8 @@ impl<X: UserData> BarChartsWith<X> {
 }
 
 impl officekit_markup_base::Read for BarCharts {
-    fn read(element: &Element) -> Self {
-        read::bar_charts(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bar_charts_from_item(item)
     }
 }
 
@@ -11032,8 +11030,8 @@ impl<X: UserData> BarDirectionWith<X> {
 }
 
 impl officekit_markup_base::Read for BarDirection {
-    fn read(element: &Element) -> Self {
-        read::bar_direction(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bar_direction_from_item(item)
     }
 }
 
@@ -11070,8 +11068,8 @@ impl<X: UserData> BarGroupingWith<X> {
 }
 
 impl officekit_markup_base::Read for BarGrouping {
-    fn read(element: &Element) -> Self {
-        read::bar_grouping(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bar_grouping_from_item(item)
     }
 }
 
@@ -11108,8 +11106,8 @@ impl<X: UserData> BaseTimeUnitWith<X> {
 }
 
 impl officekit_markup_base::Read for BaseTimeUnit {
-    fn read(element: &Element) -> Self {
-        read::base_time_unit(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::base_time_unit_from_item(item)
     }
 }
 
@@ -11146,8 +11144,8 @@ impl<X: UserData> Bubble3DWith<X> {
 }
 
 impl officekit_markup_base::Read for Bubble3D {
-    fn read(element: &Element) -> Self {
-        read::bubble3d(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bubble3d_from_item(item)
     }
 }
 
@@ -11236,8 +11234,8 @@ impl<X: UserData> BubbleChartSeriesWith<X> {
 }
 
 impl officekit_markup_base::Read for BubbleChartSeries {
-    fn read(element: &Element) -> Self {
-        read::bubble_chart_series(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bubble_chart_series_from_item(item)
     }
 }
 
@@ -11306,8 +11304,8 @@ impl<X: UserData> BubbleChartsWith<X> {
 }
 
 impl officekit_markup_base::Read for BubbleCharts {
-    fn read(element: &Element) -> Self {
-        read::bubble_charts(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bubble_charts_from_item(item)
     }
 }
 
@@ -11344,8 +11342,8 @@ impl<X: UserData> BubbleScaleWith<X> {
 }
 
 impl officekit_markup_base::Read for BubbleScale {
-    fn read(element: &Element) -> Self {
-        read::bubble_scale(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bubble_scale_from_item(item)
     }
 }
 
@@ -11432,8 +11430,8 @@ impl<X: UserData> BubbleSizeWith<X> {
 }
 
 impl officekit_markup_base::Read for BubbleSize {
-    fn read(element: &Element) -> Self {
-        read::bubble_size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bubble_size_from_item(item)
     }
 }
 
@@ -11470,8 +11468,8 @@ impl<X: UserData> BuiltInDisplayUnitValueWith<X> {
 }
 
 impl officekit_markup_base::Read for BuiltInDisplayUnitValue {
-    fn read(element: &Element) -> Self {
-        read::built_in_display_unit_value(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::built_in_display_unit_value_from_item(item)
     }
 }
 
@@ -11564,8 +11562,8 @@ impl<X: UserData> CategoryAxisDataCatWith<X> {
 }
 
 impl officekit_markup_base::Read for CategoryAxisDataCat {
-    fn read(element: &Element) -> Self {
-        read::category_axis_data_cat(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::category_axis_data_cat_from_item(item)
     }
 }
 
@@ -11598,8 +11596,8 @@ impl<X: UserData> CategoryAxisDataCatAxWith<X> {
 }
 
 impl officekit_markup_base::Read for CategoryAxisDataCatAx {
-    fn read(element: &Element) -> Self {
-        read::category_axis_data_cat_ax(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::category_axis_data_cat_ax_from_item(item)
     }
 }
 
@@ -11684,8 +11682,8 @@ impl<X: UserData> ChartWith<X> {
 }
 
 impl officekit_markup_base::Read for Chart {
-    fn read(element: &Element) -> Self {
-        read::chart(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::chart_from_item(item)
     }
 }
 
@@ -11722,8 +11720,8 @@ impl<X: UserData> ChartExtensibilityWith<X> {
 }
 
 impl officekit_markup_base::Read for ChartExtensibility {
-    fn read(element: &Element) -> Self {
-        read::chart_extensibility(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::chart_extensibility_from_item(item)
     }
 }
 
@@ -11760,8 +11758,8 @@ impl<X: UserData> ChartObjectWith<X> {
 }
 
 impl officekit_markup_base::Read for ChartObject {
-    fn read(element: &Element) -> Self {
-        read::chart_object(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::chart_object_from_item(item)
     }
 }
 
@@ -11854,8 +11852,8 @@ impl<X: UserData> ChartSpaceWith<X> {
 }
 
 impl officekit_markup_base::Read for ChartSpace {
-    fn read(element: &Element) -> Self {
-        read::chart_space(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::chart_space_from_item(item)
     }
 }
 
@@ -11892,8 +11890,8 @@ impl<X: UserData> ChartTextWith<X> {
 }
 
 impl officekit_markup_base::Read for ChartText {
-    fn read(element: &Element) -> Self {
-        read::chart_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::chart_text_from_item(item)
     }
 }
 
@@ -11932,11 +11930,11 @@ impl officekit_markup_base::Read for ChartTextContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_C, "rich")) => Self::RichText(officekit_markup_base::read(element)),
-            Some((NS_C, "strRef")) => Self::StringReference(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_C, "rich")) => Self::RichText(item.read()),
+            Some((NS_C, "strRef")) => Self::StringReference(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -12003,8 +12001,8 @@ impl<X: UserData> ColorMapOverrideWith<X> {
 }
 
 impl officekit_markup_base::Read for ColorMapOverride {
-    fn read(element: &Element) -> Self {
-        read::color_map_override(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::color_map_override_from_item(item)
     }
 }
 
@@ -12041,8 +12039,8 @@ impl<X: UserData> CrossBetweenWith<X> {
 }
 
 impl officekit_markup_base::Read for CrossBetween {
-    fn read(element: &Element) -> Self {
-        read::cross_between(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cross_between_from_item(item)
     }
 }
 
@@ -12079,8 +12077,8 @@ impl<X: UserData> CrossesWith<X> {
 }
 
 impl officekit_markup_base::Read for Crosses {
-    fn read(element: &Element) -> Self {
-        read::crosses(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::crosses_from_item(item)
     }
 }
 
@@ -12117,8 +12115,8 @@ impl<X: UserData> CrossingAxisIDWith<X> {
 }
 
 impl officekit_markup_base::Read for CrossingAxisID {
-    fn read(element: &Element) -> Self {
-        read::crossing_axis_id(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::crossing_axis_id_from_item(item)
     }
 }
 
@@ -12155,8 +12153,8 @@ impl<X: UserData> CrossingValueWith<X> {
 }
 
 impl officekit_markup_base::Read for CrossingValue {
-    fn read(element: &Element) -> Self {
-        read::crossing_value(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::crossing_value_from_item(item)
     }
 }
 
@@ -12193,8 +12191,8 @@ impl<X: UserData> CustomDisplayUnitWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomDisplayUnit {
-    fn read(element: &Element) -> Self {
-        read::custom_display_unit(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_display_unit_from_item(item)
     }
 }
 
@@ -12231,8 +12229,8 @@ impl<X: UserData> CustomSplitWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomSplit {
-    fn read(element: &Element) -> Self {
-        read::custom_split(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_split_from_item(item)
     }
 }
 
@@ -12269,8 +12267,8 @@ impl<X: UserData> DataCannotBeChangedWith<X> {
 }
 
 impl officekit_markup_base::Read for DataCannotBeChanged {
-    fn read(element: &Element) -> Self {
-        read::data_cannot_be_changed(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_cannot_be_changed_from_item(item)
     }
 }
 
@@ -12315,8 +12313,8 @@ impl<X: UserData> DataLabelWith<X> {
 }
 
 impl officekit_markup_base::Read for DataLabel {
-    fn read(element: &Element) -> Self {
-        read::data_label(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_label_from_item(item)
     }
 }
 
@@ -12371,33 +12369,23 @@ impl officekit_markup_base::Read for DataLabelContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_C, "tx")) => Self::ChartText(officekit_markup_base::read(element)),
-            Some((NS_C, "dLblPos")) => {
-                Self::DataLabelPosition(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "delete")) => Self::Delete(officekit_markup_base::read(element)),
-            Some((NS_C, "layout")) => Self::Layout(officekit_markup_base::read(element)),
-            Some((NS_C, "numFmt")) => Self::NumberFormat(officekit_markup_base::read(element)),
-            Some((NS_C, "separator")) => Self::Separator(officekit_markup_base::read(element)),
-            Some((NS_C, "spPr")) => Self::ShapeProperties(officekit_markup_base::read(element)),
-            Some((NS_C, "showBubbleSize")) => {
-                Self::ShowBubbleSize(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "showCatName")) => {
-                Self::ShowCategoryName(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "showLegendKey")) => {
-                Self::ShowLegendKey(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "showPercent")) => Self::ShowPercent(officekit_markup_base::read(element)),
-            Some((NS_C, "showSerName")) => {
-                Self::ShowSeriesName(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "showVal")) => Self::ShowValue(officekit_markup_base::read(element)),
-            Some((NS_C, "txPr")) => Self::TextProperties(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_C, "tx")) => Self::ChartText(item.read()),
+            Some((NS_C, "dLblPos")) => Self::DataLabelPosition(item.read()),
+            Some((NS_C, "delete")) => Self::Delete(item.read()),
+            Some((NS_C, "layout")) => Self::Layout(item.read()),
+            Some((NS_C, "numFmt")) => Self::NumberFormat(item.read()),
+            Some((NS_C, "separator")) => Self::Separator(item.read()),
+            Some((NS_C, "spPr")) => Self::ShapeProperties(item.read()),
+            Some((NS_C, "showBubbleSize")) => Self::ShowBubbleSize(item.read()),
+            Some((NS_C, "showCatName")) => Self::ShowCategoryName(item.read()),
+            Some((NS_C, "showLegendKey")) => Self::ShowLegendKey(item.read()),
+            Some((NS_C, "showPercent")) => Self::ShowPercent(item.read()),
+            Some((NS_C, "showSerName")) => Self::ShowSeriesName(item.read()),
+            Some((NS_C, "showVal")) => Self::ShowValue(item.read()),
+            Some((NS_C, "txPr")) => Self::TextProperties(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -12486,8 +12474,8 @@ impl<X: UserData> DataLabelPositionWith<X> {
 }
 
 impl officekit_markup_base::Read for DataLabelPosition {
-    fn read(element: &Element) -> Self {
-        read::data_label_position(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_label_position_from_item(item)
     }
 }
 
@@ -12532,8 +12520,8 @@ impl<X: UserData> DataLabelsWith<X> {
 }
 
 impl officekit_markup_base::Read for DataLabels {
-    fn read(element: &Element) -> Self {
-        read::data_labels(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_labels_from_item(item)
     }
 }
 
@@ -12592,35 +12580,23 @@ impl officekit_markup_base::Read for DataLabelsContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_C, "dLblPos")) => {
-                Self::DataLabelPosition(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "delete")) => Self::Delete(officekit_markup_base::read(element)),
-            Some((NS_C, "leaderLines")) => Self::LeaderLines(officekit_markup_base::read(element)),
-            Some((NS_C, "numFmt")) => Self::NumberFormat(officekit_markup_base::read(element)),
-            Some((NS_C, "separator")) => Self::Separator(officekit_markup_base::read(element)),
-            Some((NS_C, "spPr")) => Self::ShapeProperties(officekit_markup_base::read(element)),
-            Some((NS_C, "showBubbleSize")) => {
-                Self::ShowBubbleSize(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "showCatName")) => {
-                Self::ShowCategoryName(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "showLeaderLines")) => {
-                Self::ShowLeaderLines(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "showLegendKey")) => {
-                Self::ShowLegendKey(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "showPercent")) => Self::ShowPercent(officekit_markup_base::read(element)),
-            Some((NS_C, "showSerName")) => {
-                Self::ShowSeriesName(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "showVal")) => Self::ShowValue(officekit_markup_base::read(element)),
-            Some((NS_C, "txPr")) => Self::TextProperties(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_C, "dLblPos")) => Self::DataLabelPosition(item.read()),
+            Some((NS_C, "delete")) => Self::Delete(item.read()),
+            Some((NS_C, "leaderLines")) => Self::LeaderLines(item.read()),
+            Some((NS_C, "numFmt")) => Self::NumberFormat(item.read()),
+            Some((NS_C, "separator")) => Self::Separator(item.read()),
+            Some((NS_C, "spPr")) => Self::ShapeProperties(item.read()),
+            Some((NS_C, "showBubbleSize")) => Self::ShowBubbleSize(item.read()),
+            Some((NS_C, "showCatName")) => Self::ShowCategoryName(item.read()),
+            Some((NS_C, "showLeaderLines")) => Self::ShowLeaderLines(item.read()),
+            Some((NS_C, "showLegendKey")) => Self::ShowLegendKey(item.read()),
+            Some((NS_C, "showPercent")) => Self::ShowPercent(item.read()),
+            Some((NS_C, "showSerName")) => Self::ShowSeriesName(item.read()),
+            Some((NS_C, "showVal")) => Self::ShowValue(item.read()),
+            Some((NS_C, "txPr")) => Self::TextProperties(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -12739,8 +12715,8 @@ impl<X: UserData> DataPointWith<X> {
 }
 
 impl officekit_markup_base::Read for DataPoint {
-    fn read(element: &Element) -> Self {
-        read::data_point(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_point_from_item(item)
     }
 }
 
@@ -12801,8 +12777,8 @@ impl<X: UserData> DataTableWith<X> {
 }
 
 impl officekit_markup_base::Read for DataTable {
-    fn read(element: &Element) -> Self {
-        read::data_table(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_table_from_item(item)
     }
 }
 
@@ -12839,8 +12815,8 @@ impl<X: UserData> Date1904With<X> {
 }
 
 impl officekit_markup_base::Read for Date1904 {
-    fn read(element: &Element) -> Self {
-        read::date1904(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::date1904_from_item(item)
     }
 }
 
@@ -12873,8 +12849,8 @@ impl<X: UserData> DateAxisWith<X> {
 }
 
 impl officekit_markup_base::Read for DateAxis {
-    fn read(element: &Element) -> Self {
-        read::date_axis(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::date_axis_from_item(item)
     }
 }
 
@@ -12911,8 +12887,8 @@ impl<X: UserData> DeleteWith<X> {
 }
 
 impl officekit_markup_base::Read for Delete {
-    fn read(element: &Element) -> Self {
-        read::delete(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::delete_from_item(item)
     }
 }
 
@@ -12949,8 +12925,8 @@ impl<X: UserData> DepthPercentWith<X> {
 }
 
 impl officekit_markup_base::Read for DepthPercent {
-    fn read(element: &Element) -> Self {
-        read::depth_percent(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::depth_percent_from_item(item)
     }
 }
 
@@ -13060,8 +13036,8 @@ impl<X: UserData> DisplayBlanksAsWith<X> {
 }
 
 impl officekit_markup_base::Read for DisplayBlanksAs {
-    fn read(element: &Element) -> Self {
-        read::display_blanks_as(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::display_blanks_as_from_item(item)
     }
 }
 
@@ -13098,8 +13074,8 @@ impl<X: UserData> DisplayEquationWith<X> {
 }
 
 impl officekit_markup_base::Read for DisplayEquation {
-    fn read(element: &Element) -> Self {
-        read::display_equation(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::display_equation_from_item(item)
     }
 }
 
@@ -13136,8 +13112,8 @@ impl<X: UserData> DisplayRSquaredValueWith<X> {
 }
 
 impl officekit_markup_base::Read for DisplayRSquaredValue {
-    fn read(element: &Element) -> Self {
-        read::display_r_squared_value(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::display_r_squared_value_from_item(item)
     }
 }
 
@@ -13182,8 +13158,8 @@ impl<X: UserData> DisplayUnitsWith<X> {
 }
 
 impl officekit_markup_base::Read for DisplayUnits {
-    fn read(element: &Element) -> Self {
-        read::display_units(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::display_units_from_item(item)
     }
 }
 
@@ -13224,15 +13200,11 @@ impl officekit_markup_base::Read for DisplayUnitsContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_C, "builtInUnit")) => {
-                Self::BuiltInDisplayUnitValue(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "custUnit")) => {
-                Self::CustomDisplayUnit(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_C, "builtInUnit")) => Self::BuiltInDisplayUnitValue(item.read()),
+            Some((NS_C, "custUnit")) => Self::CustomDisplayUnit(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -13285,8 +13257,8 @@ impl<X: UserData> DisplayUnitsLabelWith<X> {
 }
 
 impl officekit_markup_base::Read for DisplayUnitsLabel {
-    fn read(element: &Element) -> Self {
-        read::display_units_label(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::display_units_label_from_item(item)
     }
 }
 
@@ -13343,8 +13315,8 @@ impl<X: UserData> DoughnutChartsWith<X> {
 }
 
 impl officekit_markup_base::Read for DoughnutCharts {
-    fn read(element: &Element) -> Self {
-        read::doughnut_charts(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::doughnut_charts_from_item(item)
     }
 }
 
@@ -13381,8 +13353,8 @@ impl<X: UserData> DownBarsWith<X> {
 }
 
 impl officekit_markup_base::Read for DownBars {
-    fn read(element: &Element) -> Self {
-        read::down_bars(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::down_bars_from_item(item)
     }
 }
 
@@ -13419,8 +13391,8 @@ impl<X: UserData> DropLinesWith<X> {
 }
 
 impl officekit_markup_base::Read for DropLines {
-    fn read(element: &Element) -> Self {
-        read::drop_lines(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drop_lines_from_item(item)
     }
 }
 
@@ -13457,8 +13429,8 @@ impl<X: UserData> EditingLanguageWith<X> {
 }
 
 impl officekit_markup_base::Read for EditingLanguage {
-    fn read(element: &Element) -> Self {
-        read::editing_language(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::editing_language_from_item(item)
     }
 }
 
@@ -13495,8 +13467,8 @@ impl<X: UserData> ErrorBarDirectionWith<X> {
 }
 
 impl officekit_markup_base::Read for ErrorBarDirection {
-    fn read(element: &Element) -> Self {
-        read::error_bar_direction(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::error_bar_direction_from_item(item)
     }
 }
 
@@ -13533,8 +13505,8 @@ impl<X: UserData> ErrorBarTypeWith<X> {
 }
 
 impl officekit_markup_base::Read for ErrorBarType {
-    fn read(element: &Element) -> Self {
-        read::error_bar_type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::error_bar_type_from_item(item)
     }
 }
 
@@ -13571,8 +13543,8 @@ impl<X: UserData> ErrorBarValueWith<X> {
 }
 
 impl officekit_markup_base::Read for ErrorBarValue {
-    fn read(element: &Element) -> Self {
-        read::error_bar_value(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::error_bar_value_from_item(item)
     }
 }
 
@@ -13609,8 +13581,8 @@ impl<X: UserData> ErrorBarValueTypeWith<X> {
 }
 
 impl officekit_markup_base::Read for ErrorBarValueType {
-    fn read(element: &Element) -> Self {
-        read::error_bar_value_type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::error_bar_value_type_from_item(item)
     }
 }
 
@@ -13679,8 +13651,8 @@ impl<X: UserData> ErrorBarsWith<X> {
 }
 
 impl officekit_markup_base::Read for ErrorBars {
-    fn read(element: &Element) -> Self {
-        read::error_bars(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::error_bars_from_item(item)
     }
 }
 
@@ -13769,8 +13741,8 @@ impl<X: UserData> EvenFooterWith<X> {
 }
 
 impl officekit_markup_base::Read for EvenFooter {
-    fn read(element: &Element) -> Self {
-        read::even_footer(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::even_footer_from_item(item)
     }
 }
 
@@ -13807,8 +13779,8 @@ impl<X: UserData> EvenHeaderWith<X> {
 }
 
 impl officekit_markup_base::Read for EvenHeader {
-    fn read(element: &Element) -> Self {
-        read::even_header(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::even_header_from_item(item)
     }
 }
 
@@ -13845,8 +13817,8 @@ impl<X: UserData> ExplosionWith<X> {
 }
 
 impl officekit_markup_base::Read for Explosion {
-    fn read(element: &Element) -> Self {
-        read::explosion(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::explosion_from_item(item)
     }
 }
 
@@ -13887,8 +13859,8 @@ impl<X: UserData> ExtensionWith<X> {
 }
 
 impl officekit_markup_base::Read for Extension {
-    fn read(element: &Element) -> Self {
-        read::extension(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::extension_from_item(item)
     }
 }
 
@@ -13929,8 +13901,8 @@ impl<X: UserData> ExternalDataRelationshipWith<X> {
 }
 
 impl officekit_markup_base::Read for ExternalDataRelationship {
-    fn read(element: &Element) -> Self {
-        read::external_data_relationship(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::external_data_relationship_from_item(item)
     }
 }
 
@@ -13967,8 +13939,8 @@ impl<X: UserData> FirstFooterWith<X> {
 }
 
 impl officekit_markup_base::Read for FirstFooter {
-    fn read(element: &Element) -> Self {
-        read::first_footer(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::first_footer_from_item(item)
     }
 }
 
@@ -14005,8 +13977,8 @@ impl<X: UserData> FirstHeaderWith<X> {
 }
 
 impl officekit_markup_base::Read for FirstHeader {
-    fn read(element: &Element) -> Self {
-        read::first_header(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::first_header_from_item(item)
     }
 }
 
@@ -14043,8 +14015,8 @@ impl<X: UserData> FirstSliceAngleWith<X> {
 }
 
 impl officekit_markup_base::Read for FirstSliceAngle {
-    fn read(element: &Element) -> Self {
-        read::first_slice_angle(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::first_slice_angle_from_item(item)
     }
 }
 
@@ -14093,8 +14065,8 @@ impl<X: UserData> FloorWith<X> {
 }
 
 impl officekit_markup_base::Read for Floor {
-    fn read(element: &Element) -> Self {
-        read::floor(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::floor_from_item(item)
     }
 }
 
@@ -14131,8 +14103,8 @@ impl<X: UserData> FormatCodeWith<X> {
 }
 
 impl officekit_markup_base::Read for FormatCode {
-    fn read(element: &Element) -> Self {
-        read::format_code(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::format_code_from_item(item)
     }
 }
 
@@ -14169,8 +14141,8 @@ impl<X: UserData> FormatIDWith<X> {
 }
 
 impl officekit_markup_base::Read for FormatID {
-    fn read(element: &Element) -> Self {
-        read::format_id(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::format_id_from_item(item)
     }
 }
 
@@ -14207,8 +14179,8 @@ impl<X: UserData> FormattingWith<X> {
 }
 
 impl officekit_markup_base::Read for Formatting {
-    fn read(element: &Element) -> Self {
-        read::formatting(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::formatting_from_item(item)
     }
 }
 
@@ -14245,8 +14217,8 @@ impl<X: UserData> FormulaWith<X> {
 }
 
 impl officekit_markup_base::Read for Formula {
-    fn read(element: &Element) -> Self {
-        read::formula(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::formula_from_item(item)
     }
 }
 
@@ -14283,8 +14255,8 @@ impl<X: UserData> ForwardWith<X> {
 }
 
 impl officekit_markup_base::Read for Forward {
-    fn read(element: &Element) -> Self {
-        read::forward(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::forward_from_item(item)
     }
 }
 
@@ -14402,8 +14374,8 @@ impl<X: UserData> GapDepthWith<X> {
 }
 
 impl officekit_markup_base::Read for GapDepth {
-    fn read(element: &Element) -> Self {
-        read::gap_depth(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::gap_depth_from_item(item)
     }
 }
 
@@ -14440,8 +14412,8 @@ impl<X: UserData> GapWidthWith<X> {
 }
 
 impl officekit_markup_base::Read for GapWidth {
-    fn read(element: &Element) -> Self {
-        read::gap_width(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::gap_width_from_item(item)
     }
 }
 
@@ -14478,8 +14450,8 @@ impl<X: UserData> GroupingWith<X> {
 }
 
 impl officekit_markup_base::Read for Grouping {
-    fn read(element: &Element) -> Self {
-        read::grouping(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::grouping_from_item(item)
     }
 }
 
@@ -14544,8 +14516,8 @@ impl<X: UserData> HeaderAndFooterWith<X> {
 }
 
 impl officekit_markup_base::Read for HeaderAndFooter {
-    fn read(element: &Element) -> Self {
-        read::header_and_footer(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::header_and_footer_from_item(item)
     }
 }
 
@@ -14582,8 +14554,8 @@ impl<X: UserData> HeightWith<X> {
 }
 
 impl officekit_markup_base::Read for Height {
-    fn read(element: &Element) -> Self {
-        read::height(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::height_from_item(item)
     }
 }
 
@@ -14620,8 +14592,8 @@ impl<X: UserData> HeightModeWith<X> {
 }
 
 impl officekit_markup_base::Read for HeightMode {
-    fn read(element: &Element) -> Self {
-        read::height_mode(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::height_mode_from_item(item)
     }
 }
 
@@ -14658,8 +14630,8 @@ impl<X: UserData> HeightPercentWith<X> {
 }
 
 impl officekit_markup_base::Read for HeightPercent {
-    fn read(element: &Element) -> Self {
-        read::height_percent(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::height_percent_from_item(item)
     }
 }
 
@@ -14723,8 +14695,8 @@ impl<X: UserData> HighLowLinesWith<X> {
 }
 
 impl officekit_markup_base::Read for HighLowLines {
-    fn read(element: &Element) -> Self {
-        read::high_low_lines(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::high_low_lines_from_item(item)
     }
 }
 
@@ -14761,8 +14733,8 @@ impl<X: UserData> HoleSizeWith<X> {
 }
 
 impl officekit_markup_base::Read for HoleSize {
-    fn read(element: &Element) -> Self {
-        read::hole_size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hole_size_from_item(item)
     }
 }
 
@@ -14849,8 +14821,8 @@ impl<X: UserData> IndexWith<X> {
 }
 
 impl officekit_markup_base::Read for Index {
-    fn read(element: &Element) -> Self {
-        read::index(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::index_from_item(item)
     }
 }
 
@@ -14887,8 +14859,8 @@ impl<X: UserData> InterceptWith<X> {
 }
 
 impl officekit_markup_base::Read for Intercept {
-    fn read(element: &Element) -> Self {
-        read::intercept(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::intercept_from_item(item)
     }
 }
 
@@ -14925,8 +14897,8 @@ impl<X: UserData> InvertIfNegativeWith<X> {
 }
 
 impl officekit_markup_base::Read for InvertIfNegative {
-    fn read(element: &Element) -> Self {
-        read::invert_if_negative(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::invert_if_negative_from_item(item)
     }
 }
 
@@ -14963,8 +14935,8 @@ impl<X: UserData> LabelAlignmentWith<X> {
 }
 
 impl officekit_markup_base::Read for LabelAlignment {
-    fn read(element: &Element) -> Self {
-        read::label_alignment(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::label_alignment_from_item(item)
     }
 }
 
@@ -15001,8 +14973,8 @@ impl<X: UserData> LabelOffsetWith<X> {
 }
 
 impl officekit_markup_base::Read for LabelOffset {
-    fn read(element: &Element) -> Self {
-        read::label_offset(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::label_offset_from_item(item)
     }
 }
 
@@ -15093,8 +15065,8 @@ impl<X: UserData> LayoutWith<X> {
 }
 
 impl officekit_markup_base::Read for Layout {
-    fn read(element: &Element) -> Self {
-        read::layout(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::layout_from_item(item)
     }
 }
 
@@ -15178,8 +15150,8 @@ impl<X: UserData> LayoutTargetWith<X> {
 }
 
 impl officekit_markup_base::Read for LayoutTarget {
-    fn read(element: &Element) -> Self {
-        read::layout_target(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::layout_target_from_item(item)
     }
 }
 
@@ -15216,8 +15188,8 @@ impl<X: UserData> LeaderLinesWith<X> {
 }
 
 impl officekit_markup_base::Read for LeaderLines {
-    fn read(element: &Element) -> Self {
-        read::leader_lines(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::leader_lines_from_item(item)
     }
 }
 
@@ -15254,8 +15226,8 @@ impl<X: UserData> LeftWith<X> {
 }
 
 impl officekit_markup_base::Read for Left {
-    fn read(element: &Element) -> Self {
-        read::left(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::left_from_item(item)
     }
 }
 
@@ -15292,8 +15264,8 @@ impl<X: UserData> LeftModeWith<X> {
 }
 
 impl officekit_markup_base::Read for LeftMode {
-    fn read(element: &Element) -> Self {
-        read::left_mode(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::left_mode_from_item(item)
     }
 }
 
@@ -15330,8 +15302,8 @@ impl<X: UserData> LegacyDrawingForHeadersAndFootersWith<X> {
 }
 
 impl officekit_markup_base::Read for LegacyDrawingForHeadersAndFooters {
-    fn read(element: &Element) -> Self {
-        read::legacy_drawing_for_headers_and_footers(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::legacy_drawing_for_headers_and_footers_from_item(item)
     }
 }
 
@@ -15392,8 +15364,8 @@ impl<X: UserData> LegendWith<X> {
 }
 
 impl officekit_markup_base::Read for Legend {
-    fn read(element: &Element) -> Self {
-        read::legend(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::legend_from_item(item)
     }
 }
 
@@ -15438,8 +15410,8 @@ impl<X: UserData> LegendEntryWith<X> {
 }
 
 impl officekit_markup_base::Read for LegendEntry {
-    fn read(element: &Element) -> Self {
-        read::legend_entry(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::legend_entry_from_item(item)
     }
 }
 
@@ -15472,11 +15444,11 @@ impl officekit_markup_base::Read for LegendEntryContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_C, "delete")) => Self::Delete(officekit_markup_base::read(element)),
-            Some((NS_C, "txPr")) => Self::TextProperties(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_C, "delete")) => Self::Delete(item.read()),
+            Some((NS_C, "txPr")) => Self::TextProperties(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -15517,8 +15489,8 @@ impl<X: UserData> LegendPositionWith<X> {
 }
 
 impl officekit_markup_base::Read for LegendPosition {
-    fn read(element: &Element) -> Self {
-        read::legend_position(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::legend_position_from_item(item)
     }
 }
 
@@ -15555,8 +15527,8 @@ impl<X: UserData> LevelWith<X> {
 }
 
 impl officekit_markup_base::Read for Level {
-    fn read(element: &Element) -> Self {
-        read::level(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::level_from_item(item)
     }
 }
 
@@ -15621,8 +15593,8 @@ impl<X: UserData> Line3DChartWith<X> {
 }
 
 impl officekit_markup_base::Read for Line3DChart {
-    fn read(element: &Element) -> Self {
-        read::line3d_chart(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::line3d_chart_from_item(item)
     }
 }
 
@@ -15707,8 +15679,8 @@ impl<X: UserData> LineChartSeriesWith<X> {
 }
 
 impl officekit_markup_base::Read for LineChartSeries {
-    fn read(element: &Element) -> Self {
-        read::line_chart_series(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::line_chart_series_from_item(item)
     }
 }
 
@@ -15785,8 +15757,8 @@ impl<X: UserData> LineChartsWith<X> {
 }
 
 impl officekit_markup_base::Read for LineCharts {
-    fn read(element: &Element) -> Self {
-        read::line_charts(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::line_charts_from_item(item)
     }
 }
 
@@ -15823,8 +15795,8 @@ impl<X: UserData> LogarithmicBaseWith<X> {
 }
 
 impl officekit_markup_base::Read for LogarithmicBase {
-    fn read(element: &Element) -> Self {
-        read::logarithmic_base(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::logarithmic_base_from_item(item)
     }
 }
 
@@ -15861,8 +15833,8 @@ impl<X: UserData> MajorGridlinesWith<X> {
 }
 
 impl officekit_markup_base::Read for MajorGridlines {
-    fn read(element: &Element) -> Self {
-        read::major_gridlines(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::major_gridlines_from_item(item)
     }
 }
 
@@ -15899,8 +15871,8 @@ impl<X: UserData> MajorTickMarkWith<X> {
 }
 
 impl officekit_markup_base::Read for MajorTickMark {
-    fn read(element: &Element) -> Self {
-        read::major_tick_mark(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::major_tick_mark_from_item(item)
     }
 }
 
@@ -15937,8 +15909,8 @@ impl<X: UserData> MajorTimeUnitWith<X> {
 }
 
 impl officekit_markup_base::Read for MajorTimeUnit {
-    fn read(element: &Element) -> Self {
-        read::major_time_unit(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::major_time_unit_from_item(item)
     }
 }
 
@@ -15975,8 +15947,8 @@ impl<X: UserData> MajorUnitWith<X> {
 }
 
 impl officekit_markup_base::Read for MajorUnit {
-    fn read(element: &Element) -> Self {
-        read::major_unit(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::major_unit_from_item(item)
     }
 }
 
@@ -16049,8 +16021,8 @@ impl<X: UserData> ManualLayoutWith<X> {
 }
 
 impl officekit_markup_base::Read for ManualLayout {
-    fn read(element: &Element) -> Self {
-        read::manual_layout(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::manual_layout_from_item(item)
     }
 }
 
@@ -16099,8 +16071,8 @@ impl<X: UserData> MarkerWith<X> {
 }
 
 impl officekit_markup_base::Read for Marker {
-    fn read(element: &Element) -> Self {
-        read::marker(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::marker_from_item(item)
     }
 }
 
@@ -16219,8 +16191,8 @@ impl<X: UserData> MaximumWith<X> {
 }
 
 impl officekit_markup_base::Read for Maximum {
-    fn read(element: &Element) -> Self {
-        read::maximum(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::maximum_from_item(item)
     }
 }
 
@@ -16257,8 +16229,8 @@ impl<X: UserData> MinimumWith<X> {
 }
 
 impl officekit_markup_base::Read for Minimum {
-    fn read(element: &Element) -> Self {
-        read::minimum(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::minimum_from_item(item)
     }
 }
 
@@ -16295,8 +16267,8 @@ impl<X: UserData> MinorGridlinesWith<X> {
 }
 
 impl officekit_markup_base::Read for MinorGridlines {
-    fn read(element: &Element) -> Self {
-        read::minor_gridlines(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::minor_gridlines_from_item(item)
     }
 }
 
@@ -16333,8 +16305,8 @@ impl<X: UserData> MinorTickMarkWith<X> {
 }
 
 impl officekit_markup_base::Read for MinorTickMark {
-    fn read(element: &Element) -> Self {
-        read::minor_tick_mark(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::minor_tick_mark_from_item(item)
     }
 }
 
@@ -16371,8 +16343,8 @@ impl<X: UserData> MinorTimeUnitWith<X> {
 }
 
 impl officekit_markup_base::Read for MinorTimeUnit {
-    fn read(element: &Element) -> Self {
-        read::minor_time_unit(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::minor_time_unit_from_item(item)
     }
 }
 
@@ -16409,8 +16381,8 @@ impl<X: UserData> MinorUnitWith<X> {
 }
 
 impl officekit_markup_base::Read for MinorUnit {
-    fn read(element: &Element) -> Self {
-        read::minor_unit(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::minor_unit_from_item(item)
     }
 }
 
@@ -16447,8 +16419,8 @@ impl<X: UserData> MinusWith<X> {
 }
 
 impl officekit_markup_base::Read for Minus {
-    fn read(element: &Element) -> Self {
-        read::minus(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::minus_from_item(item)
     }
 }
 
@@ -16493,8 +16465,8 @@ impl<X: UserData> MultiLevelStringCacheWith<X> {
 }
 
 impl officekit_markup_base::Read for MultiLevelStringCache {
-    fn read(element: &Element) -> Self {
-        read::multi_level_string_cache(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::multi_level_string_cache_from_item(item)
     }
 }
 
@@ -16539,8 +16511,8 @@ impl<X: UserData> MultiLevelStringReferenceWith<X> {
 }
 
 impl officekit_markup_base::Read for MultiLevelStringReference {
-    fn read(element: &Element) -> Self {
-        read::multi_level_string_reference(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::multi_level_string_reference_from_item(item)
     }
 }
 
@@ -16577,8 +16549,8 @@ impl<X: UserData> NoEndCapWith<X> {
 }
 
 impl officekit_markup_base::Read for NoEndCap {
-    fn read(element: &Element) -> Self {
-        read::no_end_cap(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::no_end_cap_from_item(item)
     }
 }
 
@@ -16615,8 +16587,8 @@ impl<X: UserData> NoMultiLevelLabelsWith<X> {
 }
 
 impl officekit_markup_base::Read for NoMultiLevelLabels {
-    fn read(element: &Element) -> Self {
-        read::no_multi_level_labels(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::no_multi_level_labels_from_item(item)
     }
 }
 
@@ -16665,8 +16637,8 @@ impl<X: UserData> NumberCacheWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberCache {
-    fn read(element: &Element) -> Self {
-        read::number_cache(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::number_cache_from_item(item)
     }
 }
 
@@ -16707,11 +16679,11 @@ impl officekit_markup_base::Read for NumberDataSourceContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_C, "numLit")) => Self::NumberLiteral(officekit_markup_base::read(element)),
-            Some((NS_C, "numRef")) => Self::NumberReference(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_C, "numLit")) => Self::NumberLiteral(item.read()),
+            Some((NS_C, "numRef")) => Self::NumberReference(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -16754,8 +16726,8 @@ impl<X: UserData> NumberFormatWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberFormat {
-    fn read(element: &Element) -> Self {
-        read::number_format(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::number_format_from_item(item)
     }
 }
 
@@ -16804,8 +16776,8 @@ impl<X: UserData> NumberLiteralWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberLiteral {
-    fn read(element: &Element) -> Self {
-        read::number_literal(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::number_literal_from_item(item)
     }
 }
 
@@ -16850,8 +16822,8 @@ impl<X: UserData> NumberReferenceWith<X> {
 }
 
 impl officekit_markup_base::Read for NumberReference {
-    fn read(element: &Element) -> Self {
-        read::number_reference(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::number_reference_from_item(item)
     }
 }
 
@@ -16894,8 +16866,8 @@ impl<X: UserData> NumericPointWith<X> {
 }
 
 impl officekit_markup_base::Read for NumericPoint {
-    fn read(element: &Element) -> Self {
-        read::numeric_point(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::numeric_point_from_item(item)
     }
 }
 
@@ -16932,8 +16904,8 @@ impl<X: UserData> NumericValueWith<X> {
 }
 
 impl officekit_markup_base::Read for NumericValue {
-    fn read(element: &Element) -> Self {
-        read::numeric_value(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::numeric_value_from_item(item)
     }
 }
 
@@ -16970,8 +16942,8 @@ impl<X: UserData> OddFooterWith<X> {
 }
 
 impl officekit_markup_base::Read for OddFooter {
-    fn read(element: &Element) -> Self {
-        read::odd_footer(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::odd_footer_from_item(item)
     }
 }
 
@@ -17008,8 +16980,8 @@ impl<X: UserData> OddHeaderWith<X> {
 }
 
 impl officekit_markup_base::Read for OddHeader {
-    fn read(element: &Element) -> Self {
-        read::odd_header(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::odd_header_from_item(item)
     }
 }
 
@@ -17046,8 +17018,8 @@ impl<X: UserData> OrderWith<X> {
 }
 
 impl officekit_markup_base::Read for Order {
-    fn read(element: &Element) -> Self {
-        read::order(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::order_from_item(item)
     }
 }
 
@@ -17133,8 +17105,8 @@ impl<X: UserData> OverlapWith<X> {
 }
 
 impl officekit_markup_base::Read for Overlap {
-    fn read(element: &Element) -> Self {
-        read::overlap(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::overlap_from_item(item)
     }
 }
 
@@ -17217,8 +17189,8 @@ impl<X: UserData> OverlayWith<X> {
 }
 
 impl officekit_markup_base::Read for Overlay {
-    fn read(element: &Element) -> Self {
-        read::overlay(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::overlay_from_item(item)
     }
 }
 
@@ -17265,8 +17237,8 @@ impl<X: UserData> PageMarginsWith<X> {
 }
 
 impl officekit_markup_base::Read for PageMargins {
-    fn read(element: &Element) -> Self {
-        read::page_margins(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::page_margins_from_item(item)
     }
 }
 
@@ -17323,8 +17295,8 @@ impl<X: UserData> PageSetupWith<X> {
 }
 
 impl officekit_markup_base::Read for PageSetup {
-    fn read(element: &Element) -> Self {
-        read::page_setup(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::page_setup_from_item(item)
     }
 }
 
@@ -17361,8 +17333,8 @@ impl<X: UserData> PeriodWith<X> {
 }
 
 impl officekit_markup_base::Read for Period {
-    fn read(element: &Element) -> Self {
-        read::period(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::period_from_item(item)
     }
 }
 
@@ -17399,8 +17371,8 @@ impl<X: UserData> PerspectiveWith<X> {
 }
 
 impl officekit_markup_base::Read for Perspective {
-    fn read(element: &Element) -> Self {
-        read::perspective(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::perspective_from_item(item)
     }
 }
 
@@ -17437,8 +17409,8 @@ impl<X: UserData> PictureFormatWith<X> {
 }
 
 impl officekit_markup_base::Read for PictureFormat {
-    fn read(element: &Element) -> Self {
-        read::picture_format(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::picture_format_from_item(item)
     }
 }
 
@@ -17491,8 +17463,8 @@ impl<X: UserData> PictureOptionsWith<X> {
 }
 
 impl officekit_markup_base::Read for PictureOptions {
-    fn read(element: &Element) -> Self {
-        read::picture_options(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::picture_options_from_item(item)
     }
 }
 
@@ -17529,8 +17501,8 @@ impl<X: UserData> PictureStackUnitWith<X> {
 }
 
 impl officekit_markup_base::Read for PictureStackUnit {
-    fn read(element: &Element) -> Self {
-        read::picture_stack_unit(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::picture_stack_unit_from_item(item)
     }
 }
 
@@ -17579,8 +17551,8 @@ impl<X: UserData> Pie3DChartWith<X> {
 }
 
 impl officekit_markup_base::Read for Pie3DChart {
-    fn read(element: &Element) -> Self {
-        read::pie3d_chart(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pie3d_chart_from_item(item)
     }
 }
 
@@ -17653,8 +17625,8 @@ impl<X: UserData> PieChartSeriesWith<X> {
 }
 
 impl officekit_markup_base::Read for PieChartSeries {
-    fn read(element: &Element) -> Self {
-        read::pie_chart_series(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pie_chart_series_from_item(item)
     }
 }
 
@@ -17707,8 +17679,8 @@ impl<X: UserData> PieChartsWith<X> {
 }
 
 impl officekit_markup_base::Read for PieCharts {
-    fn read(element: &Element) -> Self {
-        read::pie_charts(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pie_charts_from_item(item)
     }
 }
 
@@ -17785,8 +17757,8 @@ impl<X: UserData> PieOfPieChartsWith<X> {
 }
 
 impl officekit_markup_base::Read for PieOfPieCharts {
-    fn read(element: &Element) -> Self {
-        read::pie_of_pie_charts(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pie_of_pie_charts_from_item(item)
     }
 }
 
@@ -17823,8 +17795,8 @@ impl<X: UserData> PieOfPieTypeWith<X> {
 }
 
 impl officekit_markup_base::Read for PieOfPieType {
-    fn read(element: &Element) -> Self {
-        read::pie_of_pie_type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pie_of_pie_type_from_item(item)
     }
 }
 
@@ -17881,8 +17853,8 @@ impl<X: UserData> PivotFormatWith<X> {
 }
 
 impl officekit_markup_base::Read for PivotFormat {
-    fn read(element: &Element) -> Self {
-        read::pivot_format(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pivot_format_from_item(item)
     }
 }
 
@@ -17919,8 +17891,8 @@ impl<X: UserData> PivotFormatsWith<X> {
 }
 
 impl officekit_markup_base::Read for PivotFormats {
-    fn read(element: &Element) -> Self {
-        read::pivot_formats(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pivot_formats_from_item(item)
     }
 }
 
@@ -17957,8 +17929,8 @@ impl<X: UserData> PivotNameWith<X> {
 }
 
 impl officekit_markup_base::Read for PivotName {
-    fn read(element: &Element) -> Self {
-        read::pivot_name(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pivot_name_from_item(item)
     }
 }
 
@@ -18003,8 +17975,8 @@ impl<X: UserData> PivotSourceWith<X> {
 }
 
 impl officekit_markup_base::Read for PivotSource {
-    fn read(element: &Element) -> Self {
-        read::pivot_source(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pivot_source_from_item(item)
     }
 }
 
@@ -18061,8 +18033,8 @@ impl<X: UserData> PlotAreaWith<X> {
 }
 
 impl officekit_markup_base::Read for PlotArea {
-    fn read(element: &Element) -> Self {
-        read::plot_area(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::plot_area_from_item(item)
     }
 }
 
@@ -18097,15 +18069,13 @@ impl officekit_markup_base::Read for PlotAreaAxisContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_C, "catAx")) => {
-                Self::CategoryAxisDataCatAx(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "dateAx")) => Self::DateAxis(officekit_markup_base::read(element)),
-            Some((NS_C, "serAx")) => Self::SeriesAxis(officekit_markup_base::read(element)),
-            Some((NS_C, "valAx")) => Self::ValueAxis(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_C, "catAx")) => Self::CategoryAxisDataCatAx(item.read()),
+            Some((NS_C, "dateAx")) => Self::DateAxis(item.read()),
+            Some((NS_C, "serAx")) => Self::SeriesAxis(item.read()),
+            Some((NS_C, "valAx")) => Self::ValueAxis(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -18168,35 +18138,25 @@ impl officekit_markup_base::Read for PlotAreaChartContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_C, "area3DChart")) => Self::Area3DChart(officekit_markup_base::read(element)),
-            Some((NS_C, "areaChart")) => Self::AreaCharts(officekit_markup_base::read(element)),
-            Some((NS_C, "bar3DChart")) => Self::Bar3DChart(officekit_markup_base::read(element)),
-            Some((NS_C, "barChart")) => Self::BarCharts(officekit_markup_base::read(element)),
-            Some((NS_C, "bubbleChart")) => Self::BubbleCharts(officekit_markup_base::read(element)),
-            Some((NS_C, "doughnutChart")) => {
-                Self::DoughnutCharts(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "line3DChart")) => Self::Line3DChart(officekit_markup_base::read(element)),
-            Some((NS_C, "lineChart")) => Self::LineCharts(officekit_markup_base::read(element)),
-            Some((NS_C, "pie3DChart")) => Self::Pie3DChart(officekit_markup_base::read(element)),
-            Some((NS_C, "pieChart")) => Self::PieCharts(officekit_markup_base::read(element)),
-            Some((NS_C, "ofPieChart")) => {
-                Self::PieOfPieCharts(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "radarChart")) => Self::RadarCharts(officekit_markup_base::read(element)),
-            Some((NS_C, "scatterChart")) => {
-                Self::ScatterCharts(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "stockChart")) => Self::StockCharts(officekit_markup_base::read(element)),
-            Some((NS_C, "surface3DChart")) => {
-                Self::Surface3DChart(officekit_markup_base::read(element))
-            }
-            Some((NS_C, "surfaceChart")) => {
-                Self::SurfaceCharts(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_C, "area3DChart")) => Self::Area3DChart(item.read()),
+            Some((NS_C, "areaChart")) => Self::AreaCharts(item.read()),
+            Some((NS_C, "bar3DChart")) => Self::Bar3DChart(item.read()),
+            Some((NS_C, "barChart")) => Self::BarCharts(item.read()),
+            Some((NS_C, "bubbleChart")) => Self::BubbleCharts(item.read()),
+            Some((NS_C, "doughnutChart")) => Self::DoughnutCharts(item.read()),
+            Some((NS_C, "line3DChart")) => Self::Line3DChart(item.read()),
+            Some((NS_C, "lineChart")) => Self::LineCharts(item.read()),
+            Some((NS_C, "pie3DChart")) => Self::Pie3DChart(item.read()),
+            Some((NS_C, "pieChart")) => Self::PieCharts(item.read()),
+            Some((NS_C, "ofPieChart")) => Self::PieOfPieCharts(item.read()),
+            Some((NS_C, "radarChart")) => Self::RadarCharts(item.read()),
+            Some((NS_C, "scatterChart")) => Self::ScatterCharts(item.read()),
+            Some((NS_C, "stockChart")) => Self::StockCharts(item.read()),
+            Some((NS_C, "surface3DChart")) => Self::Surface3DChart(item.read()),
+            Some((NS_C, "surfaceChart")) => Self::SurfaceCharts(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -18251,8 +18211,8 @@ impl<X: UserData> PlotVisibleOnlyWith<X> {
 }
 
 impl officekit_markup_base::Read for PlotVisibleOnly {
-    fn read(element: &Element) -> Self {
-        read::plot_visible_only(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::plot_visible_only_from_item(item)
     }
 }
 
@@ -18289,8 +18249,8 @@ impl<X: UserData> PlusWith<X> {
 }
 
 impl officekit_markup_base::Read for Plus {
-    fn read(element: &Element) -> Self {
-        read::plus(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::plus_from_item(item)
     }
 }
 
@@ -18327,8 +18287,8 @@ impl<X: UserData> PointCountWith<X> {
 }
 
 impl officekit_markup_base::Read for PointCount {
-    fn read(element: &Element) -> Self {
-        read::point_count(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::point_count_from_item(item)
     }
 }
 
@@ -18365,8 +18325,8 @@ impl<X: UserData> PolynomialTrendlineOrderWith<X> {
 }
 
 impl officekit_markup_base::Read for PolynomialTrendlineOrder {
-    fn read(element: &Element) -> Self {
-        read::polynomial_trendline_order(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::polynomial_trendline_order_from_item(item)
     }
 }
 
@@ -18415,8 +18375,8 @@ impl<X: UserData> PrintSettingsWith<X> {
 }
 
 impl officekit_markup_base::Read for PrintSettings {
-    fn read(element: &Element) -> Self {
-        read::print_settings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::print_settings_from_item(item)
     }
 }
 
@@ -18523,8 +18483,8 @@ impl<X: UserData> ProtectionWith<X> {
 }
 
 impl officekit_markup_base::Read for Protection {
-    fn read(element: &Element) -> Self {
-        read::protection(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::protection_from_item(item)
     }
 }
 
@@ -18597,8 +18557,8 @@ impl<X: UserData> RadarChartSeriesWith<X> {
 }
 
 impl officekit_markup_base::Read for RadarChartSeries {
-    fn read(element: &Element) -> Self {
-        read::radar_chart_series(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::radar_chart_series_from_item(item)
     }
 }
 
@@ -18655,8 +18615,8 @@ impl<X: UserData> RadarChartsWith<X> {
 }
 
 impl officekit_markup_base::Read for RadarCharts {
-    fn read(element: &Element) -> Self {
-        read::radar_charts(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::radar_charts_from_item(item)
     }
 }
 
@@ -18693,8 +18653,8 @@ impl<X: UserData> RadarStyleWith<X> {
 }
 
 impl officekit_markup_base::Read for RadarStyle {
-    fn read(element: &Element) -> Self {
-        read::radar_style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::radar_style_from_item(item)
     }
 }
 
@@ -18731,8 +18691,8 @@ impl<X: UserData> ReferenceToChartDrawingPartWith<X> {
 }
 
 impl officekit_markup_base::Read for ReferenceToChartDrawingPart {
-    fn read(element: &Element) -> Self {
-        read::reference_to_chart_drawing_part(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::reference_to_chart_drawing_part_from_item(item)
     }
 }
 
@@ -18769,8 +18729,8 @@ impl<X: UserData> ReferenceToChartPartWith<X> {
 }
 
 impl officekit_markup_base::Read for ReferenceToChartPart {
-    fn read(element: &Element) -> Self {
-        read::reference_to_chart_part(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::reference_to_chart_part_from_item(item)
     }
 }
 
@@ -18815,8 +18775,8 @@ impl<X: UserData> RichTextWith<X> {
 }
 
 impl officekit_markup_base::Read for RichText {
-    fn read(element: &Element) -> Self {
-        read::rich_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rich_text_from_item(item)
     }
 }
 
@@ -18853,8 +18813,8 @@ impl<X: UserData> RightAngleAxesWith<X> {
 }
 
 impl officekit_markup_base::Read for RightAngleAxes {
-    fn read(element: &Element) -> Self {
-        read::right_angle_axes(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::right_angle_axes_from_item(item)
     }
 }
 
@@ -18891,8 +18851,8 @@ impl<X: UserData> RoundedCornersWith<X> {
 }
 
 impl officekit_markup_base::Read for RoundedCorners {
-    fn read(element: &Element) -> Self {
-        read::rounded_corners(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rounded_corners_from_item(item)
     }
 }
 
@@ -18945,8 +18905,8 @@ impl<X: UserData> ScalingWith<X> {
 }
 
 impl officekit_markup_base::Read for Scaling {
-    fn read(element: &Element) -> Self {
-        read::scaling(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::scaling_from_item(item)
     }
 }
 
@@ -19031,8 +18991,8 @@ impl<X: UserData> ScatterChartSeriesWith<X> {
 }
 
 impl officekit_markup_base::Read for ScatterChartSeries {
-    fn read(element: &Element) -> Self {
-        read::scatter_chart_series(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::scatter_chart_series_from_item(item)
     }
 }
 
@@ -19089,8 +19049,8 @@ impl<X: UserData> ScatterChartsWith<X> {
 }
 
 impl officekit_markup_base::Read for ScatterCharts {
-    fn read(element: &Element) -> Self {
-        read::scatter_charts(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::scatter_charts_from_item(item)
     }
 }
 
@@ -19127,8 +19087,8 @@ impl<X: UserData> ScatterStyleWith<X> {
 }
 
 impl officekit_markup_base::Read for ScatterStyle {
-    fn read(element: &Element) -> Self {
-        read::scatter_style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::scatter_style_from_item(item)
     }
 }
 
@@ -19165,8 +19125,8 @@ impl<X: UserData> SecondPiePointWith<X> {
 }
 
 impl officekit_markup_base::Read for SecondPiePoint {
-    fn read(element: &Element) -> Self {
-        read::second_pie_point(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::second_pie_point_from_item(item)
     }
 }
 
@@ -19203,8 +19163,8 @@ impl<X: UserData> SecondPieSizeWith<X> {
 }
 
 impl officekit_markup_base::Read for SecondPieSize {
-    fn read(element: &Element) -> Self {
-        read::second_pie_size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::second_pie_size_from_item(item)
     }
 }
 
@@ -19291,8 +19251,8 @@ impl<X: UserData> SelectionWith<X> {
 }
 
 impl officekit_markup_base::Read for Selection {
-    fn read(element: &Element) -> Self {
-        read::selection(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::selection_from_item(item)
     }
 }
 
@@ -19329,8 +19289,8 @@ impl<X: UserData> SeparatorWith<X> {
 }
 
 impl officekit_markup_base::Read for Separator {
-    fn read(element: &Element) -> Self {
-        read::separator(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::separator_from_item(item)
     }
 }
 
@@ -19435,8 +19395,8 @@ impl<X: UserData> SeriesAxisWith<X> {
 }
 
 impl officekit_markup_base::Read for SeriesAxis {
-    fn read(element: &Element) -> Self {
-        read::series_axis(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::series_axis_from_item(item)
     }
 }
 
@@ -19473,8 +19433,8 @@ impl<X: UserData> SeriesLinesWith<X> {
 }
 
 impl officekit_markup_base::Read for SeriesLines {
-    fn read(element: &Element) -> Self {
-        read::series_lines(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::series_lines_from_item(item)
     }
 }
 
@@ -19511,8 +19471,8 @@ impl<X: UserData> SeriesTextWith<X> {
 }
 
 impl officekit_markup_base::Read for SeriesText {
-    fn read(element: &Element) -> Self {
-        read::series_text(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::series_text_from_item(item)
     }
 }
 
@@ -19551,11 +19511,11 @@ impl officekit_markup_base::Read for SeriesTextContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_C, "v")) => Self::NumericValue(officekit_markup_base::read(element)),
-            Some((NS_C, "strRef")) => Self::StringReference(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_C, "v")) => Self::NumericValue(item.read()),
+            Some((NS_C, "strRef")) => Self::StringReference(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -19596,8 +19556,8 @@ impl<X: UserData> ShapeWith<X> {
 }
 
 impl officekit_markup_base::Read for Shape {
-    fn read(element: &Element) -> Self {
-        read::shape(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shape_from_item(item)
     }
 }
 
@@ -19666,8 +19626,8 @@ impl<X: UserData> ShapePropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for ShapeProperties {
-    fn read(element: &Element) -> Self {
-        read::shape_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shape_properties_from_item(item)
     }
 }
 
@@ -19704,8 +19664,8 @@ impl<X: UserData> ShowBubbleSizeWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowBubbleSize {
-    fn read(element: &Element) -> Self {
-        read::show_bubble_size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_bubble_size_from_item(item)
     }
 }
 
@@ -19742,8 +19702,8 @@ impl<X: UserData> ShowCategoryNameWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowCategoryName {
-    fn read(element: &Element) -> Self {
-        read::show_category_name(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_category_name_from_item(item)
     }
 }
 
@@ -19780,8 +19740,8 @@ impl<X: UserData> ShowDataLabelsOverMaximumWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowDataLabelsOverMaximum {
-    fn read(element: &Element) -> Self {
-        read::show_data_labels_over_maximum(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_data_labels_over_maximum_from_item(item)
     }
 }
 
@@ -19818,8 +19778,8 @@ impl<X: UserData> ShowHorizontalBorderWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowHorizontalBorder {
-    fn read(element: &Element) -> Self {
-        read::show_horizontal_border(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_horizontal_border_from_item(item)
     }
 }
 
@@ -19856,8 +19816,8 @@ impl<X: UserData> ShowLeaderLinesWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowLeaderLines {
-    fn read(element: &Element) -> Self {
-        read::show_leader_lines(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_leader_lines_from_item(item)
     }
 }
 
@@ -19894,8 +19854,8 @@ impl<X: UserData> ShowLegendKeyWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowLegendKey {
-    fn read(element: &Element) -> Self {
-        read::show_legend_key(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_legend_key_from_item(item)
     }
 }
 
@@ -19932,8 +19892,8 @@ impl<X: UserData> ShowLegendKeysWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowLegendKeys {
-    fn read(element: &Element) -> Self {
-        read::show_legend_keys(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_legend_keys_from_item(item)
     }
 }
 
@@ -19970,8 +19930,8 @@ impl<X: UserData> ShowMarkerWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowMarker {
-    fn read(element: &Element) -> Self {
-        read::show_marker(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_marker_from_item(item)
     }
 }
 
@@ -20008,8 +19968,8 @@ impl<X: UserData> ShowNegativeBubblesWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowNegativeBubbles {
-    fn read(element: &Element) -> Self {
-        read::show_negative_bubbles(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_negative_bubbles_from_item(item)
     }
 }
 
@@ -20046,8 +20006,8 @@ impl<X: UserData> ShowOutlineBorderWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowOutlineBorder {
-    fn read(element: &Element) -> Self {
-        read::show_outline_border(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_outline_border_from_item(item)
     }
 }
 
@@ -20084,8 +20044,8 @@ impl<X: UserData> ShowPercentWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowPercent {
-    fn read(element: &Element) -> Self {
-        read::show_percent(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_percent_from_item(item)
     }
 }
 
@@ -20122,8 +20082,8 @@ impl<X: UserData> ShowSeriesNameWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowSeriesName {
-    fn read(element: &Element) -> Self {
-        read::show_series_name(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_series_name_from_item(item)
     }
 }
 
@@ -20160,8 +20120,8 @@ impl<X: UserData> ShowValueWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowValue {
-    fn read(element: &Element) -> Self {
-        read::show_value(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_value_from_item(item)
     }
 }
 
@@ -20198,8 +20158,8 @@ impl<X: UserData> ShowVerticalBorderWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowVerticalBorder {
-    fn read(element: &Element) -> Self {
-        read::show_vertical_border(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_vertical_border_from_item(item)
     }
 }
 
@@ -20248,8 +20208,8 @@ impl<X: UserData> SideWallWith<X> {
 }
 
 impl officekit_markup_base::Read for SideWall {
-    fn read(element: &Element) -> Self {
-        read::side_wall(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::side_wall_from_item(item)
     }
 }
 
@@ -20286,8 +20246,8 @@ impl<X: UserData> SizeWith<X> {
 }
 
 impl officekit_markup_base::Read for Size {
-    fn read(element: &Element) -> Self {
-        read::size(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::size_from_item(item)
     }
 }
 
@@ -20324,8 +20284,8 @@ impl<X: UserData> SizeRepresentsWith<X> {
 }
 
 impl officekit_markup_base::Read for SizeRepresents {
-    fn read(element: &Element) -> Self {
-        read::size_represents(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::size_represents_from_item(item)
     }
 }
 
@@ -20385,8 +20345,8 @@ impl<X: UserData> SmoothingWith<X> {
 }
 
 impl officekit_markup_base::Read for Smoothing {
-    fn read(element: &Element) -> Self {
-        read::smoothing(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::smoothing_from_item(item)
     }
 }
 
@@ -20423,8 +20383,8 @@ impl<X: UserData> SplitPositionWith<X> {
 }
 
 impl officekit_markup_base::Read for SplitPosition {
-    fn read(element: &Element) -> Self {
-        read::split_position(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::split_position_from_item(item)
     }
 }
 
@@ -20461,8 +20421,8 @@ impl<X: UserData> SplitTypeWith<X> {
 }
 
 impl officekit_markup_base::Read for SplitType {
-    fn read(element: &Element) -> Self {
-        read::split_type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::split_type_from_item(item)
     }
 }
 
@@ -22119,8 +22079,8 @@ impl<X: UserData> StockChartsWith<X> {
 }
 
 impl officekit_markup_base::Read for StockCharts {
-    fn read(element: &Element) -> Self {
-        read::stock_charts(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::stock_charts_from_item(item)
     }
 }
 
@@ -22165,8 +22125,8 @@ impl<X: UserData> StringCacheWith<X> {
 }
 
 impl officekit_markup_base::Read for StringCache {
-    fn read(element: &Element) -> Self {
-        read::string_cache(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::string_cache_from_item(item)
     }
 }
 
@@ -22211,8 +22171,8 @@ impl<X: UserData> StringLiteralWith<X> {
 }
 
 impl officekit_markup_base::Read for StringLiteral {
-    fn read(element: &Element) -> Self {
-        read::string_literal(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::string_literal_from_item(item)
     }
 }
 
@@ -22253,8 +22213,8 @@ impl<X: UserData> StringPointWith<X> {
 }
 
 impl officekit_markup_base::Read for StringPoint {
-    fn read(element: &Element) -> Self {
-        read::string_point(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::string_point_from_item(item)
     }
 }
 
@@ -22299,8 +22259,8 @@ impl<X: UserData> StringReferenceWith<X> {
 }
 
 impl officekit_markup_base::Read for StringReference {
-    fn read(element: &Element) -> Self {
-        read::string_reference(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::string_reference_from_item(item)
     }
 }
 
@@ -22337,8 +22297,8 @@ impl<X: UserData> StyleWith<X> {
 }
 
 impl officekit_markup_base::Read for Style {
-    fn read(element: &Element) -> Self {
-        read::style(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::style_from_item(item)
     }
 }
 
@@ -22391,8 +22351,8 @@ impl<X: UserData> Surface3DChartWith<X> {
 }
 
 impl officekit_markup_base::Read for Surface3DChart {
-    fn read(element: &Element) -> Self {
-        read::surface3d_chart(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::surface3d_chart_from_item(item)
     }
 }
 
@@ -22453,8 +22413,8 @@ impl<X: UserData> SurfaceChartSeriesWith<X> {
 }
 
 impl officekit_markup_base::Read for SurfaceChartSeries {
-    fn read(element: &Element) -> Self {
-        read::surface_chart_series(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::surface_chart_series_from_item(item)
     }
 }
 
@@ -22507,8 +22467,8 @@ impl<X: UserData> SurfaceChartsWith<X> {
 }
 
 impl officekit_markup_base::Read for SurfaceCharts {
-    fn read(element: &Element) -> Self {
-        read::surface_charts(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::surface_charts_from_item(item)
     }
 }
 
@@ -22545,8 +22505,8 @@ impl<X: UserData> SymbolWith<X> {
 }
 
 impl officekit_markup_base::Read for Symbol {
-    fn read(element: &Element) -> Self {
-        read::symbol(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::symbol_from_item(item)
     }
 }
 
@@ -22591,8 +22551,8 @@ impl<X: UserData> TextPropertiesWith<X> {
 }
 
 impl officekit_markup_base::Read for TextProperties {
-    fn read(element: &Element) -> Self {
-        read::text_properties(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::text_properties_from_item(item)
     }
 }
 
@@ -22629,8 +22589,8 @@ impl<X: UserData> ThicknessWith<X> {
 }
 
 impl officekit_markup_base::Read for Thickness {
-    fn read(element: &Element) -> Self {
-        read::thickness(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::thickness_from_item(item)
     }
 }
 
@@ -22667,8 +22627,8 @@ impl<X: UserData> TickLabelPositionWith<X> {
 }
 
 impl officekit_markup_base::Read for TickLabelPosition {
-    fn read(element: &Element) -> Self {
-        read::tick_label_position(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tick_label_position_from_item(item)
     }
 }
 
@@ -22705,8 +22665,8 @@ impl<X: UserData> TickLabelSkipWith<X> {
 }
 
 impl officekit_markup_base::Read for TickLabelSkip {
-    fn read(element: &Element) -> Self {
-        read::tick_label_skip(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tick_label_skip_from_item(item)
     }
 }
 
@@ -22794,8 +22754,8 @@ impl<X: UserData> TickMarkSkipWith<X> {
 }
 
 impl officekit_markup_base::Read for TickMarkSkip {
-    fn read(element: &Element) -> Self {
-        read::tick_mark_skip(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tick_mark_skip_from_item(item)
     }
 }
 
@@ -22902,8 +22862,8 @@ impl<X: UserData> TitleWith<X> {
 }
 
 impl officekit_markup_base::Read for Title {
-    fn read(element: &Element) -> Self {
-        read::title(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::title_from_item(item)
     }
 }
 
@@ -22940,8 +22900,8 @@ impl<X: UserData> TopWith<X> {
 }
 
 impl officekit_markup_base::Read for Top {
-    fn read(element: &Element) -> Self {
-        read::top(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::top_from_item(item)
     }
 }
 
@@ -22978,8 +22938,8 @@ impl<X: UserData> TopModeWith<X> {
 }
 
 impl officekit_markup_base::Read for TopMode {
-    fn read(element: &Element) -> Self {
-        read::top_mode(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::top_mode_from_item(item)
     }
 }
 
@@ -23036,8 +22996,8 @@ impl<X: UserData> TrendlineLabelWith<X> {
 }
 
 impl officekit_markup_base::Read for TrendlineLabel {
-    fn read(element: &Element) -> Self {
-        read::trendline_label(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::trendline_label_from_item(item)
     }
 }
 
@@ -23074,8 +23034,8 @@ impl<X: UserData> TrendlineNameWith<X> {
 }
 
 impl officekit_markup_base::Read for TrendlineName {
-    fn read(element: &Element) -> Self {
-        read::trendline_name(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::trendline_name_from_item(item)
     }
 }
 
@@ -23112,8 +23072,8 @@ impl<X: UserData> TrendlineTypeWith<X> {
 }
 
 impl officekit_markup_base::Read for TrendlineType {
-    fn read(element: &Element) -> Self {
-        read::trendline_type(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::trendline_type_from_item(item)
     }
 }
 
@@ -23194,8 +23154,8 @@ impl<X: UserData> TrendlinesWith<X> {
 }
 
 impl officekit_markup_base::Read for Trendlines {
-    fn read(element: &Element) -> Self {
-        read::trendlines(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::trendlines_from_item(item)
     }
 }
 
@@ -23232,8 +23192,8 @@ impl<X: UserData> UpBarsWith<X> {
 }
 
 impl officekit_markup_base::Read for UpBars {
-    fn read(element: &Element) -> Self {
-        read::up_bars(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::up_bars_from_item(item)
     }
 }
 
@@ -23282,8 +23242,8 @@ impl<X: UserData> UpDownBarsWith<X> {
 }
 
 impl officekit_markup_base::Read for UpDownBars {
-    fn read(element: &Element) -> Self {
-        read::up_down_bars(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::up_down_bars_from_item(item)
     }
 }
 
@@ -23320,8 +23280,8 @@ impl<X: UserData> UpdateAutomaticallyWith<X> {
 }
 
 impl officekit_markup_base::Read for UpdateAutomatically {
-    fn read(element: &Element) -> Self {
-        read::update_automatically(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::update_automatically_from_item(item)
     }
 }
 
@@ -23358,8 +23318,8 @@ impl<X: UserData> UserInterfaceWith<X> {
 }
 
 impl officekit_markup_base::Read for UserInterface {
-    fn read(element: &Element) -> Self {
-        read::user_interface(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::user_interface_from_item(item)
     }
 }
 
@@ -23396,8 +23356,8 @@ impl<X: UserData> UserShapesWith<X> {
 }
 
 impl officekit_markup_base::Read for UserShapes {
-    fn read(element: &Element) -> Self {
-        read::user_shapes(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::user_shapes_from_item(item)
     }
 }
 
@@ -23510,8 +23470,8 @@ impl<X: UserData> ValueAxisWith<X> {
 }
 
 impl officekit_markup_base::Read for ValueAxis {
-    fn read(element: &Element) -> Self {
-        read::value_axis(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::value_axis_from_item(item)
     }
 }
 
@@ -23548,8 +23508,8 @@ impl<X: UserData> ValuesWith<X> {
 }
 
 impl officekit_markup_base::Read for Values {
-    fn read(element: &Element) -> Self {
-        read::values(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::values_from_item(item)
     }
 }
 
@@ -23586,8 +23546,8 @@ impl<X: UserData> VaryColorsByPointWith<X> {
 }
 
 impl officekit_markup_base::Read for VaryColorsByPoint {
-    fn read(element: &Element) -> Self {
-        read::vary_colors_by_point(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::vary_colors_by_point_from_item(item)
     }
 }
 
@@ -23648,8 +23608,8 @@ impl<X: UserData> ViewIn3DWith<X> {
 }
 
 impl officekit_markup_base::Read for ViewIn3D {
-    fn read(element: &Element) -> Self {
-        read::view_in3d(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::view_in3d_from_item(item)
     }
 }
 
@@ -23686,8 +23646,8 @@ impl<X: UserData> WidthWith<X> {
 }
 
 impl officekit_markup_base::Read for Width {
-    fn read(element: &Element) -> Self {
-        read::width(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::width_from_item(item)
     }
 }
 
@@ -23724,8 +23684,8 @@ impl<X: UserData> WidthModeWith<X> {
 }
 
 impl officekit_markup_base::Read for WidthMode {
-    fn read(element: &Element) -> Self {
-        read::width_mode(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::width_mode_from_item(item)
     }
 }
 
@@ -23762,8 +23722,8 @@ impl<X: UserData> WireframeWith<X> {
 }
 
 impl officekit_markup_base::Read for Wireframe {
-    fn read(element: &Element) -> Self {
-        read::wireframe(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::wireframe_from_item(item)
     }
 }
 
@@ -23800,8 +23760,8 @@ impl<X: UserData> XRotationWith<X> {
 }
 
 impl officekit_markup_base::Read for XRotation {
-    fn read(element: &Element) -> Self {
-        read::x_rotation(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::x_rotation_from_item(item)
     }
 }
 
@@ -23838,8 +23798,8 @@ impl<X: UserData> XValuesWith<X> {
 }
 
 impl officekit_markup_base::Read for XValues {
-    fn read(element: &Element) -> Self {
-        read::x_values(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::x_values_from_item(item)
     }
 }
 
@@ -23876,8 +23836,8 @@ impl<X: UserData> YRotationWith<X> {
 }
 
 impl officekit_markup_base::Read for YRotation {
-    fn read(element: &Element) -> Self {
-        read::y_rotation(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::y_rotation_from_item(item)
     }
 }
 
@@ -23914,8 +23874,8 @@ impl<X: UserData> YValuesWith<X> {
 }
 
 impl officekit_markup_base::Read for YValues {
-    fn read(element: &Element) -> Self {
-        read::y_values(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::y_values_from_item(item)
     }
 }
 

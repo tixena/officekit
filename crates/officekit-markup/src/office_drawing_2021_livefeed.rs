@@ -226,7 +226,7 @@ pub mod write;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -698,8 +698,8 @@ impl<X: UserData> BackgroundPropsWith<X> {
 }
 
 impl officekit_markup_base::Read for BackgroundProps {
-    fn read(element: &Element) -> Self {
-        read::background_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::background_props_from_item(item)
     }
 }
 
@@ -736,8 +736,8 @@ impl<X: UserData> BlurWith<X> {
 }
 
 impl officekit_markup_base::Read for Blur {
-    fn read(element: &Element) -> Self {
-        read::blur(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::blur_from_item(item)
     }
 }
 
@@ -774,8 +774,8 @@ impl<X: UserData> CustomWith<X> {
 }
 
 impl officekit_markup_base::Read for Custom {
-    fn read(element: &Element) -> Self {
-        read::custom(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_from_item(item)
     }
 }
 
@@ -812,8 +812,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -854,13 +854,13 @@ impl officekit_markup_base::Read for LiveFeedBackgroundPropertiesContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_ALF, "Blur")) => Self::Blur(officekit_markup_base::read(element)),
-            Some((NS_ALF, "Custom")) => Self::Custom(officekit_markup_base::read(element)),
-            Some((NS_ALF, "Normal")) => Self::Normal(officekit_markup_base::read(element)),
-            Some((NS_ALF, "Removed")) => Self::Removed(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_ALF, "Blur")) => Self::Blur(item.read()),
+            Some((NS_ALF, "Custom")) => Self::Custom(item.read()),
+            Some((NS_ALF, "Normal")) => Self::Normal(item.read()),
+            Some((NS_ALF, "Removed")) => Self::Removed(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -907,8 +907,8 @@ impl<X: UserData> LiveFeedPropsWith<X> {
 }
 
 impl officekit_markup_base::Read for LiveFeedProps {
-    fn read(element: &Element) -> Self {
-        read::live_feed_props(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::live_feed_props_from_item(item)
     }
 }
 
@@ -945,8 +945,8 @@ impl<X: UserData> NormalWith<X> {
 }
 
 impl officekit_markup_base::Read for Normal {
-    fn read(element: &Element) -> Self {
-        read::normal(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::normal_from_item(item)
     }
 }
 
@@ -983,8 +983,8 @@ impl<X: UserData> RemovedWith<X> {
 }
 
 impl officekit_markup_base::Read for Removed {
-    fn read(element: &Element) -> Self {
-        read::removed(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::removed_from_item(item)
     }
 }
 

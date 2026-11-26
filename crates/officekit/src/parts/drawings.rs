@@ -350,6 +350,7 @@
 use crate::parts::part_root::{self, PartRoot};
 #[cfg(feature = "transitional")]
 use crate::transitional::Transitional as _;
+use officekit_markup::Item;
 use officekit_markup::spreadsheet_drawing;
 #[cfg(feature = "strict")]
 use officekit_strict::Strict as _;
@@ -374,6 +375,11 @@ pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::DRAWING;
 
 impl PartRoot for spreadsheet_drawing::WorksheetDrawing {
     const LOCAL_NAME: &'static str = "wsDr";
+
+    fn from_part(root: Item<'_>) -> Result<Self, String> {
+        super::check_root(root.element(), 129, Self::LOCAL_NAME)?;
+        Ok(spreadsheet_drawing::read::worksheet_drawing_from_item(root))
+    }
 
     fn from_tree(root: &Element) -> Result<Self, String> {
         super::check_root(root, 129, Self::LOCAL_NAME)?;

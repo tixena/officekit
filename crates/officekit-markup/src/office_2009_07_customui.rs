@@ -225,7 +225,7 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::values::ValueError;
@@ -10192,8 +10192,8 @@ impl<X: UserData> BackstageWith<X> {
 }
 
 impl officekit_markup_base::Read for Backstage {
-    fn read(element: &Element) -> Self {
-        read::backstage(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::backstage_from_item(item)
     }
 }
 
@@ -10228,13 +10228,11 @@ impl officekit_markup_base::Read for BackstageContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_MSO14, "button")) => {
-                Self::ButtonBackstageFastCommandButton(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "tab")) => Self::TabBackstageTab(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_MSO14, "button")) => Self::ButtonBackstageFastCommandButton(item.read()),
+            Some((NS_MSO14, "tab")) => Self::TabBackstageTab(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -10274,16 +10272,12 @@ impl officekit_markup_base::Read for BackstageGroupsContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_MSO14, "group")) => {
-                Self::GroupBackstageGroup(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "taskFormGroup")) => {
-                Self::TaskFormGroup(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "taskGroup")) => Self::TaskGroup(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_MSO14, "group")) => Self::GroupBackstageGroup(item.read()),
+            Some((NS_MSO14, "taskFormGroup")) => Self::TaskFormGroup(item.read()),
+            Some((NS_MSO14, "taskGroup")) => Self::TaskGroup(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -10356,21 +10350,15 @@ impl officekit_markup_base::Read for BackstageMenuGroupContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_MSO14, "button")) => {
-                Self::ButtonBackstageMenuButton(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "checkBox")) => {
-                Self::CheckBoxBackstageMenuCheckBox(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "menu")) => {
-                Self::MenuBackstageSubMenu(officekit_markup_base::read(element))
-            }
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_MSO14, "button")) => Self::ButtonBackstageMenuButton(item.read()),
+            Some((NS_MSO14, "checkBox")) => Self::CheckBoxBackstageMenuCheckBox(item.read()),
+            Some((NS_MSO14, "menu")) => Self::MenuBackstageSubMenu(item.read()),
             Some((NS_MSO14, "toggleButton")) => {
-                Self::ToggleButtonBackstageMenuToggleButton(officekit_markup_base::read(element))
+                Self::ToggleButtonBackstageMenuToggleButton(item.read())
             }
-            _ => Self::Other(Node::Element(element.clone())),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -10413,8 +10401,8 @@ impl<X: UserData> BottomItemsWith<X> {
 }
 
 impl officekit_markup_base::Read for BottomItems {
-    fn read(element: &Element) -> Self {
-        read::bottom_items(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::bottom_items_from_item(item)
     }
 }
 
@@ -10473,8 +10461,8 @@ impl<X: UserData> BoxBoxWith<X> {
 }
 
 impl officekit_markup_base::Read for BoxBox {
-    fn read(element: &Element) -> Self {
-        read::box_box(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::box_box_from_item(item)
     }
 }
 
@@ -10531,45 +10519,23 @@ impl officekit_markup_base::Read for BoxContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_MSO14, "box")) => Self::BoxBox(officekit_markup_base::read(element)),
-            Some((NS_MSO14, "button")) => Self::ButtonButton(officekit_markup_base::read(element)),
-            Some((NS_MSO14, "buttonGroup")) => {
-                Self::ButtonGroup(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "checkBox")) => {
-                Self::CheckBoxCheckBox(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "comboBox")) => {
-                Self::ComboBoxComboBox(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "control")) => {
-                Self::ControlControlClone(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "dropDown")) => {
-                Self::DropDownDropDownRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "dynamicMenu")) => {
-                Self::DynamicMenuDynamicMenu(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "editBox")) => {
-                Self::EditBoxEditBox(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "gallery")) => {
-                Self::GalleryGallery(Box::new(officekit_markup_base::read(element)))
-            }
-            Some((NS_MSO14, "labelControl")) => {
-                Self::LabelControlLabelControl(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "menu")) => Self::MenuMenu(officekit_markup_base::read(element)),
-            Some((NS_MSO14, "splitButton")) => {
-                Self::SplitButtonSplitButton(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "toggleButton")) => {
-                Self::ToggleButtonToggleButton(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_MSO14, "box")) => Self::BoxBox(item.read()),
+            Some((NS_MSO14, "button")) => Self::ButtonButton(item.read()),
+            Some((NS_MSO14, "buttonGroup")) => Self::ButtonGroup(item.read()),
+            Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(item.read()),
+            Some((NS_MSO14, "comboBox")) => Self::ComboBoxComboBox(item.read()),
+            Some((NS_MSO14, "control")) => Self::ControlControlClone(item.read()),
+            Some((NS_MSO14, "dropDown")) => Self::DropDownDropDownRegular(item.read()),
+            Some((NS_MSO14, "dynamicMenu")) => Self::DynamicMenuDynamicMenu(item.read()),
+            Some((NS_MSO14, "editBox")) => Self::EditBoxEditBox(item.read()),
+            Some((NS_MSO14, "gallery")) => Self::GalleryGallery(Box::new(item.read())),
+            Some((NS_MSO14, "labelControl")) => Self::LabelControlLabelControl(item.read()),
+            Some((NS_MSO14, "menu")) => Self::MenuMenu(item.read()),
+            Some((NS_MSO14, "splitButton")) => Self::SplitButtonSplitButton(item.read()),
+            Some((NS_MSO14, "toggleButton")) => Self::ToggleButtonToggleButton(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -10715,8 +10681,8 @@ impl<X: UserData> ButtonBackstageFastCommandButtonWith<X> {
 }
 
 impl officekit_markup_base::Read for ButtonBackstageFastCommandButton {
-    fn read(element: &Element) -> Self {
-        read::button_backstage_fast_command_button(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::button_backstage_fast_command_button_from_item(item)
     }
 }
 
@@ -10795,8 +10761,8 @@ impl<X: UserData> ButtonBackstageGroupButtonWith<X> {
 }
 
 impl officekit_markup_base::Read for ButtonBackstageGroupButton {
-    fn read(element: &Element) -> Self {
-        read::button_backstage_group_button(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::button_backstage_group_button_from_item(item)
     }
 }
 
@@ -10867,8 +10833,8 @@ impl<X: UserData> ButtonBackstageMenuButtonWith<X> {
 }
 
 impl officekit_markup_base::Read for ButtonBackstageMenuButton {
-    fn read(element: &Element) -> Self {
-        read::button_backstage_menu_button(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::button_backstage_menu_button_from_item(item)
     }
 }
 
@@ -10943,8 +10909,8 @@ impl<X: UserData> ButtonBackstageRegularButtonWith<X> {
 }
 
 impl officekit_markup_base::Read for ButtonBackstageRegularButton {
-    fn read(element: &Element) -> Self {
-        read::button_backstage_regular_button(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::button_backstage_regular_button_from_item(item)
     }
 }
 
@@ -11043,8 +11009,8 @@ impl<X: UserData> ButtonButtonWith<X> {
 }
 
 impl officekit_markup_base::Read for ButtonButton {
-    fn read(element: &Element) -> Self {
-        read::button_button(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::button_button_from_item(item)
     }
 }
 
@@ -11139,8 +11105,8 @@ impl<X: UserData> ButtonButtonRegularWith<X> {
 }
 
 impl officekit_markup_base::Read for ButtonButtonRegular {
-    fn read(element: &Element) -> Self {
-        read::button_button_regular(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::button_button_regular_from_item(item)
     }
 }
 
@@ -11197,8 +11163,8 @@ impl<X: UserData> ButtonGroupWith<X> {
 }
 
 impl officekit_markup_base::Read for ButtonGroup {
-    fn read(element: &Element) -> Self {
-        read::button_group(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::button_group_from_item(item)
     }
 }
 
@@ -11249,29 +11215,17 @@ impl officekit_markup_base::Read for ButtonGroupContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_MSO14, "button")) => {
-                Self::ButtonButtonRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "control")) => {
-                Self::ControlControlCloneRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "dynamicMenu")) => {
-                Self::DynamicMenuDynamicMenuRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "gallery")) => {
-                Self::GalleryGalleryRegular(Box::new(officekit_markup_base::read(element)))
-            }
-            Some((NS_MSO14, "menu")) => Self::MenuMenuRegular(officekit_markup_base::read(element)),
-            Some((NS_MSO14, "separator")) => Self::Separator(officekit_markup_base::read(element)),
-            Some((NS_MSO14, "splitButton")) => {
-                Self::SplitButtonSplitButtonRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "toggleButton")) => {
-                Self::ToggleButtonToggleButtonRegular(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(item.read()),
+            Some((NS_MSO14, "control")) => Self::ControlControlCloneRegular(item.read()),
+            Some((NS_MSO14, "dynamicMenu")) => Self::DynamicMenuDynamicMenuRegular(item.read()),
+            Some((NS_MSO14, "gallery")) => Self::GalleryGalleryRegular(Box::new(item.read())),
+            Some((NS_MSO14, "menu")) => Self::MenuMenuRegular(item.read()),
+            Some((NS_MSO14, "separator")) => Self::Separator(item.read()),
+            Some((NS_MSO14, "splitButton")) => Self::SplitButtonSplitButtonRegular(item.read()),
+            Some((NS_MSO14, "toggleButton")) => Self::ToggleButtonToggleButtonRegular(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -11372,8 +11326,8 @@ impl<X: UserData> ButtonVisibleButtonWith<X> {
 }
 
 impl officekit_markup_base::Read for ButtonVisibleButton {
-    fn read(element: &Element) -> Self {
-        read::button_visible_button(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::button_visible_button_from_item(item)
     }
 }
 
@@ -11436,8 +11390,8 @@ impl<X: UserData> CategoryTaskFormGroupCategoryWith<X> {
 }
 
 impl officekit_markup_base::Read for CategoryTaskFormGroupCategory {
-    fn read(element: &Element) -> Self {
-        read::category_task_form_group_category(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::category_task_form_group_category_from_item(item)
     }
 }
 
@@ -11500,8 +11454,8 @@ impl<X: UserData> CategoryTaskGroupCategoryWith<X> {
 }
 
 impl officekit_markup_base::Read for CategoryTaskGroupCategory {
-    fn read(element: &Element) -> Self {
-        read::category_task_group_category(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::category_task_group_category_from_item(item)
     }
 }
 
@@ -11576,8 +11530,8 @@ impl<X: UserData> CheckBoxBackstageCheckBoxWith<X> {
 }
 
 impl officekit_markup_base::Read for CheckBoxBackstageCheckBox {
-    fn read(element: &Element) -> Self {
-        read::check_box_backstage_check_box(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::check_box_backstage_check_box_from_item(item)
     }
 }
 
@@ -11642,8 +11596,8 @@ impl<X: UserData> CheckBoxBackstageMenuCheckBoxWith<X> {
 }
 
 impl officekit_markup_base::Read for CheckBoxBackstageMenuCheckBox {
-    fn read(element: &Element) -> Self {
-        read::check_box_backstage_menu_check_box(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::check_box_backstage_menu_check_box_from_item(item)
     }
 }
 
@@ -11726,8 +11680,8 @@ impl<X: UserData> CheckBoxCheckBoxWith<X> {
 }
 
 impl officekit_markup_base::Read for CheckBoxCheckBox {
-    fn read(element: &Element) -> Self {
-        read::check_box_check_box(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::check_box_check_box_from_item(item)
     }
 }
 
@@ -11804,8 +11758,8 @@ impl<X: UserData> ComboBoxBackstageComboBoxWith<X> {
 }
 
 impl officekit_markup_base::Read for ComboBoxBackstageComboBox {
-    fn read(element: &Element) -> Self {
-        read::combo_box_backstage_combo_box(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::combo_box_backstage_combo_box_from_item(item)
     }
 }
 
@@ -11922,8 +11876,8 @@ impl<X: UserData> ComboBoxComboBoxWith<X> {
 }
 
 impl officekit_markup_base::Read for ComboBoxComboBox {
-    fn read(element: &Element) -> Self {
-        read::combo_box_combo_box(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::combo_box_combo_box_from_item(item)
     }
 }
 
@@ -11966,8 +11920,8 @@ impl<X: UserData> CommandWith<X> {
 }
 
 impl officekit_markup_base::Read for Command {
-    fn read(element: &Element) -> Self {
-        read::command(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::command_from_item(item)
     }
 }
 
@@ -12004,8 +11958,8 @@ impl<X: UserData> CommandsWith<X> {
 }
 
 impl officekit_markup_base::Read for Commands {
-    fn read(element: &Element) -> Self {
-        read::commands(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::commands_from_item(item)
     }
 }
 
@@ -12046,8 +12000,8 @@ impl<X: UserData> ContextMenuWith<X> {
 }
 
 impl officekit_markup_base::Read for ContextMenu {
-    fn read(element: &Element) -> Self {
-        read::context_menu(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::context_menu_from_item(item)
     }
 }
 
@@ -12103,34 +12057,20 @@ impl officekit_markup_base::Read for ContextMenuContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_MSO14, "button")) => {
-                Self::ButtonButtonRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "checkBox")) => {
-                Self::CheckBoxCheckBox(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "control")) => {
-                Self::ControlControlCloneRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "dynamicMenu")) => {
-                Self::DynamicMenuDynamicMenuRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "gallery")) => {
-                Self::GalleryGalleryRegular(Box::new(officekit_markup_base::read(element)))
-            }
-            Some((NS_MSO14, "menu")) => Self::MenuMenuRegular(officekit_markup_base::read(element)),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(item.read()),
+            Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(item.read()),
+            Some((NS_MSO14, "control")) => Self::ControlControlCloneRegular(item.read()),
+            Some((NS_MSO14, "dynamicMenu")) => Self::DynamicMenuDynamicMenuRegular(item.read()),
+            Some((NS_MSO14, "gallery")) => Self::GalleryGalleryRegular(Box::new(item.read())),
+            Some((NS_MSO14, "menu")) => Self::MenuMenuRegular(item.read()),
             Some((NS_MSO14, "menuSeparator")) => {
-                Self::MenuSeparatorMenuSeparatorNoTitle(officekit_markup_base::read(element))
+                Self::MenuSeparatorMenuSeparatorNoTitle(item.read())
             }
-            Some((NS_MSO14, "splitButton")) => {
-                Self::SplitButtonSplitButtonRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "toggleButton")) => {
-                Self::ToggleButtonToggleButtonRegular(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+            Some((NS_MSO14, "splitButton")) => Self::SplitButtonSplitButtonRegular(item.read()),
+            Some((NS_MSO14, "toggleButton")) => Self::ToggleButtonToggleButtonRegular(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -12178,8 +12118,8 @@ impl<X: UserData> ContextMenusWith<X> {
 }
 
 impl officekit_markup_base::Read for ContextMenus {
-    fn read(element: &Element) -> Self {
-        read::context_menus(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::context_menus_from_item(item)
     }
 }
 
@@ -12216,8 +12156,8 @@ impl<X: UserData> ContextualTabsWith<X> {
 }
 
 impl officekit_markup_base::Read for ContextualTabs {
-    fn read(element: &Element) -> Self {
-        read::contextual_tabs(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::contextual_tabs_from_item(item)
     }
 }
 
@@ -12312,8 +12252,8 @@ impl<X: UserData> ControlControlCloneWith<X> {
 }
 
 impl officekit_markup_base::Read for ControlControlClone {
-    fn read(element: &Element) -> Self {
-        read::control_control_clone(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::control_control_clone_from_item(item)
     }
 }
 
@@ -12408,8 +12348,8 @@ impl<X: UserData> ControlControlCloneQatWith<X> {
 }
 
 impl officekit_markup_base::Read for ControlControlCloneQat {
-    fn read(element: &Element) -> Self {
-        read::control_control_clone_qat(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::control_control_clone_qat_from_item(item)
     }
 }
 
@@ -12496,8 +12436,8 @@ impl<X: UserData> ControlControlCloneRegularWith<X> {
 }
 
 impl officekit_markup_base::Read for ControlControlCloneRegular {
-    fn read(element: &Element) -> Self {
-        read::control_control_clone_regular(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::control_control_clone_regular_from_item(item)
     }
 }
 
@@ -12552,8 +12492,8 @@ impl<X: UserData> CustomUIWith<X> {
 }
 
 impl officekit_markup_base::Read for CustomUI {
-    fn read(element: &Element) -> Self {
-        read::custom_ui(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::custom_ui_from_item(item)
     }
 }
 
@@ -12590,8 +12530,8 @@ impl<X: UserData> DialogBoxLauncherWith<X> {
 }
 
 impl officekit_markup_base::Read for DialogBoxLauncher {
-    fn read(element: &Element) -> Self {
-        read::dialog_box_launcher(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::dialog_box_launcher_from_item(item)
     }
 }
 
@@ -12628,8 +12568,8 @@ impl<X: UserData> DocumentControlsWith<X> {
 }
 
 impl officekit_markup_base::Read for DocumentControls {
-    fn read(element: &Element) -> Self {
-        read::document_controls(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::document_controls_from_item(item)
     }
 }
 
@@ -12714,8 +12654,8 @@ impl<X: UserData> DropDownBackstageDropDownWith<X> {
 }
 
 impl officekit_markup_base::Read for DropDownBackstageDropDown {
-    fn read(element: &Element) -> Self {
-        read::drop_down_backstage_drop_down(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drop_down_backstage_drop_down_from_item(item)
     }
 }
 
@@ -12836,8 +12776,8 @@ impl<X: UserData> DropDownDropDownRegularWith<X> {
 }
 
 impl officekit_markup_base::Read for DropDownDropDownRegular {
-    fn read(element: &Element) -> Self {
-        read::drop_down_drop_down_regular(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::drop_down_drop_down_regular_from_item(item)
     }
 }
 
@@ -12938,8 +12878,8 @@ impl<X: UserData> DynamicMenuDynamicMenuWith<X> {
 }
 
 impl officekit_markup_base::Read for DynamicMenuDynamicMenu {
-    fn read(element: &Element) -> Self {
-        read::dynamic_menu_dynamic_menu(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::dynamic_menu_dynamic_menu_from_item(item)
     }
 }
 
@@ -13036,8 +12976,8 @@ impl<X: UserData> DynamicMenuDynamicMenuRegularWith<X> {
 }
 
 impl officekit_markup_base::Read for DynamicMenuDynamicMenuRegular {
-    fn read(element: &Element) -> Self {
-        read::dynamic_menu_dynamic_menu_regular(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::dynamic_menu_dynamic_menu_regular_from_item(item)
     }
 }
 
@@ -13106,8 +13046,8 @@ impl<X: UserData> EditBoxBackstageEditBoxWith<X> {
 }
 
 impl officekit_markup_base::Read for EditBoxBackstageEditBox {
-    fn read(element: &Element) -> Self {
-        read::edit_box_backstage_edit_box(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::edit_box_backstage_edit_box_from_item(item)
     }
 }
 
@@ -13204,8 +13144,8 @@ impl<X: UserData> EditBoxEditBoxWith<X> {
 }
 
 impl officekit_markup_base::Read for EditBoxEditBox {
-    fn read(element: &Element) -> Self {
-        read::edit_box_edit_box(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::edit_box_edit_box_from_item(item)
     }
 }
 
@@ -13306,8 +13246,8 @@ impl<X: UserData> FirstColumnWith<X> {
 }
 
 impl officekit_markup_base::Read for FirstColumn {
-    fn read(element: &Element) -> Self {
-        read::first_column(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::first_column_from_item(item)
     }
 }
 
@@ -13452,8 +13392,8 @@ impl<X: UserData> GalleryGalleryWith<X> {
 }
 
 impl officekit_markup_base::Read for GalleryGallery {
-    fn read(element: &Element) -> Self {
-        read::gallery_gallery(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::gallery_gallery_from_item(item)
     }
 }
 
@@ -13594,8 +13534,8 @@ impl<X: UserData> GalleryGalleryRegularWith<X> {
 }
 
 impl officekit_markup_base::Read for GalleryGalleryRegular {
-    fn read(element: &Element) -> Self {
-        read::gallery_gallery_regular(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::gallery_gallery_regular_from_item(item)
     }
 }
 
@@ -13731,8 +13671,8 @@ impl<X: UserData> GroupBackstageGroupWith<X> {
 }
 
 impl officekit_markup_base::Read for GroupBackstageGroup {
-    fn read(element: &Element) -> Self {
-        read::group_backstage_group(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::group_backstage_group_from_item(item)
     }
 }
 
@@ -13783,8 +13723,8 @@ impl<X: UserData> GroupBoxWith<X> {
 }
 
 impl officekit_markup_base::Read for GroupBox {
-    fn read(element: &Element) -> Self {
-        read::group_box(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::group_box_from_item(item)
     }
 }
 
@@ -13846,46 +13786,24 @@ impl officekit_markup_base::Read for GroupContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_MSO14, "box")) => Self::BoxBox(officekit_markup_base::read(element)),
-            Some((NS_MSO14, "button")) => Self::ButtonButton(officekit_markup_base::read(element)),
-            Some((NS_MSO14, "buttonGroup")) => {
-                Self::ButtonGroup(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "checkBox")) => {
-                Self::CheckBoxCheckBox(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "comboBox")) => {
-                Self::ComboBoxComboBox(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "control")) => {
-                Self::ControlControlClone(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "dropDown")) => {
-                Self::DropDownDropDownRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "dynamicMenu")) => {
-                Self::DynamicMenuDynamicMenu(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "editBox")) => {
-                Self::EditBoxEditBox(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "gallery")) => {
-                Self::GalleryGallery(Box::new(officekit_markup_base::read(element)))
-            }
-            Some((NS_MSO14, "labelControl")) => {
-                Self::LabelControlLabelControl(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "menu")) => Self::MenuMenu(officekit_markup_base::read(element)),
-            Some((NS_MSO14, "separator")) => Self::Separator(officekit_markup_base::read(element)),
-            Some((NS_MSO14, "splitButton")) => {
-                Self::SplitButtonSplitButton(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "toggleButton")) => {
-                Self::ToggleButtonToggleButton(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_MSO14, "box")) => Self::BoxBox(item.read()),
+            Some((NS_MSO14, "button")) => Self::ButtonButton(item.read()),
+            Some((NS_MSO14, "buttonGroup")) => Self::ButtonGroup(item.read()),
+            Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(item.read()),
+            Some((NS_MSO14, "comboBox")) => Self::ComboBoxComboBox(item.read()),
+            Some((NS_MSO14, "control")) => Self::ControlControlClone(item.read()),
+            Some((NS_MSO14, "dropDown")) => Self::DropDownDropDownRegular(item.read()),
+            Some((NS_MSO14, "dynamicMenu")) => Self::DynamicMenuDynamicMenu(item.read()),
+            Some((NS_MSO14, "editBox")) => Self::EditBoxEditBox(item.read()),
+            Some((NS_MSO14, "gallery")) => Self::GalleryGallery(Box::new(item.read())),
+            Some((NS_MSO14, "labelControl")) => Self::LabelControlLabelControl(item.read()),
+            Some((NS_MSO14, "menu")) => Self::MenuMenu(item.read()),
+            Some((NS_MSO14, "separator")) => Self::Separator(item.read()),
+            Some((NS_MSO14, "splitButton")) => Self::SplitButtonSplitButton(item.read()),
+            Some((NS_MSO14, "toggleButton")) => Self::ToggleButtonToggleButton(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -14005,38 +13923,22 @@ impl officekit_markup_base::Read for GroupControlsContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_MSO14, "button")) => {
-                Self::ButtonBackstageGroupButton(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "checkBox")) => {
-                Self::CheckBoxBackstageCheckBox(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "comboBox")) => {
-                Self::ComboBoxBackstageComboBox(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "dropDown")) => {
-                Self::DropDownBackstageDropDown(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "editBox")) => {
-                Self::EditBoxBackstageEditBox(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "groupBox")) => Self::GroupBox(officekit_markup_base::read(element)),
-            Some((NS_MSO14, "hyperlink")) => Self::Hyperlink(officekit_markup_base::read(element)),
-            Some((NS_MSO14, "imageControl")) => {
-                Self::ImageControl(officekit_markup_base::read(element))
-            }
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_MSO14, "button")) => Self::ButtonBackstageGroupButton(item.read()),
+            Some((NS_MSO14, "checkBox")) => Self::CheckBoxBackstageCheckBox(item.read()),
+            Some((NS_MSO14, "comboBox")) => Self::ComboBoxBackstageComboBox(item.read()),
+            Some((NS_MSO14, "dropDown")) => Self::DropDownBackstageDropDown(item.read()),
+            Some((NS_MSO14, "editBox")) => Self::EditBoxBackstageEditBox(item.read()),
+            Some((NS_MSO14, "groupBox")) => Self::GroupBox(item.read()),
+            Some((NS_MSO14, "hyperlink")) => Self::Hyperlink(item.read()),
+            Some((NS_MSO14, "imageControl")) => Self::ImageControl(item.read()),
             Some((NS_MSO14, "labelControl")) => {
-                Self::LabelControlBackstageLabelControl(officekit_markup_base::read(element))
+                Self::LabelControlBackstageLabelControl(item.read())
             }
-            Some((NS_MSO14, "layoutContainer")) => {
-                Self::LayoutContainer(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "radioGroup")) => {
-                Self::RadioGroup(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+            Some((NS_MSO14, "layoutContainer")) => Self::LayoutContainer(item.read()),
+            Some((NS_MSO14, "radioGroup")) => Self::RadioGroup(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -14138,8 +14040,8 @@ impl<X: UserData> GroupGroupWith<X> {
 }
 
 impl officekit_markup_base::Read for GroupGroup {
-    fn read(element: &Element) -> Self {
-        read::group_group(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::group_group_from_item(item)
     }
 }
 
@@ -14220,8 +14122,8 @@ impl<X: UserData> HyperlinkWith<X> {
 }
 
 impl officekit_markup_base::Read for Hyperlink {
-    fn read(element: &Element) -> Self {
-        read::hyperlink(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hyperlink_from_item(item)
     }
 }
 
@@ -14280,8 +14182,8 @@ impl<X: UserData> ImageControlWith<X> {
 }
 
 impl officekit_markup_base::Read for ImageControl {
-    fn read(element: &Element) -> Self {
-        read::image_control(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::image_control_from_item(item)
     }
 }
 
@@ -14314,8 +14216,8 @@ impl<X: UserData> ItemBackstageItemWith<X> {
 }
 
 impl officekit_markup_base::Read for ItemBackstageItem {
-    fn read(element: &Element) -> Self {
-        read::item_backstage_item(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::item_backstage_item_from_item(item)
     }
 }
 
@@ -14362,8 +14264,8 @@ impl<X: UserData> ItemItemWith<X> {
 }
 
 impl officekit_markup_base::Read for ItemItem {
-    fn read(element: &Element) -> Self {
-        read::item_item(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::item_item_from_item(item)
     }
 }
 
@@ -14471,8 +14373,8 @@ impl<X: UserData> LabelControlBackstageLabelControlWith<X> {
 }
 
 impl officekit_markup_base::Read for LabelControlBackstageLabelControl {
-    fn read(element: &Element) -> Self {
-        read::label_control_backstage_label_control(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::label_control_backstage_label_control_from_item(item)
     }
 }
 
@@ -14547,8 +14449,8 @@ impl<X: UserData> LabelControlLabelControlWith<X> {
 }
 
 impl officekit_markup_base::Read for LabelControlLabelControl {
-    fn read(element: &Element) -> Self {
-        read::label_control_label_control(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::label_control_label_control_from_item(item)
     }
 }
 
@@ -14652,8 +14554,8 @@ impl<X: UserData> LayoutContainerWith<X> {
 }
 
 impl officekit_markup_base::Read for LayoutContainer {
-    fn read(element: &Element) -> Self {
-        read::layout_container(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::layout_container_from_item(item)
     }
 }
 
@@ -14728,8 +14630,8 @@ impl<X: UserData> MenuBackstagePrimaryMenuWith<X> {
 }
 
 impl officekit_markup_base::Read for MenuBackstagePrimaryMenu {
-    fn read(element: &Element) -> Self {
-        read::menu_backstage_primary_menu(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::menu_backstage_primary_menu_from_item(item)
     }
 }
 
@@ -14800,8 +14702,8 @@ impl<X: UserData> MenuBackstageSubMenuWith<X> {
 }
 
 impl officekit_markup_base::Read for MenuBackstageSubMenu {
-    fn read(element: &Element) -> Self {
-        read::menu_backstage_sub_menu(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::menu_backstage_sub_menu_from_item(item)
     }
 }
 
@@ -14855,34 +14757,18 @@ impl officekit_markup_base::Read for MenuContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_MSO14, "button")) => {
-                Self::ButtonButtonRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "checkBox")) => {
-                Self::CheckBoxCheckBox(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "control")) => {
-                Self::ControlControlCloneRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "dynamicMenu")) => {
-                Self::DynamicMenuDynamicMenuRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "gallery")) => {
-                Self::GalleryGalleryRegular(Box::new(officekit_markup_base::read(element)))
-            }
-            Some((NS_MSO14, "menu")) => Self::MenuMenuRegular(officekit_markup_base::read(element)),
-            Some((NS_MSO14, "menuSeparator")) => {
-                Self::MenuSeparatorMenuSeparator(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "splitButton")) => {
-                Self::SplitButtonSplitButtonRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "toggleButton")) => {
-                Self::ToggleButtonToggleButtonRegular(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(item.read()),
+            Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(item.read()),
+            Some((NS_MSO14, "control")) => Self::ControlControlCloneRegular(item.read()),
+            Some((NS_MSO14, "dynamicMenu")) => Self::DynamicMenuDynamicMenuRegular(item.read()),
+            Some((NS_MSO14, "gallery")) => Self::GalleryGalleryRegular(Box::new(item.read())),
+            Some((NS_MSO14, "menu")) => Self::MenuMenuRegular(item.read()),
+            Some((NS_MSO14, "menuSeparator")) => Self::MenuSeparatorMenuSeparator(item.read()),
+            Some((NS_MSO14, "splitButton")) => Self::SplitButtonSplitButtonRegular(item.read()),
+            Some((NS_MSO14, "toggleButton")) => Self::ToggleButtonToggleButtonRegular(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -14944,8 +14830,8 @@ impl<X: UserData> MenuGroupWith<X> {
 }
 
 impl officekit_markup_base::Read for MenuGroup {
-    fn read(element: &Element) -> Self {
-        read::menu_group(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::menu_group_from_item(item)
     }
 }
 
@@ -15048,8 +14934,8 @@ impl<X: UserData> MenuMenuWith<X> {
 }
 
 impl officekit_markup_base::Read for MenuMenu {
-    fn read(element: &Element) -> Self {
-        read::menu_menu(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::menu_menu_from_item(item)
     }
 }
 
@@ -15148,8 +15034,8 @@ impl<X: UserData> MenuMenuRegularWith<X> {
 }
 
 impl officekit_markup_base::Read for MenuMenuRegular {
-    fn read(element: &Element) -> Self {
-        read::menu_menu_regular(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::menu_menu_regular_from_item(item)
     }
 }
 
@@ -15194,8 +15080,8 @@ impl<X: UserData> MenuMenuRootWith<X> {
 }
 
 impl officekit_markup_base::Read for MenuMenuRoot {
-    fn read(element: &Element) -> Self {
-        read::menu_menu_root(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::menu_menu_root_from_item(item)
     }
 }
 
@@ -15294,8 +15180,8 @@ impl<X: UserData> MenuMenuWithTitleWith<X> {
 }
 
 impl officekit_markup_base::Read for MenuMenuWithTitle {
-    fn read(element: &Element) -> Self {
-        read::menu_menu_with_title(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::menu_menu_with_title_from_item(item)
     }
 }
 
@@ -15348,8 +15234,8 @@ impl<X: UserData> MenuSeparatorMenuSeparatorWith<X> {
 }
 
 impl officekit_markup_base::Read for MenuSeparatorMenuSeparator {
-    fn read(element: &Element) -> Self {
-        read::menu_separator_menu_separator(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::menu_separator_menu_separator_from_item(item)
     }
 }
 
@@ -15398,8 +15284,8 @@ impl<X: UserData> MenuSeparatorMenuSeparatorNoTitleWith<X> {
 }
 
 impl officekit_markup_base::Read for MenuSeparatorMenuSeparatorNoTitle {
-    fn read(element: &Element) -> Self {
-        read::menu_separator_menu_separator_no_title(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::menu_separator_menu_separator_no_title_from_item(item)
     }
 }
 
@@ -15455,36 +15341,18 @@ impl officekit_markup_base::Read for MenuWithTitleContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_MSO14, "button")) => {
-                Self::ButtonButtonRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "checkBox")) => {
-                Self::CheckBoxCheckBox(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "control")) => {
-                Self::ControlControlCloneRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "dynamicMenu")) => {
-                Self::DynamicMenuDynamicMenuRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "gallery")) => {
-                Self::GalleryGalleryRegular(Box::new(officekit_markup_base::read(element)))
-            }
-            Some((NS_MSO14, "menu")) => {
-                Self::MenuMenuWithTitle(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "menuSeparator")) => {
-                Self::MenuSeparatorMenuSeparator(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "splitButton")) => {
-                Self::SplitButtonSplitButtonWithTitle(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "toggleButton")) => {
-                Self::ToggleButtonToggleButtonRegular(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(item.read()),
+            Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(item.read()),
+            Some((NS_MSO14, "control")) => Self::ControlControlCloneRegular(item.read()),
+            Some((NS_MSO14, "dynamicMenu")) => Self::DynamicMenuDynamicMenuRegular(item.read()),
+            Some((NS_MSO14, "gallery")) => Self::GalleryGalleryRegular(Box::new(item.read())),
+            Some((NS_MSO14, "menu")) => Self::MenuMenuWithTitle(item.read()),
+            Some((NS_MSO14, "menuSeparator")) => Self::MenuSeparatorMenuSeparator(item.read()),
+            Some((NS_MSO14, "splitButton")) => Self::SplitButtonSplitButtonWithTitle(item.read()),
+            Some((NS_MSO14, "toggleButton")) => Self::ToggleButtonToggleButtonRegular(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -15532,8 +15400,8 @@ impl<X: UserData> PrimaryItemWith<X> {
 }
 
 impl officekit_markup_base::Read for PrimaryItem {
-    fn read(element: &Element) -> Self {
-        read::primary_item(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::primary_item_from_item(item)
     }
 }
 
@@ -15574,15 +15442,11 @@ impl officekit_markup_base::Read for PrimaryItemContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_MSO14, "button")) => {
-                Self::ButtonBackstageRegularButton(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "menu")) => {
-                Self::MenuBackstagePrimaryMenu(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_MSO14, "button")) => Self::ButtonBackstageRegularButton(item.read()),
+            Some((NS_MSO14, "menu")) => Self::MenuBackstagePrimaryMenu(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -15627,8 +15491,8 @@ impl<X: UserData> QatWith<X> {
 }
 
 impl officekit_markup_base::Read for Qat {
-    fn read(element: &Element) -> Self {
-        read::qat(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::qat_from_item(item)
     }
 }
 
@@ -15666,16 +15530,12 @@ impl officekit_markup_base::Read for QuickAccessToolbarItemsContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_MSO14, "button")) => {
-                Self::ButtonButtonRegular(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "control")) => {
-                Self::ControlControlCloneQat(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "separator")) => Self::Separator(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(item.read()),
+            Some((NS_MSO14, "control")) => Self::ControlControlCloneQat(item.read()),
+            Some((NS_MSO14, "separator")) => Self::Separator(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -15713,8 +15573,8 @@ impl<X: UserData> RadioButtonWith<X> {
 }
 
 impl officekit_markup_base::Read for RadioButton {
-    fn read(element: &Element) -> Self {
-        read::radio_button(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::radio_button_from_item(item)
     }
 }
 
@@ -15789,8 +15649,8 @@ impl<X: UserData> RadioGroupWith<X> {
 }
 
 impl officekit_markup_base::Read for RadioGroup {
-    fn read(element: &Element) -> Self {
-        read::radio_group(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::radio_group_from_item(item)
     }
 }
 
@@ -15831,8 +15691,8 @@ impl<X: UserData> RibbonWith<X> {
 }
 
 impl officekit_markup_base::Read for Ribbon {
-    fn read(element: &Element) -> Self {
-        read::ribbon(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ribbon_from_item(item)
     }
 }
 
@@ -15864,14 +15724,12 @@ impl officekit_markup_base::Read for RibbonContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_MSO14, "contextualTabs")) => {
-                Self::ContextualTabs(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "qat")) => Self::Qat(officekit_markup_base::read(element)),
-            Some((NS_MSO14, "tabs")) => Self::Tabs(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_MSO14, "contextualTabs")) => Self::ContextualTabs(item.read()),
+            Some((NS_MSO14, "qat")) => Self::Qat(item.read()),
+            Some((NS_MSO14, "tabs")) => Self::Tabs(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -15913,8 +15771,8 @@ impl<X: UserData> SecondColumnWith<X> {
 }
 
 impl officekit_markup_base::Read for SecondColumn {
-    fn read(element: &Element) -> Self {
-        read::second_column(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::second_column_from_item(item)
     }
 }
 
@@ -15967,8 +15825,8 @@ impl<X: UserData> SeparatorWith<X> {
 }
 
 impl officekit_markup_base::Read for Separator {
-    fn read(element: &Element) -> Self {
-        read::separator(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::separator_from_item(item)
     }
 }
 
@@ -16005,8 +15863,8 @@ impl<X: UserData> SharedControlsWith<X> {
 }
 
 impl officekit_markup_base::Read for SharedControls {
-    fn read(element: &Element) -> Self {
-        read::shared_controls(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::shared_controls_from_item(item)
     }
 }
 
@@ -16039,13 +15897,11 @@ impl officekit_markup_base::Read for SimpleGroupsContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_MSO14, "group")) => {
-                Self::GroupBackstageGroup(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "taskGroup")) => Self::TaskGroup(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_MSO14, "group")) => Self::GroupBackstageGroup(item.read()),
+            Some((NS_MSO14, "taskGroup")) => Self::TaskGroup(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -16133,15 +15989,11 @@ impl officekit_markup_base::Read for SplitButtonContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_MSO14, "button")) => {
-                Self::ButtonVisibleButton(officekit_markup_base::read(element))
-            }
-            Some((NS_MSO14, "toggleButton")) => {
-                Self::ToggleButtonVisibleToggleButton(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_MSO14, "button")) => Self::ButtonVisibleButton(item.read()),
+            Some((NS_MSO14, "toggleButton")) => Self::ToggleButtonVisibleToggleButton(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -16224,8 +16076,8 @@ impl<X: UserData> SplitButtonSplitButtonWith<X> {
 }
 
 impl officekit_markup_base::Read for SplitButtonSplitButton {
-    fn read(element: &Element) -> Self {
-        read::split_button_split_button(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::split_button_split_button_from_item(item)
     }
 }
 
@@ -16300,8 +16152,8 @@ impl<X: UserData> SplitButtonSplitButtonRegularWith<X> {
 }
 
 impl officekit_markup_base::Read for SplitButtonSplitButtonRegular {
-    fn read(element: &Element) -> Self {
-        read::split_button_split_button_regular(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::split_button_split_button_regular_from_item(item)
     }
 }
 
@@ -16376,8 +16228,8 @@ impl<X: UserData> SplitButtonSplitButtonWithTitleWith<X> {
 }
 
 impl officekit_markup_base::Read for SplitButtonSplitButtonWithTitle {
-    fn read(element: &Element) -> Self {
-        read::split_button_split_button_with_title(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::split_button_split_button_with_title_from_item(item)
     }
 }
 
@@ -16570,8 +16422,8 @@ impl<X: UserData> TabBackstageTabWith<X> {
 }
 
 impl officekit_markup_base::Read for TabBackstageTab {
-    fn read(element: &Element) -> Self {
-        read::tab_backstage_tab(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tab_backstage_tab_from_item(item)
     }
 }
 
@@ -16616,8 +16468,8 @@ impl<X: UserData> TabSetWith<X> {
 }
 
 impl officekit_markup_base::Read for TabSet {
-    fn read(element: &Element) -> Self {
-        read::tab_set(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tab_set_from_item(item)
     }
 }
 
@@ -16684,8 +16536,8 @@ impl<X: UserData> TabTabWith<X> {
 }
 
 impl officekit_markup_base::Read for TabTab {
-    fn read(element: &Element) -> Self {
-        read::tab_tab(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tab_tab_from_item(item)
     }
 }
 
@@ -16722,8 +16574,8 @@ impl<X: UserData> TabsWith<X> {
 }
 
 impl officekit_markup_base::Read for Tabs {
-    fn read(element: &Element) -> Self {
-        read::tabs(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tabs_from_item(item)
     }
 }
 
@@ -16788,8 +16640,8 @@ impl<X: UserData> TaskFormGroupWith<X> {
 }
 
 impl officekit_markup_base::Read for TaskFormGroup {
-    fn read(element: &Element) -> Self {
-        read::task_form_group(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::task_form_group_from_item(item)
     }
 }
 
@@ -16862,8 +16714,8 @@ impl<X: UserData> TaskGroupWith<X> {
 }
 
 impl officekit_markup_base::Read for TaskGroup {
-    fn read(element: &Element) -> Self {
-        read::task_group(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::task_group_from_item(item)
     }
 }
 
@@ -17009,8 +16861,8 @@ impl<X: UserData> TaskTaskFormGroupTaskWith<X> {
 }
 
 impl officekit_markup_base::Read for TaskTaskFormGroupTask {
-    fn read(element: &Element) -> Self {
-        read::task_task_form_group_task(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::task_task_form_group_task_from_item(item)
     }
 }
 
@@ -17091,8 +16943,8 @@ impl<X: UserData> TaskTaskGroupTaskWith<X> {
 }
 
 impl officekit_markup_base::Read for TaskTaskGroupTask {
-    fn read(element: &Element) -> Self {
-        read::task_task_group_task(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::task_task_group_task_from_item(item)
     }
 }
 
@@ -17163,8 +17015,8 @@ impl<X: UserData> ToggleButtonBackstageMenuToggleButtonWith<X> {
 }
 
 impl officekit_markup_base::Read for ToggleButtonBackstageMenuToggleButton {
-    fn read(element: &Element) -> Self {
-        read::toggle_button_backstage_menu_toggle_button(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::toggle_button_backstage_menu_toggle_button_from_item(item)
     }
 }
 
@@ -17265,8 +17117,8 @@ impl<X: UserData> ToggleButtonToggleButtonWith<X> {
 }
 
 impl officekit_markup_base::Read for ToggleButtonToggleButton {
-    fn read(element: &Element) -> Self {
-        read::toggle_button_toggle_button(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::toggle_button_toggle_button_from_item(item)
     }
 }
 
@@ -17363,8 +17215,8 @@ impl<X: UserData> ToggleButtonToggleButtonRegularWith<X> {
 }
 
 impl officekit_markup_base::Read for ToggleButtonToggleButtonRegular {
-    fn read(element: &Element) -> Self {
-        read::toggle_button_toggle_button_regular(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::toggle_button_toggle_button_regular_from_item(item)
     }
 }
 
@@ -17457,8 +17309,8 @@ impl<X: UserData> ToggleButtonVisibleToggleButtonWith<X> {
 }
 
 impl officekit_markup_base::Read for ToggleButtonVisibleToggleButton {
-    fn read(element: &Element) -> Self {
-        read::toggle_button_visible_toggle_button(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::toggle_button_visible_toggle_button_from_item(item)
     }
 }
 
@@ -17495,8 +17347,8 @@ impl<X: UserData> TopItemsWith<X> {
 }
 
 impl officekit_markup_base::Read for TopItems {
-    fn read(element: &Element) -> Self {
-        read::top_items(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::top_items_from_item(item)
     }
 }
 

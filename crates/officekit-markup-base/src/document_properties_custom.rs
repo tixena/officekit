@@ -222,7 +222,7 @@ pub mod read;
 pub mod write;
 
 use crate::UserData;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::NamespaceId;
 
 const NS_OP: Option<NamespaceId> = Some(63);
@@ -443,8 +443,8 @@ impl<X: UserData> CustomFilePropertiesWith<X> {
 }
 
 impl crate::Read for CustomFileProperties {
-    fn read(element: &Element) -> Self {
-        read::custom_file_properties(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::custom_file_properties_from_item(item)
     }
 }
 
@@ -491,8 +491,8 @@ impl<X: UserData> CustomFilePropertyWith<X> {
 }
 
 impl crate::Read for CustomFileProperty {
-    fn read(element: &Element) -> Self {
-        read::custom_file_property(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::custom_file_property_from_item(item)
     }
 }
 
@@ -582,42 +582,42 @@ impl crate::Read for CustomFilePropertyContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match crate::name(element) {
-            Some((NS_VT, "array")) => Self::Array(crate::read(element)),
-            Some((NS_VT, "bstr")) => Self::BasicString(crate::read(element)),
-            Some((NS_VT, "blob")) => Self::BinaryBlob(crate::read(element)),
-            Some((NS_VT, "oblob")) => Self::BinaryBlobObject(crate::read(element)),
-            Some((NS_VT, "storage")) => Self::BinaryStorage(crate::read(element)),
-            Some((NS_VT, "ostorage")) => Self::BinaryStorageObject(crate::read(element)),
-            Some((NS_VT, "stream")) => Self::BinaryStream(crate::read(element)),
-            Some((NS_VT, "ostream")) => Self::BinaryStreamObject(crate::read(element)),
-            Some((NS_VT, "vstream")) => Self::BinaryVersionedStream(crate::read(element)),
-            Some((NS_VT, "bool")) => Self::Boolean(crate::read(element)),
-            Some((NS_VT, "clsid")) => Self::ClassID(crate::read(element)),
-            Some((NS_VT, "cy")) => Self::Currency(crate::read(element)),
-            Some((NS_VT, "date")) => Self::DateAndTime(crate::read(element)),
-            Some((NS_VT, "decimal")) => Self::Decimal(crate::read(element)),
-            Some((NS_VT, "empty")) => Self::Empty(crate::read(element)),
-            Some((NS_VT, "error")) => Self::ErrorStatusCode(crate::read(element)),
-            Some((NS_VT, "filetime")) => Self::FileTime(crate::read(element)),
-            Some((NS_VT, "i1")) => Self::I1(crate::read(element)),
-            Some((NS_VT, "i2")) => Self::I2(crate::read(element)),
-            Some((NS_VT, "i4")) => Self::I4(crate::read(element)),
-            Some((NS_VT, "i8")) => Self::I8(crate::read(element)),
-            Some((NS_VT, "int")) => Self::Integer(crate::read(element)),
-            Some((NS_VT, "lpstr")) => Self::Lpstr(crate::read(element)),
-            Some((NS_VT, "lpwstr")) => Self::Lpwstr(crate::read(element)),
-            Some((NS_VT, "null")) => Self::Null(crate::read(element)),
-            Some((NS_VT, "r4")) => Self::R4(crate::read(element)),
-            Some((NS_VT, "r8")) => Self::R8(crate::read(element)),
-            Some((NS_VT, "ui1")) => Self::Ui1(crate::read(element)),
-            Some((NS_VT, "ui2")) => Self::Ui2(crate::read(element)),
-            Some((NS_VT, "ui4")) => Self::Ui4(crate::read(element)),
-            Some((NS_VT, "ui8")) => Self::Ui8(crate::read(element)),
-            Some((NS_VT, "uint")) => Self::UnsignedInteger(crate::read(element)),
-            Some((NS_VT, "vector")) => Self::Vector(crate::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: crate::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_VT, "array")) => Self::Array(item.read()),
+            Some((NS_VT, "bstr")) => Self::BasicString(item.read()),
+            Some((NS_VT, "blob")) => Self::BinaryBlob(item.read()),
+            Some((NS_VT, "oblob")) => Self::BinaryBlobObject(item.read()),
+            Some((NS_VT, "storage")) => Self::BinaryStorage(item.read()),
+            Some((NS_VT, "ostorage")) => Self::BinaryStorageObject(item.read()),
+            Some((NS_VT, "stream")) => Self::BinaryStream(item.read()),
+            Some((NS_VT, "ostream")) => Self::BinaryStreamObject(item.read()),
+            Some((NS_VT, "vstream")) => Self::BinaryVersionedStream(item.read()),
+            Some((NS_VT, "bool")) => Self::Boolean(item.read()),
+            Some((NS_VT, "clsid")) => Self::ClassID(item.read()),
+            Some((NS_VT, "cy")) => Self::Currency(item.read()),
+            Some((NS_VT, "date")) => Self::DateAndTime(item.read()),
+            Some((NS_VT, "decimal")) => Self::Decimal(item.read()),
+            Some((NS_VT, "empty")) => Self::Empty(item.read()),
+            Some((NS_VT, "error")) => Self::ErrorStatusCode(item.read()),
+            Some((NS_VT, "filetime")) => Self::FileTime(item.read()),
+            Some((NS_VT, "i1")) => Self::I1(item.read()),
+            Some((NS_VT, "i2")) => Self::I2(item.read()),
+            Some((NS_VT, "i4")) => Self::I4(item.read()),
+            Some((NS_VT, "i8")) => Self::I8(item.read()),
+            Some((NS_VT, "int")) => Self::Integer(item.read()),
+            Some((NS_VT, "lpstr")) => Self::Lpstr(item.read()),
+            Some((NS_VT, "lpwstr")) => Self::Lpwstr(item.read()),
+            Some((NS_VT, "null")) => Self::Null(item.read()),
+            Some((NS_VT, "r4")) => Self::R4(item.read()),
+            Some((NS_VT, "r8")) => Self::R8(item.read()),
+            Some((NS_VT, "ui1")) => Self::Ui1(item.read()),
+            Some((NS_VT, "ui2")) => Self::Ui2(item.read()),
+            Some((NS_VT, "ui4")) => Self::Ui4(item.read()),
+            Some((NS_VT, "ui8")) => Self::Ui8(item.read()),
+            Some((NS_VT, "uint")) => Self::UnsignedInteger(item.read()),
+            Some((NS_VT, "vector")) => Self::Vector(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }

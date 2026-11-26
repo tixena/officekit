@@ -221,8 +221,25 @@ use officekit_xml::element::Element;
 /// Read `xlpcalc:aggregationInfo` into a `AggregationInfo`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn aggregation_info(element: &Element) -> super::AggregationInfo {
+    aggregation_info_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlpcalc:aggregationInfo` into a `AggregationInfo` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn aggregation_info_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AggregationInfo {
+    aggregation_info_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlpcalc:aggregationInfo` into a `AggregationInfo` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn aggregation_info_from_item(item: officekit_markup_base::Item<'_>) -> super::AggregationInfo {
     let mut node = super::AggregationInfo::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::AGGREGATION_INFO_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::AGGREGATION_INFO_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.aggregation_type),
@@ -237,9 +254,27 @@ pub fn aggregation_info(element: &Element) -> super::AggregationInfo {
 /// Read `xlpcalc:featureSupportInfo` into a `FeatureSupportInfo`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn feature_support_info(element: &Element) -> super::FeatureSupportInfo {
+    feature_support_info_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlpcalc:featureSupportInfo` into a `FeatureSupportInfo` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn feature_support_info_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::FeatureSupportInfo {
+    feature_support_info_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlpcalc:featureSupportInfo` into a `FeatureSupportInfo` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn feature_support_info_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::FeatureSupportInfo {
     let mut node = super::FeatureSupportInfo::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::FEATURE_SUPPORT_INFO_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::FEATURE_SUPPORT_INFO_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.feature_name);
@@ -252,9 +287,28 @@ pub fn feature_support_info(element: &Element) -> super::FeatureSupportInfo {
 /// Read `xlpcalc:pivotAreaReferenceSubtotals` into a `PivotAreaReferenceSubtotals`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_area_reference_subtotals(element: &Element) -> super::PivotAreaReferenceSubtotals {
+    pivot_area_reference_subtotals_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlpcalc:pivotAreaReferenceSubtotals` into a `PivotAreaReferenceSubtotals` from its start
+/// tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pivot_area_reference_subtotals_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PivotAreaReferenceSubtotals {
+    pivot_area_reference_subtotals_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlpcalc:pivotAreaReferenceSubtotals` into a `PivotAreaReferenceSubtotals` from an element,
+/// or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pivot_area_reference_subtotals_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PivotAreaReferenceSubtotals {
     let mut node = super::PivotAreaReferenceSubtotals::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PIVOT_AREA_REFERENCE_SUBTOTALS_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::PIVOT_AREA_REFERENCE_SUBTOTALS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.subtotal_pivot_subtotal_type);
@@ -267,9 +321,28 @@ pub fn pivot_area_reference_subtotals(element: &Element) -> super::PivotAreaRefe
 /// Read `xlpcalc:pivotFieldSubtotalLineItems` into a `PivotFieldSubtotalLineItems`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_field_subtotal_line_items(element: &Element) -> super::PivotFieldSubtotalLineItems {
+    pivot_field_subtotal_line_items_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlpcalc:pivotFieldSubtotalLineItems` into a `PivotFieldSubtotalLineItems` from its start
+/// tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pivot_field_subtotal_line_items_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PivotFieldSubtotalLineItems {
+    pivot_field_subtotal_line_items_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlpcalc:pivotFieldSubtotalLineItems` into a `PivotFieldSubtotalLineItems` from an element,
+/// or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pivot_field_subtotal_line_items_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PivotFieldSubtotalLineItems {
     let mut node = super::PivotFieldSubtotalLineItems::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PIVOT_FIELD_SUBTOTAL_LINE_ITEMS_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::PIVOT_FIELD_SUBTOTAL_LINE_ITEMS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.subtotal_line_item);
@@ -282,9 +355,27 @@ pub fn pivot_field_subtotal_line_items(element: &Element) -> super::PivotFieldSu
 /// Read `xlpcalc:pivotFieldSubtotals` into a `PivotFieldSubtotals`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_field_subtotals(element: &Element) -> super::PivotFieldSubtotals {
+    pivot_field_subtotals_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlpcalc:pivotFieldSubtotals` into a `PivotFieldSubtotals` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pivot_field_subtotals_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::PivotFieldSubtotals {
+    pivot_field_subtotals_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlpcalc:pivotFieldSubtotals` into a `PivotFieldSubtotals` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn pivot_field_subtotals_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::PivotFieldSubtotals {
     let mut node = super::PivotFieldSubtotals::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::PIVOT_FIELD_SUBTOTALS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::PIVOT_FIELD_SUBTOTALS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.subtotal_pivot_item_subtotal);
@@ -297,7 +388,26 @@ pub fn pivot_field_subtotals(element: &Element) -> super::PivotFieldSubtotals {
 /// Read `xlpcalc:subtotalLineItem` into a `SubtotalLineItem`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn subtotal_line_item(element: &Element) -> super::SubtotalLineItem {
-    let reader = officekit_markup_base::Reader::new(element, &super::SUBTOTAL_LINE_ITEM_SHAPE);
+    subtotal_line_item_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlpcalc:subtotalLineItem` into a `SubtotalLineItem` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn subtotal_line_item_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SubtotalLineItem {
+    subtotal_line_item_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlpcalc:subtotalLineItem` into a `SubtotalLineItem` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn subtotal_line_item_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SubtotalLineItem {
+    let reader = officekit_markup_base::Reader::of(item, &super::SUBTOTAL_LINE_ITEM_SHAPE);
     super::SubtotalLineItem {
         user_data: (),
         unknown: reader.finish(),
@@ -307,8 +417,27 @@ pub fn subtotal_line_item(element: &Element) -> super::SubtotalLineItem {
 /// Read `xlpcalc:subtotal` into a `SubtotalPivotItemSubtotal`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn subtotal_pivot_item_subtotal(element: &Element) -> super::SubtotalPivotItemSubtotal {
+    subtotal_pivot_item_subtotal_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlpcalc:subtotal` into a `SubtotalPivotItemSubtotal` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn subtotal_pivot_item_subtotal_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SubtotalPivotItemSubtotal {
+    subtotal_pivot_item_subtotal_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlpcalc:subtotal` into a `SubtotalPivotItemSubtotal` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn subtotal_pivot_item_subtotal_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SubtotalPivotItemSubtotal {
     let reader =
-        officekit_markup_base::Reader::new(element, &super::SUBTOTAL_PIVOT_ITEM_SUBTOTAL_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::SUBTOTAL_PIVOT_ITEM_SUBTOTAL_SHAPE);
     super::SubtotalPivotItemSubtotal {
         user_data: (),
         unknown: reader.finish(),
@@ -318,9 +447,28 @@ pub fn subtotal_pivot_item_subtotal(element: &Element) -> super::SubtotalPivotIt
 /// Read `xlpcalc:subtotal` into a `SubtotalPivotSubtotalType`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn subtotal_pivot_subtotal_type(element: &Element) -> super::SubtotalPivotSubtotalType {
+    subtotal_pivot_subtotal_type_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlpcalc:subtotal` into a `SubtotalPivotSubtotalType` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn subtotal_pivot_subtotal_type_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SubtotalPivotSubtotalType {
+    subtotal_pivot_subtotal_type_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlpcalc:subtotal` into a `SubtotalPivotSubtotalType` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn subtotal_pivot_subtotal_type_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SubtotalPivotSubtotalType {
     let mut node = super::SubtotalPivotSubtotalType::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::SUBTOTAL_PIVOT_SUBTOTAL_TYPE_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::SUBTOTAL_PIVOT_SUBTOTAL_TYPE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.subtotal_type);

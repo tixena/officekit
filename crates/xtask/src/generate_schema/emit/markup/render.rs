@@ -1580,10 +1580,21 @@ fn node_impls(names: &Names<'_>, index: usize, node: &Node) -> String {
         &format!("{runtime}::Read"),
         &node.name,
     ));
-    out.push_str("    fn read(element: &Element) -> Self {\n");
+    out.push_str(&layout::signature(
+        4,
+        "fn read_item",
+        &[format!("item: {runtime}::Item<'_>")],
+        "Self",
+    ));
     line(
         "        ",
-        &Expr::call(&format!("read::{function}"), vec![Expr::atom("element")]),
+        &Expr::call(
+            &format!(
+                "read::{}_from_item",
+                function.strip_prefix("r#").unwrap_or(&function)
+            ),
+            vec![Expr::atom("item")],
+        ),
         "",
         &mut out,
     );
@@ -1692,20 +1703,19 @@ fn enum_read(
     out.push_str(
         "    fn other(node: Node) -> Option<Self> {\n        Some(Self::Other(node))\n    }\n\n",
     );
-    out.push_str("    fn read(element: &Element) -> Self {\n");
-    let other = Expr::call(
-        "Self::Other",
-        vec![Expr::call(
-            "Node::Element",
-            vec![Expr::atom("element.clone()")],
-        )],
-    );
+    out.push_str(&layout::signature(
+        4,
+        "fn read_item",
+        &[format!("item: {runtime}::Item<'_>")],
+        "Self",
+    ));
+    let other = Expr::call("Self::Other", vec![Expr::atom("item.into_node()")]);
     let arm_lines: Vec<(String, String, Expr)> = found
         .arms
         .iter()
         .map(|(variant, arm)| {
             let pattern = arm_pattern(names, &catalog.nodes[*arm], namespaces);
-            let read = Expr::call(&format!("{runtime}::read"), vec![Expr::atom("element")]);
+            let read = Expr::atom("item.read()");
             let value = if found.boxed.contains(arm) {
                 Expr::call("Box::new", vec![read])
             } else {
@@ -1720,7 +1730,7 @@ fn enum_read(
             layout::arm(indent, &Expr::Atom(pattern.clone()), &body, false)
         };
     let matched = (arm_lines.len() <= CHUNK).then(|| {
-        let mut text = format!("        match {runtime}::name(element) {{\n");
+        let mut text = String::from("        match item.name() {\n");
         for arm in &arm_lines {
             text.push_str(&arm_text(12, "Self", arm));
         }
@@ -1749,35 +1759,56 @@ fn enum_read(
             count += 1;
         }
         chunks.push(chunk);
-        let mut calls = Vec::new();
-        for (index, text) in chunks.iter().enumerate() {
-            let helper = format!("read_{function}_{}", index + 1);
-            if index > 0 {
-                calls.push(format!(".or_else(|| {helper}(element))"));
-            }
-            let _ = write!(
-                helpers,
-                "\n{}",
-                layout::signature(
-                    0,
-                    &format!("fn {helper}"),
-                    &["element: &Element".to_owned()],
-                    &format!("Option<{}>", found.name)
-                )
-            );
-            let _ = writeln!(helpers, "    let item = match {runtime}::name(element) {{");
-            helpers.push_str(text);
-            helpers.push_str("        _ => return None,\n    };\n    Some(item)\n}\n");
-        }
-        calls.push(format!(".unwrap_or_else(|| {})", other.one_line()));
-        out.push_str(&layout::chain(
-            8,
-            &format!("read_{function}_1(element)"),
-            &calls,
-        ));
+        read_helpers(runtime, &found.name, function, &chunks, helpers);
+        line(
+            "        ",
+            &Expr::call(&format!("read_{function}_1"), vec![Expr::atom("item")]),
+            "",
+            &mut out,
+        );
     }
     out.push_str("    }\n}\n");
     out
+}
+
+/// The helpers an enum's `read_item` is split into, one per chunk of arms: each reads its arms
+/// and hands any other item to the next, the last one to `Other`.
+fn read_helpers(
+    runtime: &str,
+    name: &str,
+    function: &str,
+    chunks: &[String],
+    helpers: &mut String,
+) {
+    let other = Expr::call(
+        &format!("{name}::Other"),
+        vec![Expr::atom("item.into_node()")],
+    );
+    for (index, text) in chunks.iter().enumerate() {
+        let helper = format!("read_{function}_{}", index + 1);
+        let _ = write!(
+            helpers,
+            "\n{}",
+            layout::signature(
+                0,
+                &format!("fn {helper}"),
+                &[format!("item: {runtime}::Item<'_>")],
+                name
+            )
+        );
+        helpers.push_str("    match item.name() {\n");
+        helpers.push_str(text);
+        let rest = if index + 1 < chunks.len() {
+            Expr::call(
+                &format!("read_{function}_{}", index + 2),
+                vec![Expr::atom("item")],
+            )
+        } else {
+            other.clone()
+        };
+        helpers.push_str(&layout::arm(8, &Expr::atom("_"), &rest, false));
+        helpers.push_str("    }\n}\n");
+    }
 }
 
 /// An enum's `Write`: its arm's element, or its `Other` node; past `CHUNK`

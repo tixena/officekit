@@ -1,14 +1,23 @@
-use officekit_xml::element::{Document, Element, NamespaceDeclaration, Node};
+use core::fmt::Debug;
+
+use officekit_xml::element::{Document, Element, NamespaceDeclaration, Node, XmlError};
 use officekit_xml::name::{Namespace, NamespaceId, QName};
 use officekit_xml::parse::parse;
+use officekit_xml::stream::reader::PartReader;
 use officekit_xml::write::{Layout, WriteOptions};
 
 use super::{
-    Children, Extra, Field, Pending, Placement, Reader, Scope, Shape, Slot, Unknown, Writer,
+    Children, Events, Extra, Field, Item, Pending, Placement, Read, Reader, Scope, Shape, Slot,
+    Unknown, Writer,
 };
+use crate::document_properties_custom::CustomFileProperties;
+use crate::document_properties_extended::ApplicationSpecificFileProperties;
 
+const CUSTOM_PROPERTIES: &str =
+    "http://schemas.openxmlformats.org/officeDocument/2006/custom-properties";
 const EXTENDED_PROPERTIES: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties";
+const VARIANT_TYPES: &str = "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes";
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const W14: &str = "http://schemas.microsoft.com/office/word/2010/wordml";
 const W_STRICT: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";
@@ -498,5 +507,83 @@ fn a_name_set_in_code_names_the_element_written() {
     assert_eq!(
         written.namespace_declarations,
         [NamespaceDeclaration::new("wps".to_owned(), WPS.to_owned())]
+    );
+}
+
+/// `T` read from `xml` forward through `Events`, and what `Events::finish` returns.
+fn read_forward<T>(xml: &str) -> (T, Result<(), XmlError>)
+where
+    T: Read,
+{
+    let mut reader = PartReader::new(xml.as_bytes());
+    let events = Events::new(&mut reader);
+    let node = T::read_item(events.root().unwrap());
+    (node, events.finish())
+}
+
+/// `T` read from `xml` forward is `T` read from its tree; the tree read is returned.
+fn forward_is_tree<T>(xml: &str) -> T
+where
+    T: Read + PartialEq + Debug,
+{
+    let tree = T::read(&parse(xml.as_bytes()).unwrap().root);
+    let (forward, finished) = read_forward::<T>(xml);
+    assert_eq!(finished, Ok(()));
+    assert_eq!(forward, tree);
+    tree
+}
+
+#[test]
+fn a_node_read_forward_is_the_node_read_from_its_tree() {
+    let custom = format!(
+        "<?xml version=\"1.0\"?><!--before--><op:Properties xmlns:op=\"{CUSTOM_PROPERTIES}\" \
+         xmlns:vt=\"{VARIANT_TYPES}\" {DECLARE_X} x:a=\"1\"><!--c--><op:property pid=\"2\" name=\"Draft\">\
+         <vt:lpwstr>a<!--in-->b<x:in><x:deep/></x:in>c</vt:lpwstr></op:property><x:note><x:deep>text</x:deep></x:note> \
+         <op:property name=\"Final\" x:b=\"2\"><vt:bool>true</vt:bool><vt:i4>2</vt:i4></op:property>\
+         <op:property/><op:property name=\"Empty\"><vt:empty/></op:property></op:Properties><!--after-->"
+    );
+    let properties = forward_is_tree::<CustomFileProperties>(&custom);
+    assert_eq!(properties.custom_file_property.len(), 4);
+    assert_eq!(properties.unknown.children.len(), 2);
+    assert_eq!(properties.custom_file_property[2].unknown.absent, [0]);
+
+    let extended = format!(
+        "<ap:Properties xmlns:ap=\"{EXTENDED_PROPERTIES}\" xmlns:vt=\"{VARIANT_TYPES}\" {DECLARE_X}>\
+         <ap:Template>Normal</ap:Template><x:between/><ap:Pages>1</ap:Pages><ap:Template>Again</ap:Template>\
+         <ap:HeadingPairs><vt:vector size=\"2\" baseType=\"variant\"><vt:variant><vt:lpstr>Title</vt:lpstr></vt:variant>\
+         <x:z/><vt:variant><vt:i4>1</vt:i4></vt:variant></vt:vector></ap:HeadingPairs></ap:Properties>"
+    );
+    forward_is_tree::<ApplicationSpecificFileProperties>(&extended);
+}
+
+#[test]
+fn an_empty_root_is_read_whole() {
+    let xml = format!("<op:Properties xmlns:op=\"{CUSTOM_PROPERTIES}\"/>");
+    let mut reader = PartReader::new(xml.as_bytes());
+    let events = Events::new(&mut reader);
+    assert!(matches!(events.root(), Some(Item::Owned(_))));
+    assert_eq!(events.finish(), Ok(()));
+    forward_is_tree::<CustomFileProperties>(&xml);
+}
+
+#[test]
+fn the_first_error_and_a_second_root_are_what_finish_returns() {
+    let broken = format!(
+        "<op:Properties xmlns:op=\"{CUSTOM_PROPERTIES}\" xmlns:vt=\"{VARIANT_TYPES}\">\
+         <op:property><vt:lpwstr>a</vt:bool></op:property></op:Properties>"
+    );
+    let (_, finished) = read_forward::<CustomFileProperties>(&broken);
+    assert!(
+        matches!(finished, Err(XmlError::Malformed(_))),
+        "{finished:?}"
+    );
+
+    let twice = format!(
+        "<op:Properties xmlns:op=\"{CUSTOM_PROPERTIES}\"></op:Properties><op:Properties xmlns:op=\"{CUSTOM_PROPERTIES}\"/>"
+    );
+    let (_, second_root) = read_forward::<CustomFileProperties>(&twice);
+    assert_eq!(
+        second_root,
+        Err(XmlError::Malformed("more than one root element".to_owned()))
     );
 }

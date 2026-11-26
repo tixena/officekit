@@ -225,7 +225,6 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::values::ValueError;
@@ -526,8 +525,8 @@ impl<X: UserData> TrackWith<X> {
 }
 
 impl officekit_markup_base::Read for Track {
-    fn read(element: &Element) -> Self {
-        read::track(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::track_from_item(item)
     }
 }
 
@@ -564,8 +563,8 @@ impl<X: UserData> TrackLstWith<X> {
 }
 
 impl officekit_markup_base::Read for TrackLst {
-    fn read(element: &Element) -> Self {
-        read::track_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::track_lst_from_item(item)
     }
 }
 
@@ -606,8 +605,8 @@ impl<X: UserData> TracksInfoWith<X> {
 }
 
 impl officekit_markup_base::Read for TracksInfo {
-    fn read(element: &Element) -> Self {
-        read::tracks_info(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::tracks_info_from_item(item)
     }
 }
 

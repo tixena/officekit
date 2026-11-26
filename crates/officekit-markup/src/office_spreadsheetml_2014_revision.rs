@@ -230,7 +230,7 @@ use officekit_markup_base::office_excel_2006_main;
 use officekit_markup_base::office_spreadsheetml_2011_1_ac;
 use officekit_markup_core::office_spreadsheetml_2009_9_main;
 use officekit_markup_core::spreadsheet;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::values::ValueError;
@@ -4705,8 +4705,8 @@ impl<X: UserData> AutoFilterWith<X> {
 }
 
 impl officekit_markup_base::Read for AutoFilter {
-    fn read(element: &Element) -> Self {
-        read::auto_filter(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::auto_filter_from_item(item)
     }
 }
 
@@ -4743,8 +4743,8 @@ impl<X: UserData> BodyWith<X> {
 }
 
 impl officekit_markup_base::Read for Body {
-    fn read(element: &Element) -> Self {
-        read::body(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::body_from_item(item)
     }
 }
 
@@ -4793,8 +4793,8 @@ impl<X: UserData> CWith<X> {
 }
 
 impl officekit_markup_base::Read for C {
-    fn read(element: &Element) -> Self {
-        read::c(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::c_from_item(item)
     }
 }
 
@@ -4838,8 +4838,8 @@ impl<X: UserData> CcseWith<X> {
 }
 
 impl officekit_markup_base::Read for Ccse {
-    fn read(element: &Element) -> Self {
-        read::ccse(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ccse_from_item(item)
     }
 }
 
@@ -4884,8 +4884,8 @@ impl<X: UserData> CommentsWith<X> {
 }
 
 impl officekit_markup_base::Read for Comments {
-    fn read(element: &Element) -> Self {
-        read::comments(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::comments_from_item(item)
     }
 }
 
@@ -4958,8 +4958,8 @@ impl<X: UserData> DataValidationWith<X> {
 }
 
 impl officekit_markup_base::Read for DataValidation {
-    fn read(element: &Element) -> Self {
-        read::data_validation(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::data_validation_from_item(item)
     }
 }
 
@@ -5020,8 +5020,8 @@ impl<X: UserData> DxfWith<X> {
 }
 
 impl officekit_markup_base::Read for Dxf {
-    fn read(element: &Element) -> Self {
-        read::dxf(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::dxf_from_item(item)
     }
 }
 
@@ -5105,8 +5105,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -5194,8 +5194,8 @@ impl<X: UserData> FWith<X> {
 }
 
 impl officekit_markup_base::Read for F {
-    fn read(element: &Element) -> Self {
-        read::f(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::f_from_item(item)
     }
 }
 
@@ -5429,8 +5429,8 @@ impl<X: UserData> FormulaWith<X> {
 }
 
 impl officekit_markup_base::Read for Formula {
-    fn read(element: &Element) -> Self {
-        read::formula(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::formula_from_item(item)
     }
 }
 
@@ -5467,8 +5467,8 @@ impl<X: UserData> FreezePanesWith<X> {
 }
 
 impl officekit_markup_base::Read for FreezePanes {
-    fn read(element: &Element) -> Self {
-        read::freeze_panes(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::freeze_panes_from_item(item)
     }
 }
 
@@ -5501,8 +5501,8 @@ impl<X: UserData> FutureWith<X> {
 }
 
 impl officekit_markup_base::Read for Future {
-    fn read(element: &Element) -> Self {
-        read::future(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::future_from_item(item)
     }
 }
 
@@ -5545,8 +5545,8 @@ impl<X: UserData> HdrRevExHeaderWith<X> {
 }
 
 impl officekit_markup_base::Read for HdrRevExHeader {
-    fn read(element: &Element) -> Self {
-        read::hdr_rev_ex_header(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hdr_rev_ex_header_from_item(item)
     }
 }
 
@@ -5595,8 +5595,8 @@ impl<X: UserData> HdrStateBasedHeaderWith<X> {
 }
 
 impl officekit_markup_base::Read for HdrStateBasedHeader {
-    fn read(element: &Element) -> Self {
-        read::hdr_state_based_header(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hdr_state_based_header_from_item(item)
     }
 }
 
@@ -5633,8 +5633,8 @@ impl<X: UserData> HideUnhideSheetWith<X> {
 }
 
 impl officekit_markup_base::Read for HideUnhideSheet {
-    fn read(element: &Element) -> Self {
-        read::hide_unhide_sheet(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hide_unhide_sheet_from_item(item)
     }
 }
 
@@ -5679,8 +5679,8 @@ impl<X: UserData> HyperlinkWith<X> {
 }
 
 impl officekit_markup_base::Read for Hyperlink {
-    fn read(element: &Element) -> Self {
-        read::hyperlink(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::hyperlink_from_item(item)
     }
 }
 
@@ -5729,8 +5729,8 @@ impl<X: UserData> IsWith<X> {
 }
 
 impl officekit_markup_base::Read for Is {
-    fn read(element: &Element) -> Self {
-        read::is(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::is_from_item(item)
     }
 }
 
@@ -5767,8 +5767,8 @@ impl<X: UserData> LinkWith<X> {
 }
 
 impl officekit_markup_base::Read for Link {
-    fn read(element: &Element) -> Self {
-        read::link(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::link_from_item(item)
     }
 }
 
@@ -5831,8 +5831,8 @@ impl<X: UserData> OartAnchorWith<X> {
 }
 
 impl officekit_markup_base::Read for OartAnchor {
-    fn read(element: &Element) -> Self {
-        read::oart_anchor(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::oart_anchor_from_item(item)
     }
 }
 
@@ -5919,8 +5919,8 @@ impl<X: UserData> ObjectStateWith<X> {
 }
 
 impl officekit_markup_base::Read for ObjectState {
-    fn read(element: &Element) -> Self {
-        read::object_state(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::object_state_from_item(item)
     }
 }
 
@@ -5959,8 +5959,8 @@ impl<X: UserData> OutlineWith<X> {
 }
 
 impl officekit_markup_base::Read for Outline {
-    fn read(element: &Element) -> Self {
-        read::outline(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::outline_from_item(item)
     }
 }
 
@@ -6001,8 +6001,8 @@ impl<X: UserData> OutlinesWith<X> {
 }
 
 impl officekit_markup_base::Read for Outlines {
-    fn read(element: &Element) -> Self {
-        read::outlines(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::outlines_from_item(item)
     }
 }
 
@@ -6105,8 +6105,8 @@ impl<X: UserData> PivotTableDefinitionWith<X> {
 }
 
 impl officekit_markup_base::Read for PivotTableDefinition {
-    fn read(element: &Element) -> Self {
-        read::pivot_table_definition(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pivot_table_definition_from_item(item)
     }
 }
 
@@ -6155,8 +6155,8 @@ impl<X: UserData> RefWith<X> {
 }
 
 impl officekit_markup_base::Read for Ref {
-    fn read(element: &Element) -> Self {
-        read::r#ref(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ref_from_item(item)
     }
 }
 
@@ -6190,14 +6190,14 @@ impl officekit_markup_base::Read for ReferenceMapContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_XR, "future")) => Self::Future(officekit_markup_base::read(element)),
-            Some((NS_XR, "oartAnchor")) => Self::OartAnchor(officekit_markup_base::read(element)),
-            Some((NS_XR, "ref")) => Self::Ref(officekit_markup_base::read(element)),
-            Some((NS_XR, "sheetUid")) => Self::SheetUid(officekit_markup_base::read(element)),
-            Some((NS_XR, "test")) => Self::Test(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_XR, "future")) => Self::Future(item.read()),
+            Some((NS_XR, "oartAnchor")) => Self::OartAnchor(item.read()),
+            Some((NS_XR, "ref")) => Self::Ref(item.read()),
+            Some((NS_XR, "sheetUid")) => Self::SheetUid(item.read()),
+            Some((NS_XR, "test")) => Self::Test(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -6241,8 +6241,8 @@ impl<X: UserData> RefmapWith<X> {
 }
 
 impl officekit_markup_base::Read for Refmap {
-    fn read(element: &Element) -> Self {
-        read::refmap(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::refmap_from_item(item)
     }
 }
 
@@ -6289,8 +6289,8 @@ impl<X: UserData> RevHdrsWith<X> {
 }
 
 impl officekit_markup_base::Read for RevHdrs {
-    fn read(element: &Element) -> Self {
-        read::rev_hdrs(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rev_hdrs_from_item(item)
     }
 }
 
@@ -6327,8 +6327,8 @@ impl<X: UserData> RevStreamWith<X> {
 }
 
 impl officekit_markup_base::Read for RevStream {
-    fn read(element: &Element) -> Self {
-        read::rev_stream(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rev_stream_from_item(item)
     }
 }
 
@@ -6365,11 +6365,11 @@ impl officekit_markup_base::Read for RevisionChangeObjectContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_XR, "body")) => Self::Body(officekit_markup_base::read(element)),
-            Some((NS_XR, "link")) => Self::Link(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_XR, "body")) => Self::Body(item.read()),
+            Some((NS_XR, "link")) => Self::Link(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -6470,22 +6470,22 @@ impl officekit_markup_base::Read for RevisionGroupContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_XR, "xrrDefName")) => Self::XrrDefName(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrList")) => Self::XrrList(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrListExpR")) => Self::XrrListExpR(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrSheet")) => Self::XrrSheet(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrTrim")) => Self::XrrTrim(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrUspt")) => Self::XrrUspt(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrc")) => Self::Xrrc(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrco")) => Self::Xrrco(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrdo")) => Self::Xrrdo(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrf")) => Self::Xrrf(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrftr")) => Self::Xrrftr(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrm")) => Self::Xrrm(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrrc")) => Self::Xrrrc(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_XR, "xrrDefName")) => Self::XrrDefName(item.read()),
+            Some((NS_XR, "xrrList")) => Self::XrrList(item.read()),
+            Some((NS_XR, "xrrListExpR")) => Self::XrrListExpR(item.read()),
+            Some((NS_XR, "xrrSheet")) => Self::XrrSheet(item.read()),
+            Some((NS_XR, "xrrTrim")) => Self::XrrTrim(item.read()),
+            Some((NS_XR, "xrrUspt")) => Self::XrrUspt(item.read()),
+            Some((NS_XR, "xrrc")) => Self::Xrrc(item.read()),
+            Some((NS_XR, "xrrco")) => Self::Xrrco(item.read()),
+            Some((NS_XR, "xrrdo")) => Self::Xrrdo(item.read()),
+            Some((NS_XR, "xrrf")) => Self::Xrrf(item.read()),
+            Some((NS_XR, "xrrftr")) => Self::Xrrftr(item.read()),
+            Some((NS_XR, "xrrm")) => Self::Xrrm(item.read()),
+            Some((NS_XR, "xrrrc")) => Self::Xrrrc(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -6539,8 +6539,8 @@ impl<X: UserData> RevisionPtrWith<X> {
 }
 
 impl officekit_markup_base::Read for RevisionPtr {
-    fn read(element: &Element) -> Self {
-        read::revision_ptr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::revision_ptr_from_item(item)
     }
 }
 
@@ -6586,20 +6586,14 @@ impl officekit_markup_base::Read for RevisionStateContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_XR, "freezePanes")) => Self::FreezePanes(officekit_markup_base::read(element)),
-            Some((NS_XR, "hideUnhideSheet")) => {
-                Self::HideUnhideSheet(officekit_markup_base::read(element))
-            }
-            Some((NS_XR, "outlines")) => Self::Outlines(officekit_markup_base::read(element)),
-            Some((NS_XR, "rowColVisualOps")) => {
-                Self::RowColVisualOps(officekit_markup_base::read(element))
-            }
-            Some((NS_XR, "showGridlinesHeadings")) => {
-                Self::ShowGridlinesHeadings(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_XR, "freezePanes")) => Self::FreezePanes(item.read()),
+            Some((NS_XR, "hideUnhideSheet")) => Self::HideUnhideSheet(item.read()),
+            Some((NS_XR, "outlines")) => Self::Outlines(item.read()),
+            Some((NS_XR, "rowColVisualOps")) => Self::RowColVisualOps(item.read()),
+            Some((NS_XR, "showGridlinesHeadings")) => Self::ShowGridlinesHeadings(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -6651,23 +6645,23 @@ impl officekit_markup_base::Read for RevisionStreamContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_XR, "xrrDefName")) => Self::XrrDefName(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrList")) => Self::XrrList(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrListExpR")) => Self::XrrListExpR(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrSheet")) => Self::XrrSheet(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrTrim")) => Self::XrrTrim(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrUspt")) => Self::XrrUspt(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrc")) => Self::Xrrc(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrco")) => Self::Xrrco(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrdo")) => Self::Xrrdo(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrf")) => Self::Xrrf(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrftr")) => Self::Xrrftr(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrg")) => Self::Xrrg(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrm")) => Self::Xrrm(officekit_markup_base::read(element)),
-            Some((NS_XR, "xrrrc")) => Self::Xrrrc(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_XR, "xrrDefName")) => Self::XrrDefName(item.read()),
+            Some((NS_XR, "xrrList")) => Self::XrrList(item.read()),
+            Some((NS_XR, "xrrListExpR")) => Self::XrrListExpR(item.read()),
+            Some((NS_XR, "xrrSheet")) => Self::XrrSheet(item.read()),
+            Some((NS_XR, "xrrTrim")) => Self::XrrTrim(item.read()),
+            Some((NS_XR, "xrrUspt")) => Self::XrrUspt(item.read()),
+            Some((NS_XR, "xrrc")) => Self::Xrrc(item.read()),
+            Some((NS_XR, "xrrco")) => Self::Xrrco(item.read()),
+            Some((NS_XR, "xrrdo")) => Self::Xrrdo(item.read()),
+            Some((NS_XR, "xrrf")) => Self::Xrrf(item.read()),
+            Some((NS_XR, "xrrftr")) => Self::Xrrftr(item.read()),
+            Some((NS_XR, "xrrg")) => Self::Xrrg(item.read()),
+            Some((NS_XR, "xrrm")) => Self::Xrrm(item.read()),
+            Some((NS_XR, "xrrrc")) => Self::Xrrrc(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -6822,8 +6816,8 @@ impl<X: UserData> RowColVisualOpsWith<X> {
 }
 
 impl officekit_markup_base::Read for RowColVisualOps {
-    fn read(element: &Element) -> Self {
-        read::row_col_visual_ops(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::row_col_visual_ops_from_item(item)
     }
 }
 
@@ -6970,8 +6964,8 @@ impl<X: UserData> SheetUidWith<X> {
 }
 
 impl officekit_markup_base::Read for SheetUid {
-    fn read(element: &Element) -> Self {
-        read::sheet_uid(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sheet_uid_from_item(item)
     }
 }
 
@@ -7010,8 +7004,8 @@ impl<X: UserData> ShowGridlinesHeadingsWith<X> {
 }
 
 impl officekit_markup_base::Read for ShowGridlinesHeadings {
-    fn read(element: &Element) -> Self {
-        read::show_gridlines_headings(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::show_gridlines_headings_from_item(item)
     }
 }
 
@@ -7120,8 +7114,8 @@ impl<X: UserData> SparklineGroupWith<X> {
 }
 
 impl officekit_markup_base::Read for SparklineGroup {
-    fn read(element: &Element) -> Self {
-        read::sparkline_group(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sparkline_group_from_item(item)
     }
 }
 
@@ -7170,21 +7164,17 @@ impl officekit_markup_base::Read for StateBasedObjectContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_XR, "autoFilter")) => Self::AutoFilter(officekit_markup_base::read(element)),
-            Some((NS_XR, "comments")) => Self::Comments(officekit_markup_base::read(element)),
-            Some((NS_XR, "dataValidation")) => {
-                Self::DataValidation(officekit_markup_base::read(element))
-            }
-            Some((NS_XR, "hyperlink")) => Self::Hyperlink(officekit_markup_base::read(element)),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_XR, "autoFilter")) => Self::AutoFilter(item.read()),
+            Some((NS_XR, "comments")) => Self::Comments(item.read()),
+            Some((NS_XR, "dataValidation")) => Self::DataValidation(item.read()),
+            Some((NS_XR, "hyperlink")) => Self::Hyperlink(item.read()),
             Some((NS_XR, "pivotTableDefinition")) => {
-                Self::PivotTableDefinition(Box::new(officekit_markup_base::read(element)))
+                Self::PivotTableDefinition(Box::new(item.read()))
             }
-            Some((NS_XR, "sparklineGroup")) => {
-                Self::SparklineGroup(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+            Some((NS_XR, "sparklineGroup")) => Self::SparklineGroup(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -7284,8 +7274,8 @@ impl<X: UserData> TestWith<X> {
 }
 
 impl officekit_markup_base::Read for Test {
-    fn read(element: &Element) -> Self {
-        read::test(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::test_from_item(item)
     }
 }
 
@@ -7322,8 +7312,8 @@ impl<X: UserData> VWith<X> {
 }
 
 impl officekit_markup_base::Read for V {
-    fn read(element: &Element) -> Self {
-        read::v(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::v_from_item(item)
     }
 }
 
@@ -7398,8 +7388,8 @@ impl<X: UserData> XrrDefNameWith<X> {
 }
 
 impl officekit_markup_base::Read for XrrDefName {
-    fn read(element: &Element) -> Self {
-        read::xrr_def_name(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xrr_def_name_from_item(item)
     }
 }
 
@@ -7460,8 +7450,8 @@ impl<X: UserData> XrrListWith<X> {
 }
 
 impl officekit_markup_base::Read for XrrList {
-    fn read(element: &Element) -> Self {
-        read::xrr_list(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xrr_list_from_item(item)
     }
 }
 
@@ -7510,8 +7500,8 @@ impl<X: UserData> XrrListExpRWith<X> {
 }
 
 impl officekit_markup_base::Read for XrrListExpR {
-    fn read(element: &Element) -> Self {
-        read::xrr_list_exp_r(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xrr_list_exp_r_from_item(item)
     }
 }
 
@@ -7564,8 +7554,8 @@ impl<X: UserData> XrrSheetWith<X> {
 }
 
 impl officekit_markup_base::Read for XrrSheet {
-    fn read(element: &Element) -> Self {
-        read::xrr_sheet(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xrr_sheet_from_item(item)
     }
 }
 
@@ -7610,8 +7600,8 @@ impl<X: UserData> XrrTrimWith<X> {
 }
 
 impl officekit_markup_base::Read for XrrTrim {
-    fn read(element: &Element) -> Self {
-        read::xrr_trim(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xrr_trim_from_item(item)
     }
 }
 
@@ -7656,8 +7646,8 @@ impl<X: UserData> XrrUsptWith<X> {
 }
 
 impl officekit_markup_base::Read for XrrUspt {
-    fn read(element: &Element) -> Self {
-        read::xrr_uspt(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xrr_uspt_from_item(item)
     }
 }
 
@@ -7714,8 +7704,8 @@ impl<X: UserData> XrrcWith<X> {
 }
 
 impl officekit_markup_base::Read for Xrrc {
-    fn read(element: &Element) -> Self {
-        read::xrrc(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xrrc_from_item(item)
     }
 }
 
@@ -7768,8 +7758,8 @@ impl<X: UserData> XrrcoWith<X> {
 }
 
 impl officekit_markup_base::Read for Xrrco {
-    fn read(element: &Element) -> Self {
-        read::xrrco(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xrrco_from_item(item)
     }
 }
 
@@ -7818,8 +7808,8 @@ impl<X: UserData> XrrdoWith<X> {
 }
 
 impl officekit_markup_base::Read for Xrrdo {
-    fn read(element: &Element) -> Self {
-        read::xrrdo(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xrrdo_from_item(item)
     }
 }
 
@@ -7900,8 +7890,8 @@ impl<X: UserData> XrrfWith<X> {
 }
 
 impl officekit_markup_base::Read for Xrrf {
-    fn read(element: &Element) -> Self {
-        read::xrrf(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xrrf_from_item(item)
     }
 }
 
@@ -7952,8 +7942,8 @@ impl<X: UserData> XrrftrWith<X> {
 }
 
 impl officekit_markup_base::Read for Xrrftr {
-    fn read(element: &Element) -> Self {
-        read::xrrftr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xrrftr_from_item(item)
     }
 }
 
@@ -8002,8 +7992,8 @@ impl<X: UserData> XrrgWith<X> {
 }
 
 impl officekit_markup_base::Read for Xrrg {
-    fn read(element: &Element) -> Self {
-        read::xrrg(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xrrg_from_item(item)
     }
 }
 
@@ -8054,8 +8044,8 @@ impl<X: UserData> XrrmWith<X> {
 }
 
 impl officekit_markup_base::Read for Xrrm {
-    fn read(element: &Element) -> Self {
-        read::xrrm(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xrrm_from_item(item)
     }
 }
 
@@ -8106,8 +8096,8 @@ impl<X: UserData> XrrrcWith<X> {
 }
 
 impl officekit_markup_base::Read for Xrrrc {
-    fn read(element: &Element) -> Self {
-        read::xrrrc(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xrrrc_from_item(item)
     }
 }
 
@@ -8140,8 +8130,8 @@ impl<X: UserData> XrrtestWith<X> {
 }
 
 impl officekit_markup_base::Read for Xrrtest {
-    fn read(element: &Element) -> Self {
-        read::xrrtest(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::xrrtest_from_item(item)
     }
 }
 

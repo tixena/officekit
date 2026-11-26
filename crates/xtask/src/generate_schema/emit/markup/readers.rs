@@ -1,6 +1,7 @@
 //! The readers of a namespace module, `officekit_markup::<namespace>::read`:
-//! one free function per struct, which takes each declared attribute and
-//! child the runtime's `Reader` hands it, and one per enum, which reads an
+//! three free functions per struct, from its generic element, from its start tag and the
+//! events after it, and from either as an `Item`, the last of which takes each declared
+//! attribute and child the runtime's `Reader` hands it; and one per enum, which reads an
 //! item by its tag.
 
 use core::fmt::Write as _;
@@ -87,24 +88,30 @@ fn node_reader(names: &Names<'_>, index: usize, function: &str) -> String {
             }
         }
     }
-    let mut out = layout::doc(
+    let tag = format!(
+        "`{}:{}`",
+        catalog.modules[node.module].prefix, node.key.tag.local
+    );
+    let item_function = format!("{}_from_item", bare(function));
+    let mut out = entry_readers(runtime, &tag, &node.name, function, &item_function);
+    out.push_str(&layout::doc(
         0,
         &format!(
-            "Read `{}:{}` into a `{}`.",
-            catalog.modules[node.module].prefix, node.key.tag.local, node.name
+            "Read {tag} into a `{}` from an element, or from its start tag and events.",
+            node.name
         ),
-    );
+    ));
     out.push_str("#[must_use = \"the node read is returned; nothing else keeps it\"]\n");
     out.push_str(&layout::signature(
         0,
-        &format!("pub fn {function}"),
-        &["element: &Element".to_owned()],
+        &format!("pub fn {item_function}"),
+        &[format!("item: {runtime}::Item<'_>")],
         &format!("super::{}", node.name),
     ));
     let new_reader = Expr::call(
-        &format!("{runtime}::Reader::new"),
+        &format!("{runtime}::Reader::of"),
         vec![
-            Expr::atom("element"),
+            Expr::atom("item"),
             Expr::Atom(format!("&super::{}", names.shape(index))),
         ],
     );
@@ -142,6 +149,56 @@ fn node_reader(names: &Names<'_>, index: usize, function: &str) -> String {
     }
     out.push_str("    }\n    node.unknown = reader.finish();\n    node\n}\n");
     out.push_str(&helpers);
+    out
+}
+
+/// The two readers of a struct that start a read of `item_function`: from its generic element,
+/// and from its start tag and the events after it. `tag` is the struct's tag as a doc shows it.
+fn entry_readers(
+    runtime: &str,
+    tag: &str,
+    node_name: &str,
+    function: &str,
+    item_function: &str,
+) -> String {
+    let mut out = String::new();
+    for (doc, head, parameters, item) in [
+        (
+            format!("Read {tag} into a `{node_name}`."),
+            format!("pub fn {function}"),
+            vec!["element: &Element".to_owned()],
+            Expr::call(
+                &format!("{runtime}::Item::Tree"),
+                vec![Expr::atom("element")],
+            ),
+        ),
+        (
+            format!(
+                "Read {tag} into a `{node_name}` from its start tag and the events after it, up to \
+                 its end."
+            ),
+            format!("pub fn {}_from_events", bare(function)),
+            vec![
+                "start: Element".to_owned(),
+                format!("events: &dyn {runtime}::EventSource"),
+            ],
+            Expr::call(
+                &format!("{runtime}::Item::Events"),
+                vec![Expr::atom("start"), Expr::atom("events")],
+            ),
+        ),
+    ] {
+        out.push_str(&layout::doc(0, &doc));
+        out.push_str("#[must_use = \"the node read is returned; nothing else keeps it\"]\n");
+        out.push_str(&layout::signature(
+            0,
+            &head,
+            &parameters,
+            &format!("super::{node_name}"),
+        ));
+        layout::line("    ", &Expr::call(item_function, vec![item]), "", &mut out);
+        out.push_str("}\n\n");
+    }
     out
 }
 

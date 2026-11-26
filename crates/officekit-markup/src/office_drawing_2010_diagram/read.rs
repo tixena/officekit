@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `dgm14:cNvPr` into a `CNvPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_pr(element: &Element) -> super::CNvPr {
+    c_nv_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dgm14:cNvPr` into a `CNvPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CNvPr {
+    c_nv_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dgm14:cNvPr` into a `CNvPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::CNvPr {
     let mut node = super::CNvPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::C_NV_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -243,8 +258,24 @@ pub fn c_nv_pr(element: &Element) -> super::CNvPr {
 /// Read `dgm14:recolorImg` into a `RecolorImg`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn recolor_img(element: &Element) -> super::RecolorImg {
+    recolor_img_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dgm14:recolorImg` into a `RecolorImg` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn recolor_img_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RecolorImg {
+    recolor_img_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dgm14:recolorImg` into a `RecolorImg` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn recolor_img_from_item(item: officekit_markup_base::Item<'_>) -> super::RecolorImg {
     let mut node = super::RecolorImg::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::RECOLOR_IMG_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::RECOLOR_IMG_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);

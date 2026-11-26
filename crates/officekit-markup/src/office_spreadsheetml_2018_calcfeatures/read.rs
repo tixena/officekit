@@ -221,8 +221,25 @@ use officekit_xml::element::Element;
 /// Read `xcalcf:calcFeatures` into a `CalcFeatures`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn calc_features(element: &Element) -> super::CalcFeatures {
+    calc_features_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xcalcf:calcFeatures` into a `CalcFeatures` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn calc_features_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CalcFeatures {
+    calc_features_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xcalcf:calcFeatures` into a `CalcFeatures` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn calc_features_from_item(item: officekit_markup_base::Item<'_>) -> super::CalcFeatures {
     let mut node = super::CalcFeatures::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CALC_FEATURES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CALC_FEATURES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.feature);
@@ -235,8 +252,24 @@ pub fn calc_features(element: &Element) -> super::CalcFeatures {
 /// Read `xcalcf:feature` into a `Feature`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn feature(element: &Element) -> super::Feature {
+    feature_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xcalcf:feature` into a `Feature` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn feature_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Feature {
+    feature_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xcalcf:feature` into a `Feature` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn feature_from_item(item: officekit_markup_base::Item<'_>) -> super::Feature {
     let mut node = super::Feature::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::FEATURE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::FEATURE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.name);

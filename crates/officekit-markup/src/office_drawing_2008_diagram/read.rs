@@ -221,8 +221,24 @@ use officekit_xml::element::Element;
 /// Read `dsp:cNvGrpSpPr` into a `CNvGrpSpPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_grp_sp_pr(element: &Element) -> super::CNvGrpSpPr {
+    c_nv_grp_sp_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dsp:cNvGrpSpPr` into a `CNvGrpSpPr` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_grp_sp_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CNvGrpSpPr {
+    c_nv_grp_sp_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dsp:cNvGrpSpPr` into a `CNvGrpSpPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_grp_sp_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::CNvGrpSpPr {
     let mut node = super::CNvGrpSpPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_GRP_SP_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::C_NV_GRP_SP_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.group_shape_locks),
@@ -237,8 +253,23 @@ pub fn c_nv_grp_sp_pr(element: &Element) -> super::CNvGrpSpPr {
 /// Read `dsp:cNvPr` into a `CNvPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_pr(element: &Element) -> super::CNvPr {
+    c_nv_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dsp:cNvPr` into a `CNvPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CNvPr {
+    c_nv_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dsp:cNvPr` into a `CNvPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::CNvPr {
     let mut node = super::CNvPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::C_NV_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.id),
@@ -259,8 +290,23 @@ pub fn c_nv_pr(element: &Element) -> super::CNvPr {
 /// Read `dsp:cNvSpPr` into a `CNvSpPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_sp_pr(element: &Element) -> super::CNvSpPr {
+    c_nv_sp_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dsp:cNvSpPr` into a `CNvSpPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_sp_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CNvSpPr {
+    c_nv_sp_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dsp:cNvSpPr` into a `CNvSpPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn c_nv_sp_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::CNvSpPr {
     let mut node = super::CNvSpPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_SP_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::C_NV_SP_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.tx_box),
@@ -276,8 +322,24 @@ pub fn c_nv_sp_pr(element: &Element) -> super::CNvSpPr {
 /// Read `dsp:dataModelExt` into a `DataModelExt`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_model_ext(element: &Element) -> super::DataModelExt {
+    data_model_ext_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dsp:dataModelExt` into a `DataModelExt` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn data_model_ext_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DataModelExt {
+    data_model_ext_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dsp:dataModelExt` into a `DataModelExt` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn data_model_ext_from_item(item: officekit_markup_base::Item<'_>) -> super::DataModelExt {
     let mut node = super::DataModelExt::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_MODEL_EXT_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DATA_MODEL_EXT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.rel_id),
@@ -292,8 +354,23 @@ pub fn data_model_ext(element: &Element) -> super::DataModelExt {
 /// Read `dsp:drawing` into a `Drawing`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drawing(element: &Element) -> super::Drawing {
+    drawing_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dsp:drawing` into a `Drawing` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drawing_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Drawing {
+    drawing_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dsp:drawing` into a `Drawing` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn drawing_from_item(item: officekit_markup_base::Item<'_>) -> super::Drawing {
     let mut node = super::Drawing::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DRAWING_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DRAWING_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.sp_tree);
@@ -306,8 +383,23 @@ pub fn drawing(element: &Element) -> super::Drawing {
 /// Read `dsp:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dsp:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dsp:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -326,8 +418,23 @@ pub fn group_shape(element: &Element) -> super::GroupShapeContent {
 /// Read `dsp:grpSp` into a `GrpSp`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn grp_sp(element: &Element) -> super::GrpSp {
+    grp_sp_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dsp:grpSp` into a `GrpSp` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn grp_sp_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::GrpSp {
+    grp_sp_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dsp:grpSp` into a `GrpSp` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn grp_sp_from_item(item: officekit_markup_base::Item<'_>) -> super::GrpSp {
     let mut node = super::GrpSp::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::GRP_SP_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::GRP_SP_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.nv_grp_sp_pr),
@@ -344,8 +451,23 @@ pub fn grp_sp(element: &Element) -> super::GrpSp {
 /// Read `dsp:grpSpPr` into a `GrpSpPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn grp_sp_pr(element: &Element) -> super::GrpSpPr {
+    grp_sp_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dsp:grpSpPr` into a `GrpSpPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn grp_sp_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::GrpSpPr {
+    grp_sp_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dsp:grpSpPr` into a `GrpSpPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn grp_sp_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::GrpSpPr {
     let mut node = super::GrpSpPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::GRP_SP_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::GRP_SP_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bw_mode),
@@ -364,8 +486,24 @@ pub fn grp_sp_pr(element: &Element) -> super::GrpSpPr {
 /// Read `dsp:nvGrpSpPr` into a `NvGrpSpPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nv_grp_sp_pr(element: &Element) -> super::NvGrpSpPr {
+    nv_grp_sp_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dsp:nvGrpSpPr` into a `NvGrpSpPr` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn nv_grp_sp_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NvGrpSpPr {
+    nv_grp_sp_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dsp:nvGrpSpPr` into a `NvGrpSpPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn nv_grp_sp_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::NvGrpSpPr {
     let mut node = super::NvGrpSpPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NV_GRP_SP_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NV_GRP_SP_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.c_nv_pr),
@@ -380,8 +518,23 @@ pub fn nv_grp_sp_pr(element: &Element) -> super::NvGrpSpPr {
 /// Read `dsp:nvSpPr` into a `NvSpPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nv_sp_pr(element: &Element) -> super::NvSpPr {
+    nv_sp_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dsp:nvSpPr` into a `NvSpPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn nv_sp_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::NvSpPr {
+    nv_sp_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dsp:nvSpPr` into a `NvSpPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn nv_sp_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::NvSpPr {
     let mut node = super::NvSpPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::NV_SP_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::NV_SP_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.c_nv_pr),
@@ -396,8 +549,23 @@ pub fn nv_sp_pr(element: &Element) -> super::NvSpPr {
 /// Read `dsp:sp` into a `Sp`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sp(element: &Element) -> super::Sp {
+    sp_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dsp:sp` into a `Sp` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sp_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Sp {
+    sp_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dsp:sp` into a `Sp` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sp_from_item(item: officekit_markup_base::Item<'_>) -> super::Sp {
     let mut node = super::Sp::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SP_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SP_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.model_id),
@@ -417,8 +585,23 @@ pub fn sp(element: &Element) -> super::Sp {
 /// Read `dsp:spPr` into a `SpPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sp_pr(element: &Element) -> super::SpPr {
+    sp_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dsp:spPr` into a `SpPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sp_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SpPr {
+    sp_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dsp:spPr` into a `SpPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sp_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::SpPr {
     let mut node = super::SpPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SP_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SP_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.bw_mode),
@@ -440,8 +623,23 @@ pub fn sp_pr(element: &Element) -> super::SpPr {
 /// Read `dsp:spTree` into a `SpTree`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sp_tree(element: &Element) -> super::SpTree {
+    sp_tree_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dsp:spTree` into a `SpTree` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sp_tree_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SpTree {
+    sp_tree_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dsp:spTree` into a `SpTree` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn sp_tree_from_item(item: officekit_markup_base::Item<'_>) -> super::SpTree {
     let mut node = super::SpTree::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SP_TREE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SP_TREE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.nv_grp_sp_pr),
@@ -458,8 +656,23 @@ pub fn sp_tree(element: &Element) -> super::SpTree {
 /// Read `dsp:style` into a `Style`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style(element: &Element) -> super::Style {
+    style_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dsp:style` into a `Style` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn style_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Style {
+    style_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dsp:style` into a `Style` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn style_from_item(item: officekit_markup_base::Item<'_>) -> super::Style {
     let mut node = super::Style::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::STYLE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::STYLE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.line_reference),
@@ -476,8 +689,23 @@ pub fn style(element: &Element) -> super::Style {
 /// Read `dsp:txBody` into a `TxBody`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tx_body(element: &Element) -> super::TxBody {
+    tx_body_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dsp:txBody` into a `TxBody` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tx_body_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TxBody {
+    tx_body_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dsp:txBody` into a `TxBody` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tx_body_from_item(item: officekit_markup_base::Item<'_>) -> super::TxBody {
     let mut node = super::TxBody::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TX_BODY_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TX_BODY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.properties),
@@ -493,8 +721,23 @@ pub fn tx_body(element: &Element) -> super::TxBody {
 /// Read `dsp:txXfrm` into a `TxXfrm`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tx_xfrm(element: &Element) -> super::TxXfrm {
+    tx_xfrm_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dsp:txXfrm` into a `TxXfrm` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tx_xfrm_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::TxXfrm {
+    tx_xfrm_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dsp:txXfrm` into a `TxXfrm` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn tx_xfrm_from_item(item: officekit_markup_base::Item<'_>) -> super::TxXfrm {
     let mut node = super::TxXfrm::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TX_XFRM_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TX_XFRM_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.rot),

@@ -27,6 +27,11 @@
 //! builds a [`Writer`] from the same shape and writes the declared attributes and children in
 //! schema order.
 //!
+//! A node is also read from a part's events, with no generic tree of the part:
+//! `read::<node>_from_events(start, events)` takes the node's start tag and an [`EventSource`],
+//! as [`Events`] over a part reader, and reads each declared child from the events in turn. An
+//! [`Item`] is what either read starts from.
+//!
 //! # Content the schemas do not declare
 //!
 //! A part can hold more than the schemas of one namespace declare: elements of a newer Office
@@ -117,13 +122,17 @@ mod user_data;
 pub use user_data::{UserData, UserDataSlot};
 
 use alloc::collections::VecDeque;
+use alloc::vec;
+use core::cell::Cell;
+use core::fmt::{self, Debug, Formatter};
 use core::num::ParseFloatError;
 use core::{mem, slice};
 
 use officekit_xml::conformance::ConformanceClass;
-use officekit_xml::element::{Attribute, Element, NamespaceDeclaration, Node};
+use officekit_xml::element::{Attribute, Element, NamespaceDeclaration, Node, XmlError};
 use officekit_xml::name::table::NAMESPACES;
 use officekit_xml::name::{Namespace, NamespaceId, OfficeVersion, QName, tag_of};
+use officekit_xml::stream::reader::{PartEvent, ReadEvents};
 use officekit_xml::values::{DateTime, Measure, ValueError, matches_pattern, parse};
 use officekit_xml::write::{Scope, is_whitespace_text};
 
@@ -259,8 +268,51 @@ pub enum Field<'element> {
     /// A node the schemas do not declare, which joins the list of an enum
     /// type at this position as its `Other` item.
     Node(Node),
+    /// A declared child element the reader owns: one read from events whole.
+    Owned(Element),
+    /// A declared child's start tag; its content is the next events of the source, up to its end.
+    Start(Element, &'element dyn EventSource),
     /// A declared attribute's value, or the text of simple content.
     Text(String),
+}
+
+/// A part's events as a typed read takes them: an [`EventSource`] over a [`ReadEvents`].
+///
+/// The first error the source gives is kept, and from there the read sees the part end;
+/// [`Events::finish`] returns it.
+pub struct Events<'source> {
+    /// How deep in elements the events given so far stand.
+    depth: Cell<usize>,
+    error: Cell<Option<XmlError>>,
+    /// How many elements started outside every other.
+    roots: Cell<usize>,
+    /// `None` after an error.
+    source: Cell<Option<&'source mut dyn ReadEvents>>,
+}
+
+/// What a node read from events takes them from: the events after the start tag it was given.
+pub trait EventSource: Debug {
+    /// The element `start` began, read whole up to its end; `start` as it is once the source
+    /// failed.
+    #[must_use = "this reads the element; dropping it skips it"]
+    fn element(&self, start: Element) -> Element;
+
+    /// The next event; `None` at the end of the part, or once the source failed.
+    #[must_use = "this reads the event; dropping it skips it"]
+    fn event(&self) -> Option<PartEvent>;
+}
+
+/// What a node is read from: a generic element, borrowed or owned, or an element's start tag
+/// and the events after it.
+#[derive(Debug)]
+#[non_exhaustive]
+pub enum Item<'element> {
+    /// The start tag, and the events of its content and end.
+    Events(Element, &'element dyn EventSource),
+    /// An element read whole.
+    Owned(Element),
+    /// An element of a tree.
+    Tree(&'element Element),
 }
 
 /// The members of an enumeration newtype: each member, the text it stands
@@ -300,11 +352,10 @@ pub struct Positions {
 /// `Shape`; what the schemas do not declare stays at its place.
 #[derive(Debug)]
 pub struct Reader<'element> {
-    attributes: slice::Iter<'element, Attribute>,
-    children: slice::Iter<'element, Node>,
+    attributes: Attributes<'element>,
+    content: Content<'element>,
     /// The position of the last declared child read.
     cursor: usize,
-    element: &'element Element,
     ended: bool,
     /// Which single positions hold their child.
     filled: Vec<bool>,
@@ -434,6 +485,28 @@ pub struct Writer<'scope, 'node> {
     unknown: &'node Unknown,
 }
 
+/// The attributes a reader goes through.
+#[derive(Debug)]
+enum Attributes<'element> {
+    Borrowed(slice::Iter<'element, Attribute>),
+    Owned(vec::IntoIter<Attribute>),
+}
+
+/// The children a reader goes through.
+#[derive(Debug)]
+enum Content<'element> {
+    Borrowed(slice::Iter<'element, Node>),
+    Events(&'element dyn EventSource),
+    Owned(vec::IntoIter<Node>),
+}
+
+/// A child a reader reached.
+enum Child<'element> {
+    Borrowed(&'element Node),
+    Owned(Node),
+    Start(Element, &'element dyn EventSource),
+}
+
 /// A declared attribute's field: its text, when it has one.
 pub trait AttributeValue {
     /// The text to write; `None` leaves the attribute out.
@@ -469,7 +542,7 @@ pub trait Nodes {
     fn nodes(&self) -> &[Self::Node];
 }
 
-/// A node of the typed tree read from a generic element.
+/// A node of the typed tree read from a generic element, or from a part's events.
 pub trait Read: Sized {
     /// The `Other` item holding a node the schemas do not declare, for an
     /// enum; `None` for a struct, which has no such item.
@@ -479,7 +552,19 @@ pub trait Read: Sized {
     }
 
     /// The node `element` holds.
-    fn read(element: &Element) -> Self;
+    #[must_use = "the node read is returned; nothing else keeps it"]
+    fn read(element: &Element) -> Self {
+        Self::read_item(Item::Tree(element))
+    }
+
+    /// The node `start` begins, read from the events after it up to its end.
+    #[must_use = "the node read is returned; nothing else keeps it"]
+    fn read_events(start: Element, events: &dyn EventSource) -> Self {
+        Self::read_item(Item::Events(start, events))
+    }
+
+    /// The node `item` holds.
+    fn read_item(item: Item<'_>) -> Self;
 }
 
 /// A node of the typed tree written at its place: a struct as its element,
@@ -548,7 +633,7 @@ impl Extra {
     }
 }
 
-impl Field<'_> {
+impl<'element> Field<'element> {
     /// Set a declared attribute's field from its text.
     pub fn attribute<T>(self, slot: &mut Option<T>)
     where
@@ -565,6 +650,16 @@ impl Field<'_> {
         F: ChildField,
     {
         slot.take(self);
+    }
+
+    /// What a declared child is read from; `None` for a node or text.
+    fn into_item(self) -> Option<Item<'element>> {
+        match self {
+            Self::Element(element) => Some(Item::Tree(element)),
+            Self::Owned(element) => Some(Item::Owned(element)),
+            Self::Start(start, events) => Some(Item::Events(start, events)),
+            Self::Node(_) | Self::Text(_) => None,
+        }
     }
 
     /// Set simple content's field from the element's text.
@@ -592,8 +687,8 @@ where
     T: Read + Write,
 {
     fn take(&mut self, field: Field<'_>) {
-        if let Field::Element(element) = field {
-            **self = T::read(element);
+        if let Some(item) = field.into_item() {
+            **self = T::read_item(item);
         }
     }
 
@@ -607,8 +702,8 @@ where
     T: Read + Write,
 {
     fn take(&mut self, field: Field<'_>) {
-        if let Field::Element(element) = field {
-            *self = Some(Box::new(T::read(element)));
+        if let Some(item) = field.into_item() {
+            *self = Some(Box::new(T::read_item(item)));
         }
     }
 
@@ -624,10 +719,12 @@ where
     T: Read + Write,
 {
     fn take(&mut self, field: Field<'_>) {
-        match field {
-            Field::Element(element) => self.push(T::read(element)),
-            Field::Node(node) => self.extend(T::other(node)),
-            Field::Text(_) => {}
+        if let Field::Node(node) = field {
+            self.extend(T::other(node));
+        } else if let Some(item) = field.into_item() {
+            self.push(T::read_item(item));
+        } else {
+            // An attribute's text: no child.
         }
     }
 
@@ -769,14 +866,136 @@ impl Positions {
 }
 
 impl<'element> Reader<'element> {
-    /// The declared child `element` is when one of the positions from the
-    /// last one read on takes it: the first that does, a single position only
-    /// while it holds no child and an `xsd:all` list only while it lacks the tag.
-    fn child(&mut self, node: &'element Node) {
-        let Node::Element(element) = node else {
-            self.placement.unknown(node.clone());
-            return;
+    /// A child the reader reached: a declared one is handed out, an unknown one waits for the
+    /// next declared child.
+    fn child(&mut self, child: Child<'element>) {
+        match child {
+            Child::Borrowed(node) => {
+                if let Node::Element(element) = node
+                    && let Some(index) = self.place(element)
+                {
+                    self.queue.push_back((index, Field::Element(element)));
+                } else {
+                    self.placement.unknown(node.clone());
+                }
+            }
+            Child::Owned(Node::Element(element)) => match self.place(&element) {
+                Some(index) => self.queue.push_back((index, Field::Owned(element))),
+                None => self.placement.unknown(Node::Element(element)),
+            },
+            Child::Owned(node) => self.placement.unknown(node),
+            Child::Start(start, events) => match self.place(&start) {
+                Some(index) => self.queue.push_back((index, Field::Start(start, events))),
+                None => self.placement.unknown(Node::Element(events.element(start))),
+            },
+        }
+    }
+
+    /// The unknown content: attributes the shape does not declare, children
+    /// at positions no list covers, the node's own namespace declarations,
+    /// and the required single positions the element left empty.
+    #[must_use = "the value moves into the one returned"]
+    pub fn finish(mut self) -> Unknown {
+        for (_, field) in self.by_ref() {
+            if let Field::Start(start, events) = field {
+                drop(events.element(start));
+            }
+        }
+        self.unknown.absent = self
+            .shape
+            .slots
+            .iter()
+            .zip(&self.filled)
+            .enumerate()
+            .filter(|(_, (slot, filled))| slot.occurs == SlotOccurs::Required && !**filled)
+            .map(|(position, _)| position)
+            .collect();
+        self.unknown
+    }
+
+    /// What `element`'s reader is given, by `shape`.
+    #[must_use = "this only builds the value"]
+    pub fn new(element: &'element Element, shape: &'static Shape) -> Self {
+        Self::of(Item::Tree(element), shape)
+    }
+
+    /// The next child; `None` past the last.
+    fn next_child(&mut self) -> Option<Child<'element>> {
+        match &mut self.content {
+            Content::Borrowed(children) => children.next().map(Child::Borrowed),
+            Content::Owned(children) => children.next().map(Child::Owned),
+            Content::Events(events) => loop {
+                match events.event()? {
+                    PartEvent::End => return None,
+                    PartEvent::Node(node) => return Some(Child::Owned(node)),
+                    PartEvent::Start(start) => return Some(Child::Start(start, *events)),
+                    PartEvent::Declaration(_) | _ => {}
+                }
+            },
+        }
+    }
+
+    /// What the reader of the node `item` holds is given, by `shape`.
+    #[must_use = "this only builds the value"]
+    pub fn of(item: Item<'element>, shape: &'static Shape) -> Self {
+        let (attributes, content, name, namespace_declarations) = match item {
+            Item::Events(start, events) => (
+                Attributes::Owned(start.attributes.into_iter()),
+                Content::Events(events),
+                other_name(shape, start.name),
+                start.namespace_declarations,
+            ),
+            Item::Owned(element) => (
+                Attributes::Owned(element.attributes.into_iter()),
+                Content::Owned(element.children.into_iter()),
+                other_name(shape, element.name),
+                element.namespace_declarations,
+            ),
+            Item::Tree(element) => (
+                Attributes::Borrowed(element.attributes.iter()),
+                Content::Borrowed(element.children.iter()),
+                (!is_tag(shape.name, &element.name)).then(|| Box::new(element.name.clone())),
+                element.namespace_declarations.clone(),
+            ),
         };
+        Self {
+            attributes,
+            content,
+            cursor: 0,
+            ended: false,
+            filled: vec![false; shape.slots.len()],
+            last_items: None,
+            once: Vec::new(),
+            placement: Placement::default(),
+            queue: VecDeque::new(),
+            shape,
+            unknown: Unknown {
+                absent: Vec::new(),
+                attributes: Vec::new(),
+                children: Vec::new(),
+                name,
+                namespace_declarations,
+            },
+        }
+    }
+
+    fn pending(&mut self, pending: Pending) {
+        match pending {
+            Pending::Extra(extra) => self.unknown.children.extend(extra),
+            Pending::List(nodes) => {
+                let base = self.shape.attributes.len();
+                let position = self.last_items.unwrap_or_default();
+                for node in nodes {
+                    self.queue.push_back((base + position, Field::Node(node)));
+                }
+            }
+        }
+    }
+
+    /// The field index of `element` when one of the positions from the last one read on takes
+    /// it: the first that does, a single position only while it holds no child and an `xsd:all`
+    /// list only while it lacks the tag. The unknown nodes waiting before it are queued first.
+    fn place(&mut self, element: &Element) -> Option<usize> {
         let tag = (known(&element.name.namespace), element.name.local.as_str());
         let base = self.shape.attributes.len();
         for (index, slot) in self.shape.slots.iter().enumerate().skip(self.cursor) {
@@ -811,82 +1030,30 @@ impl<'element> Reader<'element> {
                 let pending = self.placement.single();
                 self.pending(pending);
             }
-            self.queue
-                .push_back((base + index, Field::Element(element)));
-            return;
+            return Some(base + index);
         }
-        self.placement.unknown(node.clone());
-    }
-
-    /// The unknown content: attributes the shape does not declare, children
-    /// at positions no list covers, the node's own namespace declarations,
-    /// and the required single positions the element left empty.
-    #[must_use = "the value moves into the one returned"]
-    pub fn finish(mut self) -> Unknown {
-        while self.next().is_some() {}
-        self.unknown.absent = self
-            .shape
-            .slots
-            .iter()
-            .zip(&self.filled)
-            .enumerate()
-            .filter(|(_, (slot, filled))| slot.occurs == SlotOccurs::Required && !**filled)
-            .map(|(position, _)| position)
-            .collect();
-        self.unknown
-    }
-
-    /// What `element`'s reader is given, by `shape`.
-    #[must_use = "this only builds the value"]
-    pub fn new(element: &'element Element, shape: &'static Shape) -> Self {
-        Self {
-            attributes: element.attributes.iter(),
-            children: element.children.iter(),
-            cursor: 0,
-            element,
-            ended: false,
-            filled: vec![false; shape.slots.len()],
-            last_items: None,
-            once: Vec::new(),
-            placement: Placement::default(),
-            queue: VecDeque::new(),
-            shape,
-            unknown: Unknown {
-                absent: Vec::new(),
-                attributes: Vec::new(),
-                children: Vec::new(),
-                name: (!is_tag(shape.name, &element.name)).then(|| Box::new(element.name.clone())),
-                namespace_declarations: element.namespace_declarations.clone(),
-            },
-        }
-    }
-
-    fn pending(&mut self, pending: Pending) {
-        match pending {
-            Pending::Extra(extra) => self.unknown.children.extend(extra),
-            Pending::List(nodes) => {
-                let base = self.shape.attributes.len();
-                let position = self.last_items.unwrap_or_default();
-                for node in nodes {
-                    self.queue.push_back((base + position, Field::Node(node)));
-                }
-            }
-        }
+        None
     }
 
     /// Simple content: its text and CDATA, joined, and every other node kept
     /// after it.
     fn text(&mut self) -> String {
         let mut text = String::new();
-        for node in &self.element.children {
-            if let Node::CData(part) | Node::Text(part) = node {
-                text.push_str(part);
-            } else {
-                self.unknown.children.push(Extra {
-                    after: 0,
-                    node: node.clone(),
-                });
-            }
+        while let Some(child) = self.next_child() {
+            let node = match child {
+                Child::Borrowed(Node::CData(part) | Node::Text(part)) => {
+                    text.push_str(part);
+                    continue;
+                }
+                Child::Owned(Node::CData(part) | Node::Text(part)) => {
+                    text.push_str(&part);
+                    continue;
+                }
+                Child::Borrowed(node) => node.clone(),
+                Child::Owned(node) => node,
+                Child::Start(start, events) => Node::Element(events.element(start)),
+            };
+            self.unknown.children.push(Extra { after: 0, node });
         }
         text
     }
@@ -900,17 +1067,31 @@ impl<'element> Iterator for Reader<'element> {
             if let Some(item) = self.queue.pop_front() {
                 return Some(item);
             }
-            if let Some(attribute) = self.attributes.next() {
-                let declared = self
-                    .shape
+            let declared = |name: &QName| {
+                self.shape
                     .attributes
                     .iter()
-                    .position(|tag| is_tag(*tag, &attribute.name));
-                if let Some(index) = declared {
-                    return Some((index, Field::Text(attribute.value.clone())));
+                    .position(|tag| is_tag(*tag, name))
+            };
+            match &mut self.attributes {
+                Attributes::Borrowed(attributes) => {
+                    if let Some(attribute) = attributes.next() {
+                        if let Some(index) = declared(&attribute.name) {
+                            return Some((index, Field::Text(attribute.value.clone())));
+                        }
+                        self.unknown.attributes.push(attribute.clone());
+                        continue;
+                    }
                 }
-                self.unknown.attributes.push(attribute.clone());
-                continue;
+                Attributes::Owned(attributes) => {
+                    if let Some(attribute) = attributes.next() {
+                        if let Some(index) = declared(&attribute.name) {
+                            return Some((index, Field::Text(attribute.value)));
+                        }
+                        self.unknown.attributes.push(attribute);
+                        continue;
+                    }
+                }
             }
             if self.ended {
                 return None;
@@ -920,14 +1101,157 @@ impl<'element> Iterator for Reader<'element> {
                 let text = self.text();
                 return Some((self.shape.attributes.len(), Field::Text(text)));
             }
-            if let Some(node) = self.children.next() {
-                self.child(node);
+            if let Some(child) = self.next_child() {
+                self.child(child);
                 continue;
             }
             self.ended = true;
             let pending = self.placement.end();
             self.pending(pending);
         }
+    }
+}
+
+impl Debug for Events<'_> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        f.debug_struct("Events")
+            .field("depth", &self.depth.get())
+            .finish_non_exhaustive()
+    }
+}
+
+impl<'source> Events<'source> {
+    /// Drain the events the read left, and return the first error the source gave: a second
+    /// element outside the root is one.
+    ///
+    /// # Errors
+    ///
+    /// The source's first error; [`XmlError::Malformed`] for more than one root element.
+    pub fn finish(self) -> Result<(), XmlError> {
+        while self.event().is_some() {}
+        if let Some(error) = self.error.take() {
+            return Err(error);
+        }
+        if self.roots.get() > 1 {
+            return Err(XmlError::Malformed("more than one root element".to_owned()));
+        }
+        Ok(())
+    }
+
+    /// A typed read over `source`, before its first event.
+    #[must_use = "this only builds the value"]
+    pub fn new(source: &'source mut dyn ReadEvents) -> Self {
+        Self {
+            depth: Cell::new(0),
+            error: Cell::new(None),
+            roots: Cell::new(0),
+            source: Cell::new(Some(source)),
+        }
+    }
+
+    /// The part's root element, past the declaration and the nodes before it: its start tag and
+    /// these events, or the whole element when it is empty. `None` when the part holds no
+    /// element, or the source failed before it.
+    #[must_use = "this reads the root's start; dropping it skips it"]
+    pub fn root(&self) -> Option<Item<'_>> {
+        loop {
+            match self.event()? {
+                PartEvent::Start(start) => return Some(Item::Events(start, self)),
+                PartEvent::Node(Node::Element(element)) => return Some(Item::Owned(element)),
+                PartEvent::Declaration(_) | PartEvent::End | PartEvent::Node(_) | _ => {}
+            }
+        }
+    }
+}
+
+impl EventSource for Events<'_> {
+    fn element(&self, start: Element) -> Element {
+        let mut element = start;
+        let mut open: Vec<Element> = Vec::new();
+        while let Some(event) = self.event() {
+            let node = match event {
+                PartEvent::End => match open.pop() {
+                    Some(done) => Node::Element(done),
+                    None => return element,
+                },
+                PartEvent::Node(node) => node,
+                PartEvent::Start(child) => {
+                    open.push(child);
+                    continue;
+                }
+                PartEvent::Declaration(_) | _ => continue,
+            };
+            open.last_mut().unwrap_or(&mut element).children.push(node);
+        }
+        element
+    }
+
+    fn event(&self) -> Option<PartEvent> {
+        let source = self.source.take()?;
+        let event = match source.event() {
+            Ok(event) => event,
+            Err(error) => {
+                self.error.set(Some(error));
+                return None;
+            }
+        };
+        self.source.set(Some(source));
+        let depth = self.depth.get();
+        let starts = matches!(event, Some(PartEvent::Start(_)));
+        if depth == 0 && (starts || matches!(event, Some(PartEvent::Node(Node::Element(_))))) {
+            self.roots.set(self.roots.get() + 1);
+        }
+        if starts {
+            self.depth.set(depth + 1);
+        } else if matches!(event, Some(PartEvent::End)) {
+            self.depth.set(depth.saturating_sub(1));
+        } else {
+            // A node or the declaration: the depth stays.
+        }
+        event
+    }
+}
+
+impl Item<'_> {
+    /// The element: the start tag of one read from events.
+    #[must_use = "this only returns the value"]
+    pub const fn element(&self) -> &Element {
+        match self {
+            Self::Events(element, _) | Self::Owned(element) => element,
+            Self::Tree(element) => element,
+        }
+    }
+
+    /// The element whole, read from the events up to its end for one read from events.
+    #[must_use = "this reads the element; dropping it skips it"]
+    pub fn into_element(self) -> Element {
+        match self {
+            Self::Events(start, events) => events.element(start),
+            Self::Owned(element) => element,
+            Self::Tree(element) => element.clone(),
+        }
+    }
+
+    /// The element as a generic node, for an enum's `Other` item.
+    #[must_use = "this reads the element; dropping it skips it"]
+    pub fn into_node(self) -> Node {
+        Node::Element(self.into_element())
+    }
+
+    /// The element's tag as the typed tree matches it; `None` for a namespace the table does not
+    /// know.
+    #[must_use = "this only returns the value"]
+    pub const fn name(&self) -> Option<(Option<NamespaceId>, &str)> {
+        name(self.element())
+    }
+
+    /// The node of `T` the item holds.
+    #[must_use = "the node read is returned; nothing else keeps it"]
+    pub fn read<T>(self) -> T
+    where
+        T: Read,
+    {
+        T::read_item(self)
     }
 }
 
@@ -1368,6 +1692,11 @@ const fn known(namespace: &Namespace) -> Option<NamespaceId> {
     } else {
         None
     }
+}
+
+/// `name`, boxed, when it is not the tag of `shape`: the name a node read under another keeps.
+fn other_name(shape: &Shape, name: QName) -> Option<Box<QName>> {
+    (!is_tag(shape.name, &name)).then(|| Box::new(name))
 }
 
 /// Whether `name` is the tag `tag`.

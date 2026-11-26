@@ -222,7 +222,6 @@ pub mod read;
 pub mod write;
 
 use crate::UserData;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
 const NS_XXL21: Option<NamespaceId> = Some(164);
@@ -332,8 +331,8 @@ impl<X: UserData> AbsoluteUrlWith<X> {
 }
 
 impl crate::Read for AbsoluteUrl {
-    fn read(element: &Element) -> Self {
-        read::absolute_url(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::absolute_url_from_item(item)
     }
 }
 
@@ -380,8 +379,8 @@ impl<X: UserData> AlternateUrlsWith<X> {
 }
 
 impl crate::Read for AlternateUrls {
-    fn read(element: &Element) -> Self {
-        read::alternate_urls(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::alternate_urls_from_item(item)
     }
 }
 
@@ -414,8 +413,8 @@ impl<X: UserData> RelativeUrlWith<X> {
 }
 
 impl crate::Read for RelativeUrl {
-    fn read(element: &Element) -> Self {
-        read::relative_url(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::relative_url_from_item(item)
     }
 }
 

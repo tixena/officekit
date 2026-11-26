@@ -225,7 +225,6 @@ pub mod write;
 
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
-use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -517,8 +516,8 @@ impl<X: UserData> ColIdWith<X> {
 }
 
 impl officekit_markup_base::Read for ColId {
-    fn read(element: &Element) -> Self {
-        read::col_id(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::col_id_from_item(item)
     }
 }
 
@@ -555,8 +554,8 @@ impl<X: UserData> CreationIdWith<X> {
 }
 
 impl officekit_markup_base::Read for CreationId {
-    fn read(element: &Element) -> Self {
-        read::creation_id(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::creation_id_from_item(item)
     }
 }
 
@@ -595,8 +594,8 @@ impl<X: UserData> CxnDERefsWith<X> {
 }
 
 impl officekit_markup_base::Read for CxnDERefs {
-    fn read(element: &Element) -> Self {
-        read::cxn_de_refs(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::cxn_de_refs_from_item(item)
     }
 }
 
@@ -633,8 +632,8 @@ impl<X: UserData> PredDERefWith<X> {
 }
 
 impl officekit_markup_base::Read for PredDERef {
-    fn read(element: &Element) -> Self {
-        read::pred_de_ref(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pred_de_ref_from_item(item)
     }
 }
 
@@ -667,8 +666,8 @@ impl<X: UserData> RowIdWith<X> {
 }
 
 impl officekit_markup_base::Read for RowId {
-    fn read(element: &Element) -> Self {
-        read::row_id(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::row_id_from_item(item)
     }
 }
 

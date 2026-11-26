@@ -221,9 +221,27 @@ use officekit_xml::element::Element;
 /// Read `x16:calculatedTimeColumn` into a `CalculatedTimeColumn`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn calculated_time_column(element: &Element) -> super::CalculatedTimeColumn {
+    calculated_time_column_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `x16:calculatedTimeColumn` into a `CalculatedTimeColumn` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn calculated_time_column_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CalculatedTimeColumn {
+    calculated_time_column_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `x16:calculatedTimeColumn` into a `CalculatedTimeColumn` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn calculated_time_column_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::CalculatedTimeColumn {
     let mut node = super::CalculatedTimeColumn::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::CALCULATED_TIME_COLUMN_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CALCULATED_TIME_COLUMN_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.column_name),
@@ -240,8 +258,27 @@ pub fn calculated_time_column(element: &Element) -> super::CalculatedTimeColumn 
 /// Read `x16:modelTimeGrouping` into a `ModelTimeGrouping`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn model_time_grouping(element: &Element) -> super::ModelTimeGrouping {
+    model_time_grouping_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `x16:modelTimeGrouping` into a `ModelTimeGrouping` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn model_time_grouping_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ModelTimeGrouping {
+    model_time_grouping_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `x16:modelTimeGrouping` into a `ModelTimeGrouping` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn model_time_grouping_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ModelTimeGrouping {
     let mut node = super::ModelTimeGrouping::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::MODEL_TIME_GROUPING_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::MODEL_TIME_GROUPING_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.table_name),
@@ -258,9 +295,27 @@ pub fn model_time_grouping(element: &Element) -> super::ModelTimeGrouping {
 /// Read `x16:modelTimeGroupings` into a `ModelTimeGroupings`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn model_time_groupings(element: &Element) -> super::ModelTimeGroupings {
+    model_time_groupings_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `x16:modelTimeGroupings` into a `ModelTimeGroupings` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn model_time_groupings_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ModelTimeGroupings {
+    model_time_groupings_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `x16:modelTimeGroupings` into a `ModelTimeGroupings` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn model_time_groupings_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ModelTimeGroupings {
     let mut node = super::ModelTimeGroupings::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::MODEL_TIME_GROUPINGS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::MODEL_TIME_GROUPINGS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.model_time_grouping);

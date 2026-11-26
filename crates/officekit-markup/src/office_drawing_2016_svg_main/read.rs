@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `asvg:svgBlip` into a `SvgBlip`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn svg_blip(element: &Element) -> super::SvgBlip {
+    svg_blip_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `asvg:svgBlip` into a `SvgBlip` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn svg_blip_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SvgBlip {
+    svg_blip_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `asvg:svgBlip` into a `SvgBlip` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn svg_blip_from_item(item: officekit_markup_base::Item<'_>) -> super::SvgBlip {
     let mut node = super::SvgBlip::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SVG_BLIP_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SVG_BLIP_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.embed),

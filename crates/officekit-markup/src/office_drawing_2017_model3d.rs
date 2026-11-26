@@ -249,7 +249,7 @@ use officekit_markup_core::vml;
 use officekit_markup_core::vml_office_drawing;
 use officekit_markup_core::wordprocessing;
 use officekit_markup_core::wordprocessing_drawing;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
 use std::io;
@@ -3033,8 +3033,8 @@ impl<X: UserData> AmbientLightWith<X> {
 }
 
 impl officekit_markup_base::Read for AmbientLight {
-    fn read(element: &Element) -> Self {
-        read::ambient_light(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ambient_light_from_item(item)
     }
 }
 
@@ -3071,8 +3071,8 @@ impl<X: UserData> AttrSrcUrlWith<X> {
 }
 
 impl officekit_markup_base::Read for AttrSrcUrl {
-    fn read(element: &Element) -> Self {
-        read::attr_src_url(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::attr_src_url_from_item(item)
     }
 }
 
@@ -3121,8 +3121,8 @@ impl<X: UserData> BlipWith<X> {
 }
 
 impl officekit_markup_base::Read for Blip {
-    fn read(element: &Element) -> Self {
-        read::blip(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::blip_from_item(item)
     }
 }
 
@@ -3169,8 +3169,8 @@ impl<X: UserData> CameraWith<X> {
 }
 
 impl officekit_markup_base::Read for Camera {
-    fn read(element: &Element) -> Self {
-        read::camera(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::camera_from_item(item)
     }
 }
 
@@ -3207,8 +3207,8 @@ impl<X: UserData> ClrWith<X> {
 }
 
 impl officekit_markup_base::Read for Clr {
-    fn read(element: &Element) -> Self {
-        read::clr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::clr_from_item(item)
     }
 }
 
@@ -3261,8 +3261,8 @@ impl<X: UserData> DirLightWith<X> {
 }
 
 impl officekit_markup_base::Read for DirLight {
-    fn read(element: &Element) -> Self {
-        read::dir_light(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::dir_light_from_item(item)
     }
 }
 
@@ -3303,8 +3303,8 @@ impl<X: UserData> ExtWith<X> {
 }
 
 impl officekit_markup_base::Read for Ext {
-    fn read(element: &Element) -> Self {
-        read::ext(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_from_item(item)
     }
 }
 
@@ -3338,8 +3338,8 @@ impl<X: UserData> ExtLstModel3DExtensionListWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLstModel3DExtensionList {
-    fn read(element: &Element) -> Self {
-        read::ext_lst_model3d_extension_list(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_model3d_extension_list_from_item(item)
     }
 }
 
@@ -3376,8 +3376,8 @@ impl<X: UserData> ExtLstOfficeArtExtensionListWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLstOfficeArtExtensionList {
-    fn read(element: &Element) -> Self {
-        read::ext_lst_office_art_extension_list(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_office_art_extension_list_from_item(item)
     }
 }
 
@@ -3410,8 +3410,8 @@ impl<X: UserData> IlluminanceWith<X> {
 }
 
 impl officekit_markup_base::Read for Illuminance {
-    fn read(element: &Element) -> Self {
-        read::illuminance(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::illuminance_from_item(item)
     }
 }
 
@@ -3444,8 +3444,8 @@ impl<X: UserData> IntensityWith<X> {
 }
 
 impl officekit_markup_base::Read for Intensity {
-    fn read(element: &Element) -> Self {
-        read::intensity(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::intensity_from_item(item)
     }
 }
 
@@ -3486,8 +3486,8 @@ impl<X: UserData> LookAtWith<X> {
 }
 
 impl officekit_markup_base::Read for LookAt {
-    fn read(element: &Element) -> Self {
-        read::look_at(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::look_at_from_item(item)
     }
 }
 
@@ -3520,8 +3520,8 @@ impl<X: UserData> MeterPerModelUnitWith<X> {
 }
 
 impl officekit_markup_base::Read for MeterPerModelUnit {
-    fn read(element: &Element) -> Self {
-        read::meter_per_model_unit(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::meter_per_model_unit_from_item(item)
     }
 }
 
@@ -3560,15 +3560,11 @@ impl officekit_markup_base::Read for Model3DCameraContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_AM3D, "orthographic")) => {
-                Self::Orthographic(officekit_markup_base::read(element))
-            }
-            Some((NS_AM3D, "perspective")) => {
-                Self::Perspective(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_AM3D, "orthographic")) => Self::Orthographic(item.read()),
+            Some((NS_AM3D, "perspective")) => Self::Perspective(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -3649,14 +3645,8 @@ impl officekit_markup_base::Read for Model3DExtensionContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        read_model3d_extension_1(element)
-            .or_else(|| read_model3d_extension_2(element))
-            .or_else(|| read_model3d_extension_3(element))
-            .or_else(|| read_model3d_extension_4(element))
-            .or_else(|| read_model3d_extension_5(element))
-            .or_else(|| read_model3d_extension_6(element))
-            .unwrap_or_else(|| Self::Other(Node::Element(element.clone())))
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read_model3d_extension_1(item)
     }
 }
 
@@ -4354,13 +4344,13 @@ impl officekit_markup_base::Read for Model3DLightContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_AM3D, "dirLight")) => Self::DirLight(officekit_markup_base::read(element)),
-            Some((NS_AM3D, "ptLight")) => Self::PtLight(officekit_markup_base::read(element)),
-            Some((NS_AM3D, "spotLight")) => Self::SpotLight(officekit_markup_base::read(element)),
-            Some((NS_AM3D, "unkLight")) => Self::UnkLight(officekit_markup_base::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_AM3D, "dirLight")) => Self::DirLight(item.read()),
+            Some((NS_AM3D, "ptLight")) => Self::PtLight(item.read()),
+            Some((NS_AM3D, "spotLight")) => Self::SpotLight(item.read()),
+            Some((NS_AM3D, "unkLight")) => Self::UnkLight(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -4407,15 +4397,11 @@ impl officekit_markup_base::Read for Model3DViewportContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match officekit_markup_base::name(element) {
-            Some((NS_AM3D, "objViewport")) => {
-                Self::ObjViewport(officekit_markup_base::read(element))
-            }
-            Some((NS_AM3D, "winViewport")) => {
-                Self::WinViewport(officekit_markup_base::read(element))
-            }
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_AM3D, "objViewport")) => Self::ObjViewport(item.read()),
+            Some((NS_AM3D, "winViewport")) => Self::WinViewport(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -4494,8 +4480,8 @@ impl<X: UserData> Model3dWith<X> {
 }
 
 impl officekit_markup_base::Read for Model3d {
-    fn read(element: &Element) -> Self {
-        read::model3d(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::model3d_from_item(item)
     }
 }
 
@@ -4536,8 +4522,8 @@ impl<X: UserData> ObjViewportWith<X> {
 }
 
 impl officekit_markup_base::Read for ObjViewport {
-    fn read(element: &Element) -> Self {
-        read::obj_viewport(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::obj_viewport_from_item(item)
     }
 }
 
@@ -4578,8 +4564,8 @@ impl<X: UserData> OrthographicWith<X> {
 }
 
 impl officekit_markup_base::Read for Orthographic {
-    fn read(element: &Element) -> Self {
-        read::orthographic(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::orthographic_from_item(item)
     }
 }
 
@@ -4620,8 +4606,8 @@ impl<X: UserData> PerspectiveWith<X> {
 }
 
 impl officekit_markup_base::Read for Perspective {
-    fn read(element: &Element) -> Self {
-        read::perspective(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::perspective_from_item(item)
     }
 }
 
@@ -4662,8 +4648,8 @@ impl<X: UserData> PosWith<X> {
 }
 
 impl officekit_markup_base::Read for Pos {
-    fn read(element: &Element) -> Self {
-        read::pos(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pos_from_item(item)
     }
 }
 
@@ -4704,8 +4690,8 @@ impl<X: UserData> PostTransWith<X> {
 }
 
 impl officekit_markup_base::Read for PostTrans {
-    fn read(element: &Element) -> Self {
-        read::post_trans(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::post_trans_from_item(item)
     }
 }
 
@@ -4746,8 +4732,8 @@ impl<X: UserData> PreTransWith<X> {
 }
 
 impl officekit_markup_base::Read for PreTrans {
-    fn read(element: &Element) -> Self {
-        read::pre_trans(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pre_trans_from_item(item)
     }
 }
 
@@ -4796,8 +4782,8 @@ impl<X: UserData> PtLightWith<X> {
 }
 
 impl officekit_markup_base::Read for PtLight {
-    fn read(element: &Element) -> Self {
-        read::pt_light(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::pt_light_from_item(item)
     }
 }
 
@@ -4840,8 +4826,8 @@ impl<X: UserData> RasterWith<X> {
 }
 
 impl officekit_markup_base::Read for Raster {
-    fn read(element: &Element) -> Self {
-        read::raster(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::raster_from_item(item)
     }
 }
 
@@ -4882,8 +4868,8 @@ impl<X: UserData> RotWith<X> {
 }
 
 impl officekit_markup_base::Read for Rot {
-    fn read(element: &Element) -> Self {
-        read::rot(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rot_from_item(item)
     }
 }
 
@@ -4922,8 +4908,8 @@ impl<X: UserData> ScaleWith<X> {
 }
 
 impl officekit_markup_base::Read for Scale {
-    fn read(element: &Element) -> Self {
-        read::scale(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::scale_from_item(item)
     }
 }
 
@@ -4992,8 +4978,8 @@ impl<X: UserData> SpPrWith<X> {
 }
 
 impl officekit_markup_base::Read for SpPr {
-    fn read(element: &Element) -> Self {
-        read::sp_pr(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sp_pr_from_item(item)
     }
 }
 
@@ -5048,8 +5034,8 @@ impl<X: UserData> SpotLightWith<X> {
 }
 
 impl officekit_markup_base::Read for SpotLight {
-    fn read(element: &Element) -> Self {
-        read::spot_light(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::spot_light_from_item(item)
     }
 }
 
@@ -5088,8 +5074,8 @@ impl<X: UserData> SxWith<X> {
 }
 
 impl officekit_markup_base::Read for Sx {
-    fn read(element: &Element) -> Self {
-        read::sx(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sx_from_item(item)
     }
 }
 
@@ -5128,8 +5114,8 @@ impl<X: UserData> SyWith<X> {
 }
 
 impl officekit_markup_base::Read for Sy {
-    fn read(element: &Element) -> Self {
-        read::sy(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sy_from_item(item)
     }
 }
 
@@ -5162,8 +5148,8 @@ impl<X: UserData> SzPositiveRatioWith<X> {
 }
 
 impl officekit_markup_base::Read for SzPositiveRatio {
-    fn read(element: &Element) -> Self {
-        read::sz_positive_ratio(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sz_positive_ratio_from_item(item)
     }
 }
 
@@ -5202,8 +5188,8 @@ impl<X: UserData> SzRatioWith<X> {
 }
 
 impl officekit_markup_base::Read for SzRatio {
-    fn read(element: &Element) -> Self {
-        read::sz_ratio(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::sz_ratio_from_item(item)
     }
 }
 
@@ -5260,8 +5246,8 @@ impl<X: UserData> TransWith<X> {
 }
 
 impl officekit_markup_base::Read for Trans {
-    fn read(element: &Element) -> Self {
-        read::trans(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::trans_from_item(item)
     }
 }
 
@@ -5294,8 +5280,8 @@ impl<X: UserData> UnkLightWith<X> {
 }
 
 impl officekit_markup_base::Read for UnkLight {
-    fn read(element: &Element) -> Self {
-        read::unk_light(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::unk_light_from_item(item)
     }
 }
 
@@ -5336,8 +5322,8 @@ impl<X: UserData> UpWith<X> {
 }
 
 impl officekit_markup_base::Read for Up {
-    fn read(element: &Element) -> Self {
-        read::up(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::up_from_item(item)
     }
 }
 
@@ -5374,8 +5360,8 @@ impl<X: UserData> WinViewportWith<X> {
 }
 
 impl officekit_markup_base::Read for WinViewport {
-    fn read(element: &Element) -> Self {
-        read::win_viewport(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::win_viewport_from_item(item)
     }
 }
 
@@ -5386,550 +5372,268 @@ impl officekit_markup_base::Write for WinViewport {
     }
 }
 
-fn read_model3d_extension_1(element: &Element) -> Option<Model3DExtensionContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_WP, "anchor")) => Model3DExtensionContent::AnchorForFloatingDrawingMLObject(
-            officekit_markup_base::read(element),
-        ),
+fn read_model3d_extension_1(item: officekit_markup_base::Item<'_>) -> Model3DExtensionContent {
+    match item.name() {
+        Some((NS_WP, "anchor")) => {
+            Model3DExtensionContent::AnchorForFloatingDrawingMLObject(item.read())
+        }
         Some((NS_W10, "anchorlock")) => {
-            Model3DExtensionContent::AnchorLocationIsLocked(officekit_markup_base::read(element))
+            Model3DExtensionContent::AnchorLocationIsLocked(item.read())
         }
-        Some((NS_AP, "Properties")) => Model3DExtensionContent::ApplicationSpecificFileProperties(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_V, "arc")) => {
-            Model3DExtensionContent::ArcSegment(officekit_markup_base::read(element))
+        Some((NS_AP, "Properties")) => {
+            Model3DExtensionContent::ApplicationSpecificFileProperties(item.read())
         }
-        Some((NS_VT, "array")) => {
-            Model3DExtensionContent::Array(officekit_markup_base::read(element))
+        Some((NS_V, "arc")) => Model3DExtensionContent::ArcSegment(item.read()),
+        Some((NS_VT, "array")) => Model3DExtensionContent::Array(item.read()),
+        Some((NS_XVML, "ClientData")) => Model3DExtensionContent::AttachedObjectData(item.read()),
+        Some((NS_VT, "bstr")) => Model3DExtensionContent::BasicString(item.read()),
+        Some((NS_V, "curve")) => Model3DExtensionContent::BezierCurve(item.read()),
+        Some((NS_VT, "blob")) => Model3DExtensionContent::BinaryBlob(item.read()),
+        Some((NS_VT, "oblob")) => Model3DExtensionContent::BinaryBlobObject(item.read()),
+        Some((NS_VT, "storage")) => Model3DExtensionContent::BinaryStorage(item.read()),
+        Some((NS_VT, "ostorage")) => Model3DExtensionContent::BinaryStorageObject(item.read()),
+        Some((NS_VT, "stream")) => Model3DExtensionContent::BinaryStream(item.read()),
+        Some((NS_VT, "ostream")) => Model3DExtensionContent::BinaryStreamObject(item.read()),
+        Some((NS_VT, "vstream")) => Model3DExtensionContent::BinaryVersionedStream(item.read()),
+        Some((NS_A, "blip")) => Model3DExtensionContent::Blip(item.read()),
+        Some((NS_VT, "bool")) => Model3DExtensionContent::Boolean(item.read()),
+        Some((NS_W10, "borderbottom")) => Model3DExtensionContent::BottomBorder(item.read()),
+        Some((NS_X, "calcChain")) => Model3DExtensionContent::CalculationChainInfo(item.read()),
+        Some((NS_O, "callout")) => Model3DExtensionContent::Callout(item.read()),
+        Some((NS_X, "chartsheet")) => Model3DExtensionContent::ChartSheet(item.read()),
+        Some((NS_C, "chartSpace")) => Model3DExtensionContent::ChartSpace(item.read()),
+        Some((NS_VT, "clsid")) => Model3DExtensionContent::ClassID(item.read()),
+        Some((NS_DGM, "colorsDefHdr")) => {
+            Model3DExtensionContent::ColorTransformDefinitionHeader(item.read())
         }
-        Some((NS_XVML, "ClientData")) => {
-            Model3DExtensionContent::AttachedObjectData(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "bstr")) => {
-            Model3DExtensionContent::BasicString(officekit_markup_base::read(element))
-        }
-        Some((NS_V, "curve")) => {
-            Model3DExtensionContent::BezierCurve(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "blob")) => {
-            Model3DExtensionContent::BinaryBlob(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "oblob")) => {
-            Model3DExtensionContent::BinaryBlobObject(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "storage")) => {
-            Model3DExtensionContent::BinaryStorage(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "ostorage")) => {
-            Model3DExtensionContent::BinaryStorageObject(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "stream")) => {
-            Model3DExtensionContent::BinaryStream(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "ostream")) => {
-            Model3DExtensionContent::BinaryStreamObject(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "vstream")) => {
-            Model3DExtensionContent::BinaryVersionedStream(officekit_markup_base::read(element))
-        }
-        Some((NS_A, "blip")) => Model3DExtensionContent::Blip(officekit_markup_base::read(element)),
-        Some((NS_VT, "bool")) => {
-            Model3DExtensionContent::Boolean(officekit_markup_base::read(element))
-        }
-        Some((NS_W10, "borderbottom")) => {
-            Model3DExtensionContent::BottomBorder(officekit_markup_base::read(element))
-        }
-        Some((NS_X, "calcChain")) => {
-            Model3DExtensionContent::CalculationChainInfo(officekit_markup_base::read(element))
-        }
-        Some((NS_O, "callout")) => {
-            Model3DExtensionContent::Callout(officekit_markup_base::read(element))
-        }
-        Some((NS_X, "chartsheet")) => {
-            Model3DExtensionContent::ChartSheet(officekit_markup_base::read(element))
-        }
-        Some((NS_C, "chartSpace")) => {
-            Model3DExtensionContent::ChartSpace(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "clsid")) => {
-            Model3DExtensionContent::ClassID(officekit_markup_base::read(element))
-        }
-        Some((NS_DGM, "colorsDefHdr")) => Model3DExtensionContent::ColorTransformDefinitionHeader(
-            officekit_markup_base::read(element),
-        ),
         Some((NS_DGM, "colorsDef")) => {
-            Model3DExtensionContent::ColorTransformDefinitions(officekit_markup_base::read(element))
+            Model3DExtensionContent::ColorTransformDefinitions(item.read())
         }
         Some((NS_DGM, "colorsDefHdrLst")) => {
-            Model3DExtensionContent::ColorTransformHeaderList(officekit_markup_base::read(element))
+            Model3DExtensionContent::ColorTransformHeaderList(item.read())
         }
-        Some((NS_P, "cmLst")) => {
-            Model3DExtensionContent::CommentList(officekit_markup_base::read(element))
-        }
-        Some((NS_X, "comments")) => {
-            Model3DExtensionContent::Comments(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "comments")) => {
-            Model3DExtensionContent::CommentsCollection(officekit_markup_base::read(element))
-        }
-        Some((NS_O, "complex")) => {
-            Model3DExtensionContent::Complex(officekit_markup_base::read(element))
-        }
-        _ => return None,
-    };
-    Some(item)
-}
-
-fn read_model3d_extension_2(element: &Element) -> Option<Model3DExtensionContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_X, "connections")) => {
-            Model3DExtensionContent::Connections(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "cy")) => {
-            Model3DExtensionContent::Currency(officekit_markup_base::read(element))
-        }
-        Some((NS_OP, "Properties")) => {
-            Model3DExtensionContent::CustomFileProperties(officekit_markup_base::read(element))
-        }
+        Some((NS_P, "cmLst")) => Model3DExtensionContent::CommentList(item.read()),
+        Some((NS_X, "comments")) => Model3DExtensionContent::Comments(item.read()),
+        Some((NS_W, "comments")) => Model3DExtensionContent::CommentsCollection(item.read()),
+        Some((NS_O, "complex")) => Model3DExtensionContent::Complex(item.read()),
+        Some((NS_X, "connections")) => Model3DExtensionContent::Connections(item.read()),
+        Some((NS_VT, "cy")) => Model3DExtensionContent::Currency(item.read()),
+        Some((NS_OP, "Properties")) => Model3DExtensionContent::CustomFileProperties(item.read()),
         Some((NS_DS, "datastoreItem")) => {
-            Model3DExtensionContent::CustomXMLDataProperties(officekit_markup_base::read(element))
+            Model3DExtensionContent::CustomXMLDataProperties(item.read())
         }
-        Some((NS_DGM, "dataModel")) => {
-            Model3DExtensionContent::DataModel(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "date")) => {
-            Model3DExtensionContent::DateAndTime(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "decimal")) => {
-            Model3DExtensionContent::Decimal(officekit_markup_base::read(element))
-        }
+        Some((NS_DGM, "dataModel")) => Model3DExtensionContent::DataModel(item.read()),
+        Some((NS_VT, "date")) => Model3DExtensionContent::DateAndTime(item.read()),
+        Some((NS_VT, "decimal")) => Model3DExtensionContent::Decimal(item.read()),
         Some((NS_DGM, "layoutDefHdrLst")) => {
-            Model3DExtensionContent::DiagramLayoutHeaderList(officekit_markup_base::read(element))
+            Model3DExtensionContent::DiagramLayoutHeaderList(item.read())
         }
-        Some((NS_X, "dialogsheet")) => {
-            Model3DExtensionContent::DialogSheet(officekit_markup_base::read(element))
-        }
-        Some((NS_O, "signatureline")) => {
-            Model3DExtensionContent::DigitalSignatureLine(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "document")) => {
-            Model3DExtensionContent::Document(officekit_markup_base::read(element))
-        }
-        Some((NS_V, "background")) => {
-            Model3DExtensionContent::DocumentBackground(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "endnotes")) => {
-            Model3DExtensionContent::DocumentEndnotes(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "footnotes")) => {
-            Model3DExtensionContent::DocumentFootnotes(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "settings")) => {
-            Model3DExtensionContent::DocumentSettings(officekit_markup_base::read(element))
-        }
-        Some((NS_A, "tbl")) => {
-            Model3DExtensionContent::DrawingTable(officekit_markup_base::read(element))
-        }
-        Some((NS_A3DANIM, "embedAnim")) => {
-            Model3DExtensionContent::EmbedAnim(officekit_markup_base::read(element))
-        }
+        Some((NS_X, "dialogsheet")) => Model3DExtensionContent::DialogSheet(item.read()),
+        Some((NS_O, "signatureline")) => Model3DExtensionContent::DigitalSignatureLine(item.read()),
+        _ => read_model3d_extension_2(item),
+    }
+}
+
+fn read_model3d_extension_2(item: officekit_markup_base::Item<'_>) -> Model3DExtensionContent {
+    match item.name() {
+        Some((NS_W, "document")) => Model3DExtensionContent::Document(item.read()),
+        Some((NS_V, "background")) => Model3DExtensionContent::DocumentBackground(item.read()),
+        Some((NS_W, "endnotes")) => Model3DExtensionContent::DocumentEndnotes(item.read()),
+        Some((NS_W, "footnotes")) => Model3DExtensionContent::DocumentFootnotes(item.read()),
+        Some((NS_W, "settings")) => Model3DExtensionContent::DocumentSettings(item.read()),
+        Some((NS_A, "tbl")) => Model3DExtensionContent::DrawingTable(item.read()),
+        Some((NS_A3DANIM, "embedAnim")) => Model3DExtensionContent::EmbedAnim(item.read()),
         Some((NS_SL, "schemaLibrary")) => {
-            Model3DExtensionContent::EmbeddedCustomXMLSchemaSupplementaryData(
-                officekit_markup_base::read(element),
-            )
+            Model3DExtensionContent::EmbeddedCustomXMLSchemaSupplementaryData(item.read())
         }
-        Some((NS_O, "OLEObject")) => {
-            Model3DExtensionContent::EmbeddedOLEObject(officekit_markup_base::read(element))
+        Some((NS_O, "OLEObject")) => Model3DExtensionContent::EmbeddedOLEObject(item.read()),
+        Some((NS_P, "oleObj")) => Model3DExtensionContent::EmbeddedObjectsAndControls(item.read()),
+        Some((NS_VT, "empty")) => Model3DExtensionContent::Empty(item.read()),
+        Some((NS_XDR, "to")) => Model3DExtensionContent::EndingAnchorPoint(item.read()),
+        Some((NS_VT, "error")) => Model3DExtensionContent::ErrorStatusCode(item.read()),
+        Some((NS_DGM, "relIds")) => {
+            Model3DExtensionContent::ExplicitRelationshipsToDiagramParts(item.read())
         }
-        Some((NS_P, "oleObj")) => Model3DExtensionContent::EmbeddedObjectsAndControls(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_VT, "empty")) => {
-            Model3DExtensionContent::Empty(officekit_markup_base::read(element))
+        Some((NS_X, "externalLink")) => {
+            Model3DExtensionContent::ExternalReferenceExternalLink(item.read())
         }
-        Some((NS_XDR, "to")) => {
-            Model3DExtensionContent::EndingAnchorPoint(officekit_markup_base::read(element))
+        Some((NS_O, "extrusion")) => Model3DExtensionContent::Extrusion(item.read()),
+        Some((NS_VT, "filetime")) => Model3DExtensionContent::FileTime(item.read()),
+        Some((NS_W, "fonts")) => Model3DExtensionContent::FontTableRootElement(item.read()),
+        Some((NS_W, "ftr")) => Model3DExtensionContent::Footer(item.read()),
+        Some((NS_W, "glossaryDocument")) => {
+            Model3DExtensionContent::GlossaryDocumentRootElement(item.read())
         }
-        Some((NS_VT, "error")) => {
-            Model3DExtensionContent::ErrorStatusCode(officekit_markup_base::read(element))
+        Some((NS_A, "graphic")) => Model3DExtensionContent::GraphicObject(item.read()),
+        Some((NS_P, "handoutMaster")) => Model3DExtensionContent::HandoutMaster(item.read()),
+        Some((NS_W, "hdr")) => Model3DExtensionContent::Header(item.read()),
+        Some((NS_VT, "i1")) => Model3DExtensionContent::I1(item.read()),
+        Some((NS_VT, "i2")) => Model3DExtensionContent::I2(item.read()),
+        Some((NS_VT, "i4")) => Model3DExtensionContent::I4(item.read()),
+        Some((NS_VT, "i8")) => Model3DExtensionContent::I8(item.read()),
+        Some((NS_V, "imagedata")) => Model3DExtensionContent::ImageData(item.read()),
+        Some((NS_V, "image")) => Model3DExtensionContent::ImageFile(item.read()),
+        Some((NS_W, "recipients")) => {
+            Model3DExtensionContent::InclusionExclusionDataForDataSource(item.read())
         }
-        Some((NS_DGM, "relIds")) => Model3DExtensionContent::ExplicitRelationshipsToDiagramParts(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_X, "externalLink")) => Model3DExtensionContent::ExternalReferenceExternalLink(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_O, "extrusion")) => {
-            Model3DExtensionContent::Extrusion(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "filetime")) => {
-            Model3DExtensionContent::FileTime(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "fonts")) => {
-            Model3DExtensionContent::FontTableRootElement(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "ftr")) => {
-            Model3DExtensionContent::Footer(officekit_markup_base::read(element))
-        }
-        _ => return None,
-    };
-    Some(item)
-}
-
-fn read_model3d_extension_3(element: &Element) -> Option<Model3DExtensionContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_W, "glossaryDocument")) => Model3DExtensionContent::GlossaryDocumentRootElement(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_A, "graphic")) => {
-            Model3DExtensionContent::GraphicObject(officekit_markup_base::read(element))
-        }
-        Some((NS_P, "handoutMaster")) => {
-            Model3DExtensionContent::HandoutMaster(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "hdr")) => {
-            Model3DExtensionContent::Header(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "i1")) => Model3DExtensionContent::I1(officekit_markup_base::read(element)),
-        Some((NS_VT, "i2")) => Model3DExtensionContent::I2(officekit_markup_base::read(element)),
-        Some((NS_VT, "i4")) => Model3DExtensionContent::I4(officekit_markup_base::read(element)),
-        Some((NS_VT, "i8")) => Model3DExtensionContent::I8(officekit_markup_base::read(element)),
-        Some((NS_V, "imagedata")) => {
-            Model3DExtensionContent::ImageData(officekit_markup_base::read(element))
-        }
-        Some((NS_V, "image")) => {
-            Model3DExtensionContent::ImageFile(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "recipients")) => Model3DExtensionContent::InclusionExclusionDataForDataSource(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_O, "ink")) => Model3DExtensionContent::Ink(officekit_markup_base::read(element)),
-        Some((NS_PVML, "iscomment")) => {
-            Model3DExtensionContent::InkAnnotationFlag(officekit_markup_base::read(element))
-        }
-        Some((NS_WP, "inline")) => {
-            Model3DExtensionContent::InlineDrawingMLObject(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "int")) => {
-            Model3DExtensionContent::Integer(officekit_markup_base::read(element))
-        }
-        Some((NS_DGM, "layoutDef")) => {
-            Model3DExtensionContent::LayoutDefinition(officekit_markup_base::read(element))
-        }
+        Some((NS_O, "ink")) => Model3DExtensionContent::Ink(item.read()),
+        Some((NS_PVML, "iscomment")) => Model3DExtensionContent::InkAnnotationFlag(item.read()),
+        Some((NS_WP, "inline")) => Model3DExtensionContent::InlineDrawingMLObject(item.read()),
+        Some((NS_VT, "int")) => Model3DExtensionContent::Integer(item.read()),
+        Some((NS_DGM, "layoutDef")) => Model3DExtensionContent::LayoutDefinition(item.read()),
         Some((NS_DGM, "layoutDefHdr")) => {
-            Model3DExtensionContent::LayoutDefinitionHeader(officekit_markup_base::read(element))
+            Model3DExtensionContent::LayoutDefinitionHeader(item.read())
         }
-        Some((NS_W10, "borderleft")) => {
-            Model3DExtensionContent::LeftBorder(officekit_markup_base::read(element))
-        }
-        Some((NS_V, "line")) => Model3DExtensionContent::Line(officekit_markup_base::read(element)),
-        Some((NS_V, "stroke")) => {
-            Model3DExtensionContent::LineStrokeSettings(officekit_markup_base::read(element))
-        }
-        Some((NS_P, "cmAuthorLst")) => {
-            Model3DExtensionContent::ListOfCommentAuthors(officekit_markup_base::read(element))
-        }
-        Some((NS_DGM, "styleDefHdrLst")) => Model3DExtensionContent::ListOfStyleDefinitionHeaders(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_LC, "lockedCanvas")) => {
-            Model3DExtensionContent::LockedCanvasContainer(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "lpstr")) => {
-            Model3DExtensionContent::Lpstr(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "lpwstr")) => {
-            Model3DExtensionContent::Lpwstr(officekit_markup_base::read(element))
-        }
-        Some((NS_M, "mathPr")) => {
-            Model3DExtensionContent::MathProperties(officekit_markup_base::read(element))
-        }
-        Some((NS_X, "metadata")) => {
-            Model3DExtensionContent::Metadata(officekit_markup_base::read(element))
-        }
-        Some((NS_V, "polyline")) => {
-            Model3DExtensionContent::MultiplePathLine(officekit_markup_base::read(element))
-        }
-        Some((NS_O, "shapedefaults")) => {
-            Model3DExtensionContent::NewShapeDefaults(officekit_markup_base::read(element))
-        }
-        Some((NS_P, "notesMaster")) => {
-            Model3DExtensionContent::NotesMaster(officekit_markup_base::read(element))
-        }
-        Some((NS_P, "notes")) => {
-            Model3DExtensionContent::NotesSlide(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "null")) => {
-            Model3DExtensionContent::Null(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "numbering")) => {
-            Model3DExtensionContent::NumberingDefinitions(officekit_markup_base::read(element))
-        }
-        _ => return None,
-    };
-    Some(item)
+        Some((NS_W10, "borderleft")) => Model3DExtensionContent::LeftBorder(item.read()),
+        Some((NS_V, "line")) => Model3DExtensionContent::Line(item.read()),
+        Some((NS_V, "stroke")) => Model3DExtensionContent::LineStrokeSettings(item.read()),
+        Some((NS_P, "cmAuthorLst")) => Model3DExtensionContent::ListOfCommentAuthors(item.read()),
+        _ => read_model3d_extension_3(item),
+    }
 }
 
-fn read_model3d_extension_4(element: &Element) -> Option<Model3DExtensionContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_M, "oMath")) => {
-            Model3DExtensionContent::OfficeMath(officekit_markup_base::read(element))
+fn read_model3d_extension_3(item: officekit_markup_base::Item<'_>) -> Model3DExtensionContent {
+    match item.name() {
+        Some((NS_DGM, "styleDefHdrLst")) => {
+            Model3DExtensionContent::ListOfStyleDefinitionHeaders(item.read())
         }
-        Some((NS_M, "oMathPara")) => {
-            Model3DExtensionContent::OfficeMathParagraph(officekit_markup_base::read(element))
+        Some((NS_LC, "lockedCanvas")) => {
+            Model3DExtensionContent::LockedCanvasContainer(item.read())
         }
-        Some((NS_V, "oval")) => Model3DExtensionContent::Oval(officekit_markup_base::read(element)),
-        Some((NS_PIC, "pic")) => {
-            Model3DExtensionContent::Picture(officekit_markup_base::read(element))
-        }
+        Some((NS_VT, "lpstr")) => Model3DExtensionContent::Lpstr(item.read()),
+        Some((NS_VT, "lpwstr")) => Model3DExtensionContent::Lpwstr(item.read()),
+        Some((NS_M, "mathPr")) => Model3DExtensionContent::MathProperties(item.read()),
+        Some((NS_X, "metadata")) => Model3DExtensionContent::Metadata(item.read()),
+        Some((NS_V, "polyline")) => Model3DExtensionContent::MultiplePathLine(item.read()),
+        Some((NS_O, "shapedefaults")) => Model3DExtensionContent::NewShapeDefaults(item.read()),
+        Some((NS_P, "notesMaster")) => Model3DExtensionContent::NotesMaster(item.read()),
+        Some((NS_P, "notes")) => Model3DExtensionContent::NotesSlide(item.read()),
+        Some((NS_VT, "null")) => Model3DExtensionContent::Null(item.read()),
+        Some((NS_W, "numbering")) => Model3DExtensionContent::NumberingDefinitions(item.read()),
+        Some((NS_M, "oMath")) => Model3DExtensionContent::OfficeMath(item.read()),
+        Some((NS_M, "oMathPara")) => Model3DExtensionContent::OfficeMathParagraph(item.read()),
+        Some((NS_V, "oval")) => Model3DExtensionContent::Oval(item.read()),
+        Some((NS_PIC, "pic")) => Model3DExtensionContent::Picture(item.read()),
         Some((NS_X, "pivotCacheDefinition")) => {
-            Model3DExtensionContent::PivotCacheDefinition(officekit_markup_base::read(element))
+            Model3DExtensionContent::PivotCacheDefinition(item.read())
         }
         Some((NS_X, "pivotCacheRecords")) => {
-            Model3DExtensionContent::PivotCacheRecords(officekit_markup_base::read(element))
+            Model3DExtensionContent::PivotCacheRecords(item.read())
         }
-        Some((NS_X, "pivotTableDefinition")) => Model3DExtensionContent::PivotTableDefinition(
-            Box::new(officekit_markup_base::read(element)),
-        ),
-        Some((NS_A3DANIM, "posterFrame")) => {
-            Model3DExtensionContent::PosterFrame(officekit_markup_base::read(element))
+        Some((NS_X, "pivotTableDefinition")) => {
+            Model3DExtensionContent::PivotTableDefinition(Box::new(item.read()))
         }
-        Some((NS_P, "presentation")) => {
-            Model3DExtensionContent::Presentation(officekit_markup_base::read(element))
+        Some((NS_A3DANIM, "posterFrame")) => Model3DExtensionContent::PosterFrame(item.read()),
+        Some((NS_P, "presentation")) => Model3DExtensionContent::Presentation(item.read()),
+        Some((NS_P, "sld")) => Model3DExtensionContent::PresentationSlideSlide(item.read()),
+        Some((NS_P, "presentationPr")) => {
+            Model3DExtensionContent::PresentationWideProperties(item.read())
         }
-        Some((NS_P, "sld")) => {
-            Model3DExtensionContent::PresentationSlideSlide(officekit_markup_base::read(element))
+        Some((NS_P, "viewPr")) => {
+            Model3DExtensionContent::PresentationWideViewProperties(item.read())
         }
-        Some((NS_P, "presentationPr")) => Model3DExtensionContent::PresentationWideProperties(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_P, "viewPr")) => Model3DExtensionContent::PresentationWideViewProperties(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_P, "tagLst")) => {
-            Model3DExtensionContent::ProgrammableTabList(officekit_markup_base::read(element))
+        Some((NS_P, "tagLst")) => Model3DExtensionContent::ProgrammableTabList(item.read()),
+        Some((NS_X, "queryTable")) => Model3DExtensionContent::QueryTable(item.read()),
+        Some((NS_VT, "r4")) => Model3DExtensionContent::R4(item.read()),
+        Some((NS_VT, "r8")) => Model3DExtensionContent::R8(item.read()),
+        Some((NS_V, "rect")) => Model3DExtensionContent::Rectangle(item.read()),
+        Some((NS_C, "chart")) => Model3DExtensionContent::ReferenceToChartPart(item.read()),
+        Some((NS_X, "headers")) => Model3DExtensionContent::RevisionHeaders(item.read()),
+        Some((NS_X, "revisions")) => Model3DExtensionContent::Revisions(item.read()),
+        Some((NS_W, "txbxContent")) => {
+            Model3DExtensionContent::RichTextBoxContentContainer(item.read())
         }
-        Some((NS_X, "queryTable")) => {
-            Model3DExtensionContent::QueryTable(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "r4")) => Model3DExtensionContent::R4(officekit_markup_base::read(element)),
-        Some((NS_VT, "r8")) => Model3DExtensionContent::R8(officekit_markup_base::read(element)),
-        Some((NS_V, "rect")) => {
-            Model3DExtensionContent::Rectangle(officekit_markup_base::read(element))
-        }
-        Some((NS_C, "chart")) => {
-            Model3DExtensionContent::ReferenceToChartPart(officekit_markup_base::read(element))
-        }
-        Some((NS_X, "headers")) => {
-            Model3DExtensionContent::RevisionHeaders(officekit_markup_base::read(element))
-        }
-        Some((NS_X, "revisions")) => {
-            Model3DExtensionContent::Revisions(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "txbxContent")) => Model3DExtensionContent::RichTextBoxContentContainer(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_W10, "borderright")) => {
-            Model3DExtensionContent::RightBorder(officekit_markup_base::read(element))
-        }
-        Some((NS_V, "roundrect")) => {
-            Model3DExtensionContent::RoundedRectangle(officekit_markup_base::read(element))
-        }
+        Some((NS_W10, "borderright")) => Model3DExtensionContent::RightBorder(item.read()),
+        Some((NS_V, "roundrect")) => Model3DExtensionContent::RoundedRectangle(item.read()),
         Some((NS_AC, "additionalCharacteristics")) => {
-            Model3DExtensionContent::SetOfAdditionalCharacteristics(officekit_markup_base::read(
-                element,
-            ))
+            Model3DExtensionContent::SetOfAdditionalCharacteristics(item.read())
         }
-        Some((NS_V, "formulas")) => {
-            Model3DExtensionContent::SetOfFormulas(officekit_markup_base::read(element))
-        }
-        Some((NS_V, "handles")) => {
-            Model3DExtensionContent::SetOfHandles(officekit_markup_base::read(element))
-        }
-        Some((NS_V, "shadow")) => {
-            Model3DExtensionContent::ShadowEffect(officekit_markup_base::read(element))
-        }
-        Some((NS_O, "clippath")) => {
-            Model3DExtensionContent::ShapeClippingPath(officekit_markup_base::read(element))
-        }
-        Some((NS_V, "shape")) => {
-            Model3DExtensionContent::ShapeDefinition(officekit_markup_base::read(element))
-        }
-        Some((NS_O, "fill")) => Model3DExtensionContent::ShapeFillExtendedProperties(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_V, "fill")) => {
-            Model3DExtensionContent::ShapeFillProperties(officekit_markup_base::read(element))
-        }
-        _ => return None,
-    };
-    Some(item)
+        Some((NS_V, "formulas")) => Model3DExtensionContent::SetOfFormulas(item.read()),
+        Some((NS_V, "handles")) => Model3DExtensionContent::SetOfHandles(item.read()),
+        Some((NS_V, "shadow")) => Model3DExtensionContent::ShadowEffect(item.read()),
+        Some((NS_O, "clippath")) => Model3DExtensionContent::ShapeClippingPath(item.read()),
+        _ => read_model3d_extension_4(item),
+    }
 }
 
-fn read_model3d_extension_5(element: &Element) -> Option<Model3DExtensionContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_V, "group")) => {
-            Model3DExtensionContent::ShapeGroup(officekit_markup_base::read(element))
+fn read_model3d_extension_4(item: officekit_markup_base::Item<'_>) -> Model3DExtensionContent {
+    match item.name() {
+        Some((NS_V, "shape")) => Model3DExtensionContent::ShapeDefinition(item.read()),
+        Some((NS_O, "fill")) => Model3DExtensionContent::ShapeFillExtendedProperties(item.read()),
+        Some((NS_V, "fill")) => Model3DExtensionContent::ShapeFillProperties(item.read()),
+        Some((NS_V, "group")) => Model3DExtensionContent::ShapeGroup(item.read()),
+        Some((NS_O, "shapelayout")) => Model3DExtensionContent::ShapeLayoutProperties(item.read()),
+        Some((NS_V, "path")) => Model3DExtensionContent::ShapePath(item.read()),
+        Some((NS_O, "lock")) => Model3DExtensionContent::ShapeProtections(item.read()),
+        Some((NS_V, "shapetype")) => Model3DExtensionContent::ShapeTemplate(item.read()),
+        Some((NS_X, "sst")) => Model3DExtensionContent::SharedStringTable(item.read()),
+        Some((NS_X, "singleXmlCells")) => Model3DExtensionContent::SingleCells(item.read()),
+        Some((NS_O, "skew")) => Model3DExtensionContent::SkewTransform(item.read()),
+        Some((NS_P, "sldLayout")) => Model3DExtensionContent::SlideLayout(item.read()),
+        Some((NS_P, "sldMaster")) => Model3DExtensionContent::SlideMaster(item.read()),
+        Some((NS_P, "sldSyncPr")) => {
+            Model3DExtensionContent::SlideSynchronizationProperties(item.read())
         }
-        Some((NS_O, "shapelayout")) => {
-            Model3DExtensionContent::ShapeLayoutProperties(officekit_markup_base::read(element))
+        Some((NS_B, "Sources")) => Model3DExtensionContent::Sources(item.read()),
+        Some((NS_X, "table")) => Model3DExtensionContent::SpreadsheetTable(item.read()),
+        Some((NS_XDR, "from")) => Model3DExtensionContent::StartingAnchorPoint(item.read()),
+        Some((NS_O, "equationxml")) => {
+            Model3DExtensionContent::StorageForAlternateMathContent(item.read())
         }
-        Some((NS_V, "path")) => {
-            Model3DExtensionContent::ShapePath(officekit_markup_base::read(element))
-        }
-        Some((NS_O, "lock")) => {
-            Model3DExtensionContent::ShapeProtections(officekit_markup_base::read(element))
-        }
-        Some((NS_V, "shapetype")) => {
-            Model3DExtensionContent::ShapeTemplate(officekit_markup_base::read(element))
-        }
-        Some((NS_X, "sst")) => {
-            Model3DExtensionContent::SharedStringTable(officekit_markup_base::read(element))
-        }
-        Some((NS_X, "singleXmlCells")) => {
-            Model3DExtensionContent::SingleCells(officekit_markup_base::read(element))
-        }
-        Some((NS_O, "skew")) => {
-            Model3DExtensionContent::SkewTransform(officekit_markup_base::read(element))
-        }
-        Some((NS_P, "sldLayout")) => {
-            Model3DExtensionContent::SlideLayout(officekit_markup_base::read(element))
-        }
-        Some((NS_P, "sldMaster")) => {
-            Model3DExtensionContent::SlideMaster(officekit_markup_base::read(element))
-        }
-        Some((NS_P, "sldSyncPr")) => Model3DExtensionContent::SlideSynchronizationProperties(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_B, "Sources")) => {
-            Model3DExtensionContent::Sources(officekit_markup_base::read(element))
-        }
-        Some((NS_X, "table")) => {
-            Model3DExtensionContent::SpreadsheetTable(officekit_markup_base::read(element))
-        }
-        Some((NS_XDR, "from")) => {
-            Model3DExtensionContent::StartingAnchorPoint(officekit_markup_base::read(element))
-        }
-        Some((NS_O, "equationxml")) => Model3DExtensionContent::StorageForAlternateMathContent(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_DGM, "styleDef")) => {
-            Model3DExtensionContent::StyleDefinition(officekit_markup_base::read(element))
-        }
+        Some((NS_DGM, "styleDef")) => Model3DExtensionContent::StyleDefinition(item.read()),
         Some((NS_DGM, "styleDefHdr")) => {
-            Model3DExtensionContent::StyleDefinitionHeader(officekit_markup_base::read(element))
+            Model3DExtensionContent::StyleDefinitionHeader(item.read())
         }
-        Some((NS_W, "styles")) => {
-            Model3DExtensionContent::StyleDefinitions(officekit_markup_base::read(element))
-        }
-        Some((NS_X, "styleSheet")) => {
-            Model3DExtensionContent::StyleSheet(officekit_markup_base::read(element))
-        }
-        Some((NS_A, "tblStyleLst")) => {
-            Model3DExtensionContent::TableStyleList(officekit_markup_base::read(element))
-        }
-        Some((NS_V, "textbox")) => {
-            Model3DExtensionContent::TextBox(officekit_markup_base::read(element))
-        }
-        Some((NS_O, "bottom")) => {
-            Model3DExtensionContent::TextBoxBottomStroke(officekit_markup_base::read(element))
-        }
-        Some((NS_O, "column")) => {
-            Model3DExtensionContent::TextBoxInteriorStroke(officekit_markup_base::read(element))
-        }
-        Some((NS_O, "left")) => {
-            Model3DExtensionContent::TextBoxLeftStroke(officekit_markup_base::read(element))
-        }
-        Some((NS_O, "right")) => {
-            Model3DExtensionContent::TextBoxRightStroke(officekit_markup_base::read(element))
-        }
-        Some((NS_O, "top")) => {
-            Model3DExtensionContent::TextBoxTopStroke(officekit_markup_base::read(element))
-        }
-        Some((NS_V, "textpath")) => {
-            Model3DExtensionContent::TextLayoutPath(officekit_markup_base::read(element))
-        }
-        Some((NS_W10, "wrap")) => {
-            Model3DExtensionContent::TextWrapping(officekit_markup_base::read(element))
-        }
-        Some((NS_A, "theme")) => {
-            Model3DExtensionContent::Theme(officekit_markup_base::read(element))
-        }
-        _ => return None,
-    };
-    Some(item)
+        Some((NS_W, "styles")) => Model3DExtensionContent::StyleDefinitions(item.read()),
+        Some((NS_X, "styleSheet")) => Model3DExtensionContent::StyleSheet(item.read()),
+        Some((NS_A, "tblStyleLst")) => Model3DExtensionContent::TableStyleList(item.read()),
+        Some((NS_V, "textbox")) => Model3DExtensionContent::TextBox(item.read()),
+        Some((NS_O, "bottom")) => Model3DExtensionContent::TextBoxBottomStroke(item.read()),
+        Some((NS_O, "column")) => Model3DExtensionContent::TextBoxInteriorStroke(item.read()),
+        Some((NS_O, "left")) => Model3DExtensionContent::TextBoxLeftStroke(item.read()),
+        Some((NS_O, "right")) => Model3DExtensionContent::TextBoxRightStroke(item.read()),
+        Some((NS_O, "top")) => Model3DExtensionContent::TextBoxTopStroke(item.read()),
+        Some((NS_V, "textpath")) => Model3DExtensionContent::TextLayoutPath(item.read()),
+        Some((NS_W10, "wrap")) => Model3DExtensionContent::TextWrapping(item.read()),
+        Some((NS_A, "theme")) => Model3DExtensionContent::Theme(item.read()),
+        Some((NS_A, "themeManager")) => Model3DExtensionContent::ThemeManager(item.read()),
+        Some((NS_A, "themeOverride")) => Model3DExtensionContent::ThemeOverride(item.read()),
+        Some((NS_W10, "bordertop")) => Model3DExtensionContent::TopBorder(item.read()),
+        Some((NS_VT, "ui1")) => Model3DExtensionContent::Ui1(item.read()),
+        Some((NS_VT, "ui2")) => Model3DExtensionContent::Ui2(item.read()),
+        Some((NS_VT, "ui4")) => Model3DExtensionContent::Ui4(item.read()),
+        Some((NS_VT, "ui8")) => Model3DExtensionContent::Ui8(item.read()),
+        Some((NS_VT, "uint")) => Model3DExtensionContent::UnsignedInteger(item.read()),
+        _ => read_model3d_extension_5(item),
+    }
 }
 
-fn read_model3d_extension_6(element: &Element) -> Option<Model3DExtensionContent> {
-    let item = match officekit_markup_base::name(element) {
-        Some((NS_A, "themeManager")) => {
-            Model3DExtensionContent::ThemeManager(officekit_markup_base::read(element))
+fn read_model3d_extension_5(item: officekit_markup_base::Item<'_>) -> Model3DExtensionContent {
+    match item.name() {
+        Some((NS_X, "users")) => Model3DExtensionContent::UserList(item.read()),
+        Some((NS_C, "userShapes")) => Model3DExtensionContent::UserShapes(item.read()),
+        Some((NS_O, "diagram")) => Model3DExtensionContent::VMLDiagram(item.read()),
+        Some((NS_PVML, "textdata")) => Model3DExtensionContent::VMLDiagramText(item.read()),
+        Some((NS_VT, "variant")) => Model3DExtensionContent::Variant(item.read()),
+        Some((NS_VT, "vector")) => Model3DExtensionContent::Vector(item.read()),
+        Some((NS_A, "videoFile")) => Model3DExtensionContent::VideoFromFile(item.read()),
+        Some((NS_X, "volTypes")) => Model3DExtensionContent::VolatileDependencyTypes(item.read()),
+        Some((NS_W, "webSettings")) => Model3DExtensionContent::WebPageSettings(item.read()),
+        Some((NS_WP | NS_WPC, "wpc")) => {
+            Model3DExtensionContent::WordprocessingMLDrawingCanvas(item.read())
         }
-        Some((NS_A, "themeOverride")) => {
-            Model3DExtensionContent::ThemeOverride(officekit_markup_base::read(element))
-        }
-        Some((NS_W10, "bordertop")) => {
-            Model3DExtensionContent::TopBorder(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "ui1")) => Model3DExtensionContent::Ui1(officekit_markup_base::read(element)),
-        Some((NS_VT, "ui2")) => Model3DExtensionContent::Ui2(officekit_markup_base::read(element)),
-        Some((NS_VT, "ui4")) => Model3DExtensionContent::Ui4(officekit_markup_base::read(element)),
-        Some((NS_VT, "ui8")) => Model3DExtensionContent::Ui8(officekit_markup_base::read(element)),
-        Some((NS_VT, "uint")) => {
-            Model3DExtensionContent::UnsignedInteger(officekit_markup_base::read(element))
-        }
-        Some((NS_X, "users")) => {
-            Model3DExtensionContent::UserList(officekit_markup_base::read(element))
-        }
-        Some((NS_C, "userShapes")) => {
-            Model3DExtensionContent::UserShapes(officekit_markup_base::read(element))
-        }
-        Some((NS_O, "diagram")) => {
-            Model3DExtensionContent::VMLDiagram(officekit_markup_base::read(element))
-        }
-        Some((NS_PVML, "textdata")) => {
-            Model3DExtensionContent::VMLDiagramText(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "variant")) => {
-            Model3DExtensionContent::Variant(officekit_markup_base::read(element))
-        }
-        Some((NS_VT, "vector")) => {
-            Model3DExtensionContent::Vector(officekit_markup_base::read(element))
-        }
-        Some((NS_A, "videoFile")) => {
-            Model3DExtensionContent::VideoFromFile(officekit_markup_base::read(element))
-        }
-        Some((NS_X, "volTypes")) => {
-            Model3DExtensionContent::VolatileDependencyTypes(officekit_markup_base::read(element))
-        }
-        Some((NS_W, "webSettings")) => {
-            Model3DExtensionContent::WebPageSettings(officekit_markup_base::read(element))
-        }
-        Some((NS_WP | NS_WPC, "wpc")) => Model3DExtensionContent::WordprocessingMLDrawingCanvas(
-            officekit_markup_base::read(element),
-        ),
         Some((NS_WP | NS_WPS, "wsp")) => {
-            Model3DExtensionContent::WordprocessingMLShape(officekit_markup_base::read(element))
+            Model3DExtensionContent::WordprocessingMLShape(item.read())
         }
-        Some((NS_WP | NS_WPG, "wgp")) => Model3DExtensionContent::WordprocessingMLShapeGroup(
-            officekit_markup_base::read(element),
-        ),
-        Some((NS_X, "workbook")) => {
-            Model3DExtensionContent::Workbook(officekit_markup_base::read(element))
+        Some((NS_WP | NS_WPG, "wgp")) => {
+            Model3DExtensionContent::WordprocessingMLShapeGroup(item.read())
         }
-        Some((NS_X, "worksheet")) => {
-            Model3DExtensionContent::Worksheet(officekit_markup_base::read(element))
-        }
-        Some((NS_XDR, "wsDr")) => {
-            Model3DExtensionContent::WorksheetDrawing(officekit_markup_base::read(element))
-        }
-        Some((NS_X, "MapInfo")) => {
-            Model3DExtensionContent::XMLMappingMapInfo(officekit_markup_base::read(element))
-        }
-        _ => return None,
-    };
-    Some(item)
+        Some((NS_X, "workbook")) => Model3DExtensionContent::Workbook(item.read()),
+        Some((NS_X, "worksheet")) => Model3DExtensionContent::Worksheet(item.read()),
+        Some((NS_XDR, "wsDr")) => Model3DExtensionContent::WorksheetDrawing(item.read()),
+        Some((NS_X, "MapInfo")) => Model3DExtensionContent::XMLMappingMapInfo(item.read()),
+        _ => Model3DExtensionContent::Other(item.into_node()),
+    }
 }
 
 fn write_model3d_extension_1(

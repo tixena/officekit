@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `aanim:animPr` into a `AnimPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn anim_pr(element: &Element) -> super::AnimPr {
+    anim_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `aanim:animPr` into a `AnimPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn anim_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AnimPr {
+    anim_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `aanim:animPr` into a `AnimPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn anim_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::AnimPr {
     let mut node = super::AnimPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::ANIM_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ANIM_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.name),
@@ -243,8 +258,23 @@ pub fn anim_pr(element: &Element) -> super::AnimPr {
 /// Read `aanim:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `aanim:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `aanim:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);

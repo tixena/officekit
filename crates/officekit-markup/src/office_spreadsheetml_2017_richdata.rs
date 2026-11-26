@@ -226,7 +226,6 @@ pub mod write;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::spreadsheet;
-use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::values::ValueError;
@@ -789,8 +788,8 @@ impl<X: UserData> ExtLstWith<X> {
 }
 
 impl officekit_markup_base::Read for ExtLst {
-    fn read(element: &Element) -> Self {
-        read::ext_lst(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::ext_lst_from_item(item)
     }
 }
 
@@ -829,8 +828,8 @@ impl<X: UserData> FbWith<X> {
 }
 
 impl officekit_markup_base::Read for Fb {
-    fn read(element: &Element) -> Self {
-        read::fb(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::fb_from_item(item)
     }
 }
 
@@ -869,8 +868,8 @@ impl<X: UserData> KWith<X> {
 }
 
 impl officekit_markup_base::Read for K {
-    fn read(element: &Element) -> Self {
-        read::k(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::k_from_item(item)
     }
 }
 
@@ -1026,8 +1025,8 @@ impl<X: UserData> RvWith<X> {
 }
 
 impl officekit_markup_base::Read for Rv {
-    fn read(element: &Element) -> Self {
-        read::rv(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rv_from_item(item)
     }
 }
 
@@ -1069,8 +1068,8 @@ impl<X: UserData> RvDataWith<X> {
 }
 
 impl officekit_markup_base::Read for RvData {
-    fn read(element: &Element) -> Self {
-        read::rv_data(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rv_data_from_item(item)
     }
 }
 
@@ -1112,8 +1111,8 @@ impl<X: UserData> RvStructuresWith<X> {
 }
 
 impl officekit_markup_base::Read for RvStructures {
-    fn read(element: &Element) -> Self {
-        read::rv_structures(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rv_structures_from_item(item)
     }
 }
 
@@ -1150,8 +1149,8 @@ impl<X: UserData> RvbWith<X> {
 }
 
 impl officekit_markup_base::Read for Rvb {
-    fn read(element: &Element) -> Self {
-        read::rvb(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::rvb_from_item(item)
     }
 }
 
@@ -1189,8 +1188,8 @@ impl<X: UserData> SWith<X> {
 }
 
 impl officekit_markup_base::Read for S {
-    fn read(element: &Element) -> Self {
-        read::s(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::s_from_item(item)
     }
 }
 
@@ -1227,8 +1226,8 @@ impl<X: UserData> VWith<X> {
 }
 
 impl officekit_markup_base::Read for V {
-    fn read(element: &Element) -> Self {
-        read::v(element)
+    fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
+        read::v_from_item(item)
     }
 }
 

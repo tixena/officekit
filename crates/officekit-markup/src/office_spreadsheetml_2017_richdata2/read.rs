@@ -221,8 +221,23 @@ use officekit_xml::element::Element;
 /// Read `xlrd2:a` into a `AArray`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn a_array(element: &Element) -> super::AArray {
+    a_array_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:a` into a `AArray` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn a_array_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AArray {
+    a_array_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:a` into a `AArray` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn a_array_from_item(item: officekit_markup_base::Item<'_>) -> super::AArray {
     let mut node = super::AArray::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::A_ARRAY_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::A_ARRAY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.r),
@@ -238,9 +253,28 @@ pub fn a_array(element: &Element) -> super::AArray {
 /// Read `xlrd2:a` into a `ASupportingPropertyBagArray`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn a_supporting_property_bag_array(element: &Element) -> super::ASupportingPropertyBagArray {
+    a_supporting_property_bag_array_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:a` into a `ASupportingPropertyBagArray` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn a_supporting_property_bag_array_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ASupportingPropertyBagArray {
+    a_supporting_property_bag_array_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:a` into a `ASupportingPropertyBagArray` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn a_supporting_property_bag_array_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ASupportingPropertyBagArray {
     let mut node = super::ASupportingPropertyBagArray::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::A_SUPPORTING_PROPERTY_BAG_ARRAY_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::A_SUPPORTING_PROPERTY_BAG_ARRAY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.count),
@@ -255,8 +289,24 @@ pub fn a_supporting_property_bag_array(element: &Element) -> super::ASupportingP
 /// Read `xlrd2:arrayData` into a `ArrayData`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn array_data(element: &Element) -> super::ArrayData {
+    array_data_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:arrayData` into a `ArrayData` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn array_data_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ArrayData {
+    array_data_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:arrayData` into a `ArrayData` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn array_data_from_item(item: officekit_markup_base::Item<'_>) -> super::ArrayData {
     let mut node = super::ArrayData::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::ARRAY_DATA_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::ARRAY_DATA_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.count),
@@ -272,8 +322,25 @@ pub fn array_data(element: &Element) -> super::ArrayData {
 /// Read `xlrd2:customFilter` into a `CustomFilter`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_filter(element: &Element) -> super::CustomFilter {
+    custom_filter_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:customFilter` into a `CustomFilter` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_filter_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CustomFilter {
+    custom_filter_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:customFilter` into a `CustomFilter` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_filter_from_item(item: officekit_markup_base::Item<'_>) -> super::CustomFilter {
     let mut node = super::CustomFilter::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOM_FILTER_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CUSTOM_FILTER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.key),
@@ -289,8 +356,25 @@ pub fn custom_filter(element: &Element) -> super::CustomFilter {
 /// Read `xlrd2:customFilters` into a `CustomFilters`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_filters(element: &Element) -> super::CustomFilters {
+    custom_filters_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:customFilters` into a `CustomFilters` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_filters_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::CustomFilters {
+    custom_filters_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:customFilters` into a `CustomFilters` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn custom_filters_from_item(item: officekit_markup_base::Item<'_>) -> super::CustomFilters {
     let mut node = super::CustomFilters::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOM_FILTERS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::CUSTOM_FILTERS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.and),
@@ -311,8 +395,25 @@ pub fn custom_rich_filters(element: &Element) -> super::CustomRichFiltersContent
 /// Read `xlrd2:dateGroupItem` into a `DateGroupItem`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn date_group_item(element: &Element) -> super::DateGroupItem {
+    date_group_item_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:dateGroupItem` into a `DateGroupItem` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn date_group_item_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DateGroupItem {
+    date_group_item_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:dateGroupItem` into a `DateGroupItem` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn date_group_item_from_item(item: officekit_markup_base::Item<'_>) -> super::DateGroupItem {
     let mut node = super::DateGroupItem::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DATE_GROUP_ITEM_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DATE_GROUP_ITEM_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.key),
@@ -333,8 +434,23 @@ pub fn date_group_item(element: &Element) -> super::DateGroupItem {
 /// Read `xlrd2:dxfs` into a `Dxfs`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dxfs(element: &Element) -> super::Dxfs {
+    dxfs_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:dxfs` into a `Dxfs` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dxfs_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Dxfs {
+    dxfs_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:dxfs` into a `Dxfs` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dxfs_from_item(item: officekit_markup_base::Item<'_>) -> super::Dxfs {
     let mut node = super::Dxfs::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DXFS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DXFS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.count),
@@ -349,8 +465,25 @@ pub fn dxfs(element: &Element) -> super::Dxfs {
 /// Read `xlrd2:dynamicFilter` into a `DynamicFilter`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dynamic_filter(element: &Element) -> super::DynamicFilter {
+    dynamic_filter_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:dynamicFilter` into a `DynamicFilter` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dynamic_filter_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DynamicFilter {
+    dynamic_filter_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:dynamicFilter` into a `DynamicFilter` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn dynamic_filter_from_item(item: officekit_markup_base::Item<'_>) -> super::DynamicFilter {
     let mut node = super::DynamicFilter::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::DYNAMIC_FILTER_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DYNAMIC_FILTER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.key),
@@ -369,8 +502,23 @@ pub fn dynamic_filter(element: &Element) -> super::DynamicFilter {
 /// Read `xlrd2:extLst` into a `ExtLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:extLst` into a `ExtLst` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ExtLst {
+    ext_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:extLst` into a `ExtLst` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst {
     let mut node = super::ExtLst::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.extension);
@@ -383,8 +531,23 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 /// Read `xlrd2:filter` into a `Filter`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn filter(element: &Element) -> super::Filter {
+    filter_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:filter` into a `Filter` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn filter_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Filter {
+    filter_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:filter` into a `Filter` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn filter_from_item(item: officekit_markup_base::Item<'_>) -> super::Filter {
     let mut node = super::Filter::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::FILTER_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::FILTER_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.key),
@@ -401,8 +564,25 @@ pub fn filter(element: &Element) -> super::Filter {
 /// Read `xlrd2:filterColumn` into a `FilterColumn`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn filter_column(element: &Element) -> super::FilterColumn {
+    filter_column_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:filterColumn` into a `FilterColumn` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn filter_column_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::FilterColumn {
+    filter_column_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:filterColumn` into a `FilterColumn` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn filter_column_from_item(item: officekit_markup_base::Item<'_>) -> super::FilterColumn {
     let mut node = super::FilterColumn::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::FILTER_COLUMN_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::FILTER_COLUMN_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.content);
@@ -415,8 +595,23 @@ pub fn filter_column(element: &Element) -> super::FilterColumn {
 /// Read `xlrd2:filters` into a `Filters`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn filters(element: &Element) -> super::Filters {
+    filters_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:filters` into a `Filters` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn filters_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Filters {
+    filters_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:filters` into a `Filters` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn filters_from_item(item: officekit_markup_base::Item<'_>) -> super::Filters {
     let mut node = super::Filters::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::FILTERS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::FILTERS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.filter),
@@ -432,8 +627,23 @@ pub fn filters(element: &Element) -> super::Filters {
 /// Read `xlrd2:flag` into a `Flag`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn flag(element: &Element) -> super::Flag {
+    flag_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:flag` into a `Flag` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn flag_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Flag {
+    flag_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:flag` into a `Flag` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn flag_from_item(item: officekit_markup_base::Item<'_>) -> super::Flag {
     let mut node = super::Flag::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::FLAG_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::FLAG_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.name),
@@ -448,8 +658,23 @@ pub fn flag(element: &Element) -> super::Flag {
 /// Read `xlrd2:global` into a `Global`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn global(element: &Element) -> super::Global {
+    global_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:global` into a `Global` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn global_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Global {
+    global_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:global` into a `Global` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn global_from_item(item: officekit_markup_base::Item<'_>) -> super::Global {
     let mut node = super::Global::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::GLOBAL_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::GLOBAL_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.key_flags),
@@ -464,8 +689,20 @@ pub fn global(element: &Element) -> super::Global {
 /// Read `xlrd2:k` into a `K`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn k(element: &Element) -> super::K {
+    k_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:k` into a `K` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn k_from_events(start: Element, events: &dyn officekit_markup_base::EventSource) -> super::K {
+    k_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:k` into a `K` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn k_from_item(item: officekit_markup_base::Item<'_>) -> super::K {
     let mut node = super::K::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::K_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::K_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.n),
@@ -480,8 +717,23 @@ pub fn k(element: &Element) -> super::K {
 /// Read `xlrd2:key` into a `Key`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn key(element: &Element) -> super::Key {
+    key_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:key` into a `Key` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn key_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Key {
+    key_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:key` into a `Key` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn key_from_item(item: officekit_markup_base::Item<'_>) -> super::Key {
     let mut node = super::Key::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::KEY_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::KEY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.name),
@@ -496,8 +748,24 @@ pub fn key(element: &Element) -> super::Key {
 /// Read `xlrd2:keyFlags` into a `KeyFlags`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn key_flags(element: &Element) -> super::KeyFlags {
+    key_flags_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:keyFlags` into a `KeyFlags` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn key_flags_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::KeyFlags {
+    key_flags_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:keyFlags` into a `KeyFlags` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn key_flags_from_item(item: officekit_markup_base::Item<'_>) -> super::KeyFlags {
     let mut node = super::KeyFlags::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::KEY_FLAGS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::KEY_FLAGS_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.key);
@@ -510,8 +778,23 @@ pub fn key_flags(element: &Element) -> super::KeyFlags {
 /// Read `xlrd2:rPr` into a `RPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r_pr(element: &Element) -> super::RPr {
+    r_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:rPr` into a `RPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn r_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RPr {
+    r_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:rPr` into a `RPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn r_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::RPr {
     let mut node = super::RPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::R_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::R_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.n),
@@ -526,8 +809,23 @@ pub fn r_pr(element: &Element) -> super::RPr {
 /// Read `xlrd2:rSty` into a `RSty`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r_sty(element: &Element) -> super::RSty {
+    r_sty_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:rSty` into a `RSty` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn r_sty_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RSty {
+    r_sty_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:rSty` into a `RSty` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn r_sty_from_item(item: officekit_markup_base::Item<'_>) -> super::RSty {
     let mut node = super::RSty::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::R_STY_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::R_STY_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.dxfid),
@@ -548,8 +846,25 @@ pub fn rich_filter_column(element: &Element) -> super::RichFilterColumnContent {
 /// Read `xlrd2:richProperties` into a `RichProperties`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_properties(element: &Element) -> super::RichProperties {
+    rich_properties_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:richProperties` into a `RichProperties` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rich_properties_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RichProperties {
+    rich_properties_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:richProperties` into a `RichProperties` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rich_properties_from_item(item: officekit_markup_base::Item<'_>) -> super::RichProperties {
     let mut node = super::RichProperties::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::RICH_PROPERTIES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::RICH_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.r_pr);
@@ -562,8 +877,27 @@ pub fn rich_properties(element: &Element) -> super::RichProperties {
 /// Read `xlrd2:richSortCondition` into a `RichSortCondition`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_sort_condition(element: &Element) -> super::RichSortCondition {
+    rich_sort_condition_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:richSortCondition` into a `RichSortCondition` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rich_sort_condition_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RichSortCondition {
+    rich_sort_condition_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:richSortCondition` into a `RichSortCondition` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rich_sort_condition_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::RichSortCondition {
     let mut node = super::RichSortCondition::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::RICH_SORT_CONDITION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::RICH_SORT_CONDITION_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.rich_sort_key),
@@ -584,8 +918,25 @@ pub fn rich_sort_condition(element: &Element) -> super::RichSortCondition {
 /// Read `xlrd2:richStyleSheet` into a `RichStyleSheet`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_style_sheet(element: &Element) -> super::RichStyleSheet {
+    rich_style_sheet_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:richStyleSheet` into a `RichStyleSheet` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rich_style_sheet_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RichStyleSheet {
+    rich_style_sheet_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:richStyleSheet` into a `RichStyleSheet` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rich_style_sheet_from_item(item: officekit_markup_base::Item<'_>) -> super::RichStyleSheet {
     let mut node = super::RichStyleSheet::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::RICH_STYLE_SHEET_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::RICH_STYLE_SHEET_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.dxfs),
@@ -602,8 +953,24 @@ pub fn rich_style_sheet(element: &Element) -> super::RichStyleSheet {
 /// Read `xlrd2:richStyles` into a `RichStyles`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_styles(element: &Element) -> super::RichStyles {
+    rich_styles_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:richStyles` into a `RichStyles` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rich_styles_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RichStyles {
+    rich_styles_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:richStyles` into a `RichStyles` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rich_styles_from_item(item: officekit_markup_base::Item<'_>) -> super::RichStyles {
     let mut node = super::RichStyles::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::RICH_STYLES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::RICH_STYLES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.r_sty);
@@ -616,8 +983,23 @@ pub fn rich_styles(element: &Element) -> super::RichStyles {
 /// Read `xlrd2:rpv` into a `Rpv`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rpv(element: &Element) -> super::Rpv {
+    rpv_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:rpv` into a `Rpv` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rpv_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Rpv {
+    rpv_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:rpv` into a `Rpv` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rpv_from_item(item: officekit_markup_base::Item<'_>) -> super::Rpv {
     let mut node = super::Rpv::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::RPV_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::RPV_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.i),
@@ -632,8 +1014,24 @@ pub fn rpv(element: &Element) -> super::Rpv {
 /// Read `xlrd2:rvTypesInfo` into a `RvTypesInfo`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rv_types_info(element: &Element) -> super::RvTypesInfo {
+    rv_types_info_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:rvTypesInfo` into a `RvTypesInfo` from its start tag and the events after it, up to
+/// its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rv_types_info_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::RvTypesInfo {
+    rv_types_info_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:rvTypesInfo` into a `RvTypesInfo` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn rv_types_info_from_item(item: officekit_markup_base::Item<'_>) -> super::RvTypesInfo {
     let mut node = super::RvTypesInfo::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::RV_TYPES_INFO_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::RV_TYPES_INFO_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.global),
@@ -649,8 +1047,20 @@ pub fn rv_types_info(element: &Element) -> super::RvTypesInfo {
 /// Read `xlrd2:s` into a `S`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn s(element: &Element) -> super::S {
+    s_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:s` into a `S` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn s_from_events(start: Element, events: &dyn officekit_markup_base::EventSource) -> super::S {
+    s_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:s` into a `S` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn s_from_item(item: officekit_markup_base::Item<'_>) -> super::S {
     let mut node = super::S::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::S_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::S_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.k);
@@ -663,8 +1073,23 @@ pub fn s(element: &Element) -> super::S {
 /// Read `xlrd2:spb` into a `Spb`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn spb(element: &Element) -> super::Spb {
+    spb_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:spb` into a `Spb` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn spb_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Spb {
+    spb_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:spb` into a `Spb` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn spb_from_item(item: officekit_markup_base::Item<'_>) -> super::Spb {
     let mut node = super::Spb::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SPB_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SPB_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.s),
@@ -679,8 +1104,24 @@ pub fn spb(element: &Element) -> super::Spb {
 /// Read `xlrd2:spbArrays` into a `SpbArrays`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn spb_arrays(element: &Element) -> super::SpbArrays {
+    spb_arrays_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:spbArrays` into a `SpbArrays` from its start tag and the events after it, up to its
+/// end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn spb_arrays_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SpbArrays {
+    spb_arrays_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:spbArrays` into a `SpbArrays` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn spb_arrays_from_item(item: officekit_markup_base::Item<'_>) -> super::SpbArrays {
     let mut node = super::SpbArrays::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SPB_ARRAYS_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SPB_ARRAYS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.count),
@@ -696,8 +1137,23 @@ pub fn spb_arrays(element: &Element) -> super::SpbArrays {
 /// Read `xlrd2:spbData` into a `SpbData`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn spb_data(element: &Element) -> super::SpbData {
+    spb_data_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:spbData` into a `SpbData` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn spb_data_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SpbData {
+    spb_data_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:spbData` into a `SpbData` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn spb_data_from_item(item: officekit_markup_base::Item<'_>) -> super::SpbData {
     let mut node = super::SpbData::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SPB_DATA_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SPB_DATA_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.count),
@@ -713,8 +1169,25 @@ pub fn spb_data(element: &Element) -> super::SpbData {
 /// Read `xlrd2:spbStructures` into a `SpbStructures`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn spb_structures(element: &Element) -> super::SpbStructures {
+    spb_structures_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:spbStructures` into a `SpbStructures` from its start tag and the events after it, up
+/// to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn spb_structures_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SpbStructures {
+    spb_structures_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:spbStructures` into a `SpbStructures` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn spb_structures_from_item(item: officekit_markup_base::Item<'_>) -> super::SpbStructures {
     let mut node = super::SpbStructures::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::SPB_STRUCTURES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::SPB_STRUCTURES_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.count),
@@ -730,9 +1203,28 @@ pub fn spb_structures(element: &Element) -> super::SpbStructures {
 /// Read `xlrd2:supportingPropertyBags` into a `SupportingPropertyBags`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn supporting_property_bags(element: &Element) -> super::SupportingPropertyBags {
+    supporting_property_bags_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:supportingPropertyBags` into a `SupportingPropertyBags` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn supporting_property_bags_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::SupportingPropertyBags {
+    supporting_property_bags_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:supportingPropertyBags` into a `SupportingPropertyBags` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn supporting_property_bags_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::SupportingPropertyBags {
     let mut node = super::SupportingPropertyBags::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::SUPPORTING_PROPERTY_BAGS_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::SUPPORTING_PROPERTY_BAGS_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.child(&mut node.spb_arrays),
@@ -747,8 +1239,23 @@ pub fn supporting_property_bags(element: &Element) -> super::SupportingPropertyB
 /// Read `xlrd2:top10` into a `Top10`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn top10(element: &Element) -> super::Top10 {
+    top10_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:top10` into a `Top10` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn top10_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Top10 {
+    top10_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:top10` into a `Top10` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn top10_from_item(item: officekit_markup_base::Item<'_>) -> super::Top10 {
     let mut node = super::Top10::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TOP10_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TOP10_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.key),
@@ -766,8 +1273,23 @@ pub fn top10(element: &Element) -> super::Top10 {
 /// Read `xlrd2:type` into a `Type`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r#type(element: &Element) -> super::Type {
+    type_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:type` into a `Type` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn type_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Type {
+    type_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:type` into a `Type` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn type_from_item(item: officekit_markup_base::Item<'_>) -> super::Type {
     let mut node = super::Type::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TYPE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TYPE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.name),
@@ -783,8 +1305,23 @@ pub fn r#type(element: &Element) -> super::Type {
 /// Read `xlrd2:types` into a `Types`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn types(element: &Element) -> super::Types {
+    types_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:types` into a `Types` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn types_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::Types {
+    types_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:types` into a `Types` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn types_from_item(item: officekit_markup_base::Item<'_>) -> super::Types {
     let mut node = super::Types::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::TYPES_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::TYPES_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.r#type);
@@ -797,8 +1334,23 @@ pub fn types(element: &Element) -> super::Types {
 /// Read `xlrd2:v` into a `VArrayValue`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn v_array_value(element: &Element) -> super::VArrayValue {
+    v_array_value_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:v` into a `VArrayValue` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn v_array_value_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::VArrayValue {
+    v_array_value_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:v` into a `VArrayValue` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn v_array_value_from_item(item: officekit_markup_base::Item<'_>) -> super::VArrayValue {
     let mut node = super::VArrayValue::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::V_ARRAY_VALUE_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::V_ARRAY_VALUE_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.t),
@@ -815,9 +1367,30 @@ pub fn v_array_value(element: &Element) -> super::VArrayValue {
 pub fn v_supporting_property_bag_array_value(
     element: &Element,
 ) -> super::VSupportingPropertyBagArrayValue {
+    v_supporting_property_bag_array_value_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:v` into a `VSupportingPropertyBagArrayValue` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn v_supporting_property_bag_array_value_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::VSupportingPropertyBagArrayValue {
+    v_supporting_property_bag_array_value_from_item(officekit_markup_base::Item::Events(
+        start, events,
+    ))
+}
+
+/// Read `xlrd2:v` into a `VSupportingPropertyBagArrayValue` from an element, or from its start tag
+/// and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn v_supporting_property_bag_array_value_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::VSupportingPropertyBagArrayValue {
     let mut node = super::VSupportingPropertyBagArrayValue::default();
-    let mut reader = officekit_markup_base::Reader::new(
-        element,
+    let mut reader = officekit_markup_base::Reader::of(
+        item,
         &super::V_SUPPORTING_PROPERTY_BAG_ARRAY_VALUE_SHAPE,
     );
     for (index, field) in &mut reader {
@@ -834,9 +1407,28 @@ pub fn v_supporting_property_bag_array_value(
 /// Read `xlrd2:v` into a `VSupportingPropertyBagValue`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn v_supporting_property_bag_value(element: &Element) -> super::VSupportingPropertyBagValue {
+    v_supporting_property_bag_value_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xlrd2:v` into a `VSupportingPropertyBagValue` from its start tag and the events after it,
+/// up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn v_supporting_property_bag_value_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::VSupportingPropertyBagValue {
+    v_supporting_property_bag_value_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xlrd2:v` into a `VSupportingPropertyBagValue` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn v_supporting_property_bag_value_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::VSupportingPropertyBagValue {
     let mut node = super::VSupportingPropertyBagValue::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::V_SUPPORTING_PROPERTY_BAG_VALUE_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::V_SUPPORTING_PROPERTY_BAG_VALUE_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);

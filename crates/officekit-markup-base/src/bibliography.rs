@@ -222,7 +222,7 @@ pub mod read;
 pub mod write;
 
 use crate::UserData;
-use officekit_xml::element::{Element, Node};
+use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
 
@@ -2550,8 +2550,8 @@ impl<X: UserData> AbbreviatedCaseNumberWith<X> {
 }
 
 impl crate::Read for AbbreviatedCaseNumber {
-    fn read(element: &Element) -> Self {
-        read::abbreviated_case_number(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::abbreviated_case_number_from_item(item)
     }
 }
 
@@ -2588,8 +2588,8 @@ impl<X: UserData> AlbumTitleWith<X> {
 }
 
 impl crate::Read for AlbumTitle {
-    fn read(element: &Element) -> Self {
-        read::album_title(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::album_title_from_item(item)
     }
 }
 
@@ -2626,8 +2626,8 @@ impl<X: UserData> ArtistWith<X> {
 }
 
 impl crate::Read for Artist {
-    fn read(element: &Element) -> Self {
-        read::artist(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::artist_from_item(item)
     }
 }
 
@@ -2664,8 +2664,8 @@ impl<X: UserData> AuthorWith<X> {
 }
 
 impl crate::Read for Author {
-    fn read(element: &Element) -> Self {
-        read::author(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::author_from_item(item)
     }
 }
 
@@ -2774,8 +2774,8 @@ impl<X: UserData> BookAuthorWith<X> {
 }
 
 impl crate::Read for BookAuthor {
-    fn read(element: &Element) -> Self {
-        read::book_author(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::book_author_from_item(item)
     }
 }
 
@@ -2812,8 +2812,8 @@ impl<X: UserData> BookTitleWith<X> {
 }
 
 impl crate::Read for BookTitle {
-    fn read(element: &Element) -> Self {
-        read::book_title(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::book_title_from_item(item)
     }
 }
 
@@ -2850,8 +2850,8 @@ impl<X: UserData> BroadcastTitleWith<X> {
 }
 
 impl crate::Read for BroadcastTitle {
-    fn read(element: &Element) -> Self {
-        read::broadcast_title(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::broadcast_title_from_item(item)
     }
 }
 
@@ -2888,8 +2888,8 @@ impl<X: UserData> BroadcasterWith<X> {
 }
 
 impl crate::Read for Broadcaster {
-    fn read(element: &Element) -> Self {
-        read::broadcaster(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::broadcaster_from_item(item)
     }
 }
 
@@ -2926,8 +2926,8 @@ impl<X: UserData> CaseNumberWith<X> {
 }
 
 impl crate::Read for CaseNumber {
-    fn read(element: &Element) -> Self {
-        read::case_number(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::case_number_from_item(item)
     }
 }
 
@@ -2964,8 +2964,8 @@ impl<X: UserData> ChapterNumberWith<X> {
 }
 
 impl crate::Read for ChapterNumber {
-    fn read(element: &Element) -> Self {
-        read::chapter_number(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::chapter_number_from_item(item)
     }
 }
 
@@ -3002,8 +3002,8 @@ impl<X: UserData> CityWith<X> {
 }
 
 impl crate::Read for City {
-    fn read(element: &Element) -> Self {
-        read::city(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::city_from_item(item)
     }
 }
 
@@ -3040,8 +3040,8 @@ impl<X: UserData> CommentsWith<X> {
 }
 
 impl crate::Read for Comments {
-    fn read(element: &Element) -> Self {
-        read::comments(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::comments_from_item(item)
     }
 }
 
@@ -3078,8 +3078,8 @@ impl<X: UserData> CompilerWith<X> {
 }
 
 impl crate::Read for Compiler {
-    fn read(element: &Element) -> Self {
-        read::compiler(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::compiler_from_item(item)
     }
 }
 
@@ -3116,8 +3116,8 @@ impl<X: UserData> ComposerWith<X> {
 }
 
 impl crate::Read for Composer {
-    fn read(element: &Element) -> Self {
-        read::composer(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::composer_from_item(item)
     }
 }
 
@@ -3154,8 +3154,8 @@ impl<X: UserData> ConductorWith<X> {
 }
 
 impl crate::Read for Conductor {
-    fn read(element: &Element) -> Self {
-        read::conductor(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::conductor_from_item(item)
     }
 }
 
@@ -3192,8 +3192,8 @@ impl<X: UserData> ConferenceOrProceedingsNameWith<X> {
 }
 
 impl crate::Read for ConferenceOrProceedingsName {
-    fn read(element: &Element) -> Self {
-        read::conference_or_proceedings_name(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::conference_or_proceedings_name_from_item(item)
     }
 }
 
@@ -3230,8 +3230,8 @@ impl<X: UserData> ContributorsListWith<X> {
 }
 
 impl crate::Read for ContributorsList {
-    fn read(element: &Element) -> Self {
-        read::contributors_list(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::contributors_list_from_item(item)
     }
 }
 
@@ -3286,25 +3286,25 @@ impl crate::Read for ContributorsListContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match crate::name(element) {
-            Some((NS_B, "Artist")) => Self::Artist(crate::read(element)),
-            Some((NS_B, "Author")) => Self::Author(crate::read(element)),
-            Some((NS_B, "BookAuthor")) => Self::BookAuthor(crate::read(element)),
-            Some((NS_B, "Compiler")) => Self::Compiler(crate::read(element)),
-            Some((NS_B, "Composer")) => Self::Composer(crate::read(element)),
-            Some((NS_B, "Conductor")) => Self::Conductor(crate::read(element)),
-            Some((NS_B, "Counsel")) => Self::Counsel(crate::read(element)),
-            Some((NS_B, "Director")) => Self::Director(crate::read(element)),
-            Some((NS_B, "Editor")) => Self::Editor(crate::read(element)),
-            Some((NS_B, "Interviewee")) => Self::Interviewee(crate::read(element)),
-            Some((NS_B, "Interviewer")) => Self::Interviewer(crate::read(element)),
-            Some((NS_B, "Inventor")) => Self::Inventor(crate::read(element)),
-            Some((NS_B, "Performer")) => Self::Performer(crate::read(element)),
-            Some((NS_B, "ProducerName")) => Self::ProducerName(crate::read(element)),
-            Some((NS_B, "Translator")) => Self::Translator(crate::read(element)),
-            Some((NS_B, "Writer")) => Self::Writer(crate::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: crate::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_B, "Artist")) => Self::Artist(item.read()),
+            Some((NS_B, "Author")) => Self::Author(item.read()),
+            Some((NS_B, "BookAuthor")) => Self::BookAuthor(item.read()),
+            Some((NS_B, "Compiler")) => Self::Compiler(item.read()),
+            Some((NS_B, "Composer")) => Self::Composer(item.read()),
+            Some((NS_B, "Conductor")) => Self::Conductor(item.read()),
+            Some((NS_B, "Counsel")) => Self::Counsel(item.read()),
+            Some((NS_B, "Director")) => Self::Director(item.read()),
+            Some((NS_B, "Editor")) => Self::Editor(item.read()),
+            Some((NS_B, "Interviewee")) => Self::Interviewee(item.read()),
+            Some((NS_B, "Interviewer")) => Self::Interviewer(item.read()),
+            Some((NS_B, "Inventor")) => Self::Inventor(item.read()),
+            Some((NS_B, "Performer")) => Self::Performer(item.read()),
+            Some((NS_B, "ProducerName")) => Self::ProducerName(item.read()),
+            Some((NS_B, "Translator")) => Self::Translator(item.read()),
+            Some((NS_B, "Writer")) => Self::Writer(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -3359,8 +3359,8 @@ impl<X: UserData> CorporateAuthorWith<X> {
 }
 
 impl crate::Read for CorporateAuthor {
-    fn read(element: &Element) -> Self {
-        read::corporate_author(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::corporate_author_from_item(item)
     }
 }
 
@@ -3397,8 +3397,8 @@ impl<X: UserData> CounselWith<X> {
 }
 
 impl crate::Read for Counsel {
-    fn read(element: &Element) -> Self {
-        read::counsel(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::counsel_from_item(item)
     }
 }
 
@@ -3435,8 +3435,8 @@ impl<X: UserData> CountryOrRegionWith<X> {
 }
 
 impl crate::Read for CountryOrRegion {
-    fn read(element: &Element) -> Self {
-        read::country_or_region(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::country_or_region_from_item(item)
     }
 }
 
@@ -3473,8 +3473,8 @@ impl<X: UserData> CourtWith<X> {
 }
 
 impl crate::Read for Court {
-    fn read(element: &Element) -> Self {
-        read::court(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::court_from_item(item)
     }
 }
 
@@ -3511,8 +3511,8 @@ impl<X: UserData> DayWith<X> {
 }
 
 impl crate::Read for Day {
-    fn read(element: &Element) -> Self {
-        read::day(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::day_from_item(item)
     }
 }
 
@@ -3549,8 +3549,8 @@ impl<X: UserData> DayAccessedWith<X> {
 }
 
 impl crate::Read for DayAccessed {
-    fn read(element: &Element) -> Self {
-        read::day_accessed(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::day_accessed_from_item(item)
     }
 }
 
@@ -3587,8 +3587,8 @@ impl<X: UserData> DepartmentWith<X> {
 }
 
 impl crate::Read for Department {
-    fn read(element: &Element) -> Self {
-        read::department(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::department_from_item(item)
     }
 }
 
@@ -3625,8 +3625,8 @@ impl<X: UserData> DirectorWith<X> {
 }
 
 impl crate::Read for Director {
-    fn read(element: &Element) -> Self {
-        read::director(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::director_from_item(item)
     }
 }
 
@@ -3663,8 +3663,8 @@ impl<X: UserData> DistributorWith<X> {
 }
 
 impl crate::Read for Distributor {
-    fn read(element: &Element) -> Self {
-        read::distributor(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::distributor_from_item(item)
     }
 }
 
@@ -3701,8 +3701,8 @@ impl<X: UserData> EditorWith<X> {
 }
 
 impl crate::Read for Editor {
-    fn read(element: &Element) -> Self {
-        read::editor(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::editor_from_item(item)
     }
 }
 
@@ -3739,8 +3739,8 @@ impl<X: UserData> EditorEditionWith<X> {
 }
 
 impl crate::Read for EditorEdition {
-    fn read(element: &Element) -> Self {
-        read::editor_edition(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::editor_edition_from_item(item)
     }
 }
 
@@ -3777,8 +3777,8 @@ impl<X: UserData> GuidWith<X> {
 }
 
 impl crate::Read for Guid {
-    fn read(element: &Element) -> Self {
-        read::guid(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::guid_from_item(item)
     }
 }
 
@@ -3815,8 +3815,8 @@ impl<X: UserData> InstitutionWith<X> {
 }
 
 impl crate::Read for Institution {
-    fn read(element: &Element) -> Self {
-        read::institution(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::institution_from_item(item)
     }
 }
 
@@ -3853,8 +3853,8 @@ impl<X: UserData> InternetSiteTitleWith<X> {
 }
 
 impl crate::Read for InternetSiteTitle {
-    fn read(element: &Element) -> Self {
-        read::internet_site_title(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::internet_site_title_from_item(item)
     }
 }
 
@@ -3891,8 +3891,8 @@ impl<X: UserData> IntervieweeWith<X> {
 }
 
 impl crate::Read for Interviewee {
-    fn read(element: &Element) -> Self {
-        read::interviewee(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::interviewee_from_item(item)
     }
 }
 
@@ -3929,8 +3929,8 @@ impl<X: UserData> InterviewerWith<X> {
 }
 
 impl crate::Read for Interviewer {
-    fn read(element: &Element) -> Self {
-        read::interviewer(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::interviewer_from_item(item)
     }
 }
 
@@ -3967,8 +3967,8 @@ impl<X: UserData> InventorWith<X> {
 }
 
 impl crate::Read for Inventor {
-    fn read(element: &Element) -> Self {
-        read::inventor(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::inventor_from_item(item)
     }
 }
 
@@ -4005,8 +4005,8 @@ impl<X: UserData> IssueWith<X> {
 }
 
 impl crate::Read for Issue {
-    fn read(element: &Element) -> Self {
-        read::issue(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::issue_from_item(item)
     }
 }
 
@@ -4043,8 +4043,8 @@ impl<X: UserData> JournalNameWith<X> {
 }
 
 impl crate::Read for JournalName {
-    fn read(element: &Element) -> Self {
-        read::journal_name(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::journal_name_from_item(item)
     }
 }
 
@@ -4081,8 +4081,8 @@ impl<X: UserData> LocaleIDWith<X> {
 }
 
 impl crate::Read for LocaleID {
-    fn read(element: &Element) -> Self {
-        read::locale_id(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::locale_id_from_item(item)
     }
 }
 
@@ -4119,8 +4119,8 @@ impl<X: UserData> MediumWith<X> {
 }
 
 impl crate::Read for Medium {
-    fn read(element: &Element) -> Self {
-        read::medium(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::medium_from_item(item)
     }
 }
 
@@ -4157,8 +4157,8 @@ impl<X: UserData> MonthWith<X> {
 }
 
 impl crate::Read for Month {
-    fn read(element: &Element) -> Self {
-        read::month(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::month_from_item(item)
     }
 }
 
@@ -4195,8 +4195,8 @@ impl<X: UserData> MonthAccessedWith<X> {
 }
 
 impl crate::Read for MonthAccessed {
-    fn read(element: &Element) -> Self {
-        read::month_accessed(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::month_accessed_from_item(item)
     }
 }
 
@@ -4230,8 +4230,8 @@ impl<X: UserData> NameListWith<X> {
 }
 
 impl crate::Read for NameList {
-    fn read(element: &Element) -> Self {
-        read::name_list(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::name_list_from_item(item)
     }
 }
 
@@ -4264,11 +4264,11 @@ impl crate::Read for NameOrCorporateContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match crate::name(element) {
-            Some((NS_B, "Corporate")) => Self::CorporateAuthor(crate::read(element)),
-            Some((NS_B, "NameList")) => Self::NameList(crate::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: crate::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_B, "Corporate")) => Self::CorporateAuthor(item.read()),
+            Some((NS_B, "NameList")) => Self::NameList(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -4309,8 +4309,8 @@ impl<X: UserData> NumberOfVolumesWith<X> {
 }
 
 impl crate::Read for NumberOfVolumes {
-    fn read(element: &Element) -> Self {
-        read::number_of_volumes(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::number_of_volumes_from_item(item)
     }
 }
 
@@ -4347,8 +4347,8 @@ impl<X: UserData> PagesWith<X> {
 }
 
 impl crate::Read for Pages {
-    fn read(element: &Element) -> Self {
-        read::pages(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::pages_from_item(item)
     }
 }
 
@@ -4385,8 +4385,8 @@ impl<X: UserData> PatentNumberWith<X> {
 }
 
 impl crate::Read for PatentNumber {
-    fn read(element: &Element) -> Self {
-        read::patent_number(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::patent_number_from_item(item)
     }
 }
 
@@ -4423,8 +4423,8 @@ impl<X: UserData> PatentTypeWith<X> {
 }
 
 impl crate::Read for PatentType {
-    fn read(element: &Element) -> Self {
-        read::patent_type(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::patent_type_from_item(item)
     }
 }
 
@@ -4461,8 +4461,8 @@ impl<X: UserData> PerformerWith<X> {
 }
 
 impl crate::Read for Performer {
-    fn read(element: &Element) -> Self {
-        read::performer(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::performer_from_item(item)
     }
 }
 
@@ -4499,8 +4499,8 @@ impl<X: UserData> PeriodicalTitleWith<X> {
 }
 
 impl crate::Read for PeriodicalTitle {
-    fn read(element: &Element) -> Self {
-        read::periodical_title(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::periodical_title_from_item(item)
     }
 }
 
@@ -4545,8 +4545,8 @@ impl<X: UserData> PersonWith<X> {
 }
 
 impl crate::Read for Person {
-    fn read(element: &Element) -> Self {
-        read::person(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::person_from_item(item)
     }
 }
 
@@ -4583,8 +4583,8 @@ impl<X: UserData> PersonsFirstOrGivenNameWith<X> {
 }
 
 impl crate::Read for PersonsFirstOrGivenName {
-    fn read(element: &Element) -> Self {
-        read::persons_first_or_given_name(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::persons_first_or_given_name_from_item(item)
     }
 }
 
@@ -4621,8 +4621,8 @@ impl<X: UserData> PersonsLastOrFamilyNameWith<X> {
 }
 
 impl crate::Read for PersonsLastOrFamilyName {
-    fn read(element: &Element) -> Self {
-        read::persons_last_or_family_name(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::persons_last_or_family_name_from_item(item)
     }
 }
 
@@ -4659,8 +4659,8 @@ impl<X: UserData> PersonsMiddleOrOtherNameWith<X> {
 }
 
 impl crate::Read for PersonsMiddleOrOtherName {
-    fn read(element: &Element) -> Self {
-        read::persons_middle_or_other_name(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::persons_middle_or_other_name_from_item(item)
     }
 }
 
@@ -4694,8 +4694,8 @@ impl<X: UserData> ProducerNameWith<X> {
 }
 
 impl crate::Read for ProducerName {
-    fn read(element: &Element) -> Self {
-        read::producer_name(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::producer_name_from_item(item)
     }
 }
 
@@ -4732,8 +4732,8 @@ impl<X: UserData> ProductionCompanyWith<X> {
 }
 
 impl crate::Read for ProductionCompany {
-    fn read(element: &Element) -> Self {
-        read::production_company(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::production_company_from_item(item)
     }
 }
 
@@ -4770,8 +4770,8 @@ impl<X: UserData> PublicationTitleWith<X> {
 }
 
 impl crate::Read for PublicationTitle {
-    fn read(element: &Element) -> Self {
-        read::publication_title(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::publication_title_from_item(item)
     }
 }
 
@@ -4808,8 +4808,8 @@ impl<X: UserData> PublisherWith<X> {
 }
 
 impl crate::Read for Publisher {
-    fn read(element: &Element) -> Self {
-        read::publisher(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::publisher_from_item(item)
     }
 }
 
@@ -4846,8 +4846,8 @@ impl<X: UserData> RecordingNumberWith<X> {
 }
 
 impl crate::Read for RecordingNumber {
-    fn read(element: &Element) -> Self {
-        read::recording_number(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::recording_number_from_item(item)
     }
 }
 
@@ -4884,8 +4884,8 @@ impl<X: UserData> ReferenceOrderWith<X> {
 }
 
 impl crate::Read for ReferenceOrder {
-    fn read(element: &Element) -> Self {
-        read::reference_order(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::reference_order_from_item(item)
     }
 }
 
@@ -4922,8 +4922,8 @@ impl<X: UserData> ReporterWith<X> {
 }
 
 impl crate::Read for Reporter {
-    fn read(element: &Element) -> Self {
-        read::reporter(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::reporter_from_item(item)
     }
 }
 
@@ -4960,8 +4960,8 @@ impl<X: UserData> ShortTitleWith<X> {
 }
 
 impl crate::Read for ShortTitle {
-    fn read(element: &Element) -> Self {
-        read::short_title(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::short_title_from_item(item)
     }
 }
 
@@ -4995,8 +4995,8 @@ impl<X: UserData> SourceWith<X> {
 }
 
 impl crate::Read for Source {
-    fn read(element: &Element) -> Self {
-        read::source(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::source_from_item(item)
     }
 }
 
@@ -5099,65 +5099,61 @@ impl crate::Read for SourceContent {
         Some(Self::Other(node))
     }
 
-    fn read(element: &Element) -> Self {
-        match crate::name(element) {
-            Some((NS_B, "AbbreviatedCaseNumber")) => {
-                Self::AbbreviatedCaseNumber(crate::read(element))
-            }
-            Some((NS_B, "AlbumTitle")) => Self::AlbumTitle(crate::read(element)),
-            Some((NS_B, "BookTitle")) => Self::BookTitle(crate::read(element)),
-            Some((NS_B, "BroadcastTitle")) => Self::BroadcastTitle(crate::read(element)),
-            Some((NS_B, "Broadcaster")) => Self::Broadcaster(crate::read(element)),
-            Some((NS_B, "CaseNumber")) => Self::CaseNumber(crate::read(element)),
-            Some((NS_B, "ChapterNumber")) => Self::ChapterNumber(crate::read(element)),
-            Some((NS_B, "City")) => Self::City(crate::read(element)),
-            Some((NS_B, "Comments")) => Self::Comments(crate::read(element)),
-            Some((NS_B, "ConferenceName")) => {
-                Self::ConferenceOrProceedingsName(crate::read(element))
-            }
-            Some((NS_B, "Author")) => Self::ContributorsList(crate::read(element)),
-            Some((NS_B, "CountryRegion")) => Self::CountryOrRegion(crate::read(element)),
-            Some((NS_B, "Court")) => Self::Court(crate::read(element)),
-            Some((NS_B, "Day")) => Self::Day(crate::read(element)),
-            Some((NS_B, "DayAccessed")) => Self::DayAccessed(crate::read(element)),
-            Some((NS_B, "Department")) => Self::Department(crate::read(element)),
-            Some((NS_B, "Distributor")) => Self::Distributor(crate::read(element)),
-            Some((NS_B, "Edition")) => Self::EditorEdition(crate::read(element)),
-            Some((NS_B, "Guid")) => Self::Guid(crate::read(element)),
-            Some((NS_B, "Institution")) => Self::Institution(crate::read(element)),
-            Some((NS_B, "InternetSiteTitle")) => Self::InternetSiteTitle(crate::read(element)),
-            Some((NS_B, "Issue")) => Self::Issue(crate::read(element)),
-            Some((NS_B, "JournalName")) => Self::JournalName(crate::read(element)),
-            Some((NS_B, "LCID")) => Self::LocaleID(crate::read(element)),
-            Some((NS_B, "Medium")) => Self::Medium(crate::read(element)),
-            Some((NS_B, "Month")) => Self::Month(crate::read(element)),
-            Some((NS_B, "MonthAccessed")) => Self::MonthAccessed(crate::read(element)),
-            Some((NS_B, "NumberVolumes")) => Self::NumberOfVolumes(crate::read(element)),
-            Some((NS_B, "Pages")) => Self::Pages(crate::read(element)),
-            Some((NS_B, "PatentNumber")) => Self::PatentNumber(crate::read(element)),
-            Some((NS_B, "Type")) => Self::PatentType(crate::read(element)),
-            Some((NS_B, "PeriodicalTitle")) => Self::PeriodicalTitle(crate::read(element)),
-            Some((NS_B, "ProductionCompany")) => Self::ProductionCompany(crate::read(element)),
-            Some((NS_B, "PublicationTitle")) => Self::PublicationTitle(crate::read(element)),
-            Some((NS_B, "Publisher")) => Self::Publisher(crate::read(element)),
-            Some((NS_B, "RecordingNumber")) => Self::RecordingNumber(crate::read(element)),
-            Some((NS_B, "RefOrder")) => Self::ReferenceOrder(crate::read(element)),
-            Some((NS_B, "Reporter")) => Self::Reporter(crate::read(element)),
-            Some((NS_B, "ShortTitle")) => Self::ShortTitle(crate::read(element)),
-            Some((NS_B, "SourceType")) => Self::SourceType(crate::read(element)),
-            Some((NS_B, "StandardNumber")) => Self::StandardNumber(crate::read(element)),
-            Some((NS_B, "StateProvince")) => Self::StateOrProvince(crate::read(element)),
-            Some((NS_B, "Station")) => Self::Station(crate::read(element)),
-            Some((NS_B, "Tag")) => Self::Tag(crate::read(element)),
-            Some((NS_B, "Theater")) => Self::Theater(crate::read(element)),
-            Some((NS_B, "ThesisType")) => Self::ThesisType(crate::read(element)),
-            Some((NS_B, "Title")) => Self::Title(crate::read(element)),
-            Some((NS_B, "URL")) => Self::Url(crate::read(element)),
-            Some((NS_B, "Version")) => Self::Version(crate::read(element)),
-            Some((NS_B, "Volume")) => Self::Volume(crate::read(element)),
-            Some((NS_B, "Year")) => Self::Year(crate::read(element)),
-            Some((NS_B, "YearAccessed")) => Self::YearAccessed(crate::read(element)),
-            _ => Self::Other(Node::Element(element.clone())),
+    fn read_item(item: crate::Item<'_>) -> Self {
+        match item.name() {
+            Some((NS_B, "AbbreviatedCaseNumber")) => Self::AbbreviatedCaseNumber(item.read()),
+            Some((NS_B, "AlbumTitle")) => Self::AlbumTitle(item.read()),
+            Some((NS_B, "BookTitle")) => Self::BookTitle(item.read()),
+            Some((NS_B, "BroadcastTitle")) => Self::BroadcastTitle(item.read()),
+            Some((NS_B, "Broadcaster")) => Self::Broadcaster(item.read()),
+            Some((NS_B, "CaseNumber")) => Self::CaseNumber(item.read()),
+            Some((NS_B, "ChapterNumber")) => Self::ChapterNumber(item.read()),
+            Some((NS_B, "City")) => Self::City(item.read()),
+            Some((NS_B, "Comments")) => Self::Comments(item.read()),
+            Some((NS_B, "ConferenceName")) => Self::ConferenceOrProceedingsName(item.read()),
+            Some((NS_B, "Author")) => Self::ContributorsList(item.read()),
+            Some((NS_B, "CountryRegion")) => Self::CountryOrRegion(item.read()),
+            Some((NS_B, "Court")) => Self::Court(item.read()),
+            Some((NS_B, "Day")) => Self::Day(item.read()),
+            Some((NS_B, "DayAccessed")) => Self::DayAccessed(item.read()),
+            Some((NS_B, "Department")) => Self::Department(item.read()),
+            Some((NS_B, "Distributor")) => Self::Distributor(item.read()),
+            Some((NS_B, "Edition")) => Self::EditorEdition(item.read()),
+            Some((NS_B, "Guid")) => Self::Guid(item.read()),
+            Some((NS_B, "Institution")) => Self::Institution(item.read()),
+            Some((NS_B, "InternetSiteTitle")) => Self::InternetSiteTitle(item.read()),
+            Some((NS_B, "Issue")) => Self::Issue(item.read()),
+            Some((NS_B, "JournalName")) => Self::JournalName(item.read()),
+            Some((NS_B, "LCID")) => Self::LocaleID(item.read()),
+            Some((NS_B, "Medium")) => Self::Medium(item.read()),
+            Some((NS_B, "Month")) => Self::Month(item.read()),
+            Some((NS_B, "MonthAccessed")) => Self::MonthAccessed(item.read()),
+            Some((NS_B, "NumberVolumes")) => Self::NumberOfVolumes(item.read()),
+            Some((NS_B, "Pages")) => Self::Pages(item.read()),
+            Some((NS_B, "PatentNumber")) => Self::PatentNumber(item.read()),
+            Some((NS_B, "Type")) => Self::PatentType(item.read()),
+            Some((NS_B, "PeriodicalTitle")) => Self::PeriodicalTitle(item.read()),
+            Some((NS_B, "ProductionCompany")) => Self::ProductionCompany(item.read()),
+            Some((NS_B, "PublicationTitle")) => Self::PublicationTitle(item.read()),
+            Some((NS_B, "Publisher")) => Self::Publisher(item.read()),
+            Some((NS_B, "RecordingNumber")) => Self::RecordingNumber(item.read()),
+            Some((NS_B, "RefOrder")) => Self::ReferenceOrder(item.read()),
+            Some((NS_B, "Reporter")) => Self::Reporter(item.read()),
+            Some((NS_B, "ShortTitle")) => Self::ShortTitle(item.read()),
+            Some((NS_B, "SourceType")) => Self::SourceType(item.read()),
+            Some((NS_B, "StandardNumber")) => Self::StandardNumber(item.read()),
+            Some((NS_B, "StateProvince")) => Self::StateOrProvince(item.read()),
+            Some((NS_B, "Station")) => Self::Station(item.read()),
+            Some((NS_B, "Tag")) => Self::Tag(item.read()),
+            Some((NS_B, "Theater")) => Self::Theater(item.read()),
+            Some((NS_B, "ThesisType")) => Self::ThesisType(item.read()),
+            Some((NS_B, "Title")) => Self::Title(item.read()),
+            Some((NS_B, "URL")) => Self::Url(item.read()),
+            Some((NS_B, "Version")) => Self::Version(item.read()),
+            Some((NS_B, "Volume")) => Self::Volume(item.read()),
+            Some((NS_B, "Year")) => Self::Year(item.read()),
+            Some((NS_B, "YearAccessed")) => Self::YearAccessed(item.read()),
+            _ => Self::Other(item.into_node()),
         }
     }
 }
@@ -5248,8 +5244,8 @@ impl<X: UserData> SourceTypeWith<X> {
 }
 
 impl crate::Read for SourceType {
-    fn read(element: &Element) -> Self {
-        read::source_type(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::source_type_from_item(item)
     }
 }
 
@@ -5291,8 +5287,8 @@ impl<X: UserData> SourcesWith<X> {
 }
 
 impl crate::Read for Sources {
-    fn read(element: &Element) -> Self {
-        read::sources(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::sources_from_item(item)
     }
 }
 
@@ -5329,8 +5325,8 @@ impl<X: UserData> StandardNumberWith<X> {
 }
 
 impl crate::Read for StandardNumber {
-    fn read(element: &Element) -> Self {
-        read::standard_number(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::standard_number_from_item(item)
     }
 }
 
@@ -5367,8 +5363,8 @@ impl<X: UserData> StateOrProvinceWith<X> {
 }
 
 impl crate::Read for StateOrProvince {
-    fn read(element: &Element) -> Self {
-        read::state_or_province(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::state_or_province_from_item(item)
     }
 }
 
@@ -5405,8 +5401,8 @@ impl<X: UserData> StationWith<X> {
 }
 
 impl crate::Read for Station {
-    fn read(element: &Element) -> Self {
-        read::station(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::station_from_item(item)
     }
 }
 
@@ -5443,8 +5439,8 @@ impl<X: UserData> TagWith<X> {
 }
 
 impl crate::Read for Tag {
-    fn read(element: &Element) -> Self {
-        read::tag(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::tag_from_item(item)
     }
 }
 
@@ -5481,8 +5477,8 @@ impl<X: UserData> TheaterWith<X> {
 }
 
 impl crate::Read for Theater {
-    fn read(element: &Element) -> Self {
-        read::theater(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::theater_from_item(item)
     }
 }
 
@@ -5519,8 +5515,8 @@ impl<X: UserData> ThesisTypeWith<X> {
 }
 
 impl crate::Read for ThesisType {
-    fn read(element: &Element) -> Self {
-        read::thesis_type(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::thesis_type_from_item(item)
     }
 }
 
@@ -5557,8 +5553,8 @@ impl<X: UserData> TitleWith<X> {
 }
 
 impl crate::Read for Title {
-    fn read(element: &Element) -> Self {
-        read::title(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::title_from_item(item)
     }
 }
 
@@ -5595,8 +5591,8 @@ impl<X: UserData> TranslatorWith<X> {
 }
 
 impl crate::Read for Translator {
-    fn read(element: &Element) -> Self {
-        read::translator(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::translator_from_item(item)
     }
 }
 
@@ -5633,8 +5629,8 @@ impl<X: UserData> UrlWith<X> {
 }
 
 impl crate::Read for Url {
-    fn read(element: &Element) -> Self {
-        read::url(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::url_from_item(item)
     }
 }
 
@@ -5671,8 +5667,8 @@ impl<X: UserData> VersionWith<X> {
 }
 
 impl crate::Read for Version {
-    fn read(element: &Element) -> Self {
-        read::version(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::version_from_item(item)
     }
 }
 
@@ -5709,8 +5705,8 @@ impl<X: UserData> VolumeWith<X> {
 }
 
 impl crate::Read for Volume {
-    fn read(element: &Element) -> Self {
-        read::volume(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::volume_from_item(item)
     }
 }
 
@@ -5747,8 +5743,8 @@ impl<X: UserData> WriterWith<X> {
 }
 
 impl crate::Read for Writer {
-    fn read(element: &Element) -> Self {
-        read::writer(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::writer_from_item(item)
     }
 }
 
@@ -5785,8 +5781,8 @@ impl<X: UserData> YearWith<X> {
 }
 
 impl crate::Read for Year {
-    fn read(element: &Element) -> Self {
-        read::year(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::year_from_item(item)
     }
 }
 
@@ -5823,8 +5819,8 @@ impl<X: UserData> YearAccessedWith<X> {
 }
 
 impl crate::Read for YearAccessed {
-    fn read(element: &Element) -> Self {
-        read::year_accessed(element)
+    fn read_item(item: crate::Item<'_>) -> Self {
+        read::year_accessed_from_item(item)
     }
 }
 

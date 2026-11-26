@@ -221,9 +221,27 @@ use officekit_xml::element::Element;
 /// Read `xxpim:dataFieldFutureData` into a `DataFieldFutureData`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_field_future_data(element: &Element) -> super::DataFieldFutureData {
+    data_field_future_data_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xxpim:dataFieldFutureData` into a `DataFieldFutureData` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn data_field_future_data_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::DataFieldFutureData {
+    data_field_future_data_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xxpim:dataFieldFutureData` into a `DataFieldFutureData` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn data_field_future_data_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::DataFieldFutureData {
     let mut node = super::DataFieldFutureData::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::DATA_FIELD_FUTURE_DATA_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::DATA_FIELD_FUTURE_DATA_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.version),
@@ -238,9 +256,27 @@ pub fn data_field_future_data(element: &Element) -> super::DataFieldFutureData {
 /// Read `xxpim:ignorableAfterVersion` into a `IgnorableAfterVersion`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ignorable_after_version(element: &Element) -> super::IgnorableAfterVersion {
+    ignorable_after_version_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xxpim:ignorableAfterVersion` into a `IgnorableAfterVersion` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ignorable_after_version_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::IgnorableAfterVersion {
+    ignorable_after_version_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xxpim:ignorableAfterVersion` into a `IgnorableAfterVersion` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn ignorable_after_version_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::IgnorableAfterVersion {
     let mut node = super::IgnorableAfterVersion::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::IGNORABLE_AFTER_VERSION_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::IGNORABLE_AFTER_VERSION_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.version);
@@ -253,9 +289,28 @@ pub fn ignorable_after_version(element: &Element) -> super::IgnorableAfterVersio
 /// Read `xxpim:implicitMeasureSupport` into a `ImplicitMeasureSupport`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn implicit_measure_support(element: &Element) -> super::ImplicitMeasureSupport {
+    implicit_measure_support_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `xxpim:implicitMeasureSupport` into a `ImplicitMeasureSupport` from its start tag and the
+/// events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn implicit_measure_support_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ImplicitMeasureSupport {
+    implicit_measure_support_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `xxpim:implicitMeasureSupport` into a `ImplicitMeasureSupport` from an element, or from its
+/// start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn implicit_measure_support_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ImplicitMeasureSupport {
     let mut node = super::ImplicitMeasureSupport::default();
     let mut reader =
-        officekit_markup_base::Reader::new(element, &super::IMPLICIT_MEASURE_SUPPORT_SHAPE);
+        officekit_markup_base::Reader::of(item, &super::IMPLICIT_MEASURE_SUPPORT_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.text(&mut node.value);

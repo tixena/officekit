@@ -221,8 +221,25 @@ use officekit_xml::element::Element;
 /// Read `dgm1611:autoBuNodeInfo` into a `AutoBuNodeInfo`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn auto_bu_node_info(element: &Element) -> super::AutoBuNodeInfo {
+    auto_bu_node_info_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dgm1611:autoBuNodeInfo` into a `AutoBuNodeInfo` from its start tag and the events after
+/// it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn auto_bu_node_info_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AutoBuNodeInfo {
+    auto_bu_node_info_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dgm1611:autoBuNodeInfo` into a `AutoBuNodeInfo` from an element, or from its start tag and
+/// events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn auto_bu_node_info_from_item(item: officekit_markup_base::Item<'_>) -> super::AutoBuNodeInfo {
     let mut node = super::AutoBuNodeInfo::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::AUTO_BU_NODE_INFO_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::AUTO_BU_NODE_INFO_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.lvl),
@@ -238,9 +255,27 @@ pub fn auto_bu_node_info(element: &Element) -> super::AutoBuNodeInfo {
 /// Read `dgm1611:autoBuNodeInfoLst` into a `AutoBuNodeInfoLst`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn auto_bu_node_info_lst(element: &Element) -> super::AutoBuNodeInfoLst {
+    auto_bu_node_info_lst_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dgm1611:autoBuNodeInfoLst` into a `AutoBuNodeInfoLst` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn auto_bu_node_info_lst_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::AutoBuNodeInfoLst {
+    auto_bu_node_info_lst_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dgm1611:autoBuNodeInfoLst` into a `AutoBuNodeInfoLst` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn auto_bu_node_info_lst_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::AutoBuNodeInfoLst {
     let mut node = super::AutoBuNodeInfoLst::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::AUTO_BU_NODE_INFO_LST_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::AUTO_BU_NODE_INFO_LST_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.child(&mut node.auto_bu_node_info);
@@ -253,8 +288,23 @@ pub fn auto_bu_node_info_lst(element: &Element) -> super::AutoBuNodeInfoLst {
 /// Read `dgm1611:buPr` into a `BuPr`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bu_pr(element: &Element) -> super::BuPr {
+    bu_pr_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `dgm1611:buPr` into a `BuPr` from its start tag and the events after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bu_pr_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::BuPr {
+    bu_pr_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `dgm1611:buPr` into a `BuPr` from an element, or from its start tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn bu_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::BuPr {
     let mut node = super::BuPr::default();
-    let mut reader = officekit_markup_base::Reader::new(element, &super::BU_PR_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::BU_PR_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.prefix),

@@ -221,9 +221,27 @@ use officekit_xml::element::Element;
 /// Read `p1710:readonlyRecommended` into a `ReadonlyRecommended`.
 #[must_use = "the node read is returned; nothing else keeps it"]
 pub fn readonly_recommended(element: &Element) -> super::ReadonlyRecommended {
+    readonly_recommended_from_item(officekit_markup_base::Item::Tree(element))
+}
+
+/// Read `p1710:readonlyRecommended` into a `ReadonlyRecommended` from its start tag and the events
+/// after it, up to its end.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn readonly_recommended_from_events(
+    start: Element,
+    events: &dyn officekit_markup_base::EventSource,
+) -> super::ReadonlyRecommended {
+    readonly_recommended_from_item(officekit_markup_base::Item::Events(start, events))
+}
+
+/// Read `p1710:readonlyRecommended` into a `ReadonlyRecommended` from an element, or from its start
+/// tag and events.
+#[must_use = "the node read is returned; nothing else keeps it"]
+pub fn readonly_recommended_from_item(
+    item: officekit_markup_base::Item<'_>,
+) -> super::ReadonlyRecommended {
     let mut node = super::ReadonlyRecommended::default();
-    let mut reader =
-        officekit_markup_base::Reader::new(element, &super::READONLY_RECOMMENDED_SHAPE);
+    let mut reader = officekit_markup_base::Reader::of(item, &super::READONLY_RECOMMENDED_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
             field.attribute(&mut node.val);
