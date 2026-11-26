@@ -280,13 +280,13 @@ pub static MODEL_TIME_GROUPINGS_SHAPE: officekit_markup_base::Shape =
 #[non_exhaustive]
 pub struct CalculatedTimeColumnWith<X: UserData> {
     /// The attribute `columnId`, when the element has it.
-    pub column_id: Option<String>,
+    pub column_id: Option<Box<str>>,
     /// The attribute `columnName`, when the element has it.
-    pub column_name: Option<String>,
+    pub column_name: Option<Box<str>>,
     /// The attribute `contentType`, when the element has it.
     pub content_type: Option<ModelTimeGroupingContentType>,
     /// The attribute `isSelected`, when the element has it.
-    pub is_selected: Option<String>,
+    pub is_selected: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -381,11 +381,11 @@ pub struct ModelTimeGroupingWith<X: UserData> {
     /// The children that are `CalculatedTimeColumn`, in order.
     pub calculated_time_column: Vec<CalculatedTimeColumnWith<X>>,
     /// The attribute `columnId`, when the element has it.
-    pub column_id: Option<String>,
+    pub column_id: Option<Box<str>>,
     /// The attribute `columnName`, when the element has it.
-    pub column_name: Option<String>,
+    pub column_name: Option<Box<str>>,
     /// The attribute `tableName`, when the element has it.
-    pub table_name: Option<String>,
+    pub table_name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

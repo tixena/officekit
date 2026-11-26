@@ -223,8 +223,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Bmk)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BmkMirror {
-    pub name: Option<String>,
-    pub time: Option<String>,
+    pub name: Option<Box<str>>,
+    pub time: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -242,8 +242,8 @@ pub struct BmkLstMirror {
 #[rkyv(remote = super::BmkTgt)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BmkTgtMirror {
-    pub bmk_name: Option<String>,
-    pub spid: Option<String>,
+    pub bmk_name: Option<Box<str>>,
+    pub spid: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -252,7 +252,7 @@ pub struct BmkTgtMirror {
 #[rkyv(remote = super::BrowseMode)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BrowseModeMirror {
-    pub show_status: Option<String>,
+    pub show_status: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -263,7 +263,7 @@ pub struct BrowseModeMirror {
 pub struct CNvContentPartPrMirror {
     pub cp_locks: Option<Box<super::super::office_drawing_2010_main::CpLocks>>,
     pub ext_lst: Option<Box<super::super::office_drawing_2010_main::ExtLst>>,
-    pub is_comment: Option<String>,
+    pub is_comment: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -273,13 +273,13 @@ pub struct CNvContentPartPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CNvPrMirror {
     pub click_hyperlink: Option<Box<super::super::drawing::ClickHyperlink>>,
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     pub hyperlink_for_hover: Option<Box<super::super::drawing::HyperlinkForHover>>,
     pub id: Option<super::super::drawing::DrawingElementID>,
-    pub name: Option<String>,
-    pub title: Option<String>,
+    pub name: Option<Box<str>>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -306,7 +306,7 @@ pub struct CreationIdMirror {
 pub struct DefaultImageDpiMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -315,7 +315,7 @@ pub struct DefaultImageDpiMirror {
 pub struct DiscardImageEditDataMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -341,7 +341,7 @@ pub struct ExtLstExtensionListMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstExtensionListModifyMirror {
     pub extension: Vec<super::super::presentation::Extension>,
-    pub r#mod: Option<String>,
+    pub r#mod: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -350,8 +350,8 @@ pub struct ExtLstExtensionListModifyMirror {
 #[rkyv(remote = super::Fade)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FadeMirror {
-    pub r#in: Option<String>,
-    pub out: Option<String>,
+    pub r#in: Option<Box<str>>,
+    pub out: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -385,7 +385,7 @@ pub struct FlipMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FlythroughMirror {
     pub dir: Option<super::super::presentation::TransitionInOutDirectionType>,
-    pub has_bounce: Option<String>,
+    pub has_bounce: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -439,10 +439,10 @@ pub struct LaserTraceLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct MediaMirror {
     pub bmk_lst: Option<Box<super::BmkLst>>,
-    pub embed: Option<String>,
+    pub embed: Option<Box<str>>,
     pub ext_lst_extension_list: Option<Box<super::ExtLstExtensionList>>,
     pub fade: Option<Box<super::Fade>>,
-    pub link: Option<String>,
+    pub link: Option<Box<str>>,
     pub trim: Option<Box<super::Trim>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -460,8 +460,8 @@ pub struct ModIdMirror {
 #[rkyv(remote = super::NullEvt)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NullEvtMirror {
-    pub obj_id: Option<String>,
-    pub time: Option<String>,
+    pub obj_id: Option<Box<str>>,
+    pub time: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -484,11 +484,11 @@ pub struct NvPrMirror {
     pub content: Option<Box<super::super::presentation::NonVisualPropertiesContent>>,
     pub customer_data_list: Option<Box<super::super::presentation::CustomerDataList>>,
     pub extension_list: Option<Box<super::super::presentation::ExtensionList>>,
-    pub is_photo: Option<String>,
+    pub is_photo: Option<Box<str>>,
     pub placeholder_shape: Option<Box<super::super::presentation::PlaceholderShape>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub user_drawn: Option<String>,
+    pub user_drawn: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -521,8 +521,8 @@ pub struct PlayEvtMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PrismMirror {
     pub dir: Option<super::super::presentation::TransitionSideDirectionType>,
-    pub is_content: Option<String>,
-    pub is_inverted: Option<String>,
+    pub is_content: Option<Box<str>>,
+    pub is_inverted: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -540,7 +540,7 @@ pub struct ResumeEvtMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RevealMirror {
     pub dir: Option<super::TransitionLeftRightDirectionType>,
-    pub thru_blk: Option<String>,
+    pub thru_blk: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -549,7 +549,7 @@ pub struct RevealMirror {
 #[rkyv(remote = super::Ripple)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RippleMirror {
-    pub dir: Option<String>,
+    pub dir: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -577,8 +577,8 @@ pub struct SectionPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SectionSectionMirror {
     pub ext_lst_extension_list: Option<Box<super::ExtLstExtensionList>>,
-    pub id: Option<String>,
-    pub name: Option<String>,
+    pub id: Option<Box<str>>,
+    pub name: Option<Box<str>>,
     pub sld_id_lst: Box<super::SldIdLst>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -589,9 +589,9 @@ pub struct SectionSectionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SectionSectionOldMirror {
     pub ext_lst_extension_list: Option<Box<super::ExtLstExtensionList>>,
-    pub id: Option<String>,
-    pub name: Option<String>,
-    pub slide_id_lst: Option<String>,
+    pub id: Option<Box<str>>,
+    pub name: Option<Box<str>>,
+    pub slide_id_lst: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -600,9 +600,9 @@ pub struct SectionSectionOldMirror {
 #[rkyv(remote = super::SeekEvt)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SeekEvtMirror {
-    pub obj_id: Option<String>,
-    pub seek: Option<String>,
-    pub time: Option<String>,
+    pub obj_id: Option<Box<str>>,
+    pub seek: Option<Box<str>>,
+    pub time: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -622,7 +622,7 @@ pub struct ShowEvtLstMirror {
 pub struct ShowMediaCtrlsMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -639,7 +639,7 @@ pub struct ShredMirror {
 #[rkyv(remote = super::SldId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SldIdMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -673,11 +673,11 @@ pub struct SwitchMirror {
 #[rkyv(remote = super::TracePt)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TracePtMirror {
-    pub t: Option<String>,
+    pub t: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub x: Option<String>,
-    pub y: Option<String>,
+    pub x: Option<Box<str>>,
+    pub y: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -693,8 +693,8 @@ pub struct TracePtLstMirror {
 #[rkyv(remote = super::TriggerEvt)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TriggerEvtMirror {
-    pub obj_id: Option<String>,
-    pub time: Option<String>,
+    pub obj_id: Option<Box<str>>,
+    pub time: Option<Box<str>>,
     pub r#type: Option<super::super::presentation::TriggerEvent>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -704,8 +704,8 @@ pub struct TriggerEvtMirror {
 #[rkyv(remote = super::Trim)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TrimMirror {
-    pub end: Option<String>,
-    pub st: Option<String>,
+    pub end: Option<Box<str>>,
+    pub st: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -732,7 +732,7 @@ pub struct WarpMirror {
 #[rkyv(remote = super::WheelReverse)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WheelReverseMirror {
-    pub spokes: Option<String>,
+    pub spokes: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -751,8 +751,8 @@ pub struct WindowMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct XfrmMirror {
     pub extents: Option<Box<super::super::drawing::Extents>>,
-    pub flip_h: Option<String>,
-    pub flip_v: Option<String>,
+    pub flip_h: Option<Box<str>>,
+    pub flip_v: Option<Box<str>>,
     pub offset: Option<Box<super::super::drawing::Offset>>,
     pub rot: Option<super::super::drawing::Angle>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

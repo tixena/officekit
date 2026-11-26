@@ -19,7 +19,7 @@ use crate::xlsx::Xlsx;
 /// A font that states only its name.
 fn font_named(name: &str) -> Font {
     let mut node = FontName::default();
-    node.val = Some(name.to_owned());
+    node.val = Some(Box::from(name));
     let mut font = Font::default();
     font.content.push(FontContent::from(node));
     font
@@ -37,7 +37,7 @@ fn fill(pattern: &str) -> Fill {
 /// A border told apart from the others by its `outline`.
 fn border(marker: &str) -> Border {
     let mut border = Border::default();
-    border.outline = Some(marker.to_owned());
+    border.outline = Some(Box::from(marker));
     border
 }
 
@@ -72,7 +72,7 @@ fn styles(entries: Vec<Format>) -> StyleSheet {
 fn number_format(id: &str, code: &str) -> NumberFormat {
     let mut format = NumberFormat::default();
     format.num_fmt_id = Some(NumberFormatId::from(id.to_owned()));
-    format.format_code = Some(code.to_owned());
+    format.format_code = Some(Box::from(code));
     format
 }
 
@@ -165,7 +165,7 @@ fn the_apply_attributes_and_the_style_s_entry_change_nothing() {
         &mut applied.apply_number_format,
         &mut applied.apply_alignment,
     ] {
-        *apply = Some("0".to_owned());
+        *apply = Some(Box::from("0"));
     }
     applied.xf_id = Some(CellStyleFormatId::from("0".to_owned()));
     let mut sheet = styles(vec![applied]);
@@ -182,17 +182,17 @@ fn the_apply_attributes_and_the_style_s_entry_change_nothing() {
 
 fn row(s: Option<&str>, custom_format: Option<&str>) -> Row {
     let mut row = Row::default();
-    row.s = s.map(str::to_owned);
-    row.custom_format = custom_format.map(str::to_owned);
+    row.s = s.map(Box::from);
+    row.custom_format = custom_format.map(Box::from);
     row
 }
 
 /// One `cols` holding a `col` of columns 2 to 4 with style 5.
 fn columns() -> Vec<ColumnInformation> {
     let mut column = ColumnWidthFormatting::default();
-    column.min = Some("2".to_owned());
-    column.max = Some("4".to_owned());
-    column.style = Some("5".to_owned());
+    column.min = Some(Box::from("2"));
+    column.max = Some(Box::from("4"));
+    column.style = Some(Box::from("5"));
     let mut information = ColumnInformation::default();
     information.column_width_formatting.push(column);
     vec![information]
@@ -202,7 +202,7 @@ fn columns() -> Vec<ColumnInformation> {
 fn a_cell_takes_its_own_index_then_its_row_s_then_its_column_s() {
     let columns = columns();
     let mut cell = Cell::default();
-    cell.s = Some("3".to_owned());
+    cell.s = Some(Box::from("3"));
     let custom = row(Some("2"), Some("1"));
     let plain = row(Some("2"), None);
     assert_eq!(CellFormats::index(&columns, &custom, Some(&cell), 3), 3);
@@ -231,9 +231,9 @@ fn a_cell_node_that_states_no_index_has_the_schema_s_default_0() {
 fn the_normal_font_is_the_one_of_the_style_normal_else_the_first() {
     let mut sheet = styles(Vec::new());
     let mut normal = CellStyle::default();
-    normal.name = Some("Normal".to_owned());
+    normal.name = Some(Box::from("Normal"));
     normal.xf_id = Some(CellStyleFormatId::from("0".to_owned()));
-    normal.builtin_id = Some("0".to_owned());
+    normal.builtin_id = Some(Box::from("0"));
     let mut cell_styles = CellStyles::default();
     cell_styles.cell_style.push(normal);
     sheet.cell_styles = Some(Box::new(cell_styles));
@@ -256,11 +256,11 @@ fn the_normal_font_is_the_one_of_the_style_normal_else_the_first() {
 /// The font `<b/><i val="0"/><u/><sz val="11"/><name val="Arial"/>`.
 fn plain_members() -> Vec<FontContent> {
     let mut italic = Italic::default();
-    italic.val = Some("0".to_owned());
+    italic.val = Some(Box::from("0"));
     let mut size = FontSize::default();
-    size.val = Some("11".to_owned());
+    size.val = Some(Box::from("11"));
     let mut name = FontName::default();
-    name.val = Some("Arial".to_owned());
+    name.val = Some(Box::from("Arial"));
     vec![
         FontContent::from(Bold::default()),
         FontContent::from(italic),
@@ -286,11 +286,11 @@ fn a_font_states_its_members_a_boolean_and_u_with_no_val_being_true_and_single()
 #[test]
 fn a_member_written_twice_takes_the_last_and_a_val_that_is_no_value_states_nothing() {
     let mut first = Bold::default();
-    first.val = Some("1".to_owned());
+    first.val = Some(Box::from("1"));
     let mut last = Bold::default();
-    last.val = Some("0".to_owned());
+    last.val = Some(Box::from("0"));
     let mut nonsense = Italic::default();
-    nonsense.val = Some("maybe".to_owned());
+    nonsense.val = Some(Box::from("maybe"));
     let mut underline = Underline::default();
     underline.val = Some(UnderlineTypes::from("wavy".to_owned()));
     let mut font = Font::default();
@@ -309,11 +309,11 @@ fn a_member_written_twice_takes_the_last_and_a_val_that_is_no_value_states_nothi
 #[test]
 fn a_run_s_properties_give_the_value_of_the_same_font() {
     let mut italic = Italic::default();
-    italic.val = Some("0".to_owned());
+    italic.val = Some(Box::from("0"));
     let mut size = FontSize::default();
-    size.val = Some("11".to_owned());
+    size.val = Some(Box::from("11"));
     let mut name = FontRFont::default();
-    name.val = Some("Arial".to_owned());
+    name.val = Some(Box::from("Arial"));
     let mut run = RunProperties::default();
     run.content = vec![
         RunPropertiesContent::from(Bold::default()),
@@ -330,13 +330,13 @@ fn a_run_s_properties_give_the_value_of_the_same_font() {
 #[test]
 fn every_member_of_a_font_and_of_a_run_is_read_alike() {
     let mut charset = CharacterSet::default();
-    charset.val = Some("1".to_owned());
+    charset.val = Some(Box::from("1"));
     let mut color = DataBarColor::default();
-    color.theme = Some("1".to_owned());
+    color.theme = Some(Box::from("1"));
     let mut family = FontFamily::default();
     family.val = Some(StFontFamily::from("2".to_owned()));
     let mut run_family = FontFamilyIntProperty::default();
-    run_family.val = Some("2".to_owned());
+    run_family.val = Some(Box::from("2"));
     let mut scheme = Scheme::default();
     scheme.val = Some(FontSchemeStyles::from("minor".to_owned()));
     let mut vertical = VerticalAlignment::default();

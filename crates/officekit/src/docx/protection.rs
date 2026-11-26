@@ -160,12 +160,12 @@ pub fn entry(
         entry.crypt_algorithm_type = Some(CryptographicAlgorithmTypes::from("typeAny".to_owned()));
         entry.crypt_algorithm_sid = Some(DecimalNumberValue::from("4".to_owned()));
         entry.crypt_spin_count = Some(spin_count);
-        entry.hash = Some(STANDARD.encode(legacy_hash(password, salt)));
-        entry.salt = Some(salt_text);
+        entry.hash = Some(STANDARD.encode(legacy_hash(password, salt)).into());
+        entry.salt = Some(salt_text.into());
     } else {
-        entry.algorithm_name = Some("SHA-1".to_owned());
-        entry.hash_value = Some(STANDARD.encode(hash(password, salt)));
-        entry.salt_value = Some(salt_text);
+        entry.algorithm_name = Some(Box::from("SHA-1"));
+        entry.hash_value = Some(STANDARD.encode(hash(password, salt)).into());
+        entry.salt_value = Some(salt_text.into());
         entry.spin_count = Some(spin_count);
     }
     entry

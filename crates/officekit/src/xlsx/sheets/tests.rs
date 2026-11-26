@@ -68,7 +68,8 @@ fn with_worksheets<const N: usize>() -> (Xlsx, [(PartName, String); N]) {
         .sheet_information
         .first()
         .and_then(|sheet| sheet.id.clone())
-        .unwrap();
+        .unwrap()
+        .into_string();
     let added = from_fn(|index| {
         let part = name(&format!("/xl/worksheets/sheet{}.xml", index + 1));
         if index == 0 {
@@ -90,8 +91,8 @@ fn with_worksheets<const N: usize>() -> (Xlsx, [(PartName, String); N]) {
 /// A `sheet` element with the relationship id `id`, the name `sheet_name` and the state `state`.
 fn sheet(id: Option<&str>, sheet_name: &str, state: Option<&str>) -> SheetInformation {
     let mut element = SheetInformation::default();
-    element.id = id.map(str::to_owned);
-    element.name = Some(sheet_name.to_owned());
+    element.id = id.map(Box::from);
+    element.name = Some(Box::from(sheet_name));
     element.state = state.map(|text| SheetVisibilityTypes::from(text.to_owned()));
     element
 }
@@ -286,13 +287,13 @@ fn each_related_part_gives_the_root_that_was_stored() {
     let strings_part = name("/xl/sharedStrings.xml");
     let theme_part = name("/xl/theme/theme1.xml");
     let mut fonts = Fonts::default();
-    fonts.count = Some("0".to_owned());
+    fonts.count = Some(Box::from("0"));
     let mut style_sheet = StyleSheet::default();
     style_sheet.fonts = Some(Box::new(fonts));
     let mut strings = SharedStringTable::default();
-    strings.unique_count = Some("0".to_owned());
+    strings.unique_count = Some(Box::from("0"));
     let mut theme_root = Theme::default();
-    theme_root.name = Some("Office Theme".to_owned());
+    theme_root.name = Some(Box::from("Office Theme"));
     add(
         &mut xlsx,
         &styles_part,

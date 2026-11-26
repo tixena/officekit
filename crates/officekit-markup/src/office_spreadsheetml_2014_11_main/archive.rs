@@ -222,10 +222,10 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::CalculatedTimeColumn)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CalculatedTimeColumnMirror {
-    pub column_id: Option<String>,
-    pub column_name: Option<String>,
+    pub column_id: Option<Box<str>>,
+    pub column_name: Option<Box<str>>,
     pub content_type: Option<super::ModelTimeGroupingContentType>,
-    pub is_selected: Option<String>,
+    pub is_selected: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -235,9 +235,9 @@ pub struct CalculatedTimeColumnMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ModelTimeGroupingMirror {
     pub calculated_time_column: Vec<super::CalculatedTimeColumn>,
-    pub column_id: Option<String>,
-    pub column_name: Option<String>,
-    pub table_name: Option<String>,
+    pub column_id: Option<Box<str>>,
+    pub column_name: Option<Box<str>>,
+    pub table_name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

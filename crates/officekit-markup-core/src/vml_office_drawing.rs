@@ -829,17 +829,17 @@ pub struct CalloutWith<X: UserData> {
     /// The attribute `angle`, when the element has it.
     pub angle: Option<CalloutAngles>,
     /// The attribute `distance`, when the element has it.
-    pub distance: Option<String>,
+    pub distance: Option<Box<str>>,
     /// The attribute `drop`, when the element has it.
-    pub drop: Option<String>,
+    pub drop: Option<Box<str>>,
     /// The attribute `dropauto`, when the element has it.
     pub dropauto: Option<common_simple_types::BooleanValue>,
     /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
     /// The attribute `gap`, when the element has it.
-    pub gap: Option<String>,
+    pub gap: Option<Box<str>>,
     /// The attribute `length`, when the element has it.
-    pub length: Option<String>,
+    pub length: Option<Box<str>>,
     /// The attribute `lengthspecified`, when the element has it.
     pub lengthspecified: Option<common_simple_types::BooleanValue>,
     /// The attribute `minusx`, when the element has it.
@@ -851,7 +851,7 @@ pub struct CalloutWith<X: UserData> {
     /// The attribute `textborder`, when the element has it.
     pub textborder: Option<common_simple_types::BooleanValue>,
     /// The attribute `type`, when the element has it.
-    pub r#type: Option<String>,
+    pub r#type: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -988,7 +988,7 @@ pub enum ConnectorTypeMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct DiagramLayoutType(pub String);
+pub struct DiagramLayoutType(pub Box<str>);
 
 /// The `o:rel` element, Diagram Relationship (ECMA-376 Part 4, section 19.2.2.24). Its schema type
 /// is `CT_Relation`.
@@ -998,11 +998,11 @@ pub struct DiagramRelationshipWith<X: UserData> {
     /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
     /// The attribute `idcntr`, when the element has it.
-    pub idcntr: Option<String>,
+    pub idcntr: Option<Box<str>>,
     /// The attribute `iddest`, when the element has it.
-    pub iddest: Option<String>,
+    pub iddest: Option<Box<str>>,
     /// The attribute `idsrc`, when the element has it.
-    pub idsrc: Option<String>,
+    pub idsrc: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1044,7 +1044,7 @@ impl Eq for DiagramRelationshipTableWith<()> {}
 #[non_exhaustive]
 pub struct DigitalSignatureLineWith<X: UserData> {
     /// The attribute `addlxml`, when the element has it.
-    pub addlxml: Option<String>,
+    pub addlxml: Option<Box<str>>,
     /// The attribute `allowcomments`, when the element has it.
     pub allowcomments: Option<common_simple_types::BooleanValue>,
     /// The attribute `v:ext`, when the element has it.
@@ -1058,17 +1058,17 @@ pub struct DigitalSignatureLineWith<X: UserData> {
     /// The attribute `showsigndate`, when the element has it.
     pub showsigndate: Option<common_simple_types::BooleanValue>,
     /// The attribute `signinginstructions`, when the element has it.
-    pub signinginstructions: Option<String>,
+    pub signinginstructions: Option<Box<str>>,
     /// The attribute `signinginstructionsset`, when the element has it.
     pub signinginstructionsset: Option<common_simple_types::BooleanValue>,
     /// The attribute `sigprovurl`, when the element has it.
-    pub sigprovurl: Option<String>,
+    pub sigprovurl: Option<Box<str>>,
     /// The attribute `o:suggestedsigner`, when the element has it.
-    pub suggestedsigner: Option<String>,
+    pub suggestedsigner: Option<Box<str>>,
     /// The attribute `o:suggestedsigner2`, when the element has it.
-    pub suggestedsigner2: Option<String>,
+    pub suggestedsigner2: Option<Box<str>>,
     /// The attribute `o:suggestedsigneremail`, when the element has it.
-    pub suggestedsigneremail: Option<String>,
+    pub suggestedsigneremail: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1095,13 +1095,13 @@ pub struct EmbeddedOLEObjectWith<X: UserData> {
     /// The child that is `EmbeddedObjectCannotBeRefreshed`, when there is one.
     pub embedded_object_cannot_be_refreshed: Option<Box<EmbeddedObjectCannotBeRefreshedWith<X>>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `ObjectID`, when the element has it.
-    pub object_id: Option<String>,
+    pub object_id: Option<Box<str>>,
     /// The attribute `ProgID`, when the element has it.
-    pub prog_id: Option<String>,
+    pub prog_id: Option<Box<str>>,
     /// The attribute `ShapeID`, when the element has it.
-    pub shape_id: Option<String>,
+    pub shape_id: Option<Box<str>>,
     /// The attribute `Type`, when the element has it.
     pub r#type: Option<OLEType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1132,7 +1132,7 @@ pub struct EmbeddedObjectAlternateImageRequestWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlOfficeDrawingEmbeddedObjectAlternateImageRequest,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `o:LinkType` element of the tree a read gives: [`EmbeddedObjectAlternateImageRequestWith`]
@@ -1168,23 +1168,23 @@ pub struct ExtrusionWith<X: UserData> {
     /// The attribute `autorotationcenter`, when the element has it.
     pub autorotationcenter: Option<common_simple_types::BooleanValue>,
     /// The attribute `backdepth`, when the element has it.
-    pub backdepth: Option<String>,
+    pub backdepth: Option<Box<str>>,
     /// The attribute `brightness`, when the element has it.
-    pub brightness: Option<String>,
+    pub brightness: Option<Box<str>>,
     /// The attribute `color`, when the element has it.
-    pub color: Option<String>,
+    pub color: Option<Box<str>>,
     /// The attribute `colormode`, when the element has it.
     pub colormode: Option<ExtrusionColorTypes>,
     /// The attribute `diffusity`, when the element has it.
-    pub diffusity: Option<String>,
+    pub diffusity: Option<Box<str>>,
     /// The attribute `edge`, when the element has it.
-    pub edge: Option<String>,
+    pub edge: Option<Box<str>>,
     /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
     /// The attribute `facet`, when the element has it.
-    pub facet: Option<String>,
+    pub facet: Option<Box<str>>,
     /// The attribute `foredepth`, when the element has it.
-    pub foredepth: Option<String>,
+    pub foredepth: Option<Box<str>>,
     /// The attribute `lightface`, when the element has it.
     pub lightface: Option<common_simple_types::BooleanValue>,
     /// The attribute `lightharsh`, when the element has it.
@@ -1192,13 +1192,13 @@ pub struct ExtrusionWith<X: UserData> {
     /// The attribute `lightharsh2`, when the element has it.
     pub lightharsh2: Option<common_simple_types::BooleanValue>,
     /// The attribute `lightlevel`, when the element has it.
-    pub lightlevel: Option<String>,
+    pub lightlevel: Option<Box<str>>,
     /// The attribute `lightlevel2`, when the element has it.
-    pub lightlevel2: Option<String>,
+    pub lightlevel2: Option<Box<str>>,
     /// The attribute `lightposition`, when the element has it.
-    pub lightposition: Option<String>,
+    pub lightposition: Option<Box<str>>,
     /// The attribute `lightposition2`, when the element has it.
-    pub lightposition2: Option<String>,
+    pub lightposition2: Option<Box<str>>,
     /// The attribute `lockrotationcenter`, when the element has it.
     pub lockrotationcenter: Option<common_simple_types::BooleanValue>,
     /// The attribute `metal`, when the element has it.
@@ -1206,25 +1206,25 @@ pub struct ExtrusionWith<X: UserData> {
     /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
     /// The attribute `orientation`, when the element has it.
-    pub orientation: Option<String>,
+    pub orientation: Option<Box<str>>,
     /// The attribute `orientationangle`, when the element has it.
-    pub orientationangle: Option<String>,
+    pub orientationangle: Option<Box<str>>,
     /// The attribute `plane`, when the element has it.
     pub plane: Option<ExtrusionPlanes>,
     /// The attribute `render`, when the element has it.
     pub render: Option<ExtrusionRenderingTypes>,
     /// The attribute `rotationangle`, when the element has it.
-    pub rotationangle: Option<String>,
+    pub rotationangle: Option<Box<str>>,
     /// The attribute `rotationcenter`, when the element has it.
-    pub rotationcenter: Option<String>,
+    pub rotationcenter: Option<Box<str>>,
     /// The attribute `shininess`, when the element has it.
-    pub shininess: Option<String>,
+    pub shininess: Option<Box<str>>,
     /// The attribute `skewamt`, when the element has it.
-    pub skewamt: Option<String>,
+    pub skewamt: Option<Box<str>>,
     /// The attribute `skewangle`, when the element has it.
-    pub skewangle: Option<String>,
+    pub skewangle: Option<Box<str>>,
     /// The attribute `specularity`, when the element has it.
-    pub specularity: Option<String>,
+    pub specularity: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<ExtrusionType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1233,9 +1233,9 @@ pub struct ExtrusionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlOfficeDrawingExtrusion,
     /// The attribute `viewpoint`, when the element has it.
-    pub viewpoint: Option<String>,
+    pub viewpoint: Option<Box<str>>,
     /// The attribute `viewpointorigin`, when the element has it.
-    pub viewpointorigin: Option<String>,
+    pub viewpointorigin: Option<Box<str>>,
 }
 
 /// The `o:extrusion` element of the tree a read gives: [`ExtrusionWith`] holding nothing in
@@ -1355,9 +1355,9 @@ pub struct InkWith<X: UserData> {
     /// The attribute `annotation`, when the element has it.
     pub annotation: Option<common_simple_types::BooleanValue>,
     /// The attribute `contentType`, when the element has it.
-    pub content_type: Option<String>,
+    pub content_type: Option<Box<str>>,
     /// The attribute `i`, when the element has it.
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1401,7 +1401,7 @@ pub enum InsetMarginTypeMember {
 #[non_exhaustive]
 pub struct MostRecentlyUsedColorsWith<X: UserData> {
     /// The attribute `colors`, when the element has it.
-    pub colors: Option<String>,
+    pub colors: Option<Box<str>>,
     /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1431,15 +1431,15 @@ pub struct NewShapeDefaultsWith<X: UserData> {
     /// The attribute `fill`, when the element has it.
     pub fill: Option<common_simple_types::BooleanValue>,
     /// The attribute `fillcolor`, when the element has it.
-    pub fillcolor: Option<String>,
+    pub fillcolor: Option<Box<str>>,
     /// The attribute `spidmax`, when the element has it.
-    pub spidmax: Option<String>,
+    pub spidmax: Option<Box<str>>,
     /// The attribute `stroke`, when the element has it.
     pub stroke: Option<common_simple_types::BooleanValue>,
     /// The attribute `strokecolor`, when the element has it.
-    pub strokecolor: Option<String>,
+    pub strokecolor: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
-    pub style: Option<String>,
+    pub style: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1569,9 +1569,9 @@ pub enum OLEUpdateModeMember {
 #[non_exhaustive]
 pub struct RegroupEntryWith<X: UserData> {
     /// The attribute `new`, when the element has it.
-    pub new: Option<String>,
+    pub new: Option<Box<str>>,
     /// The attribute `old`, when the element has it.
-    pub old: Option<String>,
+    pub old: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1592,9 +1592,9 @@ pub struct RuleWith<X: UserData> {
     /// The attribute `how`, when the element has it.
     pub how: Option<StHow>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idref`, when the element has it.
-    pub idref: Option<String>,
+    pub idref: Option<Box<str>>,
     /// The children that are `ShapeReference`, in order.
     pub shape_reference: Vec<ShapeReferenceWith<X>>,
     /// The attribute `type`, when the element has it.
@@ -1705,7 +1705,7 @@ pub struct ShapeClippingPathWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlOfficeDrawingShapeClippingPath,
     /// The attribute `o:v`, when the element has it.
-    pub v: Option<String>,
+    pub v: Option<Box<str>>,
 }
 
 /// The `o:clippath` element of the tree a read gives: [`ShapeClippingPathWith`] holding nothing in
@@ -1803,7 +1803,7 @@ impl Eq for ShapeGroupingHistoryWith<()> {}
 #[non_exhaustive]
 pub struct ShapeIDMapWith<X: UserData> {
     /// The attribute `data`, when the element has it.
-    pub data: Option<String>,
+    pub data: Option<Box<str>>,
     /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1913,11 +1913,11 @@ impl Eq for ShapeProtectionsWith<()> {}
 #[non_exhaustive]
 pub struct ShapeReferenceWith<X: UserData> {
     /// The attribute `connectloc`, when the element has it.
-    pub connectloc: Option<String>,
+    pub connectloc: Option<Box<str>>,
     /// The attribute `end`, when the element has it.
     pub end: Option<common_simple_types::BooleanValueWithBlankFalseState>,
     /// The attribute `idref`, when the element has it.
-    pub idref: Option<String>,
+    pub idref: Option<Box<str>>,
     /// The attribute `start`, when the element has it.
     pub start: Option<common_simple_types::BooleanValueWithBlankFalseState>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1941,15 +1941,15 @@ pub struct SkewTransformWith<X: UserData> {
     /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `matrix`, when the element has it.
-    pub matrix: Option<String>,
+    pub matrix: Option<Box<str>>,
     /// The attribute `offset`, when the element has it.
-    pub offset: Option<String>,
+    pub offset: Option<Box<str>>,
     /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
     /// The attribute `origin`, when the element has it.
-    pub origin: Option<String>,
+    pub origin: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2031,7 +2031,7 @@ pub struct StorageForAlternateMathContentWith<X: UserData> {
     /// The child that is an item of `super::drawing::AnyElementContent`, which the schema requires.
     pub content: Box<super::drawing::AnyElementContentWith<X>>,
     /// The attribute `contentType`, when the element has it.
-    pub content_type: Option<String>,
+    pub content_type: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2051,13 +2051,13 @@ impl Eq for StorageForAlternateMathContentWith<()> {}
 #[non_exhaustive]
 pub struct TextBoxBottomStrokeWith<X: UserData> {
     /// The attribute `o:althref`, when the element has it.
-    pub althref: Option<String>,
+    pub althref: Option<Box<str>>,
     /// The attribute `color`, when the element has it.
-    pub color: Option<String>,
+    pub color: Option<Box<str>>,
     /// The attribute `color2`, when the element has it.
-    pub color2: Option<String>,
+    pub color2: Option<Box<str>>,
     /// The attribute `dashstyle`, when the element has it.
-    pub dashstyle: Option<String>,
+    pub dashstyle: Option<Box<str>>,
     /// The attribute `endarrow`, when the element has it.
     pub endarrow: Option<super::vml::StrokeArrowheadType>,
     /// The attribute `endarrowlength`, when the element has it.
@@ -2073,13 +2073,13 @@ pub struct TextBoxBottomStrokeWith<X: UserData> {
     /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `imagealignshape`, when the element has it.
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
     /// The attribute `imageaspect`, when the element has it.
     pub imageaspect: Option<super::vml::ImageScalingBehavior>,
     /// The attribute `imagesize`, when the element has it.
-    pub imagesize: Option<String>,
+    pub imagesize: Option<Box<str>>,
     /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
     /// The attribute `joinstyle`, when the element has it.
@@ -2087,13 +2087,13 @@ pub struct TextBoxBottomStrokeWith<X: UserData> {
     /// The attribute `linestyle`, when the element has it.
     pub linestyle: Option<super::vml::StrokeLineStyle>,
     /// The attribute `miterlimit`, when the element has it.
-    pub miterlimit: Option<String>,
+    pub miterlimit: Option<Box<str>>,
     /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `src`, when the element has it.
-    pub src: Option<String>,
+    pub src: Option<Box<str>>,
     /// The attribute `startarrow`, when the element has it.
     pub startarrow: Option<super::vml::StrokeArrowheadType>,
     /// The attribute `startarrowlength`, when the element has it.
@@ -2101,14 +2101,14 @@ pub struct TextBoxBottomStrokeWith<X: UserData> {
     /// The attribute `startarrowwidth`, when the element has it.
     pub startarrowwidth: Option<super::vml::StrokeArrowheadWidth>,
     /// The attribute `o:title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlOfficeDrawingTextBoxBottomStroke,
     /// The attribute `weight`, when the element has it.
-    pub weight: Option<String>,
+    pub weight: Option<Box<str>>,
 }
 
 /// The `o:bottom` element of the tree a read gives: [`TextBoxBottomStrokeWith`] holding nothing in
@@ -2123,13 +2123,13 @@ impl Eq for TextBoxBottomStrokeWith<()> {}
 #[non_exhaustive]
 pub struct TextBoxInteriorStrokeWith<X: UserData> {
     /// The attribute `o:althref`, when the element has it.
-    pub althref: Option<String>,
+    pub althref: Option<Box<str>>,
     /// The attribute `color`, when the element has it.
-    pub color: Option<String>,
+    pub color: Option<Box<str>>,
     /// The attribute `color2`, when the element has it.
-    pub color2: Option<String>,
+    pub color2: Option<Box<str>>,
     /// The attribute `dashstyle`, when the element has it.
-    pub dashstyle: Option<String>,
+    pub dashstyle: Option<Box<str>>,
     /// The attribute `endarrow`, when the element has it.
     pub endarrow: Option<super::vml::StrokeArrowheadType>,
     /// The attribute `endarrowlength`, when the element has it.
@@ -2145,13 +2145,13 @@ pub struct TextBoxInteriorStrokeWith<X: UserData> {
     /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `imagealignshape`, when the element has it.
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
     /// The attribute `imageaspect`, when the element has it.
     pub imageaspect: Option<super::vml::ImageScalingBehavior>,
     /// The attribute `imagesize`, when the element has it.
-    pub imagesize: Option<String>,
+    pub imagesize: Option<Box<str>>,
     /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
     /// The attribute `joinstyle`, when the element has it.
@@ -2159,13 +2159,13 @@ pub struct TextBoxInteriorStrokeWith<X: UserData> {
     /// The attribute `linestyle`, when the element has it.
     pub linestyle: Option<super::vml::StrokeLineStyle>,
     /// The attribute `miterlimit`, when the element has it.
-    pub miterlimit: Option<String>,
+    pub miterlimit: Option<Box<str>>,
     /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `src`, when the element has it.
-    pub src: Option<String>,
+    pub src: Option<Box<str>>,
     /// The attribute `startarrow`, when the element has it.
     pub startarrow: Option<super::vml::StrokeArrowheadType>,
     /// The attribute `startarrowlength`, when the element has it.
@@ -2173,14 +2173,14 @@ pub struct TextBoxInteriorStrokeWith<X: UserData> {
     /// The attribute `startarrowwidth`, when the element has it.
     pub startarrowwidth: Option<super::vml::StrokeArrowheadWidth>,
     /// The attribute `o:title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlOfficeDrawingTextBoxInteriorStroke,
     /// The attribute `weight`, when the element has it.
-    pub weight: Option<String>,
+    pub weight: Option<Box<str>>,
 }
 
 /// The `o:column` element of the tree a read gives: [`TextBoxInteriorStrokeWith`] holding nothing
@@ -2195,13 +2195,13 @@ impl Eq for TextBoxInteriorStrokeWith<()> {}
 #[non_exhaustive]
 pub struct TextBoxLeftStrokeWith<X: UserData> {
     /// The attribute `o:althref`, when the element has it.
-    pub althref: Option<String>,
+    pub althref: Option<Box<str>>,
     /// The attribute `color`, when the element has it.
-    pub color: Option<String>,
+    pub color: Option<Box<str>>,
     /// The attribute `color2`, when the element has it.
-    pub color2: Option<String>,
+    pub color2: Option<Box<str>>,
     /// The attribute `dashstyle`, when the element has it.
-    pub dashstyle: Option<String>,
+    pub dashstyle: Option<Box<str>>,
     /// The attribute `endarrow`, when the element has it.
     pub endarrow: Option<super::vml::StrokeArrowheadType>,
     /// The attribute `endarrowlength`, when the element has it.
@@ -2217,13 +2217,13 @@ pub struct TextBoxLeftStrokeWith<X: UserData> {
     /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `imagealignshape`, when the element has it.
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
     /// The attribute `imageaspect`, when the element has it.
     pub imageaspect: Option<super::vml::ImageScalingBehavior>,
     /// The attribute `imagesize`, when the element has it.
-    pub imagesize: Option<String>,
+    pub imagesize: Option<Box<str>>,
     /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
     /// The attribute `joinstyle`, when the element has it.
@@ -2231,13 +2231,13 @@ pub struct TextBoxLeftStrokeWith<X: UserData> {
     /// The attribute `linestyle`, when the element has it.
     pub linestyle: Option<super::vml::StrokeLineStyle>,
     /// The attribute `miterlimit`, when the element has it.
-    pub miterlimit: Option<String>,
+    pub miterlimit: Option<Box<str>>,
     /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `src`, when the element has it.
-    pub src: Option<String>,
+    pub src: Option<Box<str>>,
     /// The attribute `startarrow`, when the element has it.
     pub startarrow: Option<super::vml::StrokeArrowheadType>,
     /// The attribute `startarrowlength`, when the element has it.
@@ -2245,14 +2245,14 @@ pub struct TextBoxLeftStrokeWith<X: UserData> {
     /// The attribute `startarrowwidth`, when the element has it.
     pub startarrowwidth: Option<super::vml::StrokeArrowheadWidth>,
     /// The attribute `o:title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlOfficeDrawingTextBoxLeftStroke,
     /// The attribute `weight`, when the element has it.
-    pub weight: Option<String>,
+    pub weight: Option<Box<str>>,
 }
 
 /// The `o:left` element of the tree a read gives: [`TextBoxLeftStrokeWith`] holding nothing in
@@ -2267,13 +2267,13 @@ impl Eq for TextBoxLeftStrokeWith<()> {}
 #[non_exhaustive]
 pub struct TextBoxRightStrokeWith<X: UserData> {
     /// The attribute `o:althref`, when the element has it.
-    pub althref: Option<String>,
+    pub althref: Option<Box<str>>,
     /// The attribute `color`, when the element has it.
-    pub color: Option<String>,
+    pub color: Option<Box<str>>,
     /// The attribute `color2`, when the element has it.
-    pub color2: Option<String>,
+    pub color2: Option<Box<str>>,
     /// The attribute `dashstyle`, when the element has it.
-    pub dashstyle: Option<String>,
+    pub dashstyle: Option<Box<str>>,
     /// The attribute `endarrow`, when the element has it.
     pub endarrow: Option<super::vml::StrokeArrowheadType>,
     /// The attribute `endarrowlength`, when the element has it.
@@ -2289,13 +2289,13 @@ pub struct TextBoxRightStrokeWith<X: UserData> {
     /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `imagealignshape`, when the element has it.
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
     /// The attribute `imageaspect`, when the element has it.
     pub imageaspect: Option<super::vml::ImageScalingBehavior>,
     /// The attribute `imagesize`, when the element has it.
-    pub imagesize: Option<String>,
+    pub imagesize: Option<Box<str>>,
     /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
     /// The attribute `joinstyle`, when the element has it.
@@ -2303,13 +2303,13 @@ pub struct TextBoxRightStrokeWith<X: UserData> {
     /// The attribute `linestyle`, when the element has it.
     pub linestyle: Option<super::vml::StrokeLineStyle>,
     /// The attribute `miterlimit`, when the element has it.
-    pub miterlimit: Option<String>,
+    pub miterlimit: Option<Box<str>>,
     /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `src`, when the element has it.
-    pub src: Option<String>,
+    pub src: Option<Box<str>>,
     /// The attribute `startarrow`, when the element has it.
     pub startarrow: Option<super::vml::StrokeArrowheadType>,
     /// The attribute `startarrowlength`, when the element has it.
@@ -2317,14 +2317,14 @@ pub struct TextBoxRightStrokeWith<X: UserData> {
     /// The attribute `startarrowwidth`, when the element has it.
     pub startarrowwidth: Option<super::vml::StrokeArrowheadWidth>,
     /// The attribute `o:title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlOfficeDrawingTextBoxRightStroke,
     /// The attribute `weight`, when the element has it.
-    pub weight: Option<String>,
+    pub weight: Option<Box<str>>,
 }
 
 /// The `o:right` element of the tree a read gives: [`TextBoxRightStrokeWith`] holding nothing in
@@ -2339,13 +2339,13 @@ impl Eq for TextBoxRightStrokeWith<()> {}
 #[non_exhaustive]
 pub struct TextBoxTopStrokeWith<X: UserData> {
     /// The attribute `o:althref`, when the element has it.
-    pub althref: Option<String>,
+    pub althref: Option<Box<str>>,
     /// The attribute `color`, when the element has it.
-    pub color: Option<String>,
+    pub color: Option<Box<str>>,
     /// The attribute `color2`, when the element has it.
-    pub color2: Option<String>,
+    pub color2: Option<Box<str>>,
     /// The attribute `dashstyle`, when the element has it.
-    pub dashstyle: Option<String>,
+    pub dashstyle: Option<Box<str>>,
     /// The attribute `endarrow`, when the element has it.
     pub endarrow: Option<super::vml::StrokeArrowheadType>,
     /// The attribute `endarrowlength`, when the element has it.
@@ -2361,13 +2361,13 @@ pub struct TextBoxTopStrokeWith<X: UserData> {
     /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `imagealignshape`, when the element has it.
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
     /// The attribute `imageaspect`, when the element has it.
     pub imageaspect: Option<super::vml::ImageScalingBehavior>,
     /// The attribute `imagesize`, when the element has it.
-    pub imagesize: Option<String>,
+    pub imagesize: Option<Box<str>>,
     /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
     /// The attribute `joinstyle`, when the element has it.
@@ -2375,13 +2375,13 @@ pub struct TextBoxTopStrokeWith<X: UserData> {
     /// The attribute `linestyle`, when the element has it.
     pub linestyle: Option<super::vml::StrokeLineStyle>,
     /// The attribute `miterlimit`, when the element has it.
-    pub miterlimit: Option<String>,
+    pub miterlimit: Option<Box<str>>,
     /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `src`, when the element has it.
-    pub src: Option<String>,
+    pub src: Option<Box<str>>,
     /// The attribute `startarrow`, when the element has it.
     pub startarrow: Option<super::vml::StrokeArrowheadType>,
     /// The attribute `startarrowlength`, when the element has it.
@@ -2389,14 +2389,14 @@ pub struct TextBoxTopStrokeWith<X: UserData> {
     /// The attribute `startarrowwidth`, when the element has it.
     pub startarrowwidth: Option<super::vml::StrokeArrowheadWidth>,
     /// The attribute `o:title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlOfficeDrawingTextBoxTopStroke,
     /// The attribute `weight`, when the element has it.
-    pub weight: Option<String>,
+    pub weight: Option<Box<str>>,
 }
 
 /// The `o:top` element of the tree a read gives: [`TextBoxTopStrokeWith`] holding nothing in
@@ -2413,13 +2413,13 @@ pub struct UIDefaultColorsWith<X: UserData> {
     /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
     /// The attribute `extrusioncolor`, when the element has it.
-    pub extrusioncolor: Option<String>,
+    pub extrusioncolor: Option<Box<str>>,
     /// The attribute `fillcolor`, when the element has it.
-    pub fillcolor: Option<String>,
+    pub fillcolor: Option<Box<str>>,
     /// The attribute `shadowcolor`, when the element has it.
-    pub shadowcolor: Option<String>,
+    pub shadowcolor: Option<Box<str>>,
     /// The attribute `strokecolor`, when the element has it.
-    pub strokecolor: Option<String>,
+    pub strokecolor: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2443,17 +2443,17 @@ pub struct VMLDiagramWith<X: UserData> {
     /// The attribute `autolayout`, when the element has it.
     pub autolayout: Option<common_simple_types::BooleanValue>,
     /// The attribute `constrainbounds`, when the element has it.
-    pub constrainbounds: Option<String>,
+    pub constrainbounds: Option<Box<str>>,
     /// The attribute `dgmbasetextscale`, when the element has it.
-    pub dgmbasetextscale: Option<String>,
+    pub dgmbasetextscale: Option<Box<str>>,
     /// The attribute `dgmfontsize`, when the element has it.
-    pub dgmfontsize: Option<String>,
+    pub dgmfontsize: Option<Box<str>>,
     /// The attribute `dgmscalex`, when the element has it.
-    pub dgmscalex: Option<String>,
+    pub dgmscalex: Option<Box<str>>,
     /// The attribute `dgmscaley`, when the element has it.
-    pub dgmscaley: Option<String>,
+    pub dgmscaley: Option<Box<str>>,
     /// The attribute `dgmstyle`, when the element has it.
-    pub dgmstyle: Option<String>,
+    pub dgmstyle: Option<Box<str>>,
     /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
     /// The child that is `DiagramRelationshipTable`, when there is one.
@@ -2484,7 +2484,7 @@ pub struct WordprocessingMLFieldSwitchesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlOfficeDrawingWordprocessingMLFieldSwitches,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `o:FieldCodes` element of the tree a read gives: [`WordprocessingMLFieldSwitchesWith`]
@@ -2995,7 +2995,7 @@ impl AsRef<str> for DiagramLayoutType {
 
 impl From<String> for DiagramLayoutType {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 

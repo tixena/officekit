@@ -264,7 +264,7 @@ impl Eq for InkAnnotationFlagWith<()> {}
 #[non_exhaustive]
 pub struct VMLDiagramTextWith<X: UserData> {
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<crate::Unknown>>,

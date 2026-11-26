@@ -8153,7 +8153,7 @@ pub struct AlternateNamesForFontWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingAlternateNamesForFont,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:altName` element of the tree a read gives: [`AlternateNamesForFontWith`] holding nothing
@@ -8173,7 +8173,7 @@ pub struct AlternateStyleNamesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingAlternateStyleNames,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:aliases` element of the tree a read gives: [`AlternateStyleNamesWith`] holding nothing in
@@ -8246,7 +8246,7 @@ impl Eq for AlwaysUseFixedWidthForHangulCharactersWith<()> {}
 #[non_exhaustive]
 pub struct AnchorForImportedExternalContentWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The child that is `ExternalContentImportProperties`, when there is one.
     pub import_properties: Option<Box<ExternalContentImportPropertiesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -8268,7 +8268,7 @@ impl Eq for AnchorForImportedExternalContentWith<()> {}
 #[non_exhaustive]
 pub struct AnchorForSubdocumentLocationWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8410,7 +8410,7 @@ pub struct AssociatedParagraphStyleNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingAssociatedParagraphStyleName,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:style` element of the tree a read gives: [`AssociatedParagraphStyleNameWith`] holding
@@ -8452,7 +8452,7 @@ pub struct AttachedCustomXMLSchemaWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingAttachedCustomXMLSchema,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:attachedSchema` element of the tree a read gives: [`AttachedCustomXMLSchemaWith`] holding
@@ -8467,7 +8467,7 @@ impl Eq for AttachedCustomXMLSchemaWith<()> {}
 #[non_exhaustive]
 pub struct AttachedDocumentTemplateWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8806,7 +8806,7 @@ impl Eq for BidirectionalOverrideWith<()> {}
 #[non_exhaustive]
 pub enum BlockContentWith<X: UserData> {
     /// The element `w:altChunk`, a `AnchorForImportedExternalContent`.
-    AnchorForImportedExternalContent(Box<AnchorForImportedExternalContentWith<X>>),
+    AnchorForImportedExternalContent(AnchorForImportedExternalContentWith<X>),
     /// The element `w:customXml`, a `BlockLevelCustomXMLElement`.
     BlockLevelCustomXMLElement(Box<BlockLevelCustomXMLElementWith<X>>),
     /// The element `w:sdt`, a `BlockLevelStructuredDocumentTag`.
@@ -8913,7 +8913,7 @@ pub struct BlockLevelCustomXMLElementWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `w:uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingBlockLevelCustomXMLElement,
 }
@@ -9010,7 +9010,7 @@ pub struct BoldItalicFontStyleEmbeddingWith<X: UserData> {
     /// The attribute `w:fontKey`, when the element has it.
     pub font_key: Option<common_simple_types::Guid>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `w:subsetted`, when the element has it.
     pub subsetted: Option<common_simple_types::OnOffValue>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -9034,7 +9034,7 @@ pub struct BoldStyleFontStyleEmbeddingWith<X: UserData> {
     /// The attribute `w:fontKey`, when the element has it.
     pub font_key: Option<common_simple_types::Guid>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `w:subsetted`, when the element has it.
     pub subsetted: Option<common_simple_types::OnOffValue>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -9106,7 +9106,7 @@ pub struct BookmarkStartWith<X: UserData> {
     /// The attribute `w:id`, when the element has it.
     pub id: Option<DecimalNumberValue>,
     /// The attribute `w:name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -9533,15 +9533,15 @@ pub enum BorderStylesMember {
 #[non_exhaustive]
 pub struct BottomBorderWith<X: UserData> {
     /// The attribute `r:bottomLeft`, when the element has it.
-    pub bottom_left: Option<String>,
+    pub bottom_left: Option<Box<str>>,
     /// The attribute `r:bottomRight`, when the element has it.
-    pub bottom_right: Option<String>,
+    pub bottom_right: Option<Box<str>>,
     /// The attribute `w:color`, when the element has it.
     pub color: Option<ColorValue>,
     /// The attribute `w:frame`, when the element has it.
     pub frame: Option<common_simple_types::OnOffValue>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `w:shadow`, when the element has it.
     pub shadow: Option<common_simple_types::OnOffValue>,
     /// The attribute `w:space`, when the element has it.
@@ -9736,7 +9736,7 @@ pub struct CellLevelCustomXMLElementWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `w:uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingCellLevelCustomXMLElement,
 }
@@ -9914,7 +9914,7 @@ pub enum CharacterLevelWhitespaceCompressionSettingsMember {
 #[non_exhaustive]
 pub struct CharacterSetSupportedByFontWith<X: UserData> {
     /// The attribute `w:characterSet`, when the element has it.
-    pub character_set: Option<String>,
+    pub character_set: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -9956,14 +9956,14 @@ impl Eq for CharacterSpacingAdjustmentWith<()> {}
 #[non_exhaustive]
 pub struct CharactersWhichCannotBeginALineWith<X: UserData> {
     /// The attribute `w:lang`, when the element has it.
-    pub lang: Option<String>,
+    pub lang: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingCharactersWhichCannotBeginALine,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:noLineBreaksBefore` element of the tree a read gives:
@@ -9978,14 +9978,14 @@ impl Eq for CharactersWhichCannotBeginALineWith<()> {}
 #[non_exhaustive]
 pub struct CharactersWhichCannotEndALineWith<X: UserData> {
     /// The attribute `w:lang`, when the element has it.
-    pub lang: Option<String>,
+    pub lang: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingCharactersWhichCannotEndALine,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:noLineBreaksAfter` element of the tree a read gives:
@@ -10129,7 +10129,7 @@ pub struct ClickAndTypeStyleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingClickAndTypeStyle,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:clickAndTypeStyle` element of the tree a read gives: [`ClickAndTypeStyleWith`] holding
@@ -10174,7 +10174,7 @@ pub struct ColumnContainingEMailAddressWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingColumnContainingEMailAddress,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:addressFieldName` element of the tree a read gives: [`ColumnContainingEMailAddressWith`]
@@ -10237,14 +10237,14 @@ impl Eq for ColumnDelimiterForDataSourceWith<()> {}
 #[non_exhaustive]
 pub struct ComboBoxListItemWith<X: UserData> {
     /// The attribute `w:displayText`, when the element has it.
-    pub display_text: Option<String>,
+    pub display_text: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingComboBoxListItem,
     /// The attribute `w:value`, when the element has it.
-    pub value: Option<String>,
+    pub value: Option<Box<str>>,
 }
 
 /// The `w:listItem` element of the tree a read gives: [`ComboBoxListItemWith`] holding nothing in
@@ -10261,7 +10261,7 @@ pub struct ComboBoxStructuredDocumentTagWith<X: UserData> {
     /// The children that are `ComboBoxListItem`, in order.
     pub combo_box_list_item: Vec<ComboBoxListItemWith<X>>,
     /// The attribute `w:lastValue`, when the element has it.
-    pub last_value: Option<String>,
+    pub last_value: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -10325,17 +10325,17 @@ impl Eq for CommentAnchorRangeStartWith<()> {}
 #[non_exhaustive]
 pub struct CommentContentWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The children that are an item of `BlockContent`, in order.
     pub content: Vec<BlockContentWith<X>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w16du:dateUtc`, when the element has it.
-    pub date_utc: Option<String>,
+    pub date_utc: Option<Box<str>>,
     /// The attribute `w:id`, when the element has it.
     pub id: Option<DecimalNumberValue>,
     /// The attribute `w:initials`, when the element has it.
-    pub initials: Option<String>,
+    pub initials: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -10759,7 +10759,7 @@ impl Eq for CompressPunctuationAtStartOfLineWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct ConditionalFormattingBitmask(pub String);
+pub struct ConditionalFormattingBitmask(pub Box<str>);
 
 /// Conditional Table Style Formatting Types, the simple type `ST_TblStyleOverrideType` (ECMA-376
 /// Part 1, section 17.18.89), kept as its member or as the text the file carried.
@@ -11054,7 +11054,7 @@ impl Eq for ContentCellContentWith<()> {}
 #[non_exhaustive]
 pub struct ContentPartWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -11231,16 +11231,16 @@ impl Eq for CurrentContentsArePlaceholderTextWith<()> {}
 #[non_exhaustive]
 pub struct CustomCompatibilitySettingWith<X: UserData> {
     /// The attribute `w:name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `w:uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingCustomCompatibilitySetting,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:compatSetting` element of the tree a read gives: [`CustomCompatibilitySettingWith`]
@@ -11255,14 +11255,14 @@ impl Eq for CustomCompatibilitySettingWith<()> {}
 #[non_exhaustive]
 pub struct CustomFieldDataWith<X: UserData> {
     /// The attribute `xml:space`, when the element has it.
-    pub space: Option<String>,
+    pub space: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingCustomFieldData,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `w:fldData` element of the tree a read gives: [`CustomFieldDataWith`] holding nothing in
@@ -11373,16 +11373,16 @@ pub enum CustomTabStopTypeMember {
 #[non_exhaustive]
 pub struct CustomXMLAttributeWith<X: UserData> {
     /// The attribute `w:name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `w:uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingCustomXMLAttribute,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:attr` element of the tree a read gives: [`CustomXMLAttributeWith`] holding nothing in
@@ -11422,7 +11422,7 @@ pub struct CustomXMLElementPlaceholderTextWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingCustomXMLElementPlaceholderText,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:placeholder` element of the tree a read gives: [`CustomXMLElementPlaceholderTextWith`]
@@ -11479,7 +11479,7 @@ impl Eq for CustomXMLMarkupDeletionEndWith<()> {}
 #[non_exhaustive]
 pub struct CustomXMLMarkupDeletionStartWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w:id`, when the element has it.
@@ -11523,7 +11523,7 @@ impl Eq for CustomXMLMarkupInsertionEndWith<()> {}
 #[non_exhaustive]
 pub struct CustomXMLMarkupInsertionStartWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w:id`, when the element has it.
@@ -11567,7 +11567,7 @@ impl Eq for CustomXMLMarkupMoveSourceEndWith<()> {}
 #[non_exhaustive]
 pub struct CustomXMLMarkupMoveSourceStartWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w:id`, when the element has it.
@@ -11591,9 +11591,9 @@ impl Eq for CustomXMLMarkupMoveSourceStartWith<()> {}
 #[non_exhaustive]
 pub struct CustomXSLTransformWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `w:solutionID`, when the element has it.
-    pub solution_id: Option<String>,
+    pub solution_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -11631,7 +11631,7 @@ impl Eq for CustomXmlMoveToRangeEndWith<()> {}
 #[non_exhaustive]
 pub struct CustomXmlMoveToRangeStartWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w:id`, when the element has it.
@@ -11724,7 +11724,7 @@ pub struct DataSourceConnectionStringWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingDataSourceConnectionString,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:connectString` element of the tree a read gives: [`DataSourceConnectionStringWith`]
@@ -11739,7 +11739,7 @@ impl Eq for DataSourceConnectionStringWith<()> {}
 #[non_exhaustive]
 pub struct DataSourceFilePathWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -11764,7 +11764,7 @@ pub struct DataSourceTableNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingDataSourceTableName,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:table` element of the tree a read gives: [`DataSourceTableNameWith`] holding nothing in
@@ -11784,7 +11784,7 @@ pub struct DataSourceTypeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingDataSourceType,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:dataType` element of the tree a read gives: [`DataSourceTypeWith`] holding nothing in
@@ -11912,7 +11912,7 @@ pub struct DateDisplayMaskWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingDateDisplayMask,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:dateFormat` element of the tree a read gives: [`DateDisplayMaskWith`] holding nothing in
@@ -12008,7 +12008,7 @@ impl Eq for DateStructuredDocumentTagWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct DecimalNumberValue(pub String);
+pub struct DecimalNumberValue(pub Box<str>);
 
 /// The `w:default` element, Default Checkbox Form Field State (ECMA-376 Part 1, section 17.16.12).
 /// Its schema type is `CT_OnOff`.
@@ -12143,7 +12143,7 @@ pub struct DefaultTableStyleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingDefaultTableStyle,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:defaultTableStyle` element of the tree a read gives: [`DefaultTableStyleWith`] holding
@@ -12163,7 +12163,7 @@ pub struct DefaultTextBoxFormFieldStringWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingDefaultTextBoxFormFieldString,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:default` element of the tree a read gives: [`DefaultTextBoxFormFieldStringWith`] holding
@@ -12177,7 +12177,7 @@ impl Eq for DefaultTextBoxFormFieldStringWith<()> {}
 #[non_exhaustive]
 pub struct DelWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w:id`, when the element has it.
@@ -12202,14 +12202,14 @@ impl Eq for DelWith<()> {}
 #[non_exhaustive]
 pub struct DeletedFieldCodeWith<X: UserData> {
     /// The attribute `xml:space`, when the element has it.
-    pub space: Option<String>,
+    pub space: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingDeletedFieldCode,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `w:delInstrText` element of the tree a read gives: [`DeletedFieldCodeWith`] holding nothing
@@ -12224,11 +12224,11 @@ impl Eq for DeletedFieldCodeWith<()> {}
 #[non_exhaustive]
 pub struct DeletedMathControlCharacterWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w16du:dateUtc`, when the element has it.
-    pub date_utc: Option<String>,
+    pub date_utc: Option<Box<str>>,
     /// The attribute `w:id`, when the element has it.
     pub id: Option<DecimalNumberValue>,
     /// The child that is `RunProperties`, when there is one.
@@ -12252,7 +12252,7 @@ impl Eq for DeletedMathControlCharacterWith<()> {}
 #[non_exhaustive]
 pub struct DeletedRunContentWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The children that are an item of `TrackedRunContent`, in order.
     pub content: Vec<TrackedRunContentWith<X>>,
     /// The attribute `w:date`, when the element has it.
@@ -12278,7 +12278,7 @@ impl Eq for DeletedRunContentWith<()> {}
 #[non_exhaustive]
 pub struct DeletedTableRowWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w:id`, when the element has it.
@@ -12302,14 +12302,14 @@ impl Eq for DeletedTableRowWith<()> {}
 #[non_exhaustive]
 pub struct DeletedTextWith<X: UserData> {
     /// The attribute `xml:space`, when the element has it.
-    pub space: Option<String>,
+    pub space: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingDeletedText,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `w:delText` element of the tree a read gives: [`DeletedTextWith`] holding nothing in
@@ -12329,7 +12329,7 @@ pub struct DescriptionForEntryWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingDescriptionForEntry,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:description` element of the tree a read gives: [`DescriptionForEntryWith`] holding
@@ -12384,7 +12384,7 @@ impl Eq for DifferentFirstPageHeadersAndFootersWith<()> {}
 #[non_exhaustive]
 pub struct DisableFeaturesNotSupportedWith<X: UserData> {
     /// The attribute `w:target`, when the element has it.
-    pub target: Option<String>,
+    pub target: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -13401,7 +13401,7 @@ pub struct DocumentClassificationWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingDocumentClassification,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:documentType` element of the tree a read gives: [`DocumentClassificationWith`] holding
@@ -13441,9 +13441,9 @@ pub struct DocumentEditingRestrictionsWith<X: UserData> {
     /// The attribute `w:algIdExt`, when the element has it.
     pub alg_id_ext: Option<EightDigitHexadecimalValue>,
     /// The attribute `w:algIdExtSource`, when the element has it.
-    pub alg_id_ext_source: Option<String>,
+    pub alg_id_ext_source: Option<Box<str>>,
     /// The attribute `w:algorithmName`, when the element has it.
-    pub algorithm_name: Option<String>,
+    pub algorithm_name: Option<Box<str>>,
     /// The attribute `w:cryptAlgorithmClass`, when the element has it.
     pub crypt_algorithm_class: Option<common_simple_types::CryptographicAlgorithmClasses>,
     /// The attribute `w:cryptAlgorithmSid`, when the element has it.
@@ -13451,13 +13451,13 @@ pub struct DocumentEditingRestrictionsWith<X: UserData> {
     /// The attribute `w:cryptAlgorithmType`, when the element has it.
     pub crypt_algorithm_type: Option<common_simple_types::CryptographicAlgorithmTypes>,
     /// The attribute `w:cryptProvider`, when the element has it.
-    pub crypt_provider: Option<String>,
+    pub crypt_provider: Option<Box<str>>,
     /// The attribute `w:cryptProviderType`, when the element has it.
     pub crypt_provider_type: Option<common_simple_types::CryptographicProviderTypes>,
     /// The attribute `w:cryptProviderTypeExt`, when the element has it.
     pub crypt_provider_type_ext: Option<EightDigitHexadecimalValue>,
     /// The attribute `w:cryptProviderTypeExtSource`, when the element has it.
-    pub crypt_provider_type_ext_source: Option<String>,
+    pub crypt_provider_type_ext_source: Option<Box<str>>,
     /// The attribute `w:cryptSpinCount`, when the element has it.
     pub crypt_spin_count: Option<DecimalNumberValue>,
     /// The attribute `w:edit`, when the element has it.
@@ -13467,13 +13467,13 @@ pub struct DocumentEditingRestrictionsWith<X: UserData> {
     /// The attribute `w:formatting`, when the element has it.
     pub formatting: Option<common_simple_types::OnOffValue>,
     /// The attribute `w:hash`, when the element has it.
-    pub hash: Option<String>,
+    pub hash: Option<Box<str>>,
     /// The attribute `w:hashValue`, when the element has it.
-    pub hash_value: Option<String>,
+    pub hash_value: Option<Box<str>>,
     /// The attribute `w:salt`, when the element has it.
-    pub salt: Option<String>,
+    pub salt: Option<Box<str>>,
     /// The attribute `w:saltValue`, when the element has it.
-    pub salt_value: Option<String>,
+    pub salt_value: Option<Box<str>>,
     /// The attribute `w:spinCount`, when the element has it.
     pub spin_count: Option<DecimalNumberValue>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -13685,7 +13685,7 @@ pub struct DocumentPartCategoryFilterWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingDocumentPartCategoryFilter,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:docPartCategory` element of the tree a read gives: [`DocumentPartCategoryFilterWith`]
@@ -13705,7 +13705,7 @@ pub struct DocumentPartGalleryFilterWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingDocumentPartGalleryFilter,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:docPartGallery` element of the tree a read gives: [`DocumentPartGalleryFilterWith`]
@@ -13750,7 +13750,7 @@ pub struct DocumentPartReferenceWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingDocumentPartReference,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:docPart` element of the tree a read gives: [`DocumentPartReferenceWith`] holding nothing
@@ -14364,7 +14364,7 @@ pub struct DropDownListEntryWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingDropDownListEntry,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:listEntry` element of the tree a read gives: [`DropDownListEntryWith`] holding nothing in
@@ -14425,7 +14425,7 @@ pub struct DropDownListStructuredDocumentTagWith<X: UserData> {
     /// The children that are `ComboBoxListItem`, in order.
     pub combo_box_list_item: Vec<ComboBoxListItemWith<X>>,
     /// The attribute `w:lastValue`, when the element has it.
-    pub last_value: Option<String>,
+    pub last_value: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -14559,7 +14559,7 @@ impl Eq for EastAsianTypographySettingsWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct EightDigitHexadecimalValue(pub String);
+pub struct EightDigitHexadecimalValue(pub Box<str>);
 
 /// The `w:embedSystemFonts` element, Embed Common System Fonts (ECMA-376 Part 1, section 17.8.3.7).
 /// Its schema type is `CT_OnOff`.
@@ -14607,11 +14607,11 @@ impl Eq for EmbedTrueTypeFontsWith<()> {}
 #[non_exhaustive]
 pub struct EmbeddedControlWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `w:name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `w:shapeid`, when the element has it.
-    pub shapeid: Option<String>,
+    pub shapeid: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -14631,7 +14631,7 @@ impl Eq for EmbeddedControlWith<()> {}
 #[non_exhaustive]
 pub struct EmbeddedObjectWith<X: UserData> {
     /// The attribute `w14:anchorId`, when the element has it.
-    pub anchor_id: Option<String>,
+    pub anchor_id: Option<Box<str>>,
     /// The child that is an item of `EmbeddedObjectContent`, when there is one.
     pub content: Option<Box<EmbeddedObjectContentWith<X>>>,
     /// The child that is `DrawingMLObject`, when there is one.
@@ -14689,13 +14689,13 @@ pub struct EmbeddedObjectPropertiesWith<X: UserData> {
     /// The attribute `w:drawAspect`, when the element has it.
     pub draw_aspect: Option<EmbeddedObjectRepresentations>,
     /// The attribute `w:fieldCodes`, when the element has it.
-    pub field_codes: Option<String>,
+    pub field_codes: Option<Box<str>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `w:progId`, when the element has it.
-    pub prog_id: Option<String>,
+    pub prog_id: Option<Box<str>>,
     /// The attribute `w:shapeId`, when the element has it.
-    pub shape_id: Option<String>,
+    pub shape_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -14765,7 +14765,7 @@ pub enum EmbeddedObjectUpdateModesMember {
 #[non_exhaustive]
 pub struct EmbeddedVideoWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -15150,7 +15150,7 @@ pub struct EntryNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingEntryName,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:name` element of the tree a read gives: [`EntryNameWith`] holding nothing in `user_data`.
@@ -15334,14 +15334,14 @@ impl Eq for ExternalDataSourceMergeFieldMappingWith<()> {}
 #[non_exhaustive]
 pub struct FieldCodeWith<X: UserData> {
     /// The attribute `xml:space`, when the element has it.
-    pub space: Option<String>,
+    pub space: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingFieldCode,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `w:instrText` element of the tree a read gives: [`FieldCodeWith`] holding nothing in
@@ -15658,7 +15658,7 @@ impl Eq for FooterWith<()> {}
 #[non_exhaustive]
 pub struct FooterReferenceWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `w:type`, when the element has it.
     pub r#type: Option<HeaderOrFooterType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -15974,7 +15974,7 @@ impl Eq for FormFieldNameWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct FormFieldNameValue(pub String);
+pub struct FormFieldNameValue(pub Box<str>);
 
 /// The `w:ffData` element, Form Field Properties (ECMA-376 Part 1, section 17.16.17). Its schema
 /// type is `CT_FFData`.
@@ -16050,7 +16050,7 @@ impl Eq for FormFieldPropertiesContentWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct FourDigitHexadecimalValue(pub String);
+pub struct FourDigitHexadecimalValue(pub Box<str>);
 
 /// The `w:noResizeAllowed` element, Frame Cannot Be Resized (ECMA-376 Part 1, section 17.15.2.32).
 /// Its schema type is `CT_OnOff`.
@@ -16078,7 +16078,7 @@ impl Eq for FrameCannotBeResizedWith<()> {}
 #[non_exhaustive]
 pub struct FrameLongDescriptionWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -16103,7 +16103,7 @@ pub struct FrameOrFramesetTitleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingFrameOrFramesetTitle,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:title` element of the tree a read gives: [`FrameOrFramesetTitleWith`] holding nothing in
@@ -16150,7 +16150,7 @@ pub struct FrameSizeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingFrameSize,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:sz` element of the tree a read gives: [`FrameSizeWith`] holding nothing in `user_data`.
@@ -16330,7 +16330,7 @@ pub struct FriendlyNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingFriendlyName,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:alias` element of the tree a read gives: [`FriendlyNameWith`] holding nothing in
@@ -16481,13 +16481,13 @@ impl Eq for GlossaryDocumentRootElementWith<()> {}
 #[non_exhaustive]
 pub struct GrammarCheckingSettingsWith<X: UserData> {
     /// The attribute `w:appName`, when the element has it.
-    pub app_name: Option<String>,
+    pub app_name: Option<Box<str>>,
     /// The attribute `w:checkStyle`, when the element has it.
     pub check_style: Option<common_simple_types::OnOffValue>,
     /// The attribute `w:dllVersion`, when the element has it.
-    pub dll_version: Option<String>,
+    pub dll_version: Option<Box<str>>,
     /// The attribute `w:lang`, when the element has it.
-    pub lang: Option<String>,
+    pub lang: Option<Box<str>>,
     /// The attribute `w:nlCheck`, when the element has it.
     pub nl_check: Option<common_simple_types::OnOffValue>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -16496,7 +16496,7 @@ pub struct GrammarCheckingSettingsWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingGrammarCheckingSettings,
     /// The attribute `w:vendorID`, when the element has it.
-    pub vendor_id: Option<String>,
+    pub vendor_id: Option<Box<str>>,
 }
 
 /// The `w:activeWritingStyle` element of the tree a read gives: [`GrammarCheckingSettingsWith`]
@@ -16652,7 +16652,7 @@ pub struct HeaderCellReferenceWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingHeaderCellReference,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:header` element of the tree a read gives: [`HeaderCellReferenceWith`] holding nothing in
@@ -16687,7 +16687,7 @@ impl Eq for HeaderCellsAssociatedWithTableCellWith<()> {}
 #[non_exhaustive]
 pub struct HeaderDefinitionFilePathWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -16734,7 +16734,7 @@ pub enum HeaderOrFooterTypeMember {
 #[non_exhaustive]
 pub struct HeaderReferenceWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `w:type`, when the element has it.
     pub r#type: Option<HeaderOrFooterType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -16814,7 +16814,7 @@ pub enum HelpOrStatusTextTypeMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct HelpTextValue(pub String);
+pub struct HelpTextValue(pub Box<str>);
 
 /// The simple type `ST_HexColorAuto`, kept as its member or as the text the file carried.
 ///
@@ -16996,19 +16996,19 @@ impl Eq for HorizontallyMergedCellWith<()> {}
 #[non_exhaustive]
 pub struct HyperlinkWith<X: UserData> {
     /// The attribute `w:anchor`, when the element has it.
-    pub anchor: Option<String>,
+    pub anchor: Option<Box<str>>,
     /// The children that are an item of `ParagraphContent`, in order.
     pub content: Vec<ParagraphContentWith<X>>,
     /// The attribute `w:docLocation`, when the element has it.
-    pub doc_location: Option<String>,
+    pub doc_location: Option<Box<str>>,
     /// The attribute `w:history`, when the element has it.
     pub history: Option<common_simple_types::OnOffValue>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `w:tgtFrame`, when the element has it.
-    pub tgt_frame: Option<String>,
+    pub tgt_frame: Option<Box<str>>,
     /// The attribute `w:tooltip`, when the element has it.
-    pub tooltip: Option<String>,
+    pub tooltip: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -17336,7 +17336,7 @@ pub struct InlineLevelCustomXMLElementWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `w:uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingInlineLevelCustomXMLElement,
 }
@@ -17362,7 +17362,7 @@ pub struct InlineLevelSmartTagWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `w:uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingInlineLevelSmartTag,
 }
@@ -17439,13 +17439,13 @@ impl Eq for InlineLevelStructuredDocumentTagContentWith<()> {}
 #[non_exhaustive]
 pub struct InsertedMathControlCharacterWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The child that is an item of `InsertedMathControlCharacterContent`, when there is one.
     pub content: Option<Box<InsertedMathControlCharacterContentWith<X>>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w16du:dateUtc`, when the element has it.
-    pub date_utc: Option<String>,
+    pub date_utc: Option<Box<str>>,
     /// The attribute `w:id`, when the element has it.
     pub id: Option<DecimalNumberValue>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -17489,7 +17489,7 @@ impl Eq for InsertedMathControlCharacterContentWith<()> {}
 #[non_exhaustive]
 pub struct InsertedRunContentWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The children that are an item of `TrackedRunContent`, in order.
     pub content: Vec<TrackedRunContentWith<X>>,
     /// The attribute `w:date`, when the element has it.
@@ -17515,7 +17515,7 @@ impl Eq for InsertedRunContentWith<()> {}
 #[non_exhaustive]
 pub struct InsertedTableRowWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w:id`, when the element has it.
@@ -17588,7 +17588,7 @@ pub struct ItalicFontStyleEmbeddingWith<X: UserData> {
     /// The attribute `w:fontKey`, when the element has it.
     pub font_key: Option<common_simple_types::Guid>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `w:subsetted`, when the element has it.
     pub subsetted: Option<common_simple_types::OnOffValue>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -17713,7 +17713,7 @@ pub struct LanguageIDForPhoneticGuideWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingLanguageIDForPhoneticGuide,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:lid` element of the tree a read gives: [`LanguageIDForPhoneticGuideWith`] holding nothing
@@ -17728,16 +17728,16 @@ impl Eq for LanguageIDForPhoneticGuideWith<()> {}
 #[non_exhaustive]
 pub struct LanguagesForRunContentWith<X: UserData> {
     /// The attribute `w:bidi`, when the element has it.
-    pub bidi: Option<String>,
+    pub bidi: Option<Box<str>>,
     /// The attribute `w:eastAsia`, when the element has it.
-    pub east_asia: Option<String>,
+    pub east_asia: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingLanguagesForRunContent,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:lang` element of the tree a read gives: [`LanguagesForRunContentWith`] holding nothing in
@@ -17774,7 +17774,7 @@ pub struct LatentStyleExceptionWith<X: UserData> {
     /// The attribute `w:locked`, when the element has it.
     pub locked: Option<common_simple_types::OnOffValue>,
     /// The attribute `w:name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `w:qFormat`, when the element has it.
     pub q_format: Option<common_simple_types::OnOffValue>,
     /// The attribute `w:semiHidden`, when the element has it.
@@ -17877,7 +17877,7 @@ pub struct LeftBorderWith<X: UserData> {
     /// The attribute `w:frame`, when the element has it.
     pub frame: Option<common_simple_types::OnOffValue>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `w:shadow`, when the element has it.
     pub shadow: Option<common_simple_types::OnOffValue>,
     /// The attribute `w:space`, when the element has it.
@@ -18203,15 +18203,15 @@ pub struct LinkedObjectPropertiesWith<X: UserData> {
     /// The attribute `w:drawAspect`, when the element has it.
     pub draw_aspect: Option<EmbeddedObjectRepresentations>,
     /// The attribute `w:fieldCodes`, when the element has it.
-    pub field_codes: Option<String>,
+    pub field_codes: Option<Box<str>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `w:lockedField`, when the element has it.
     pub locked_field: Option<common_simple_types::OnOffValue>,
     /// The attribute `w:progId`, when the element has it.
-    pub prog_id: Option<String>,
+    pub prog_id: Option<Box<str>>,
     /// The attribute `w:shapeId`, when the element has it.
-    pub shape_id: Option<String>,
+    pub shape_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -18238,7 +18238,7 @@ pub struct LinkedStyleReferenceWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingLinkedStyleReference,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:link` element of the tree a read gives: [`LinkedStyleReferenceWith`] holding nothing in
@@ -18278,7 +18278,7 @@ pub struct ListSeparatorForFieldCodeEvaluationWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingListSeparatorForFieldCodeEvaluation,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:listSeparator` element of the tree a read gives:
@@ -18572,7 +18572,7 @@ impl Eq for MaximumNumberOfConsecutivelyHyphenatedLinesWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct MeasurementInEighthsOfAPoint(pub String);
+pub struct MeasurementInEighthsOfAPoint(pub Box<str>);
 
 /// Measurement in Half-Points, the simple type `ST_HpsMeasure` (ECMA-376 Part 1, section 17.18.42),
 /// kept as its member or as the text the file carried.
@@ -18611,7 +18611,7 @@ pub enum MeasurementInHalfPointsMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct MeasurementInPixels(pub String);
+pub struct MeasurementInPixels(pub Box<str>);
 
 /// Measurement in Points, the simple type `ST_PointMeasure` (ECMA-376 Part 1, section 17.18.68),
 /// kept as the text the file carried.
@@ -18625,7 +18625,7 @@ pub struct MeasurementInPixels(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct MeasurementInPoints(pub String);
+pub struct MeasurementInPoints(pub Box<str>);
 
 /// Measurement or Percentage Value, the simple type `ST_MeasurementOrPercent` (ECMA-376 Part 1,
 /// section 17.18.107), kept as its member or as the text the file carried.
@@ -18804,7 +18804,7 @@ pub struct MergedEMailOrFaxSubjectLineWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingMergedEMailOrFaxSubjectLine,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:mailSubject` element of the tree a read gives: [`MergedEMailOrFaxSubjectLineWith`]
@@ -18861,7 +18861,7 @@ impl Eq for MoveDestinationLocationContainerEndWith<()> {}
 #[non_exhaustive]
 pub struct MoveDestinationLocationContainerStartWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:colFirst`, when the element has it.
     pub col_first: Option<DecimalNumberValue>,
     /// The attribute `w:colLast`, when the element has it.
@@ -18873,7 +18873,7 @@ pub struct MoveDestinationLocationContainerStartWith<X: UserData> {
     /// The attribute `w:id`, when the element has it.
     pub id: Option<DecimalNumberValue>,
     /// The attribute `w:name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -18893,7 +18893,7 @@ impl Eq for MoveDestinationLocationContainerStartWith<()> {}
 #[non_exhaustive]
 pub struct MoveDestinationParagraphWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w:id`, when the element has it.
@@ -18917,7 +18917,7 @@ impl Eq for MoveDestinationParagraphWith<()> {}
 #[non_exhaustive]
 pub struct MoveDestinationRunContentWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The children that are an item of `TrackedRunContent`, in order.
     pub content: Vec<TrackedRunContentWith<X>>,
     /// The attribute `w:date`, when the element has it.
@@ -18965,7 +18965,7 @@ impl Eq for MoveSourceLocationContainerEndWith<()> {}
 #[non_exhaustive]
 pub struct MoveSourceLocationContainerStartWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:colFirst`, when the element has it.
     pub col_first: Option<DecimalNumberValue>,
     /// The attribute `w:colLast`, when the element has it.
@@ -18977,7 +18977,7 @@ pub struct MoveSourceLocationContainerStartWith<X: UserData> {
     /// The attribute `w:id`, when the element has it.
     pub id: Option<DecimalNumberValue>,
     /// The attribute `w:name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -18997,7 +18997,7 @@ impl Eq for MoveSourceLocationContainerStartWith<()> {}
 #[non_exhaustive]
 pub struct MoveSourceParagraphWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w:id`, when the element has it.
@@ -19021,7 +19021,7 @@ impl Eq for MoveSourceParagraphWith<()> {}
 #[non_exhaustive]
 pub struct MoveSourceRunContentWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The children that are an item of `TrackedRunContent`, in order.
     pub content: Vec<TrackedRunContentWith<X>>,
     /// The attribute `w:date`, when the element has it.
@@ -19340,7 +19340,7 @@ impl Eq for NumberingDefinitionsWith<()> {}
 #[non_exhaustive]
 pub struct NumberingFormatWith<X: UserData> {
     /// The attribute `w:format`, when the element has it.
-    pub format: Option<String>,
+    pub format: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -19485,7 +19485,7 @@ pub struct NumberingLevelTextWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingNumberingLevelText,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:lvlText` element of the tree a read gives: [`NumberingLevelTextWith`] holding nothing in
@@ -19505,7 +19505,7 @@ pub struct NumberingStyleDefinitionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingNumberingStyleDefinition,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:styleLink` element of the tree a read gives: [`NumberingStyleDefinitionWith`] holding
@@ -19525,7 +19525,7 @@ pub struct NumberingStyleReferenceWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingNumberingStyleReference,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:numStyleLink` element of the tree a read gives: [`NumberingStyleReferenceWith`] holding
@@ -19560,7 +19560,7 @@ impl Eq for NumberingTemplateCodeWith<()> {}
 #[non_exhaustive]
 pub struct ODSODataSourceFilePathWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -19817,7 +19817,7 @@ pub struct OutputEncodingWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingOutputEncoding,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:encoding` element of the tree a read gives: [`OutputEncodingWith`] holding nothing in
@@ -20152,7 +20152,7 @@ pub struct ParagraphWith<X: UserData> {
     /// The attribute `w14:noSpellErr`, when the element has it.
     pub no_spell_err: Option<common_simple_types::OnOffValue>,
     /// The attribute `w14:paraId`, when the element has it.
-    pub para_id: Option<String>,
+    pub para_id: Option<Box<str>>,
     /// The child that is `ParagraphProperties`, when there is one.
     pub properties: Option<Box<ParagraphPropertiesWith<X>>>,
     /// The attribute `w:rsidDel`, when the element has it.
@@ -20166,7 +20166,7 @@ pub struct ParagraphWith<X: UserData> {
     /// The attribute `w:rsidRPr`, when the element has it.
     pub rsid_r_pr: Option<EightDigitHexadecimalValue>,
     /// The attribute `w14:textId`, when the element has it.
-    pub text_id: Option<String>,
+    pub text_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -20646,11 +20646,11 @@ impl Eq for ParagraphMarkIsAlwaysHiddenWith<()> {}
 #[non_exhaustive]
 pub struct ParagraphMarkRunPropertiesRevisionWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w16du:dateUtc`, when the element has it.
-    pub date_utc: Option<String>,
+    pub date_utc: Option<Box<str>>,
     /// The attribute `w:id`, when the element has it.
     pub id: Option<DecimalNumberValue>,
     /// The child that is `PreviousParagraphMarkRunProperties`, which the schema requires.
@@ -20926,7 +20926,7 @@ pub struct ParentStyleIDWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingParentStyleID,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:basedOn` element of the tree a read gives: [`ParentStyleIDWith`] holding nothing in
@@ -20992,7 +20992,7 @@ impl Eq for PercentageOfDocumentToUseWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct PercentageValueWithoutPercentSign(pub String);
+pub struct PercentageValueWithoutPercentSign(pub Box<str>);
 
 /// The `w:ruby` element, Phonetic Guide (ECMA-376 Part 1, section 17.3.3.25). Its schema type is
 /// `CT_Ruby`.
@@ -21435,7 +21435,7 @@ pub struct PredefinedMergeFieldNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingPredefinedMergeFieldName,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:mappedName` element of the tree a read gives: [`PredefinedMergeFieldNameWith`] holding
@@ -21598,15 +21598,15 @@ impl Eq for PreventTextFramesFromOverlappingWith<()> {}
 #[non_exhaustive]
 pub struct PreviousNumberingFieldPropertiesWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w16du:dateUtc`, when the element has it.
-    pub date_utc: Option<String>,
+    pub date_utc: Option<Box<str>>,
     /// The attribute `w:id`, when the element has it.
     pub id: Option<DecimalNumberValue>,
     /// The attribute `w:original`, when the element has it.
-    pub original: Option<String>,
+    pub original: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -22086,7 +22086,7 @@ pub struct PrimaryStyleNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingPrimaryStyleName,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:name` element of the tree a read gives: [`PrimaryStyleNameWith`] holding nothing in
@@ -22207,7 +22207,7 @@ pub struct ProgrammaticTagWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingProgrammaticTag,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:tag` element of the tree a read gives: [`ProgrammaticTagWith`] holding nothing in
@@ -22308,7 +22308,7 @@ pub struct PropertiesForASingleFontWith<X: UserData> {
     /// The child that is `ItalicFontStyleEmbedding`, when there is one.
     pub italic_font_style_embedding: Option<Box<ItalicFontStyleEmbeddingWith<X>>>,
     /// The attribute `w:name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The child that is `NotATrueTypeOutlineFont`, when there is one.
     pub not_a_truetype_outline_font: Option<Box<NotATrueTypeOutlineFontWith<X>>>,
     /// The child that is `Panose1TypefaceClassificationNumber`, when there is one.
@@ -22345,7 +22345,7 @@ pub struct QueryForDataSourceRecordsWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingQueryForDataSourceRecords,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:query` element of the tree a read gives: [`QueryForDataSourceRecordsWith`] holding
@@ -22365,7 +22365,7 @@ pub struct RadixPointForFieldCodeEvaluationWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingRadixPointForFieldCodeEvaluation,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:decimalSymbol` element of the tree a read gives: [`RadixPointForFieldCodeEvaluationWith`]
@@ -22483,7 +22483,7 @@ pub struct RangePermissionEndWith<X: UserData> {
     /// The attribute `w:displacedByCustomXml`, when the element has it.
     pub displaced_by_custom_xml: Option<DisplacedByCustomXml>,
     /// The attribute `w:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -22509,11 +22509,11 @@ pub struct RangePermissionStartWith<X: UserData> {
     /// The attribute `w:displacedByCustomXml`, when the element has it.
     pub displaced_by_custom_xml: Option<DisplacedByCustomXml>,
     /// The attribute `w:ed`, when the element has it.
-    pub ed: Option<String>,
+    pub ed: Option<Box<str>>,
     /// The attribute `w:edGrp`, when the element has it.
     pub ed_grp: Option<RangePermisionEditingGroup>,
     /// The attribute `w:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -22614,7 +22614,7 @@ impl Eq for RecordIsIncludedInMailMergeWith<()> {}
 #[non_exhaustive]
 pub struct ReferenceToInclusionExclusionDataWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -22634,7 +22634,7 @@ impl Eq for ReferenceToInclusionExclusionDataWith<()> {}
 #[non_exhaustive]
 pub struct ReferenceToPrinterSettingsDataWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -22659,7 +22659,7 @@ pub struct ReferencedCharacterStyleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingReferencedCharacterStyle,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:rStyle` element of the tree a read gives: [`ReferencedCharacterStyleWith`] holding
@@ -22679,7 +22679,7 @@ pub struct ReferencedParagraphStyleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingReferencedParagraphStyle,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:pStyle` element of the tree a read gives: [`ReferencedParagraphStyleWith`] holding
@@ -22699,7 +22699,7 @@ pub struct ReferencedTableStyleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingReferencedTableStyle,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:tblStyle` element of the tree a read gives: [`ReferencedTableStyleWith`] holding nothing
@@ -22716,7 +22716,7 @@ pub struct RegularFontStyleEmbeddingWith<X: UserData> {
     /// The attribute `w:fontKey`, when the element has it.
     pub font_key: Option<common_simple_types::Guid>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `w:subsetted`, when the element has it.
     pub subsetted: Option<common_simple_types::OnOffValue>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -22937,11 +22937,11 @@ impl Eq for RevisionIdentifierForStyleDefinitionWith<()> {}
 #[non_exhaustive]
 pub struct RevisionInformationForParagraphPropertiesWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w16du:dateUtc`, when the element has it.
-    pub date_utc: Option<String>,
+    pub date_utc: Option<Box<str>>,
     /// The attribute `w:id`, when the element has it.
     pub id: Option<DecimalNumberValue>,
     /// The child that is `PreviousParagraphProperties`, which the schema requires.
@@ -22966,11 +22966,11 @@ impl Eq for RevisionInformationForParagraphPropertiesWith<()> {}
 #[non_exhaustive]
 pub struct RevisionInformationForRunPropertiesWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w16du:dateUtc`, when the element has it.
-    pub date_utc: Option<String>,
+    pub date_utc: Option<Box<str>>,
     /// The attribute `w:id`, when the element has it.
     pub id: Option<DecimalNumberValue>,
     /// The child that is `PreviousRunProperties`, which the schema requires.
@@ -22994,11 +22994,11 @@ impl Eq for RevisionInformationForRunPropertiesWith<()> {}
 #[non_exhaustive]
 pub struct RevisionInformationForSectionPropertiesWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w16du:dateUtc`, when the element has it.
-    pub date_utc: Option<String>,
+    pub date_utc: Option<Box<str>>,
     /// The attribute `w:id`, when the element has it.
     pub id: Option<DecimalNumberValue>,
     /// The child that is `PreviousSectionProperties`, when there is one.
@@ -23022,11 +23022,11 @@ impl Eq for RevisionInformationForSectionPropertiesWith<()> {}
 #[non_exhaustive]
 pub struct RevisionInformationForTableCellPropertiesWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w16du:dateUtc`, when the element has it.
-    pub date_utc: Option<String>,
+    pub date_utc: Option<Box<str>>,
     /// The attribute `w:id`, when the element has it.
     pub id: Option<DecimalNumberValue>,
     /// The child that is `PreviousTableCellProperties`, which the schema requires.
@@ -23051,11 +23051,11 @@ impl Eq for RevisionInformationForTableCellPropertiesWith<()> {}
 #[non_exhaustive]
 pub struct RevisionInformationForTableLevelPropertyExceptionsWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w16du:dateUtc`, when the element has it.
-    pub date_utc: Option<String>,
+    pub date_utc: Option<Box<str>>,
     /// The attribute `w:id`, when the element has it.
     pub id: Option<DecimalNumberValue>,
     /// The child that is `PreviousTableLevelPropertyExceptions`, which the schema requires.
@@ -23080,11 +23080,11 @@ impl Eq for RevisionInformationForTableLevelPropertyExceptionsWith<()> {}
 #[non_exhaustive]
 pub struct RevisionInformationForTablePropertiesWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w16du:dateUtc`, when the element has it.
-    pub date_utc: Option<String>,
+    pub date_utc: Option<Box<str>>,
     /// The attribute `w:id`, when the element has it.
     pub id: Option<DecimalNumberValue>,
     /// The child that is `PreviousTableProperties`, which the schema requires.
@@ -23108,11 +23108,11 @@ impl Eq for RevisionInformationForTablePropertiesWith<()> {}
 #[non_exhaustive]
 pub struct RevisionInformationForTableRowPropertiesWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w16du:dateUtc`, when the element has it.
-    pub date_utc: Option<String>,
+    pub date_utc: Option<Box<str>>,
     /// The attribute `w:id`, when the element has it.
     pub id: Option<DecimalNumberValue>,
     /// The child that is `PreviousTableRowProperties`, which the schema requires.
@@ -23201,7 +23201,7 @@ pub struct RightBorderWith<X: UserData> {
     /// The attribute `w:frame`, when the element has it.
     pub frame: Option<common_simple_types::OnOffValue>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `w:shadow`, when the element has it.
     pub shadow: Option<common_simple_types::OnOffValue>,
     /// The attribute `w:space`, when the element has it.
@@ -23362,7 +23362,7 @@ pub struct RowLevelCustomXMLElementWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `w:uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingRowLevelCustomXMLElement,
 }
@@ -23465,19 +23465,19 @@ impl Eq for RunContentColorWith<()> {}
 #[non_exhaustive]
 pub struct RunFontsWith<X: UserData> {
     /// The attribute `w:ascii`, when the element has it.
-    pub ascii: Option<String>,
+    pub ascii: Option<Box<str>>,
     /// The attribute `w:asciiTheme`, when the element has it.
     pub ascii_theme: Option<ThemeFont>,
     /// The attribute `w:cs`, when the element has it.
-    pub cs: Option<String>,
+    pub cs: Option<Box<str>>,
     /// The attribute `w:cstheme`, when the element has it.
     pub cstheme: Option<ThemeFont>,
     /// The attribute `w:eastAsia`, when the element has it.
-    pub east_asia: Option<String>,
+    pub east_asia: Option<Box<str>>,
     /// The attribute `w:eastAsiaTheme`, when the element has it.
     pub east_asia_theme: Option<ThemeFont>,
     /// The attribute `w:hAnsi`, when the element has it.
-    pub h_ansi: Option<String>,
+    pub h_ansi: Option<Box<str>>,
     /// The attribute `w:hAnsiTheme`, when the element has it.
     pub h_ansi_theme: Option<ThemeFont>,
     /// The attribute `w:hint`, when the element has it.
@@ -23745,7 +23745,7 @@ impl Eq for SaveThroughCustomXSLTransformWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct ScriptSubroutineNameValue(pub String);
+pub struct ScriptSubroutineNameValue(pub Box<str>);
 
 /// The `w:scrollbar` element, Scrollbar Display Option (ECMA-376 Part 1, section 17.15.2.37). Its
 /// schema type is `CT_FrameScrollbar`.
@@ -24151,7 +24151,7 @@ pub struct SimpleFieldWith<X: UserData> {
     /// The attribute `w:fldLock`, when the element has it.
     pub fld_lock: Option<common_simple_types::OnOffValue>,
     /// The attribute `w:instr`, when the element has it.
-    pub instr: Option<String>,
+    pub instr: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -24171,9 +24171,9 @@ impl Eq for SimpleFieldWith<()> {}
 #[non_exhaustive]
 pub struct SingleAutomaticCaptioningSettingWith<X: UserData> {
     /// The attribute `w:caption`, when the element has it.
-    pub caption: Option<String>,
+    pub caption: Option<Box<str>>,
     /// The attribute `w:name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -24197,7 +24197,7 @@ pub struct SingleCaptionTypeDefinitionWith<X: UserData> {
     /// The attribute `w:heading`, when the element has it.
     pub heading: Option<DecimalNumberValue>,
     /// The attribute `w:name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `w:noLabel`, when the element has it.
     pub no_label: Option<common_simple_types::OnOffValue>,
     /// The attribute `w:numFmt`, when the element has it.
@@ -24247,14 +24247,14 @@ impl Eq for SingleColumnDefinitionWith<()> {}
 #[non_exhaustive]
 pub struct SingleDocumentVariableWith<X: UserData> {
     /// The attribute `w:name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingSingleDocumentVariable,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:docVar` element of the tree a read gives: [`SingleDocumentVariableWith`] holding nothing
@@ -24454,7 +24454,7 @@ pub enum SourceDocumentTypesMember {
 #[non_exhaustive]
 pub struct SourceFileForFrameWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -24939,7 +24939,7 @@ pub enum StTextScaleMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StTextScalePercent(pub String);
+pub struct StTextScalePercent(pub Box<str>);
 
 /// Standard Date and Time Storage Format, the simple type `ST_DateTime` (ECMA-376 Part 1, section
 /// 17.18.9), kept as the text the file carried.
@@ -24953,7 +24953,7 @@ pub struct StTextScalePercent(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StandardDateAndTimeStorageFormat(pub String);
+pub struct StandardDateAndTimeStorageFormat(pub Box<str>);
 
 /// The `w:pageBreakBefore` element, Start Paragraph on Next Page (ECMA-376 Part 1, section
 /// 17.3.1.23). Its schema type is `CT_OnOff`.
@@ -25007,7 +25007,7 @@ impl Eq for StartingValueWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StatusTextValue(pub String);
+pub struct StatusTextValue(pub Box<str>);
 
 /// The `w:strictFirstAndLastChars` element, Use Strict Kinsoku Rules for Japanese Text (ECMA-376
 /// Part 1, section 17.15.1.82). Its schema type is `CT_OnOff`.
@@ -25322,7 +25322,7 @@ pub struct StyleDefinitionWith<X: UserData> {
     /// The child that is `StyleForNextParagraph`, when there is one.
     pub style_for_next_paragraph: Option<Box<StyleForNextParagraphWith<X>>>,
     /// The attribute `w:styleId`, when the element has it.
-    pub style_id: Option<String>,
+    pub style_id: Option<Box<str>>,
     /// The child that is `TableCellProperties`, when there is one.
     pub table_cell_properties: Option<Box<TableCellPropertiesWith<X>>>,
     /// The child that is `TableRowProperties`, when there is one.
@@ -25378,7 +25378,7 @@ pub struct StyleForNextParagraphWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingStyleForNextParagraph,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:next` element of the tree a read gives: [`StyleForNextParagraphWith`] holding nothing in
@@ -25577,14 +25577,14 @@ impl Eq for SuggestedSortingWith<()> {}
 #[non_exhaustive]
 pub struct SupplementarySmartTagInformationWith<X: UserData> {
     /// The attribute `w:name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `w:namespaceuri`, when the element has it.
-    pub namespaceuri: Option<String>,
+    pub namespaceuri: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `w:url`, when the element has it.
-    pub url: Option<String>,
+    pub url: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingSupplementarySmartTagInformation,
 }
@@ -25751,7 +25751,7 @@ pub struct SymbolCharacterWith<X: UserData> {
     /// The attribute `w:char`, when the element has it.
     pub char: Option<FourDigitHexadecimalValue>,
     /// The attribute `w:font`, when the element has it.
-    pub font: Option<String>,
+    pub font: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -25905,7 +25905,7 @@ pub struct TableCaptionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingTableCaption,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:tblCaption` element of the tree a read gives: [`TableCaptionWith`] holding nothing in
@@ -25921,7 +25921,7 @@ pub struct TableCellWith<X: UserData> {
     /// The children that are an item of `BlockContent`, in order.
     pub content: Vec<BlockContentWith<X>>,
     /// The attribute `w:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The child that is `TableCellProperties`, when there is one.
     pub properties: Option<Box<TableCellPropertiesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -25982,7 +25982,7 @@ impl Eq for TableCellBordersWith<()> {}
 #[non_exhaustive]
 pub struct TableCellDeletionWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w:id`, when the element has it.
@@ -26006,7 +26006,7 @@ impl Eq for TableCellDeletionWith<()> {}
 #[non_exhaustive]
 pub struct TableCellInsertionWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w:id`, when the element has it.
@@ -26282,7 +26282,7 @@ pub struct TableDescriptionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingTableDescription,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:tblDescription` element of the tree a read gives: [`TableDescriptionWith`] holding
@@ -26601,7 +26601,7 @@ pub struct TableRowWith<X: UserData> {
     /// The children that are an item of `ContentCellContent`, in order.
     pub content: Vec<ContentCellContentWith<X>>,
     /// The attribute `w14:paraId`, when the element has it.
-    pub para_id: Option<String>,
+    pub para_id: Option<Box<str>>,
     /// The child that is `TableRowProperties`, when there is one.
     pub properties: Option<Box<TableRowPropertiesWith<X>>>,
     /// The attribute `w:rsidDel`, when the element has it.
@@ -26615,7 +26615,7 @@ pub struct TableRowWith<X: UserData> {
     /// The child that is `TableLevelPropertyExceptions`, when there is one.
     pub table_level_property_exceptions: Option<Box<TableLevelPropertyExceptionsWith<X>>>,
     /// The attribute `w14:textId`, when the element has it.
-    pub text_id: Option<String>,
+    pub text_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -26892,14 +26892,14 @@ pub enum TargetScreenSizesMember {
 #[non_exhaustive]
 pub struct TextWith<X: UserData> {
     /// The attribute `xml:space`, when the element has it.
-    pub space: Option<String>,
+    pub space: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingText,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `w:t` element of the tree a read gives: [`TextWith`] holding nothing in `user_data`.
@@ -26953,7 +26953,7 @@ pub struct TextBoxFormFieldFormattingWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingTextBoxFormFieldFormatting,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:format` element of the tree a read gives: [`TextBoxFormFieldFormattingWith`] holding
@@ -27073,7 +27073,7 @@ pub enum TextBoxFormFieldTypeValuesMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct TextExpansionCompressionPercentage(pub String);
+pub struct TextExpansionCompressionPercentage(pub Box<str>);
 
 /// Text Frame Drop Cap Location, the simple type `ST_DropCap` (ECMA-376 Part 1, section 17.18.20),
 /// kept as its member or as the text the file carried.
@@ -27571,16 +27571,16 @@ pub enum ThemeFontMember {
 #[non_exhaustive]
 pub struct ThemeFontLanguagesWith<X: UserData> {
     /// The attribute `w:bidi`, when the element has it.
-    pub bidi: Option<String>,
+    pub bidi: Option<Box<str>>,
     /// The attribute `w:eastAsia`, when the element has it.
-    pub east_asia: Option<String>,
+    pub east_asia: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingThemeFontLanguages,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:themeFontLang` element of the tree a read gives: [`ThemeFontLanguagesWith`] holding
@@ -27650,7 +27650,7 @@ pub struct TopBorderWith<X: UserData> {
     /// The attribute `w:frame`, when the element has it.
     pub frame: Option<common_simple_types::OnOffValue>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `w:shadow`, when the element has it.
     pub shadow: Option<common_simple_types::OnOffValue>,
     /// The attribute `w:space`, when the element has it.
@@ -27664,9 +27664,9 @@ pub struct TopBorderWith<X: UserData> {
     /// The attribute `w:themeTint`, when the element has it.
     pub theme_tint: Option<TwoDigitHexadecimalValue>,
     /// The attribute `r:topLeft`, when the element has it.
-    pub top_left: Option<String>,
+    pub top_left: Option<Box<str>>,
     /// The attribute `r:topRight`, when the element has it.
-    pub top_right: Option<String>,
+    pub top_right: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -27988,7 +27988,7 @@ impl Eq for TruncateFontHeightsLikeWP6With<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct TwoDigitHexadecimalValue(pub String);
+pub struct TwoDigitHexadecimalValue(pub Box<str>);
 
 /// Two Lines in One Enclosing Character Type, the simple type `ST_CombineBrackets` (ECMA-376 Part
 /// 1, section 17.18.8), kept as its member or as the text the file carried.
@@ -28032,7 +28032,7 @@ pub struct UDLConnectionStringWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingUDLConnectionString,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:udl` element of the tree a read gives: [`UDLConnectionStringWith`] holding nothing in
@@ -28196,7 +28196,7 @@ pub struct UniqueValueForRecordWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingUniqueValueForRecord,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w:uniqueTag` element of the tree a read gives: [`UniqueValueForRecordWith`] holding nothing
@@ -28527,7 +28527,7 @@ impl Eq for UtilizeVMLWhenSavingAsWebPageWith<()> {}
 #[non_exhaustive]
 pub struct VMLObjectWith<X: UserData> {
     /// The attribute `w14:anchorId`, when the element has it.
-    pub anchor_id: Option<String>,
+    pub anchor_id: Option<Box<str>>,
     /// The children that are an item of `VmlElementContent`, in order.
     pub content: Vec<VmlElementContentWith<X>>,
     /// The child that is `EmbeddedControl`, when there is one.
@@ -28679,11 +28679,11 @@ impl Eq for VerticallyMergedCellWith<()> {}
 #[non_exhaustive]
 pub struct VerticallyMergedSplitTableCellsWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<StandardDateAndTimeStorageFormat>,
     /// The attribute `w16du:dateUtc`, when the element has it.
-    pub date_utc: Option<String>,
+    pub date_utc: Option<Box<str>>,
     /// The attribute `w:id`, when the element has it.
     pub id: Option<DecimalNumberValue>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -28861,7 +28861,7 @@ pub enum VmlElementContentWith<X: UserData> {
     SkewTransform(Box<super::vml_office_drawing::SkewTransformWith<X>>),
     /// The element `o:equationxml`, a `StorageForAlternateMathContent`.
     StorageForAlternateMathContent(
-        Box<super::vml_office_drawing::StorageForAlternateMathContentWith<X>>,
+        super::vml_office_drawing::StorageForAlternateMathContentWith<X>,
     ),
     /// The element `v:textbox`, a `TextBox`.
     TextBox(Box<super::vml::TextBoxWith<X>>),
@@ -28918,7 +28918,7 @@ pub enum VmlOfficeDrawingElementContentWith<X: UserData> {
     SkewTransform(Box<super::vml_office_drawing::SkewTransformWith<X>>),
     /// The element `o:equationxml`, a `StorageForAlternateMathContent`.
     StorageForAlternateMathContent(
-        Box<super::vml_office_drawing::StorageForAlternateMathContentWith<X>>,
+        super::vml_office_drawing::StorageForAlternateMathContentWith<X>,
     ),
     /// The element `o:bottom`, a `TextBoxBottomStroke`.
     TextBoxBottomStroke(Box<super::vml_office_drawing::TextBoxBottomStrokeWith<X>>),
@@ -29012,9 +29012,9 @@ pub struct WriteProtectionWith<X: UserData> {
     /// The attribute `w:algIdExt`, when the element has it.
     pub alg_id_ext: Option<EightDigitHexadecimalValue>,
     /// The attribute `w:algIdExtSource`, when the element has it.
-    pub alg_id_ext_source: Option<String>,
+    pub alg_id_ext_source: Option<Box<str>>,
     /// The attribute `w:algorithmName`, when the element has it.
-    pub algorithm_name: Option<String>,
+    pub algorithm_name: Option<Box<str>>,
     /// The attribute `w:cryptAlgorithmClass`, when the element has it.
     pub crypt_algorithm_class: Option<common_simple_types::CryptographicAlgorithmClasses>,
     /// The attribute `w:cryptAlgorithmSid`, when the element has it.
@@ -29022,25 +29022,25 @@ pub struct WriteProtectionWith<X: UserData> {
     /// The attribute `w:cryptAlgorithmType`, when the element has it.
     pub crypt_algorithm_type: Option<common_simple_types::CryptographicAlgorithmTypes>,
     /// The attribute `w:cryptProvider`, when the element has it.
-    pub crypt_provider: Option<String>,
+    pub crypt_provider: Option<Box<str>>,
     /// The attribute `w:cryptProviderType`, when the element has it.
     pub crypt_provider_type: Option<common_simple_types::CryptographicProviderTypes>,
     /// The attribute `w:cryptProviderTypeExt`, when the element has it.
     pub crypt_provider_type_ext: Option<EightDigitHexadecimalValue>,
     /// The attribute `w:cryptProviderTypeExtSource`, when the element has it.
-    pub crypt_provider_type_ext_source: Option<String>,
+    pub crypt_provider_type_ext_source: Option<Box<str>>,
     /// The attribute `w:cryptSpinCount`, when the element has it.
     pub crypt_spin_count: Option<DecimalNumberValue>,
     /// The attribute `w:hash`, when the element has it.
-    pub hash: Option<String>,
+    pub hash: Option<Box<str>>,
     /// The attribute `w:hashValue`, when the element has it.
-    pub hash_value: Option<String>,
+    pub hash_value: Option<Box<str>>,
     /// The attribute `w:recommended`, when the element has it.
     pub recommended: Option<common_simple_types::OnOffValue>,
     /// The attribute `w:salt`, when the element has it.
-    pub salt: Option<String>,
+    pub salt: Option<Box<str>>,
     /// The attribute `w:saltValue`, when the element has it.
-    pub salt_value: Option<String>,
+    pub salt_value: Option<Box<str>>,
     /// The attribute `w:spinCount`, when the element has it.
     pub spin_count: Option<DecimalNumberValue>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -29062,16 +29062,16 @@ impl Eq for WriteProtectionWith<()> {}
 #[non_exhaustive]
 pub struct XMLMappingWith<X: UserData> {
     /// The attribute `w:prefixMappings`, when the element has it.
-    pub prefix_mappings: Option<String>,
+    pub prefix_mappings: Option<Box<str>>,
     /// The attribute `w:storeItemID`, when the element has it.
-    pub store_item_id: Option<String>,
+    pub store_item_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingXMLMapping,
     /// The attribute `w:xpath`, when the element has it.
-    pub xpath: Option<String>,
+    pub xpath: Option<Box<str>>,
 }
 
 /// The `w:dataBinding` element of the tree a read gives: [`XMLMappingWith`] holding nothing in
@@ -32026,23 +32026,22 @@ impl<X: UserData> BlockContentWith<X> {
     {
         officekit_markup_base::into_user_data_match!(self, BlockContentWith;
             plain [
-                CustomXMLMarkupDeletionEnd, CustomXMLMarkupInsertionEnd,
-                CustomXMLMarkupMoveSourceEnd, CustomXmlConflictDelRangeEnd,
-                CustomXmlConflictInsRangeEnd, CustomXmlMoveToRangeEnd, OfficeMath,
-                ProofingErrorAnchor,
+                AnchorForImportedExternalContent, CustomXMLMarkupDeletionEnd,
+                CustomXMLMarkupInsertionEnd, CustomXMLMarkupMoveSourceEnd,
+                CustomXmlConflictDelRangeEnd, CustomXmlConflictInsRangeEnd, CustomXmlMoveToRangeEnd,
+                OfficeMath, ProofingErrorAnchor,
             ]
             boxed [
-                AnchorForImportedExternalContent, BlockLevelCustomXMLElement,
-                BlockLevelStructuredDocumentTag, BookmarkEnd, BookmarkStart, CommentAnchorRangeEnd,
-                CommentAnchorRangeStart, ConflictDelRunTrackChange, ConflictInsRunTrackChange,
-                CustomXMLMarkupDeletionStart, CustomXMLMarkupInsertionStart,
-                CustomXMLMarkupMoveSourceStart, CustomXmlConflictDelRangeStart,
-                CustomXmlConflictInsRangeStart, CustomXmlMoveToRangeStart, DeletedRunContent,
-                InsertedRunContent, MoveDestinationLocationContainerEnd,
-                MoveDestinationLocationContainerStart, MoveDestinationRunContent,
-                MoveSourceLocationContainerEnd, MoveSourceLocationContainerStart,
-                MoveSourceRunContent, OfficeMathParagraph, Paragraph, RangePermissionEnd,
-                RangePermissionStart, Table,
+                BlockLevelCustomXMLElement, BlockLevelStructuredDocumentTag, BookmarkEnd,
+                BookmarkStart, CommentAnchorRangeEnd, CommentAnchorRangeStart,
+                ConflictDelRunTrackChange, ConflictInsRunTrackChange, CustomXMLMarkupDeletionStart,
+                CustomXMLMarkupInsertionStart, CustomXMLMarkupMoveSourceStart,
+                CustomXmlConflictDelRangeStart, CustomXmlConflictInsRangeStart,
+                CustomXmlMoveToRangeStart, DeletedRunContent, InsertedRunContent,
+                MoveDestinationLocationContainerEnd, MoveDestinationLocationContainerStart,
+                MoveDestinationRunContent, MoveSourceLocationContainerEnd,
+                MoveSourceLocationContainerStart, MoveSourceRunContent, OfficeMathParagraph,
+                Paragraph, RangePermissionEnd, RangePermissionStart, Table,
             ]
         )
     }
@@ -32055,9 +32054,7 @@ impl officekit_markup_base::Read for BlockContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_W, "altChunk")) => {
-                Self::AnchorForImportedExternalContent(Box::new(item.read()))
-            }
+            Some((NS_W, "altChunk")) => Self::AnchorForImportedExternalContent(item.read()),
             Some((NS_W, "customXml")) => Self::BlockLevelCustomXMLElement(Box::new(item.read())),
             Some((NS_W, "sdt")) => Self::BlockLevelStructuredDocumentTag(Box::new(item.read())),
             Some((NS_W, "bookmarkEnd")) => Self::BookmarkEnd(Box::new(item.read())),
@@ -32172,7 +32169,7 @@ impl officekit_markup_base::Write for BlockContent {
 
 impl<X: UserData> From<AnchorForImportedExternalContentWith<X>> for BlockContentWith<X> {
     fn from(arm: AnchorForImportedExternalContentWith<X>) -> Self {
-        Self::AnchorForImportedExternalContent(Box::new(arm))
+        Self::AnchorForImportedExternalContent(arm)
     }
 }
 
@@ -36143,7 +36140,7 @@ impl AsRef<str> for ConditionalFormattingBitmask {
 
 impl From<String> for ConditionalFormattingBitmask {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -39790,7 +39787,7 @@ impl AsRef<str> for DecimalNumberValue {
 
 impl From<String> for DecimalNumberValue {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -45334,7 +45331,7 @@ impl AsRef<str> for EightDigitHexadecimalValue {
 
 impl From<String> for EightDigitHexadecimalValue {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -48872,7 +48869,7 @@ impl AsRef<str> for FormFieldNameValue {
 
 impl From<String> for FormFieldNameValue {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -49149,7 +49146,7 @@ impl AsRef<str> for FourDigitHexadecimalValue {
 
 impl From<String> for FourDigitHexadecimalValue {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -51191,7 +51188,7 @@ impl AsRef<str> for HelpTextValue {
 
 impl From<String> for HelpTextValue {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -55461,7 +55458,7 @@ impl AsRef<str> for MeasurementInEighthsOfAPoint {
 
 impl From<String> for MeasurementInEighthsOfAPoint {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -55598,7 +55595,7 @@ impl AsRef<str> for MeasurementInPixels {
 
 impl From<String> for MeasurementInPixels {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -55642,7 +55639,7 @@ impl AsRef<str> for MeasurementInPoints {
 
 impl From<String> for MeasurementInPoints {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -61243,7 +61240,7 @@ impl AsRef<str> for PercentageValueWithoutPercentSign {
 
 impl From<String> for PercentageValueWithoutPercentSign {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -67890,7 +67887,7 @@ impl AsRef<str> for ScriptSubroutineNameValue {
 
 impl From<String> for ScriptSubroutineNameValue {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -70598,7 +70595,7 @@ impl AsRef<str> for StTextScalePercent {
 
 impl From<String> for StTextScalePercent {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -70643,7 +70640,7 @@ impl AsRef<str> for StandardDateAndTimeStorageFormat {
 
 impl From<String> for StandardDateAndTimeStorageFormat {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -70785,7 +70782,7 @@ impl AsRef<str> for StatusTextValue {
 
 impl From<String> for StatusTextValue {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -75733,7 +75730,7 @@ impl AsRef<str> for TextExpansionCompressionPercentage {
 
 impl From<String> for TextExpansionCompressionPercentage {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -78375,7 +78372,7 @@ impl AsRef<str> for TwoDigitHexadecimalValue {
 
 impl From<String> for TwoDigitHexadecimalValue {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -80394,6 +80391,7 @@ impl<X: UserData> VmlElementContentWith<X> {
         officekit_markup_base::into_user_data_match!(self, VmlElementContentWith;
             plain [
                 Complex, SetOfFormulas, SetOfHandles, ShapeClippingPath,
+                StorageForAlternateMathContent,
             ]
             boxed [
                 ArcSegment, BezierCurve, Callout, DigitalSignatureLine, DocumentBackground,
@@ -80401,8 +80399,8 @@ impl<X: UserData> VmlElementContentWith<X> {
                 MultiplePathLine, NewShapeDefaults, Oval, Rectangle, RoundedRectangle, ShadowEffect,
                 ShapeDefinition, ShapeFillExtendedProperties, ShapeFillProperties, ShapeGroup,
                 ShapeLayoutProperties, ShapePath, ShapeProtections, ShapeTemplate, SkewTransform,
-                StorageForAlternateMathContent, TextBox, TextBoxBottomStroke, TextBoxInteriorStroke,
-                TextBoxLeftStroke, TextBoxRightStroke, TextBoxTopStroke, TextLayoutPath, VMLDiagram,
+                TextBox, TextBoxBottomStroke, TextBoxInteriorStroke, TextBoxLeftStroke,
+                TextBoxRightStroke, TextBoxTopStroke, TextLayoutPath, VMLDiagram,
             ]
         )
     }
@@ -80446,9 +80444,7 @@ impl officekit_markup_base::Read for VmlElementContent {
             Some((NS_O, "lock")) => Self::ShapeProtections(Box::new(item.read())),
             Some((NS_V, "shapetype")) => Self::ShapeTemplate(Box::new(item.read())),
             Some((NS_O, "skew")) => Self::SkewTransform(Box::new(item.read())),
-            Some((NS_O, "equationxml")) => {
-                Self::StorageForAlternateMathContent(Box::new(item.read()))
-            }
+            Some((NS_O, "equationxml")) => Self::StorageForAlternateMathContent(item.read()),
             Some((NS_V, "textbox")) => Self::TextBox(Box::new(item.read())),
             Some((NS_O, "bottom")) => Self::TextBoxBottomStroke(Box::new(item.read())),
             Some((NS_O, "column")) => Self::TextBoxInteriorStroke(Box::new(item.read())),
@@ -80716,7 +80712,7 @@ impl<X: UserData> From<super::vml_office_drawing::StorageForAlternateMathContent
     for VmlElementContentWith<X>
 {
     fn from(arm: super::vml_office_drawing::StorageForAlternateMathContentWith<X>) -> Self {
-        Self::StorageForAlternateMathContent(Box::new(arm))
+        Self::StorageForAlternateMathContent(arm)
     }
 }
 
@@ -80940,9 +80936,9 @@ impl<X: UserData> VmlOfficeDrawingElementContentWith<X> {
                 Box::new((*node).into_user_data()),
             ),
             Self::StorageForAlternateMathContent(node) => {
-                VmlOfficeDrawingElementContentWith::StorageForAlternateMathContent(Box::new(
-                    (*node).into_user_data(),
-                ))
+                VmlOfficeDrawingElementContentWith::StorageForAlternateMathContent(
+                    node.into_user_data(),
+                )
             }
             Self::TextBoxBottomStroke(node) => {
                 VmlOfficeDrawingElementContentWith::TextBoxBottomStroke(Box::new(
@@ -80991,9 +80987,7 @@ impl officekit_markup_base::Read for VmlOfficeDrawingElementContent {
             Some((NS_O, "shapelayout")) => Self::ShapeLayoutProperties(Box::new(item.read())),
             Some((NS_O, "lock")) => Self::ShapeProtections(Box::new(item.read())),
             Some((NS_O, "skew")) => Self::SkewTransform(Box::new(item.read())),
-            Some((NS_O, "equationxml")) => {
-                Self::StorageForAlternateMathContent(Box::new(item.read()))
-            }
+            Some((NS_O, "equationxml")) => Self::StorageForAlternateMathContent(item.read()),
             Some((NS_O, "bottom")) => Self::TextBoxBottomStroke(Box::new(item.read())),
             Some((NS_O, "column")) => Self::TextBoxInteriorStroke(Box::new(item.read())),
             Some((NS_O, "left")) => Self::TextBoxLeftStroke(Box::new(item.read())),
@@ -81132,7 +81126,7 @@ impl<X: UserData> From<super::vml_office_drawing::StorageForAlternateMathContent
     for VmlOfficeDrawingElementContentWith<X>
 {
     fn from(arm: super::vml_office_drawing::StorageForAlternateMathContentWith<X>) -> Self {
-        Self::StorageForAlternateMathContent(Box::new(arm))
+        Self::StorageForAlternateMathContent(arm)
     }
 }
 

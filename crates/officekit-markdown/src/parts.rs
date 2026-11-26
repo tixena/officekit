@@ -159,9 +159,9 @@ where
 /// The run's fonts: `name` for every script but East Asian text.
 fn fonts(name: &str) -> RunPropertiesContent {
     let mut fonts = RunFonts::default();
-    fonts.ascii = Some(name.to_owned());
-    fonts.cs = Some(name.to_owned());
-    fonts.h_ansi = Some(name.to_owned());
+    fonts.ascii = Some(Box::from(name));
+    fonts.cs = Some(Box::from(name));
+    fonts.h_ansi = Some(Box::from(name));
     RunPropertiesContent::from(fonts)
 }
 
@@ -185,7 +185,7 @@ fn based_on_normal(
     run: Vec<RunPropertiesContent>,
 ) -> StyleDefinition {
     let mut parent = ParentStyleID::default();
-    parent.val = Some(NORMAL.to_owned());
+    parent.val = Some(Box::from(NORMAL));
     let mut definition = style(StyleTypesMember::Paragraph, id, name);
     definition.paragraph_properties_p_pr_general = paragraph.map(Box::new);
     definition.parent_style_id = Some(Box::new(parent));
@@ -270,7 +270,7 @@ fn numbering_level(
     let mut number_format = NumberingFormat::default();
     number_format.val = Some(format.into());
     let mut marker = NumberingLevelText::default();
-    marker.val = Some(text);
+    marker.val = Some(text.into());
     let mut indentation = ParagraphIndentation::default();
     indentation.hanging = Some("360".to_owned().into());
     indentation.left = Some(level_indent(level).into());
@@ -305,11 +305,11 @@ fn spacing(before: Option<&str>, after: &str) -> Box<SpacingBetweenLinesAndAbove
 /// A style of `kind` with its id and name, and nothing else.
 fn style(kind: StyleTypesMember, id: &str, name: &str) -> StyleDefinition {
     let mut primary = PrimaryStyleName::default();
-    primary.val = Some(name.to_owned());
+    primary.val = Some(Box::from(name));
     let mut definition = StyleDefinition::default();
     definition.primary_style_name = Some(Box::new(primary));
     definition.r#type = Some(kind.into());
-    definition.style_id = Some(id.to_owned());
+    definition.style_id = Some(Box::from(id));
     definition
 }
 

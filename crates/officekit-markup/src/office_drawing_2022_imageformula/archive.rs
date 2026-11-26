@@ -222,7 +222,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::ImageFormula)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ImageFormulaMirror {
-    pub formula: Option<String>,
+    pub formula: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

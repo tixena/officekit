@@ -117,7 +117,7 @@ fn package_with(body: &str, prefix: &str, parts: &[(&str, &str)], settings: bool
 #[cfg(feature = "transitional")]
 fn header_reference(kind: &str, id: &str) -> SectionPropertiesContent {
     let mut reference = HeaderReference::default();
-    reference.id = Some(id.to_owned());
+    reference.id = Some(Box::from(id));
     reference.r#type = Some(HeaderOrFooterType::from(kind.to_owned()));
     SectionPropertiesContent::from(reference)
 }
@@ -125,7 +125,7 @@ fn header_reference(kind: &str, id: &str) -> SectionPropertiesContent {
 #[cfg(feature = "transitional")]
 fn footer_reference(kind: &str, id: &str) -> SectionPropertiesContent {
     let mut reference = FooterReference::default();
-    reference.id = Some(id.to_owned());
+    reference.id = Some(Box::from(id));
     reference.r#type = Some(HeaderOrFooterType::from(kind.to_owned()));
     SectionPropertiesContent::from(reference)
 }
@@ -254,13 +254,13 @@ fn references(section: &DocumentFinalSectionProperties) -> Vec<(&'static str, St
                 Some((
                     "header",
                     spelled(found.r#type.as_ref().unwrap()),
-                    found.id.clone().unwrap(),
+                    found.id.clone().unwrap().into(),
                 ))
             } else if let SectionPropertiesContent::FooterReference(found) = item {
                 Some((
                     "footer",
                     spelled(found.r#type.as_ref().unwrap()),
-                    found.id.clone().unwrap(),
+                    found.id.clone().unwrap().into(),
                 ))
             } else {
                 None

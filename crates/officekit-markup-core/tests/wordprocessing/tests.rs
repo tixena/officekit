@@ -131,7 +131,7 @@ fn on_off_reads_every_spelling_and_writes_the_canonical_one() {
         OnOffValue::from("yes".to_owned()).value(),
         Err(ValueError::new("ST_OnOff", "yes".to_owned()))
     );
-    assert_eq!(OnOffValue::from(false).0, "false");
+    assert_eq!(&*OnOffValue::from(false).0, "false");
 }
 
 #[test]
@@ -216,12 +216,12 @@ fn the_block_enums_convert_and_refuse_an_alt_chunk() {
 #[test]
 fn a_paragraph_built_from_default_writes_and_reads_back() {
     let mut text = Text::default();
-    text.value = "Hola".to_owned();
+    text.value = Box::from("Hola");
     let mut run = TextRun::default();
     run.content = vec![TextRunContent::from(text)];
     let mut paragraph = Paragraph::default();
     paragraph.content = vec![ParagraphContent::from(run)];
-    paragraph.para_id = Some("1A2B3C4D".to_owned());
+    paragraph.para_id = Some(Box::from("1A2B3C4D"));
     let element = write::paragraph(&paragraph, &mut Scope::default());
     // The writer declares the prefixes its element uses, and the reader keeps
     // an element's own declarations.
@@ -273,6 +273,6 @@ fn an_element_a_part_reader_loads_reads_as_a_typed_paragraph() {
     assert!(matches!(
         paragraph.content.as_slice(),
         [ParagraphContent::TextRun(run)]
-            if matches!(run.content.as_slice(), [TextRunContent::Text(text)] if text.value == "a & b")
+            if matches!(run.content.as_slice(), [TextRunContent::Text(text)] if &*text.value == "a & b")
     ));
 }

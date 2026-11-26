@@ -241,27 +241,27 @@ pub struct AxisTitleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BodyPrMirror {
     pub anchor: Option<drawing::TextAnchoringTypes>,
-    pub anchor_ctr: Option<String>,
+    pub anchor_ctr: Option<Box<str>>,
     pub b_ins: Option<drawing::StCoordinate32>,
-    pub compat_ln_spc: Option<String>,
+    pub compat_ln_spc: Option<Box<str>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub force_aa: Option<String>,
-    pub from_word_art: Option<String>,
+    pub force_aa: Option<Box<str>>,
+    pub from_word_art: Option<Box<str>>,
     pub horz_overflow: Option<drawing::TextHorizontalOverflowTypes>,
     pub l_ins: Option<drawing::StCoordinate32>,
     pub num_col: Option<drawing::TextColumnCount>,
     pub preset_text_warp: Option<Box<drawing::PresetTextWarp>>,
     pub r_ins: Option<drawing::StCoordinate32>,
     pub rot: Option<drawing::Angle>,
-    pub rtl_col: Option<String>,
+    pub rtl_col: Option<Box<str>>,
     pub scene3d: Option<Box<drawing::Scene3d>>,
     pub spc_col: Option<drawing::PositiveCoordinatePoint>,
-    pub spc_first_last_para: Option<String>,
+    pub spc_first_last_para: Option<Box<str>>,
     pub t_ins: Option<drawing::StCoordinate32>,
     pub text3d_content: Option<Box<drawing::Text3DContent>>,
     pub text_autofit_content: Option<Box<drawing::TextAutofitContent>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub upright: Option<String>,
+    pub upright: Option<Box<str>>,
     pub user_data: (),
     pub vert: Option<drawing::VerticalTextTypes>,
     pub vert_overflow: Option<drawing::TextVerticalOverflow>,
@@ -334,7 +334,7 @@ pub struct ChartStyleMirror {
     pub gridline_major: Box<super::GridlineMajor>,
     pub gridline_minor: Box<super::GridlineMinor>,
     pub hi_lo_line: Box<super::HiLoLine>,
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub leader_line: Box<super::LeaderLine>,
     pub legend_style_entry: Box<super::LegendStyleEntry>,
     pub plot_area: Box<super::PlotArea>,
@@ -357,8 +357,8 @@ pub struct ChartStyleMirror {
 pub struct ColorStyleMirror {
     pub content: Vec<drawing::ColorContent>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub id: Option<String>,
-    pub meth: Option<String>,
+    pub id: Option<Box<str>>,
+    pub meth: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub variation: Vec<super::Variation>,
@@ -484,7 +484,7 @@ pub struct DataPointMarkerMirror {
 #[rkyv(remote = super::DataPointMarkerLayout)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataPointMarkerLayoutMirror {
-    pub size: Option<String>,
+    pub size: Option<Box<str>>,
     pub symbol: Option<super::MarkerStyle>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -511,13 +511,13 @@ pub struct DataPointWireframeMirror {
 #[rkyv(remote = super::DataSeries)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataSeriesMirror {
-    pub doughnut_hole_size: Option<String>,
+    pub doughnut_hole_size: Option<Box<str>>,
     pub drop_lines: Option<super::Boolean>,
-    pub gap_depth: Option<String>,
-    pub gap_width: Option<String>,
+    pub gap_depth: Option<Box<str>>,
+    pub gap_width: Option<Box<str>>,
     pub hilo_lines: Option<super::Boolean>,
     pub marker_visible: Option<super::Boolean>,
-    pub overlap: Option<String>,
+    pub overlap: Option<Box<str>>,
     pub series_lines: Option<super::Boolean>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -556,32 +556,32 @@ pub struct DataTableStyleEntryMirror {
 #[rkyv(remote = super::DefRPr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefRPrMirror {
-    pub alt_lang: Option<String>,
-    pub b: Option<String>,
+    pub alt_lang: Option<Box<str>>,
+    pub b: Option<Box<str>>,
     pub baseline: Option<drawing::Percentage>,
-    pub bmk: Option<String>,
+    pub bmk: Option<Box<str>>,
     pub cap: Option<drawing::TextCapTypes>,
     pub click_hyperlink: Option<Box<drawing::ClickHyperlink>>,
     pub complex_script_font: Option<Box<drawing::ComplexScriptFont>>,
-    pub dirty: Option<String>,
+    pub dirty: Option<Box<str>>,
     pub east_asian_font: Option<Box<drawing::EastAsianFont>>,
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
-    pub err: Option<String>,
+    pub err: Option<Box<str>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
     pub highlight_color: Option<Box<drawing::HighlightColor>>,
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     pub kern: Option<drawing::TextNonNegativePoint>,
-    pub kumimoji: Option<String>,
-    pub lang: Option<String>,
+    pub kumimoji: Option<Box<str>>,
+    pub lang: Option<Box<str>>,
     pub latin_font: Option<Box<drawing::LatinFont>>,
     pub mouse_over_hyperlink: Option<Box<drawing::MouseOverHyperlink>>,
-    pub no_proof: Option<String>,
-    pub normalize_h: Option<String>,
+    pub no_proof: Option<Box<str>>,
+    pub normalize_h: Option<Box<str>>,
     pub outline: Option<Box<drawing::Outline>>,
     pub right_to_left_run: Option<Box<drawing::RightToLeftRun>>,
-    pub smt_clean: Option<String>,
-    pub smt_id: Option<String>,
+    pub smt_clean: Option<Box<str>>,
+    pub smt_id: Option<Box<str>>,
     pub spc: Option<drawing::TextPoint>,
     pub strike: Option<drawing::TextStrikeType>,
     pub symbol_font: Option<Box<drawing::SymbolFont>>,
@@ -696,7 +696,7 @@ pub struct FloorMirror {
 pub struct FontRefMirror {
     pub content: Option<Box<drawing::ColorContent>>,
     pub idx: Option<drawing::FontCollectionIndex>,
-    pub mods: Option<String>,
+    pub mods: Option<Box<str>>,
     pub style_clr: Option<Box<super::StyleClr>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -804,7 +804,7 @@ pub struct LegendStyleEntryMirror {
 pub struct LineWidthScaleMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -917,7 +917,7 @@ pub struct StyleClrMirror {
     pub content: Vec<drawing::ColorTransformContent>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1046,12 +1046,12 @@ pub struct VariationMirror {
 #[rkyv(remote = super::View3D)]
 #[rkyv(attr(non_exhaustive))]
 pub struct View3DMirror {
-    pub depth_percent: Option<String>,
-    pub height_percent: Option<String>,
-    pub perspective: Option<String>,
+    pub depth_percent: Option<Box<str>>,
+    pub height_percent: Option<Box<str>>,
+    pub perspective: Option<Box<str>>,
     pub r_ang_ax: Option<super::Boolean>,
-    pub rot_x: Option<String>,
-    pub rot_y: Option<String>,
+    pub rot_x: Option<Box<str>>,
+    pub rot_y: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

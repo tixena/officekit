@@ -182,7 +182,7 @@ fn old_picture() -> DrawingMLObject {
         (3_135_822, 2_000_000),
     );
     let mut extension = Extension::default();
-    extension.uri = Some("{28A0092B-C50C-407E-A947-70E740481C1C}".to_owned());
+    extension.uri = Some(Box::from("{28A0092B-C50C-407E-A947-70E740481C1C}"));
     let mut extensions = ExtensionList::default();
     extensions.extension = alloc::vec![extension];
     for item in &mut drawing.content {
@@ -219,6 +219,7 @@ fn first_embed(run: &TextRun) -> String {
         .first()
         .and_then(|inline| blip_of(inline).embed.clone())
         .unwrap()
+        .into()
 }
 
 #[test]
@@ -393,7 +394,7 @@ fn only_the_first_picture_of_the_run_changes() {
     let pictures = inlines(&run);
     let embeds: Vec<Option<String>> = pictures
         .iter()
-        .map(|inline| blip_of(inline).embed.clone())
+        .map(|inline| blip_of(inline).embed.clone().map(String::from))
         .collect();
     assert_eq!(embeds.len(), 2);
     assert_ne!(embeds[0].as_deref(), Some("rId7"));
@@ -457,15 +458,15 @@ fn sizes(inline: &InlineDrawingMLObject) -> [(String, String); 2] {
                 .as_deref()
         })
         .unwrap();
-    let text = |value: Option<&String>| value.cloned().unwrap_or_default();
+    let text = |value: Option<&str>| value.map_or_default(String::from);
     [
         (
-            text(frame.cx.as_ref().map(|found| &found.0)),
-            text(frame.cy.as_ref().map(|found| &found.0)),
+            text(frame.cx.as_ref().map(|found| &*found.0)),
+            text(frame.cy.as_ref().map(|found| &*found.0)),
         ),
         (
-            text(transform.cx.as_ref().map(|found| &found.0)),
-            text(transform.cy.as_ref().map(|found| &found.0)),
+            text(transform.cx.as_ref().map(|found| &*found.0)),
+            text(transform.cy.as_ref().map(|found| &*found.0)),
         ),
     ]
 }
@@ -506,7 +507,7 @@ fn an_embedded_inline_picture_holds_what_it_was_given() {
     let properties = &inline.drawing_object_non_visual_properties;
     assert_eq!(properties.descr.as_deref(), Some("Logo"));
     assert_eq!(properties.name.as_deref(), Some("Picture 7"));
-    assert_eq!(properties.id.as_ref().map(|id| id.0.as_str()), Some("7"));
+    assert_eq!(properties.id.as_ref().map(|id| &*id.0), Some("7"));
     let blip = blip_of(inline);
     assert_eq!(blip.embed.as_deref(), Some("rId1"));
     assert_eq!(blip.link, None);
@@ -562,9 +563,9 @@ fn a_document_holding_inline_pictures_validates_clean_and_reads_them_back() {
             let inline = inline_of(drawing);
             let properties = &inline.drawing_object_non_visual_properties;
             Some((
-                properties.id.as_ref().map(|found| found.0.clone()),
-                properties.descr.clone(),
-                blip_of(inline).embed.clone(),
+                properties.id.as_ref().map(|found| found.0.clone().into()),
+                properties.descr.clone().map(String::from),
+                blip_of(inline).embed.clone().map(String::from),
             ))
         })
         .collect();

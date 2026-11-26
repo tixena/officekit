@@ -369,11 +369,11 @@ impl Eq for ExtLstWith<()> {}
 #[non_exhaustive]
 pub struct InstanceWith<X: UserData> {
     /// The attribute `authorId`, when the element has it.
-    pub author_id: Option<String>,
+    pub author_id: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `time`, when the element has it.
-    pub time: Option<String>,
+    pub time: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -415,7 +415,7 @@ pub struct RxnWith<X: UserData> {
     /// The children that are `Instance`, in order.
     pub instance: Vec<InstanceWith<X>>,
     /// The attribute `type`, when the element has it.
-    pub r#type: Option<String>,
+    pub r#type: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

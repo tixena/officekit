@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct ChartTrackingRefBasedMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -251,13 +251,13 @@ pub struct ExtLstMirror {
 pub struct GuideMirror {
     pub clr: Box<super::Clr>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub id: Option<String>,
-    pub name: Option<String>,
+    pub id: Option<Box<str>>,
+    pub name: Option<Box<str>>,
     pub orient: Option<super::super::presentation::Direction>,
-    pub pos: Option<String>,
+    pub pos: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub user_drawn: Option<String>,
+    pub user_drawn: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -274,8 +274,8 @@ pub struct NotesGuideLstMirror {
 #[rkyv(remote = super::ParentCm)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ParentCmMirror {
-    pub author_id: Option<String>,
-    pub idx: Option<String>,
+    pub author_id: Option<Box<str>>,
+    pub idx: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -284,19 +284,19 @@ pub struct ParentCmMirror {
 #[rkyv(remote = super::PresenceInfo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PresenceInfoMirror {
-    pub provider_id: Option<String>,
+    pub provider_id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub user_id: Option<String>,
+    pub user_id: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PrstTrans)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrstTransMirror {
-    pub inv_x: Option<String>,
-    pub inv_y: Option<String>,
-    pub prst: Option<String>,
+    pub inv_x: Option<Box<str>>,
+    pub inv_y: Option<Box<str>>,
+    pub prst: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -316,7 +316,7 @@ pub struct SldGuideLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ThreadingInfoMirror {
     pub parent_cm: Option<Box<super::ParentCm>>,
-    pub time_zone_bias: Option<String>,
+    pub time_zone_bias: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

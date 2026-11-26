@@ -279,7 +279,7 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct PivotCacheDynamicArrayWith<X: UserData> {
     /// The attribute `ref`, when the element has it.
-    pub r#ref: Option<String>,
+    pub r#ref: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

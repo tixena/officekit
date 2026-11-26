@@ -223,7 +223,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct AbsPathMirror {
     pub unknown: Option<Box<crate::Unknown>>,
-    pub url: Option<String>,
+    pub url: Option<Box<str>>,
     pub user_data: (),
 }
 

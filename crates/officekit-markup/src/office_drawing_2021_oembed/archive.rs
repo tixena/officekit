@@ -233,8 +233,8 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct OembedSharedMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub src_url: Option<String>,
-    pub r#type: Option<String>,
+    pub src_url: Option<Box<str>>,
+    pub r#type: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

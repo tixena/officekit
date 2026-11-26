@@ -33,7 +33,7 @@ macro_rules! run_node {
     ($node:ty) => {{
         let mut node = <$node>::default();
         node.sz = Some(TextFontSize::from("1800".to_owned()));
-        node.b = Some("1".to_owned());
+        node.b = Some(Box::from("1"));
         node.fill_properties_content = Some(Box::new(solid_fill("FF0000")));
         node
     }};
@@ -56,7 +56,7 @@ fn alignment(member: TextAlignmentTypesMember) -> TextAlignmentTypes {
 
 fn character_bullet() -> TextBulletContent {
     let mut bullet = CharacterBullet::default();
-    bullet.char = Some("*".to_owned());
+    bullet.char = Some(Box::from("*"));
     TextBulletContent::from(bullet)
 }
 
@@ -68,7 +68,7 @@ fn hex(text: &str) -> ColorContent {
 
 fn latin(typeface: &str) -> LatinFont {
     let mut font = LatinFont::default();
-    font.typeface = Some(typeface.to_owned());
+    font.typeface = Some(Box::from(typeface));
     font
 }
 
@@ -112,17 +112,14 @@ fn a_body_style_level_over_a_default_text_style_level_holds_both() {
 
     let levels = TextLevels::of(&body).over(&TextLevels::of(&defaults));
     let first = &levels.levels[0];
-    assert_eq!(
-        first.mar_l.as_ref().map(|value| value.0.as_str()),
-        Some("342900")
-    );
+    assert_eq!(first.mar_l.as_ref().map(|value| &*value.0), Some("342900"));
     let size = first
         .default_text_run_properties
         .as_deref()
         .map(RunLevel::run_properties);
     assert_eq!(
         size.and_then(|found| found.sz).map(|value| value.0),
-        Some("1800".to_owned())
+        Some(Box::from("1800"))
     );
 }
 
@@ -205,14 +202,14 @@ fn a_bullet_choice_replaces_another_and_the_colour_stays() {
 #[test]
 fn the_run_properties_of_two_levels_are_laid_value_by_value() {
     let mut near = DefaultTextRunProperties::default();
-    near.b = Some("1".to_owned());
+    near.b = Some(Box::from("1"));
     let mut far = DefaultTextRunProperties::default();
     far.sz = Some(TextFontSize::from("1800".to_owned()));
     far.fill_properties_content = Some(Box::new(solid_fill("0000FF")));
 
     let laid = paragraph_over(&with_run(near), &with_run(far));
     let mut expected = DefaultTextRunProperties::default();
-    expected.b = Some("1".to_owned());
+    expected.b = Some(Box::from("1"));
     expected.sz = Some(TextFontSize::from("1800".to_owned()));
     expected.fill_properties_content = Some(Box::new(solid_fill("0000FF")));
     assert_eq!(laid, with_run(expected));
@@ -243,7 +240,7 @@ fn a_run_child_is_replaced_whole() {
     calibri.panose = Some(Panose1Number::from("020F0502020204030204".to_owned()));
     let mut far = TextRunProperties::default();
     far.latin_font = Some(Box::new(calibri));
-    far.b = Some("1".to_owned());
+    far.b = Some(Box::from("1"));
 
     let laid = run_over(&near, &far);
     assert_eq!(laid.latin_font.as_deref(), Some(&latin("Arial")));
@@ -391,7 +388,7 @@ fn nothing_over_nothing_is_nothing() {
 #[test]
 fn a_value_over_the_default_and_the_default_over_a_value_are_the_value() {
     let mut hyperlink = ClickHyperlink::default();
-    hyperlink.id = Some("rId3".to_owned());
+    hyperlink.id = Some(Box::from("rId3"));
     let mut run = DefaultTextRunProperties::default();
     run.latin_font = Some(Box::new(latin("Arial")));
     run.click_hyperlink = Some(Box::new(hyperlink));
@@ -408,7 +405,7 @@ fn a_value_over_the_default_and_the_default_over_a_value_are_the_value() {
 #[test]
 fn a_run_over_the_default_is_the_run() {
     let mut hyperlink = ClickHyperlink::default();
-    hyperlink.id = Some("rId7".to_owned());
+    hyperlink.id = Some(Box::from("rId7"));
     let mut run = run_node!(TextRunProperties);
     run.click_hyperlink = Some(Box::new(hyperlink));
 

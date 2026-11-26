@@ -232,15 +232,15 @@ pub struct ExtLstMirror {
 #[rkyv(remote = super::Taskpane)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TaskpaneMirror {
-    pub dockstate: Option<String>,
+    pub dockstate: Option<Box<str>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub locked: Option<String>,
-    pub row: Option<String>,
+    pub locked: Option<Box<str>>,
+    pub row: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub visibility: Option<String>,
+    pub visibility: Option<Box<str>>,
     pub webextensionref: Box<super::Webextensionref>,
-    pub width: Option<String>,
+    pub width: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -256,7 +256,7 @@ pub struct TaskpanesMirror {
 #[rkyv(remote = super::Webextensionref)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WebextensionrefMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

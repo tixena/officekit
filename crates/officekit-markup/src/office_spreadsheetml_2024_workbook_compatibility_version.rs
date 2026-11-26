@@ -271,14 +271,14 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct VersionWith<X: UserData> {
     /// The attribute `setVersion`, when the element has it.
-    pub set_version: Option<String>,
+    pub set_version: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2024WorkbookCompatibilityVersionVersion,
     /// The attribute `warnBelowVersion`, when the element has it.
-    pub warn_below_version: Option<String>,
+    pub warn_below_version: Option<Box<str>>,
 }
 
 /// The `xlwcv:version` element of the tree a read gives: [`VersionWith`] holding nothing in

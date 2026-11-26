@@ -226,13 +226,13 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct AuthorMirror {
     pub ext_lst_extension_list: Option<Box<super::ExtLstExtensionList>>,
-    pub id: Option<String>,
-    pub initials: Option<String>,
-    pub name: Option<String>,
-    pub provider_id: Option<String>,
+    pub id: Option<Box<str>>,
+    pub initials: Option<Box<str>>,
+    pub name: Option<Box<str>>,
+    pub provider_id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub user_id: Option<String>,
+    pub user_id: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -248,23 +248,23 @@ pub struct AuthorLstMirror {
 #[rkyv(remote = super::Cm)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CmMirror {
-    pub assigned_to: Option<String>,
-    pub author_id: Option<String>,
-    pub complete: Option<String>,
+    pub assigned_to: Option<Box<str>>,
+    pub author_id: Option<Box<str>>,
+    pub complete: Option<Box<str>>,
     pub content: Vec<super::CommentContent>,
-    pub created: Option<String>,
-    pub due_date: Option<String>,
+    pub created: Option<Box<str>>,
+    pub due_date: Option<Box<str>>,
     pub ext_lst_comment_properties_extension_list:
         Option<Box<super::ExtLstCommentPropertiesExtensionList>>,
-    pub id: Option<String>,
-    pub likes: Option<String>,
+    pub id: Option<Box<str>>,
+    pub likes: Option<Box<str>>,
     pub pos: Option<Box<super::Pos>>,
-    pub priority: Option<String>,
+    pub priority: Option<Box<str>>,
     pub reply_lst: Option<Box<super::ReplyLst>>,
-    pub start_date: Option<String>,
+    pub start_date: Option<Box<str>>,
     pub status: Option<super::CommentStatus>,
-    pub tags: Option<String>,
-    pub title: Option<String>,
+    pub tags: Option<Box<str>>,
+    pub title: Option<Box<str>>,
     pub tx_body: Option<Box<super::TxBody>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -283,7 +283,7 @@ pub struct CmLstMirror {
 #[rkyv(remote = super::CommentRel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentRelMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -320,14 +320,14 @@ pub struct PosMirror {
 #[rkyv(remote = super::Reply)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReplyMirror {
-    pub author_id: Option<String>,
-    pub created: Option<String>,
+    pub author_id: Option<Box<str>>,
+    pub created: Option<Box<str>>,
     pub ext_lst_comment_properties_extension_list:
         Option<Box<super::ExtLstCommentPropertiesExtensionList>>,
-    pub id: Option<String>,
-    pub likes: Option<String>,
+    pub id: Option<Box<str>>,
+    pub likes: Option<Box<str>>,
     pub status: Option<super::CommentStatus>,
-    pub tags: Option<String>,
+    pub tags: Option<Box<str>>,
     pub tx_body: Option<Box<super::TxBody>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),

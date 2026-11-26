@@ -270,9 +270,9 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct SymExWith<X: UserData> {
     /// The attribute `w16se:char`, when the element has it.
-    pub char: Option<String>,
+    pub char: Option<Box<str>>,
     /// The attribute `w16se:font`, when the element has it.
-    pub font: Option<String>,
+    pub font: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

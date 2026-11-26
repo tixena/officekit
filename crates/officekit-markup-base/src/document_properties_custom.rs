@@ -318,11 +318,11 @@ pub struct CustomFilePropertyWith<X: UserData> {
     /// The attribute `fmtid`, when the element has it.
     pub fmtid: Option<super::common_simple_types::Guid>,
     /// The attribute `linkTarget`, when the element has it.
-    pub link_target: Option<String>,
+    pub link_target: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `pid`, when the element has it.
-    pub pid: Option<String>,
+    pub pid: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<crate::Unknown>>,

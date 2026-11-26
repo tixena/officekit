@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct AutoRefreshMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 impl From<AutoRefreshMirror> for super::AutoRefresh {

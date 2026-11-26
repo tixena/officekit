@@ -316,12 +316,12 @@ pub fn custom(geometry: &CustomGeometry, width: i64, height: i64) -> Outline {
         .map(|((path, steps), fill)| PresetPath {
             commands: steps,
             fill,
-            h: path.h.as_ref().map(|h| h.0.as_str()),
+            h: path.h.as_ref().map(|h| &*h.0),
             stroke: path
                 .stroke
                 .as_deref()
                 .is_none_or(|stroke| !matches!(stroke.trim(), "false" | "0")),
-            w: path.w.as_ref().map(|w| w.0.as_str()),
+            w: path.w.as_ref().map(|w| &*w.0),
         })
         .collect();
     let rect_texts = geometry.shape_text_rectangle.as_deref().map(|found| {

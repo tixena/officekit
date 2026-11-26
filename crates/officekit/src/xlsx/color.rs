@@ -12,11 +12,11 @@
 //! let xlsx = Xlsx::new(SpreadsheetKind::Workbook)?;
 //! let (theme, palette) = (xlsx.theme_colors()?, xlsx.palette()?);
 //! let mut fill = ForegroundColor::default();
-//! fill.indexed = Some("10".to_owned());
-//! fill.tint = Some("-0.5".to_owned());
+//! fill.indexed = Some("10".into());
+//! fill.tint = Some("-0.5".into());
 //! let found = color(&SheetColor::from(&fill), &theme, &palette);
 //! assert_eq!(found, Some(Rgba::new(128, 0, 0, 100_000)));
-//! fill.indexed = Some("64".to_owned());
+//! fill.indexed = Some("64".into());
 //! let stated = SheetColor::from(&fill);
 //! assert_eq!(resolved(&stated, &theme, &palette), Some(Resolved::SystemForeground));
 //! assert_eq!(stated.with_tint([200, 200, 200]), Rgba::new(100, 100, 100, 100_000));

@@ -743,7 +743,7 @@ pub struct AutoCatWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2012ChartAutoCat,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c15:autoCat` element of the tree a read gives: [`AutoCatWith`] holding nothing in
@@ -763,7 +763,7 @@ pub struct Bubble3DWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2012ChartBubble3D,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c15:bubble3D` element of the tree a read gives: [`Bubble3DWith`] holding nothing in
@@ -1935,7 +1935,7 @@ pub struct ExplosionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2012ChartExplosion,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c15:explosion` element of the tree a read gives: [`ExplosionWith`] holding nothing in
@@ -1955,7 +1955,7 @@ pub struct FWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2012ChartF,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `c15:f` element of the tree a read gives: [`FWith`] holding nothing in `user_data`.
@@ -2214,7 +2214,7 @@ pub struct InvertIfNegativeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2012ChartInvertIfNegative,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c15:invertIfNegative` element of the tree a read gives: [`InvertIfNegativeWith`] holding
@@ -2317,9 +2317,9 @@ impl Eq for MarkerWith<()> {}
 #[non_exhaustive]
 pub struct NumFmtWith<X: UserData> {
     /// The attribute `formatCode`, when the element has it.
-    pub format_code: Option<String>,
+    pub format_code: Option<Box<str>>,
     /// The attribute `sourceLinked`, when the element has it.
-    pub source_linked: Option<String>,
+    pub source_linked: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2698,7 +2698,7 @@ pub struct ShowDataLabelsRangeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2012ChartShowDataLabelsRange,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c15:showDataLabelsRange` element of the tree a read gives: [`ShowDataLabelsRangeWith`]
@@ -2718,7 +2718,7 @@ pub struct ShowLeaderLinesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2012ChartShowLeaderLines,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c15:showLeaderLines` element of the tree a read gives: [`ShowLeaderLinesWith`] holding
@@ -2773,7 +2773,7 @@ pub struct SqrefWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2012ChartSqref,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `c15:sqref` element of the tree a read gives: [`SqrefWith`] holding nothing in `user_data`.
@@ -2811,7 +2811,7 @@ pub struct TxfldGUIDWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2012ChartTxfldGUID,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `c15:txfldGUID` element of the tree a read gives: [`TxfldGUIDWith`] holding nothing in
@@ -3142,7 +3142,7 @@ pub struct XForSaveWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2012ChartXForSave,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c15:xForSave` element of the tree a read gives: [`XForSaveWith`] holding nothing in

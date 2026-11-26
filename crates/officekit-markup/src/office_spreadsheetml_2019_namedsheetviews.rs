@@ -374,7 +374,7 @@ pub static SORT_RULE_CONTENT_TAGS: officekit_markup_base::Accept = officekit_mar
 #[non_exhaustive]
 pub struct ColumnFilterWith<X: UserData> {
     /// The attribute `colId`, when the element has it.
-    pub col_id: Option<String>,
+    pub col_id: Option<Box<str>>,
     /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<DxfWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
@@ -382,7 +382,7 @@ pub struct ColumnFilterWith<X: UserData> {
     /// The children that are `Filter`, in order.
     pub filter: Vec<FilterWith<X>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -693,13 +693,13 @@ impl Eq for ExtLstWith<()> {}
 #[non_exhaustive]
 pub struct FilterWith<X: UserData> {
     /// The attribute `colId`, when the element has it.
-    pub col_id: Option<String>,
+    pub col_id: Option<Box<str>>,
     /// The child that is an item of `spreadsheet::AutoFilterColumnContent`, when there is one.
     pub content: Option<Box<spreadsheet::AutoFilterColumnContentWith<X>>>,
     /// The attribute `hiddenButton`, when the element has it.
-    pub hidden_button: Option<String>,
+    pub hidden_button: Option<Box<str>>,
     /// The attribute `showButton`, when the element has it.
-    pub show_button: Option<String>,
+    pub show_button: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -721,9 +721,9 @@ pub struct NamedSheetViewWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The children that are `NsvFilter`, in order.
     pub nsv_filter: Vec<NsvFilterWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -771,13 +771,13 @@ pub struct NsvFilterWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `filterId`, when the element has it.
-    pub filter_id: Option<String>,
+    pub filter_id: Option<Box<str>>,
     /// The attribute `ref`, when the element has it.
-    pub r#ref: Option<String>,
+    pub r#ref: Option<Box<str>>,
     /// The child that is `SortRules`, when there is one.
     pub sort_rules: Option<Box<SortRulesWith<X>>>,
     /// The attribute `tableId`, when the element has it.
-    pub table_id: Option<String>,
+    pub table_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -797,19 +797,19 @@ impl Eq for NsvFilterWith<()> {}
 #[non_exhaustive]
 pub struct RichSortConditionWith<X: UserData> {
     /// The attribute `customList`, when the element has it.
-    pub custom_list: Option<String>,
+    pub custom_list: Option<Box<str>>,
     /// The attribute `descending`, when the element has it.
-    pub descending: Option<String>,
+    pub descending: Option<Box<str>>,
     /// The attribute `dxfId`, when the element has it.
-    pub dxf_id: Option<String>,
+    pub dxf_id: Option<Box<str>>,
     /// The attribute `iconId`, when the element has it.
-    pub icon_id: Option<String>,
+    pub icon_id: Option<Box<str>>,
     /// The attribute `iconSet`, when the element has it.
     pub icon_set: Option<office_spreadsheetml_2009_9_main::IconSetType>,
     /// The attribute `ref`, when the element has it.
-    pub r#ref: Option<String>,
+    pub r#ref: Option<Box<str>>,
     /// The attribute `richSortKey`, when the element has it.
-    pub rich_sort_key: Option<String>,
+    pub rich_sort_key: Option<Box<str>>,
     /// The attribute `sortBy`, when the element has it.
     pub sort_by: Option<spreadsheet::SortBy>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -831,17 +831,17 @@ impl Eq for RichSortConditionWith<()> {}
 #[non_exhaustive]
 pub struct SortConditionWith<X: UserData> {
     /// The attribute `customList`, when the element has it.
-    pub custom_list: Option<String>,
+    pub custom_list: Option<Box<str>>,
     /// The attribute `descending`, when the element has it.
-    pub descending: Option<String>,
+    pub descending: Option<Box<str>>,
     /// The attribute `dxfId`, when the element has it.
-    pub dxf_id: Option<String>,
+    pub dxf_id: Option<Box<str>>,
     /// The attribute `iconId`, when the element has it.
-    pub icon_id: Option<String>,
+    pub icon_id: Option<Box<str>>,
     /// The attribute `iconSet`, when the element has it.
     pub icon_set: Option<office_spreadsheetml_2009_9_main::IconSetType>,
     /// The attribute `ref`, when the element has it.
-    pub r#ref: Option<String>,
+    pub r#ref: Option<Box<str>>,
     /// The attribute `sortBy`, when the element has it.
     pub sort_by: Option<spreadsheet::SortBy>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -863,13 +863,13 @@ impl Eq for SortConditionWith<()> {}
 #[non_exhaustive]
 pub struct SortRuleWith<X: UserData> {
     /// The attribute `colId`, when the element has it.
-    pub col_id: Option<String>,
+    pub col_id: Option<Box<str>>,
     /// The child that is an item of `SortRuleContent`, when there is one.
     pub content: Option<Box<SortRuleContentWith<X>>>,
     /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<DxfWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -910,7 +910,7 @@ impl Eq for SortRuleContentWith<()> {}
 #[non_exhaustive]
 pub struct SortRulesWith<X: UserData> {
     /// The attribute `caseSensitive`, when the element has it.
-    pub case_sensitive: Option<String>,
+    pub case_sensitive: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `sortMethod`, when the element has it.

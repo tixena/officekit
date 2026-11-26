@@ -222,10 +222,10 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::DataFieldFutureData)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataFieldFutureDataMirror {
-    pub source_field: Option<String>,
+    pub source_field: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub version: Option<String>,
+    pub version: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -234,7 +234,7 @@ pub struct DataFieldFutureDataMirror {
 pub struct IgnorableAfterVersionMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub version: Option<String>,
+    pub version: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -243,7 +243,7 @@ pub struct IgnorableAfterVersionMirror {
 pub struct ImplicitMeasureSupportMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 impl From<DataFieldFutureDataMirror> for super::DataFieldFutureData {

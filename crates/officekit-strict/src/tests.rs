@@ -185,7 +185,7 @@ fn a_transitional_paragraph_writes_as_strict() {
     let mut properties = ParagraphProperties::default();
     properties.paragraph_alignment = Some(Box::new(alignment));
     let mut characters = WordText::default();
-    characters.value = "Hello".to_owned();
+    characters.value = Box::from("Hello");
     let mut paragraph = Paragraph::default();
     paragraph.content = vec![ParagraphContent::from(run_of(TextRunContent::from(
         characters,
@@ -202,8 +202,8 @@ fn a_transitional_paragraph_writes_as_strict() {
 #[test]
 fn spreadsheet_string_elements_read_back_with_their_space() {
     let mut text = SpreadsheetText::default();
-    text.space = Some("preserve".to_owned());
-    text.value = " two".to_owned();
+    text.space = Some(Box::from("preserve"));
+    text.value = Box::from(" two");
     assert_eq!(
         written(text.to_strict().unwrap()),
         format!("<x:t xmlns:x=\"{X_STRICT}\" xml:space=\"preserve\"> two</x:t>")
@@ -212,8 +212,8 @@ fn spreadsheet_string_elements_read_back_with_their_space() {
     assert_eq!(read_text.space, text.space);
     assert_eq!(read_text.value, text.value);
     let mut value = CellValue::default();
-    value.space = Some("preserve".to_owned());
-    value.value = " 1".to_owned();
+    value.space = Some(Box::from("preserve"));
+    value.value = Box::from(" 1");
     let read_value = through_strict(&value);
     assert_eq!(read_value.space, value.space);
     assert_eq!(read_value.value, value.value);
@@ -222,7 +222,7 @@ fn spreadsheet_string_elements_read_back_with_their_space() {
 #[test]
 fn spreadsheet_text_with_no_space_writes_no_attribute() {
     let mut text = SpreadsheetText::default();
-    text.value = "two".to_owned();
+    text.value = Box::from("two");
     assert_eq!(
         written(text.to_strict().unwrap()),
         format!("<x:t xmlns:x=\"{X_STRICT}\">two</x:t>")
@@ -237,7 +237,7 @@ fn a_read_holds_xml_space_on_the_field_of_spreadsheet_text() {
         )))
         .unwrap();
         assert_eq!(text.space.as_deref(), Some("preserve"));
-        assert_eq!(text.value, " two");
+        assert_eq!(text.value, Box::from(" two"));
         assert_eq!(text.unknown().unwrap().attributes, []);
     }
 }
@@ -328,7 +328,7 @@ fn a_loose_vml_picture_takes_the_wrapper_with_no_fallback() {
 #[test]
 fn an_embedded_object_takes_the_wrapper_and_its_attribute_rules() {
     let mut ole = EmbeddedOLEObject::default();
-    ole.prog_id = Some("PBrush".to_owned());
+    ole.prog_id = Some(Box::from("PBrush"));
     ole.r#type = Some(OLEType::from("Embed".to_owned()));
     let mut link = LinkedObjectProperties::default();
     link.locked_field = Some(OnOffValue::from("on".to_owned()));
@@ -576,8 +576,8 @@ fn renamed_children_and_attributes_take_their_strict_names() {
     let started = through_strict(&indentation);
     assert_eq!((started.start, started.left), (measure("10"), None));
     let mut cell = CellCalcCell::default();
-    cell.i = Some("1".to_owned());
-    cell.r#ref = Some("A1".to_owned());
+    cell.i = Some(Box::from("1"));
+    cell.r#ref = Some(Box::from("A1"));
     let mut chain = CalculationChainInfo::default();
     chain.cell_calc_cell = vec![cell];
     let cells = through_strict(&chain).cell_calc_cell;
@@ -588,8 +588,8 @@ fn renamed_children_and_attributes_take_their_strict_names() {
     );
     assert_eq!(first.i.as_deref(), Some("1"));
     let mut range = ProtectedRange::default();
-    range.name = Some("r".to_owned());
-    range.security_descriptor_attribute = Some("O:WD".to_owned());
+    range.name = Some(Box::from("r"));
+    range.security_descriptor_attribute = Some(Box::from("O:WD"));
     range.sqref = Some(ReferenceSequence::from("A1".to_owned()));
     let protected = through_strict(&range);
     assert_eq!(protected.security_descriptor_attribute, None);
@@ -597,7 +597,7 @@ fn renamed_children_and_attributes_take_their_strict_names() {
         protected
             .security_descriptor
             .iter()
-            .map(|descriptor| descriptor.value.as_str())
+            .map(|descriptor| &*descriptor.value)
             .collect::<Vec<_>>(),
         ["O:WD"]
     );
@@ -643,7 +643,7 @@ fn a_font_drops_a_character_set_code_with_no_name() {
         charset.val = Some(TwoDigitHexadecimalValue::from(code.to_owned()));
         let mut font = PropertiesForASingleFont::default();
         font.character_set_supported_by_font = Some(Box::new(charset));
-        font.name = Some(name.to_owned());
+        font.name = Some(Box::from(name));
         font
     };
     let character_set =
@@ -663,7 +663,7 @@ fn a_font_drops_a_character_set_code_with_no_name() {
     );
     let mut given = font("Wingdings", "02");
     if let Some(charset) = given.character_set_supported_by_font.as_mut() {
-        charset.character_set = Some("windows-1252".to_owned());
+        charset.character_set = Some(Box::from("windows-1252"));
     }
     assert_eq!(
         character_set(through_strict(&given)).as_deref(),
@@ -710,8 +710,8 @@ fn legacy_content_has_no_strict_form() {
     compatibility.ignore_page_break_from_continuous_section_break = Some(Box::default());
     assert_eq!(refused(&compatibility), Some("footnoteLayoutLikeWW8"));
     let mut protection = DocumentEditingRestrictions::default();
-    protection.hash = Some("AAAA".to_owned());
-    protection.salt = Some("AAAA".to_owned());
+    protection.hash = Some(Box::from("AAAA"));
+    protection.salt = Some(Box::from("AAAA"));
     assert_eq!(refused(&protection), Some("documentProtection/@hash"));
 }
 
@@ -917,7 +917,7 @@ fn a_chart_na_as_blank_reads_and_writes_the_unprefixed_val_word_writes() {
     let node = DispNaAsBlank::from_strict(&element(&text)).unwrap();
     assert_eq!(node.val.as_deref(), Some("1"));
     let mut set = DispNaAsBlank::default();
-    set.val = Some("1".to_owned());
+    set.val = Some(Box::from("1"));
     assert_eq!(written(set.to_strict().unwrap()), text);
 }
 
@@ -1090,14 +1090,14 @@ fn a_protection_part_1_has_no_slot_for_stays_refused() {
             "SHA-1 with a hash",
             protection(|node| {
                 node.crypt_algorithm_sid = Some(number("4"));
-                node.hash = Some("9oN7nWkCAyEZib1RomSJTjmPpCY=".to_owned());
+                node.hash = Some(Box::from("9oN7nWkCAyEZib1RomSJTjmPpCY="));
             }),
         ),
         (
             "SHA-1 with a salt",
             protection(|node| {
                 node.crypt_algorithm_sid = Some(number("4"));
-                node.salt = Some("ZUdHa+D8F/OAKP3I7ssUnQ==".to_owned());
+                node.salt = Some(Box::from("ZUdHa+D8F/OAKP3I7ssUnQ=="));
             }),
         ),
         (
@@ -1109,7 +1109,7 @@ fn a_protection_part_1_has_no_slot_for_stays_refused() {
         (
             "a provider",
             protection(|node| {
-                node.crypt_provider = Some("Provider".to_owned());
+                node.crypt_provider = Some(Box::from("Provider"));
             }),
         ),
         (
@@ -1174,11 +1174,11 @@ fn a_vml_background_with_a_fill_of_its_own_stays_refused() {
     };
     let shape = || {
         let mut shape = VmlBackground::default();
-        shape.id = Some("_x0000_s1025".to_owned());
+        shape.id = Some(Box::from("_x0000_s1025"));
         shape
     };
     let mut colored = shape();
-    colored.fillcolor = Some("yellow".to_owned());
+    colored.fillcolor = Some(Box::from("yellow"));
     let mut fill = ShapeFillProperties::default();
     fill.r#type = Some(ShapeFillType::from("gradient".to_owned()));
     let mut gradient = shape();

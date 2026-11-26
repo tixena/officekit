@@ -6482,7 +6482,7 @@ impl super::Transform for presentation::EmbeddedObjectContent {
         if let Self::EmbeddedObjectOrControl(arm) = self {
             Self::EmbeddedObjectOrControl(Box::new(arm.transform(ctx)))
         } else if let Self::LinkedObjectOrControl(arm) = self {
-            Self::LinkedObjectOrControl(Box::new(arm.transform(ctx)))
+            Self::LinkedObjectOrControl(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {
@@ -11255,7 +11255,7 @@ impl super::Transform for presentation::NonVisualPropertiesContent {
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::QuickTimeFromFile(arm) = self {
-            Self::QuickTimeFromFile(Box::new(arm.transform(ctx)))
+            Self::QuickTimeFromFile(arm.transform(ctx))
         } else if let Self::VideoFromFile(arm) = self {
             Self::VideoFromFile(Box::new(arm.transform(ctx)))
         } else {
@@ -16874,7 +16874,7 @@ impl super::Transform for presentation::SlideBackgroundContent {
         if let Self::BackgroundProperties(arm) = self {
             Self::BackgroundProperties(Box::new(arm.transform(ctx)))
         } else if let Self::BackgroundStyleReference(arm) = self {
-            Self::BackgroundStyleReference(Box::new(arm.transform(ctx)))
+            Self::BackgroundStyleReference(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {
@@ -19003,7 +19003,7 @@ impl super::Transform for presentation::SoundActionContent {
         if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::StartSoundAction(arm) = self {
-            Self::StartSoundAction(Box::new(arm.transform(ctx)))
+            Self::StartSoundAction(arm.transform(ctx))
         } else if let Self::StopSoundAction(arm) = self {
             Self::StopSoundAction(arm.transform(ctx))
         } else {
@@ -19954,7 +19954,7 @@ impl super::Transform for presentation::TargetElementContent {
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::ShapeTarget(arm) = self {
-            Self::ShapeTarget(Box::new(arm.transform(ctx)))
+            Self::ShapeTarget(arm.transform(ctx))
         } else if let Self::SlideTarget(arm) = self {
             Self::SlideTarget(arm.transform(ctx))
         } else if let Self::SoundTarget(arm) = self {
@@ -20989,7 +20989,7 @@ impl super::Transform for presentation::TimeNodeListContent {
         } else if let Self::AnimateScale(arm) = self {
             Self::AnimateScale(Box::new(arm.transform(ctx)))
         } else if let Self::Audio(arm) = self {
-            Self::Audio(Box::new(arm.transform(ctx)))
+            Self::Audio(arm.transform(ctx))
         } else if let Self::Command(arm) = self {
             Self::Command(Box::new(arm.transform(ctx)))
         } else if let Self::Exclusive(arm) = self {
@@ -21003,7 +21003,7 @@ impl super::Transform for presentation::TimeNodeListContent {
         } else if let Self::SetTimeNodeBehavior(arm) = self {
             Self::SetTimeNodeBehavior(arm.transform(ctx))
         } else if let Self::Video(arm) = self {
-            Self::Video(Box::new(arm.transform(ctx)))
+            Self::Video(arm.transform(ctx))
         } else {
             self.clone()
         }

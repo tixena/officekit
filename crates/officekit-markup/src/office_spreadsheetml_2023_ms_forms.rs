@@ -382,13 +382,13 @@ pub struct MsFormWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `isFormConnected`, when the element has it.
-    pub is_form_connected: Option<String>,
+    pub is_form_connected: Option<Box<str>>,
     /// The attribute `latestEventMarker`, when the element has it.
-    pub latest_event_marker: Option<String>,
+    pub latest_event_marker: Option<Box<str>>,
     /// The attribute `maxResponseId`, when the element has it.
-    pub max_response_id: Option<String>,
+    pub max_response_id: Option<Box<str>>,
     /// The children that are `SyncedQuestionId`, in order.
     pub synced_question_id: Vec<SyncedQuestionIdWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -412,7 +412,7 @@ pub struct QuestionWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -437,7 +437,7 @@ pub struct SyncedQuestionIdWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2023MsFormsSyncedQuestionId,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xlmsforms:syncedQuestionId` element of the tree a read gives: [`SyncedQuestionIdWith`]

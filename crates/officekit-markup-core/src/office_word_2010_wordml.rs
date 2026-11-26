@@ -932,7 +932,7 @@ pub struct CNvContentPartPrWith<X: UserData> {
     /// The child that is `super::office_drawing_2010_main::ExtLst`, when there is one.
     pub ext_lst: Option<Box<super::office_drawing_2010_main::ExtLstWith<X>>>,
     /// The attribute `isComment`, when the element has it.
-    pub is_comment: Option<String>,
+    pub is_comment: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -954,19 +954,19 @@ pub struct CNvPrWith<X: UserData> {
     /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
     /// The attribute `hidden`, when the element has it.
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHoverWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1174,7 +1174,7 @@ pub enum CompoundLineMember {
 #[non_exhaustive]
 pub struct ConflictDelRunTrackChangeWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The children that are an item of `super::wordprocessing::TrackedRunContent`, in order.
     pub content: Vec<super::wordprocessing::TrackedRunContentWith<X>>,
     /// The attribute `w:date`, when the element has it.
@@ -1200,7 +1200,7 @@ impl Eq for ConflictDelRunTrackChangeWith<()> {}
 #[non_exhaustive]
 pub struct ConflictDelTrackChangeWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<super::wordprocessing::StandardDateAndTimeStorageFormat>,
     /// The attribute `w:id`, when the element has it.
@@ -1224,7 +1224,7 @@ impl Eq for ConflictDelTrackChangeWith<()> {}
 #[non_exhaustive]
 pub struct ConflictInsRunTrackChangeWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The children that are an item of `super::wordprocessing::TrackedRunContent`, in order.
     pub content: Vec<super::wordprocessing::TrackedRunContentWith<X>>,
     /// The attribute `w:date`, when the element has it.
@@ -1250,7 +1250,7 @@ impl Eq for ConflictInsRunTrackChangeWith<()> {}
 #[non_exhaustive]
 pub struct ConflictInsTrackChangeWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<super::wordprocessing::StandardDateAndTimeStorageFormat>,
     /// The attribute `w:id`, when the element has it.
@@ -1296,7 +1296,7 @@ pub struct ContentPartWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The child that is `NvContentPartPr`, when there is one.
     pub nv_content_part_pr: Option<Box<NvContentPartPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1360,7 +1360,7 @@ impl Eq for CustomXmlConflictDelRangeEndWith<()> {}
 #[non_exhaustive]
 pub struct CustomXmlConflictDelRangeStartWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<super::wordprocessing::StandardDateAndTimeStorageFormat>,
     /// The attribute `w:id`, when the element has it.
@@ -1404,7 +1404,7 @@ impl Eq for CustomXmlConflictInsRangeEndWith<()> {}
 #[non_exhaustive]
 pub struct CustomXmlConflictInsRangeStartWith<X: UserData> {
     /// The attribute `w:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The attribute `w:date`, when the element has it.
     pub date: Option<super::wordprocessing::StandardDateAndTimeStorageFormat>,
     /// The attribute `w:id`, when the element has it.
@@ -1433,7 +1433,7 @@ pub struct DefaultImageDpiWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2010WordmlDefaultImageDpi,
     /// The attribute `w14:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w14:defaultImageDpi` element of the tree a read gives: [`DefaultImageDpiWith`] holding
@@ -1471,7 +1471,7 @@ pub struct DocIdWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2010WordmlDocId,
     /// The attribute `w14:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w14:docId` element of the tree a read gives: [`DocIdWith`] holding nothing in `user_data`.
@@ -1567,13 +1567,13 @@ impl Eq for FillPropertiesContentWith<()> {}
 #[non_exhaustive]
 pub struct FillToRectWith<X: UserData> {
     /// The attribute `w14:b`, when the element has it.
-    pub b: Option<String>,
+    pub b: Option<Box<str>>,
     /// The attribute `w14:l`, when the element has it.
-    pub l: Option<String>,
+    pub l: Option<Box<str>>,
     /// The attribute `w14:r`, when the element has it.
-    pub r: Option<String>,
+    pub r: Option<Box<str>>,
     /// The attribute `w14:t`, when the element has it.
-    pub t: Option<String>,
+    pub t: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1595,7 +1595,7 @@ pub struct GlowWith<X: UserData> {
     /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContentWith<X>>,
     /// The attribute `w14:rad`, when the element has it.
-    pub rad: Option<String>,
+    pub rad: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1660,7 +1660,7 @@ pub struct GsWith<X: UserData> {
     /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContentWith<X>>,
     /// The attribute `w14:pos`, when the element has it.
-    pub pos: Option<String>,
+    pub pos: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1703,7 +1703,7 @@ pub struct HueModWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2010WordmlHueMod,
     /// The attribute `w14:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w14:hueMod` element of the tree a read gives: [`HueModWith`] holding nothing in
@@ -1872,7 +1872,7 @@ pub enum LightRigTypeMember {
 #[non_exhaustive]
 pub struct LinWith<X: UserData> {
     /// The attribute `w14:ang`, when the element has it.
-    pub ang: Option<String>,
+    pub ang: Option<Box<str>>,
     /// The attribute `w14:scaled`, when the element has it.
     pub scaled: Option<OnOff>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1995,7 +1995,7 @@ impl Eq for LumOffWith<()> {}
 #[non_exhaustive]
 pub struct MiterWith<X: UserData> {
     /// The attribute `w14:lim`, when the element has it.
-    pub lim: Option<String>,
+    pub lim: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2437,11 +2437,11 @@ pub struct Props3dWith<X: UserData> {
     /// The child that is `ContourClr`, when there is one.
     pub contour_clr: Option<Box<ContourClrWith<X>>>,
     /// The attribute `w14:contourW`, when the element has it.
-    pub contour_w: Option<String>,
+    pub contour_w: Option<Box<str>>,
     /// The child that is `ExtrusionClr`, when there is one.
     pub extrusion_clr: Option<Box<ExtrusionClrWith<X>>>,
     /// The attribute `w14:extrusionH`, when the element has it.
-    pub extrusion_h: Option<String>,
+    pub extrusion_h: Option<Box<str>>,
     /// The attribute `w14:prstMaterial`, when the element has it.
     pub prst_material: Option<PresetMaterialType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -2525,29 +2525,29 @@ pub struct ReflectionWith<X: UserData> {
     /// The attribute `w14:algn`, when the element has it.
     pub algn: Option<RectAlignment>,
     /// The attribute `w14:blurRad`, when the element has it.
-    pub blur_rad: Option<String>,
+    pub blur_rad: Option<Box<str>>,
     /// The attribute `w14:dir`, when the element has it.
-    pub dir: Option<String>,
+    pub dir: Option<Box<str>>,
     /// The attribute `w14:dist`, when the element has it.
-    pub dist: Option<String>,
+    pub dist: Option<Box<str>>,
     /// The attribute `w14:endA`, when the element has it.
-    pub end_a: Option<String>,
+    pub end_a: Option<Box<str>>,
     /// The attribute `w14:endPos`, when the element has it.
-    pub end_pos: Option<String>,
+    pub end_pos: Option<Box<str>>,
     /// The attribute `w14:fadeDir`, when the element has it.
-    pub fade_dir: Option<String>,
+    pub fade_dir: Option<Box<str>>,
     /// The attribute `w14:kx`, when the element has it.
-    pub kx: Option<String>,
+    pub kx: Option<Box<str>>,
     /// The attribute `w14:ky`, when the element has it.
-    pub ky: Option<String>,
+    pub ky: Option<Box<str>>,
     /// The attribute `w14:stA`, when the element has it.
-    pub st_a: Option<String>,
+    pub st_a: Option<Box<str>>,
     /// The attribute `w14:stPos`, when the element has it.
-    pub st_pos: Option<String>,
+    pub st_pos: Option<Box<str>>,
     /// The attribute `w14:sx`, when the element has it.
-    pub sx: Option<String>,
+    pub sx: Option<Box<str>>,
     /// The attribute `w14:sy`, when the element has it.
-    pub sy: Option<String>,
+    pub sy: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2567,11 +2567,11 @@ impl Eq for ReflectionWith<()> {}
 #[non_exhaustive]
 pub struct RotWith<X: UserData> {
     /// The attribute `w14:lat`, when the element has it.
-    pub lat: Option<String>,
+    pub lat: Option<Box<str>>,
     /// The attribute `w14:lon`, when the element has it.
-    pub lon: Option<String>,
+    pub lon: Option<Box<str>>,
     /// The attribute `w14:rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2777,21 +2777,21 @@ pub struct ShadowWith<X: UserData> {
     /// The attribute `w14:algn`, when the element has it.
     pub algn: Option<RectAlignment>,
     /// The attribute `w14:blurRad`, when the element has it.
-    pub blur_rad: Option<String>,
+    pub blur_rad: Option<Box<str>>,
     /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContentWith<X>>,
     /// The attribute `w14:dir`, when the element has it.
-    pub dir: Option<String>,
+    pub dir: Option<Box<str>>,
     /// The attribute `w14:dist`, when the element has it.
-    pub dist: Option<String>,
+    pub dist: Option<Box<str>>,
     /// The attribute `w14:kx`, when the element has it.
-    pub kx: Option<String>,
+    pub kx: Option<Box<str>>,
     /// The attribute `w14:ky`, when the element has it.
-    pub ky: Option<String>,
+    pub ky: Option<Box<str>>,
     /// The attribute `w14:sx`, when the element has it.
-    pub sx: Option<String>,
+    pub sx: Option<Box<str>>,
     /// The attribute `w14:sy`, when the element has it.
-    pub sy: Option<String>,
+    pub sy: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2838,7 +2838,7 @@ pub struct SrgbClrWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2010WordmlSrgbClr,
     /// The attribute `w14:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w14:srgbClr` element of the tree a read gives: [`SrgbClrWith`] holding nothing in
@@ -2957,7 +2957,7 @@ pub enum StNumSpacingMember {
 #[non_exhaustive]
 pub struct StyleSetWith<X: UserData> {
     /// The attribute `w14:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3036,7 +3036,7 @@ pub struct TextOutlineWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2010WordmlTextOutline,
     /// The attribute `w14:w`, when the element has it.
-    pub w: Option<String>,
+    pub w: Option<Box<str>>,
 }
 
 /// The `w14:textOutline` element of the tree a read gives: [`TextOutlineWith`] holding nothing in
@@ -3088,9 +3088,9 @@ pub struct XfrmWith<X: UserData> {
     /// The child that is `super::drawing::Extents`, when there is one.
     pub extents: Option<Box<super::drawing::ExtentsWith<X>>>,
     /// The attribute `flipH`, when the element has it.
-    pub flip_h: Option<String>,
+    pub flip_h: Option<Box<str>>,
     /// The attribute `flipV`, when the element has it.
-    pub flip_v: Option<String>,
+    pub flip_v: Option<Box<str>>,
     /// The child that is `super::drawing::Offset`, when there is one.
     pub offset: Option<Box<super::drawing::OffsetWith<X>>>,
     /// The attribute `rot`, when the element has it.

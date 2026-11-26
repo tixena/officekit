@@ -393,20 +393,20 @@ pub struct AuthorWith<X: UserData> {
     /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionListWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `initials`, when the element has it.
-    pub initials: Option<String>,
+    pub initials: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `providerId`, when the element has it.
-    pub provider_id: Option<String>,
+    pub provider_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficePowerpoint20188MainAuthor,
     /// The attribute `userId`, when the element has it.
-    pub user_id: Option<String>,
+    pub user_id: Option<Box<str>>,
 }
 
 /// The `p188:author` element of the tree a read gives: [`AuthorWith`] holding nothing in
@@ -441,38 +441,38 @@ impl Eq for AuthorLstWith<()> {}
 #[non_exhaustive]
 pub struct CmWith<X: UserData> {
     /// The attribute `assignedTo`, when the element has it.
-    pub assigned_to: Option<String>,
+    pub assigned_to: Option<Box<str>>,
     /// The attribute `authorId`, when the element has it.
-    pub author_id: Option<String>,
+    pub author_id: Option<Box<str>>,
     /// The attribute `complete`, when the element has it.
-    pub complete: Option<String>,
+    pub complete: Option<Box<str>>,
     /// The children that are an item of `CommentContent`, in order.
     pub content: Vec<CommentContentWith<X>>,
     /// The attribute `created`, when the element has it.
-    pub created: Option<String>,
+    pub created: Option<Box<str>>,
     /// The attribute `dueDate`, when the element has it.
-    pub due_date: Option<String>,
+    pub due_date: Option<Box<str>>,
     /// The child that is `ExtLstCommentPropertiesExtensionList`, when there is one.
     pub ext_lst_comment_properties_extension_list:
         Option<Box<ExtLstCommentPropertiesExtensionListWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `likes`, when the element has it.
-    pub likes: Option<String>,
+    pub likes: Option<Box<str>>,
     /// The child that is `Pos`, when there is one.
     pub pos: Option<Box<PosWith<X>>>,
     /// The attribute `priority`, when the element has it.
-    pub priority: Option<String>,
+    pub priority: Option<Box<str>>,
     /// The child that is `ReplyLst`, when there is one.
     pub reply_lst: Option<Box<ReplyLstWith<X>>>,
     /// The attribute `startDate`, when the element has it.
-    pub start_date: Option<String>,
+    pub start_date: Option<Box<str>>,
     /// The attribute `status`, when the element has it.
     pub status: Option<CommentStatus>,
     /// The attribute `tags`, when the element has it.
-    pub tags: Option<String>,
+    pub tags: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// The child that is `TxBody`, when there is one.
     pub tx_body: Option<Box<TxBodyWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -549,7 +549,7 @@ impl Eq for CommentContentWith<()> {}
 #[non_exhaustive]
 pub struct CommentRelWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -928,20 +928,20 @@ impl Eq for PosWith<()> {}
 #[non_exhaustive]
 pub struct ReplyWith<X: UserData> {
     /// The attribute `authorId`, when the element has it.
-    pub author_id: Option<String>,
+    pub author_id: Option<Box<str>>,
     /// The attribute `created`, when the element has it.
-    pub created: Option<String>,
+    pub created: Option<Box<str>>,
     /// The child that is `ExtLstCommentPropertiesExtensionList`, when there is one.
     pub ext_lst_comment_properties_extension_list:
         Option<Box<ExtLstCommentPropertiesExtensionListWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `likes`, when the element has it.
-    pub likes: Option<String>,
+    pub likes: Option<Box<str>>,
     /// The attribute `status`, when the element has it.
     pub status: Option<CommentStatus>,
     /// The attribute `tags`, when the element has it.
-    pub tags: Option<String>,
+    pub tags: Option<Box<str>>,
     /// The child that is `TxBody`, when there is one.
     pub tx_body: Option<Box<TxBodyWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it

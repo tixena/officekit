@@ -316,25 +316,25 @@ fn settings(
     different_odd_even: Option<&str>,
 ) -> HeaderFooterSettings {
     let mut element = HeaderFooterSettings::default();
-    element.different_first = different_first.map(str::to_owned);
-    element.different_odd_even = different_odd_even.map(str::to_owned);
+    element.different_first = different_first.map(Box::from);
+    element.different_odd_even = different_odd_even.map(Box::from);
     let mut odd_header = OddHeader::default();
-    odd_header.value = "odd header".to_owned();
+    odd_header.value = Box::from("odd header");
     element.odd_header = Some(Box::new(odd_header));
     let mut odd_footer = OddPageFooter::default();
-    odd_footer.value = "odd footer".to_owned();
+    odd_footer.value = Box::from("odd footer");
     element.odd_page_footer = Some(Box::new(odd_footer));
     let mut even_header = EvenPageHeader::default();
-    even_header.value = "even header".to_owned();
+    even_header.value = Box::from("even header");
     element.even_page_header = Some(Box::new(even_header));
     let mut even_footer = EvenPageFooter::default();
-    even_footer.value = "even footer".to_owned();
+    even_footer.value = Box::from("even footer");
     element.even_page_footer = Some(Box::new(even_footer));
     let mut first_header = FirstPageHeader::default();
-    first_header.value = "first header".to_owned();
+    first_header.value = Box::from("first header");
     element.first_page_header = Some(Box::new(first_header));
     let mut first_footer = FirstPageFooter::default();
-    first_footer.value = "first footer".to_owned();
+    first_footer.value = Box::from("first footer");
     element.first_page_footer = Some(Box::new(first_footer));
     element
 }
@@ -359,7 +359,7 @@ fn which_texts_a_page_takes() {
 #[test]
 fn a_text_that_is_absent_is_none() {
     let mut element = HeaderFooterSettings::default();
-    element.different_first = Some("1".to_owned());
+    element.different_first = Some(Box::from("1"));
     assert_eq!(
         HeaderFooter::for_page(&element, true, false),
         HeaderFooter::default()

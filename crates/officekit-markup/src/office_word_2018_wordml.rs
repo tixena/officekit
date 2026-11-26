@@ -278,7 +278,7 @@ pub struct ExtWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `w16cur:uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2018WordmlExt,
 }

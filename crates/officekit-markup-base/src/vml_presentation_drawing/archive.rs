@@ -230,7 +230,7 @@ pub struct InkAnnotationFlagMirror {
 #[rkyv(remote = super::VMLDiagramText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VMLDiagramTextMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }

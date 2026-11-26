@@ -601,9 +601,9 @@ pub static RICH_FILTER_COLUMN_CONTENT_TAGS: officekit_markup_base::Accept =
 #[non_exhaustive]
 pub struct AArrayWith<X: UserData> {
     /// The attribute `c`, when the element has it.
-    pub c: Option<String>,
+    pub c: Option<Box<str>>,
     /// The attribute `r`, when the element has it.
-    pub r: Option<String>,
+    pub r: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -624,7 +624,7 @@ impl Eq for AArrayWith<()> {}
 #[non_exhaustive]
 pub struct ASupportingPropertyBagArrayWith<X: UserData> {
     /// The attribute `count`, when the element has it.
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -648,7 +648,7 @@ pub struct ArrayDataWith<X: UserData> {
     /// The children that are `AArray`, in order.
     pub a_array: Vec<AArrayWith<X>>,
     /// The attribute `count`, when the element has it.
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1467,7 +1467,7 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct CustomFilterWith<X: UserData> {
     /// The attribute `key`, when the element has it.
-    pub key: Option<String>,
+    pub key: Option<Box<str>>,
     /// The attribute `operator`, when the element has it.
     pub operator: Option<spreadsheet::FilterOperator>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1476,7 +1476,7 @@ pub struct CustomFilterWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2017Richdata2CustomFilter,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `xlrd2:customFilter` element of the tree a read gives: [`CustomFilterWith`] holding nothing
@@ -1491,7 +1491,7 @@ impl Eq for CustomFilterWith<()> {}
 #[non_exhaustive]
 pub struct CustomFiltersWith<X: UserData> {
     /// The attribute `and`, when the element has it.
-    pub and: Option<String>,
+    pub and: Option<Box<str>>,
     /// The children that are an item of `CustomRichFiltersContent`, in order.
     pub content: Vec<CustomRichFiltersContentWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1537,24 +1537,24 @@ pub struct DateGroupItemWith<X: UserData> {
     /// The attribute `dateTimeGrouping`, when the element has it.
     pub date_time_grouping: Option<spreadsheet::DateTimeGrouping>,
     /// The attribute `day`, when the element has it.
-    pub day: Option<String>,
+    pub day: Option<Box<str>>,
     /// The attribute `hour`, when the element has it.
-    pub hour: Option<String>,
+    pub hour: Option<Box<str>>,
     /// The attribute `key`, when the element has it.
-    pub key: Option<String>,
+    pub key: Option<Box<str>>,
     /// The attribute `minute`, when the element has it.
-    pub minute: Option<String>,
+    pub minute: Option<Box<str>>,
     /// The attribute `month`, when the element has it.
-    pub month: Option<String>,
+    pub month: Option<Box<str>>,
     /// The attribute `second`, when the element has it.
-    pub second: Option<String>,
+    pub second: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2017Richdata2DateGroupItem,
     /// The attribute `year`, when the element has it.
-    pub year: Option<String>,
+    pub year: Option<Box<str>>,
 }
 
 /// The `xlrd2:dateGroupItem` element of the tree a read gives: [`DateGroupItemWith`] holding
@@ -1569,7 +1569,7 @@ impl Eq for DateGroupItemWith<()> {}
 #[non_exhaustive]
 pub struct DxfsWith<X: UserData> {
     /// The attribute `count`, when the element has it.
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     /// The children that are `spreadsheet::Formatting`, in order.
     pub formatting: Vec<spreadsheet::FormattingWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1590,11 +1590,11 @@ impl Eq for DxfsWith<()> {}
 #[non_exhaustive]
 pub struct DynamicFilterWith<X: UserData> {
     /// The attribute `key`, when the element has it.
-    pub key: Option<String>,
+    pub key: Option<Box<str>>,
     /// The attribute `maxVal`, when the element has it.
-    pub max_val: Option<String>,
+    pub max_val: Option<Box<str>>,
     /// The attribute `maxValIso`, when the element has it.
-    pub max_val_iso: Option<String>,
+    pub max_val_iso: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<spreadsheet::StDynamicFilterType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1603,9 +1603,9 @@ pub struct DynamicFilterWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2017Richdata2DynamicFilter,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
     /// The attribute `valIso`, when the element has it.
-    pub val_iso: Option<String>,
+    pub val_iso: Option<Box<str>>,
 }
 
 /// The `xlrd2:dynamicFilter` element of the tree a read gives: [`DynamicFilterWith`] holding
@@ -1640,18 +1640,18 @@ impl Eq for ExtLstWith<()> {}
 #[non_exhaustive]
 pub struct FilterWith<X: UserData> {
     /// The attribute `blank`, when the element has it.
-    pub blank: Option<String>,
+    pub blank: Option<Box<str>>,
     /// The attribute `key`, when the element has it.
-    pub key: Option<String>,
+    pub key: Option<Box<str>>,
     /// The attribute `nodata`, when the element has it.
-    pub nodata: Option<String>,
+    pub nodata: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2017Richdata2Filter,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `xlrd2:filter` element of the tree a read gives: [`FilterWith`] holding nothing in
@@ -1710,14 +1710,14 @@ impl Eq for FiltersWith<()> {}
 #[non_exhaustive]
 pub struct FlagWith<X: UserData> {
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2017Richdata2Flag,
     /// The attribute `value`, when the element has it.
-    pub value: Option<String>,
+    pub value: Option<Box<str>>,
 }
 
 /// The `xlrd2:flag` element of the tree a read gives: [`FlagWith`] holding nothing in `user_data`.
@@ -1753,7 +1753,7 @@ impl Eq for GlobalWith<()> {}
 #[non_exhaustive]
 pub struct KWith<X: UserData> {
     /// The attribute `n`, when the element has it.
-    pub n: Option<String>,
+    pub n: Option<Box<str>>,
     /// The attribute `t`, when the element has it.
     pub t: Option<SupportingPropertyBagValueType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1776,7 +1776,7 @@ pub struct KeyWith<X: UserData> {
     /// The children that are `Flag`, in order.
     pub flag: Vec<FlagWith<X>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1815,7 +1815,7 @@ impl Eq for KeyFlagsWith<()> {}
 #[non_exhaustive]
 pub struct RPrWith<X: UserData> {
     /// The attribute `n`, when the element has it.
-    pub n: Option<String>,
+    pub n: Option<Box<str>>,
     /// The attribute `t`, when the element has it.
     pub t: Option<RichFormatPropertyType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1836,7 +1836,7 @@ impl Eq for RPrWith<()> {}
 #[non_exhaustive]
 pub struct RStyWith<X: UserData> {
     /// The attribute `dxfid`, when the element has it.
-    pub dxfid: Option<String>,
+    pub dxfid: Option<Box<str>>,
     /// The children that are `Rpv`, in order.
     pub rpv: Vec<RpvWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1933,19 +1933,19 @@ impl Eq for RichPropertiesWith<()> {}
 #[non_exhaustive]
 pub struct RichSortConditionWith<X: UserData> {
     /// The attribute `customList`, when the element has it.
-    pub custom_list: Option<String>,
+    pub custom_list: Option<Box<str>>,
     /// The attribute `descending`, when the element has it.
-    pub descending: Option<String>,
+    pub descending: Option<Box<str>>,
     /// The attribute `dxfId`, when the element has it.
-    pub dxf_id: Option<String>,
+    pub dxf_id: Option<Box<str>>,
     /// The attribute `iconId`, when the element has it.
-    pub icon_id: Option<String>,
+    pub icon_id: Option<Box<str>>,
     /// The attribute `iconSet`, when the element has it.
     pub icon_set: Option<office_spreadsheetml_2009_9_main::IconSetType>,
     /// The attribute `ref`, when the element has it.
-    pub r#ref: Option<String>,
+    pub r#ref: Option<Box<str>>,
     /// The attribute `richSortKey`, when the element has it.
-    pub rich_sort_key: Option<String>,
+    pub rich_sort_key: Option<Box<str>>,
     /// The attribute `sortBy`, when the element has it.
     pub sort_by: Option<spreadsheet::SortBy>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -2013,14 +2013,14 @@ impl Eq for RichStylesWith<()> {}
 #[non_exhaustive]
 pub struct RpvWith<X: UserData> {
     /// The attribute `i`, when the element has it.
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2017Richdata2Rpv,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xlrd2:rpv` element of the tree a read gives: [`RpvWith`] holding nothing in `user_data`.
@@ -2077,7 +2077,7 @@ impl Eq for SWith<()> {}
 #[non_exhaustive]
 pub struct SpbWith<X: UserData> {
     /// The attribute `s`, when the element has it.
-    pub s: Option<String>,
+    pub s: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2100,7 +2100,7 @@ pub struct SpbArraysWith<X: UserData> {
     /// The children that are `ASupportingPropertyBagArray`, in order.
     pub a_supporting_property_bag_array: Vec<ASupportingPropertyBagArrayWith<X>>,
     /// The attribute `count`, when the element has it.
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -2122,7 +2122,7 @@ impl Eq for SpbArraysWith<()> {}
 #[non_exhaustive]
 pub struct SpbDataWith<X: UserData> {
     /// The attribute `count`, when the element has it.
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The children that are `Spb`, in order.
@@ -2146,7 +2146,7 @@ impl Eq for SpbDataWith<()> {}
 #[non_exhaustive]
 pub struct SpbStructuresWith<X: UserData> {
     /// The attribute `count`, when the element has it.
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The children that are `S`, in order.
@@ -2256,20 +2256,20 @@ impl Eq for SupportingPropertyBagsWith<()> {}
 #[non_exhaustive]
 pub struct Top10With<X: UserData> {
     /// The attribute `filterVal`, when the element has it.
-    pub filter_val: Option<String>,
+    pub filter_val: Option<Box<str>>,
     /// The attribute `key`, when the element has it.
-    pub key: Option<String>,
+    pub key: Option<Box<str>>,
     /// The attribute `percent`, when the element has it.
-    pub percent: Option<String>,
+    pub percent: Option<Box<str>>,
     /// The attribute `top`, when the element has it.
-    pub top: Option<String>,
+    pub top: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2017Richdata2Top10,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `xlrd2:top10` element of the tree a read gives: [`Top10With`] holding nothing in
@@ -2288,7 +2288,7 @@ pub struct TypeWith<X: UserData> {
     /// The child that is `KeyFlags`, when there is one.
     pub key_flags: Option<Box<KeyFlagsWith<X>>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2334,7 +2334,7 @@ pub struct VArrayValueWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2017Richdata2VArrayValue,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xlrd2:v` element of the tree a read gives: [`VArrayValueWith`] holding nothing in
@@ -2356,7 +2356,7 @@ pub struct VSupportingPropertyBagArrayValueWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2017Richdata2VSupportingPropertyBagArrayValue,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xlrd2:v` element of the tree a read gives: [`VSupportingPropertyBagArrayValueWith`] holding
@@ -2376,7 +2376,7 @@ pub struct VSupportingPropertyBagValueWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2017Richdata2VSupportingPropertyBagValue,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xlrd2:v` element of the tree a read gives: [`VSupportingPropertyBagValueWith`] holding

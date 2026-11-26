@@ -222,8 +222,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::CommentId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentIdMirror {
-    pub durable_id: Option<String>,
-    pub para_id: Option<String>,
+    pub durable_id: Option<Box<str>>,
+    pub para_id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

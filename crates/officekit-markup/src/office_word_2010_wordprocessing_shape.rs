@@ -394,17 +394,17 @@ pub struct BodyPrWith<X: UserData> {
     /// The attribute `anchor`, when the element has it.
     pub anchor: Option<drawing::TextAnchoringTypes>,
     /// The attribute `anchorCtr`, when the element has it.
-    pub anchor_ctr: Option<String>,
+    pub anchor_ctr: Option<Box<str>>,
     /// The attribute `bIns`, when the element has it.
     pub b_ins: Option<drawing::StCoordinate32>,
     /// The attribute `compatLnSpc`, when the element has it.
-    pub compat_ln_spc: Option<String>,
+    pub compat_ln_spc: Option<Box<str>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
     /// The attribute `forceAA`, when the element has it.
-    pub force_aa: Option<String>,
+    pub force_aa: Option<Box<str>>,
     /// The attribute `fromWordArt`, when the element has it.
-    pub from_word_art: Option<String>,
+    pub from_word_art: Option<Box<str>>,
     /// The attribute `horzOverflow`, when the element has it.
     pub horz_overflow: Option<drawing::TextHorizontalOverflowTypes>,
     /// The attribute `lIns`, when the element has it.
@@ -418,13 +418,13 @@ pub struct BodyPrWith<X: UserData> {
     /// The attribute `rot`, when the element has it.
     pub rot: Option<drawing::Angle>,
     /// The attribute `rtlCol`, when the element has it.
-    pub rtl_col: Option<String>,
+    pub rtl_col: Option<Box<str>>,
     /// The child that is `drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<drawing::Scene3dWith<X>>>,
     /// The attribute `spcCol`, when the element has it.
     pub spc_col: Option<drawing::PositiveCoordinatePoint>,
     /// The attribute `spcFirstLastPara`, when the element has it.
-    pub spc_first_last_para: Option<String>,
+    pub spc_first_last_para: Option<Box<str>>,
     /// The attribute `tIns`, when the element has it.
     pub t_ins: Option<drawing::StCoordinate32>,
     /// The child that is an item of `drawing::Text3DContent`, when there is one.
@@ -435,7 +435,7 @@ pub struct BodyPrWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `upright`, when the element has it.
-    pub upright: Option<String>,
+    pub upright: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2010WordprocessingShapeBodyPr,
     /// The attribute `vert`, when the element has it.
@@ -486,19 +486,19 @@ pub struct CNvPrWith<X: UserData> {
     /// The child that is `drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
     /// The attribute `hidden`, when the element has it.
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     /// The child that is `drawing::HyperlinkForHover`, when there is one.
     pub hyperlink_for_hover: Option<Box<drawing::HyperlinkForHoverWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<drawing::DrawingElementID>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -521,7 +521,7 @@ pub struct CNvSpPrWith<X: UserData> {
     /// The child that is `drawing::ShapeLocks`, when there is one.
     pub shape_locks: Option<Box<drawing::ShapeLocksWith<X>>>,
     /// The attribute `txBox`, when the element has it.
-    pub tx_box: Option<String>,
+    pub tx_box: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -788,9 +788,9 @@ pub struct LinkedTxbxWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `seq`, when the element has it.
-    pub seq: Option<String>,
+    pub seq: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -915,7 +915,7 @@ pub struct TxbxWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The child that is `wordprocessing::RichTextBoxContentContainer`, when there is one.
     pub rich_text_box_content_container:
         Option<Box<wordprocessing::RichTextBoxContentContainerWith<X>>>,
@@ -1016,7 +1016,7 @@ pub struct WspWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `normalEastAsianFlow`, when the element has it.
-    pub normal_east_asian_flow: Option<String>,
+    pub normal_east_asian_flow: Option<Box<str>>,
     /// The child that is an item of `ShapeNonVisualPropertiesContent`, which the schema requires.
     pub shape_non_visual_properties_content: Box<ShapeNonVisualPropertiesContentWith<X>>,
     /// The child that is an item of `ShapeTextContent`, when there is one.

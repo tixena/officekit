@@ -49,7 +49,7 @@ impl officekit_markup::Context for Fill {
 impl wordprocessing::Context for Fill {
     fn text(&mut self, node: &Text) -> Option<Text> {
         let mut text = node.clone();
-        text.value.clone_from(&self.value);
+        text.value = Box::from(self.value.as_str());
         Some(text)
     }
 }
@@ -62,7 +62,7 @@ impl officekit_markup::Visitor for FindPlaceholder {
 
 impl wordprocessing::Visitor for FindPlaceholder {
     fn text(&mut self, node: &Text) -> Descend {
-        self.found |= node.value == "placeholder";
+        self.found |= &*node.value == "placeholder";
         Descend::Yes
     }
 }
@@ -149,7 +149,7 @@ fn main() -> Result<PartName, PackageError> {
 
 fn paragraph_of(value: &str) -> wordprocessing::BlockContent {
     let mut text = Text::default();
-    value.clone_into(&mut text.value);
+    text.value = Box::from(value);
     let mut run = wordprocessing::TextRun::default();
     run.content = vec![wordprocessing::TextRunContent::from(text)];
     let mut paragraph = wordprocessing::Paragraph::default();

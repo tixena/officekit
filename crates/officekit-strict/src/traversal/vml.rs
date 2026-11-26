@@ -3939,7 +3939,7 @@ fn transform_shape_definition_content_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<vml::ShapeDefinitionContent> {
     if let vml::ShapeDefinitionContent::StorageForAlternateMathContent(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml::ShapeDefinitionContent::StorageForAlternateMathContent(
             node,
         ));

@@ -597,7 +597,7 @@ pub struct LineSketchStylePropsWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `sd`, when the element has it.
-    pub sd: Option<String>,
+    pub sd: Option<Box<str>>,
     /// The child that is `Seed`, when there is one.
     pub seed: Option<Box<SeedWith<X>>>,
     /// The child that is `Type`, when there is one.
@@ -652,7 +652,7 @@ pub struct SeedWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2018SketchyshapesSeed,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ask:seed` element of the tree a read gives: [`SeedWith`] holding nothing in `user_data`.

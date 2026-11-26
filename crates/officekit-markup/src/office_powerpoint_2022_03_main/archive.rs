@@ -232,9 +232,9 @@ pub struct ExtLstMirror {
 #[rkyv(remote = super::Instance)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InstanceMirror {
-    pub author_id: Option<String>,
+    pub author_id: Option<Box<str>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub time: Option<String>,
+    pub time: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -253,7 +253,7 @@ pub struct ReactionsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RxnMirror {
     pub instance: Vec<super::Instance>,
-    pub r#type: Option<String>,
+    pub r#type: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

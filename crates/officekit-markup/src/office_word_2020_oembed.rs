@@ -274,11 +274,11 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct OembedWith<X: UserData> {
     /// The attribute `mediaType`, when the element has it.
-    pub media_type: Option<String>,
+    pub media_type: Option<Box<str>>,
     /// The attribute `oEmbedUrl`, when the element has it.
-    pub o_embed_url: Option<String>,
+    pub o_embed_url: Option<Box<str>>,
     /// The attribute `picLocksAutoForOEmbed`, when the element has it.
-    pub pic_locks_auto_for_o_embed: Option<String>,
+    pub pic_locks_auto_for_o_embed: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

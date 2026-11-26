@@ -36,9 +36,9 @@ fn workbook_of(embedded: Embedded) -> Xlsx {
 
 fn value_cell(reference: &str, value: u32) -> Cell {
     let mut holding = CellValue::default();
-    holding.value = value.to_string();
+    holding.value = value.to_string().into();
     let mut cell = Cell::default();
-    cell.r = Some(reference.to_owned());
+    cell.r = Some(Box::from(reference));
     cell.value = Some(Box::new(holding));
     cell
 }
@@ -47,7 +47,7 @@ fn value_cell(reference: &str, value: u32) -> Cell {
 fn sheet_with(b2: u32, c2: u32) -> Worksheet {
     let mut row = Row::default();
     row.cell = vec![value_cell("B2", b2), value_cell("C2", c2)];
-    row.r = Some("2".to_owned());
+    row.r = Some(Box::from("2"));
     let mut sheet = Worksheet::default();
     sheet.sheet_data.row = vec![row];
     sheet
@@ -78,10 +78,10 @@ fn values(workbook: &Xlsx) -> Vec<(String, String)> {
         .flat_map(|row| &row.cell)
         .map(|cell| {
             (
-                cell.r.clone().unwrap_or_default(),
+                cell.r.clone().unwrap_or_default().into(),
                 cell.value
                     .as_ref()
-                    .map_or_else(String::new, |held| held.value.clone()),
+                    .map_or_else(String::new, |held| held.value.clone().into()),
             )
         })
         .collect()

@@ -18,7 +18,7 @@ const fn millimetres(width: i64, height: i64) -> PaperSize {
 fn setup(code: Option<&str>, width: Option<&str>, height: Option<&str>) -> PageSetupSettings {
     let measure = |text: &str| PositiveUniversalMeasurement::from(text.to_owned());
     let mut settings = PageSetupSettings::default();
-    settings.paper_size = code.map(str::to_owned);
+    settings.paper_size = code.map(Box::from);
     settings.paper_width = width.map(measure);
     settings.paper_height = height.map(measure);
     settings

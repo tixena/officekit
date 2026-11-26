@@ -1421,7 +1421,7 @@ impl super::Transform for office_drawing_2017_model3d::Model3DCameraContent {
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Perspective(arm) = self {
-            Self::Perspective(Box::new(arm.transform(ctx)))
+            Self::Perspective(arm.transform(ctx))
         } else {
             self.clone()
         }
@@ -1755,7 +1755,7 @@ impl super::Transform for office_drawing_2017_model3d::Model3DViewportContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ObjViewport(arm) = self {
-            Self::ObjViewport(Box::new(arm.transform(ctx)))
+            Self::ObjViewport(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::WinViewport(arm) = self {
@@ -3979,7 +3979,7 @@ fn transform_model3d_extension_3(
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::CustomXMLDataProperties(arm) = item
     {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::CustomXMLDataProperties(node),
         );
@@ -4564,7 +4564,7 @@ fn transform_model3d_extension_9(
         arm,
     ) = item
     {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::StorageForAlternateMathContent(
                 node,

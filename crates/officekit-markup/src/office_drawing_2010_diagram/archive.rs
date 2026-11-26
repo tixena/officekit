@@ -224,13 +224,13 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct CNvPrMirror {
     pub click_hyperlink: Option<Box<drawing::ClickHyperlink>>,
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     pub hyperlink_for_hover: Option<Box<drawing::HyperlinkForHover>>,
     pub id: Option<drawing::DrawingElementID>,
-    pub name: Option<String>,
-    pub title: Option<String>,
+    pub name: Option<Box<str>>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -241,7 +241,7 @@ pub struct CNvPrMirror {
 pub struct RecolorImgMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 impl From<CNvPrMirror> for super::CNvPr {

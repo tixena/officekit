@@ -49,8 +49,8 @@ fn geometry(guides: Vec<ShapeGuide>, paths: Vec<ShapePath>) -> CustomGeometry {
 /// An `a:gd` named `name` of the formula `fmla`.
 fn guide(name: &str, fmla: &str) -> ShapeGuide {
     let mut guide = ShapeGuide::default();
-    guide.name = Some(name.to_owned());
-    guide.fmla = Some(fmla.to_owned());
+    guide.name = Some(Box::from(name));
+    guide.fmla = Some(Box::from(fmla));
     guide
 }
 
@@ -371,7 +371,7 @@ fn fill_modes_and_stroke_are_kept_in_order() {
         paths.push(filled);
     }
     let mut unstroked = path(vec![move_to("0", "0")]);
-    unstroked.stroke = Some("false".to_owned());
+    unstroked.stroke = Some(Box::from("false"));
     paths.push(unstroked);
     let outline = custom(&geometry(Vec::new(), paths), 10, 10);
     let found: Vec<(PathFill, bool)> = outline

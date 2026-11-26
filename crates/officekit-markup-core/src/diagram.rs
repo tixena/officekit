@@ -1099,7 +1099,7 @@ pub struct AlgorithmWith<X: UserData> {
     /// The children that are `Parameter`, in order.
     pub parameter: Vec<ParameterWith<X>>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<AlgorithmTypes>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1296,7 +1296,7 @@ pub enum AxisTypeMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct AxisTypeList(pub String);
+pub struct AxisTypeList(pub Box<str>);
 
 /// The `dgm:bg` element, Background Formatting (ECMA-376 Part 1, section 21.4.3.1). Its schema type
 /// is `CT_BackgroundFormatting`.
@@ -1388,7 +1388,7 @@ pub enum BooleanConstraintMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct BooleanList(pub String);
+pub struct BooleanList(pub Box<str>);
 
 /// Breakpoint, the simple type `ST_Breakpoint` (ECMA-376 Part 1, section 21.4.7.11), kept as its
 /// member or as the text the file carried.
@@ -1423,9 +1423,9 @@ pub enum BreakpointMember {
 #[non_exhaustive]
 pub struct CategoryWith<X: UserData> {
     /// The attribute `pri`, when the element has it.
-    pub pri: Option<String>,
+    pub pri: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
-    pub r#type: Option<String>,
+    pub r#type: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1484,9 +1484,9 @@ impl Eq for CategoryListSDCategoriesWith<()> {}
 #[non_exhaustive]
 pub struct CategorySDCategoryWith<X: UserData> {
     /// The attribute `pri`, when the element has it.
-    pub pri: Option<String>,
+    pub pri: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
-    pub r#type: Option<String>,
+    pub r#type: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1614,7 +1614,7 @@ pub struct ChooseElementWith<X: UserData> {
     /// The children that are `If`, in order.
     pub r#if: Vec<IfWith<X>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1661,9 +1661,9 @@ pub enum ColorApplicationMethodTypeMember {
 #[non_exhaustive]
 pub struct ColorTransformCategoryWith<X: UserData> {
     /// The attribute `pri`, when the element has it.
-    pub pri: Option<String>,
+    pub pri: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
-    pub r#type: Option<String>,
+    pub r#type: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1709,13 +1709,13 @@ pub struct ColorTransformDefinitionHeaderWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `minVer`, when the element has it.
-    pub min_ver: Option<String>,
+    pub min_ver: Option<Box<str>>,
     /// The attribute `resId`, when the element has it.
-    pub res_id: Option<String>,
+    pub res_id: Option<Box<str>>,
     /// The children that are `TitleCTName`, in order.
     pub title_ct_name: Vec<TitleCTNameWith<X>>,
     /// The attribute `uniqueId`, when the element has it.
-    pub unique_id: Option<String>,
+    pub unique_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1741,13 +1741,13 @@ pub struct ColorTransformDefinitionsWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `minVer`, when the element has it.
-    pub min_ver: Option<String>,
+    pub min_ver: Option<Box<str>>,
     /// The children that are `StyleLabel`, in order.
     pub style_label: Vec<StyleLabelWith<X>>,
     /// The children that are `TitleCTName`, in order.
     pub title_ct_name: Vec<TitleCTNameWith<X>>,
     /// The attribute `uniqueId`, when the element has it.
-    pub unique_id: Option<String>,
+    pub unique_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1792,7 +1792,7 @@ pub struct ColorTransformSampleDataWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `useDef`, when the element has it.
-    pub use_def: Option<String>,
+    pub use_def: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DiagramColorTransformSampleData,
 }
@@ -1811,7 +1811,7 @@ pub struct ConnectionWith<X: UserData> {
     /// The attribute `destId`, when the element has it.
     pub dest_id: Option<ModelIdentifier>,
     /// The attribute `destOrd`, when the element has it.
-    pub dest_ord: Option<String>,
+    pub dest_ord: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `modelId`, when the element has it.
@@ -1819,13 +1819,13 @@ pub struct ConnectionWith<X: UserData> {
     /// The attribute `parTransId`, when the element has it.
     pub par_trans_id: Option<ModelIdentifier>,
     /// The attribute `presId`, when the element has it.
-    pub pres_id: Option<String>,
+    pub pres_id: Option<Box<str>>,
     /// The attribute `sibTransId`, when the element has it.
     pub sib_trans_id: Option<ModelIdentifier>,
     /// The attribute `srcId`, when the element has it.
     pub src_id: Option<ModelIdentifier>,
     /// The attribute `srcOrd`, when the element has it.
-    pub src_ord: Option<String>,
+    pub src_ord: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<ConnectionType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1997,11 +1997,11 @@ pub struct ConstraintWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `fact`, when the element has it.
-    pub fact: Option<String>,
+    pub fact: Option<Box<str>>,
     /// The attribute `for`, when the element has it.
     pub r#for: Option<ConstraintRelationship>,
     /// The attribute `forName`, when the element has it.
-    pub for_name: Option<String>,
+    pub for_name: Option<Box<str>>,
     /// The attribute `op`, when the element has it.
     pub op: Option<BooleanConstraint>,
     /// The attribute `ptType`, when the element has it.
@@ -2009,7 +2009,7 @@ pub struct ConstraintWith<X: UserData> {
     /// The attribute `refFor`, when the element has it.
     pub ref_for: Option<ConstraintRelationship>,
     /// The attribute `refForName`, when the element has it.
-    pub ref_for_name: Option<String>,
+    pub ref_for_name: Option<Box<str>>,
     /// The attribute `refPtType`, when the element has it.
     pub ref_pt_type: Option<DataPointType>,
     /// The attribute `refType`, when the element has it.
@@ -2022,7 +2022,7 @@ pub struct ConstraintWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DiagramConstraint,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `dgm:constr` element of the tree a read gives: [`ConstraintWith`] holding nothing in
@@ -2327,14 +2327,14 @@ pub enum DataPointTypeMember {
 #[non_exhaustive]
 pub struct DescriptionWith<X: UserData> {
     /// The attribute `lang`, when the element has it.
-    pub lang: Option<String>,
+    pub lang: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DiagramDescription,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `dgm:desc` element of the tree a read gives: [`DescriptionWith`] holding nothing in
@@ -2349,14 +2349,14 @@ impl Eq for DescriptionWith<()> {}
 #[non_exhaustive]
 pub struct DescriptionCTDescriptionWith<X: UserData> {
     /// The attribute `lang`, when the element has it.
-    pub lang: Option<String>,
+    pub lang: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DiagramDescriptionCTDescription,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `dgm:desc` element of the tree a read gives: [`DescriptionCTDescriptionWith`] holding
@@ -2442,7 +2442,7 @@ impl Eq for DiagramLayoutHeaderListWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct DiagreamLayoutNodeTypeList(pub String);
+pub struct DiagreamLayoutNodeTypeList(pub Box<str>);
 
 /// The `dgm:effectClrLst` element, Effect Color List (ECMA-376 Part 1, section 21.4.4.7). Its
 /// schema type is `CT_Colors`.
@@ -2476,7 +2476,7 @@ pub struct ElseWith<X: UserData> {
     /// The children that are an item of `LayoutElementContent`, in order.
     pub content: Vec<LayoutElementContentWith<X>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2495,13 +2495,13 @@ impl Eq for ElseWith<()> {}
 #[non_exhaustive]
 pub struct ExplicitRelationshipsToDiagramPartsWith<X: UserData> {
     /// The attribute `r:cs`, when the element has it.
-    pub cs: Option<String>,
+    pub cs: Option<Box<str>>,
     /// The attribute `r:dm`, when the element has it.
-    pub dm: Option<String>,
+    pub dm: Option<Box<str>>,
     /// The attribute `r:lo`, when the element has it.
-    pub lo: Option<String>,
+    pub lo: Option<Box<str>>,
     /// The attribute `r:qs`, when the element has it.
-    pub qs: Option<String>,
+    pub qs: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2623,11 +2623,11 @@ pub struct ForEachWith<X: UserData> {
     /// The attribute `hideLastTrans`, when the element has it.
     pub hide_last_trans: Option<BooleanList>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `ptType`, when the element has it.
     pub pt_type: Option<DiagreamLayoutNodeTypeList>,
     /// The attribute `ref`, when the element has it.
-    pub r#ref: Option<String>,
+    pub r#ref: Option<Box<str>>,
     /// The attribute `st`, when the element has it.
     pub st: Option<IntegerList>,
     /// The attribute `step`, when the element has it.
@@ -2957,7 +2957,7 @@ pub struct IfWith<X: UserData> {
     /// The attribute `hideLastTrans`, when the element has it.
     pub hide_last_trans: Option<BooleanList>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `op`, when the element has it.
     pub op: Option<FunctionOperator>,
     /// The attribute `ptType`, when the element has it.
@@ -2991,7 +2991,7 @@ impl Eq for IfWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct Index1(pub String);
+pub struct Index1(pub Box<str>);
 
 /// Integer List, the simple type `ST_Ints` (ECMA-376 Part 1, section 21.4.7.40), kept as the text
 /// the file carried.
@@ -3005,7 +3005,7 @@ pub struct Index1(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct IntegerList(pub String);
+pub struct IntegerList(pub Box<str>);
 
 /// The `dgm:layoutDef` element, Layout Definition (ECMA-376 Part 1, section 21.4.2.16). Its schema
 /// type is `CT_DiagramDefinition`.
@@ -3017,7 +3017,7 @@ pub struct LayoutDefinitionWith<X: UserData> {
     /// The child that is `ColorTransformSampleData`, when there is one.
     pub color_transform_sample_data: Option<Box<ColorTransformSampleDataWith<X>>>,
     /// The attribute `defStyle`, when the element has it.
-    pub def_style: Option<String>,
+    pub def_style: Option<Box<str>>,
     /// The children that are `Description`, in order.
     pub description: Vec<DescriptionWith<X>>,
     /// The child that is `ExtensionList`, when there is one.
@@ -3025,7 +3025,7 @@ pub struct LayoutDefinitionWith<X: UserData> {
     /// The child that is `LayoutNode`, which the schema requires.
     pub layout_node: Box<LayoutNodeWith<X>>,
     /// The attribute `minVer`, when the element has it.
-    pub min_ver: Option<String>,
+    pub min_ver: Option<Box<str>>,
     /// The child that is `SampleData`, when there is one.
     pub sample_data: Option<Box<SampleDataWith<X>>>,
     /// The child that is `StyleData`, when there is one.
@@ -3033,7 +3033,7 @@ pub struct LayoutDefinitionWith<X: UserData> {
     /// The children that are `Title`, in order.
     pub title: Vec<TitleWith<X>>,
     /// The attribute `uniqueId`, when the element has it.
-    pub unique_id: Option<String>,
+    pub unique_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3055,19 +3055,19 @@ pub struct LayoutDefinitionHeaderWith<X: UserData> {
     /// The child that is `CategoryList`, when there is one.
     pub category_list: Option<Box<CategoryListWith<X>>>,
     /// The attribute `defStyle`, when the element has it.
-    pub def_style: Option<String>,
+    pub def_style: Option<Box<str>>,
     /// The children that are `Description`, in order.
     pub description: Vec<DescriptionWith<X>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `minVer`, when the element has it.
-    pub min_ver: Option<String>,
+    pub min_ver: Option<Box<str>>,
     /// The attribute `resId`, when the element has it.
-    pub res_id: Option<String>,
+    pub res_id: Option<Box<str>>,
     /// The children that are `Title`, in order.
     pub title: Vec<TitleWith<X>>,
     /// The attribute `uniqueId`, when the element has it.
-    pub unique_id: Option<String>,
+    pub unique_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3128,11 +3128,11 @@ pub struct LayoutNodeWith<X: UserData> {
     /// The children that are an item of `LayoutNodeContent`, in order.
     pub content: Vec<LayoutNodeContentWith<X>>,
     /// The attribute `moveWith`, when the element has it.
-    pub move_with: Option<String>,
+    pub move_with: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `styleLbl`, when the element has it.
-    pub style_lbl: Option<String>,
+    pub style_lbl: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3412,7 +3412,7 @@ pub enum NodeVerticalAlignmentMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct NumberOfNodesDefinition(pub String);
+pub struct NumberOfNodesDefinition(pub Box<str>);
 
 /// Offset, the simple type `ST_Offset` (ECMA-376 Part 1, section 21.4.7.47), kept as its member or
 /// as the text the file carried.
@@ -3955,17 +3955,17 @@ impl Eq for PresentationOfWith<()> {}
 #[non_exhaustive]
 pub struct PropertySetWith<X: UserData> {
     /// The attribute `coherent3DOff`, when the element has it.
-    pub coherent3_d_off: Option<String>,
+    pub coherent3_d_off: Option<Box<str>>,
     /// The attribute `csCatId`, when the element has it.
-    pub cs_cat_id: Option<String>,
+    pub cs_cat_id: Option<Box<str>>,
     /// The attribute `csTypeId`, when the element has it.
-    pub cs_type_id: Option<String>,
+    pub cs_type_id: Option<Box<str>>,
     /// The attribute `custAng`, when the element has it.
-    pub cust_ang: Option<String>,
+    pub cust_ang: Option<Box<str>>,
     /// The attribute `custFlipHor`, when the element has it.
-    pub cust_flip_hor: Option<String>,
+    pub cust_flip_hor: Option<Box<str>>,
     /// The attribute `custFlipVert`, when the element has it.
-    pub cust_flip_vert: Option<String>,
+    pub cust_flip_vert: Option<Box<str>>,
     /// The attribute `custLinFactNeighborX`, when the element has it.
     pub cust_lin_fact_neighbor_x: Option<PropertySetCustomizedValue>,
     /// The attribute `custLinFactNeighborY`, when the element has it.
@@ -3983,35 +3983,35 @@ pub struct PropertySetWith<X: UserData> {
     /// The attribute `custScaleY`, when the element has it.
     pub cust_scale_y: Option<PropertySetCustomizedValue>,
     /// The attribute `custSzX`, when the element has it.
-    pub cust_sz_x: Option<String>,
+    pub cust_sz_x: Option<Box<str>>,
     /// The attribute `custSzY`, when the element has it.
-    pub cust_sz_y: Option<String>,
+    pub cust_sz_y: Option<Box<str>>,
     /// The attribute `custT`, when the element has it.
-    pub cust_t: Option<String>,
+    pub cust_t: Option<Box<str>>,
     /// The attribute `loCatId`, when the element has it.
-    pub lo_cat_id: Option<String>,
+    pub lo_cat_id: Option<Box<str>>,
     /// The attribute `loTypeId`, when the element has it.
-    pub lo_type_id: Option<String>,
+    pub lo_type_id: Option<Box<str>>,
     /// The attribute `phldr`, when the element has it.
-    pub phldr: Option<String>,
+    pub phldr: Option<Box<str>>,
     /// The attribute `phldrT`, when the element has it.
-    pub phldr_t: Option<String>,
+    pub phldr_t: Option<Box<str>>,
     /// The attribute `presAssocID`, when the element has it.
     pub pres_assoc_id: Option<ModelIdentifier>,
     /// The attribute `presName`, when the element has it.
-    pub pres_name: Option<String>,
+    pub pres_name: Option<Box<str>>,
     /// The attribute `presStyleCnt`, when the element has it.
-    pub pres_style_cnt: Option<String>,
+    pub pres_style_cnt: Option<Box<str>>,
     /// The attribute `presStyleIdx`, when the element has it.
-    pub pres_style_idx: Option<String>,
+    pub pres_style_idx: Option<Box<str>>,
     /// The attribute `presStyleLbl`, when the element has it.
-    pub pres_style_lbl: Option<String>,
+    pub pres_style_lbl: Option<Box<str>>,
     /// The child that is `PresentationLayoutVariables`, when there is one.
     pub presentation_layout_variables: Option<Box<PresentationLayoutVariablesWith<X>>>,
     /// The attribute `qsCatId`, when the element has it.
-    pub qs_cat_id: Option<String>,
+    pub qs_cat_id: Option<Box<str>>,
     /// The attribute `qsTypeId`, when the element has it.
-    pub qs_type_id: Option<String>,
+    pub qs_type_id: Option<Box<str>>,
     /// The child that is `ShapeStyle`, when there is one.
     pub shape_style: Option<Box<ShapeStyleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -4160,13 +4160,13 @@ pub struct RuleWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `fact`, when the element has it.
-    pub fact: Option<String>,
+    pub fact: Option<Box<str>>,
     /// The attribute `for`, when the element has it.
     pub r#for: Option<ConstraintRelationship>,
     /// The attribute `forName`, when the element has it.
-    pub for_name: Option<String>,
+    pub for_name: Option<Box<str>>,
     /// The attribute `max`, when the element has it.
-    pub max: Option<String>,
+    pub max: Option<Box<str>>,
     /// The attribute `ptType`, when the element has it.
     pub pt_type: Option<DataPointType>,
     /// The attribute `type`, when the element has it.
@@ -4177,7 +4177,7 @@ pub struct RuleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DiagramRule,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `dgm:rule` element of the tree a read gives: [`RuleWith`] holding nothing in `user_data`.
@@ -4216,7 +4216,7 @@ pub struct SampleDataWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `useDef`, when the element has it.
-    pub use_def: Option<String>,
+    pub use_def: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DiagramSampleData,
 }
@@ -4322,17 +4322,17 @@ pub struct ShapeWith<X: UserData> {
     /// The child that is `ShapeAdjustList`, when there is one.
     pub adjust_list: Option<Box<ShapeAdjustListWith<X>>>,
     /// The attribute `r:blip`, when the element has it.
-    pub blip: Option<String>,
+    pub blip: Option<Box<str>>,
     /// The attribute `blipPhldr`, when the element has it.
-    pub blip_phldr: Option<String>,
+    pub blip_phldr: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `hideGeom`, when the element has it.
-    pub hide_geom: Option<String>,
+    pub hide_geom: Option<Box<str>>,
     /// The attribute `lkTxEntry`, when the element has it.
-    pub lk_tx_entry: Option<String>,
+    pub lk_tx_entry: Option<Box<str>>,
     /// The attribute `rot`, when the element has it.
-    pub rot: Option<String>,
+    pub rot: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<LayoutShapeType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -4341,7 +4341,7 @@ pub struct ShapeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DiagramShape,
     /// The attribute `zOrderOff`, when the element has it.
-    pub z_order_off: Option<String>,
+    pub z_order_off: Option<Box<str>>,
 }
 
 /// The `dgm:shape` element of the tree a read gives: [`ShapeWith`] holding nothing in `user_data`.
@@ -4362,7 +4362,7 @@ pub struct ShapeAdjustWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DiagramShapeAdjust,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `dgm:adj` element of the tree a read gives: [`ShapeAdjustWith`] holding nothing in
@@ -4484,7 +4484,7 @@ pub struct ShowInsertNodeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DiagramShowInsertNode,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `dgm:bulletEnabled` element of the tree a read gives: [`ShowInsertNodeWith`] holding nothing
@@ -4504,7 +4504,7 @@ pub struct ShowOrganizationChartUserInterfaceWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DiagramShowOrganizationChartUserInterface,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `dgm:orgChart` element of the tree a read gives: [`ShowOrganizationChartUserInterfaceWith`]
@@ -4583,7 +4583,7 @@ pub struct StyleDataWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `useDef`, when the element has it.
-    pub use_def: Option<String>,
+    pub use_def: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DiagramStyleData,
 }
@@ -4604,7 +4604,7 @@ pub struct StyleDefinitionWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `minVer`, when the element has it.
-    pub min_ver: Option<String>,
+    pub min_ver: Option<Box<str>>,
     /// The child that is `Scene3d`, when there is one.
     pub scene3d: Option<Box<Scene3dWith<X>>>,
     /// The children that are `StyleLabelDescription`, in order.
@@ -4614,7 +4614,7 @@ pub struct StyleDefinitionWith<X: UserData> {
     /// The children that are `TitleSDName`, in order.
     pub title_sd_name: Vec<TitleSDNameWith<X>>,
     /// The attribute `uniqueId`, when the element has it.
-    pub unique_id: Option<String>,
+    pub unique_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4638,15 +4638,15 @@ pub struct StyleDefinitionHeaderWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `minVer`, when the element has it.
-    pub min_ver: Option<String>,
+    pub min_ver: Option<Box<str>>,
     /// The attribute `resId`, when the element has it.
-    pub res_id: Option<String>,
+    pub res_id: Option<Box<str>>,
     /// The children that are `StyleLabelDescription`, in order.
     pub style_label_description: Vec<StyleLabelDescriptionWith<X>>,
     /// The children that are `TitleSDName`, in order.
     pub title_sd_name: Vec<TitleSDNameWith<X>>,
     /// The attribute `uniqueId`, when the element has it.
-    pub unique_id: Option<String>,
+    pub unique_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4674,7 +4674,7 @@ pub struct StyleLabelWith<X: UserData> {
     /// The child that is `LineColorList`, when there is one.
     pub line_color_list: Option<Box<LineColorListWith<X>>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The child that is `TextEffectColorList`, when there is one.
     pub text_effect_color_list: Option<Box<TextEffectColorListWith<X>>>,
     /// The child that is `TextFillColorList`, when there is one.
@@ -4700,14 +4700,14 @@ impl Eq for StyleLabelWith<()> {}
 #[non_exhaustive]
 pub struct StyleLabelDescriptionWith<X: UserData> {
     /// The attribute `lang`, when the element has it.
-    pub lang: Option<String>,
+    pub lang: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DiagramStyleLabelDescription,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `dgm:desc` element of the tree a read gives: [`StyleLabelDescriptionWith`] holding nothing
@@ -4724,7 +4724,7 @@ pub struct StyleLabelStyleLabelWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The child that is `Scene3d`, when there is one.
     pub scene3d: Option<Box<Scene3dWith<X>>>,
     /// The child that is `ShapeStyle`, when there is one.
@@ -4996,14 +4996,14 @@ impl Eq for TextPropertiesWith<()> {}
 #[non_exhaustive]
 pub struct TitleWith<X: UserData> {
     /// The attribute `lang`, when the element has it.
-    pub lang: Option<String>,
+    pub lang: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DiagramTitle,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `dgm:title` element of the tree a read gives: [`TitleWith`] holding nothing in `user_data`.
@@ -5017,14 +5017,14 @@ impl Eq for TitleWith<()> {}
 #[non_exhaustive]
 pub struct TitleCTNameWith<X: UserData> {
     /// The attribute `lang`, when the element has it.
-    pub lang: Option<String>,
+    pub lang: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DiagramTitleCTName,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `dgm:title` element of the tree a read gives: [`TitleCTNameWith`] holding nothing in
@@ -5039,14 +5039,14 @@ impl Eq for TitleCTNameWith<()> {}
 #[non_exhaustive]
 pub struct TitleSDNameWith<X: UserData> {
     /// The attribute `lang`, when the element has it.
-    pub lang: Option<String>,
+    pub lang: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DiagramTitleSDName,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `dgm:title` element of the tree a read gives: [`TitleSDNameWith`] holding nothing in
@@ -5067,7 +5067,7 @@ impl Eq for TitleSDNameWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct UnsignedIntegerList(pub String);
+pub struct UnsignedIntegerList(pub Box<str>);
 
 /// The `dgm:varLst` element, Variable List (ECMA-376 Part 1, section 21.4.2.31). Its schema type is
 /// `CT_LayoutVariablePropertySet`.
@@ -5729,7 +5729,7 @@ impl AsRef<str> for AxisTypeList {
 
 impl From<String> for AxisTypeList {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -6011,7 +6011,7 @@ impl AsRef<str> for BooleanList {
 
 impl From<String> for BooleanList {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -8567,7 +8567,7 @@ impl AsRef<str> for DiagreamLayoutNodeTypeList {
 
 impl From<String> for DiagreamLayoutNodeTypeList {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -10025,7 +10025,7 @@ impl AsRef<str> for Index1 {
 
 impl From<String> for Index1 {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -10069,7 +10069,7 @@ impl AsRef<str> for IntegerList {
 
 impl From<String> for IntegerList {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -11276,7 +11276,7 @@ impl AsRef<str> for NumberOfNodesDefinition {
 
 impl From<String> for NumberOfNodesDefinition {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -15378,7 +15378,7 @@ impl AsRef<str> for UnsignedIntegerList {
 
 impl From<String> for UnsignedIntegerList {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 

@@ -313,7 +313,7 @@ pub struct CNvContentPartPrWith<X: UserData> {
     /// The child that is `super::office_drawing_2010_main::ExtLst`, when there is one.
     pub ext_lst: Option<Box<super::office_drawing_2010_main::ExtLstWith<X>>>,
     /// The attribute `isComment`, when the element has it.
-    pub is_comment: Option<String>,
+    pub is_comment: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -335,19 +335,19 @@ pub struct CNvPrWith<X: UserData> {
     /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
     /// The attribute `hidden`, when the element has it.
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHoverWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -371,7 +371,7 @@ pub struct ContentPartWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The child that is `NvContentPartPr`, when there is one.
     pub nv_content_part_pr: Option<Box<NvContentPartPrWith<X>>>,
     /// The child that is `NvPr`, when there is one.
@@ -439,9 +439,9 @@ impl Eq for NvContentPartPrWith<()> {}
 #[non_exhaustive]
 pub struct NvPrWith<X: UserData> {
     /// The attribute `fPublished`, when the element has it.
-    pub f_published: Option<String>,
+    pub f_published: Option<Box<str>>,
     /// The attribute `macro`, when the element has it.
-    pub r#macro: Option<String>,
+    pub r#macro: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -462,9 +462,9 @@ pub struct XfrmWith<X: UserData> {
     /// The child that is `super::drawing::Extents`, when there is one.
     pub extents: Option<Box<super::drawing::ExtentsWith<X>>>,
     /// The attribute `flipH`, when the element has it.
-    pub flip_h: Option<String>,
+    pub flip_h: Option<Box<str>>,
     /// The attribute `flipV`, when the element has it.
-    pub flip_v: Option<String>,
+    pub flip_v: Option<Box<str>>,
     /// The child that is `super::drawing::Offset`, when there is one.
     pub offset: Option<Box<super::drawing::OffsetWith<X>>>,
     /// The attribute `rot`, when the element has it.

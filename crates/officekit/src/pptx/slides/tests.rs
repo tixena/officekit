@@ -102,7 +102,7 @@ fn set_list(pptx: &mut Pptx, r_ids: &[Option<&str>]) {
     for (number, r_id) in (256_u32..).zip(r_ids) {
         let mut entry = SlideID::default();
         entry.id = Some(number.to_string().into());
-        entry.r_id = r_id.map(str::to_owned);
+        entry.r_id = r_id.map(Box::from);
         list.slide_id.push(entry);
     }
     let mut presentation = pptx.presentation().unwrap();

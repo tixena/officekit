@@ -230,7 +230,7 @@ pub struct CNvContentPartPrMirror {
     pub cp_locks: Option<Box<super::super::office_drawing_2010_main::CpLocks>>,
     #[rkyv(omit_bounds)]
     pub ext_lst: Option<Box<super::super::office_drawing_2010_main::ExtLst>>,
-    pub is_comment: Option<String>,
+    pub is_comment: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -244,15 +244,15 @@ pub struct CNvContentPartPrMirror {
 pub struct CNvPrMirror {
     #[rkyv(omit_bounds)]
     pub click_hyperlink: Option<Box<super::super::drawing::ClickHyperlink>>,
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub hyperlink_for_hover: Option<Box<super::super::drawing::HyperlinkForHover>>,
     pub id: Option<super::super::drawing::DrawingElementID>,
-    pub name: Option<String>,
-    pub title: Option<String>,
+    pub name: Option<Box<str>>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -267,7 +267,7 @@ pub struct ContentPartMirror {
     pub bw_mode: Option<super::super::drawing::BlackAndWhiteMode>,
     #[rkyv(omit_bounds)]
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub nv_content_part_pr: Option<Box<super::NvContentPartPr>>,
     pub nv_pr: Option<Box<super::NvPr>>,
@@ -308,8 +308,8 @@ pub struct NvContentPartPrMirror {
 #[rkyv(remote = super::NvPr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NvPrMirror {
-    pub f_published: Option<String>,
-    pub r#macro: Option<String>,
+    pub f_published: Option<Box<str>>,
+    pub r#macro: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -319,8 +319,8 @@ pub struct NvPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct XfrmMirror {
     pub extents: Option<Box<super::super::drawing::Extents>>,
-    pub flip_h: Option<String>,
-    pub flip_v: Option<String>,
+    pub flip_h: Option<Box<str>>,
+    pub flip_v: Option<Box<str>>,
     pub offset: Option<Box<super::super::drawing::Offset>>,
     pub rot: Option<super::super::drawing::Angle>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

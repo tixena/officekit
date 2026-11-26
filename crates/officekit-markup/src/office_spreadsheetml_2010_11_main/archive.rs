@@ -226,8 +226,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::ActiveTabTopLevelEntity)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ActiveTabTopLevelEntityMirror {
-    pub name: Option<String>,
-    pub r#type: Option<String>,
+    pub name: Option<Box<str>>,
+    pub r#type: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -238,7 +238,7 @@ pub struct ActiveTabTopLevelEntityMirror {
 pub struct AutoFilterMirror {
     pub autofilter_column: Vec<spreadsheet::AutoFilterColumn>,
     pub future_feature_data_storage_area: Option<Box<spreadsheet::FutureFeatureDataStorageArea>>,
-    pub r#ref: Option<String>,
+    pub r#ref: Option<Box<str>>,
     pub sort_state: Option<Box<spreadsheet::SortState>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -256,7 +256,7 @@ pub struct BoundsMirror {
 #[rkyv(remote = super::C)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CMirror {
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     pub t: Option<super::SXVCellType>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -268,7 +268,7 @@ pub struct CMirror {
 #[rkyv(remote = super::CacheHierarchy)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CacheHierarchyMirror {
-    pub aggregated_column: Option<String>,
+    pub aggregated_column: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -277,8 +277,8 @@ pub struct CacheHierarchyMirror {
 #[rkyv(remote = super::CachedUniqueName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CachedUniqueNameMirror {
-    pub index: Option<String>,
-    pub name: Option<String>,
+    pub index: Option<Box<str>>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -296,8 +296,8 @@ pub struct CachedUniqueNamesMirror {
 #[rkyv(remote = super::CalculatedMember)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CalculatedMemberMirror {
-    pub measure: Option<String>,
-    pub measure_group: Option<String>,
+    pub measure: Option<Box<str>>,
+    pub measure_group: Option<Box<str>>,
     pub number_format: Option<super::CalcMemNumberFormat>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -307,17 +307,17 @@ pub struct CalculatedMemberMirror {
 #[rkyv(remote = super::Connection)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ConnectionMirror {
-    pub auto_delete: Option<String>,
+    pub auto_delete: Option<Box<str>>,
     pub data_feed_pr: Option<Box<super::DataFeedPr>>,
-    pub exclude_from_refresh_all: Option<String>,
-    pub id: Option<String>,
-    pub model: Option<String>,
+    pub exclude_from_refresh_all: Option<Box<str>>,
+    pub id: Option<Box<str>>,
+    pub model: Option<Box<str>>,
     pub model_text_pr: Option<Box<super::ModelTextPr>>,
     pub oledb_pr: Option<Box<super::OledbPr>>,
     pub range_pr: Option<Box<super::RangePr>>,
     pub text_pr: Option<Box<super::TextPr>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub used_by_addin: Option<String>,
+    pub used_by_addin: Option<Box<str>>,
     pub user_data: (),
 }
 
@@ -325,7 +325,7 @@ pub struct ConnectionMirror {
 #[rkyv(remote = super::DataFeedPr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataFeedPrMirror {
-    pub connection: Option<String>,
+    pub connection: Option<Box<str>>,
     pub db_tables: Box<super::DbTables>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -335,7 +335,7 @@ pub struct DataFeedPrMirror {
 #[rkyv(remote = super::DataField)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataFieldMirror {
-    pub is_count_distinct: Option<String>,
+    pub is_count_distinct: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -345,7 +345,7 @@ pub struct DataFieldMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DataModelMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub min_version_load: Option<String>,
+    pub min_version_load: Option<Box<str>>,
     pub relationships: Option<Box<super::ModelRelationships>>,
     pub tables: Option<Box<super::ModelTables>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -356,7 +356,7 @@ pub struct DataModelMirror {
 #[rkyv(remote = super::DbCommand)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DbCommandMirror {
-    pub text: Option<String>,
+    pub text: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -365,7 +365,7 @@ pub struct DbCommandMirror {
 #[rkyv(remote = super::DbTable)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DbTableMirror {
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -392,7 +392,7 @@ pub struct DescriptionPrMirror {
 #[rkyv(remote = super::Dxfs)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DxfsMirror {
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     pub formatting: Vec<spreadsheet::Formatting>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -411,10 +411,10 @@ pub struct ExtLstMirror {
 #[rkyv(remote = super::ModelRelationship)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ModelRelationshipMirror {
-    pub from_column: Option<String>,
-    pub from_table: Option<String>,
-    pub to_column: Option<String>,
-    pub to_table: Option<String>,
+    pub from_column: Option<Box<str>>,
+    pub from_table: Option<Box<str>>,
+    pub to_column: Option<Box<str>>,
+    pub to_table: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -432,9 +432,9 @@ pub struct ModelRelationshipsMirror {
 #[rkyv(remote = super::ModelTable)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ModelTableMirror {
-    pub connection: Option<String>,
-    pub id: Option<String>,
-    pub name: Option<String>,
+    pub connection: Option<Box<str>>,
+    pub id: Option<Box<str>>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -452,7 +452,7 @@ pub struct ModelTablesMirror {
 #[rkyv(remote = super::ModelTextPr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ModelTextPrMirror {
-    pub headers: Option<String>,
+    pub headers: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -461,10 +461,10 @@ pub struct ModelTextPrMirror {
 #[rkyv(remote = super::MovingPeriodState)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MovingPeriodStateMirror {
-    pub moving_multiple: Option<String>,
+    pub moving_multiple: Option<Box<str>>,
     pub moving_period: Option<super::MovingPeriodStep>,
-    pub reference_date_begin: Option<String>,
-    pub reference_multiple: Option<String>,
+    pub reference_date_begin: Option<Box<str>>,
+    pub reference_multiple: Option<Box<str>>,
     pub reference_period: Option<super::MovingPeriodStep>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -474,7 +474,7 @@ pub struct MovingPeriodStateMirror {
 #[rkyv(remote = super::OledbPr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OledbPrMirror {
-    pub connection: Option<String>,
+    pub connection: Option<Box<str>>,
     pub content: Box<super::DatabaseSourceContent>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -484,7 +484,7 @@ pub struct OledbPrMirror {
 #[rkyv(remote = super::PivotCacheDecoupled)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotCacheDecoupledMirror {
-    pub decoupled: Option<String>,
+    pub decoupled: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -493,8 +493,8 @@ pub struct PivotCacheDecoupledMirror {
 #[rkyv(remote = super::PivotCacheIdVersion)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotCacheIdVersionMirror {
-    pub cache_id_created_version: Option<String>,
-    pub cache_id_supported_version: Option<String>,
+    pub cache_id_created_version: Option<Box<str>>,
+    pub cache_id_supported_version: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -513,7 +513,7 @@ pub struct PivotCachesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotFilterMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub use_whole_day: Option<String>,
+    pub use_whole_day: Option<Box<str>>,
     pub user_data: (),
 }
 
@@ -522,8 +522,8 @@ pub struct PivotFilterMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotRowMirror {
     pub c: Vec<super::C>,
-    pub count: Option<String>,
-    pub r: Option<String>,
+    pub count: Option<Box<str>>,
+    pub r: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -532,8 +532,8 @@ pub struct PivotRowMirror {
 #[rkyv(remote = super::PivotTable)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotTableMirror {
-    pub name: Option<String>,
-    pub tab_id: Option<String>,
+    pub name: Option<Box<str>>,
+    pub tab_id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -542,10 +542,10 @@ pub struct PivotTableMirror {
 #[rkyv(remote = super::PivotTableData)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotTableDataMirror {
-    pub cache_id: Option<String>,
-    pub column_count: Option<String>,
+    pub cache_id: Option<Box<str>>,
+    pub column_count: Option<Box<str>>,
     pub pivot_row: Box<super::PivotRow>,
-    pub row_count: Option<String>,
+    pub row_count: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -554,7 +554,7 @@ pub struct PivotTableDataMirror {
 #[rkyv(remote = super::PivotTableReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotTableReferenceMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -572,7 +572,7 @@ pub struct PivotTableReferencesMirror {
 #[rkyv(remote = super::PivotTableServerFormats)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotTableServerFormatsMirror {
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     pub server_format: Vec<super::ServerFormat>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -584,8 +584,8 @@ pub struct PivotTableServerFormatsMirror {
 pub struct PivotTableUISettingsMirror {
     pub active_tab_top_level_entity: Vec<super::ActiveTabTopLevelEntity>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub rel_needed_hidden: Option<String>,
-    pub source_data_name: Option<String>,
+    pub rel_needed_hidden: Option<Box<str>>,
+    pub source_data_name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -603,9 +603,9 @@ pub struct PivotTablesMirror {
 #[rkyv(remote = super::QueryTable)]
 #[rkyv(attr(non_exhaustive))]
 pub struct QueryTableMirror {
-    pub clipped: Option<String>,
-    pub drill_through: Option<String>,
-    pub source_data_name: Option<String>,
+    pub clipped: Option<Box<str>>,
+    pub drill_through: Option<Box<str>>,
+    pub source_data_name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -614,16 +614,16 @@ pub struct QueryTableMirror {
 #[rkyv(remote = super::Question)]
 #[rkyv(attr(non_exhaustive))]
 pub struct QuestionMirror {
-    pub binding: Option<String>,
-    pub decimal_places: Option<String>,
-    pub default_value: Option<String>,
+    pub binding: Option<Box<str>>,
+    pub decimal_places: Option<Box<str>>,
+    pub default_value: Option<Box<str>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub format: Option<super::QuestionFormat>,
-    pub help_text: Option<String>,
+    pub help_text: Option<Box<str>>,
     pub pr: Option<Box<super::QuestionPr>>,
-    pub required: Option<String>,
-    pub row_source: Option<String>,
-    pub text: Option<String>,
+    pub required: Option<Box<str>>,
+    pub row_source: Option<Box<str>>,
+    pub text: Option<Box<str>>,
     pub r#type: Option<super::QuestionType>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -661,7 +661,7 @@ pub struct QuestionsPrMirror {
 #[rkyv(remote = super::RangePr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RangePrMirror {
-    pub source_name: Option<String>,
+    pub source_name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -678,8 +678,8 @@ pub struct SelectionMirror {
 #[rkyv(remote = super::ServerFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ServerFormatMirror {
-    pub culture: Option<String>,
-    pub format: Option<String>,
+    pub culture: Option<Box<str>>,
+    pub format: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -688,7 +688,7 @@ pub struct ServerFormatMirror {
 #[rkyv(remote = super::SlicerCacheHideItemsWithNoData)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SlicerCacheHideItemsWithNoDataMirror {
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     pub slicer_cache_olap_level_name: Vec<super::SlicerCacheOlapLevelName>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -698,8 +698,8 @@ pub struct SlicerCacheHideItemsWithNoDataMirror {
 #[rkyv(remote = super::SlicerCacheOlapLevelName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SlicerCacheOlapLevelNameMirror {
-    pub count: Option<String>,
-    pub unique_name: Option<String>,
+    pub count: Option<Box<str>>,
+    pub unique_name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -728,16 +728,16 @@ pub struct SlicerCachesMirror {
 pub struct StateMirror {
     pub bounds: Box<super::Bounds>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub filter_id: Option<String>,
-    pub filter_pivot_name: Option<String>,
-    pub filter_tab_id: Option<String>,
+    pub filter_id: Option<Box<str>>,
+    pub filter_pivot_name: Option<Box<str>>,
+    pub filter_tab_id: Option<Box<str>>,
     pub filter_type: Option<spreadsheet::PivotFilterTypes>,
-    pub last_refresh_version: Option<String>,
-    pub minimal_refresh_version: Option<String>,
+    pub last_refresh_version: Option<Box<str>>,
+    pub minimal_refresh_version: Option<Box<str>>,
     pub moving_period: Option<Box<super::MovingPeriodState>>,
-    pub pivot_cache_id: Option<String>,
+    pub pivot_cache_id: Option<Box<str>>,
     pub selection: Option<Box<super::Selection>>,
-    pub single_range_filter_state: Option<String>,
+    pub single_range_filter_state: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -746,14 +746,14 @@ pub struct StateMirror {
 #[rkyv(remote = super::Survey)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SurveyMirror {
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     pub description_pr: Option<Box<super::DescriptionPr>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub guid: Option<String>,
-    pub id: Option<String>,
+    pub guid: Option<Box<str>>,
+    pub id: Option<Box<str>>,
     pub pr: Option<Box<super::SurveyPr>>,
     pub questions: Box<super::Questions>,
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     pub title_pr: Option<Box<super::TitlePr>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -772,12 +772,12 @@ pub struct SurveyPrMirror {
 #[rkyv(remote = super::TableSlicerCache)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableSlicerCacheMirror {
-    pub column: Option<String>,
+    pub column: Option<Box<str>>,
     pub cross_filter: Option<office_spreadsheetml_2009_9_main::SlicerCacheCrossFilter>,
-    pub custom_list_sort: Option<String>,
+    pub custom_list_sort: Option<Box<str>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub sort_order: Option<office_spreadsheetml_2009_9_main::TabularSlicerCacheSortOrder>,
-    pub table_id: Option<String>,
+    pub table_id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -786,23 +786,23 @@ pub struct TableSlicerCacheMirror {
 #[rkyv(remote = super::TextPr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextPrMirror {
-    pub character_set: Option<String>,
-    pub code_page: Option<String>,
-    pub comma: Option<String>,
-    pub consecutive: Option<String>,
-    pub decimal: Option<String>,
-    pub delimited: Option<String>,
-    pub delimiter: Option<String>,
+    pub character_set: Option<Box<str>>,
+    pub code_page: Option<Box<str>>,
+    pub comma: Option<Box<str>>,
+    pub consecutive: Option<Box<str>>,
+    pub decimal: Option<Box<str>>,
+    pub delimited: Option<Box<str>>,
+    pub delimiter: Option<Box<str>>,
     pub fields: Option<Box<spreadsheet::Fields>>,
     pub file_type: Option<spreadsheet::FileType>,
-    pub first_row: Option<String>,
-    pub prompt: Option<String>,
+    pub first_row: Option<Box<str>>,
+    pub prompt: Option<Box<str>>,
     pub qualifier: Option<spreadsheet::Qualifier>,
-    pub semicolon: Option<String>,
-    pub source_file: Option<String>,
-    pub space: Option<String>,
-    pub tab: Option<String>,
-    pub thousands: Option<String>,
+    pub semicolon: Option<Box<str>>,
+    pub source_file: Option<Box<str>>,
+    pub space: Option<Box<str>>,
+    pub tab: Option<Box<str>>,
+    pub thousands: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -811,18 +811,18 @@ pub struct TextPrMirror {
 #[rkyv(remote = super::Timeline)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TimelineMirror {
-    pub cache: Option<String>,
-    pub caption: Option<String>,
+    pub cache: Option<Box<str>>,
+    pub caption: Option<Box<str>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub level: Option<String>,
-    pub name: Option<String>,
-    pub scroll_position: Option<String>,
-    pub selection_level: Option<String>,
-    pub show_header: Option<String>,
-    pub show_horizontal_scrollbar: Option<String>,
-    pub show_selection_label: Option<String>,
-    pub show_time_level: Option<String>,
-    pub style: Option<String>,
+    pub level: Option<Box<str>>,
+    pub name: Option<Box<str>>,
+    pub scroll_position: Option<Box<str>>,
+    pub selection_level: Option<Box<str>>,
+    pub show_header: Option<Box<str>>,
+    pub show_horizontal_scrollbar: Option<Box<str>>,
+    pub show_selection_label: Option<Box<str>>,
+    pub show_time_level: Option<Box<str>>,
+    pub style: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -832,9 +832,9 @@ pub struct TimelineMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TimelineCacheDefinitionMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     pub pivot_tables: Option<Box<super::PivotTables>>,
-    pub source_name: Option<String>,
+    pub source_name: Option<Box<str>>,
     pub state: Box<super::State>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -853,7 +853,7 @@ pub struct TimelineCachePivotCachesMirror {
 #[rkyv(remote = super::TimelineCacheRef)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TimelineCacheRefMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -871,7 +871,7 @@ pub struct TimelineCacheRefsMirror {
 #[rkyv(remote = super::TimelinePivotCacheDefinition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TimelinePivotCacheDefinitionMirror {
-    pub timeline_data: Option<String>,
+    pub timeline_data: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -880,7 +880,7 @@ pub struct TimelinePivotCacheDefinitionMirror {
 #[rkyv(remote = super::TimelineRef)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TimelineRefMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -899,7 +899,7 @@ pub struct TimelineRefsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TimelineStyleMirror {
     pub elements: Option<Box<super::TimelineStyleElements>>,
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -908,7 +908,7 @@ pub struct TimelineStyleMirror {
 #[rkyv(remote = super::TimelineStyleElement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TimelineStyleElementMirror {
-    pub dxf_id: Option<String>,
+    pub dxf_id: Option<Box<str>>,
     pub r#type: Option<super::TimelineStyleType>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -927,7 +927,7 @@ pub struct TimelineStyleElementsMirror {
 #[rkyv(remote = super::TimelineStyles)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TimelineStylesMirror {
-    pub default_timeline_style: Option<String>,
+    pub default_timeline_style: Option<Box<str>>,
     pub timeline_style: Vec<super::TimelineStyle>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -957,14 +957,14 @@ pub struct TitlePrMirror {
 pub struct VMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::WebExtension)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WebExtensionMirror {
-    pub app_ref: Option<String>,
+    pub app_ref: Option<Box<str>>,
     pub f: Box<office_excel_2006_main::F>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -983,7 +983,7 @@ pub struct WebExtensionsMirror {
 #[rkyv(remote = super::WorkbookPr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WorkbookPrMirror {
-    pub chart_tracking_ref_base: Option<String>,
+    pub chart_tracking_ref_base: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -992,13 +992,13 @@ pub struct WorkbookPrMirror {
 #[rkyv(remote = super::X)]
 #[rkyv(attr(non_exhaustive))]
 pub struct XMirror {
-    pub b: Option<String>,
-    pub bc: Option<String>,
-    pub fc: Option<String>,
-    pub i: Option<String>,
-    pub r#in: Option<String>,
-    pub st: Option<String>,
-    pub un: Option<String>,
+    pub b: Option<Box<str>>,
+    pub bc: Option<Box<str>>,
+    pub fc: Option<Box<str>>,
+    pub i: Option<Box<str>>,
+    pub r#in: Option<Box<str>>,
+    pub st: Option<Box<str>>,
+    pub un: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

@@ -113,7 +113,7 @@ fn document(count: usize) -> Document {
     body.content = (0..count)
         .map(|index| {
             let mut text = Text::default();
-            text.value = format!("paragraph {index:06}");
+            text.value = format!("paragraph {index:06}").into();
             let mut run = TextRun::default();
             run.content.push(TextRunContent::from(text));
             let mut paragraph = Paragraph::default();
@@ -237,12 +237,12 @@ fn worksheet(count: usize) -> spreadsheet::Worksheet {
     sheet.sheet_data.row = (0..count)
         .map(|index| {
             let mut value = spreadsheet::CellValue::default();
-            value.value = index.to_string();
+            value.value = index.to_string().into();
             let mut cell = spreadsheet::Cell::default();
-            cell.r = Some(format!("A{}", index + 1));
+            cell.r = Some(format!("A{}", index + 1).into());
             cell.value = Some(Box::new(value));
             let mut row = spreadsheet::Row::default();
-            row.r = Some((index + 1).to_string());
+            row.r = Some((index + 1).to_string().into());
             row.cell.push(cell);
             row
         })

@@ -461,7 +461,7 @@ impl Eq for AttributionWith<()> {}
 #[non_exhaustive]
 pub struct CommentWith<X: UserData> {
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -892,9 +892,9 @@ pub struct EventWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `time`, when the element has it.
-    pub time: Option<String>,
+    pub time: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -957,7 +957,7 @@ pub struct PriorityWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksPriority,
     /// The attribute `value`, when the element has it.
-    pub value: Option<String>,
+    pub value: Option<Box<str>>,
 }
 
 /// The `t:Priority` element of the tree a read gives: [`PriorityWith`] holding nothing in
@@ -972,7 +972,7 @@ impl Eq for PriorityWith<()> {}
 #[non_exhaustive]
 pub struct ProgressWith<X: UserData> {
     /// The attribute `percentComplete`, when the element has it.
-    pub percent_complete: Option<String>,
+    pub percent_complete: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -992,9 +992,9 @@ impl Eq for ProgressWith<()> {}
 #[non_exhaustive]
 pub struct ScheduleWith<X: UserData> {
     /// The attribute `dueDate`, when the element has it.
-    pub due_date: Option<String>,
+    pub due_date: Option<Box<str>>,
     /// The attribute `startDate`, when the element has it.
-    pub start_date: Option<String>,
+    pub start_date: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1014,7 +1014,7 @@ impl Eq for ScheduleWith<()> {}
 #[non_exhaustive]
 pub struct SetTitleWith<X: UserData> {
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1040,7 +1040,7 @@ pub struct TaskWith<X: UserData> {
     /// The child that is `History`, when there is one.
     pub history: Option<Box<HistoryWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1174,7 +1174,7 @@ impl Eq for UndeleteWith<()> {}
 #[non_exhaustive]
 pub struct UndoWith<X: UserData> {
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

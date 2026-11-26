@@ -22,9 +22,9 @@ const SCRIPT_FALLBACKS: [(&str, &str); 1] = [("Kore", "Hang")];
 /// 20.1.4.1.24 and 20.1.4.1.25).
 #[derive(Clone, Debug, Default)]
 struct Collection {
-    complex_script: Option<String>,
-    east_asian: Option<String>,
-    latin: Option<String>,
+    complex_script: Option<Box<str>>,
+    east_asian: Option<Box<str>>,
+    latin: Option<Box<str>>,
     supplemental: Vec<Font>,
 }
 

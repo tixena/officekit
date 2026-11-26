@@ -885,7 +885,7 @@ fn string_declaration(simple: &Simple) -> String {
     out.push_str(&super::archive::attributes(
         "Clone, Debug, Default, Eq, PartialEq",
     ));
-    let _ = writeln!(out, "pub struct {}(pub String);", simple.name);
+    let _ = writeln!(out, "pub struct {}(pub Box<str>);", simple.name);
     out
 }
 
@@ -893,7 +893,7 @@ fn string_declaration(simple: &Simple) -> String {
 fn string_conversions(simple: &Simple) -> String {
     format!(
         "\n{}    fn as_ref(&self) -> &str {{\n        &self.0\n    }}\n}}\n\
-         \n{}    fn from(text: String) -> Self {{\n        Self(text)\n    }}\n}}\n\
+         \n{}    fn from(text: String) -> Self {{\n        Self(Box::from(text))\n    }}\n}}\n\
          \n{}    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {{\n        Cow::Borrowed(&self.0)\n    }}\n}}\n",
         layout::impl_header("AsRef<str>", &simple.name),
         layout::impl_header("From<String>", &simple.name),
@@ -1047,7 +1047,7 @@ fn value_body(
         Kind::OnOff => {
             let _ = write!(
                 implementations,
-                "\n{}    fn from(value: bool) -> Self {{\n        Self(value.to_string())\n    }}\n}}\n",
+                "\n{}    fn from(value: bool) -> Self {{\n        Self(Box::from(value.to_string()))\n    }}\n}}\n",
                 layout::impl_header("From<bool>", &simple.name)
             );
             (

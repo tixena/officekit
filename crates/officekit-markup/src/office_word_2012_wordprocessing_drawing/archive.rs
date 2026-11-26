@@ -222,11 +222,11 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::WebVideoPr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WebVideoPrMirror {
-    pub embedded_html: Option<String>,
-    pub h: Option<String>,
+    pub embedded_html: Option<Box<str>>,
+    pub h: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub w: Option<String>,
+    pub w: Option<Box<str>>,
 }
 
 impl From<WebVideoPrMirror> for super::WebVideoPr {

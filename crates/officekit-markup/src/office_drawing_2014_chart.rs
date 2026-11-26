@@ -458,7 +458,7 @@ pub struct Bubble3DWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartBubble3D,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c16:bubble3D` element of the tree a read gives: [`Bubble3DWith`] holding nothing in
@@ -1024,7 +1024,7 @@ pub struct ExplosionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartExplosion,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c16:explosion` element of the tree a read gives: [`ExplosionWith`] holding nothing in
@@ -1105,7 +1105,7 @@ pub struct InvertIfNegativeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartInvertIfNegative,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c16:invertIfNegative` element of the tree a read gives: [`InvertIfNegativeWith`] holding
@@ -1125,7 +1125,7 @@ pub struct LiteralDataChartWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartLiteralDataChart,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c16:literalDataChart` element of the tree a read gives: [`LiteralDataChartWith`] holding
@@ -1263,7 +1263,7 @@ pub struct PtidxWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartPtidx,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `c16:ptidx` element of the tree a read gives: [`PtidxWith`] holding nothing in `user_data`.
@@ -1282,7 +1282,7 @@ pub struct ShowExpandCollapseFieldButtonsWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartShowExpandCollapseFieldButtons,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c16:showExpandCollapseFieldButtons` element of the tree a read gives:

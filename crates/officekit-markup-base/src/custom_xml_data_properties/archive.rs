@@ -223,7 +223,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct AssociatedXMLSchemaMirror {
     pub unknown: Option<Box<crate::Unknown>>,
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     pub user_data: (),
 }
 

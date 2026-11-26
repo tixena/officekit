@@ -251,9 +251,9 @@ pub static COMMENTS_IDS_SHAPE: officekit_markup_base::Shape = officekit_markup_b
 #[non_exhaustive]
 pub struct CommentIdWith<X: UserData> {
     /// The attribute `w16cid:durableId`, when the element has it.
-    pub durable_id: Option<String>,
+    pub durable_id: Option<Box<str>>,
     /// The attribute `w16cid:paraId`, when the element has it.
-    pub para_id: Option<String>,
+    pub para_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

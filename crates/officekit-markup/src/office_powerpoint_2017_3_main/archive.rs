@@ -222,11 +222,11 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Track)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TrackMirror {
-    pub embed: Option<String>,
-    pub id: Option<String>,
-    pub label: Option<String>,
-    pub lang: Option<String>,
-    pub link: Option<String>,
+    pub embed: Option<Box<str>>,
+    pub id: Option<Box<str>>,
+    pub label: Option<Box<str>>,
+    pub lang: Option<Box<str>>,
+    pub link: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

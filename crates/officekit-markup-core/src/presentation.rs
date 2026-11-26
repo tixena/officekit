@@ -2787,19 +2787,19 @@ impl Eq for AllSlidesWith<()> {}
 #[non_exhaustive]
 pub struct AnimateWith<X: UserData> {
     /// The attribute `p14:bounceEnd`, when the element has it.
-    pub bounce_end: Option<String>,
+    pub bounce_end: Option<Box<str>>,
     /// The attribute `by`, when the element has it.
-    pub by: Option<String>,
+    pub by: Option<Box<str>>,
     /// The attribute `calcmode`, when the element has it.
     pub calcmode: Option<TLAnimateBehaviorCalcMode>,
     /// The child that is `CommonBehavior`, which the schema requires.
     pub common_behavior: Box<CommonBehaviorWith<X>>,
     /// The attribute `from`, when the element has it.
-    pub from: Option<String>,
+    pub from: Option<Box<str>>,
     /// The child that is `TimeAnimatedValueList`, when there is one.
     pub time_animated_value_list: Option<Box<TimeAnimatedValueListWith<X>>>,
     /// The attribute `to`, when the element has it.
-    pub to: Option<String>,
+    pub to: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2874,9 +2874,9 @@ pub struct AnimateEffectWith<X: UserData> {
     /// The child that is `CommonBehavior`, which the schema requires.
     pub common_behavior: Box<CommonBehaviorWith<X>>,
     /// The attribute `filter`, when the element has it.
-    pub filter: Option<String>,
+    pub filter: Option<Box<str>>,
     /// The attribute `prLst`, when the element has it.
-    pub pr_lst: Option<String>,
+    pub pr_lst: Option<Box<str>>,
     /// The child that is `Progress`, when there is one.
     pub progress: Option<Box<ProgressWith<X>>>,
     /// The attribute `transition`, when the element has it.
@@ -2900,7 +2900,7 @@ impl Eq for AnimateEffectWith<()> {}
 #[non_exhaustive]
 pub struct AnimateMotionWith<X: UserData> {
     /// The attribute `p14:bounceEnd`, when the element has it.
-    pub bounce_end: Option<String>,
+    pub bounce_end: Option<Box<str>>,
     /// The child that is `ByTLPoint`, when there is one.
     pub by_tl_point: Option<Box<ByTLPointWith<X>>>,
     /// The child that is `CommonBehavior`, which the schema requires.
@@ -2910,11 +2910,11 @@ pub struct AnimateMotionWith<X: UserData> {
     /// The attribute `origin`, when the element has it.
     pub origin: Option<TLAnimateMotionBehaviorOrigin>,
     /// The attribute `path`, when the element has it.
-    pub path: Option<String>,
+    pub path: Option<Box<str>>,
     /// The attribute `pathEditMode`, when the element has it.
     pub path_edit_mode: Option<TLAnimateMotionPathEditMode>,
     /// The attribute `ptsTypes`, when the element has it.
-    pub pts_types: Option<String>,
+    pub pts_types: Option<Box<str>>,
     /// The attribute `rAng`, when the element has it.
     pub r_ang: Option<super::drawing::Angle>,
     /// The child that is `RotationCenter`, when there is one.
@@ -2940,7 +2940,7 @@ impl Eq for AnimateMotionWith<()> {}
 #[non_exhaustive]
 pub struct AnimateRotationWith<X: UserData> {
     /// The attribute `p14:bounceEnd`, when the element has it.
-    pub bounce_end: Option<String>,
+    pub bounce_end: Option<Box<str>>,
     /// The attribute `by`, when the element has it.
     pub by: Option<super::drawing::Angle>,
     /// The child that is `CommonBehavior`, which the schema requires.
@@ -2968,7 +2968,7 @@ impl Eq for AnimateRotationWith<()> {}
 #[non_exhaustive]
 pub struct AnimateScaleWith<X: UserData> {
     /// The attribute `p14:bounceEnd`, when the element has it.
-    pub bounce_end: Option<String>,
+    pub bounce_end: Option<Box<str>>,
     /// The child that is `ByTLPoint`, when there is one.
     pub by_tl_point: Option<Box<ByTLPointWith<X>>>,
     /// The child that is `CommonBehavior`, which the schema requires.
@@ -2983,7 +2983,7 @@ pub struct AnimateScaleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::PresentationAnimateScale,
     /// The attribute `zoomContents`, when the element has it.
-    pub zoom_contents: Option<String>,
+    pub zoom_contents: Option<Box<str>>,
 }
 
 /// The `p:animScale` element of the tree a read gives: [`AnimateScaleWith`] holding nothing in
@@ -3058,7 +3058,7 @@ pub struct AttributeNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::PresentationAttributeName,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `p:attrName` element of the tree a read gives: [`AttributeNameWith`] holding nothing in
@@ -3095,7 +3095,7 @@ pub struct AudioWith<X: UserData> {
     /// The child that is `CommonMediaNodeProperties`, which the schema requires.
     pub common_media_node_properties: Box<CommonMediaNodePropertiesWith<X>>,
     /// The attribute `isNarration`, when the element has it.
-    pub is_narration: Option<String>,
+    pub is_narration: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3138,7 +3138,7 @@ pub struct BackgroundPropertiesWith<X: UserData> {
     /// requires.
     pub fill_properties_content: Box<super::drawing::FillPropertiesContentWith<X>>,
     /// The attribute `shadeToTitle`, when the element has it.
-    pub shade_to_title: Option<String>,
+    pub shade_to_title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3306,7 +3306,7 @@ impl Eq for BlindsSlideTransitionWith<()> {}
 #[non_exhaustive]
 pub struct BoldEmbeddedFontWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3326,7 +3326,7 @@ impl Eq for BoldEmbeddedFontWith<()> {}
 #[non_exhaustive]
 pub struct BoldItalicEmbeddedFontWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3352,7 +3352,7 @@ impl Eq for BoldItalicEmbeddedFontWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct BookmarkIDSeed(pub String);
+pub struct BookmarkIDSeed(pub Box<str>);
 
 /// The `p:boolVal` element, Boolean Variant (ECMA-376 Part 1, section 19.5.19). Its schema type is
 /// `CT_TLAnimVariantBooleanVal`.
@@ -3365,7 +3365,7 @@ pub struct BooleanVariantWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::PresentationBooleanVariant,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `p:boolVal` element of the tree a read gives: [`BooleanVariantWith`] holding nothing in
@@ -3380,7 +3380,7 @@ impl Eq for BooleanVariantWith<()> {}
 #[non_exhaustive]
 pub struct BrowseSlideShowModeWith<X: UserData> {
     /// The attribute `showScrollbar`, when the element has it.
-    pub show_scrollbar: Option<String>,
+    pub show_scrollbar: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3420,11 +3420,11 @@ pub struct BuildDiagramWith<X: UserData> {
     /// The attribute `bld`, when the element has it.
     pub bld: Option<DiagramBuildTypes>,
     /// The attribute `grpId`, when the element has it.
-    pub grp_id: Option<String>,
+    pub grp_id: Option<Box<str>>,
     /// The attribute `spid`, when the element has it.
     pub spid: Option<super::drawing::DrawingElementID>,
     /// The attribute `uiExpand`, when the element has it.
-    pub ui_expand: Option<String>,
+    pub ui_expand: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3444,15 +3444,15 @@ impl Eq for BuildDiagramWith<()> {}
 #[non_exhaustive]
 pub struct BuildEmbeddedChartWith<X: UserData> {
     /// The attribute `animBg`, when the element has it.
-    pub anim_bg: Option<String>,
+    pub anim_bg: Option<Box<str>>,
     /// The attribute `bld`, when the element has it.
     pub bld: Option<EmbeddedChartBuildType>,
     /// The attribute `grpId`, when the element has it.
-    pub grp_id: Option<String>,
+    pub grp_id: Option<Box<str>>,
     /// The attribute `spid`, when the element has it.
     pub spid: Option<super::drawing::DrawingElementID>,
     /// The attribute `uiExpand`, when the element has it.
-    pub ui_expand: Option<String>,
+    pub ui_expand: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3474,11 +3474,11 @@ pub struct BuildGraphicsWith<X: UserData> {
     /// The child that is an item of `BuildGraphicsContent`, which the schema requires.
     pub content: Box<BuildGraphicsContentWith<X>>,
     /// The attribute `grpId`, when the element has it.
-    pub grp_id: Option<String>,
+    pub grp_id: Option<Box<str>>,
     /// The attribute `spid`, when the element has it.
     pub spid: Option<super::drawing::DrawingElementID>,
     /// The attribute `uiExpand`, when the element has it.
-    pub ui_expand: Option<String>,
+    pub ui_expand: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3567,23 +3567,23 @@ pub struct BuildParagraphWith<X: UserData> {
     /// The attribute `advAuto`, when the element has it.
     pub adv_auto: Option<Time>,
     /// The attribute `animBg`, when the element has it.
-    pub anim_bg: Option<String>,
+    pub anim_bg: Option<Box<str>>,
     /// The attribute `autoUpdateAnimBg`, when the element has it.
-    pub auto_update_anim_bg: Option<String>,
+    pub auto_update_anim_bg: Option<Box<str>>,
     /// The attribute `bldLvl`, when the element has it.
-    pub bld_lvl: Option<String>,
+    pub bld_lvl: Option<Box<str>>,
     /// The attribute `build`, when the element has it.
     pub build: Option<ParagraphBuildType>,
     /// The attribute `grpId`, when the element has it.
-    pub grp_id: Option<String>,
+    pub grp_id: Option<Box<str>>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// The attribute `spid`, when the element has it.
     pub spid: Option<super::drawing::DrawingElementID>,
     /// The child that is `TemplateEffectsTmplLst`, when there is one.
     pub template_effects_tmpl_lst: Option<Box<TemplateEffectsTmplLstWith<X>>>,
     /// The attribute `uiExpand`, when the element has it.
-    pub ui_expand: Option<String>,
+    pub ui_expand: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3899,7 +3899,7 @@ impl Eq for CombSlideTransitionWith<()> {}
 #[non_exhaustive]
 pub struct CommandWith<X: UserData> {
     /// The attribute `cmd`, when the element has it.
-    pub cmd: Option<String>,
+    pub cmd: Option<Box<str>>,
     /// The child that is `CommonBehavior`, which the schema requires.
     pub common_behavior: Box<CommonBehaviorWith<X>>,
     /// The attribute `type`, when the element has it.
@@ -3948,11 +3948,11 @@ pub enum CommandTypeMember {
 #[non_exhaustive]
 pub struct CommentWith<X: UserData> {
     /// The attribute `authorId`, when the element has it.
-    pub author_id: Option<String>,
+    pub author_id: Option<Box<str>>,
     /// The child that is `CommentsTextContent`, which the schema requires.
     pub comments_text_content: Box<CommentsTextContentWith<X>>,
     /// The attribute `dt`, when the element has it.
-    pub dt: Option<String>,
+    pub dt: Option<Box<str>>,
     /// The child that is `ExtensionListWithModificationFlag`, when there is one.
     pub extension_list_with_modification_flag:
         Option<Box<ExtensionListWithModificationFlagWith<X>>>,
@@ -3978,17 +3978,17 @@ impl Eq for CommentWith<()> {}
 #[non_exhaustive]
 pub struct CommentAuthorWith<X: UserData> {
     /// The attribute `clrIdx`, when the element has it.
-    pub clr_idx: Option<String>,
+    pub clr_idx: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `initials`, when the element has it.
-    pub initials: Option<String>,
+    pub initials: Option<Box<str>>,
     /// The attribute `lastIdx`, when the element has it.
-    pub last_idx: Option<String>,
+    pub last_idx: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4055,7 +4055,7 @@ pub struct CommentsTextContentWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::PresentationCommentsTextContent,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `p:text` element of the tree a read gives: [`CommentsTextContentWith`] holding nothing in
@@ -4076,19 +4076,19 @@ pub struct CommonBehaviorWith<X: UserData> {
     /// The child that is `AttributeNameList`, when there is one.
     pub attribute_name_list: Option<Box<AttributeNameListWith<X>>>,
     /// The attribute `by`, when the element has it.
-    pub by: Option<String>,
+    pub by: Option<Box<str>>,
     /// The child that is `CommonTimeNodeProperties`, which the schema requires.
     pub common_time_node_properties: Box<CommonTimeNodePropertiesWith<X>>,
     /// The attribute `from`, when the element has it.
-    pub from: Option<String>,
+    pub from: Option<Box<str>>,
     /// The attribute `override`, when the element has it.
     pub r#override: Option<BehaviorOverrideType>,
     /// The attribute `rctx`, when the element has it.
-    pub rctx: Option<String>,
+    pub rctx: Option<Box<str>>,
     /// The child that is `TargetElement`, which the schema requires.
     pub target_element: Box<TargetElementWith<X>>,
     /// The attribute `to`, when the element has it.
-    pub to: Option<String>,
+    pub to: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4112,11 +4112,11 @@ pub struct CommonMediaNodePropertiesWith<X: UserData> {
     /// The child that is `CommonTimeNodeProperties`, which the schema requires.
     pub common_time_node_properties: Box<CommonTimeNodePropertiesWith<X>>,
     /// The attribute `mute`, when the element has it.
-    pub mute: Option<String>,
+    pub mute: Option<Box<str>>,
     /// The attribute `numSld`, when the element has it.
-    pub num_sld: Option<String>,
+    pub num_sld: Option<Box<str>>,
     /// The attribute `showWhenStopped`, when the element has it.
-    pub show_when_stopped: Option<String>,
+    pub show_when_stopped: Option<Box<str>>,
     /// The child that is `TargetElement`, which the schema requires.
     pub target_element: Box<TargetElementWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -4146,7 +4146,7 @@ pub struct CommonSlideDataWith<X: UserData> {
     /// The child that is `ListOfControls`, when there is one.
     pub list_of_controls: Option<Box<ListOfControlsWith<X>>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The child that is `ShapeTree`, which the schema requires.
     pub shape_tree: Box<ShapeTreeWith<X>>,
     /// The child that is `SlideBackground`, when there is one.
@@ -4174,11 +4174,11 @@ pub struct CommonSlideViewPropertiesWith<X: UserData> {
     /// The child that is `ListOfGuides`, when there is one.
     pub list_of_guides: Option<Box<ListOfGuidesWith<X>>>,
     /// The attribute `showGuides`, when the element has it.
-    pub show_guides: Option<String>,
+    pub show_guides: Option<Box<str>>,
     /// The attribute `snapToGrid`, when the element has it.
-    pub snap_to_grid: Option<String>,
+    pub snap_to_grid: Option<Box<str>>,
     /// The attribute `snapToObjects`, when the element has it.
-    pub snap_to_objects: Option<String>,
+    pub snap_to_objects: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4200,17 +4200,17 @@ pub struct CommonTimeNodePropertiesWith<X: UserData> {
     /// The attribute `accel`, when the element has it.
     pub accel: Option<super::drawing::PositiveFixedPercentage>,
     /// The attribute `afterEffect`, when the element has it.
-    pub after_effect: Option<String>,
+    pub after_effect: Option<Box<str>>,
     /// The attribute `autoRev`, when the element has it.
-    pub auto_rev: Option<String>,
+    pub auto_rev: Option<Box<str>>,
     /// The attribute `bldLvl`, when the element has it.
-    pub bld_lvl: Option<String>,
+    pub bld_lvl: Option<Box<str>>,
     /// The child that is `ChildrenTimeNodeList`, when there is one.
     pub children_time_node_list: Option<Box<ChildrenTimeNodeListWith<X>>>,
     /// The attribute `decel`, when the element has it.
     pub decel: Option<super::drawing::PositiveFixedPercentage>,
     /// The attribute `display`, when the element has it.
-    pub display: Option<String>,
+    pub display: Option<Box<str>>,
     /// The attribute `dur`, when the element has it.
     pub dur: Option<Time>,
     /// The child that is `EndConditionsList`, when there is one.
@@ -4218,11 +4218,11 @@ pub struct CommonTimeNodePropertiesWith<X: UserData> {
     /// The child that is `EndSync`, when there is one.
     pub endsync: Option<Box<EndSyncWith<X>>>,
     /// The attribute `evtFilter`, when the element has it.
-    pub evt_filter: Option<String>,
+    pub evt_filter: Option<Box<str>>,
     /// The attribute `fill`, when the element has it.
     pub fill: Option<TimeNodeFillType>,
     /// The attribute `grpId`, when the element has it.
-    pub grp_id: Option<String>,
+    pub grp_id: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<TimeNodeID>,
     /// The child that is `Iterate`, when there is one.
@@ -4230,17 +4230,17 @@ pub struct CommonTimeNodePropertiesWith<X: UserData> {
     /// The attribute `masterRel`, when the element has it.
     pub master_rel: Option<TimeNodeMasterRelation>,
     /// The attribute `nodePh`, when the element has it.
-    pub node_ph: Option<String>,
+    pub node_ph: Option<Box<str>>,
     /// The attribute `nodeType`, when the element has it.
     pub node_type: Option<TimeNodeType>,
     /// The attribute `p14:presetBounceEnd`, when the element has it.
-    pub preset_bounce_end: Option<String>,
+    pub preset_bounce_end: Option<Box<str>>,
     /// The attribute `presetClass`, when the element has it.
     pub preset_class: Option<TimeNodePresetClassType>,
     /// The attribute `presetID`, when the element has it.
-    pub preset_id: Option<String>,
+    pub preset_id: Option<Box<str>>,
     /// The attribute `presetSubtype`, when the element has it.
-    pub preset_subtype: Option<String>,
+    pub preset_subtype: Option<Box<str>>,
     /// The attribute `repeatCount`, when the element has it.
     pub repeat_count: Option<Time>,
     /// The attribute `repeatDur`, when the element has it.
@@ -4256,7 +4256,7 @@ pub struct CommonTimeNodePropertiesWith<X: UserData> {
     /// The attribute `syncBehavior`, when the element has it.
     pub sync_behavior: Option<TimeNodeSyncType>,
     /// The attribute `tmFilter`, when the element has it.
-    pub tm_filter: Option<String>,
+    pub tm_filter: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4281,7 +4281,7 @@ pub struct CommonViewPropertiesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::PresentationCommonViewProperties,
     /// The attribute `varScale`, when the element has it.
-    pub var_scale: Option<String>,
+    pub var_scale: Option<Box<str>>,
     /// The child that is `ViewOrigin`, which the schema requires.
     pub view_origin: Box<ViewOriginWith<X>>,
     /// The child that is `ViewScale`, which the schema requires.
@@ -4350,7 +4350,7 @@ impl Eq for ConnectionShapeWith<()> {}
 #[non_exhaustive]
 pub struct ContentPartWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4390,7 +4390,7 @@ impl Eq for CoverSlideTransitionWith<()> {}
 #[non_exhaustive]
 pub struct CustomShowWith<X: UserData> {
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4412,11 +4412,11 @@ pub struct CustomShowCustomShowWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The child that is `ListOfPresentationSlides`, which the schema requires.
     pub list_of_presentation_slides: Box<ListOfPresentationSlidesWith<X>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4436,7 +4436,7 @@ impl Eq for CustomShowCustomShowWith<()> {}
 #[non_exhaustive]
 pub struct CustomerDataWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4478,7 +4478,7 @@ impl Eq for CustomerDataListWith<()> {}
 #[non_exhaustive]
 pub struct CustomerDataTagsWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4498,7 +4498,7 @@ impl Eq for CustomerDataTagsWith<()> {}
 #[non_exhaustive]
 pub struct CutSlideTransitionWith<X: UserData> {
     /// The attribute `thruBlk`, when the element has it.
-    pub thru_blk: Option<String>,
+    pub thru_blk: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4704,7 +4704,7 @@ pub enum EmbeddedChartBuildTypeMember {
 #[non_exhaustive]
 pub struct EmbeddedChartElementWith<X: UserData> {
     /// The attribute `lvl`, when the element has it.
-    pub lvl: Option<String>,
+    pub lvl: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<ChartSubelementType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -4728,19 +4728,19 @@ pub struct EmbeddedControlWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `imgH`, when the element has it.
     pub img_h: Option<super::drawing::PositiveCoordinatePoint>,
     /// The attribute `imgW`, when the element has it.
     pub img_w: Option<super::drawing::PositiveCoordinatePoint>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The child that is `Picture`, when there is one.
     pub picture: Option<Box<PictureWith<X>>>,
     /// The attribute `showAsIcon`, when the element has it.
-    pub show_as_icon: Option<String>,
+    pub show_as_icon: Option<Box<str>>,
     /// The attribute `spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4808,13 +4808,13 @@ impl Eq for EmbeddedFontListWith<()> {}
 #[non_exhaustive]
 pub struct EmbeddedFontNameWith<X: UserData> {
     /// The attribute `charset`, when the element has it.
-    pub charset: Option<String>,
+    pub charset: Option<Box<str>>,
     /// The attribute `panose`, when the element has it.
     pub panose: Option<common_simple_types::Panose1Number>,
     /// The attribute `pitchFamily`, when the element has it.
     pub pitch_family: Option<super::drawing::PitchFamily>,
     /// The attribute `typeface`, when the element has it.
-    pub typeface: Option<String>,
+    pub typeface: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4839,7 +4839,7 @@ pub enum EmbeddedObjectContentWith<X: UserData> {
     /// The element `p:embed`, a `EmbeddedObjectOrControl`.
     EmbeddedObjectOrControl(Box<EmbeddedObjectOrControlWith<X>>),
     /// The element `p:link`, a `LinkedObjectOrControl`.
-    LinkedObjectOrControl(Box<LinkedObjectOrControlWith<X>>),
+    LinkedObjectOrControl(LinkedObjectOrControlWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -4880,21 +4880,21 @@ pub struct EmbeddedObjectsAndControlsWith<X: UserData> {
     /// The child that is an item of `EmbeddedObjectContent`, which the schema requires.
     pub content: Box<EmbeddedObjectContentWith<X>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `imgH`, when the element has it.
     pub img_h: Option<super::drawing::PositiveCoordinatePoint>,
     /// The attribute `imgW`, when the element has it.
     pub img_w: Option<super::drawing::PositiveCoordinatePoint>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The child that is `Picture`, when there is one.
     pub picture: Option<Box<PictureWith<X>>>,
     /// The attribute `progId`, when the element has it.
-    pub prog_id: Option<String>,
+    pub prog_id: Option<Box<str>>,
     /// The attribute `showAsIcon`, when the element has it.
-    pub show_as_icon: Option<String>,
+    pub show_as_icon: Option<Box<str>>,
     /// The attribute `spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4982,7 +4982,7 @@ pub struct ExtensionWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::PresentationExtension,
 }
@@ -5020,7 +5020,7 @@ pub struct ExtensionListWithModificationFlagWith<X: UserData> {
     /// The children that are `Extension`, in order.
     pub extension: Vec<ExtensionWith<X>>,
     /// The attribute `mod`, when the element has it.
-    pub r#mod: Option<String>,
+    pub r#mod: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5040,7 +5040,7 @@ impl Eq for ExtensionListWithModificationFlagWith<()> {}
 #[non_exhaustive]
 pub struct FadeSlideTransitionWith<X: UserData> {
     /// The attribute `thruBlk`, when the element has it.
-    pub thru_blk: Option<String>,
+    pub thru_blk: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5065,7 +5065,7 @@ pub struct FloatValueWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::PresentationFloatValue,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `p:fltVal` element of the tree a read gives: [`FloatValueWith`] holding nothing in
@@ -5281,13 +5281,13 @@ pub struct HTMLPublishingPropertiesWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `showSpeakerNotes`, when the element has it.
-    pub show_speaker_notes: Option<String>,
+    pub show_speaker_notes: Option<Box<str>>,
     /// The attribute `target`, when the element has it.
-    pub target: Option<String>,
+    pub target: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5413,7 +5413,7 @@ pub struct HandoutMasterIDWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5433,16 +5433,16 @@ impl Eq for HandoutMasterIDWith<()> {}
 #[non_exhaustive]
 pub struct HeaderFooterInformationForASlideMasterWith<X: UserData> {
     /// The attribute `dt`, when the element has it.
-    pub dt: Option<String>,
+    pub dt: Option<Box<str>>,
     /// The child that is `ExtensionListWithModificationFlag`, when there is one.
     pub extension_list_with_modification_flag:
         Option<Box<ExtensionListWithModificationFlagWith<X>>>,
     /// The attribute `ftr`, when the element has it.
-    pub ftr: Option<String>,
+    pub ftr: Option<Box<str>>,
     /// The attribute `hdr`, when the element has it.
-    pub hdr: Option<String>,
+    pub hdr: Option<Box<str>>,
     /// The attribute `sldNum`, when the element has it.
-    pub sld_num: Option<String>,
+    pub sld_num: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5514,7 +5514,7 @@ pub enum IndefiniteTimeDeclarationMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct Index(pub String);
+pub struct Index(pub Box<str>);
 
 /// The `p:inkTgt` element, Ink Target (ECMA-376 Part 1, section 19.5.47). Its schema type is
 /// `CT_TLSubShapeId`.
@@ -5522,7 +5522,7 @@ pub struct Index(pub String);
 #[non_exhaustive]
 pub struct InkTargetWith<X: UserData> {
     /// The attribute `spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5547,7 +5547,7 @@ pub struct IntegerWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::PresentationInteger,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `p:intVal` element of the tree a read gives: [`IntegerWith`] holding nothing in `user_data`.
@@ -5561,7 +5561,7 @@ impl Eq for IntegerWith<()> {}
 #[non_exhaustive]
 pub struct ItalicEmbeddedFontWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5581,7 +5581,7 @@ impl Eq for ItalicEmbeddedFontWith<()> {}
 #[non_exhaustive]
 pub struct IterateWith<X: UserData> {
     /// The attribute `backwards`, when the element has it.
-    pub backwards: Option<String>,
+    pub backwards: Option<Box<str>>,
     /// The child that is an item of `IterateContent`, which the schema requires.
     pub content: Box<IterateContentWith<X>>,
     /// The attribute `type`, when the element has it.
@@ -5653,11 +5653,11 @@ pub enum IterateTypeMember {
 #[non_exhaustive]
 pub struct KinsokuSettingsWith<X: UserData> {
     /// The attribute `invalEndChars`, when the element has it.
-    pub inval_end_chars: Option<String>,
+    pub inval_end_chars: Option<Box<str>>,
     /// The attribute `invalStChars`, when the element has it.
-    pub inval_st_chars: Option<String>,
+    pub inval_st_chars: Option<Box<str>>,
     /// The attribute `lang`, when the element has it.
-    pub lang: Option<String>,
+    pub lang: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5677,7 +5677,7 @@ impl Eq for KinsokuSettingsWith<()> {}
 #[non_exhaustive]
 pub struct KioskSlideShowModeWith<X: UserData> {
     /// The attribute `restart`, when the element has it.
-    pub restart: Option<String>,
+    pub restart: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5702,7 +5702,7 @@ pub struct LinkedObjectOrControlWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `updateAutomatic`, when the element has it.
-    pub update_automatic: Option<String>,
+    pub update_automatic: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::PresentationLinkedObjectOrControl,
 }
@@ -5978,37 +5978,37 @@ pub enum ListOfViewTypesMember {
 #[non_exhaustive]
 pub struct ModificationVerifierWith<X: UserData> {
     /// The attribute `algIdExt`, when the element has it.
-    pub alg_id_ext: Option<String>,
+    pub alg_id_ext: Option<Box<str>>,
     /// The attribute `algIdExtSource`, when the element has it.
-    pub alg_id_ext_source: Option<String>,
+    pub alg_id_ext_source: Option<Box<str>>,
     /// The attribute `algorithmName`, when the element has it.
-    pub algorithm_name: Option<String>,
+    pub algorithm_name: Option<Box<str>>,
     /// The attribute `cryptAlgorithmClass`, when the element has it.
     pub crypt_algorithm_class: Option<common_simple_types::CryptographicAlgorithmClasses>,
     /// The attribute `cryptAlgorithmSid`, when the element has it.
-    pub crypt_algorithm_sid: Option<String>,
+    pub crypt_algorithm_sid: Option<Box<str>>,
     /// The attribute `cryptAlgorithmType`, when the element has it.
     pub crypt_algorithm_type: Option<common_simple_types::CryptographicAlgorithmTypes>,
     /// The attribute `cryptProvider`, when the element has it.
-    pub crypt_provider: Option<String>,
+    pub crypt_provider: Option<Box<str>>,
     /// The attribute `cryptProviderType`, when the element has it.
     pub crypt_provider_type: Option<common_simple_types::CryptographicProviderTypes>,
     /// The attribute `cryptProviderTypeExt`, when the element has it.
-    pub crypt_provider_type_ext: Option<String>,
+    pub crypt_provider_type_ext: Option<Box<str>>,
     /// The attribute `cryptProviderTypeExtSource`, when the element has it.
-    pub crypt_provider_type_ext_source: Option<String>,
+    pub crypt_provider_type_ext_source: Option<Box<str>>,
     /// The attribute `hashData`, when the element has it.
-    pub hash_data: Option<String>,
+    pub hash_data: Option<Box<str>>,
     /// The attribute `hashValue`, when the element has it.
-    pub hash_value: Option<String>,
+    pub hash_value: Option<Box<str>>,
     /// The attribute `saltData`, when the element has it.
-    pub salt_data: Option<String>,
+    pub salt_data: Option<Box<str>>,
     /// The attribute `saltValue`, when the element has it.
-    pub salt_value: Option<String>,
+    pub salt_value: Option<Box<str>>,
     /// The attribute `spinCount`, when the element has it.
-    pub spin_count: Option<String>,
+    pub spin_count: Option<Box<str>>,
     /// The attribute `spinValue`, when the element has it.
-    pub spin_value: Option<String>,
+    pub spin_value: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6120,19 +6120,19 @@ pub struct NonVisualDrawingPropertiesWith<X: UserData> {
     /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
     /// The attribute `hidden`, when the element has it.
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHoverWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6156,7 +6156,7 @@ pub struct NonVisualDrawingPropertiesForAShapeWith<X: UserData> {
     /// The child that is `super::drawing::ShapeLocks`, when there is one.
     pub locks: Option<Box<super::drawing::ShapeLocksWith<X>>>,
     /// The attribute `txBox`, when the element has it.
-    pub tx_box: Option<String>,
+    pub tx_box: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6224,7 +6224,7 @@ pub struct NonVisualPictureDrawingPropertiesWith<X: UserData> {
     /// The child that is `super::drawing::PictureLocks`, when there is one.
     pub picture_locks: Option<Box<super::drawing::PictureLocksWith<X>>>,
     /// The attribute `preferRelativeResize`, when the element has it.
-    pub prefer_relative_resize: Option<String>,
+    pub prefer_relative_resize: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6250,7 +6250,7 @@ pub struct NonVisualPropertiesWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `isPhoto`, when the element has it.
-    pub is_photo: Option<String>,
+    pub is_photo: Option<Box<str>>,
     /// The child that is `PlaceholderShape`, when there is one.
     pub placeholder_shape: Option<Box<PlaceholderShapeWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -6259,7 +6259,7 @@ pub struct NonVisualPropertiesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::PresentationNonVisualProperties,
     /// The attribute `userDrawn`, when the element has it.
-    pub user_drawn: Option<String>,
+    pub user_drawn: Option<Box<str>>,
 }
 
 /// The `p:nvPr` element of the tree a read gives: [`NonVisualPropertiesWith`] holding nothing in
@@ -6285,7 +6285,7 @@ pub enum NonVisualPropertiesContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `a:quickTimeFile`, a `QuickTimeFromFile`.
-    QuickTimeFromFile(Box<super::drawing::QuickTimeFromFileWith<X>>),
+    QuickTimeFromFile(super::drawing::QuickTimeFromFileWith<X>),
     /// The element `a:videoFile`, a `VideoFromFile`.
     VideoFromFile(Box<super::drawing::VideoFromFileWith<X>>),
 }
@@ -6432,11 +6432,11 @@ pub struct NormalViewPropertiesWith<X: UserData> {
     /// The child that is `NormalViewRestoredTopProperties`, which the schema requires.
     pub normal_view_restored_top_properties: Box<NormalViewRestoredTopPropertiesWith<X>>,
     /// The attribute `preferSingleView`, when the element has it.
-    pub prefer_single_view: Option<String>,
+    pub prefer_single_view: Option<Box<str>>,
     /// The attribute `showOutlineIcons`, when the element has it.
-    pub show_outline_icons: Option<String>,
+    pub show_outline_icons: Option<Box<str>>,
     /// The attribute `snapVertSplitter`, when the element has it.
-    pub snap_vert_splitter: Option<String>,
+    pub snap_vert_splitter: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6458,7 +6458,7 @@ impl Eq for NormalViewPropertiesWith<()> {}
 #[non_exhaustive]
 pub struct NormalViewRestoredLeftPropertiesWith<X: UserData> {
     /// The attribute `autoAdjust`, when the element has it.
-    pub auto_adjust: Option<String>,
+    pub auto_adjust: Option<Box<str>>,
     /// The attribute `sz`, when the element has it.
     pub sz: Option<super::drawing::PositiveFixedPercentage>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -6480,7 +6480,7 @@ impl Eq for NormalViewRestoredLeftPropertiesWith<()> {}
 #[non_exhaustive]
 pub struct NormalViewRestoredTopPropertiesWith<X: UserData> {
     /// The attribute `autoAdjust`, when the element has it.
-    pub auto_adjust: Option<String>,
+    pub auto_adjust: Option<Box<str>>,
     /// The attribute `sz`, when the element has it.
     pub sz: Option<super::drawing::PositiveFixedPercentage>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -6534,7 +6534,7 @@ pub struct NotesMasterIDWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6561,9 +6561,9 @@ pub struct NotesSlideWith<X: UserData> {
     pub extension_list_with_modification_flag:
         Option<Box<ExtensionListWithModificationFlagWith<X>>>,
     /// The attribute `showMasterPhAnim`, when the element has it.
-    pub show_master_ph_anim: Option<String>,
+    pub show_master_ph_anim: Option<Box<str>>,
     /// The attribute `showMasterSp`, when the element has it.
-    pub show_master_sp: Option<String>,
+    pub show_master_sp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6832,7 +6832,7 @@ impl Eq for PenColorForSlideShowWith<()> {}
 #[non_exhaustive]
 pub struct PhotoAlbumInformationWith<X: UserData> {
     /// The attribute `bw`, when the element has it.
-    pub bw: Option<String>,
+    pub bw: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `frame`, when the element has it.
@@ -6840,7 +6840,7 @@ pub struct PhotoAlbumInformationWith<X: UserData> {
     /// The attribute `layout`, when the element has it.
     pub layout: Option<PhotoAlbumLayoutDefinition>,
     /// The attribute `showCaptions`, when the element has it.
-    pub show_captions: Option<String>,
+    pub show_captions: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6962,9 +6962,9 @@ pub struct PictureFillWith<X: UserData> {
     /// The child that is an item of `super::drawing::FillModeContent`, when there is one.
     pub content: Option<Box<super::drawing::FillModeContentWith<X>>>,
     /// The attribute `dpi`, when the element has it.
-    pub dpi: Option<String>,
+    pub dpi: Option<Box<str>>,
     /// The attribute `rotWithShape`, when the element has it.
-    pub rot_with_shape: Option<String>,
+    pub rot_with_shape: Option<Box<str>>,
     /// The child that is `super::drawing::SourceRectangle`, when there is one.
     pub source_rectangle: Option<Box<super::drawing::SourceRectangleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -7042,9 +7042,9 @@ pub struct PlaceholderShapeWith<X: UserData> {
     pub extension_list_with_modification_flag:
         Option<Box<ExtensionListWithModificationFlagWith<X>>>,
     /// The attribute `hasCustomPrompt`, when the element has it.
-    pub has_custom_prompt: Option<String>,
+    pub has_custom_prompt: Option<Box<str>>,
     /// The attribute `idx`, when the element has it.
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     /// The attribute `orient`, when the element has it.
     pub orient: Option<Direction>,
     /// The attribute `sz`, when the element has it.
@@ -7115,11 +7115,11 @@ impl Eq for PlusSlideTransitionWith<()> {}
 #[non_exhaustive]
 pub struct PresentationWith<X: UserData> {
     /// The attribute `autoCompressPictures`, when the element has it.
-    pub auto_compress_pictures: Option<String>,
+    pub auto_compress_pictures: Option<Box<str>>,
     /// The attribute `bookmarkIdSeed`, when the element has it.
     pub bookmark_id_seed: Option<BookmarkIDSeed>,
     /// The attribute `compatMode`, when the element has it.
-    pub compat_mode: Option<String>,
+    pub compat_mode: Option<Box<str>>,
     /// The attribute `conformance`, when the element has it.
     pub conformance: Option<common_simple_types::DocumentConformanceClassValue>,
     /// The child that is `CustomerDataList`, when there is one.
@@ -7127,13 +7127,13 @@ pub struct PresentationWith<X: UserData> {
     /// The child that is `PresentationDefaultTextStyle`, when there is one.
     pub default_text_style: Option<Box<PresentationDefaultTextStyleWith<X>>>,
     /// The attribute `embedTrueTypeFonts`, when the element has it.
-    pub embed_true_type_fonts: Option<String>,
+    pub embed_true_type_fonts: Option<Box<str>>,
     /// The child that is `EmbeddedFontList`, when there is one.
     pub embedded_font_list: Option<Box<EmbeddedFontListWith<X>>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `firstSlideNum`, when the element has it.
-    pub first_slide_num: Option<String>,
+    pub first_slide_num: Option<Box<str>>,
     /// The child that is `KinsokuSettings`, when there is one.
     pub kinsoku_settings: Option<Box<KinsokuSettingsWith<X>>>,
     /// The child that is `ListOfCustomShows`, when there is one.
@@ -7153,21 +7153,21 @@ pub struct PresentationWith<X: UserData> {
     /// The child that is `PhotoAlbumInformation`, when there is one.
     pub photo_album_information: Option<Box<PhotoAlbumInformationWith<X>>>,
     /// The attribute `removePersonalInfoOnSave`, when the element has it.
-    pub remove_personal_info_on_save: Option<String>,
+    pub remove_personal_info_on_save: Option<Box<str>>,
     /// The attribute `rtl`, when the element has it.
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     /// The attribute `saveSubsetFonts`, when the element has it.
-    pub save_subset_fonts: Option<String>,
+    pub save_subset_fonts: Option<Box<str>>,
     /// The attribute `serverZoom`, when the element has it.
     pub server_zoom: Option<super::drawing::Percentage>,
     /// The attribute `showSpecialPlsOnTitleSld`, when the element has it.
-    pub show_special_pls_on_title_sld: Option<String>,
+    pub show_special_pls_on_title_sld: Option<Box<str>>,
     /// The child that is `PresentationSlideSize`, when there is one.
     pub slide_size: Option<Box<PresentationSlideSizeWith<X>>>,
     /// The child that is `SmartTags`, when there is one.
     pub smart_tags: Option<Box<SmartTagsWith<X>>>,
     /// The attribute `strictFirstAndLastChars`, when the element has it.
-    pub strict_first_and_last_chars: Option<String>,
+    pub strict_first_and_last_chars: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -7227,7 +7227,7 @@ impl Eq for PresentationDefaultTextStyleWith<()> {}
 #[non_exhaustive]
 pub struct PresentationSlideWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -7247,9 +7247,9 @@ impl Eq for PresentationSlideWith<()> {}
 #[non_exhaustive]
 pub struct PresentationSlideOutlineViewSlideEntryWith<X: UserData> {
     /// The attribute `collapse`, when the element has it.
-    pub collapse: Option<String>,
+    pub collapse: Option<Box<str>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -7300,11 +7300,11 @@ pub struct PresentationSlideSlideWith<X: UserData> {
     pub extension_list_with_modification_flag:
         Option<Box<ExtensionListWithModificationFlagWith<X>>>,
     /// The attribute `show`, when the element has it.
-    pub show: Option<String>,
+    pub show: Option<Box<str>>,
     /// The attribute `showMasterPhAnim`, when the element has it.
-    pub show_master_ph_anim: Option<String>,
+    pub show_master_ph_anim: Option<Box<str>>,
     /// The attribute `showMasterSp`, when the element has it.
-    pub show_master_sp: Option<String>,
+    pub show_master_sp: Option<Box<str>>,
     /// The child that is `SlideTimingInformation`, when there is one.
     pub timing_information: Option<Box<SlideTimingInformationWith<X>>>,
     /// The child that is `SlideTransitionForASlideLayout`, when there is one.
@@ -7360,13 +7360,13 @@ pub struct PresentationWideShowPropertiesWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `loop`, when the element has it.
-    pub r#loop: Option<String>,
+    pub r#loop: Option<Box<str>>,
     /// The child that is `PenColorForSlideShow`, when there is one.
     pub pen_color_for_slide_show: Option<Box<PenColorForSlideShowWith<X>>>,
     /// The attribute `showAnimation`, when the element has it.
-    pub show_animation: Option<String>,
+    pub show_animation: Option<Box<str>>,
     /// The attribute `showNarration`, when the element has it.
-    pub show_narration: Option<String>,
+    pub show_narration: Option<Box<str>>,
     /// The child that is an item of `ShowTypeContent`, when there is one.
     pub show_type_content: Option<Box<ShowTypeContentWith<X>>>,
     /// The child that is an item of `SlideListContent`, when there is one.
@@ -7375,7 +7375,7 @@ pub struct PresentationWideShowPropertiesWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `useTimings`, when the element has it.
-    pub use_timings: Option<String>,
+    pub use_timings: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::PresentationPresentationWideShowProperties,
 }
@@ -7406,7 +7406,7 @@ pub struct PresentationWideViewPropertiesWith<X: UserData> {
     /// The child that is `OutlineViewProperties`, when there is one.
     pub outline_view_properties: Option<Box<OutlineViewPropertiesWith<X>>>,
     /// The attribute `showComments`, when the element has it.
-    pub show_comments: Option<String>,
+    pub show_comments: Option<Box<str>>,
     /// The child that is `SlideSorterViewProperties`, when there is one.
     pub slide_sorter_view_properties: Option<Box<SlideSorterViewPropertiesWith<X>>>,
     /// The child that is `SlideViewProperties`, when there is one.
@@ -7524,13 +7524,13 @@ pub struct PrintingPropertiesWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `frameSlides`, when the element has it.
-    pub frame_slides: Option<String>,
+    pub frame_slides: Option<Box<str>>,
     /// The attribute `hiddenSlides`, when the element has it.
-    pub hidden_slides: Option<String>,
+    pub hidden_slides: Option<Box<str>>,
     /// The attribute `prnWhat`, when the element has it.
     pub prn_what: Option<DefaultPrintOutput>,
     /// The attribute `scaleToFitPaper`, when the element has it.
-    pub scale_to_fit_paper: Option<String>,
+    pub scale_to_fit_paper: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -7550,14 +7550,14 @@ impl Eq for PrintingPropertiesWith<()> {}
 #[non_exhaustive]
 pub struct ProgrammableExtensibilityTagWith<X: UserData> {
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::PresentationProgrammableExtensibilityTag,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `p:tag` element of the tree a read gives: [`ProgrammableExtensibilityTagWith`] holding
@@ -7690,7 +7690,7 @@ impl Eq for RandomSlideTransitionWith<()> {}
 #[non_exhaustive]
 pub struct RegularEmbeddedFontWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -7777,7 +7777,7 @@ pub struct SequenceTimeNodeWith<X: UserData> {
     /// The child that is `CommonTimeNodeProperties`, which the schema requires.
     pub common_time_node_properties: Box<CommonTimeNodePropertiesWith<X>>,
     /// The attribute `concurrent`, when the element has it.
-    pub concurrent: Option<String>,
+    pub concurrent: Option<Box<str>>,
     /// The attribute `nextAc`, when the element has it.
     pub next_ac: Option<NextActionType>,
     /// The child that is `NextConditionsList`, when there is one.
@@ -7840,7 +7840,7 @@ pub struct ShapeWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `useBgFill`, when the element has it.
-    pub use_bg_fill: Option<String>,
+    pub use_bg_fill: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::PresentationShape,
 }
@@ -8069,7 +8069,7 @@ pub enum SlideBackgroundContentWith<X: UserData> {
     /// The element `p:bgPr`, a `BackgroundProperties`.
     BackgroundProperties(Box<BackgroundPropertiesWith<X>>),
     /// The element `p:bgRef`, a `BackgroundStyleReference`.
-    BackgroundStyleReference(Box<BackgroundStyleReferenceWith<X>>),
+    BackgroundStyleReference(BackgroundStyleReferenceWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -8090,7 +8090,7 @@ pub struct SlideIDWith<X: UserData> {
     /// The attribute `id`, when the element has it.
     pub id: Option<SlideIdentifier>,
     /// The attribute `r:id`, when the element has it.
-    pub r_id: Option<String>,
+    pub r_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8115,7 +8115,7 @@ impl Eq for SlideIDWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct SlideIdentifier(pub String);
+pub struct SlideIdentifier(pub Box<str>);
 
 /// The `p:sldLayout` element, Slide Layout (ECMA-376 Part 1, section 19.3.1.39). Its schema type is
 /// `CT_SlideLayout`.
@@ -8133,13 +8133,13 @@ pub struct SlideLayoutWith<X: UserData> {
     pub header_footer_information_for_a_slide_master:
         Option<Box<HeaderFooterInformationForASlideMasterWith<X>>>,
     /// The attribute `matchingName`, when the element has it.
-    pub matching_name: Option<String>,
+    pub matching_name: Option<Box<str>>,
     /// The attribute `preserve`, when the element has it.
-    pub preserve: Option<String>,
+    pub preserve: Option<Box<str>>,
     /// The attribute `showMasterPhAnim`, when the element has it.
-    pub show_master_ph_anim: Option<String>,
+    pub show_master_ph_anim: Option<Box<str>>,
     /// The attribute `showMasterSp`, when the element has it.
-    pub show_master_sp: Option<String>,
+    pub show_master_sp: Option<Box<str>>,
     /// The child that is `SlideTimingInformation`, when there is one.
     pub slide_timing_information: Option<Box<SlideTimingInformationWith<X>>>,
     /// The child that is `SlideTransitionForASlideLayout`, when there is one.
@@ -8152,7 +8152,7 @@ pub struct SlideLayoutWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::PresentationSlideLayout,
     /// The attribute `userDrawn`, when the element has it.
-    pub user_drawn: Option<String>,
+    pub user_drawn: Option<Box<str>>,
 }
 
 /// The `p:sldLayout` element of the tree a read gives: [`SlideLayoutWith`] holding nothing in
@@ -8173,7 +8173,7 @@ impl Eq for SlideLayoutWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct SlideLayoutID(pub String);
+pub struct SlideLayoutID(pub Box<str>);
 
 /// The `p:sldLayoutId` element, Slide Layout Id (ECMA-376 Part 1, section 19.3.1.40). Its schema
 /// type is `CT_SlideLayoutIdListEntry`.
@@ -8185,7 +8185,7 @@ pub struct SlideLayoutIdWith<X: UserData> {
     /// The attribute `id`, when the element has it.
     pub id: Option<SlideLayoutID>,
     /// The attribute `r:id`, when the element has it.
-    pub r_id: Option<String>,
+    pub r_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8332,7 +8332,7 @@ pub struct SlideMasterWith<X: UserData> {
     /// The child that is `ListOfSlideLayouts`, when there is one.
     pub list_of_slide_layouts: Option<Box<ListOfSlideLayoutsWith<X>>>,
     /// The attribute `preserve`, when the element has it.
-    pub preserve: Option<String>,
+    pub preserve: Option<Box<str>>,
     /// The child that is `SlideTimingInformation`, when there is one.
     pub slide_timing_information: Option<Box<SlideTimingInformationWith<X>>>,
     /// The child that is `SlideTransitionForASlideLayout`, when there is one.
@@ -8402,7 +8402,7 @@ pub struct SlideMasterIDWith<X: UserData> {
     /// The attribute `id`, when the element has it.
     pub id: Option<StSlideMasterId>,
     /// The attribute `r:id`, when the element has it.
-    pub r_id: Option<String>,
+    pub r_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8556,7 +8556,7 @@ impl Eq for SlideRangeWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct SlideSizeCoordinate(pub String);
+pub struct SlideSizeCoordinate(pub Box<str>);
 
 /// Slide Size Type, the simple type `ST_SlideSizeType` (ECMA-376 Part 1, section 19.7.18), kept as
 /// its member or as the text the file carried.
@@ -8621,7 +8621,7 @@ pub struct SlideSorterViewPropertiesWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `showFormatting`, when the element has it.
-    pub show_formatting: Option<String>,
+    pub show_formatting: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8641,13 +8641,13 @@ impl Eq for SlideSorterViewPropertiesWith<()> {}
 #[non_exhaustive]
 pub struct SlideSynchronizationPropertiesWith<X: UserData> {
     /// The attribute `clientInsertedTime`, when the element has it.
-    pub client_inserted_time: Option<String>,
+    pub client_inserted_time: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `serverSldId`, when the element has it.
-    pub server_sld_id: Option<String>,
+    pub server_sld_id: Option<Box<str>>,
     /// The attribute `serverSldModifiedTime`, when the element has it.
-    pub server_sld_modified_time: Option<String>,
+    pub server_sld_modified_time: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8810,13 +8810,13 @@ impl Eq for SlideTransitionContentWith<()> {}
 #[non_exhaustive]
 pub struct SlideTransitionForASlideLayoutWith<X: UserData> {
     /// The attribute `advClick`, when the element has it.
-    pub adv_click: Option<String>,
+    pub adv_click: Option<Box<str>>,
     /// The attribute `advTm`, when the element has it.
-    pub adv_tm: Option<String>,
+    pub adv_tm: Option<Box<str>>,
     /// The child that is an item of `SlideTransitionContent`, when there is one.
     pub content: Option<Box<SlideTransitionContentWith<X>>>,
     /// The attribute `p14:dur`, when the element has it.
-    pub dur: Option<String>,
+    pub dur: Option<Box<str>>,
     /// The child that is `ExtensionListWithModificationFlag`, when there is one.
     pub extension_list_with_modification_flag:
         Option<Box<ExtensionListWithModificationFlagWith<X>>>,
@@ -8865,7 +8865,7 @@ impl Eq for SlideViewPropertiesWith<()> {}
 #[non_exhaustive]
 pub struct SmartTagsWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8885,9 +8885,9 @@ impl Eq for SmartTagsWith<()> {}
 #[non_exhaustive]
 pub struct SoundWith<X: UserData> {
     /// The attribute `r:embed`, when the element has it.
-    pub embed: Option<String>,
+    pub embed: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8931,7 +8931,7 @@ pub enum SoundActionContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `p:stSnd`, a `StartSoundAction`.
-    StartSoundAction(Box<StartSoundActionWith<X>>),
+    StartSoundAction(StartSoundActionWith<X>),
     /// The element `p:endSnd`, a `StopSoundAction`.
     StopSoundAction(StopSoundActionWith<X>),
 }
@@ -8948,9 +8948,9 @@ impl Eq for SoundActionContentWith<()> {}
 #[non_exhaustive]
 pub struct SoundTargetWith<X: UserData> {
     /// The attribute `r:embed`, when the element has it.
-    pub embed: Option<String>,
+    pub embed: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -9025,7 +9025,7 @@ pub enum SplitterBarStateMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StSlideMasterId(pub String);
+pub struct StSlideMasterId(pub Box<str>);
 
 /// The `p:stCondLst` element, Start Conditions List (ECMA-376 Part 1, section 19.5.73). Its schema
 /// type is `CT_TLTimeConditionList`.
@@ -9053,7 +9053,7 @@ impl Eq for StartConditionsListWith<()> {}
 #[non_exhaustive]
 pub struct StartSoundActionWith<X: UserData> {
     /// The attribute `loop`, when the element has it.
-    pub r#loop: Option<String>,
+    pub r#loop: Option<Box<str>>,
     /// The child that is `Sound`, which the schema requires.
     pub sound: Box<SoundWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -9098,7 +9098,7 @@ pub struct StringValueWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::PresentationStringValue,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `p:strVal` element of the tree a read gives: [`StringValueWith`] holding nothing in
@@ -9153,7 +9153,7 @@ impl Eq for SubTimeNodesListWith<()> {}
 #[non_exhaustive]
 pub struct SubshapeWith<X: UserData> {
     /// The attribute `spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -9305,7 +9305,7 @@ pub enum TargetElementContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `p:spTgt`, a `ShapeTarget`.
-    ShapeTarget(Box<ShapeTargetWith<X>>),
+    ShapeTarget(ShapeTargetWith<X>),
     /// The element `p:sldTgt`, a `SlideTarget`.
     SlideTarget(SlideTargetWith<X>),
     /// The element `p:sndTgt`, a `SoundTarget`.
@@ -9324,7 +9324,7 @@ impl Eq for TargetElementContentWith<()> {}
 #[non_exhaustive]
 pub struct TemplateEffectsTmplWith<X: UserData> {
     /// The attribute `lvl`, when the element has it.
-    pub lvl: Option<String>,
+    pub lvl: Option<Box<str>>,
     /// The child that is `TimeNodeList`, which the schema requires.
     pub time_node_list: Box<TimeNodeListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -9453,7 +9453,7 @@ impl Eq for TimeAbsoluteWith<()> {}
 #[non_exhaustive]
 pub struct TimeAnimateValueWith<X: UserData> {
     /// The attribute `fmla`, when the element has it.
-    pub fmla: Option<String>,
+    pub fmla: Option<Box<str>>,
     /// The attribute `tm`, when the element has it.
     pub tm: Option<AnimationTime>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -9652,7 +9652,7 @@ pub enum TimeNodeFillTypeMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct TimeNodeID(pub String);
+pub struct TimeNodeID(pub Box<str>);
 
 /// The `p:tnLst` element, Time Node List (ECMA-376 Part 1, section 19.5.87). Its schema type is
 /// `CT_TimeNodeList`.
@@ -9695,7 +9695,7 @@ pub enum TimeNodeListContentWith<X: UserData> {
     /// The element `p:animScale`, a `AnimateScale`.
     AnimateScale(Box<AnimateScaleWith<X>>),
     /// The element `p:audio`, a `Audio`.
-    Audio(Box<AudioWith<X>>),
+    Audio(AudioWith<X>),
     /// The element `p:cmd`, a `Command`.
     Command(Box<CommandWith<X>>),
     /// The element `p:excl`, a `Exclusive`.
@@ -9709,7 +9709,7 @@ pub enum TimeNodeListContentWith<X: UserData> {
     /// The element `p:set`, a `SetTimeNodeBehavior`.
     SetTimeNodeBehavior(SetTimeNodeBehaviorWith<X>),
     /// The element `p:video`, a `Video`.
-    Video(Box<VideoWith<X>>),
+    Video(VideoWith<X>),
 }
 
 /// [`TimeNodeListContentWith`] of the tree a read gives, where no node holds anything in
@@ -10179,7 +10179,7 @@ pub struct VideoWith<X: UserData> {
     /// The child that is `CommonMediaNodeProperties`, which the schema requires.
     pub common_media_node_properties: Box<CommonMediaNodePropertiesWith<X>>,
     /// The attribute `fullScrn`, when the element has it.
-    pub full_scrn: Option<String>,
+    pub full_scrn: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -10242,28 +10242,28 @@ impl Eq for ViewScaleWith<()> {}
 #[non_exhaustive]
 pub struct WebPropertiesWith<X: UserData> {
     /// The attribute `allowPng`, when the element has it.
-    pub allow_png: Option<String>,
+    pub allow_png: Option<Box<str>>,
     /// The attribute `clr`, when the element has it.
     pub clr: Option<HTMLSlideNavigationControlColors>,
     /// The attribute `encoding`, when the element has it.
-    pub encoding: Option<String>,
+    pub encoding: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `imgSz`, when the element has it.
     pub img_sz: Option<HTMLWebScreenSizeTarget>,
     /// The attribute `organizeInFolders`, when the element has it.
-    pub organize_in_folders: Option<String>,
+    pub organize_in_folders: Option<Box<str>>,
     /// The attribute `relyOnVml`, when the element has it.
-    pub rely_on_vml: Option<String>,
+    pub rely_on_vml: Option<Box<str>>,
     /// The attribute `resizeGraphics`, when the element has it.
-    pub resize_graphics: Option<String>,
+    pub resize_graphics: Option<Box<str>>,
     /// The attribute `showAnimation`, when the element has it.
-    pub show_animation: Option<String>,
+    pub show_animation: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `useLongFilenames`, when the element has it.
-    pub use_long_filenames: Option<String>,
+    pub use_long_filenames: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::PresentationWebProperties,
 }
@@ -10298,7 +10298,7 @@ impl Eq for WedgeSlideTransitionWith<()> {}
 #[non_exhaustive]
 pub struct WheelSlideTransitionWith<X: UserData> {
     /// The attribute `spokes`, when the element has it.
-    pub spokes: Option<String>,
+    pub spokes: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -10339,9 +10339,9 @@ pub struct XfrmWith<X: UserData> {
     /// The child that is `super::drawing::Extents`, when there is one.
     pub extents: Option<Box<super::drawing::ExtentsWith<X>>>,
     /// The attribute `flipH`, when the element has it.
-    pub flip_h: Option<String>,
+    pub flip_h: Option<Box<str>>,
     /// The attribute `flipV`, when the element has it.
-    pub flip_v: Option<String>,
+    pub flip_v: Option<Box<str>>,
     /// The child that is `super::drawing::Offset`, when there is one.
     pub offset: Option<Box<super::drawing::OffsetWith<X>>>,
     /// The attribute `rot`, when the element has it.
@@ -11949,7 +11949,7 @@ impl AsRef<str> for BookmarkIDSeed {
 
 impl From<String> for BookmarkIDSeed {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -15421,7 +15421,7 @@ impl<X: UserData> EmbeddedObjectContentWith<X> {
                 ))
             }
             Self::LinkedObjectOrControl(node) => {
-                EmbeddedObjectContentWith::LinkedObjectOrControl(Box::new((*node).into_user_data()))
+                EmbeddedObjectContentWith::LinkedObjectOrControl(node.into_user_data())
             }
             Self::Other(node) => EmbeddedObjectContentWith::Other(node),
         }
@@ -15442,7 +15442,7 @@ impl officekit_markup_base::Read for EmbeddedObjectContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_P, "embed")) => Self::EmbeddedObjectOrControl(Box::new(item.read())),
-            Some((NS_P, "link")) => Self::LinkedObjectOrControl(Box::new(item.read())),
+            Some((NS_P, "link")) => Self::LinkedObjectOrControl(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -15466,7 +15466,7 @@ impl<X: UserData> From<EmbeddedObjectOrControlWith<X>> for EmbeddedObjectContent
 
 impl<X: UserData> From<LinkedObjectOrControlWith<X>> for EmbeddedObjectContentWith<X> {
     fn from(arm: LinkedObjectOrControlWith<X>) -> Self {
-        Self::LinkedObjectOrControl(Box::new(arm))
+        Self::LinkedObjectOrControl(arm)
     }
 }
 
@@ -17072,7 +17072,7 @@ impl AsRef<str> for Index {
 
 impl From<String> for Index {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -18945,9 +18945,9 @@ impl<X: UserData> NonVisualPropertiesContentWith<X> {
                 NonVisualPropertiesContentWith::AudioFromWAVFile(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => NonVisualPropertiesContentWith::Other(node),
-            Self::QuickTimeFromFile(node) => NonVisualPropertiesContentWith::QuickTimeFromFile(
-                Box::new((*node).into_user_data()),
-            ),
+            Self::QuickTimeFromFile(node) => {
+                NonVisualPropertiesContentWith::QuickTimeFromFile(node.into_user_data())
+            }
             Self::VideoFromFile(node) => {
                 NonVisualPropertiesContentWith::VideoFromFile(Box::new((*node).into_user_data()))
             }
@@ -18965,7 +18965,7 @@ impl officekit_markup_base::Read for NonVisualPropertiesContent {
             Some((NS_A, "audioCd")) => Self::AudioFromCD(item.read()),
             Some((NS_A, "audioFile")) => Self::AudioFromFile(Box::new(item.read())),
             Some((NS_A, "wavAudioFile")) => Self::AudioFromWAVFile(Box::new(item.read())),
-            Some((NS_A, "quickTimeFile")) => Self::QuickTimeFromFile(Box::new(item.read())),
+            Some((NS_A, "quickTimeFile")) => Self::QuickTimeFromFile(item.read()),
             Some((NS_A, "videoFile")) => Self::VideoFromFile(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -19009,7 +19009,7 @@ impl<X: UserData> From<super::drawing::QuickTimeFromFileWith<X>>
     for NonVisualPropertiesContentWith<X>
 {
     fn from(arm: super::drawing::QuickTimeFromFileWith<X>) -> Self {
-        Self::QuickTimeFromFile(Box::new(arm))
+        Self::QuickTimeFromFile(arm)
     }
 }
 
@@ -23243,9 +23243,7 @@ impl<X: UserData> SlideBackgroundContentWith<X> {
                 SlideBackgroundContentWith::BackgroundProperties(Box::new((*node).into_user_data()))
             }
             Self::BackgroundStyleReference(node) => {
-                SlideBackgroundContentWith::BackgroundStyleReference(Box::new(
-                    (*node).into_user_data(),
-                ))
+                SlideBackgroundContentWith::BackgroundStyleReference(node.into_user_data())
             }
             Self::Other(node) => SlideBackgroundContentWith::Other(node),
         }
@@ -23266,7 +23264,7 @@ impl officekit_markup_base::Read for SlideBackgroundContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_P, "bgPr")) => Self::BackgroundProperties(Box::new(item.read())),
-            Some((NS_P, "bgRef")) => Self::BackgroundStyleReference(Box::new(item.read())),
+            Some((NS_P, "bgRef")) => Self::BackgroundStyleReference(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -23290,7 +23288,7 @@ impl<X: UserData> From<BackgroundPropertiesWith<X>> for SlideBackgroundContentWi
 
 impl<X: UserData> From<BackgroundStyleReferenceWith<X>> for SlideBackgroundContentWith<X> {
     fn from(arm: BackgroundStyleReferenceWith<X>) -> Self {
-        Self::BackgroundStyleReference(Box::new(arm))
+        Self::BackgroundStyleReference(arm)
     }
 }
 
@@ -23362,7 +23360,7 @@ impl AsRef<str> for SlideIdentifier {
 
 impl From<String> for SlideIdentifier {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -23490,7 +23488,7 @@ impl AsRef<str> for SlideLayoutID {
 
 impl From<String> for SlideLayoutID {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -24304,7 +24302,7 @@ impl AsRef<str> for SlideSizeCoordinate {
 
 impl From<String> for SlideSizeCoordinate {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -25356,7 +25354,7 @@ impl<X: UserData> SoundActionContentWith<X> {
         match self {
             Self::Other(node) => SoundActionContentWith::Other(node),
             Self::StartSoundAction(node) => {
-                SoundActionContentWith::StartSoundAction(Box::new((*node).into_user_data()))
+                SoundActionContentWith::StartSoundAction(node.into_user_data())
             }
             Self::StopSoundAction(node) => {
                 SoundActionContentWith::StopSoundAction(node.into_user_data())
@@ -25367,7 +25365,7 @@ impl<X: UserData> SoundActionContentWith<X> {
 
 impl<X: UserData> Default for SoundActionContentWith<X> {
     fn default() -> Self {
-        Self::StartSoundAction(Box::default())
+        Self::StartSoundAction(StartSoundActionWith::default())
     }
 }
 
@@ -25378,7 +25376,7 @@ impl officekit_markup_base::Read for SoundActionContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "stSnd")) => Self::StartSoundAction(Box::new(item.read())),
+            Some((NS_P, "stSnd")) => Self::StartSoundAction(item.read()),
             Some((NS_P, "endSnd")) => Self::StopSoundAction(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -25397,7 +25395,7 @@ impl officekit_markup_base::Write for SoundActionContent {
 
 impl<X: UserData> From<StartSoundActionWith<X>> for SoundActionContentWith<X> {
     fn from(arm: StartSoundActionWith<X>) -> Self {
-        Self::StartSoundAction(Box::new(arm))
+        Self::StartSoundAction(arm)
     }
 }
 
@@ -25612,7 +25610,7 @@ impl AsRef<str> for StSlideMasterId {
 
 impl From<String> for StSlideMasterId {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -26411,9 +26409,7 @@ impl<X: UserData> TargetElementContentWith<X> {
             }
             Self::InkTarget(node) => TargetElementContentWith::InkTarget(node.into_user_data()),
             Self::Other(node) => TargetElementContentWith::Other(node),
-            Self::ShapeTarget(node) => {
-                TargetElementContentWith::ShapeTarget(Box::new((*node).into_user_data()))
-            }
+            Self::ShapeTarget(node) => TargetElementContentWith::ShapeTarget(node.into_user_data()),
             Self::SlideTarget(node) => TargetElementContentWith::SlideTarget(node.into_user_data()),
             Self::SoundTarget(node) => {
                 TargetElementContentWith::SoundTarget(Box::new((*node).into_user_data()))
@@ -26437,7 +26433,7 @@ impl officekit_markup_base::Read for TargetElementContent {
         match item.name() {
             Some((NS_P14, "bmkTgt")) => Self::BmkTgt(Box::new(item.read())),
             Some((NS_P, "inkTgt")) => Self::InkTarget(item.read()),
-            Some((NS_P, "spTgt")) => Self::ShapeTarget(Box::new(item.read())),
+            Some((NS_P, "spTgt")) => Self::ShapeTarget(item.read()),
             Some((NS_P, "sldTgt")) => Self::SlideTarget(item.read()),
             Some((NS_P, "sndTgt")) => Self::SoundTarget(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
@@ -26474,7 +26470,7 @@ impl<X: UserData> From<InkTargetWith<X>> for TargetElementContentWith<X> {
 
 impl<X: UserData> From<ShapeTargetWith<X>> for TargetElementContentWith<X> {
     fn from(arm: ShapeTargetWith<X>) -> Self {
-        Self::ShapeTarget(Box::new(arm))
+        Self::ShapeTarget(arm)
     }
 }
 
@@ -27419,7 +27415,7 @@ impl AsRef<str> for TimeNodeID {
 
 impl From<String> for TimeNodeID {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -27530,7 +27526,7 @@ impl<X: UserData> TimeNodeListContentWith<X> {
             Self::AnimateScale(node) => {
                 TimeNodeListContentWith::AnimateScale(Box::new((*node).into_user_data()))
             }
-            Self::Audio(node) => TimeNodeListContentWith::Audio(Box::new((*node).into_user_data())),
+            Self::Audio(node) => TimeNodeListContentWith::Audio(node.into_user_data()),
             Self::Command(node) => {
                 TimeNodeListContentWith::Command(Box::new((*node).into_user_data()))
             }
@@ -27545,7 +27541,7 @@ impl<X: UserData> TimeNodeListContentWith<X> {
             Self::SetTimeNodeBehavior(node) => {
                 TimeNodeListContentWith::SetTimeNodeBehavior(node.into_user_data())
             }
-            Self::Video(node) => TimeNodeListContentWith::Video(Box::new((*node).into_user_data())),
+            Self::Video(node) => TimeNodeListContentWith::Video(node.into_user_data()),
         }
     }
 }
@@ -27563,13 +27559,13 @@ impl officekit_markup_base::Read for TimeNodeListContent {
             Some((NS_P, "animMotion")) => Self::AnimateMotion(Box::new(item.read())),
             Some((NS_P, "animRot")) => Self::AnimateRotation(Box::new(item.read())),
             Some((NS_P, "animScale")) => Self::AnimateScale(Box::new(item.read())),
-            Some((NS_P, "audio")) => Self::Audio(Box::new(item.read())),
+            Some((NS_P, "audio")) => Self::Audio(item.read()),
             Some((NS_P, "cmd")) => Self::Command(Box::new(item.read())),
             Some((NS_P, "excl")) => Self::Exclusive(item.read()),
             Some((NS_P, "par")) => Self::ParallelTimeNode(item.read()),
             Some((NS_P, "seq")) => Self::SequenceTimeNode(Box::new(item.read())),
             Some((NS_P, "set")) => Self::SetTimeNodeBehavior(item.read()),
-            Some((NS_P, "video")) => Self::Video(Box::new(item.read())),
+            Some((NS_P, "video")) => Self::Video(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -27634,7 +27630,7 @@ impl<X: UserData> From<AnimateScaleWith<X>> for TimeNodeListContentWith<X> {
 
 impl<X: UserData> From<AudioWith<X>> for TimeNodeListContentWith<X> {
     fn from(arm: AudioWith<X>) -> Self {
-        Self::Audio(Box::new(arm))
+        Self::Audio(arm)
     }
 }
 
@@ -27670,7 +27666,7 @@ impl<X: UserData> From<SetTimeNodeBehaviorWith<X>> for TimeNodeListContentWith<X
 
 impl<X: UserData> From<VideoWith<X>> for TimeNodeListContentWith<X> {
     fn from(arm: VideoWith<X>) -> Self {
-        Self::Video(Box::new(arm))
+        Self::Video(arm)
     }
 }
 

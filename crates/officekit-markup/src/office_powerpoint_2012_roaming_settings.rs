@@ -324,7 +324,7 @@ pub struct KeyWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficePowerpoint2012RoamingSettingsKey,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `pRoam:key` element of the tree a read gives: [`KeyWith`] holding nothing in `user_data`.
@@ -365,7 +365,7 @@ pub struct ValueWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficePowerpoint2012RoamingSettingsValue,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `pRoam:value` element of the tree a read gives: [`ValueWith`] holding nothing in

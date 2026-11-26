@@ -70,7 +70,7 @@ impl officekit_markup::Context for Fill {
 impl wordprocessing::Context for Fill {
     fn text(&mut self, node: &Text) -> Option<Text> {
         let mut text = node.clone();
-        text.value.clone_from(&self.value);
+        text.value = Box::from(self.value.as_str());
         Some(text)
     }
 }
@@ -83,7 +83,7 @@ impl officekit_markup::Visitor for FindPlaceholder {
 
 impl wordprocessing::Visitor for FindPlaceholder {
     fn text(&mut self, node: &Text) -> Descend {
-        self.found |= node.value == "placeholder";
+        self.found |= &*node.value == "placeholder";
         Descend::Yes
     }
 }
@@ -171,7 +171,7 @@ fn part_bytes(root: Element) -> Vec<u8> {
 fn template() -> Package {
     let paragraph = |value: &str| {
         let mut text = Text::default();
-        text.value = value.to_owned();
+        text.value = Box::from(value);
         let mut run = TextRun::default();
         run.content = vec![TextRunContent::from(text)];
         let mut paragraph = Paragraph::default();

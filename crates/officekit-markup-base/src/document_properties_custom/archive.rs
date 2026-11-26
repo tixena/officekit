@@ -234,9 +234,9 @@ pub struct CustomFilePropertiesMirror {
 pub struct CustomFilePropertyMirror {
     pub content: Box<super::CustomFilePropertyContent>,
     pub fmtid: Option<super::super::common_simple_types::Guid>,
-    pub link_target: Option<String>,
-    pub name: Option<String>,
-    pub pid: Option<String>,
+    pub link_target: Option<Box<str>>,
+    pub name: Option<Box<str>>,
+    pub pid: Option<Box<str>>,
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }

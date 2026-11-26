@@ -232,7 +232,7 @@ pub struct ExtLstMirror {
 #[rkyv(remote = super::Rel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RelMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

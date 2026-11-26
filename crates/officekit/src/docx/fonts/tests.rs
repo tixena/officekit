@@ -1,4 +1,3 @@
-use alloc::string::String;
 use alloc::vec::Vec;
 
 use officekit_markup::drawing::{Font, Theme};
@@ -25,21 +24,21 @@ const MEMBERS: [ThemeFontMember; 8] = [
 /// A theme whose minor `a:latin` is Calibri and major `a:latin` Calibri Light.
 fn office() -> Theme {
     let mut theme = Theme::default();
-    theme.elements.font_scheme.minor_fonts.latin_font.typeface = Some("Calibri".to_owned());
-    theme.elements.font_scheme.major_font.latin_font.typeface = Some("Calibri Light".to_owned());
+    theme.elements.font_scheme.minor_fonts.latin_font.typeface = Some(Box::from("Calibri"));
+    theme.elements.font_scheme.major_font.latin_font.typeface = Some(Box::from("Calibri Light"));
     theme
 }
 
 fn font(script: &str, typeface: &str) -> Font {
     let mut found = Font::default();
-    found.script = Some(script.to_owned());
-    found.typeface = Some(typeface.to_owned());
+    found.script = Some(Box::from(script));
+    found.typeface = Some(Box::from(typeface));
     found
 }
 
 fn east_asian_language(tag: &str) -> ThemeFontLanguages {
     let mut languages = ThemeFontLanguages::default();
-    languages.east_asia = Some(tag.to_owned());
+    languages.east_asia = Some(Box::from(tag));
     languages
 }
 
@@ -61,9 +60,9 @@ fn the_theme_attribute_wins_over_the_plain_one_of_its_kind() {
     );
 
     let mut run = RunFonts::default();
-    run.ascii = Some("Arial".to_owned());
+    run.ascii = Some(Box::from("Arial"));
     run.ascii_theme = Some(ThemeFont::from(ThemeFontMember::MinorHAnsi));
-    run.h_ansi = Some("Arial".to_owned());
+    run.h_ansi = Some(Box::from("Arial"));
     let families = fonts.families(Some(&run));
     assert_eq!(families.ascii.as_deref(), Some("Calibri"));
     assert_eq!(families.h_ansi.as_deref(), Some("Arial"));
@@ -75,12 +74,12 @@ fn the_theme_attribute_wins_over_the_plain_one_of_its_kind() {
 fn each_value_takes_its_region_of_its_collection() {
     let mut theme = Theme::default();
     let scheme = &mut theme.elements.font_scheme;
-    scheme.major_font.latin_font.typeface = Some("Major Latin".to_owned());
-    scheme.major_font.east_asian_font.typeface = Some("Major East Asian".to_owned());
-    scheme.major_font.complex_script_font.typeface = Some("Major Complex".to_owned());
-    scheme.minor_fonts.latin_font.typeface = Some("Minor Latin".to_owned());
-    scheme.minor_fonts.east_asian_font.typeface = Some("Minor East Asian".to_owned());
-    scheme.minor_fonts.complex_script_font.typeface = Some("Minor Complex".to_owned());
+    scheme.major_font.latin_font.typeface = Some(Box::from("Major Latin"));
+    scheme.major_font.east_asian_font.typeface = Some(Box::from("Major East Asian"));
+    scheme.major_font.complex_script_font.typeface = Some(Box::from("Major Complex"));
+    scheme.minor_fonts.latin_font.typeface = Some(Box::from("Minor Latin"));
+    scheme.minor_fonts.east_asian_font.typeface = Some(Box::from("Minor East Asian"));
+    scheme.minor_fonts.complex_script_font.typeface = Some(Box::from("Minor Complex"));
     let fonts = ThemeFonts::new(Some(&theme), None);
 
     let families: Vec<Option<&str>> = MEMBERS.iter().map(|member| fonts.family(*member)).collect();
@@ -103,7 +102,7 @@ fn each_value_takes_its_region_of_its_collection() {
 fn a_language_with_a_script_subtag_takes_the_font_of_that_script() {
     let mut theme = Theme::default();
     let minor = &mut theme.elements.font_scheme.minor_fonts;
-    minor.east_asian_font.typeface = Some(String::new());
+    minor.east_asian_font.typeface = Some(Box::default());
     minor
         .font
         .extend([font("Hans", "SimSun"), font("Hant", "PMingLiU")]);
@@ -132,9 +131,9 @@ fn by_script(fonts: &[(&str, &str)]) -> Theme {
         .collect();
     let mut theme = Theme::default();
     let scheme = &mut theme.elements.font_scheme;
-    scheme.major_font.east_asian_font.typeface = Some(String::new());
+    scheme.major_font.east_asian_font.typeface = Some(Box::default());
     scheme.major_font.font.clone_from(&listed);
-    scheme.minor_fonts.east_asian_font.typeface = Some(String::new());
+    scheme.minor_fonts.east_asian_font.typeface = Some(Box::default());
     scheme.minor_fonts.font = listed;
     theme
 }
@@ -143,7 +142,7 @@ fn by_script(fonts: &[(&str, &str)]) -> Theme {
 fn the_standard_s_example_maps_ja_jp_to_the_font_of_jpan() {
     let theme = by_script(&[("Jpan", "MS Mincho")]);
     let mut languages = ThemeFontLanguages::default();
-    languages.val = Some("ja-JP".to_owned());
+    languages.val = Some(Box::from("ja-JP"));
     let fonts = ThemeFonts::new(Some(&theme), Some(&languages));
     assert_eq!(fonts.family(ThemeFontMember::MajorAscii), Some("MS Mincho"));
     assert_eq!(fonts.family(ThemeFontMember::MajorHAnsi), Some("MS Mincho"));
@@ -202,16 +201,16 @@ fn a_script_subtag_wins_over_the_likely_script() {
 fn a_language_with_no_likely_script_falls_back_to_the_region_s_typeface() {
     let mut theme = by_script(&[("Jpan", "MS Mincho"), ("Arab", "Arabic Font")]);
     let mut languages = ThemeFontLanguages::default();
-    languages.val = Some("xx-XX".to_owned());
-    languages.east_asia = Some("xx-XX".to_owned());
-    languages.bidi = Some("xx-XX".to_owned());
+    languages.val = Some(Box::from("xx-XX"));
+    languages.east_asia = Some(Box::from("xx-XX"));
+    languages.bidi = Some(Box::from("xx-XX"));
     let fonts = ThemeFonts::new(Some(&theme), Some(&languages));
     assert_eq!(fonts.family(ThemeFontMember::MinorEastAsia), None);
 
     let minor = &mut theme.elements.font_scheme.minor_fonts;
-    minor.east_asian_font.typeface = Some("Yu Mincho".to_owned());
-    minor.latin_font.typeface = Some("Calibri".to_owned());
-    minor.complex_script_font.typeface = Some("Arial".to_owned());
+    minor.east_asian_font.typeface = Some(Box::from("Yu Mincho"));
+    minor.latin_font.typeface = Some(Box::from("Calibri"));
+    minor.complex_script_font.typeface = Some(Box::from("Arial"));
     let named = ThemeFonts::new(Some(&theme), Some(&languages));
     assert_eq!(
         named.family(ThemeFontMember::MinorEastAsia),
@@ -229,7 +228,7 @@ fn a_likely_script_the_theme_lacks_falls_back_to_the_region_s_typeface() {
         .font_scheme
         .minor_fonts
         .east_asian_font
-        .typeface = Some("Yu Mincho".to_owned());
+        .typeface = Some(Box::from("Yu Mincho"));
     let languages = east_asian_language("ja-JP");
     let fonts = ThemeFonts::new(Some(&theme), Some(&languages));
     assert_eq!(
@@ -242,9 +241,9 @@ fn a_likely_script_the_theme_lacks_falls_back_to_the_region_s_typeface() {
 fn standard_major_font() -> Theme {
     let mut theme = Theme::default();
     let major = &mut theme.elements.font_scheme.major_font;
-    major.latin_font.typeface = Some("Calibri".to_owned());
-    major.east_asian_font.typeface = Some("Arial".to_owned());
-    major.complex_script_font.typeface = Some("Arial".to_owned());
+    major.latin_font.typeface = Some(Box::from("Calibri"));
+    major.east_asian_font.typeface = Some(Box::from("Arial"));
+    major.complex_script_font.typeface = Some(Box::from("Arial"));
     major.font.extend(
         [
             (
@@ -357,14 +356,14 @@ fn a_font_whose_script_is_the_language_itself_is_the_language_s() {
 fn each_language_attribute_picks_for_its_own_values() {
     let mut theme = office();
     let major = &mut theme.elements.font_scheme.major_font;
-    major.east_asian_font.typeface = Some("Major East Asian".to_owned());
-    major.complex_script_font.typeface = Some("Major Complex".to_owned());
+    major.east_asian_font.typeface = Some(Box::from("Major East Asian"));
+    major.complex_script_font.typeface = Some(Box::from("Major Complex"));
     major
         .font
         .extend([font("Cyrl", "Cyrillic Font"), font("Arab", "Arabic Font")]);
     let mut languages = ThemeFontLanguages::default();
-    languages.val = Some("sr-Cyrl-RS".to_owned());
-    languages.bidi = Some("ar-Arab-SA".to_owned());
+    languages.val = Some(Box::from("sr-Cyrl-RS"));
+    languages.bidi = Some(Box::from("ar-Arab-SA"));
     let fonts = ThemeFonts::new(Some(&theme), Some(&languages));
     assert_eq!(
         fonts.family(ThemeFontMember::MajorAscii),
@@ -393,7 +392,7 @@ fn an_empty_typeface_is_no_family() {
         .font_scheme
         .major_font
         .east_asian_font
-        .typeface = Some(String::new());
+        .typeface = Some(Box::default());
     let fonts = ThemeFonts::new(Some(&theme), None);
     assert_eq!(fonts.family(ThemeFontMember::MajorEastAsia), None);
 }
@@ -405,7 +404,7 @@ fn with_no_theme_a_theme_attribute_names_no_family() {
         assert_eq!(fonts.family(member), None);
     }
     let mut run = RunFonts::default();
-    run.ascii = Some("Arial".to_owned());
+    run.ascii = Some(Box::from("Arial"));
     run.h_ansi_theme = Some(ThemeFont::from(ThemeFontMember::MinorHAnsi));
     let families = fonts.families(Some(&run));
     assert_eq!(families.ascii.as_deref(), Some("Arial"));
@@ -416,7 +415,7 @@ fn with_no_theme_a_theme_attribute_names_no_family() {
 fn a_theme_attribute_that_is_no_value_leaves_the_plain_one() {
     let fonts = ThemeFonts::new(Some(&office()), None);
     let mut run = RunFonts::default();
-    run.ascii = Some("Arial".to_owned());
+    run.ascii = Some(Box::from("Arial"));
     run.ascii_theme = Some(ThemeFont::from("nonsense".to_owned()));
     assert_eq!(fonts.families(Some(&run)).ascii.as_deref(), Some("Arial"));
 }

@@ -24,8 +24,8 @@ const BINARY: &[u8] = &[0, 159, 146, 150, 10, 32, 32, 60];
 /// media part.
 fn typed_docx() -> Docx {
     let mut characters = Text::default();
-    characters.space = Some("preserve".to_owned());
-    characters.value = " kept ".to_owned();
+    characters.space = Some(Box::from("preserve"));
+    characters.value = Box::from(" kept ");
     let mut run = TextRun::default();
     run.content = vec![TextRunContent::from(characters)];
     let mut paragraph = Paragraph::default();

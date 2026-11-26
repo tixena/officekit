@@ -249,7 +249,7 @@ pub struct AutoRefreshWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2024PivotAutoRefreshAutoRefresh,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xlpar:autoRefresh` element of the tree a read gives: [`AutoRefreshWith`] holding nothing in

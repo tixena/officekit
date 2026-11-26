@@ -68,7 +68,7 @@ fn package_with(part: &PartName, content_type: &str, xml: &str) -> Package {
 #[cfg(any(feature = "strict", feature = "transitional"))]
 fn paragraph(alignment: Option<&str>, value: &str) -> Paragraph {
     let mut characters = Text::default();
-    characters.value = value.to_owned();
+    characters.value = Box::from(value);
     let mut run = TextRun::default();
     run.content = vec![TextRunContent::from(characters)];
     let mut paragraph = Paragraph::default();

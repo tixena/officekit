@@ -864,7 +864,7 @@ pub struct AbbreviatedCaseNumberWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyAbbreviatedCaseNumber,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:AbbreviatedCaseNumber` element of the tree a read gives: [`AbbreviatedCaseNumberWith`]
@@ -884,7 +884,7 @@ pub struct AlbumTitleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyAlbumTitle,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:AlbumTitle` element of the tree a read gives: [`AlbumTitleWith`] holding nothing in
@@ -1017,7 +1017,7 @@ pub struct BookTitleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyBookTitle,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:BookTitle` element of the tree a read gives: [`BookTitleWith`] holding nothing in
@@ -1037,7 +1037,7 @@ pub struct BroadcastTitleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyBroadcastTitle,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:BroadcastTitle` element of the tree a read gives: [`BroadcastTitleWith`] holding nothing
@@ -1057,7 +1057,7 @@ pub struct BroadcasterWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyBroadcaster,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Broadcaster` element of the tree a read gives: [`BroadcasterWith`] holding nothing in
@@ -1077,7 +1077,7 @@ pub struct CaseNumberWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyCaseNumber,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:CaseNumber` element of the tree a read gives: [`CaseNumberWith`] holding nothing in
@@ -1097,7 +1097,7 @@ pub struct ChapterNumberWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyChapterNumber,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:ChapterNumber` element of the tree a read gives: [`ChapterNumberWith`] holding nothing in
@@ -1116,7 +1116,7 @@ pub struct CityWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyCity,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:City` element of the tree a read gives: [`CityWith`] holding nothing in `user_data`.
@@ -1135,7 +1135,7 @@ pub struct CommentsWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyComments,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Comments` element of the tree a read gives: [`CommentsWith`] holding nothing in
@@ -1215,7 +1215,7 @@ pub struct ConferenceOrProceedingsNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyConferenceOrProceedingsName,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:ConferenceName` element of the tree a read gives: [`ConferenceOrProceedingsNameWith`]
@@ -1305,7 +1305,7 @@ pub struct CorporateAuthorWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyCorporateAuthor,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Corporate` element of the tree a read gives: [`CorporateAuthorWith`] holding nothing in
@@ -1345,7 +1345,7 @@ pub struct CountryOrRegionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyCountryOrRegion,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:CountryRegion` element of the tree a read gives: [`CountryOrRegionWith`] holding nothing
@@ -1365,7 +1365,7 @@ pub struct CourtWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyCourt,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Court` element of the tree a read gives: [`CourtWith`] holding nothing in `user_data`.
@@ -1383,7 +1383,7 @@ pub struct DayWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyDay,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Day` element of the tree a read gives: [`DayWith`] holding nothing in `user_data`.
@@ -1402,7 +1402,7 @@ pub struct DayAccessedWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyDayAccessed,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:DayAccessed` element of the tree a read gives: [`DayAccessedWith`] holding nothing in
@@ -1422,7 +1422,7 @@ pub struct DepartmentWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyDepartment,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Department` element of the tree a read gives: [`DepartmentWith`] holding nothing in
@@ -1462,7 +1462,7 @@ pub struct DistributorWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyDistributor,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Distributor` element of the tree a read gives: [`DistributorWith`] holding nothing in
@@ -1501,7 +1501,7 @@ pub struct EditorEditionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyEditorEdition,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Edition` element of the tree a read gives: [`EditorEditionWith`] holding nothing in
@@ -1520,7 +1520,7 @@ pub struct GuidWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyGuid,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Guid` element of the tree a read gives: [`GuidWith`] holding nothing in `user_data`.
@@ -1539,7 +1539,7 @@ pub struct InstitutionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyInstitution,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Institution` element of the tree a read gives: [`InstitutionWith`] holding nothing in
@@ -1559,7 +1559,7 @@ pub struct InternetSiteTitleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyInternetSiteTitle,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:InternetSiteTitle` element of the tree a read gives: [`InternetSiteTitleWith`] holding
@@ -1639,7 +1639,7 @@ pub struct IssueWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyIssue,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Issue` element of the tree a read gives: [`IssueWith`] holding nothing in `user_data`.
@@ -1658,7 +1658,7 @@ pub struct JournalNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyJournalName,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:JournalName` element of the tree a read gives: [`JournalNameWith`] holding nothing in
@@ -1678,7 +1678,7 @@ pub struct LocaleIDWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyLocaleID,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:LCID` element of the tree a read gives: [`LocaleIDWith`] holding nothing in `user_data`.
@@ -1697,7 +1697,7 @@ pub struct MediumWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyMedium,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Medium` element of the tree a read gives: [`MediumWith`] holding nothing in `user_data`.
@@ -1716,7 +1716,7 @@ pub struct MonthWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyMonth,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Month` element of the tree a read gives: [`MonthWith`] holding nothing in `user_data`.
@@ -1735,7 +1735,7 @@ pub struct MonthAccessedWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyMonthAccessed,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:MonthAccessed` element of the tree a read gives: [`MonthAccessedWith`] holding nothing in
@@ -1797,7 +1797,7 @@ pub struct NumberOfVolumesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyNumberOfVolumes,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:NumberVolumes` element of the tree a read gives: [`NumberOfVolumesWith`] holding nothing
@@ -1817,7 +1817,7 @@ pub struct PagesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyPages,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Pages` element of the tree a read gives: [`PagesWith`] holding nothing in `user_data`.
@@ -1836,7 +1836,7 @@ pub struct PatentNumberWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyPatentNumber,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:PatentNumber` element of the tree a read gives: [`PatentNumberWith`] holding nothing in
@@ -1856,7 +1856,7 @@ pub struct PatentTypeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyPatentType,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Type` element of the tree a read gives: [`PatentTypeWith`] holding nothing in
@@ -1896,7 +1896,7 @@ pub struct PeriodicalTitleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyPeriodicalTitle,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:PeriodicalTitle` element of the tree a read gives: [`PeriodicalTitleWith`] holding
@@ -1939,7 +1939,7 @@ pub struct PersonsFirstOrGivenNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyPersonsFirstOrGivenName,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:First` element of the tree a read gives: [`PersonsFirstOrGivenNameWith`] holding nothing
@@ -1959,7 +1959,7 @@ pub struct PersonsLastOrFamilyNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyPersonsLastOrFamilyName,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Last` element of the tree a read gives: [`PersonsLastOrFamilyNameWith`] holding nothing
@@ -1979,7 +1979,7 @@ pub struct PersonsMiddleOrOtherNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyPersonsMiddleOrOtherName,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Middle` element of the tree a read gives: [`PersonsMiddleOrOtherNameWith`] holding
@@ -2019,7 +2019,7 @@ pub struct ProductionCompanyWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyProductionCompany,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:ProductionCompany` element of the tree a read gives: [`ProductionCompanyWith`] holding
@@ -2039,7 +2039,7 @@ pub struct PublicationTitleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyPublicationTitle,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:PublicationTitle` element of the tree a read gives: [`PublicationTitleWith`] holding
@@ -2059,7 +2059,7 @@ pub struct PublisherWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyPublisher,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Publisher` element of the tree a read gives: [`PublisherWith`] holding nothing in
@@ -2079,7 +2079,7 @@ pub struct RecordingNumberWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyRecordingNumber,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:RecordingNumber` element of the tree a read gives: [`RecordingNumberWith`] holding
@@ -2099,7 +2099,7 @@ pub struct ReferenceOrderWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyReferenceOrder,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:RefOrder` element of the tree a read gives: [`ReferenceOrderWith`] holding nothing in
@@ -2119,7 +2119,7 @@ pub struct ReporterWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyReporter,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Reporter` element of the tree a read gives: [`ReporterWith`] holding nothing in
@@ -2139,7 +2139,7 @@ pub struct ShortTitleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyShortTitle,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:ShortTitle` element of the tree a read gives: [`ShortTitleWith`] holding nothing in
@@ -2314,16 +2314,16 @@ impl Eq for SourceTypeWith<()> {}
 #[non_exhaustive]
 pub struct SourcesWith<X: UserData> {
     /// The attribute `SelectedStyle`, when the element has it.
-    pub selected_style: Option<String>,
+    pub selected_style: Option<Box<str>>,
     /// The children that are `Source`, in order.
     pub source: Vec<SourceWith<X>>,
     /// The attribute `StyleName`, when the element has it.
-    pub style_name: Option<String>,
+    pub style_name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<crate::Unknown>>,
     /// The attribute `URI`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographySources,
 }
@@ -2345,7 +2345,7 @@ pub struct StandardNumberWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyStandardNumber,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:StandardNumber` element of the tree a read gives: [`StandardNumberWith`] holding nothing
@@ -2365,7 +2365,7 @@ pub struct StateOrProvinceWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyStateOrProvince,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:StateProvince` element of the tree a read gives: [`StateOrProvinceWith`] holding nothing
@@ -2385,7 +2385,7 @@ pub struct StationWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyStation,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Station` element of the tree a read gives: [`StationWith`] holding nothing in
@@ -2404,7 +2404,7 @@ pub struct TagWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyTag,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Tag` element of the tree a read gives: [`TagWith`] holding nothing in `user_data`.
@@ -2423,7 +2423,7 @@ pub struct TheaterWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyTheater,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Theater` element of the tree a read gives: [`TheaterWith`] holding nothing in
@@ -2443,7 +2443,7 @@ pub struct ThesisTypeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyThesisType,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:ThesisType` element of the tree a read gives: [`ThesisTypeWith`] holding nothing in
@@ -2463,7 +2463,7 @@ pub struct TitleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyTitle,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Title` element of the tree a read gives: [`TitleWith`] holding nothing in `user_data`.
@@ -2501,7 +2501,7 @@ pub struct UrlWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyUrl,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:URL` element of the tree a read gives: [`UrlWith`] holding nothing in `user_data`.
@@ -2520,7 +2520,7 @@ pub struct VersionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyVersion,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Version` element of the tree a read gives: [`VersionWith`] holding nothing in
@@ -2540,7 +2540,7 @@ pub struct VolumeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyVolume,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Volume` element of the tree a read gives: [`VolumeWith`] holding nothing in `user_data`.
@@ -2577,7 +2577,7 @@ pub struct YearWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyYear,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:Year` element of the tree a read gives: [`YearWith`] holding nothing in `user_data`.
@@ -2596,7 +2596,7 @@ pub struct YearAccessedWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::BibliographyYearAccessed,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `b:YearAccessed` element of the tree a read gives: [`YearAccessedWith`] holding nothing in

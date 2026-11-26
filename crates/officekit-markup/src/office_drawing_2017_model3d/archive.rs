@@ -247,7 +247,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct AmbientLightMirror {
     pub clr: Box<super::Clr>,
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
     pub illuminance: Box<super::Illuminance>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -258,7 +258,7 @@ pub struct AmbientLightMirror {
 #[rkyv(remote = super::AttrSrcUrl)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AttrSrcUrlMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -269,9 +269,9 @@ pub struct AttrSrcUrlMirror {
 pub struct BlipMirror {
     pub content: Vec<drawing::BlipContent>,
     pub cstate: Option<drawing::BlipCompressionType>,
-    pub embed: Option<String>,
+    pub embed: Option<Box<str>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub link: Option<String>,
+    pub link: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -302,9 +302,9 @@ pub struct ClrMirror {
 #[rkyv(remote = super::DirLight)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DirLightMirror {
-    pub angular_rad: Option<String>,
+    pub angular_rad: Option<Box<str>>,
     pub clr: Box<super::Clr>,
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
     pub illuminance: Box<super::Illuminance>,
     pub look_at: Box<super::LookAt>,
@@ -319,7 +319,7 @@ pub struct DirLightMirror {
 pub struct ExtMirror {
     pub content: Box<super::Model3DExtensionContent>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     pub user_data: (),
 }
 
@@ -383,10 +383,10 @@ pub struct Model3dMirror {
     pub ambient_light: Option<Box<super::AmbientLight>>,
     pub attr_src_url: Option<Box<super::AttrSrcUrl>>,
     pub camera: Box<super::Camera>,
-    pub embed: Option<String>,
+    pub embed: Option<Box<str>>,
     pub ext_lst_model3d_extension_list: Option<Box<super::ExtLstModel3DExtensionList>>,
     pub light_content: Vec<super::Model3DLightContent>,
-    pub link: Option<String>,
+    pub link: Option<Box<str>>,
     pub raster: Option<Box<super::Raster>>,
     pub sp_pr: Box<super::SpPr>,
     pub trans: Box<super::Trans>,
@@ -402,7 +402,7 @@ pub struct ObjViewportMirror {
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub viewport_sz: Option<String>,
+    pub viewport_sz: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -420,7 +420,7 @@ pub struct OrthographicMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PerspectiveMirror {
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
-    pub fov: Option<String>,
+    pub fov: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -463,11 +463,11 @@ pub struct PreTransMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PtLightMirror {
     pub clr: Box<super::Clr>,
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
     pub intensity: Box<super::Intensity>,
     pub pos: Box<super::Pos>,
-    pub rad: Option<String>,
+    pub rad: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -477,8 +477,8 @@ pub struct PtLightMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RasterMirror {
     pub blip: Option<Box<super::Blip>>,
-    pub r_name: Option<String>,
-    pub r_ver: Option<String>,
+    pub r_name: Option<Box<str>>,
+    pub r_ver: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -487,9 +487,9 @@ pub struct RasterMirror {
 #[rkyv(remote = super::Rot)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RotMirror {
-    pub ax: Option<String>,
-    pub ay: Option<String>,
-    pub az: Option<String>,
+    pub ax: Option<Box<str>>,
+    pub ay: Option<Box<str>>,
+    pub az: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -527,13 +527,13 @@ pub struct SpPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SpotLightMirror {
     pub clr: Box<super::Clr>,
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
     pub intensity: Box<super::Intensity>,
     pub look_at: Box<super::LookAt>,
     pub pos: Box<super::Pos>,
-    pub rad: Option<String>,
-    pub spot_ang: Option<String>,
+    pub rad: Option<Box<str>>,
+    pub spot_ang: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -542,8 +542,8 @@ pub struct SpotLightMirror {
 #[rkyv(remote = super::Sx)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SxMirror {
-    pub d: Option<String>,
-    pub n: Option<String>,
+    pub d: Option<Box<str>>,
+    pub n: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -552,8 +552,8 @@ pub struct SxMirror {
 #[rkyv(remote = super::Sy)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SyMirror {
-    pub d: Option<String>,
-    pub n: Option<String>,
+    pub d: Option<Box<str>>,
+    pub n: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -570,8 +570,8 @@ pub struct SzPositiveRatioMirror {
 #[rkyv(remote = super::SzRatio)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SzRatioMirror {
-    pub d: Option<String>,
-    pub n: Option<String>,
+    pub d: Option<Box<str>>,
+    pub n: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -624,7 +624,7 @@ pub struct WinViewportMirror {
 pub enum Model3DCameraContent {
     Orthographic(super::Orthographic),
     Other(Box<Node>),
-    Perspective(Box<super::Perspective>),
+    Perspective(super::Perspective),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -666,7 +666,7 @@ pub enum Model3DExtensionContent {
     Connections(spreadsheet::Connections),
     Currency(document_properties_variant_types::Currency),
     CustomFileProperties(document_properties_custom::CustomFileProperties),
-    CustomXMLDataProperties(Box<custom_xml_data_properties::CustomXMLDataProperties>),
+    CustomXMLDataProperties(custom_xml_data_properties::CustomXMLDataProperties),
     DataModel(Box<diagram::DataModel>),
     DateAndTime(document_properties_variant_types::DateAndTime),
     Decimal(document_properties_variant_types::Decimal),
@@ -773,7 +773,7 @@ pub enum Model3DExtensionContent {
     Sources(Box<bibliography::Sources>),
     SpreadsheetTable(Box<spreadsheet::Table>),
     StartingAnchorPoint(Box<spreadsheet_drawing::StartingAnchorPoint>),
-    StorageForAlternateMathContent(Box<vml_office_drawing::StorageForAlternateMathContent>),
+    StorageForAlternateMathContent(vml_office_drawing::StorageForAlternateMathContent),
     StyleDefinition(Box<diagram::StyleDefinition>),
     StyleDefinitionHeader(Box<diagram::StyleDefinitionHeader>),
     StyleDefinitions(Box<wordprocessing::StyleDefinitions>),
@@ -829,7 +829,7 @@ pub enum Model3DLightContent {
 #[rkyv(remote = super::Model3DViewportContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum Model3DViewportContent {
-    ObjViewport(Box<super::ObjViewport>),
+    ObjViewport(super::ObjViewport),
     Other(Box<Node>),
     WinViewport(super::WinViewport),
 }

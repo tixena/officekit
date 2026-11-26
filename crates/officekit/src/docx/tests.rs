@@ -109,7 +109,7 @@ fn template() -> Package {
     charset.val = Some(TwoDigitHexadecimalValue::from("FF".to_owned()));
     let mut font = PropertiesForASingleFont::default();
     font.character_set_supported_by_font = Some(Box::new(charset));
-    font.name = Some("Terminal".to_owned());
+    font.name = Some(Box::from("Terminal"));
     let mut fonts = FontTableRootElement::default();
     fonts.properties_for_a_single_font = vec![font];
     let mut compatibility = CompatibilitySettings::default();
@@ -208,7 +208,7 @@ fn run_of(content: Vec<TextRunContent>) -> ParagraphContent {
 /// Text of `value` with no `xml:space`.
 fn text_of(value: &str) -> TextRunContent {
     let mut text = Text::default();
-    text.value = value.to_owned();
+    text.value = Box::from(value);
     TextRunContent::from(text)
 }
 
@@ -554,7 +554,7 @@ fn vml_takes_the_wrapper_in_strict_and_keeps_it_through_a_round_trip() {
 
     let block = "<mc:AlternateContent xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:v=\"urn:schemas-microsoft-com:vml\"><mc:Choice Requires=\"v\"><w:pict>";
     let mut shape = ShapeDefinition::default();
-    shape.style = Some("width:108.75pt;height:40.5pt".to_owned());
+    shape.style = Some(Box::from("width:108.75pt;height:40.5pt"));
     let mut picture = VMLObject::default();
     picture.content = vec![VmlElementContent::from(shape)];
     let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
@@ -675,7 +675,7 @@ fn compact_runs_merges_neighbouring_runs_of_the_main_part_and_keeps_the_text() {
                         .iter()
                         .filter_map(|content| {
                             if let TextRunContent::Text(characters) = content {
-                                Some(characters.value.clone())
+                                Some(characters.value.clone().into())
                             } else {
                                 None
                             }
@@ -703,8 +703,8 @@ fn a_save_writes_the_addresses_of_graphics_and_schema_references_in_its_class() 
     frame.drawing_object_size.cx = Some(PositiveCoordinate::from("1".to_owned()));
     frame.drawing_object_size.cy = Some(PositiveCoordinate::from("1".to_owned()));
     frame.drawing_object_non_visual_properties.id = Some(DrawingElementID::from("1".to_owned()));
-    frame.drawing_object_non_visual_properties.name = Some("Picture 1".to_owned());
-    frame.graphic_object.data.uri = Some(picture.to_owned());
+    frame.drawing_object_non_visual_properties.name = Some(Box::from("Picture 1"));
+    frame.graphic_object.data.uri = Some(Box::from(picture));
     let mut drawing = DrawingMLObject::default();
     drawing.content = vec![DrawingObjectContent::from(frame)];
     let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
@@ -784,7 +784,7 @@ fn a_strict_save_removes_the_settings_word_leaves_out_and_goes_on() {
     compatibility.do_not_bypass_east_asian_complex_script_layout_code = Some(Box::default());
     let mut shape_defaults = NewShapeDefaults::default();
     shape_defaults.ext = Some(VMLExtensionHandlingBehaviors::from("edit".to_owned()));
-    shape_defaults.spidmax = Some("1026".to_owned());
+    shape_defaults.spidmax = Some(Box::from("1026"));
     let mut defaults = DefaultPropertiesForVMLObjectsInMainDocument::default();
     defaults.content = vec![VmlOfficeDrawingElementContent::from(shape_defaults)];
     let mut settings = DocumentSettings::default();
@@ -914,12 +914,11 @@ fn a_binding_to_a_bibliography_follows_the_bibliography_into_each_class() {
     };
 
     let mut mapping = XMLMapping::default();
-    mapping.prefix_mappings = Some(
-        "xmlns:ns0='http://schemas.openxmlformats.org/officeDocument/2006/bibliography' "
-            .to_owned(),
-    );
-    mapping.store_item_id = Some("{1}".to_owned());
-    mapping.xpath = Some("/ns0:Sources[1]/ns0:Source[1]/ns0:Title[1]".to_owned());
+    mapping.prefix_mappings = Some(Box::from(
+        "xmlns:ns0='http://schemas.openxmlformats.org/officeDocument/2006/bibliography' ",
+    ));
+    mapping.store_item_id = Some(Box::from("{1}"));
+    mapping.xpath = Some(Box::from("/ns0:Sources[1]/ns0:Source[1]/ns0:Title[1]"));
     let mut properties = StructuredDocumentTagProperties::default();
     properties.content = Some(Box::new(StructuredDocumentTagPropertiesContent::from(
         PlainTextStructuredDocumentTag::default(),
@@ -1186,13 +1185,13 @@ fn a_word_file_with_no_theme_part_has_no_theme_no_settings_and_no_colour() {
 fn theme_fonts_reads_the_theme_part_with_the_settings_part_s_languages() {
     let mut root = Theme::default();
     let minor = &mut root.elements.font_scheme.minor_fonts;
-    minor.latin_font.typeface = Some("Calibri".to_owned());
+    minor.latin_font.typeface = Some(Box::from("Calibri"));
     let mut traditional = Font::default();
-    traditional.script = Some("Hant".to_owned());
-    traditional.typeface = Some("PMingLiU".to_owned());
+    traditional.script = Some(Box::from("Hant"));
+    traditional.typeface = Some(Box::from("PMingLiU"));
     minor.font.push(traditional);
     let mut languages = ThemeFontLanguages::default();
-    languages.east_asia = Some("zh-Hant-TW".to_owned());
+    languages.east_asia = Some(Box::from("zh-Hant-TW"));
     let mut settings = DocumentSettings::default();
     settings.theme_font_languages = Some(Box::new(languages));
 
@@ -1229,10 +1228,10 @@ fn a_word_file_with_no_theme_part_gives_no_theme_family_and_a_run_s_plain_fonts(
         assert_eq!(fonts.family(member), None, "{member:?}");
     }
     let mut run = RunFonts::default();
-    run.ascii = Some("Arial".to_owned());
-    run.cs = Some("Times New Roman".to_owned());
-    run.east_asia = Some("MS Mincho".to_owned());
-    run.h_ansi = Some("Verdana".to_owned());
+    run.ascii = Some(Box::from("Arial"));
+    run.cs = Some(Box::from("Times New Roman"));
+    run.east_asia = Some(Box::from("MS Mincho"));
+    run.h_ansi = Some(Box::from("Verdana"));
     let families = fonts.families(Some(&run));
     assert_eq!(families.ascii.as_deref(), Some("Arial"));
     assert_eq!(families.cs.as_deref(), Some("Times New Roman"));

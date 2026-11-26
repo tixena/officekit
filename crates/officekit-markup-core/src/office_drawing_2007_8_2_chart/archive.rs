@@ -294,7 +294,7 @@ pub struct PivotOptionsMirror {
 pub struct ShowSketchBtnMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -330,7 +330,7 @@ pub struct SpPrMirror {
 pub struct StyleMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 impl From<DropZoneCategoriesMirror> for super::DropZoneCategories {

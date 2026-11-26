@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct KeyMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -243,7 +243,7 @@ pub struct PropsMirror {
 pub struct ValueMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 impl From<KeyMirror> for super::Key {

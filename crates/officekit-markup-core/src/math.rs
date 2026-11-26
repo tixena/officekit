@@ -2578,7 +2578,7 @@ impl Eq for HideTopEdgeWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct Integer2(pub String);
+pub struct Integer2(pub Box<str>);
 
 /// The simple type `ST_Integer255`, kept as the text the file carried.
 ///
@@ -2591,7 +2591,7 @@ pub struct Integer2(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct Integer255(pub String);
+pub struct Integer255(pub Box<str>);
 
 /// The `m:intLim` element, Integral Limit Locations (ECMA-376 Part 1, section 22.1.2.49). Its
 /// schema type is `CT_LimLoc`.
@@ -2833,7 +2833,7 @@ pub struct MathFontWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::MathMathFont,
     /// The attribute `m:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `m:mathFont` element of the tree a read gives: [`MathFontWith`] holding nothing in
@@ -4187,7 +4187,7 @@ impl Eq for SmallFractionWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct SpacingRule(pub String);
+pub struct SpacingRule(pub Box<str>);
 
 /// Break on Binary Subtraction, the simple type `ST_BreakBinSub` (ECMA-376 Part 1, section
 /// 22.1.3.2), kept as its member or as the text the file carried.
@@ -4228,7 +4228,7 @@ pub enum StBreakBinSubMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StChar(pub String);
+pub struct StChar(pub Box<str>);
 
 /// Fraction Type, the simple type `ST_FType` (ECMA-376 Part 1, section 22.1.3.4), kept as its
 /// member or as the text the file carried.
@@ -4615,14 +4615,14 @@ impl Eq for SuperscriptPropertiesWith<()> {}
 #[non_exhaustive]
 pub struct TextWith<X: UserData> {
     /// The attribute `xml:space`, when the element has it.
-    pub space: Option<String>,
+    pub space: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::MathText,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `m:t` element of the tree a read gives: [`TextWith`] holding nothing in `user_data`.
@@ -4685,7 +4685,7 @@ impl Eq for TranspWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct UnsignedInteger(pub String);
+pub struct UnsignedInteger(pub Box<str>);
 
 /// The `m:limUpp` element, Upper-Limit Object (ECMA-376 Part 1, section 22.1.2.56). Its schema type
 /// is `CT_LimUpp`.
@@ -7464,7 +7464,7 @@ impl AsRef<str> for Integer2 {
 
 impl From<String> for Integer2 {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -7508,7 +7508,7 @@ impl AsRef<str> for Integer255 {
 
 impl From<String> for Integer255 {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -12137,7 +12137,7 @@ impl AsRef<str> for SpacingRule {
 
 impl From<String> for SpacingRule {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -12270,7 +12270,7 @@ impl AsRef<str> for StChar {
 
 impl From<String> for StChar {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -13516,7 +13516,7 @@ impl AsRef<str> for UnsignedInteger {
 
 impl From<String> for UnsignedInteger {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 

@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::ArtisticBlur)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticBlurMirror {
-    pub radius: Option<String>,
+    pub radius: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -233,8 +233,8 @@ pub struct ArtisticBlurMirror {
 #[rkyv(remote = super::ArtisticCement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticCementMirror {
-    pub crack_spacing: Option<String>,
-    pub trans: Option<String>,
+    pub crack_spacing: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -243,8 +243,8 @@ pub struct ArtisticCementMirror {
 #[rkyv(remote = super::ArtisticChalkSketch)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticChalkSketchMirror {
-    pub pressure: Option<String>,
-    pub trans: Option<String>,
+    pub pressure: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -253,8 +253,8 @@ pub struct ArtisticChalkSketchMirror {
 #[rkyv(remote = super::ArtisticCrisscrossEtching)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticCrisscrossEtchingMirror {
-    pub pressure: Option<String>,
-    pub trans: Option<String>,
+    pub pressure: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -263,8 +263,8 @@ pub struct ArtisticCrisscrossEtchingMirror {
 #[rkyv(remote = super::ArtisticCutout)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticCutoutMirror {
-    pub number_of_shades: Option<String>,
-    pub trans: Option<String>,
+    pub number_of_shades: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -273,8 +273,8 @@ pub struct ArtisticCutoutMirror {
 #[rkyv(remote = super::ArtisticFilmGrain)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticFilmGrainMirror {
-    pub grain_size: Option<String>,
-    pub trans: Option<String>,
+    pub grain_size: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -283,8 +283,8 @@ pub struct ArtisticFilmGrainMirror {
 #[rkyv(remote = super::ArtisticGlass)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticGlassMirror {
-    pub scaling: Option<String>,
-    pub trans: Option<String>,
+    pub scaling: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -293,8 +293,8 @@ pub struct ArtisticGlassMirror {
 #[rkyv(remote = super::ArtisticGlowDiffused)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticGlowDiffusedMirror {
-    pub intensity: Option<String>,
-    pub trans: Option<String>,
+    pub intensity: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -303,8 +303,8 @@ pub struct ArtisticGlowDiffusedMirror {
 #[rkyv(remote = super::ArtisticGlowEdges)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticGlowEdgesMirror {
-    pub smoothness: Option<String>,
-    pub trans: Option<String>,
+    pub smoothness: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -313,8 +313,8 @@ pub struct ArtisticGlowEdgesMirror {
 #[rkyv(remote = super::ArtisticLightScreen)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticLightScreenMirror {
-    pub grid_size: Option<String>,
-    pub trans: Option<String>,
+    pub grid_size: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -323,8 +323,8 @@ pub struct ArtisticLightScreenMirror {
 #[rkyv(remote = super::ArtisticLineDrawing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticLineDrawingMirror {
-    pub pencil_size: Option<String>,
-    pub trans: Option<String>,
+    pub pencil_size: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -333,8 +333,8 @@ pub struct ArtisticLineDrawingMirror {
 #[rkyv(remote = super::ArtisticMarker)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticMarkerMirror {
-    pub size: Option<String>,
-    pub trans: Option<String>,
+    pub size: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -343,8 +343,8 @@ pub struct ArtisticMarkerMirror {
 #[rkyv(remote = super::ArtisticMosiaicBubbles)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticMosiaicBubblesMirror {
-    pub pressure: Option<String>,
-    pub trans: Option<String>,
+    pub pressure: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -353,8 +353,8 @@ pub struct ArtisticMosiaicBubblesMirror {
 #[rkyv(remote = super::ArtisticPaintBrush)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticPaintBrushMirror {
-    pub brush_size: Option<String>,
-    pub trans: Option<String>,
+    pub brush_size: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -363,8 +363,8 @@ pub struct ArtisticPaintBrushMirror {
 #[rkyv(remote = super::ArtisticPaintStrokes)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticPaintStrokesMirror {
-    pub intensity: Option<String>,
-    pub trans: Option<String>,
+    pub intensity: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -373,8 +373,8 @@ pub struct ArtisticPaintStrokesMirror {
 #[rkyv(remote = super::ArtisticPastelsSmooth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticPastelsSmoothMirror {
-    pub scaling: Option<String>,
-    pub trans: Option<String>,
+    pub scaling: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -383,8 +383,8 @@ pub struct ArtisticPastelsSmoothMirror {
 #[rkyv(remote = super::ArtisticPencilGrayscale)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticPencilGrayscaleMirror {
-    pub pencil_size: Option<String>,
-    pub trans: Option<String>,
+    pub pencil_size: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -393,8 +393,8 @@ pub struct ArtisticPencilGrayscaleMirror {
 #[rkyv(remote = super::ArtisticPencilSketch)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticPencilSketchMirror {
-    pub pressure: Option<String>,
-    pub trans: Option<String>,
+    pub pressure: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -403,8 +403,8 @@ pub struct ArtisticPencilSketchMirror {
 #[rkyv(remote = super::ArtisticPhotocopy)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticPhotocopyMirror {
-    pub detail: Option<String>,
-    pub trans: Option<String>,
+    pub detail: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -413,8 +413,8 @@ pub struct ArtisticPhotocopyMirror {
 #[rkyv(remote = super::ArtisticPlasticWrap)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticPlasticWrapMirror {
-    pub smoothness: Option<String>,
-    pub trans: Option<String>,
+    pub smoothness: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -423,8 +423,8 @@ pub struct ArtisticPlasticWrapMirror {
 #[rkyv(remote = super::ArtisticTexturizer)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticTexturizerMirror {
-    pub scaling: Option<String>,
-    pub trans: Option<String>,
+    pub scaling: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -433,8 +433,8 @@ pub struct ArtisticTexturizerMirror {
 #[rkyv(remote = super::ArtisticWatercolorSponge)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticWatercolorSpongeMirror {
-    pub brush_size: Option<String>,
-    pub trans: Option<String>,
+    pub brush_size: Option<Box<str>>,
+    pub trans: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -445,22 +445,22 @@ pub struct ArtisticWatercolorSpongeMirror {
 pub struct BackgroundMarkMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub x1: Option<String>,
-    pub x2: Option<String>,
-    pub y1: Option<String>,
-    pub y2: Option<String>,
+    pub x1: Option<Box<str>>,
+    pub x2: Option<Box<str>>,
+    pub y1: Option<Box<str>>,
+    pub y2: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BackgroundRemoval)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BackgroundRemovalMirror {
-    pub b: Option<String>,
+    pub b: Option<Box<str>>,
     pub background_mark: Vec<super::BackgroundMark>,
     pub foreground_mark: Vec<super::ForegroundMark>,
-    pub l: Option<String>,
-    pub r: Option<String>,
-    pub t: Option<String>,
+    pub l: Option<Box<str>>,
+    pub r: Option<Box<str>>,
+    pub t: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -469,8 +469,8 @@ pub struct BackgroundRemovalMirror {
 #[rkyv(remote = super::BrightnessContrast)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BrightnessContrastMirror {
-    pub bright: Option<String>,
-    pub contrast: Option<String>,
+    pub bright: Option<Box<str>>,
+    pub contrast: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -486,7 +486,7 @@ pub struct CNvContentPartPrMirror {
     pub cp_locks: Option<Box<super::CpLocks>>,
     #[rkyv(omit_bounds)]
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub is_comment: Option<String>,
+    pub is_comment: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -500,15 +500,15 @@ pub struct CNvContentPartPrMirror {
 pub struct CNvPrMirror {
     #[rkyv(omit_bounds)]
     pub click_hyperlink: Option<Box<super::super::drawing::ClickHyperlink>>,
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub hyperlink_for_hover: Option<Box<super::super::drawing::HyperlinkForHover>>,
     pub id: Option<super::super::drawing::DrawingElementID>,
-    pub name: Option<String>,
-    pub title: Option<String>,
+    pub name: Option<Box<str>>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -517,8 +517,8 @@ pub struct CNvPrMirror {
 #[rkyv(remote = super::CameraTool)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CameraToolMirror {
-    pub cell_range: Option<String>,
-    pub spid: Option<String>,
+    pub cell_range: Option<Box<str>>,
+    pub spid: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -527,7 +527,7 @@ pub struct CameraToolMirror {
 #[rkyv(remote = super::ColorTemperature)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ColorTemperatureMirror {
-    pub color_temp: Option<String>,
+    pub color_temp: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -536,7 +536,7 @@ pub struct ColorTemperatureMirror {
 #[rkyv(remote = super::CompatExt)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CompatExtMirror {
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -551,7 +551,7 @@ pub struct ContentPartMirror {
     pub bw_mode: Option<super::super::drawing::BlackAndWhiteMode>,
     #[rkyv(omit_bounds)]
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub nv_content_part_pr: Option<Box<super::NvContentPartPr>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -568,16 +568,16 @@ pub struct ContentPartMirror {
 pub struct CpLocksMirror {
     #[rkyv(omit_bounds)]
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub no_adjust_handles: Option<String>,
-    pub no_change_arrowheads: Option<String>,
-    pub no_change_aspect: Option<String>,
-    pub no_change_shape_type: Option<String>,
-    pub no_edit_points: Option<String>,
-    pub no_grp: Option<String>,
-    pub no_move: Option<String>,
-    pub no_resize: Option<String>,
-    pub no_rot: Option<String>,
-    pub no_select: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
+    pub no_change_arrowheads: Option<Box<str>>,
+    pub no_change_aspect: Option<Box<str>>,
+    pub no_change_shape_type: Option<Box<str>>,
+    pub no_edit_points: Option<Box<str>>,
+    pub no_grp: Option<Box<str>>,
+    pub no_move: Option<Box<str>>,
+    pub no_resize: Option<Box<str>>,
+    pub no_rot: Option<Box<str>>,
+    pub no_select: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -601,10 +601,10 @@ pub struct ExtLstMirror {
 pub struct ForegroundMarkMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub x1: Option<String>,
-    pub x2: Option<String>,
-    pub y1: Option<String>,
-    pub y2: Option<String>,
+    pub x1: Option<Box<str>>,
+    pub x2: Option<Box<str>>,
+    pub y1: Option<Box<str>>,
+    pub y2: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -679,14 +679,14 @@ pub struct ImgEffectMirror {
     pub content: Box<super::PictureEffectContent>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ImgLayer)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ImgLayerMirror {
-    pub embed: Option<String>,
+    pub embed: Option<Box<str>>,
     pub img_effect: Vec<super::ImgEffect>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -707,7 +707,7 @@ pub struct ImgPropsMirror {
 pub struct IsCanvasMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -737,7 +737,7 @@ pub struct NvContentPartPrMirror {
 #[rkyv(remote = super::Saturation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SaturationMirror {
-    pub sat: Option<String>,
+    pub sat: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -748,14 +748,14 @@ pub struct SaturationMirror {
 pub struct ShadowObscuredMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SharpenSoften)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SharpenSoftenMirror {
-    pub amount: Option<String>,
+    pub amount: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -766,7 +766,7 @@ pub struct SharpenSoftenMirror {
 pub struct UseLocalDpiMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -774,8 +774,8 @@ pub struct UseLocalDpiMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct XfrmMirror {
     pub extents: Option<Box<super::super::drawing::Extents>>,
-    pub flip_h: Option<String>,
-    pub flip_v: Option<String>,
+    pub flip_h: Option<Box<str>>,
+    pub flip_v: Option<Box<str>>,
     pub offset: Option<Box<super::super::drawing::Offset>>,
     pub rot: Option<super::super::drawing::Angle>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

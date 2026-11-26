@@ -225,7 +225,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct ExtMirror {
     pub content: Box<drawing::AnyElementContent>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     pub user_data: (),
 }
 
@@ -242,15 +242,15 @@ pub struct ExtLstMirror {
 #[rkyv(remote = super::Label)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LabelMirror {
-    pub action_id: Option<String>,
-    pub content_bits: Option<String>,
-    pub enabled: Option<String>,
-    pub id: Option<String>,
-    pub method: Option<String>,
-    pub name: Option<String>,
-    pub removed: Option<String>,
-    pub set_date: Option<String>,
-    pub site_id: Option<String>,
+    pub action_id: Option<Box<str>>,
+    pub content_bits: Option<Box<str>>,
+    pub enabled: Option<Box<str>>,
+    pub id: Option<Box<str>>,
+    pub method: Option<Box<str>>,
+    pub name: Option<Box<str>>,
+    pub removed: Option<Box<str>>,
+    pub set_date: Option<Box<str>>,
+    pub site_id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

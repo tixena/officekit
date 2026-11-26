@@ -792,7 +792,7 @@ pub struct AnchorWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingAnchor,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:Anchor` element of the tree a read gives: [`AnchorWith`] holding nothing in
@@ -1046,7 +1046,7 @@ pub struct CallbackTypeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingCallbackType,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:LCT` element of the tree a read gives: [`CallbackTypeWith`] holding nothing in
@@ -1066,7 +1066,7 @@ pub struct CameraSourceRangeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingCameraSourceRange,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:FmlaPict` element of the tree a read gives: [`CameraSourceRangeWith`] holding nothing
@@ -1126,7 +1126,7 @@ pub struct CheckedWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingChecked,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:Checked` element of the tree a read gives: [`CheckedWith`] holding nothing in
@@ -1146,7 +1146,7 @@ pub struct ClipboardFormatWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingClipboardFormat,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:CF` element of the tree a read gives: [`ClipboardFormatWith`] holding nothing in
@@ -1166,7 +1166,7 @@ pub struct CommentColumnTargetWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingCommentColumnTarget,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:Column` element of the tree a read gives: [`CommentColumnTargetWith`] holding nothing
@@ -1186,7 +1186,7 @@ pub struct CommentRowTargetWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingCommentRowTarget,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:Row` element of the tree a read gives: [`CommentRowTargetWith`] holding nothing in
@@ -1386,7 +1386,7 @@ pub struct DropdownMaximumLinesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingDropdownMaximumLines,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:DropLines` element of the tree a read gives: [`DropdownMaximumLinesWith`] holding
@@ -1406,7 +1406,7 @@ pub struct DropdownStyleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingDropdownStyle,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:DropStyle` element of the tree a read gives: [`DropdownStyleWith`] holding nothing in
@@ -1526,7 +1526,7 @@ pub struct HTMLScriptAttributesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingHTMLScriptAttributes,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:ScriptExtended` element of the tree a read gives: [`HTMLScriptAttributesWith`] holding
@@ -1546,7 +1546,7 @@ pub struct HTMLScriptLanguageWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingHTMLScriptLanguage,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:ScriptLanguage` element of the tree a read gives: [`HTMLScriptLanguageWith`] holding
@@ -1566,7 +1566,7 @@ pub struct HTMLScriptLocationWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingHTMLScriptLocation,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:ScriptLocation` element of the tree a read gives: [`HTMLScriptLocationWith`] holding
@@ -1586,7 +1586,7 @@ pub struct HTMLScriptTextWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingHTMLScriptText,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:ScriptText` element of the tree a read gives: [`HTMLScriptTextWith`] holding nothing
@@ -1626,7 +1626,7 @@ pub struct HorizontalTextAlignmentWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingHorizontalTextAlignment,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:TextHAlign` element of the tree a read gives: [`HorizontalTextAlignmentWith`] holding
@@ -1646,7 +1646,7 @@ pub struct LinkedFormulaWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingLinkedFormula,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:FmlaLink` element of the tree a read gives: [`LinkedFormulaWith`] holding nothing in
@@ -1666,7 +1666,7 @@ pub struct LinkedFormulaGroupBoxWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingLinkedFormulaGroupBox,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:FmlaGroup` element of the tree a read gives: [`LinkedFormulaGroupBoxWith`] holding
@@ -1686,7 +1686,7 @@ pub struct ListItemsSourceRangeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingListItemsSourceRange,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:FmlaRange` element of the tree a read gives: [`ListItemsSourceRangeWith`] holding
@@ -1746,7 +1746,7 @@ pub struct MinimumWidthWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingMinimumWidth,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:WidthMin` element of the tree a read gives: [`MinimumWidthWith`] holding nothing in
@@ -1806,7 +1806,7 @@ pub struct MultipleSelectionsWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingMultipleSelections,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:MultiSel` element of the tree a read gives: [`MultipleSelectionsWith`] holding nothing
@@ -1826,7 +1826,7 @@ pub struct NonLinkedListItemWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingNonLinkedListItem,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:ListItem` element of the tree a read gives: [`NonLinkedListItemWith`] holding nothing
@@ -1925,7 +1925,7 @@ pub struct PrimaryKeyboardAcceleratorWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingPrimaryKeyboardAccelerator,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:Accel` element of the tree a read gives: [`PrimaryKeyboardAcceleratorWith`] holding
@@ -1985,7 +1985,7 @@ pub struct ReferenceToCustomFunctionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingReferenceToCustomFunction,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:FmlaMacro` element of the tree a read gives: [`ReferenceToCustomFunctionWith`] holding
@@ -2025,7 +2025,7 @@ pub struct ScrollBarIncrementWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingScrollBarIncrement,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:Inc` element of the tree a read gives: [`ScrollBarIncrementWith`] holding nothing in
@@ -2045,7 +2045,7 @@ pub struct ScrollBarMaximumWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingScrollBarMaximum,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:Max` element of the tree a read gives: [`ScrollBarMaximumWith`] holding nothing in
@@ -2065,7 +2065,7 @@ pub struct ScrollBarMinimumWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingScrollBarMinimum,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:Min` element of the tree a read gives: [`ScrollBarMinimumWith`] holding nothing in
@@ -2105,7 +2105,7 @@ pub struct ScrollBarPageIncrementWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingScrollBarPageIncrement,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:Page` element of the tree a read gives: [`ScrollBarPageIncrementWith`] holding nothing
@@ -2125,7 +2125,7 @@ pub struct ScrollBarPositionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingScrollBarPosition,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:Val` element of the tree a read gives: [`ScrollBarPositionWith`] holding nothing in
@@ -2145,7 +2145,7 @@ pub struct ScrollBarWidthWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingScrollBarWidth,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:Dx` element of the tree a read gives: [`ScrollBarWidthWith`] holding nothing in
@@ -2165,7 +2165,7 @@ pub struct SecondaryKeyboardAcceleratorWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingSecondaryKeyboardAccelerator,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:Accel2` element of the tree a read gives: [`SecondaryKeyboardAcceleratorWith`] holding
@@ -2185,7 +2185,7 @@ pub struct SelectedEntryWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingSelectedEntry,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:Sel` element of the tree a read gives: [`SelectedEntryWith`] holding nothing in
@@ -2205,7 +2205,7 @@ pub struct SelectionTypeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingSelectionType,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:SelType` element of the tree a read gives: [`SelectionTypeWith`] holding nothing in
@@ -2225,7 +2225,7 @@ pub struct TextFormulaWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingTextFormula,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:FmlaTxbx` element of the tree a read gives: [`TextFormulaWith`] holding nothing in
@@ -2305,7 +2305,7 @@ pub struct ValidationTypeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingValidationType,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:VTEdit` element of the tree a read gives: [`ValidationTypeWith`] holding nothing in
@@ -2345,7 +2345,7 @@ pub struct VerticalTextAlignmentWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlSpreadsheetDrawingVerticalTextAlignment,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xvml:TextVAlign` element of the tree a read gives: [`VerticalTextAlignmentWith`] holding

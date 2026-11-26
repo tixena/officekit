@@ -92,13 +92,13 @@ fn an_opacity_in_no_form_or_outside_zero_to_one_is_unstated() {
 #[test]
 fn the_opacity_of_a_fill_a_stroke_a_shadow_and_a_shape() {
     let mut fill = ShapeFillProperties::default();
-    fill.opacity = Some(".5".to_owned());
-    fill.opacity2 = Some("32768f".to_owned());
+    fill.opacity = Some(Box::from(".5"));
+    fill.opacity2 = Some(Box::from("32768f"));
     assert_eq!(opacity(fill.opacity.as_deref()), Stated::Value(50_000));
     assert_eq!(opacity(fill.opacity2.as_deref()), Stated::Value(50_000));
 
     let mut line = LineStrokeSettings::default();
-    line.opacity = Some("50%".to_owned());
+    line.opacity = Some(Box::from("50%"));
     assert_eq!(opacity(line.opacity.as_deref()), Stated::Value(50_000));
     assert_eq!(
         opacity(LineStrokeSettings::default().opacity.as_deref()),
@@ -106,14 +106,14 @@ fn the_opacity_of_a_fill_a_stroke_a_shadow_and_a_shape() {
     );
 
     let mut shadow = ShadowEffect::default();
-    shadow.opacity = Some(".5".to_owned());
+    shadow.opacity = Some(Box::from(".5"));
     assert_eq!(opacity(shadow.opacity.as_deref()), Stated::Value(50_000));
 
     let mut rectangle = Rectangle::default();
-    rectangle.opacity = Some("52429f".to_owned());
+    rectangle.opacity = Some(Box::from("52429f"));
     assert_eq!(opacity(rectangle.opacity.as_deref()), Stated::Value(80_000));
     let mut definition = ShapeDefinition::default();
-    definition.opacity = Some(".25".to_owned());
+    definition.opacity = Some(Box::from(".25"));
     assert_eq!(
         opacity(definition.opacity.as_deref()),
         Stated::Value(25_000)
@@ -127,7 +127,7 @@ fn the_opacity_of_a_fill_a_stroke_a_shadow_and_a_shape() {
 #[test]
 fn a_miter_limit_is_the_stated_number_in_thousandths() {
     let mut line = LineStrokeSettings::default();
-    line.miterlimit = Some("2".to_owned());
+    line.miterlimit = Some(Box::from("2"));
     assert_eq!(miter_limit(line.miterlimit.as_deref()), Stated::Value(2000));
     assert_eq!(miter_limit(Some("2.5")), Stated::Value(2500));
     assert_eq!(miter_limit(Some("+3")), Stated::Value(3000));
@@ -272,7 +272,7 @@ fn template(
     stroke: Option<LineStrokeSettings>,
 ) -> ShapeTemplate {
     let mut template = ShapeTemplate::default();
-    template.id = Some(id.to_owned());
+    template.id = Some(Box::from(id));
     template.filled = toggles[0].map(truth);
     template.stroked = toggles[1].map(truth);
     template.content = fill
@@ -291,7 +291,7 @@ fn typed(
     stroke: Option<LineStrokeSettings>,
 ) -> ShapeDefinition {
     let mut shape = ShapeDefinition::default();
-    shape.r#type = r#type.map(ToOwned::to_owned);
+    shape.r#type = r#type.map(Box::from);
     shape.filled = toggles[0].map(truth);
     shape.stroked = toggles[1].map(truth);
     shape.content = fill
@@ -473,10 +473,10 @@ fn each_property_not_stated_on_the_shape_comes_from_the_shapetype() {
 #[test]
 fn a_fill_and_stroke_attribute_comes_from_the_shapetypes_child_where_the_shape_states_none() {
     let mut type_fill = fill(None);
-    type_fill.opacity = Some(".5".to_owned());
+    type_fill.opacity = Some(Box::from(".5"));
     let mut type_stroke = stroke(None);
-    type_stroke.opacity = Some("25%".to_owned());
-    type_stroke.miterlimit = Some("2".to_owned());
+    type_stroke.opacity = Some(Box::from("25%"));
+    type_stroke.miterlimit = Some(Box::from("2"));
     let types = [template("t", [None; 2], Some(type_fill), Some(type_stroke))];
 
     let bare = typed(Some("#t"), [None; 2], None, None);
@@ -506,9 +506,9 @@ fn a_fill_and_stroke_attribute_comes_from_the_shapetypes_child_where_the_shape_s
     );
 
     let mut own_fill = fill(None);
-    own_fill.opacity = Some("80%".to_owned());
+    own_fill.opacity = Some(Box::from("80%"));
     let mut own_stroke = stroke(None);
-    own_stroke.miterlimit = Some("3".to_owned());
+    own_stroke.miterlimit = Some(Box::from("3"));
     let stated = typed(Some("#t"), [None; 2], Some(own_fill), Some(own_stroke));
     let stated_typed = TypedShape::new(&stated, &types);
     assert_eq!(
@@ -528,9 +528,9 @@ fn a_fill_and_stroke_attribute_comes_from_the_shapetypes_child_where_the_shape_s
 #[test]
 fn a_shape_with_no_type_or_an_undefined_one_reads_as_it_does_alone() {
     let mut type_fill = fill(Some("f"));
-    type_fill.opacity = Some(".5".to_owned());
+    type_fill.opacity = Some(Box::from(".5"));
     let mut type_stroke = stroke(Some("f"));
-    type_stroke.miterlimit = Some("2".to_owned());
+    type_stroke.miterlimit = Some(Box::from("2"));
     let types = [template(
         "_x0000_t75",
         [Some("f"); 2],

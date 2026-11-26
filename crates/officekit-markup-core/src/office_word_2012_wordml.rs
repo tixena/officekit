@@ -476,9 +476,9 @@ pub struct CommentExWith<X: UserData> {
     /// The attribute `w15:done`, when the element has it.
     pub done: Option<common_simple_types::OnOffValue>,
     /// The attribute `w15:paraId`, when the element has it.
-    pub para_id: Option<String>,
+    pub para_id: Option<Box<str>>,
     /// The attribute `w15:paraIdParent`, when the element has it.
-    pub para_id_parent: Option<String>,
+    pub para_id_parent: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -518,16 +518,16 @@ impl Eq for CommentsExWith<()> {}
 #[non_exhaustive]
 pub struct DataBindingWith<X: UserData> {
     /// The attribute `w:prefixMappings`, when the element has it.
-    pub prefix_mappings: Option<String>,
+    pub prefix_mappings: Option<Box<str>>,
     /// The attribute `w:storeItemID`, when the element has it.
-    pub store_item_id: Option<String>,
+    pub store_item_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2012WordmlDataBinding,
     /// The attribute `w:xpath`, when the element has it.
-    pub xpath: Option<String>,
+    pub xpath: Option<Box<str>>,
 }
 
 /// The `w15:dataBinding` element of the tree a read gives: [`DataBindingWith`] holding nothing in
@@ -567,7 +567,7 @@ pub struct DocIdWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2012WordmlDocId,
     /// The attribute `w15:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w15:docId` element of the tree a read gives: [`DocIdWith`] holding nothing in `user_data`.
@@ -621,7 +621,7 @@ impl Eq for PeopleWith<()> {}
 #[non_exhaustive]
 pub struct PersonWith<X: UserData> {
     /// The attribute `w15:author`, when the element has it.
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     /// The child that is `PresenceInfo`, when there is one.
     pub presence_info: Option<Box<PresenceInfoWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -643,14 +643,14 @@ impl Eq for PersonWith<()> {}
 #[non_exhaustive]
 pub struct PresenceInfoWith<X: UserData> {
     /// The attribute `w15:providerId`, when the element has it.
-    pub provider_id: Option<String>,
+    pub provider_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2012WordmlPresenceInfo,
     /// The attribute `w15:userId`, when the element has it.
-    pub user_id: Option<String>,
+    pub user_id: Option<Box<str>>,
 }
 
 /// The `w15:presenceInfo` element of the tree a read gives: [`PresenceInfoWith`] holding nothing in
@@ -736,7 +736,7 @@ pub struct SectionTitleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2012WordmlSectionTitle,
     /// The attribute `w:val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `w15:sectionTitle` element of the tree a read gives: [`SectionTitleWith`] holding nothing in

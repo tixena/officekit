@@ -159,15 +159,15 @@ fn merged(count: usize) -> PartCompaction {
 /// Text of `value` with no `xml:space`.
 pub(super) fn plain_text(value: &str) -> TextRunContent {
     let mut text = Text::default();
-    text.value = value.to_owned();
+    text.value = Box::from(value);
     TextRunContent::from(text)
 }
 
 /// Text of `value` whose spaces are kept.
 fn kept_text(value: &str) -> TextRunContent {
     let mut text = Text::default();
-    text.space = Some("preserve".to_owned());
-    text.value = value.to_owned();
+    text.space = Some(Box::from("preserve"));
+    text.value = Box::from(value);
     TextRunContent::from(text)
 }
 
@@ -224,7 +224,7 @@ pub(super) fn comment_end(id: &str) -> ParagraphContent {
 /// The run Word writes for the reference mark of comment `id`, in the `CommentReference` style.
 pub(super) fn comment_reference(id: &str) -> ParagraphContent {
     let mut style = ReferencedCharacterStyle::default();
-    style.val = Some("CommentReference".to_owned());
+    style.val = Some(Box::from("CommentReference"));
     let mut mark = CommentContentReferenceMark::default();
     mark.id = Some(number(id));
     ParagraphContent::from(run(
@@ -307,7 +307,7 @@ fn item(content: &TextRunContent) -> String {
 }
 
 fn ids(id: Option<&DecimalNumberValue>) -> &str {
-    id.map_or("", |found| found.0.as_str())
+    id.map_or("", |found| &*found.0)
 }
 
 /// What `content` holds, one entry per node: a run as its marks and items, and any other node by
@@ -368,7 +368,7 @@ fn the_fox_paragraph_becomes_one_run() {
             None
         }
     });
-    assert_eq!(rsid.map(|value| value.0), Some("00A1".to_owned()));
+    assert_eq!(rsid.map(|value| value.0), Some(Box::from("00A1")));
 }
 
 #[test]
@@ -588,7 +588,7 @@ fn a_kept_comment_keeps_its_runs_apart() {
 fn a_removed_comment_loses_every_node_of_it_in_the_tree() {
     let mut bookmark = BookmarkStart::default();
     bookmark.id = Some(number("0"));
-    bookmark.name = Some("m".to_owned());
+    bookmark.name = Some(Box::from("m"));
     let mut referenced = run(Vec::new(), vec![plain_text("e")]);
     let mut mark = CommentContentReferenceMark::default();
     mark.id = Some(number("7"));
@@ -695,10 +695,10 @@ fn drawingml_runs_with_equal_properties_become_one() {
 #[test]
 fn spreadsheetml_rich_text_runs_merge_and_pivot_records_do_not() {
     let mut one = SpreadsheetText::default();
-    one.value = "one".to_owned();
+    one.value = Box::from("one");
     let mut two = SpreadsheetText::default();
-    two.value = " two".to_owned();
-    two.space = Some("preserve".to_owned());
+    two.value = Box::from(" two");
+    two.space = Some(Box::from("preserve"));
     let mut item = StringItem::default();
     item.rich_text_run = vec![styled_rich_text_run(one), styled_rich_text_run(two)];
     let mut shared = SharedStringTable::default();
@@ -721,7 +721,7 @@ fn spreadsheetml_rich_text_runs_merge_and_pivot_records_do_not() {
         [r#""one two""#]
     );
     let mut numeric = Numeric::default();
-    numeric.v = Some("1".to_owned());
+    numeric.v = Some(Box::from("1"));
     let mut valued = PivotCacheRecord::default();
     valued.content = vec![PivotCacheRecordContent::from(numeric)];
     let mut records = PivotCacheRecords::default();
@@ -1054,7 +1054,7 @@ fn drawing_paragraph(values: &[&str]) -> TextParagraphs {
         .iter()
         .map(|&value| {
             let mut text = TextString::default();
-            text.value = value.to_owned();
+            text.value = Box::from(value);
             let mut found = DrawingRun::default();
             found.text_string = Box::new(text);
             TextParagraphsContent::from(found)
@@ -1129,7 +1129,7 @@ fn rich_text_runs(values: &[&str]) -> Vec<RichTextRun> {
         .iter()
         .map(|&value| {
             let mut text = SpreadsheetText::default();
-            text.value = value.to_owned();
+            text.value = Box::from(value);
             let mut found = RichTextRun::default();
             found.text = Box::new(text);
             found
@@ -1162,7 +1162,7 @@ fn rich_text_xml(values: &[&str]) -> String {
 /// A `SpreadsheetML` rich text run of `text`, bold and of size 11.
 fn styled_rich_text_run(text: SpreadsheetText) -> RichTextRun {
     let mut size = FontSize::default();
-    size.val = Some("11".to_owned());
+    size.val = Some(Box::from("11"));
     let mut properties = spreadsheet::RunProperties::default();
     properties.content = vec![
         spreadsheet::RunPropertiesContent::from(spreadsheet::Bold::default()),
@@ -1477,8 +1477,8 @@ fn a_workbook_has_its_shared_strings_and_comments_compacted() {
     let mut shared = SharedStringTable::default();
     shared.string_item = vec![item];
     let mut comment = Comment::default();
-    comment.author_id = Some("0".to_owned());
-    comment.r#ref = Some("A1".to_owned());
+    comment.author_id = Some(Box::from("0"));
+    comment.r#ref = Some(Box::from("A1"));
     comment.text.rich_text_run = fragmented_rich_text();
     let mut comments = SpreadsheetComments::default();
     comments.list.comment = vec![comment];

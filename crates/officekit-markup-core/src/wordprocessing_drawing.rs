@@ -903,7 +903,7 @@ impl Eq for AbsolutePositionOffsetWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct AbsolutePositionOffsetValue(pub String);
+pub struct AbsolutePositionOffsetValue(pub Box<str>);
 
 /// One child element of a choice: local choice in `EG_WrapType`.
 ///
@@ -938,11 +938,11 @@ impl Eq for AnchorContentWith<()> {}
 #[non_exhaustive]
 pub struct AnchorForFloatingDrawingMLObjectWith<X: UserData> {
     /// The attribute `allowOverlap`, when the element has it.
-    pub allow_overlap: Option<String>,
+    pub allow_overlap: Option<Box<str>>,
     /// The attribute `wp14:anchorId`, when the element has it.
-    pub anchor_id: Option<String>,
+    pub anchor_id: Option<Box<str>>,
     /// The attribute `behindDoc`, when the element has it.
-    pub behind_doc: Option<String>,
+    pub behind_doc: Option<Box<str>>,
     /// The child that is `CommonDrawingMLNonVisualProperties`, when there is one.
     pub common_drawingml_non_visual_properties:
         Option<Box<CommonDrawingMLNonVisualPropertiesWith<X>>>,
@@ -961,23 +961,23 @@ pub struct AnchorForFloatingDrawingMLObjectWith<X: UserData> {
     /// The child that is `DrawingObjectSize`, which the schema requires.
     pub drawing_object_size: Box<DrawingObjectSizeWith<X>>,
     /// The attribute `wp14:editId`, when the element has it.
-    pub edit_id: Option<String>,
+    pub edit_id: Option<Box<str>>,
     /// The child that is `ObjectExtentsIncludingEffects`, when there is one.
     pub extents_including_effects: Option<Box<ObjectExtentsIncludingEffectsWith<X>>>,
     /// The child that is `super::drawing::GraphicObject`, which the schema requires.
     pub graphic_object: Box<super::drawing::GraphicObjectWith<X>>,
     /// The attribute `hidden`, when the element has it.
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     /// The child that is `HorizontalPositioning`, which the schema requires.
     pub horizontal_positioning: Box<HorizontalPositioningWith<X>>,
     /// The attribute `layoutInCell`, when the element has it.
-    pub layout_in_cell: Option<String>,
+    pub layout_in_cell: Option<Box<str>>,
     /// The attribute `locked`, when the element has it.
-    pub locked: Option<String>,
+    pub locked: Option<Box<str>>,
     /// The attribute `relativeHeight`, when the element has it.
-    pub relative_height: Option<String>,
+    pub relative_height: Option<Box<str>>,
     /// The attribute `simplePos`, when the element has it.
-    pub simple_pos: Option<String>,
+    pub simple_pos: Option<Box<str>>,
     /// The child that is `SimplePositioningCoordinates`, which the schema requires.
     pub simple_positioning_coordinates: Box<SimplePositioningCoordinatesWith<X>>,
     /// The child that is `super::office_word_2010_wordprocessing_drawing::SizeRelH`, when there is
@@ -1031,17 +1031,17 @@ pub struct BodyPropertiesWith<X: UserData> {
     /// The attribute `anchor`, when the element has it.
     pub anchor: Option<super::drawing::TextAnchoringTypes>,
     /// The attribute `anchorCtr`, when the element has it.
-    pub anchor_ctr: Option<String>,
+    pub anchor_ctr: Option<Box<str>>,
     /// The attribute `bIns`, when the element has it.
     pub b_ins: Option<super::drawing::StCoordinate32>,
     /// The attribute `compatLnSpc`, when the element has it.
-    pub compat_ln_spc: Option<String>,
+    pub compat_ln_spc: Option<Box<str>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
     /// The attribute `forceAA`, when the element has it.
-    pub force_aa: Option<String>,
+    pub force_aa: Option<Box<str>>,
     /// The attribute `fromWordArt`, when the element has it.
-    pub from_word_art: Option<String>,
+    pub from_word_art: Option<Box<str>>,
     /// The attribute `horzOverflow`, when the element has it.
     pub horz_overflow: Option<super::drawing::TextHorizontalOverflowTypes>,
     /// The attribute `lIns`, when the element has it.
@@ -1055,13 +1055,13 @@ pub struct BodyPropertiesWith<X: UserData> {
     /// The attribute `rot`, when the element has it.
     pub rot: Option<super::drawing::Angle>,
     /// The attribute `rtlCol`, when the element has it.
-    pub rtl_col: Option<String>,
+    pub rtl_col: Option<Box<str>>,
     /// The child that is `super::drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<super::drawing::Scene3dWith<X>>>,
     /// The attribute `spcCol`, when the element has it.
     pub spc_col: Option<super::drawing::PositiveCoordinatePoint>,
     /// The attribute `spcFirstLastPara`, when the element has it.
-    pub spc_first_last_para: Option<String>,
+    pub spc_first_last_para: Option<Box<str>>,
     /// The attribute `tIns`, when the element has it.
     pub t_ins: Option<super::drawing::StCoordinate32>,
     /// The child that is an item of `super::drawing::Text3DContent`, when there is one.
@@ -1072,7 +1072,7 @@ pub struct BodyPropertiesWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `upright`, when the element has it.
-    pub upright: Option<String>,
+    pub upright: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::WordprocessingDrawingBodyProperties,
     /// The attribute `vert`, when the element has it.
@@ -1121,7 +1121,7 @@ pub struct ContentPartWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The child that is `NvContentPartPr`, when there is one.
     pub nv_content_part_pr: Option<Box<NvContentPartPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1151,7 +1151,7 @@ impl Eq for ContentPartWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct DistanceFromText(pub String);
+pub struct DistanceFromText(pub Box<str>);
 
 /// One child element of a choice: local choice in `CT_WordprocessingCanvas`.
 ///
@@ -1189,19 +1189,19 @@ pub struct DrawingObjectNonVisualPropertiesWith<X: UserData> {
     /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
     /// The attribute `hidden`, when the element has it.
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHoverWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1460,7 +1460,7 @@ pub enum HorizontalRelativePositioningMember {
 #[non_exhaustive]
 pub struct InlineDrawingMLObjectWith<X: UserData> {
     /// The attribute `wp14:anchorId`, when the element has it.
-    pub anchor_id: Option<String>,
+    pub anchor_id: Option<Box<str>>,
     /// The child that is `CommonDrawingMLNonVisualProperties`, when there is one.
     pub common_drawingml_non_visual_properties:
         Option<Box<CommonDrawingMLNonVisualPropertiesWith<X>>>,
@@ -1477,7 +1477,7 @@ pub struct InlineDrawingMLObjectWith<X: UserData> {
     /// The child that is `DrawingObjectSize`, which the schema requires.
     pub drawing_object_size: Box<DrawingObjectSizeWith<X>>,
     /// The attribute `wp14:editId`, when the element has it.
-    pub edit_id: Option<String>,
+    pub edit_id: Option<Box<str>>,
     /// The child that is `ObjectExtentsIncludingEffects`, when there is one.
     pub extents_including_effects: Option<Box<ObjectExtentsIncludingEffectsWith<X>>>,
     /// The child that is `super::drawing::GraphicObject`, which the schema requires.
@@ -1550,7 +1550,7 @@ pub struct NonVisualContentPartDrawingPropertiesWith<X: UserData> {
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
     /// The attribute `isComment`, when the element has it.
-    pub is_comment: Option<String>,
+    pub is_comment: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1572,19 +1572,19 @@ pub struct NonVisualDrawingPropertiesWith<X: UserData> {
     /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
     /// The attribute `hidden`, when the element has it.
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHoverWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1608,7 +1608,7 @@ pub struct NonVisualDrawingPropertiesForAShapeWith<X: UserData> {
     /// The child that is `super::drawing::ShapeLocks`, when there is one.
     pub locks: Option<Box<super::drawing::ShapeLocksWith<X>>>,
     /// The attribute `txBox`, when the element has it.
-    pub tx_box: Option<String>,
+    pub tx_box: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1999,9 +1999,9 @@ pub struct TextualContentsOfShapeLinkedTxbxWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `seq`, when the element has it.
-    pub seq: Option<String>,
+    pub seq: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2023,7 +2023,7 @@ pub struct TextualContentsOfShapeTxbxWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The child that is `RichTextBoxContentContainer`, which the schema requires.
     pub rich_text_box_content_container: Box<RichTextBoxContentContainerWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -2291,7 +2291,7 @@ pub struct WordprocessingMLShapeWith<X: UserData> {
     /// The child that is an item of `ShapeNonVisualPropertiesContent`, which the schema requires.
     pub non_visual_properties_content: Box<ShapeNonVisualPropertiesContentWith<X>>,
     /// The attribute `normalEastAsianFlow`, when the element has it.
-    pub normal_east_asian_flow: Option<String>,
+    pub normal_east_asian_flow: Option<Box<str>>,
     /// The child that is `ShapeProperties`, which the schema requires.
     pub properties: Box<ShapePropertiesWith<X>>,
     /// The child that is `ShapeStyle`, when there is one.
@@ -2345,7 +2345,7 @@ impl Eq for WordprocessingMLShapeGroupWith<()> {}
 #[non_exhaustive]
 pub struct WrappingPolygonWith<X: UserData> {
     /// The attribute `edited`, when the element has it.
-    pub edited: Option<String>,
+    pub edited: Option<Box<str>>,
     /// The children that are `WrappingPolygonLineEndPosition`, in order.
     pub line_end_position: Vec<WrappingPolygonLineEndPositionWith<X>>,
     /// The child that is `WrappingPolygonStart`, which the schema requires.
@@ -2414,9 +2414,9 @@ pub struct XfrmWith<X: UserData> {
     /// The child that is `super::drawing::Extents`, when there is one.
     pub extents: Option<Box<super::drawing::ExtentsWith<X>>>,
     /// The attribute `flipH`, when the element has it.
-    pub flip_h: Option<String>,
+    pub flip_h: Option<Box<str>>,
     /// The attribute `flipV`, when the element has it.
-    pub flip_v: Option<String>,
+    pub flip_v: Option<Box<str>>,
     /// The child that is `super::drawing::Offset`, when there is one.
     pub offset: Option<Box<super::drawing::OffsetWith<X>>>,
     /// The attribute `rot`, when the element has it.
@@ -2490,7 +2490,7 @@ impl AsRef<str> for AbsolutePositionOffsetValue {
 
 impl From<String> for AbsolutePositionOffsetValue {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -3023,7 +3023,7 @@ impl AsRef<str> for DistanceFromText {
 
 impl From<String> for DistanceFromText {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 

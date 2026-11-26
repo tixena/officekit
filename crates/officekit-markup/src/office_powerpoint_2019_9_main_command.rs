@@ -272,7 +272,7 @@ pub static CM_MK_LST_SHAPE: officekit_markup_base::Shape = officekit_markup_base
 #[non_exhaustive]
 pub struct CmMKWith<X: UserData> {
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -314,7 +314,7 @@ impl Eq for CmMkLstWith<()> {}
 #[non_exhaustive]
 pub struct CmRplyMkWith<X: UserData> {
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

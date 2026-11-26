@@ -222,9 +222,9 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::PivotTableDefinition16)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotTableDefinition16Mirror {
-    pub enabled_subtotals_default: Option<String>,
-    pub insert_blank_row_default: Option<String>,
-    pub subtotals_on_top_default: Option<String>,
+    pub enabled_subtotals_default: Option<Box<str>>,
+    pub insert_blank_row_default: Option<Box<str>>,
+    pub subtotals_on_top_default: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

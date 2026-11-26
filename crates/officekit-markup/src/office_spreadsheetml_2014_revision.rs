@@ -1125,7 +1125,7 @@ pub struct AutoFilterWith<X: UserData> {
     pub future_feature_data_storage_area:
         Option<Box<spreadsheet::FutureFeatureDataStorageAreaWith<X>>>,
     /// The attribute `ref`, when the element has it.
-    pub r#ref: Option<String>,
+    pub r#ref: Option<Box<str>>,
     /// The child that is `spreadsheet::SortState`, when there is one.
     pub sort_state: Option<Box<spreadsheet::SortStateWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1170,13 +1170,13 @@ pub struct CWith<X: UserData> {
     /// The child that is `Is`, when there is one.
     pub is: Option<Box<IsWith<X>>>,
     /// The attribute `nop`, when the element has it.
-    pub nop: Option<String>,
+    pub nop: Option<Box<str>>,
     /// The attribute `rep`, when the element has it.
-    pub rep: Option<String>,
+    pub rep: Option<Box<str>>,
     /// The attribute `t`, when the element has it.
     pub t: Option<spreadsheet::CellType>,
     /// The attribute `tick`, when the element has it.
-    pub tick: Option<String>,
+    pub tick: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1199,7 +1199,7 @@ pub struct CcseWith<X: UserData> {
     /// The children that are `C`, in order.
     pub c: Vec<CWith<X>>,
     /// The attribute `r`, when the element has it.
-    pub r: Option<String>,
+    pub r: Option<Box<str>>,
     /// The attribute `t`, when the element has it.
     pub t: Option<FillType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1208,7 +1208,7 @@ pub struct CcseWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2014RevisionCcse,
     /// The attribute `w`, when the element has it.
-    pub w: Option<String>,
+    pub w: Option<Box<str>>,
     /// The attribute `x`, when the element has it.
     pub x: Option<FillTypeExt>,
 }
@@ -2347,13 +2347,13 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct DataValidationWith<X: UserData> {
     /// The attribute `allowBlank`, when the element has it.
-    pub allow_blank: Option<String>,
+    pub allow_blank: Option<Box<str>>,
     /// The attribute `error`, when the element has it.
-    pub error: Option<String>,
+    pub error: Option<Box<str>>,
     /// The attribute `errorStyle`, when the element has it.
     pub error_style: Option<spreadsheet::DataValidationErrorStyles>,
     /// The attribute `errorTitle`, when the element has it.
-    pub error_title: Option<String>,
+    pub error_title: Option<Box<str>>,
     /// The child that is `spreadsheet::Formula1`, when there is one.
     pub formula_1: Option<Box<spreadsheet::Formula1With<X>>>,
     /// The child that is `spreadsheet::Formula2`, when there is one.
@@ -2365,15 +2365,15 @@ pub struct DataValidationWith<X: UserData> {
     /// The attribute `operator`, when the element has it.
     pub operator: Option<spreadsheet::DataValidationOperator>,
     /// The attribute `prompt`, when the element has it.
-    pub prompt: Option<String>,
+    pub prompt: Option<Box<str>>,
     /// The attribute `promptTitle`, when the element has it.
-    pub prompt_title: Option<String>,
+    pub prompt_title: Option<Box<str>>,
     /// The attribute `showDropDown`, when the element has it.
-    pub show_drop_down: Option<String>,
+    pub show_drop_down: Option<Box<str>>,
     /// The attribute `showErrorMessage`, when the element has it.
-    pub show_error_message: Option<String>,
+    pub show_error_message: Option<Box<str>>,
     /// The attribute `showInputMessage`, when the element has it.
-    pub show_input_message: Option<String>,
+    pub show_input_message: Option<Box<str>>,
     /// The attribute `sqref`, when the element has it.
     pub sqref: Option<spreadsheet::ReferenceSequence>,
     /// The attribute `type`, when the element has it.
@@ -2497,7 +2497,7 @@ pub struct FWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2014RevisionF,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xr:f` element of the tree a read gives: [`FWith`] holding nothing in `user_data`.
@@ -2610,7 +2610,7 @@ pub struct FormulaWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2014RevisionFormula,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xr:formula` element of the tree a read gives: [`FormulaWith`] holding nothing in
@@ -2625,7 +2625,7 @@ impl Eq for FormulaWith<()> {}
 #[non_exhaustive]
 pub struct FreezePanesWith<X: UserData> {
     /// The attribute `sheetViewUid`, when the element has it.
-    pub sheet_view_uid: Option<String>,
+    pub sheet_view_uid: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2662,13 +2662,13 @@ impl Eq for FutureWith<()> {}
 #[non_exhaustive]
 pub struct HdrRevExHeaderWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `maxRev`, when the element has it.
-    pub max_rev: Option<String>,
+    pub max_rev: Option<Box<str>>,
     /// The attribute `minRev`, when the element has it.
-    pub min_rev: Option<String>,
+    pub min_rev: Option<Box<str>>,
     /// The attribute `time`, when the element has it.
-    pub time: Option<String>,
+    pub time: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2698,7 +2698,7 @@ pub struct HdrStateBasedHeaderWith<X: UserData> {
     /// The attribute `seftx`, when the element has it.
     pub seftx: Option<ExtSubFeatureType>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2718,7 +2718,7 @@ impl Eq for HdrStateBasedHeaderWith<()> {}
 #[non_exhaustive]
 pub struct HideUnhideSheetWith<X: UserData> {
     /// The attribute `hide`, when the element has it.
-    pub hide: Option<String>,
+    pub hide: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2738,15 +2738,15 @@ impl Eq for HideUnhideSheetWith<()> {}
 #[non_exhaustive]
 pub struct HyperlinkWith<X: UserData> {
     /// The attribute `display`, when the element has it.
-    pub display: Option<String>,
+    pub display: Option<Box<str>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `location`, when the element has it.
-    pub location: Option<String>,
+    pub location: Option<Box<str>>,
     /// The attribute `ref`, when the element has it.
-    pub r#ref: Option<String>,
+    pub r#ref: Option<Box<str>>,
     /// The attribute `tooltip`, when the element has it.
-    pub tooltip: Option<String>,
+    pub tooltip: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2791,7 +2791,7 @@ impl Eq for IsWith<()> {}
 #[non_exhaustive]
 pub struct LinkWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2814,34 +2814,34 @@ pub struct OartAnchorWith<X: UserData> {
     /// The attribute `ajtx`, when the element has it.
     pub ajtx: Option<AdjustTypeExt>,
     /// The attribute `cx`, when the element has it.
-    pub cx: Option<String>,
+    pub cx: Option<Box<str>>,
     /// The attribute `cy`, when the element has it.
-    pub cy: Option<String>,
+    pub cy: Option<Box<str>>,
     /// The attribute `fromColOff`, when the element has it.
-    pub from_col_off: Option<String>,
+    pub from_col_off: Option<Box<str>>,
     /// The attribute `fromRowOff`, when the element has it.
-    pub from_row_off: Option<String>,
+    pub from_row_off: Option<Box<str>>,
     /// The attribute `homeRef`, when the element has it.
-    pub home_ref: Option<String>,
+    pub home_ref: Option<Box<str>>,
     /// The attribute `n`, when the element has it.
-    pub n: Option<String>,
+    pub n: Option<Box<str>>,
     /// The attribute `oat`, when the element has it.
     pub oat: Option<OartAnchorType>,
     /// The attribute `r`, when the element has it.
-    pub r: Option<String>,
+    pub r: Option<Box<str>>,
     /// The attribute `toColOff`, when the element has it.
-    pub to_col_off: Option<String>,
+    pub to_col_off: Option<Box<str>>,
     /// The attribute `toRowOff`, when the element has it.
-    pub to_row_off: Option<String>,
+    pub to_row_off: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2014RevisionOartAnchor,
     /// The attribute `x`, when the element has it.
-    pub x: Option<String>,
+    pub x: Option<Box<str>>,
     /// The attribute `y`, when the element has it.
-    pub y: Option<String>,
+    pub y: Option<Box<str>>,
 }
 
 /// The `xr:oartAnchor` element of the tree a read gives: [`OartAnchorWith`] holding nothing in
@@ -2902,9 +2902,9 @@ impl Eq for ObjectStateWith<()> {}
 #[non_exhaustive]
 pub struct OutlineWith<X: UserData> {
     /// The attribute `isCollapsed`, when the element has it.
-    pub is_collapsed: Option<String>,
+    pub is_collapsed: Option<Box<str>>,
     /// The attribute `level`, when the element has it.
-    pub level: Option<String>,
+    pub level: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2924,7 +2924,7 @@ impl Eq for OutlineWith<()> {}
 #[non_exhaustive]
 pub struct OutlinesWith<X: UserData> {
     /// The attribute `isRow`, when the element has it.
-    pub is_row: Option<String>,
+    pub is_row: Option<Box<str>>,
     /// The children that are `Outline`, in order.
     pub outline: Vec<OutlineWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -2946,29 +2946,29 @@ impl Eq for OutlinesWith<()> {}
 #[non_exhaustive]
 pub struct PivotTableDefinitionWith<X: UserData> {
     /// The attribute `applyAlignmentFormats`, when the element has it.
-    pub apply_alignment_formats: Option<String>,
+    pub apply_alignment_formats: Option<Box<str>>,
     /// The attribute `applyBorderFormats`, when the element has it.
-    pub apply_border_formats: Option<String>,
+    pub apply_border_formats: Option<Box<str>>,
     /// The attribute `applyFontFormats`, when the element has it.
-    pub apply_font_formats: Option<String>,
+    pub apply_font_formats: Option<Box<str>>,
     /// The attribute `applyNumberFormats`, when the element has it.
-    pub apply_number_formats: Option<String>,
+    pub apply_number_formats: Option<Box<str>>,
     /// The attribute `applyPatternFormats`, when the element has it.
-    pub apply_pattern_formats: Option<String>,
+    pub apply_pattern_formats: Option<Box<str>>,
     /// The attribute `applyWidthHeightFormats`, when the element has it.
-    pub apply_width_height_formats: Option<String>,
+    pub apply_width_height_formats: Option<Box<str>>,
     /// The attribute `asteriskTotals`, when the element has it.
-    pub asterisk_totals: Option<String>,
+    pub asterisk_totals: Option<Box<str>>,
     /// The attribute `autoFormatId`, when the element has it.
-    pub auto_format_id: Option<String>,
+    pub auto_format_id: Option<Box<str>>,
     /// The attribute `cacheId`, when the element has it.
-    pub cache_id: Option<String>,
+    pub cache_id: Option<Box<str>>,
     /// The attribute `chartFormat`, when the element has it.
-    pub chart_format: Option<String>,
+    pub chart_format: Option<Box<str>>,
     /// The attribute `colGrandTotals`, when the element has it.
-    pub col_grand_totals: Option<String>,
+    pub col_grand_totals: Option<Box<str>>,
     /// The attribute `colHeaderCaption`, when the element has it.
-    pub col_header_caption: Option<String>,
+    pub col_header_caption: Option<Box<str>>,
     /// The child that is `spreadsheet::ColumnFields`, when there is one.
     pub column_fields: Option<Box<spreadsheet::ColumnFieldsWith<X>>>,
     /// The child that is `spreadsheet::ColumnItems`, when there is one.
@@ -2977,80 +2977,80 @@ pub struct PivotTableDefinitionWith<X: UserData> {
     pub column_olap_hierarchy_references:
         Option<Box<spreadsheet::ColumnOLAPHierarchyReferencesWith<X>>>,
     /// The attribute `compact`, when the element has it.
-    pub compact: Option<String>,
+    pub compact: Option<Box<str>>,
     /// The attribute `compactData`, when the element has it.
-    pub compact_data: Option<String>,
+    pub compact_data: Option<Box<str>>,
     /// The child that is `spreadsheet::ConditionalFormats`, when there is one.
     pub conditional_formats: Option<Box<spreadsheet::ConditionalFormatsWith<X>>>,
     /// The attribute `createdVersion`, when the element has it.
-    pub created_version: Option<String>,
+    pub created_version: Option<Box<str>>,
     /// The attribute `customListSort`, when the element has it.
-    pub custom_list_sort: Option<String>,
+    pub custom_list_sort: Option<Box<str>>,
     /// The attribute `dataCaption`, when the element has it.
-    pub data_caption: Option<String>,
+    pub data_caption: Option<Box<str>>,
     /// The child that is `spreadsheet::DataFields`, when there is one.
     pub data_fields: Option<Box<spreadsheet::DataFieldsWith<X>>>,
     /// The attribute `dataOnRows`, when the element has it.
-    pub data_on_rows: Option<String>,
+    pub data_on_rows: Option<Box<str>>,
     /// The attribute `dataPosition`, when the element has it.
-    pub data_position: Option<String>,
+    pub data_position: Option<Box<str>>,
     /// The attribute `disableFieldList`, when the element has it.
-    pub disable_field_list: Option<String>,
+    pub disable_field_list: Option<Box<str>>,
     /// The attribute `editData`, when the element has it.
-    pub edit_data: Option<String>,
+    pub edit_data: Option<Box<str>>,
     /// The attribute `enableDrill`, when the element has it.
-    pub enable_drill: Option<String>,
+    pub enable_drill: Option<Box<str>>,
     /// The attribute `enableFieldProperties`, when the element has it.
-    pub enable_field_properties: Option<String>,
+    pub enable_field_properties: Option<Box<str>>,
     /// The attribute `enableWizard`, when the element has it.
-    pub enable_wizard: Option<String>,
+    pub enable_wizard: Option<Box<str>>,
     /// The attribute `errorCaption`, when the element has it.
-    pub error_caption: Option<String>,
+    pub error_caption: Option<Box<str>>,
     /// The attribute `fieldListSortAscending`, when the element has it.
-    pub field_list_sort_ascending: Option<String>,
+    pub field_list_sort_ascending: Option<Box<str>>,
     /// The attribute `fieldPrintTitles`, when the element has it.
-    pub field_print_titles: Option<String>,
+    pub field_print_titles: Option<Box<str>>,
     /// The child that is `spreadsheet::Filters`, when there is one.
     pub filters: Option<Box<spreadsheet::FiltersWith<X>>>,
     /// The child that is `spreadsheet::FutureFeatureDataStorageArea`, when there is one.
     pub future_feature_data_storage_area:
         Option<Box<spreadsheet::FutureFeatureDataStorageAreaWith<X>>>,
     /// The attribute `grandTotalCaption`, when the element has it.
-    pub grand_total_caption: Option<String>,
+    pub grand_total_caption: Option<Box<str>>,
     /// The attribute `gridDropZones`, when the element has it.
-    pub grid_drop_zones: Option<String>,
+    pub grid_drop_zones: Option<Box<str>>,
     /// The attribute `immersive`, when the element has it.
-    pub immersive: Option<String>,
+    pub immersive: Option<Box<str>>,
     /// The attribute `indent`, when the element has it.
-    pub indent: Option<String>,
+    pub indent: Option<Box<str>>,
     /// The attribute `itemPrintTitles`, when the element has it.
-    pub item_print_titles: Option<String>,
+    pub item_print_titles: Option<Box<str>>,
     /// The attribute `mdxSubqueries`, when the element has it.
-    pub mdx_subqueries: Option<String>,
+    pub mdx_subqueries: Option<Box<str>>,
     /// The attribute `mergeItem`, when the element has it.
-    pub merge_item: Option<String>,
+    pub merge_item: Option<Box<str>>,
     /// The attribute `minRefreshableVersion`, when the element has it.
-    pub min_refreshable_version: Option<String>,
+    pub min_refreshable_version: Option<Box<str>>,
     /// The attribute `missingCaption`, when the element has it.
-    pub missing_caption: Option<String>,
+    pub missing_caption: Option<Box<str>>,
     /// The attribute `multipleFieldFilters`, when the element has it.
-    pub multiple_field_filters: Option<String>,
+    pub multiple_field_filters: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `outline`, when the element has it.
-    pub outline: Option<String>,
+    pub outline: Option<Box<str>>,
     /// The attribute `outlineData`, when the element has it.
-    pub outline_data: Option<String>,
+    pub outline_data: Option<Box<str>>,
     /// The child that is `spreadsheet::PageFieldItems`, when there is one.
     pub page_field_items: Option<Box<spreadsheet::PageFieldItemsWith<X>>>,
     /// The attribute `pageOverThenDown`, when the element has it.
-    pub page_over_then_down: Option<String>,
+    pub page_over_then_down: Option<Box<str>>,
     /// The attribute `pageStyle`, when the element has it.
-    pub page_style: Option<String>,
+    pub page_style: Option<Box<str>>,
     /// The attribute `pageWrap`, when the element has it.
-    pub page_wrap: Option<String>,
+    pub page_wrap: Option<Box<str>>,
     /// The attribute `pivotTableStyle`, when the element has it.
-    pub pivot_table_style: Option<String>,
+    pub pivot_table_style: Option<Box<str>>,
     /// The child that is `spreadsheet::PivotChartFormats`, when there is one.
     pub pivotchart_formats: Option<Box<spreadsheet::PivotChartFormatsWith<X>>>,
     /// The child that is `spreadsheet::PivotTableFields`, when there is one.
@@ -3064,64 +3064,64 @@ pub struct PivotTableDefinitionWith<X: UserData> {
     /// The child that is `spreadsheet::PivotTableStyle`, when there is one.
     pub pivottable_style: Option<Box<spreadsheet::PivotTableStyleWith<X>>>,
     /// The attribute `preserveFormatting`, when the element has it.
-    pub preserve_formatting: Option<String>,
+    pub preserve_formatting: Option<Box<str>>,
     /// The attribute `printDrill`, when the element has it.
-    pub print_drill: Option<String>,
+    pub print_drill: Option<Box<str>>,
     /// The attribute `published`, when the element has it.
-    pub published: Option<String>,
+    pub published: Option<Box<str>>,
     /// The child that is `spreadsheet::RowFields`, when there is one.
     pub row_fields: Option<Box<spreadsheet::RowFieldsWith<X>>>,
     /// The attribute `rowGrandTotals`, when the element has it.
-    pub row_grand_totals: Option<String>,
+    pub row_grand_totals: Option<Box<str>>,
     /// The attribute `rowHeaderCaption`, when the element has it.
-    pub row_header_caption: Option<String>,
+    pub row_header_caption: Option<Box<str>>,
     /// The child that is `spreadsheet::RowItems`, when there is one.
     pub row_items: Option<Box<spreadsheet::RowItemsWith<X>>>,
     /// The child that is `spreadsheet::RowOLAPHierarchyReferences`, when there is one.
     pub row_olap_hierarchy_references: Option<Box<spreadsheet::RowOLAPHierarchyReferencesWith<X>>>,
     /// The attribute `showCalcMbrs`, when the element has it.
-    pub show_calc_mbrs: Option<String>,
+    pub show_calc_mbrs: Option<Box<str>>,
     /// The attribute `showDataDropDown`, when the element has it.
-    pub show_data_drop_down: Option<String>,
+    pub show_data_drop_down: Option<Box<str>>,
     /// The attribute `showDataTips`, when the element has it.
-    pub show_data_tips: Option<String>,
+    pub show_data_tips: Option<Box<str>>,
     /// The attribute `showDrill`, when the element has it.
-    pub show_drill: Option<String>,
+    pub show_drill: Option<Box<str>>,
     /// The attribute `showDropZones`, when the element has it.
-    pub show_drop_zones: Option<String>,
+    pub show_drop_zones: Option<Box<str>>,
     /// The attribute `showEmptyCol`, when the element has it.
-    pub show_empty_col: Option<String>,
+    pub show_empty_col: Option<Box<str>>,
     /// The attribute `showEmptyRow`, when the element has it.
-    pub show_empty_row: Option<String>,
+    pub show_empty_row: Option<Box<str>>,
     /// The attribute `showError`, when the element has it.
-    pub show_error: Option<String>,
+    pub show_error: Option<Box<str>>,
     /// The attribute `showHeaders`, when the element has it.
-    pub show_headers: Option<String>,
+    pub show_headers: Option<Box<str>>,
     /// The attribute `showItems`, when the element has it.
-    pub show_items: Option<String>,
+    pub show_items: Option<Box<str>>,
     /// The attribute `showMemberPropertyTips`, when the element has it.
-    pub show_member_property_tips: Option<String>,
+    pub show_member_property_tips: Option<Box<str>>,
     /// The attribute `showMissing`, when the element has it.
-    pub show_missing: Option<String>,
+    pub show_missing: Option<Box<str>>,
     /// The attribute `showMultipleLabel`, when the element has it.
-    pub show_multiple_label: Option<String>,
+    pub show_multiple_label: Option<Box<str>>,
     /// The attribute `subtotalHiddenItems`, when the element has it.
-    pub subtotal_hidden_items: Option<String>,
+    pub subtotal_hidden_items: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `updatedVersion`, when the element has it.
-    pub updated_version: Option<String>,
+    pub updated_version: Option<Box<str>>,
     /// The attribute `useAutoFormatting`, when the element has it.
-    pub use_auto_formatting: Option<String>,
+    pub use_auto_formatting: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2014RevisionPivotTableDefinition,
     /// The attribute `vacatedStyle`, when the element has it.
-    pub vacated_style: Option<String>,
+    pub vacated_style: Option<Box<str>>,
     /// The attribute `visualTotals`, when the element has it.
-    pub visual_totals: Option<String>,
+    pub visual_totals: Option<Box<str>>,
 }
 
 /// The `xr:pivotTableDefinition` element of the tree a read gives: [`PivotTableDefinitionWith`]
@@ -3140,15 +3140,15 @@ pub struct RefWith<X: UserData> {
     /// The attribute `ajtx`, when the element has it.
     pub ajtx: Option<AdjustTypeExt>,
     /// The attribute `homeRef`, when the element has it.
-    pub home_ref: Option<String>,
+    pub home_ref: Option<Box<str>>,
     /// The attribute `n`, when the element has it.
-    pub n: Option<String>,
+    pub n: Option<Box<str>>,
     /// The attribute `r`, when the element has it.
-    pub r: Option<String>,
+    pub r: Option<Box<str>>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// The attribute `uidLast`, when the element has it.
-    pub uid_last: Option<String>,
+    pub uid_last: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3214,15 +3214,15 @@ impl Eq for RefmapWith<()> {}
 #[non_exhaustive]
 pub struct RevHdrsWith<X: UserData> {
     /// The attribute `docId`, when the element has it.
-    pub doc_id: Option<String>,
+    pub doc_id: Option<Box<str>>,
     /// The attribute `endpointId`, when the element has it.
-    pub endpoint_id: Option<String>,
+    pub endpoint_id: Option<Box<str>>,
     /// The children that are `HdrRevExHeader`, in order.
     pub hdr_rev_ex_header: Vec<HdrRevExHeaderWith<X>>,
     /// The attribute `maxRev`, when the element has it.
-    pub max_rev: Option<String>,
+    pub max_rev: Option<Box<str>>,
     /// The attribute `minRev`, when the element has it.
-    pub min_rev: Option<String>,
+    pub min_rev: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3356,9 +3356,9 @@ impl Eq for RevisionGroupContentWith<()> {}
 #[non_exhaustive]
 pub struct RevisionPtrWith<X: UserData> {
     /// The attribute `documentId`, when the element has it.
-    pub document_id: Option<String>,
+    pub document_id: Option<Box<str>>,
     /// The attribute `revIDLastSave`, when the element has it.
-    pub rev_id_last_save: Option<String>,
+    pub rev_id_last_save: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3482,16 +3482,16 @@ pub struct RowColVisualOpsWith<X: UserData> {
     /// The attribute `action`, when the element has it.
     pub action: Option<RowColVisualOp>,
     /// The attribute `isRow`, when the element has it.
-    pub is_row: Option<String>,
+    pub is_row: Option<Box<str>>,
     /// The attribute `size`, when the element has it.
-    pub size: Option<String>,
+    pub size: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2014RevisionRowColVisualOps,
     /// The attribute `userSized`, when the element has it.
-    pub user_sized: Option<String>,
+    pub user_sized: Option<Box<str>>,
 }
 
 /// The `xr:rowColVisualOps` element of the tree a read gives: [`RowColVisualOpsWith`] holding
@@ -3566,11 +3566,11 @@ pub struct SheetUidWith<X: UserData> {
     /// The attribute `ajtx`, when the element has it.
     pub ajtx: Option<AdjustTypeExt>,
     /// The attribute `homeRef`, when the element has it.
-    pub home_ref: Option<String>,
+    pub home_ref: Option<Box<str>>,
     /// The attribute `n`, when the element has it.
-    pub n: Option<String>,
+    pub n: Option<Box<str>>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3590,9 +3590,9 @@ impl Eq for SheetUidWith<()> {}
 #[non_exhaustive]
 pub struct ShowGridlinesHeadingsWith<X: UserData> {
     /// The attribute `showGridLines`, when the element has it.
-    pub show_grid_lines: Option<String>,
+    pub show_grid_lines: Option<Box<str>>,
     /// The attribute `showRowCol`, when the element has it.
-    pub show_row_col: Option<String>,
+    pub show_row_col: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3628,39 +3628,39 @@ pub struct SparklineGroupWith<X: UserData> {
     /// The child that is `office_spreadsheetml_2009_9_main::ColorSeries`, when there is one.
     pub color_series: Option<Box<office_spreadsheetml_2009_9_main::ColorSeriesWith<X>>>,
     /// The attribute `dateAxis`, when the element has it.
-    pub date_axis: Option<String>,
+    pub date_axis: Option<Box<str>>,
     /// The attribute `displayEmptyCellsAs`, when the element has it.
     pub display_empty_cells_as: Option<office_spreadsheetml_2009_9_main::DispBlanksAs>,
     /// The attribute `displayHidden`, when the element has it.
-    pub display_hidden: Option<String>,
+    pub display_hidden: Option<Box<str>>,
     /// The attribute `displayXAxis`, when the element has it.
-    pub display_x_axis: Option<String>,
+    pub display_x_axis: Option<Box<str>>,
     /// The child that is `office_excel_2006_main::F`, when there is one.
     pub f: Option<Box<office_excel_2006_main::FWith<X>>>,
     /// The attribute `first`, when the element has it.
-    pub first: Option<String>,
+    pub first: Option<Box<str>>,
     /// The attribute `high`, when the element has it.
-    pub high: Option<String>,
+    pub high: Option<Box<str>>,
     /// The attribute `last`, when the element has it.
-    pub last: Option<String>,
+    pub last: Option<Box<str>>,
     /// The attribute `lineWeight`, when the element has it.
-    pub line_weight: Option<String>,
+    pub line_weight: Option<Box<str>>,
     /// The attribute `low`, when the element has it.
-    pub low: Option<String>,
+    pub low: Option<Box<str>>,
     /// The attribute `manualMax`, when the element has it.
-    pub manual_max: Option<String>,
+    pub manual_max: Option<Box<str>>,
     /// The attribute `manualMin`, when the element has it.
-    pub manual_min: Option<String>,
+    pub manual_min: Option<Box<str>>,
     /// The attribute `markers`, when the element has it.
-    pub markers: Option<String>,
+    pub markers: Option<Box<str>>,
     /// The attribute `maxAxisType`, when the element has it.
     pub max_axis_type: Option<office_spreadsheetml_2009_9_main::SparklineAxisMinMax>,
     /// The attribute `minAxisType`, when the element has it.
     pub min_axis_type: Option<office_spreadsheetml_2009_9_main::SparklineAxisMinMax>,
     /// The attribute `negative`, when the element has it.
-    pub negative: Option<String>,
+    pub negative: Option<Box<str>>,
     /// The attribute `rightToLeft`, when the element has it.
-    pub right_to_left: Option<String>,
+    pub right_to_left: Option<Box<str>>,
     /// The child that is `office_spreadsheetml_2009_9_main::Sparklines`, which the schema requires.
     pub sparklines: Box<office_spreadsheetml_2009_9_main::SparklinesWith<X>>,
     /// The attribute `type`, when the element has it.
@@ -3742,9 +3742,9 @@ pub struct TestWith<X: UserData> {
     /// The attribute `ajtx`, when the element has it.
     pub ajtx: Option<AdjustTypeExt>,
     /// The attribute `homeRef`, when the element has it.
-    pub home_ref: Option<String>,
+    pub home_ref: Option<Box<str>>,
     /// The attribute `n`, when the element has it.
-    pub n: Option<String>,
+    pub n: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3768,7 +3768,7 @@ pub struct VWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2014RevisionV,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xr:v` element of the tree a read gives: [`VWith`] holding nothing in `user_data`.
@@ -4102,41 +4102,41 @@ pub trait Visitor: crate::Visitor {
 #[non_exhaustive]
 pub struct XrrDefNameWith<X: UserData> {
     /// The attribute `comment`, when the element has it.
-    pub comment: Option<String>,
+    pub comment: Option<Box<str>>,
     /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
     /// The attribute `customMenu`, when the element has it.
-    pub custom_menu: Option<String>,
+    pub custom_menu: Option<Box<str>>,
     /// The attribute `customView`, when the element has it.
-    pub custom_view: Option<String>,
+    pub custom_view: Option<Box<str>>,
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The child that is `Formula`, when there is one.
     pub formula: Option<Box<FormulaWith<X>>>,
     /// The attribute `function`, when the element has it.
-    pub function: Option<String>,
+    pub function: Option<Box<str>>,
     /// The attribute `functionGroupId`, when the element has it.
-    pub function_group_id: Option<String>,
+    pub function_group_id: Option<Box<str>>,
     /// The attribute `help`, when the element has it.
-    pub help: Option<String>,
+    pub help: Option<Box<str>>,
     /// The attribute `hidden`, when the element has it.
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// The attribute `sh`, when the element has it.
-    pub sh: Option<String>,
+    pub sh: Option<Box<str>>,
     /// The attribute `shortcutKey`, when the element has it.
-    pub shortcut_key: Option<String>,
+    pub shortcut_key: Option<Box<str>>,
     /// The attribute `statusBar`, when the element has it.
-    pub status_bar: Option<String>,
+    pub status_bar: Option<Box<str>>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// The attribute `uidp`, when the element has it.
-    pub uidp: Option<String>,
+    pub uidp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4158,29 +4158,29 @@ pub struct XrrListWith<X: UserData> {
     /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
     /// The attribute `Data`, when the element has it.
-    pub data: Option<String>,
+    pub data: Option<Box<str>>,
     /// The attribute `Fake`, when the element has it.
-    pub fake: Option<String>,
+    pub fake: Option<Box<str>>,
     /// The attribute `Formatting`, when the element has it.
-    pub formatting: Option<String>,
+    pub formatting: Option<Box<str>>,
     /// The attribute `Headers`, when the element has it.
-    pub headers: Option<String>,
+    pub headers: Option<Box<str>>,
     /// The attribute `InsDelHeaders`, when the element has it.
-    pub ins_del_headers: Option<String>,
+    pub ins_del_headers: Option<Box<str>>,
     /// The attribute `rId`, when the element has it.
-    pub r_id: Option<String>,
+    pub r_id: Option<Box<str>>,
     /// The attribute `RangeBased`, when the element has it.
-    pub range_based: Option<String>,
+    pub range_based: Option<Box<str>>,
     /// The attribute `ref`, when the element has it.
-    pub r#ref: Option<String>,
+    pub r#ref: Option<Box<str>>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// The attribute `sh`, when the element has it.
-    pub sh: Option<String>,
+    pub sh: Option<Box<str>>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// The attribute `uidp`, when the element has it.
-    pub uidp: Option<String>,
+    pub uidp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4202,17 +4202,17 @@ pub struct XrrListExpRWith<X: UserData> {
     /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
     /// The attribute `listGuid`, when the element has it.
-    pub list_guid: Option<String>,
+    pub list_guid: Option<Box<str>>,
     /// The attribute `refAdded`, when the element has it.
-    pub ref_added: Option<String>,
+    pub ref_added: Option<Box<str>>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// The attribute `sh`, when the element has it.
-    pub sh: Option<String>,
+    pub sh: Option<Box<str>>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// The attribute `uidp`, when the element has it.
-    pub uidp: Option<String>,
+    pub uidp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4234,21 +4234,21 @@ pub struct XrrSheetWith<X: UserData> {
     /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
     /// The attribute `idNew`, when the element has it.
-    pub id_new: Option<String>,
+    pub id_new: Option<Box<str>>,
     /// The attribute `idOrig`, when the element has it.
-    pub id_orig: Option<String>,
+    pub id_orig: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `op`, when the element has it.
     pub op: Option<SheetOp>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// The attribute `sh`, when the element has it.
-    pub sh: Option<String>,
+    pub sh: Option<Box<str>>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// The attribute `uidp`, when the element has it.
-    pub uidp: Option<String>,
+    pub uidp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4270,13 +4270,13 @@ pub struct XrrTrimWith<X: UserData> {
     /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// The attribute `sh`, when the element has it.
-    pub sh: Option<String>,
+    pub sh: Option<Box<str>>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// The attribute `uidp`, when the element has it.
-    pub uidp: Option<String>,
+    pub uidp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4298,13 +4298,13 @@ pub struct XrrUsptWith<X: UserData> {
     /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// The attribute `sh`, when the element has it.
-    pub sh: Option<String>,
+    pub sh: Option<Box<str>>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// The attribute `uidp`, when the element has it.
-    pub uidp: Option<String>,
+    pub uidp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4330,26 +4330,26 @@ pub struct XrrcWith<X: UserData> {
     /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
     /// The attribute `listUid`, when the element has it.
-    pub list_uid: Option<String>,
+    pub list_uid: Option<Box<str>>,
     /// The attribute `r`, when the element has it.
-    pub r: Option<String>,
+    pub r: Option<Box<str>>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// The attribute `sh`, when the element has it.
-    pub sh: Option<String>,
+    pub sh: Option<Box<str>>,
     /// The attribute `t`, when the element has it.
     pub t: Option<FillType>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// The attribute `uidp`, when the element has it.
-    pub uidp: Option<String>,
+    pub uidp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2014RevisionXrrc,
     /// The attribute `w`, when the element has it.
-    pub w: Option<String>,
+    pub w: Option<Box<str>>,
     /// The attribute `x`, when the element has it.
     pub x: Option<FillTypeExt>,
 }
@@ -4371,13 +4371,13 @@ pub struct XrrcoWith<X: UserData> {
     /// The child that is `HdrStateBasedHeader`, which the schema requires.
     pub hdr_state_based_header: Box<HdrStateBasedHeaderWith<X>>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// The attribute `sh`, when the element has it.
-    pub sh: Option<String>,
+    pub sh: Option<Box<str>>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// The attribute `uidp`, when the element has it.
-    pub uidp: Option<String>,
+    pub uidp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4400,13 +4400,13 @@ pub struct XrrdoWith<X: UserData> {
     /// The child that is `HdrStateBasedHeader`, which the schema requires.
     pub hdr_state_based_header: Box<HdrStateBasedHeaderWith<X>>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// The attribute `sh`, when the element has it.
-    pub sh: Option<String>,
+    pub sh: Option<Box<str>>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// The attribute `uidp`, when the element has it.
-    pub uidp: Option<String>,
+    pub uidp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4425,17 +4425,17 @@ impl Eq for XrrdoWith<()> {}
 #[non_exhaustive]
 pub struct XrrfWith<X: UserData> {
     /// The attribute `applyAlignment`, when the element has it.
-    pub apply_alignment: Option<String>,
+    pub apply_alignment: Option<Box<str>>,
     /// The attribute `applyBorder`, when the element has it.
-    pub apply_border: Option<String>,
+    pub apply_border: Option<Box<str>>,
     /// The attribute `applyFill`, when the element has it.
-    pub apply_fill: Option<String>,
+    pub apply_fill: Option<Box<str>>,
     /// The attribute `applyFont`, when the element has it.
-    pub apply_font: Option<String>,
+    pub apply_font: Option<Box<str>>,
     /// The attribute `applyNumberFormat`, when the element has it.
-    pub apply_number_format: Option<String>,
+    pub apply_number_format: Option<Box<str>>,
     /// The attribute `applyProtection`, when the element has it.
-    pub apply_protection: Option<String>,
+    pub apply_protection: Option<Box<str>>,
     /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
     /// The child that is `Dxf`, when there is one.
@@ -4443,34 +4443,34 @@ pub struct XrrfWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `fBlankCell`, when the element has it.
-    pub f_blank_cell: Option<String>,
+    pub f_blank_cell: Option<Box<str>>,
     /// The attribute `length`, when the element has it.
-    pub length: Option<String>,
+    pub length: Option<Box<str>>,
     /// The attribute `numFmtId`, when the element has it.
-    pub num_fmt_id: Option<String>,
+    pub num_fmt_id: Option<Box<str>>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// The attribute `sh`, when the element has it.
-    pub sh: Option<String>,
+    pub sh: Option<Box<str>>,
     /// The attribute `sqref`, when the element has it.
-    pub sqref: Option<String>,
+    pub sqref: Option<Box<str>>,
     /// The attribute `start`, when the element has it.
-    pub start: Option<String>,
+    pub start: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
-    pub style: Option<String>,
+    pub style: Option<Box<str>>,
     /// The attribute `styleUid`, when the element has it.
-    pub style_uid: Option<String>,
+    pub style_uid: Option<Box<str>>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// The attribute `uidp`, when the element has it.
-    pub uidp: Option<String>,
+    pub uidp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2014RevisionXrrf,
     /// The attribute `xfDxf`, when the element has it.
-    pub xf_dxf: Option<String>,
+    pub xf_dxf: Option<Box<str>>,
 }
 
 /// The `xr:xrrf` element of the tree a read gives: [`XrrfWith`] holding nothing in `user_data`.
@@ -4486,15 +4486,15 @@ pub struct XrrftrWith<X: UserData> {
     /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// The attribute `sh`, when the element has it.
-    pub sh: Option<String>,
+    pub sh: Option<Box<str>>,
     /// The attribute `sti`, when the element has it.
-    pub sti: Option<String>,
+    pub sti: Option<Box<str>>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// The attribute `uidp`, when the element has it.
-    pub uidp: Option<String>,
+    pub uidp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4519,13 +4519,13 @@ pub struct XrrgWith<X: UserData> {
     /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// The attribute `sh`, when the element has it.
-    pub sh: Option<String>,
+    pub sh: Option<Box<str>>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// The attribute `uidp`, when the element has it.
-    pub uidp: Option<String>,
+    pub uidp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4546,19 +4546,19 @@ pub struct XrrmWith<X: UserData> {
     /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
     /// The attribute `dst`, when the element has it.
-    pub dst: Option<String>,
+    pub dst: Option<Box<str>>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// The attribute `sh`, when the element has it.
-    pub sh: Option<String>,
+    pub sh: Option<Box<str>>,
     /// The attribute `src`, when the element has it.
-    pub src: Option<String>,
+    pub src: Option<Box<str>>,
     /// The attribute `srcSh`, when the element has it.
-    pub src_sh: Option<String>,
+    pub src_sh: Option<Box<str>>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// The attribute `uidp`, when the element has it.
-    pub uidp: Option<String>,
+    pub uidp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4581,17 +4581,17 @@ pub struct XrrrcWith<X: UserData> {
     /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
     /// The attribute `eol`, when the element has it.
-    pub eol: Option<String>,
+    pub eol: Option<Box<str>>,
     /// The attribute `ref`, when the element has it.
-    pub r#ref: Option<String>,
+    pub r#ref: Option<Box<str>>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// The attribute `sh`, when the element has it.
-    pub sh: Option<String>,
+    pub sh: Option<Box<str>>,
     /// The attribute `uid`, when the element has it.
-    pub uid: Option<String>,
+    pub uid: Option<Box<str>>,
     /// The attribute `uidp`, when the element has it.
-    pub uidp: Option<String>,
+    pub uidp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

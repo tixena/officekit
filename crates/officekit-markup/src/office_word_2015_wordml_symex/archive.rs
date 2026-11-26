@@ -222,8 +222,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::SymEx)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SymExMirror {
-    pub char: Option<String>,
-    pub font: Option<String>,
+    pub char: Option<Box<str>>,
+    pub font: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

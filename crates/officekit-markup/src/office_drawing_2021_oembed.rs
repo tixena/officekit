@@ -321,9 +321,9 @@ pub struct OembedSharedWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `srcUrl`, when the element has it.
-    pub src_url: Option<String>,
+    pub src_url: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
-    pub r#type: Option<String>,
+    pub r#type: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

@@ -409,7 +409,7 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct NonVisualGroupPropsWith<X: UserData> {
     /// The attribute `isLegacyGroup`, when the element has it.
-    pub is_legacy_group: Option<String>,
+    pub is_legacy_group: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -429,11 +429,11 @@ impl Eq for NonVisualGroupPropsWith<()> {}
 #[non_exhaustive]
 pub struct ObjectPrWith<X: UserData> {
     /// The attribute `isActiveX`, when the element has it.
-    pub is_active_x: Option<String>,
+    pub is_active_x: Option<Box<str>>,
     /// The attribute `linkType`, when the element has it.
-    pub link_type: Option<String>,
+    pub link_type: Option<Box<str>>,
     /// The attribute `objectId`, when the element has it.
-    pub object_id: Option<String>,
+    pub object_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -453,29 +453,29 @@ impl Eq for ObjectPrWith<()> {}
 #[non_exhaustive]
 pub struct SignatureLineWith<X: UserData> {
     /// The attribute `addlXml`, when the element has it.
-    pub addl_xml: Option<String>,
+    pub addl_xml: Option<Box<str>>,
     /// The attribute `allowComments`, when the element has it.
-    pub allow_comments: Option<String>,
+    pub allow_comments: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `isSignatureLine`, when the element has it.
-    pub is_signature_line: Option<String>,
+    pub is_signature_line: Option<Box<str>>,
     /// The attribute `provId`, when the element has it.
-    pub prov_id: Option<String>,
+    pub prov_id: Option<Box<str>>,
     /// The attribute `showSignDate`, when the element has it.
-    pub show_sign_date: Option<String>,
+    pub show_sign_date: Option<Box<str>>,
     /// The attribute `sigProvUrl`, when the element has it.
-    pub sig_prov_url: Option<String>,
+    pub sig_prov_url: Option<Box<str>>,
     /// The attribute `signingInstructions`, when the element has it.
-    pub signing_instructions: Option<String>,
+    pub signing_instructions: Option<Box<str>>,
     /// The attribute `signingInstructionsSet`, when the element has it.
-    pub signing_instructions_set: Option<String>,
+    pub signing_instructions_set: Option<Box<str>>,
     /// The attribute `suggestedSigner`, when the element has it.
-    pub suggested_signer: Option<String>,
+    pub suggested_signer: Option<Box<str>>,
     /// The attribute `suggestedSigner2`, when the element has it.
-    pub suggested_signer2: Option<String>,
+    pub suggested_signer2: Option<Box<str>>,
     /// The attribute `suggestedSignerEmail`, when the element has it.
-    pub suggested_signer_email: Option<String>,
+    pub suggested_signer_email: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

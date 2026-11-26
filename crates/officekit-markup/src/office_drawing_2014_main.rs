@@ -391,7 +391,7 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct CreationIdWith<X: UserData> {
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -411,9 +411,9 @@ impl Eq for CreationIdWith<()> {}
 #[non_exhaustive]
 pub struct CxnDERefsWith<X: UserData> {
     /// The attribute `end`, when the element has it.
-    pub end: Option<String>,
+    pub end: Option<Box<str>>,
     /// The attribute `st`, when the element has it.
-    pub st: Option<String>,
+    pub st: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -433,7 +433,7 @@ impl Eq for CxnDERefsWith<()> {}
 #[non_exhaustive]
 pub struct PredDERefWith<X: UserData> {
     /// The attribute `pred`, when the element has it.
-    pub pred: Option<String>,
+    pub pred: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

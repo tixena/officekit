@@ -67,15 +67,15 @@ pub fn inline_picture(
     let (cx, cy) = (size.0.to_string(), size.1.to_string());
     let mut blip = Blip::default();
     match source {
-        PictureSource::Embedded(relationship) => blip.embed = Some(relationship.to_owned()),
-        PictureSource::Linked(relationship) => blip.link = Some(relationship.to_owned()),
+        PictureSource::Embedded(relationship) => blip.embed = Some(Box::from(relationship)),
+        PictureSource::Linked(relationship) => blip.link = Some(Box::from(relationship)),
     }
     let mut fill = PictureFill::default();
     fill.blip = Some(Box::new(blip));
     fill.content = Some(Box::new(FillModeContent::from(Stretch::default())));
     let mut drawing_properties = NonVisualDrawingProperties::default();
     drawing_properties.id = Some(DrawingElementID::from("0".to_owned()));
-    drawing_properties.name = Some(name.to_owned());
+    drawing_properties.name = Some(Box::from(name));
     let mut non_visual = NonVisualPictureProperties::default();
     non_visual.non_visual_drawing_properties = Box::new(drawing_properties);
     let mut offset = Offset::default();
@@ -98,16 +98,16 @@ pub fn inline_picture(
     picture.shape_properties = Box::new(shape);
     let mut data = GraphicObjectData::default();
     data.content = alloc::vec![AnyElementContent::from(picture)];
-    data.uri = Some(PICTURE.to_owned());
+    data.uri = Some(Box::from(PICTURE));
     let mut graphic = GraphicObject::default();
     graphic.data = Box::new(data);
     let mut frame_size = DrawingObjectSize::default();
     frame_size.cx = Some(PositiveCoordinate::from(cx));
     frame_size.cy = Some(PositiveCoordinate::from(cy));
     let mut properties = DrawingObjectNonVisualProperties::default();
-    properties.descr = description.map(str::to_owned);
+    properties.descr = description.map(Box::from);
     properties.id = Some(DrawingElementID::from(id.to_string()));
-    properties.name = Some(name.to_owned());
+    properties.name = Some(Box::from(name));
     let mut inline = InlineDrawingMLObject::default();
     inline.drawing_object_non_visual_properties = Box::new(properties);
     inline.drawing_object_size = Box::new(frame_size);

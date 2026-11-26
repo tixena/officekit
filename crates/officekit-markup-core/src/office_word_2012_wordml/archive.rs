@@ -263,8 +263,8 @@ pub struct ColorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentExMirror {
     pub done: Option<common_simple_types::OnOffValue>,
-    pub para_id: Option<String>,
-    pub para_id_parent: Option<String>,
+    pub para_id: Option<Box<str>>,
+    pub para_id_parent: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -282,11 +282,11 @@ pub struct CommentsExMirror {
 #[rkyv(remote = super::DataBinding)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataBindingMirror {
-    pub prefix_mappings: Option<String>,
-    pub store_item_id: Option<String>,
+    pub prefix_mappings: Option<Box<str>>,
+    pub store_item_id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub xpath: Option<String>,
+    pub xpath: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -304,7 +304,7 @@ pub struct DoNotAllowInsertDeleteSectionMirror {
 pub struct DocIdMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -329,7 +329,7 @@ pub struct PeopleMirror {
 #[rkyv(remote = super::Person)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PersonMirror {
-    pub author: Option<String>,
+    pub author: Option<Box<str>>,
     pub presence_info: Option<Box<super::PresenceInfo>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -339,10 +339,10 @@ pub struct PersonMirror {
 #[rkyv(remote = super::PresenceInfo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PresenceInfoMirror {
-    pub provider_id: Option<String>,
+    pub provider_id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub user_id: Option<String>,
+    pub user_id: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -369,7 +369,7 @@ pub struct RepeatingSectionItemMirror {
 pub struct SectionTitleMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]

@@ -697,9 +697,9 @@ impl Eq for AbsoluteAnchorShapeSizeWith<()> {}
 #[non_exhaustive]
 pub struct ClientDataWith<X: UserData> {
     /// The attribute `fLocksWithSheet`, when the element has it.
-    pub f_locks_with_sheet: Option<String>,
+    pub f_locks_with_sheet: Option<Box<str>>,
     /// The attribute `fPrintsWithSheet`, when the element has it.
-    pub f_prints_with_sheet: Option<String>,
+    pub f_prints_with_sheet: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -743,7 +743,7 @@ impl Eq for ColWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct ColumnID(pub String);
+pub struct ColumnID(pub Box<str>);
 
 /// The `xdr:colOff` element, Column Offset (ECMA-376 Part 1, section 20.5.2.11). Its schema type is
 /// `ST_Coordinate`.
@@ -775,7 +775,7 @@ pub struct ConnectionNonVisualShapePropertiesWith<X: UserData> {
     /// The child that is `super::drawing::ShapeLocks`, when there is one.
     pub shape_locks: Option<Box<super::drawing::ShapeLocksWith<X>>>,
     /// The attribute `txBox`, when the element has it.
-    pub tx_box: Option<String>,
+    pub tx_box: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -795,9 +795,9 @@ impl Eq for ConnectionNonVisualShapePropertiesWith<()> {}
 #[non_exhaustive]
 pub struct ConnectionShapeWith<X: UserData> {
     /// The attribute `fPublished`, when the element has it.
-    pub f_published: Option<String>,
+    pub f_published: Option<Box<str>>,
     /// The attribute `macro`, when the element has it.
-    pub r#macro: Option<String>,
+    pub r#macro: Option<Box<str>>,
     /// The child that is `NonVisualPropertiesForAConnectionShape`, which the schema requires.
     pub non_visual_properties: Box<NonVisualPropertiesForAConnectionShapeWith<X>>,
     /// The child that is `ShapeProperties`, which the schema requires.
@@ -823,7 +823,7 @@ impl Eq for ConnectionShapeWith<()> {}
 #[non_exhaustive]
 pub struct ContentPartWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -869,11 +869,11 @@ impl Eq for EndingAnchorPointWith<()> {}
 #[non_exhaustive]
 pub struct GraphicFrameWith<X: UserData> {
     /// The attribute `fPublished`, when the element has it.
-    pub f_published: Option<String>,
+    pub f_published: Option<Box<str>>,
     /// The child that is `super::drawing::GraphicObject`, which the schema requires.
     pub graphic_object: Box<super::drawing::GraphicObjectWith<X>>,
     /// The attribute `macro`, when the element has it.
-    pub r#macro: Option<String>,
+    pub r#macro: Option<Box<str>>,
     /// The child that is `NonVisualPropertiesForAGraphicFrame`, which the schema requires.
     pub non_visual_properties: Box<NonVisualPropertiesForAGraphicFrameWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1009,19 +1009,19 @@ pub struct NonVisualDrawingPropertiesWith<X: UserData> {
     /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
     /// The attribute `hidden`, when the element has it.
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHoverWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1089,7 +1089,7 @@ pub struct NonVisualPictureDrawingPropertiesWith<X: UserData> {
     /// The child that is `super::drawing::PictureLocks`, when there is one.
     pub picture_locks: Option<Box<super::drawing::PictureLocksWith<X>>>,
     /// The attribute `preferRelativeResize`, when the element has it.
-    pub prefer_relative_resize: Option<String>,
+    pub prefer_relative_resize: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1276,11 +1276,11 @@ impl Eq for OneCellAnchorShapeSizeWith<()> {}
 #[non_exhaustive]
 pub struct PictureWith<X: UserData> {
     /// The attribute `fPublished`, when the element has it.
-    pub f_published: Option<String>,
+    pub f_published: Option<Box<str>>,
     /// The child that is `PictureFill`, which the schema requires.
     pub fill: Box<PictureFillWith<X>>,
     /// The attribute `macro`, when the element has it.
-    pub r#macro: Option<String>,
+    pub r#macro: Option<Box<str>>,
     /// The child that is `NonVisualPropertiesForAPicture`, which the schema requires.
     pub non_visual_properties: Box<NonVisualPropertiesForAPictureWith<X>>,
     /// The child that is `ShapeProperties`, which the schema requires.
@@ -1309,9 +1309,9 @@ pub struct PictureFillWith<X: UserData> {
     /// The child that is an item of `super::drawing::FillModeContent`, when there is one.
     pub content: Option<Box<super::drawing::FillModeContentWith<X>>>,
     /// The attribute `dpi`, when the element has it.
-    pub dpi: Option<String>,
+    pub dpi: Option<Box<str>>,
     /// The attribute `rotWithShape`, when the element has it.
-    pub rot_with_shape: Option<String>,
+    pub rot_with_shape: Option<Box<str>>,
     /// The child that is `super::drawing::SourceRectangle`, when there is one.
     pub source_rectangle: Option<Box<super::drawing::SourceRectangleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1405,7 +1405,7 @@ impl Eq for RowWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct RowID(pub String);
+pub struct RowID(pub Box<str>);
 
 /// The `xdr:rowOff` element, Row Offset (ECMA-376 Part 1, section 20.5.2.28). Its schema type is
 /// `ST_Coordinate`.
@@ -1432,11 +1432,11 @@ impl Eq for RowOffsetWith<()> {}
 #[non_exhaustive]
 pub struct ShapeWith<X: UserData> {
     /// The attribute `fLocksText`, when the element has it.
-    pub f_locks_text: Option<String>,
+    pub f_locks_text: Option<Box<str>>,
     /// The attribute `fPublished`, when the element has it.
-    pub f_published: Option<String>,
+    pub f_published: Option<Box<str>>,
     /// The attribute `macro`, when the element has it.
-    pub r#macro: Option<String>,
+    pub r#macro: Option<Box<str>>,
     /// The child that is `NonVisualPropertiesForAShape`, which the schema requires.
     pub non_visual_properties: Box<NonVisualPropertiesForAShapeWith<X>>,
     /// The child that is `ShapeProperties`, which the schema requires.
@@ -1446,7 +1446,7 @@ pub struct ShapeWith<X: UserData> {
     /// The child that is `ShapeTextBody`, when there is one.
     pub text_body: Option<Box<ShapeTextBodyWith<X>>>,
     /// The attribute `textlink`, when the element has it.
-    pub textlink: Option<String>,
+    pub textlink: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1672,9 +1672,9 @@ pub struct XfrmWith<X: UserData> {
     /// The child that is `super::drawing::Extents`, when there is one.
     pub extents: Option<Box<super::drawing::ExtentsWith<X>>>,
     /// The attribute `flipH`, when the element has it.
-    pub flip_h: Option<String>,
+    pub flip_h: Option<Box<str>>,
     /// The attribute `flipV`, when the element has it.
-    pub flip_v: Option<String>,
+    pub flip_v: Option<Box<str>>,
     /// The child that is `super::drawing::Offset`, when there is one.
     pub offset: Option<Box<super::drawing::OffsetWith<X>>>,
     /// The attribute `rot`, when the element has it.
@@ -1860,7 +1860,7 @@ impl AsRef<str> for ColumnID {
 
 impl From<String> for ColumnID {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -3515,7 +3515,7 @@ impl AsRef<str> for RowID {
 
 impl From<String> for RowID {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 

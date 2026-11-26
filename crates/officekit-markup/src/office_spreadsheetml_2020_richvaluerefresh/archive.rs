@@ -222,9 +222,9 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::RefreshInterval)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RefreshIntervalMirror {
-    pub interval: Option<String>,
-    pub resource_id_int: Option<String>,
-    pub resource_id_str: Option<String>,
+    pub interval: Option<Box<str>>,
+    pub resource_id_int: Option<Box<str>>,
+    pub resource_id_str: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

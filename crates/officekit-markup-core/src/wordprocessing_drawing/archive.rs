@@ -236,9 +236,9 @@ pub struct AbsolutePositionOffsetMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct AnchorForFloatingDrawingMLObjectMirror {
-    pub allow_overlap: Option<String>,
-    pub anchor_id: Option<String>,
-    pub behind_doc: Option<String>,
+    pub allow_overlap: Option<Box<str>>,
+    pub anchor_id: Option<Box<str>>,
+    pub behind_doc: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub common_drawingml_non_visual_properties:
         Option<Box<super::CommonDrawingMLNonVisualProperties>>,
@@ -250,16 +250,16 @@ pub struct AnchorForFloatingDrawingMLObjectMirror {
     #[rkyv(omit_bounds)]
     pub drawing_object_non_visual_properties: Box<super::DrawingObjectNonVisualProperties>,
     pub drawing_object_size: Box<super::DrawingObjectSize>,
-    pub edit_id: Option<String>,
+    pub edit_id: Option<Box<str>>,
     pub extents_including_effects: Option<Box<super::ObjectExtentsIncludingEffects>>,
     #[rkyv(omit_bounds)]
     pub graphic_object: Box<super::super::drawing::GraphicObject>,
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     pub horizontal_positioning: Box<super::HorizontalPositioning>,
-    pub layout_in_cell: Option<String>,
-    pub locked: Option<String>,
-    pub relative_height: Option<String>,
-    pub simple_pos: Option<String>,
+    pub layout_in_cell: Option<Box<str>>,
+    pub locked: Option<Box<str>>,
+    pub relative_height: Option<Box<str>>,
+    pub simple_pos: Option<Box<str>>,
     pub simple_positioning_coordinates: Box<super::SimplePositioningCoordinates>,
     pub size_rel_h: Option<Box<super::super::office_word_2010_wordprocessing_drawing::SizeRelH>>,
     pub size_rel_v: Option<Box<super::super::office_word_2010_wordprocessing_drawing::SizeRelV>>,
@@ -291,30 +291,30 @@ pub struct BackgroundFormattingMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BodyPropertiesMirror {
     pub anchor: Option<super::super::drawing::TextAnchoringTypes>,
-    pub anchor_ctr: Option<String>,
+    pub anchor_ctr: Option<Box<str>>,
     pub b_ins: Option<super::super::drawing::StCoordinate32>,
-    pub compat_ln_spc: Option<String>,
+    pub compat_ln_spc: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub force_aa: Option<String>,
-    pub from_word_art: Option<String>,
+    pub force_aa: Option<Box<str>>,
+    pub from_word_art: Option<Box<str>>,
     pub horz_overflow: Option<super::super::drawing::TextHorizontalOverflowTypes>,
     pub l_ins: Option<super::super::drawing::StCoordinate32>,
     pub num_col: Option<super::super::drawing::TextColumnCount>,
     pub preset_text_warp: Option<Box<super::super::drawing::PresetTextWarp>>,
     pub r_ins: Option<super::super::drawing::StCoordinate32>,
     pub rot: Option<super::super::drawing::Angle>,
-    pub rtl_col: Option<String>,
+    pub rtl_col: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub scene3d: Option<Box<super::super::drawing::Scene3d>>,
     pub spc_col: Option<super::super::drawing::PositiveCoordinatePoint>,
-    pub spc_first_last_para: Option<String>,
+    pub spc_first_last_para: Option<Box<str>>,
     pub t_ins: Option<super::super::drawing::StCoordinate32>,
     #[rkyv(omit_bounds)]
     pub text3d_content: Option<Box<super::super::drawing::Text3DContent>>,
     pub text_autofit_content: Option<Box<super::super::drawing::TextAutofitContent>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub upright: Option<String>,
+    pub upright: Option<Box<str>>,
     pub user_data: (),
     pub vert: Option<super::super::drawing::VerticalTextTypes>,
     pub vert_overflow: Option<super::super::drawing::TextVerticalOverflow>,
@@ -346,7 +346,7 @@ pub struct ContentPartMirror {
     pub bw_mode: Option<super::super::drawing::BlackAndWhiteMode>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub nv_content_part_pr: Option<Box<super::NvContentPartPr>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -363,15 +363,15 @@ pub struct ContentPartMirror {
 pub struct DrawingObjectNonVisualPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub click_hyperlink: Option<Box<super::super::drawing::ClickHyperlink>>,
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub hyperlink_for_hover: Option<Box<super::super::drawing::HyperlinkForHover>>,
     pub id: Option<super::super::drawing::DrawingElementID>,
-    pub name: Option<String>,
-    pub title: Option<String>,
+    pub name: Option<Box<str>>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -479,7 +479,7 @@ pub struct HorizontalPositioningMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct InlineDrawingMLObjectMirror {
-    pub anchor_id: Option<String>,
+    pub anchor_id: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub common_drawingml_non_visual_properties:
         Option<Box<super::CommonDrawingMLNonVisualProperties>>,
@@ -490,7 +490,7 @@ pub struct InlineDrawingMLObjectMirror {
     #[rkyv(omit_bounds)]
     pub drawing_object_non_visual_properties: Box<super::DrawingObjectNonVisualProperties>,
     pub drawing_object_size: Box<super::DrawingObjectSize>,
-    pub edit_id: Option<String>,
+    pub edit_id: Option<Box<str>>,
     pub extents_including_effects: Option<Box<super::ObjectExtentsIncludingEffects>>,
     #[rkyv(omit_bounds)]
     pub graphic_object: Box<super::super::drawing::GraphicObject>,
@@ -534,7 +534,7 @@ pub struct NonVisualContentPartDrawingPropertiesMirror {
     pub content_part_locks: Option<Box<super::super::drawing::ContentPartLocks>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub is_comment: Option<String>,
+    pub is_comment: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -548,15 +548,15 @@ pub struct NonVisualContentPartDrawingPropertiesMirror {
 pub struct NonVisualDrawingPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub click_hyperlink: Option<Box<super::super::drawing::ClickHyperlink>>,
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub hyperlink_for_hover: Option<Box<super::super::drawing::HyperlinkForHover>>,
     pub id: Option<super::super::drawing::DrawingElementID>,
-    pub name: Option<String>,
-    pub title: Option<String>,
+    pub name: Option<Box<str>>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -572,7 +572,7 @@ pub struct NonVisualDrawingPropertiesForAShapeMirror {
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub locks: Option<Box<super::super::drawing::ShapeLocks>>,
-    pub tx_box: Option<String>,
+    pub tx_box: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -737,8 +737,8 @@ pub struct SquareWrappingMirror {
 pub struct TextualContentsOfShapeLinkedTxbxMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub id: Option<String>,
-    pub seq: Option<String>,
+    pub id: Option<Box<str>>,
+    pub seq: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -752,7 +752,7 @@ pub struct TextualContentsOfShapeLinkedTxbxMirror {
 pub struct TextualContentsOfShapeTxbxMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub rich_text_box_content_container: Box<super::RichTextBoxContentContainer>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -853,7 +853,7 @@ pub struct WordprocessingMLShapeMirror {
     pub non_visual_drawing_properties: Option<Box<super::NonVisualDrawingProperties>>,
     #[rkyv(omit_bounds)]
     pub non_visual_properties_content: Box<super::ShapeNonVisualPropertiesContent>,
-    pub normal_east_asian_flow: Option<String>,
+    pub normal_east_asian_flow: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub properties: Box<super::ShapeProperties>,
     pub style: Option<Box<super::ShapeStyle>>,
@@ -888,7 +888,7 @@ pub struct WordprocessingMLShapeGroupMirror {
 #[rkyv(remote = super::WrappingPolygon)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WrappingPolygonMirror {
-    pub edited: Option<String>,
+    pub edited: Option<Box<str>>,
     pub line_end_position: Vec<super::WrappingPolygonLineEndPosition>,
     pub start: Box<super::WrappingPolygonStart>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -920,8 +920,8 @@ pub struct WrappingPolygonStartMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct XfrmMirror {
     pub extents: Option<Box<super::super::drawing::Extents>>,
-    pub flip_h: Option<String>,
-    pub flip_v: Option<String>,
+    pub flip_h: Option<Box<str>>,
+    pub flip_v: Option<Box<str>>,
     pub offset: Option<Box<super::super::drawing::Offset>>,
     pub rot: Option<super::super::drawing::Angle>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

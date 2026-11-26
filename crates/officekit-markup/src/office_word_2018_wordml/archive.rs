@@ -225,7 +225,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct ExtMirror {
     pub content: Box<drawing::AnyElementContent>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     pub user_data: (),
 }
 

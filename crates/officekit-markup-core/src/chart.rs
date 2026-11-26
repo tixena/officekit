@@ -2742,7 +2742,7 @@ pub struct ApplyToEndWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartApplyToEnd,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:applyToEnd` element of the tree a read gives: [`ApplyToEndWith`] holding nothing in
@@ -2762,7 +2762,7 @@ pub struct ApplyToFrontWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartApplyToFront,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:applyToFront` element of the tree a read gives: [`ApplyToFrontWith`] holding nothing in
@@ -2782,7 +2782,7 @@ pub struct ApplyToSidesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartApplyToSides,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:applyToSides` element of the tree a read gives: [`ApplyToSidesWith`] holding nothing in
@@ -2909,7 +2909,7 @@ pub struct AutoTitleIsDeletedWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartAutoTitleIsDeleted,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:autoTitleDeleted` element of the tree a read gives: [`AutoTitleIsDeletedWith`] holding
@@ -2929,7 +2929,7 @@ pub struct AutomaticCategoryAxisWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartAutomaticCategoryAxis,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:auto` element of the tree a read gives: [`AutomaticCategoryAxisWith`] holding nothing in
@@ -2999,7 +2999,7 @@ pub struct AxisIDWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartAxisID,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:axId` element of the tree a read gives: [`AxisIDWith`] holding nothing in `user_data`.
@@ -3059,7 +3059,7 @@ impl Eq for AxisPositionWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct AxisUnit(pub String);
+pub struct AxisUnit(pub Box<str>);
 
 /// The `c:backWall` element, Back Wall (ECMA-376 Part 1, section 21.2.2.11). Its schema type is
 /// `CT_Surface`.
@@ -3098,7 +3098,7 @@ pub struct BackwardWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartBackward,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:backward` element of the tree a read gives: [`BackwardWith`] holding nothing in
@@ -3340,7 +3340,7 @@ pub struct Bubble3DWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartBubble3D,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:bubble3D` element of the tree a read gives: [`Bubble3DWith`] holding nothing in
@@ -3463,7 +3463,7 @@ impl Eq for BubbleScaleWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct BubbleScalePercentage(pub String);
+pub struct BubbleScalePercentage(pub Box<str>);
 
 /// Bubble Scale `UnsignedInt`, the simple type `ST_BubbleScaleUInt` (ECMA-376 Part 4, section
 /// 18.1.3.16), kept as the text the file carried.
@@ -3477,7 +3477,7 @@ pub struct BubbleScalePercentage(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct BubbleScaleUnsignedInt(pub String);
+pub struct BubbleScaleUnsignedInt(pub Box<str>);
 
 /// The `c:bubbleSize` element, Bubble Size (ECMA-376 Part 1, section 21.2.2.22). Its schema type is
 /// `CT_NumDataSource`.
@@ -3714,7 +3714,7 @@ pub struct ChartObjectWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartChartObject,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:chartObject` element of the tree a read gives: [`ChartObjectWith`] holding nothing in
@@ -3906,7 +3906,7 @@ pub struct CrossingAxisIDWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartCrossingAxisID,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:crossAx` element of the tree a read gives: [`CrossingAxisIDWith`] holding nothing in
@@ -3926,7 +3926,7 @@ pub struct CrossingValueWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartCrossingValue,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:crossesAt` element of the tree a read gives: [`CrossingValueWith`] holding nothing in
@@ -3946,7 +3946,7 @@ pub struct CustomDisplayUnitWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartCustomDisplayUnit,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:custUnit` element of the tree a read gives: [`CustomDisplayUnitWith`] holding nothing in
@@ -3986,7 +3986,7 @@ pub struct DataCannotBeChangedWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartDataCannotBeChanged,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:data` element of the tree a read gives: [`DataCannotBeChangedWith`] holding nothing in
@@ -4227,7 +4227,7 @@ pub struct Date1904With<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartDate1904,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:date1904` element of the tree a read gives: [`Date1904With`] holding nothing in
@@ -4311,7 +4311,7 @@ pub struct DeleteWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartDelete,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:delete` element of the tree a read gives: [`DeleteWith`] holding nothing in `user_data`.
@@ -4350,7 +4350,7 @@ impl Eq for DepthPercentWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct DepthPercentUShort(pub String);
+pub struct DepthPercentUShort(pub Box<str>);
 
 /// Depth Percent `UnsignedShort`, the simple type `ST_HPercentUShort` (ECMA-376 Part 4, section
 /// 18.1.3.4), kept as the text the file carried.
@@ -4364,7 +4364,7 @@ pub struct DepthPercentUShort(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct DepthPercentUnsignedShort(pub String);
+pub struct DepthPercentUnsignedShort(pub Box<str>);
 
 /// Depth Percent with Symbol, the simple type `ST_DepthPercentWithSymbol` (ECMA-376 Part 1, section
 /// 21.2.3.51), kept as the text the file carried.
@@ -4378,7 +4378,7 @@ pub struct DepthPercentUnsignedShort(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct DepthPercentWithSymbol(pub String);
+pub struct DepthPercentWithSymbol(pub Box<str>);
 
 /// The `c:dispBlanksAs` element, Display Blanks As (ECMA-376 Part 1, section 21.2.2.42). Its schema
 /// type is `CT_DispBlanksAs`.
@@ -4411,7 +4411,7 @@ pub struct DisplayEquationWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartDisplayEquation,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:dispEq` element of the tree a read gives: [`DisplayEquationWith`] holding nothing in
@@ -4431,7 +4431,7 @@ pub struct DisplayRSquaredValueWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartDisplayRSquaredValue,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:dispRSqr` element of the tree a read gives: [`DisplayRSquaredValueWith`] holding nothing
@@ -4593,7 +4593,7 @@ pub struct EditingLanguageWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartEditingLanguage,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:lang` element of the tree a read gives: [`EditingLanguageWith`] holding nothing in
@@ -4653,7 +4653,7 @@ pub struct ErrorBarValueWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartErrorBarValue,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:val` element of the tree a read gives: [`ErrorBarValueWith`] holding nothing in
@@ -4760,7 +4760,7 @@ pub struct EvenFooterWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartEvenFooter,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `c:evenFooter` element of the tree a read gives: [`EvenFooterWith`] holding nothing in
@@ -4780,7 +4780,7 @@ pub struct EvenHeaderWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartEvenHeader,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `c:evenHeader` element of the tree a read gives: [`EvenHeaderWith`] holding nothing in
@@ -4800,7 +4800,7 @@ pub struct ExplosionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartExplosion,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:explosion` element of the tree a read gives: [`ExplosionWith`] holding nothing in
@@ -4820,7 +4820,7 @@ pub struct ExtensionWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartExtension,
 }
@@ -4836,7 +4836,7 @@ impl Eq for ExtensionWith<()> {}
 #[non_exhaustive]
 pub struct ExternalDataRelationshipWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4863,7 +4863,7 @@ pub struct FirstFooterWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartFirstFooter,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `c:firstFooter` element of the tree a read gives: [`FirstFooterWith`] holding nothing in
@@ -4883,7 +4883,7 @@ pub struct FirstHeaderWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartFirstHeader,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `c:firstHeader` element of the tree a read gives: [`FirstHeaderWith`] holding nothing in
@@ -4948,7 +4948,7 @@ pub struct FormatCodeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartFormatCode,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `c:formatCode` element of the tree a read gives: [`FormatCodeWith`] holding nothing in
@@ -4968,7 +4968,7 @@ pub struct FormatIDWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartFormatID,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:fmtId` element of the tree a read gives: [`FormatIDWith`] holding nothing in `user_data`.
@@ -4987,7 +4987,7 @@ pub struct FormattingWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartFormatting,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:formatting` element of the tree a read gives: [`FormattingWith`] holding nothing in
@@ -5006,7 +5006,7 @@ pub struct FormulaWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartFormula,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `c:f` element of the tree a read gives: [`FormulaWith`] holding nothing in `user_data`.
@@ -5025,7 +5025,7 @@ pub struct ForwardWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartForward,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:forward` element of the tree a read gives: [`ForwardWith`] holding nothing in
@@ -5071,7 +5071,7 @@ pub enum GapAmountMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct GapAmountPercentage(pub String);
+pub struct GapAmountPercentage(pub Box<str>);
 
 /// Gap Amount `UnsignedShort`, the simple type `ST_GapAmountUShort` (ECMA-376 Part 4, section
 /// 18.1.3.6), kept as the text the file carried.
@@ -5085,7 +5085,7 @@ pub struct GapAmountPercentage(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct GapAmountUnsignedShort(pub String);
+pub struct GapAmountUnsignedShort(pub Box<str>);
 
 /// The `c:gapDepth` element, Gap Depth (ECMA-376 Part 1, section 21.2.2.74). Its schema type is
 /// `CT_GapAmount`.
@@ -5153,11 +5153,11 @@ impl Eq for GroupingWith<()> {}
 #[non_exhaustive]
 pub struct HeaderAndFooterWith<X: UserData> {
     /// The attribute `alignWithMargins`, when the element has it.
-    pub align_with_margins: Option<String>,
+    pub align_with_margins: Option<Box<str>>,
     /// The attribute `differentFirst`, when the element has it.
-    pub different_first: Option<String>,
+    pub different_first: Option<Box<str>>,
     /// The attribute `differentOddEven`, when the element has it.
-    pub different_odd_even: Option<String>,
+    pub different_odd_even: Option<Box<str>>,
     /// The child that is `EvenFooter`, when there is one.
     pub even_footer: Option<Box<EvenFooterWith<X>>>,
     /// The child that is `EvenHeader`, when there is one.
@@ -5193,7 +5193,7 @@ pub struct HeightWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartHeight,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:h` element of the tree a read gives: [`HeightWith`] holding nothing in `user_data`.
@@ -5253,7 +5253,7 @@ impl Eq for HeightPercentWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct HeightPercentWithSymbol(pub String);
+pub struct HeightPercentWithSymbol(pub Box<str>);
 
 /// The `c:hiLowLines` element, High Low Lines (ECMA-376 Part 1, section 21.2.2.80). Its schema type
 /// is `CT_ChartLines`.
@@ -5307,7 +5307,7 @@ impl Eq for HoleSizeWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct HoleSizePercentage(pub String);
+pub struct HoleSizePercentage(pub Box<str>);
 
 /// Hole Size `UnsignedByte`, the simple type `ST_HoleSizeUByte` (ECMA-376 Part 4, section
 /// 18.1.3.10), kept as the text the file carried.
@@ -5321,7 +5321,7 @@ pub struct HoleSizePercentage(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct HoleSizeUnsignedByte(pub String);
+pub struct HoleSizeUnsignedByte(pub Box<str>);
 
 /// The `c:idx` element, Index (ECMA-376 Part 1, section 21.2.2.84). Its schema type is
 /// `CT_UnsignedInt`.
@@ -5334,7 +5334,7 @@ pub struct IndexWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartIndex,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:idx` element of the tree a read gives: [`IndexWith`] holding nothing in `user_data`.
@@ -5353,7 +5353,7 @@ pub struct InterceptWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartIntercept,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:intercept` element of the tree a read gives: [`InterceptWith`] holding nothing in
@@ -5373,7 +5373,7 @@ pub struct InvertIfNegativeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartInvertIfNegative,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:invertIfNegative` element of the tree a read gives: [`InvertIfNegativeWith`] holding
@@ -5434,7 +5434,7 @@ impl Eq for LabelOffsetWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct LabelOffsetPercentage(pub String);
+pub struct LabelOffsetPercentage(pub Box<str>);
 
 /// Label Offset `UnsignedShort`, the simple type `ST_LblOffsetUShort` (ECMA-376 Part 4, section
 /// 18.1.3.12), kept as the text the file carried.
@@ -5448,7 +5448,7 @@ pub struct LabelOffsetPercentage(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct LabelOffsetUnsignedShort(pub String);
+pub struct LabelOffsetUnsignedShort(pub Box<str>);
 
 /// The `c:layout` element, Layout (ECMA-376 Part 1, section 21.2.2.88). Its schema type is
 /// `CT_Layout`.
@@ -5546,7 +5546,7 @@ pub struct LeftWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartLeft,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:x` element of the tree a read gives: [`LeftWith`] holding nothing in `user_data`.
@@ -5579,7 +5579,7 @@ impl Eq for LeftModeWith<()> {}
 #[non_exhaustive]
 pub struct LegacyDrawingForHeadersAndFootersWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6000,7 +6000,7 @@ impl Eq for MarkerWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct MarkerSize(pub String);
+pub struct MarkerSize(pub Box<str>);
 
 /// Marker Style, the simple type `ST_MarkerStyle` (ECMA-376 Part 1, section 21.2.3.27), kept as its
 /// member or as the text the file carried.
@@ -6058,7 +6058,7 @@ pub struct MaximumWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartMaximum,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:max` element of the tree a read gives: [`MaximumWith`] holding nothing in `user_data`.
@@ -6077,7 +6077,7 @@ pub struct MinimumWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartMinimum,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:min` element of the tree a read gives: [`MinimumWith`] holding nothing in `user_data`.
@@ -6243,7 +6243,7 @@ pub struct NoEndCapWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartNoEndCap,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:noEndCap` element of the tree a read gives: [`NoEndCapWith`] holding nothing in
@@ -6263,7 +6263,7 @@ pub struct NoMultiLevelLabelsWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartNoMultiLevelLabels,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:noMultiLvlLbl` element of the tree a read gives: [`NoMultiLevelLabelsWith`] holding
@@ -6326,9 +6326,9 @@ impl Eq for NumberDataSourceContentWith<()> {}
 #[non_exhaustive]
 pub struct NumberFormatWith<X: UserData> {
     /// The attribute `formatCode`, when the element has it.
-    pub format_code: Option<String>,
+    pub format_code: Option<Box<str>>,
     /// The attribute `sourceLinked`, when the element has it.
-    pub source_linked: Option<String>,
+    pub source_linked: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6398,9 +6398,9 @@ impl Eq for NumberReferenceWith<()> {}
 #[non_exhaustive]
 pub struct NumericPointWith<X: UserData> {
     /// The attribute `formatCode`, when the element has it.
-    pub format_code: Option<String>,
+    pub format_code: Option<Box<str>>,
     /// The attribute `idx`, when the element has it.
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     /// The child that is `NumericValue`, which the schema requires.
     pub numeric_value: Box<NumericValueWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -6427,7 +6427,7 @@ pub struct NumericValueWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartNumericValue,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `c:v` element of the tree a read gives: [`NumericValueWith`] holding nothing in `user_data`.
@@ -6446,7 +6446,7 @@ pub struct OddFooterWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartOddFooter,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `c:oddFooter` element of the tree a read gives: [`OddFooterWith`] holding nothing in
@@ -6466,7 +6466,7 @@ pub struct OddHeaderWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartOddHeader,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `c:oddHeader` element of the tree a read gives: [`OddHeaderWith`] holding nothing in
@@ -6486,7 +6486,7 @@ pub struct OrderWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartOrder,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:order` element of the tree a read gives: [`OrderWith`] holding nothing in `user_data`.
@@ -6551,7 +6551,7 @@ impl Eq for OverlapWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct OverlapByte(pub String);
+pub struct OverlapByte(pub Box<str>);
 
 /// Overlap Percentage, the simple type `ST_OverlapPercent` (ECMA-376 Part 1, section 21.2.3.57),
 /// kept as the text the file carried.
@@ -6565,7 +6565,7 @@ pub struct OverlapByte(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct OverlapPercentage(pub String);
+pub struct OverlapPercentage(pub Box<str>);
 
 /// The `c:overlay` element, Overlay (ECMA-376 Part 1, section 21.2.2.132). Its schema type is
 /// `CT_Boolean`.
@@ -6578,7 +6578,7 @@ pub struct OverlayWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartOverlay,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:overlay` element of the tree a read gives: [`OverlayWith`] holding nothing in
@@ -6593,17 +6593,17 @@ impl Eq for OverlayWith<()> {}
 #[non_exhaustive]
 pub struct PageMarginsWith<X: UserData> {
     /// The attribute `b`, when the element has it.
-    pub b: Option<String>,
+    pub b: Option<Box<str>>,
     /// The attribute `footer`, when the element has it.
-    pub footer: Option<String>,
+    pub footer: Option<Box<str>>,
     /// The attribute `header`, when the element has it.
-    pub header: Option<String>,
+    pub header: Option<Box<str>>,
     /// The attribute `l`, when the element has it.
-    pub l: Option<String>,
+    pub l: Option<Box<str>>,
     /// The attribute `r`, when the element has it.
-    pub r: Option<String>,
+    pub r: Option<Box<str>>,
     /// The attribute `t`, when the element has it.
-    pub t: Option<String>,
+    pub t: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6623,32 +6623,32 @@ impl Eq for PageMarginsWith<()> {}
 #[non_exhaustive]
 pub struct PageSetupWith<X: UserData> {
     /// The attribute `blackAndWhite`, when the element has it.
-    pub black_and_white: Option<String>,
+    pub black_and_white: Option<Box<str>>,
     /// The attribute `copies`, when the element has it.
-    pub copies: Option<String>,
+    pub copies: Option<Box<str>>,
     /// The attribute `draft`, when the element has it.
-    pub draft: Option<String>,
+    pub draft: Option<Box<str>>,
     /// The attribute `firstPageNumber`, when the element has it.
-    pub first_page_number: Option<String>,
+    pub first_page_number: Option<Box<str>>,
     /// The attribute `horizontalDpi`, when the element has it.
-    pub horizontal_dpi: Option<String>,
+    pub horizontal_dpi: Option<Box<str>>,
     /// The attribute `orientation`, when the element has it.
     pub orientation: Option<PrintedPageOrientation>,
     /// The attribute `paperHeight`, when the element has it.
     pub paper_height: Option<common_simple_types::PositiveUniversalMeasurement>,
     /// The attribute `paperSize`, when the element has it.
-    pub paper_size: Option<String>,
+    pub paper_size: Option<Box<str>>,
     /// The attribute `paperWidth`, when the element has it.
     pub paper_width: Option<common_simple_types::PositiveUniversalMeasurement>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `useFirstPageNumber`, when the element has it.
-    pub use_first_page_number: Option<String>,
+    pub use_first_page_number: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartPageSetup,
     /// The attribute `verticalDpi`, when the element has it.
-    pub vertical_dpi: Option<String>,
+    pub vertical_dpi: Option<Box<str>>,
 }
 
 /// The `c:pageSetup` element of the tree a read gives: [`PageSetupWith`] holding nothing in
@@ -6976,7 +6976,7 @@ pub struct PivotNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartPivotName,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `c:name` element of the tree a read gives: [`PivotNameWith`] holding nothing in `user_data`.
@@ -7125,7 +7125,7 @@ pub struct PlotVisibleOnlyWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartPlotVisibleOnly,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:plotVisOnly` element of the tree a read gives: [`PlotVisibleOnlyWith`] holding nothing in
@@ -7164,7 +7164,7 @@ pub struct PointCountWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartPointCount,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:ptCount` element of the tree a read gives: [`PointCountWith`] holding nothing in
@@ -7369,7 +7369,7 @@ impl Eq for RadarStyleWith<()> {}
 #[non_exhaustive]
 pub struct ReferenceToChartDrawingPartWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -7389,7 +7389,7 @@ impl Eq for ReferenceToChartDrawingPartWith<()> {}
 #[non_exhaustive]
 pub struct ReferenceToChartPartWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -7437,7 +7437,7 @@ pub struct RightAngleAxesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartRightAngleAxes,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:rAngAx` element of the tree a read gives: [`RightAngleAxesWith`] holding nothing in
@@ -7457,7 +7457,7 @@ pub struct RoundedCornersWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartRoundedCorners,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:roundedCorners` element of the tree a read gives: [`RoundedCornersWith`] holding nothing
@@ -7599,7 +7599,7 @@ pub struct SecondPiePointWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartSecondPiePoint,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:secondPiePt` element of the tree a read gives: [`SecondPiePointWith`] holding nothing in
@@ -7640,7 +7640,7 @@ impl Eq for SecondPieSizeWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct SecondPieSizePercentage(pub String);
+pub struct SecondPieSizePercentage(pub Box<str>);
 
 /// Second Pie Size `UnsignedShort`, the simple type `ST_SecondPieSizeUShort` (ECMA-376 Part 4,
 /// section 18.1.3.8), kept as the text the file carried.
@@ -7654,7 +7654,7 @@ pub struct SecondPieSizePercentage(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct SecondPieSizeUnsignedShort(pub String);
+pub struct SecondPieSizeUnsignedShort(pub Box<str>);
 
 /// The `c:selection` element, Selection (ECMA-376 Part 1, section 21.2.2.165). Its schema type is
 /// `CT_Boolean`.
@@ -7667,7 +7667,7 @@ pub struct SelectionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartSelection,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:selection` element of the tree a read gives: [`SelectionWith`] holding nothing in
@@ -7687,7 +7687,7 @@ pub struct SeparatorWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartSeparator,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `c:separator` element of the tree a read gives: [`SeparatorWith`] holding nothing in
@@ -7876,7 +7876,7 @@ pub struct ShowBubbleSizeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartShowBubbleSize,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:showBubbleSize` element of the tree a read gives: [`ShowBubbleSizeWith`] holding nothing
@@ -7896,7 +7896,7 @@ pub struct ShowCategoryNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartShowCategoryName,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:showCatName` element of the tree a read gives: [`ShowCategoryNameWith`] holding nothing
@@ -7916,7 +7916,7 @@ pub struct ShowDataLabelsOverMaximumWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartShowDataLabelsOverMaximum,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:showDLblsOverMax` element of the tree a read gives: [`ShowDataLabelsOverMaximumWith`]
@@ -7936,7 +7936,7 @@ pub struct ShowHorizontalBorderWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartShowHorizontalBorder,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:showHorzBorder` element of the tree a read gives: [`ShowHorizontalBorderWith`] holding
@@ -7956,7 +7956,7 @@ pub struct ShowLeaderLinesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartShowLeaderLines,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:showLeaderLines` element of the tree a read gives: [`ShowLeaderLinesWith`] holding
@@ -7976,7 +7976,7 @@ pub struct ShowLegendKeyWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartShowLegendKey,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:showLegendKey` element of the tree a read gives: [`ShowLegendKeyWith`] holding nothing in
@@ -7996,7 +7996,7 @@ pub struct ShowLegendKeysWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartShowLegendKeys,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:showKeys` element of the tree a read gives: [`ShowLegendKeysWith`] holding nothing in
@@ -8016,7 +8016,7 @@ pub struct ShowMarkerWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartShowMarker,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:marker` element of the tree a read gives: [`ShowMarkerWith`] holding nothing in
@@ -8036,7 +8036,7 @@ pub struct ShowNegativeBubblesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartShowNegativeBubbles,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:showNegBubbles` element of the tree a read gives: [`ShowNegativeBubblesWith`] holding
@@ -8056,7 +8056,7 @@ pub struct ShowOutlineBorderWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartShowOutlineBorder,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:showOutline` element of the tree a read gives: [`ShowOutlineBorderWith`] holding nothing
@@ -8076,7 +8076,7 @@ pub struct ShowPercentWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartShowPercent,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:showPercent` element of the tree a read gives: [`ShowPercentWith`] holding nothing in
@@ -8096,7 +8096,7 @@ pub struct ShowSeriesNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartShowSeriesName,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:showSerName` element of the tree a read gives: [`ShowSeriesNameWith`] holding nothing in
@@ -8116,7 +8116,7 @@ pub struct ShowValueWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartShowValue,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:showVal` element of the tree a read gives: [`ShowValueWith`] holding nothing in
@@ -8136,7 +8136,7 @@ pub struct ShowVerticalBorderWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartShowVerticalBorder,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:showVertBorder` element of the tree a read gives: [`ShowVerticalBorderWith`] holding
@@ -8222,7 +8222,7 @@ impl Eq for SizeRepresentsWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct Skip(pub String);
+pub struct Skip(pub Box<str>);
 
 /// The `c:smooth` element, Smoothing (ECMA-376 Part 1, section 21.2.2.194). Its schema type is
 /// `CT_Boolean`.
@@ -8235,7 +8235,7 @@ pub struct SmoothingWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartSmoothing,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:smooth` element of the tree a read gives: [`SmoothingWith`] holding nothing in
@@ -8255,7 +8255,7 @@ pub struct SplitPositionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartSplitPosition,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:splitPos` element of the tree a read gives: [`SplitPositionWith`] holding nothing in
@@ -8599,7 +8599,7 @@ pub enum StErrDirMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StFirstSliceAng(pub String);
+pub struct StFirstSliceAng(pub Box<str>);
 
 /// Grouping, the simple type `ST_Grouping` (ECMA-376 Part 1, section 21.2.3.17), kept as its member
 /// or as the text the file carried.
@@ -8798,7 +8798,7 @@ pub enum StLegendPosMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StLogBase(pub String);
+pub struct StLogBase(pub Box<str>);
 
 /// Pie of Pie or Bar of Pie Type, the simple type `ST_OfPieType` (ECMA-376 Part 1, section
 /// 21.2.3.28), kept as its member or as the text the file carried.
@@ -8837,7 +8837,7 @@ pub enum StOfPieTypeMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StOrder(pub String);
+pub struct StOrder(pub Box<str>);
 
 /// Overlap, the simple type `ST_Overlap` (ECMA-376 Part 1, section 21.2.3.31), kept as its member
 /// or as the text the file carried.
@@ -8876,7 +8876,7 @@ pub enum StOverlapMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StPeriod(pub String);
+pub struct StPeriod(pub Box<str>);
 
 /// Perspective, the simple type `ST_Perspective` (ECMA-376 Part 1, section 21.2.3.34), kept as the
 /// text the file carried.
@@ -8890,7 +8890,7 @@ pub struct StPeriod(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StPerspective(pub String);
+pub struct StPerspective(pub Box<str>);
 
 /// Picture Format, the simple type `ST_PictureFormat` (ECMA-376 Part 1, section 21.2.3.35), kept as
 /// its member or as the text the file carried.
@@ -8931,7 +8931,7 @@ pub enum StPictureFormatMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StPictureStackUnit(pub String);
+pub struct StPictureStackUnit(pub Box<str>);
 
 /// Radar Style, the simple type `ST_RadarStyle` (ECMA-376 Part 1, section 21.2.3.37), kept as its
 /// member or as the text the file carried.
@@ -8972,7 +8972,7 @@ pub enum StRadarStyleMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StRotX(pub String);
+pub struct StRotX(pub Box<str>);
 
 /// Y Rotation, the simple type `ST_RotY` (ECMA-376 Part 1, section 21.2.3.39), kept as the text the
 /// file carried.
@@ -8986,7 +8986,7 @@ pub struct StRotX(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StRotY(pub String);
+pub struct StRotY(pub Box<str>);
 
 /// Scatter Style, the simple type `ST_ScatterStyle` (ECMA-376 Part 1, section 21.2.3.40), kept as
 /// its member or as the text the file carried.
@@ -9147,7 +9147,7 @@ pub enum StSplitTypeMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StStyle(pub String);
+pub struct StStyle(pub Box<str>);
 
 /// Thickness Percentage, the simple type `ST_Thickness` (ECMA-376 Part 1, section 21.2.3.59), kept
 /// as its member or as the text the file carried.
@@ -9186,7 +9186,7 @@ pub enum StThicknessMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StThicknessPercent(pub String);
+pub struct StThicknessPercent(pub Box<str>);
 
 /// Tick Label Position, the simple type `ST_TickLblPos` (ECMA-376 Part 1, section 21.2.3.47), kept
 /// as its member or as the text the file carried.
@@ -9336,7 +9336,7 @@ impl Eq for StringLiteralWith<()> {}
 #[non_exhaustive]
 pub struct StringPointWith<X: UserData> {
     /// The attribute `idx`, when the element has it.
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     /// The child that is `NumericValue`, which the schema requires.
     pub numeric_value: Box<NumericValueWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -9699,7 +9699,7 @@ pub struct TopWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartTop,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:y` element of the tree a read gives: [`TopWith`] holding nothing in `user_data`.
@@ -9767,7 +9767,7 @@ pub struct TrendlineNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartTrendlineName,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `c:name` element of the tree a read gives: [`TrendlineNameWith`] holding nothing in
@@ -9894,7 +9894,7 @@ pub struct UpdateAutomaticallyWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartUpdateAutomatically,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:autoUpdate` element of the tree a read gives: [`UpdateAutomaticallyWith`] holding nothing
@@ -9914,7 +9914,7 @@ pub struct UserInterfaceWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartUserInterface,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:userInterface` element of the tree a read gives: [`UserInterfaceWith`] holding nothing in
@@ -10031,7 +10031,7 @@ pub struct VaryColorsByPointWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartVaryColorsByPoint,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:varyColors` element of the tree a read gives: [`VaryColorsByPointWith`] holding nothing
@@ -10082,7 +10082,7 @@ pub struct WidthWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartWidth,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:w` element of the tree a read gives: [`WidthWith`] holding nothing in `user_data`.
@@ -10121,7 +10121,7 @@ pub struct WireframeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::ChartWireframe,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c:wireframe` element of the tree a read gives: [`WireframeWith`] holding nothing in
@@ -11037,7 +11037,7 @@ impl AsRef<str> for AxisUnit {
 
 impl From<String> for AxisUnit {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -11991,7 +11991,7 @@ impl AsRef<str> for BubbleScalePercentage {
 
 impl From<String> for BubbleScalePercentage {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -12036,7 +12036,7 @@ impl AsRef<str> for BubbleScaleUnsignedInt {
 
 impl From<String> for BubbleScaleUnsignedInt {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -14140,7 +14140,7 @@ impl AsRef<str> for DepthPercentUShort {
 
 impl From<String> for DepthPercentUShort {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -14185,7 +14185,7 @@ impl AsRef<str> for DepthPercentUnsignedShort {
 
 impl From<String> for DepthPercentUnsignedShort {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -14230,7 +14230,7 @@ impl AsRef<str> for DepthPercentWithSymbol {
 
 impl From<String> for DepthPercentWithSymbol {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -15984,7 +15984,7 @@ impl AsRef<str> for GapAmountPercentage {
 
 impl From<String> for GapAmountPercentage {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -16029,7 +16029,7 @@ impl AsRef<str> for GapAmountUnsignedShort {
 
 impl From<String> for GapAmountUnsignedShort {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -16445,7 +16445,7 @@ impl AsRef<str> for HeightPercentWithSymbol {
 
 impl From<String> for HeightPercentWithSymbol {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -16588,7 +16588,7 @@ impl AsRef<str> for HoleSizePercentage {
 
 impl From<String> for HoleSizePercentage {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -16633,7 +16633,7 @@ impl AsRef<str> for HoleSizeUnsignedByte {
 
 impl From<String> for HoleSizeUnsignedByte {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -16922,7 +16922,7 @@ impl AsRef<str> for LabelOffsetPercentage {
 
 impl From<String> for LabelOffsetPercentage {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -16967,7 +16967,7 @@ impl AsRef<str> for LabelOffsetUnsignedShort {
 
 impl From<String> for LabelOffsetUnsignedShort {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -18336,7 +18336,7 @@ impl AsRef<str> for MarkerSize {
 
 impl From<String> for MarkerSize {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -19717,7 +19717,7 @@ impl AsRef<str> for OverlapByte {
 
 impl From<String> for OverlapByte {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -19761,7 +19761,7 @@ impl AsRef<str> for OverlapPercentage {
 
 impl From<String> for OverlapPercentage {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -22428,7 +22428,7 @@ impl AsRef<str> for SecondPieSizePercentage {
 
 impl From<String> for SecondPieSizePercentage {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -22473,7 +22473,7 @@ impl AsRef<str> for SecondPieSizeUnsignedShort {
 
 impl From<String> for SecondPieSizeUnsignedShort {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -23870,7 +23870,7 @@ impl AsRef<str> for Skip {
 
 impl From<String> for Skip {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -25039,7 +25039,7 @@ impl AsRef<str> for StFirstSliceAng {
 
 impl From<String> for StFirstSliceAng {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -25702,7 +25702,7 @@ impl AsRef<str> for StLogBase {
 
 impl From<String> for StLogBase {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -25832,7 +25832,7 @@ impl AsRef<str> for StOrder {
 
 impl From<String> for StOrder {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -25964,7 +25964,7 @@ impl AsRef<str> for StPeriod {
 
 impl From<String> for StPeriod {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -26008,7 +26008,7 @@ impl AsRef<str> for StPerspective {
 
 impl From<String> for StPerspective {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -26141,7 +26141,7 @@ impl AsRef<str> for StPictureStackUnit {
 
 impl From<String> for StPictureStackUnit {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -26275,7 +26275,7 @@ impl AsRef<str> for StRotX {
 
 impl From<String> for StRotX {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -26319,7 +26319,7 @@ impl AsRef<str> for StRotY {
 
 impl From<String> for StRotY {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -26813,7 +26813,7 @@ impl AsRef<str> for StStyle {
 
 impl From<String> for StStyle {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -26945,7 +26945,7 @@ impl AsRef<str> for StThicknessPercent {
 
 impl From<String> for StThicknessPercent {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 

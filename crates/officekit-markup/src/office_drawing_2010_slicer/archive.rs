@@ -233,7 +233,7 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SlicerMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

@@ -941,9 +941,9 @@ pub static DATABASE_SOURCE_CONTENT_TAGS: officekit_markup_base::Accept =
 #[non_exhaustive]
 pub struct ActiveTabTopLevelEntityWith<X: UserData> {
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
-    pub r#type: Option<String>,
+    pub r#type: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -968,7 +968,7 @@ pub struct AutoFilterWith<X: UserData> {
     pub future_feature_data_storage_area:
         Option<Box<spreadsheet::FutureFeatureDataStorageAreaWith<X>>>,
     /// The attribute `ref`, when the element has it.
-    pub r#ref: Option<String>,
+    pub r#ref: Option<Box<str>>,
     /// The child that is `spreadsheet::SortState`, when there is one.
     pub sort_state: Option<Box<spreadsheet::SortStateWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1008,7 +1008,7 @@ impl Eq for BoundsWith<()> {}
 #[non_exhaustive]
 pub struct CWith<X: UserData> {
     /// The attribute `i`, when the element has it.
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     /// The attribute `t`, when the element has it.
     pub t: Option<SXVCellType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1033,7 +1033,7 @@ impl Eq for CWith<()> {}
 #[non_exhaustive]
 pub struct CacheHierarchyWith<X: UserData> {
     /// The attribute `aggregatedColumn`, when the element has it.
-    pub aggregated_column: Option<String>,
+    pub aggregated_column: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1053,9 +1053,9 @@ impl Eq for CacheHierarchyWith<()> {}
 #[non_exhaustive]
 pub struct CachedUniqueNameWith<X: UserData> {
     /// The attribute `index`, when the element has it.
-    pub index: Option<String>,
+    pub index: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1121,9 +1121,9 @@ pub enum CalcMemNumberFormatMember {
 #[non_exhaustive]
 pub struct CalculatedMemberWith<X: UserData> {
     /// The attribute `measure`, when the element has it.
-    pub measure: Option<String>,
+    pub measure: Option<Box<str>>,
     /// The attribute `measureGroup`, when the element has it.
-    pub measure_group: Option<String>,
+    pub measure_group: Option<Box<str>>,
     /// The attribute `numberFormat`, when the element has it.
     pub number_format: Option<CalcMemNumberFormat>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1145,15 +1145,15 @@ impl Eq for CalculatedMemberWith<()> {}
 #[non_exhaustive]
 pub struct ConnectionWith<X: UserData> {
     /// The attribute `autoDelete`, when the element has it.
-    pub auto_delete: Option<String>,
+    pub auto_delete: Option<Box<str>>,
     /// The child that is `DataFeedPr`, when there is one.
     pub data_feed_pr: Option<Box<DataFeedPrWith<X>>>,
     /// The attribute `excludeFromRefreshAll`, when the element has it.
-    pub exclude_from_refresh_all: Option<String>,
+    pub exclude_from_refresh_all: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `model`, when the element has it.
-    pub model: Option<String>,
+    pub model: Option<Box<str>>,
     /// The child that is `ModelTextPr`, when there is one.
     pub model_text_pr: Option<Box<ModelTextPrWith<X>>>,
     /// The child that is `OledbPr`, when there is one.
@@ -1166,7 +1166,7 @@ pub struct ConnectionWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `usedByAddin`, when the element has it.
-    pub used_by_addin: Option<String>,
+    pub used_by_addin: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml201011MainConnection,
 }
@@ -2682,7 +2682,7 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct DataFeedPrWith<X: UserData> {
     /// The attribute `connection`, when the element has it.
-    pub connection: Option<String>,
+    pub connection: Option<Box<str>>,
     /// The child that is `DbTables`, which the schema requires.
     pub db_tables: Box<DbTablesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -2704,7 +2704,7 @@ impl Eq for DataFeedPrWith<()> {}
 #[non_exhaustive]
 pub struct DataFieldWith<X: UserData> {
     /// The attribute `isCountDistinct`, when the element has it.
-    pub is_count_distinct: Option<String>,
+    pub is_count_distinct: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2726,7 +2726,7 @@ pub struct DataModelWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `minVersionLoad`, when the element has it.
-    pub min_version_load: Option<String>,
+    pub min_version_load: Option<Box<str>>,
     /// The child that is `ModelRelationships`, when there is one.
     pub relationships: Option<Box<ModelRelationshipsWith<X>>>,
     /// The child that is `ModelTables`, when there is one.
@@ -2772,7 +2772,7 @@ impl Eq for DatabaseSourceContentWith<()> {}
 #[non_exhaustive]
 pub struct DbCommandWith<X: UserData> {
     /// The attribute `text`, when the element has it.
-    pub text: Option<String>,
+    pub text: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2792,7 +2792,7 @@ impl Eq for DbCommandWith<()> {}
 #[non_exhaustive]
 pub struct DbTableWith<X: UserData> {
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2852,7 +2852,7 @@ impl Eq for DescriptionPrWith<()> {}
 #[non_exhaustive]
 pub struct DxfsWith<X: UserData> {
     /// The attribute `count`, when the element has it.
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     /// The children that are `spreadsheet::Formatting`, in order.
     pub formatting: Vec<spreadsheet::FormattingWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -2893,13 +2893,13 @@ impl Eq for ExtLstWith<()> {}
 #[non_exhaustive]
 pub struct ModelRelationshipWith<X: UserData> {
     /// The attribute `fromColumn`, when the element has it.
-    pub from_column: Option<String>,
+    pub from_column: Option<Box<str>>,
     /// The attribute `fromTable`, when the element has it.
-    pub from_table: Option<String>,
+    pub from_table: Option<Box<str>>,
     /// The attribute `toColumn`, when the element has it.
-    pub to_column: Option<String>,
+    pub to_column: Option<Box<str>>,
     /// The attribute `toTable`, when the element has it.
-    pub to_table: Option<String>,
+    pub to_table: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2939,11 +2939,11 @@ impl Eq for ModelRelationshipsWith<()> {}
 #[non_exhaustive]
 pub struct ModelTableWith<X: UserData> {
     /// The attribute `connection`, when the element has it.
-    pub connection: Option<String>,
+    pub connection: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2983,7 +2983,7 @@ impl Eq for ModelTablesWith<()> {}
 #[non_exhaustive]
 pub struct ModelTextPrWith<X: UserData> {
     /// The attribute `headers`, when the element has it.
-    pub headers: Option<String>,
+    pub headers: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3003,13 +3003,13 @@ impl Eq for ModelTextPrWith<()> {}
 #[non_exhaustive]
 pub struct MovingPeriodStateWith<X: UserData> {
     /// The attribute `movingMultiple`, when the element has it.
-    pub moving_multiple: Option<String>,
+    pub moving_multiple: Option<Box<str>>,
     /// The attribute `movingPeriod`, when the element has it.
     pub moving_period: Option<MovingPeriodStep>,
     /// The attribute `referenceDateBegin`, when the element has it.
-    pub reference_date_begin: Option<String>,
+    pub reference_date_begin: Option<Box<str>>,
     /// The attribute `referenceMultiple`, when the element has it.
-    pub reference_multiple: Option<String>,
+    pub reference_multiple: Option<Box<str>>,
     /// The attribute `referencePeriod`, when the element has it.
     pub reference_period: Option<MovingPeriodStep>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -3061,7 +3061,7 @@ pub enum MovingPeriodStepMember {
 #[non_exhaustive]
 pub struct OledbPrWith<X: UserData> {
     /// The attribute `connection`, when the element has it.
-    pub connection: Option<String>,
+    pub connection: Option<Box<str>>,
     /// The child that is an item of `DatabaseSourceContent`, which the schema requires.
     pub content: Box<DatabaseSourceContentWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -3083,7 +3083,7 @@ impl Eq for OledbPrWith<()> {}
 #[non_exhaustive]
 pub struct PivotCacheDecoupledWith<X: UserData> {
     /// The attribute `decoupled`, when the element has it.
-    pub decoupled: Option<String>,
+    pub decoupled: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3103,9 +3103,9 @@ impl Eq for PivotCacheDecoupledWith<()> {}
 #[non_exhaustive]
 pub struct PivotCacheIdVersionWith<X: UserData> {
     /// The attribute `cacheIdCreatedVersion`, when the element has it.
-    pub cache_id_created_version: Option<String>,
+    pub cache_id_created_version: Option<Box<str>>,
     /// The attribute `cacheIdSupportedVersion`, when the element has it.
-    pub cache_id_supported_version: Option<String>,
+    pub cache_id_supported_version: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3148,7 +3148,7 @@ pub struct PivotFilterWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `useWholeDay`, when the element has it.
-    pub use_whole_day: Option<String>,
+    pub use_whole_day: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml201011MainPivotFilter,
 }
@@ -3167,9 +3167,9 @@ pub struct PivotRowWith<X: UserData> {
     /// The children that are `C`, in order.
     pub c: Vec<CWith<X>>,
     /// The attribute `count`, when the element has it.
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     /// The attribute `r`, when the element has it.
-    pub r: Option<String>,
+    pub r: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3189,9 +3189,9 @@ impl Eq for PivotRowWith<()> {}
 #[non_exhaustive]
 pub struct PivotTableWith<X: UserData> {
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `tabId`, when the element has it.
-    pub tab_id: Option<String>,
+    pub tab_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3211,13 +3211,13 @@ impl Eq for PivotTableWith<()> {}
 #[non_exhaustive]
 pub struct PivotTableDataWith<X: UserData> {
     /// The attribute `cacheId`, when the element has it.
-    pub cache_id: Option<String>,
+    pub cache_id: Option<Box<str>>,
     /// The attribute `columnCount`, when the element has it.
-    pub column_count: Option<String>,
+    pub column_count: Option<Box<str>>,
     /// The child that is `PivotRow`, which the schema requires.
     pub pivot_row: Box<PivotRowWith<X>>,
     /// The attribute `rowCount`, when the element has it.
-    pub row_count: Option<String>,
+    pub row_count: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3237,7 +3237,7 @@ impl Eq for PivotTableDataWith<()> {}
 #[non_exhaustive]
 pub struct PivotTableReferenceWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3277,7 +3277,7 @@ impl Eq for PivotTableReferencesWith<()> {}
 #[non_exhaustive]
 pub struct PivotTableServerFormatsWith<X: UserData> {
     /// The attribute `count`, when the element has it.
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     /// The children that are `ServerFormat`, in order.
     pub server_format: Vec<ServerFormatWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -3303,9 +3303,9 @@ pub struct PivotTableUISettingsWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `relNeededHidden`, when the element has it.
-    pub rel_needed_hidden: Option<String>,
+    pub rel_needed_hidden: Option<Box<str>>,
     /// The attribute `sourceDataName`, when the element has it.
-    pub source_data_name: Option<String>,
+    pub source_data_name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3345,11 +3345,11 @@ impl Eq for PivotTablesWith<()> {}
 #[non_exhaustive]
 pub struct QueryTableWith<X: UserData> {
     /// The attribute `clipped`, when the element has it.
-    pub clipped: Option<String>,
+    pub clipped: Option<Box<str>>,
     /// The attribute `drillThrough`, when the element has it.
-    pub drill_through: Option<String>,
+    pub drill_through: Option<Box<str>>,
     /// The attribute `sourceDataName`, when the element has it.
-    pub source_data_name: Option<String>,
+    pub source_data_name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3369,25 +3369,25 @@ impl Eq for QueryTableWith<()> {}
 #[non_exhaustive]
 pub struct QuestionWith<X: UserData> {
     /// The attribute `binding`, when the element has it.
-    pub binding: Option<String>,
+    pub binding: Option<Box<str>>,
     /// The attribute `decimalPlaces`, when the element has it.
-    pub decimal_places: Option<String>,
+    pub decimal_places: Option<Box<str>>,
     /// The attribute `defaultValue`, when the element has it.
-    pub default_value: Option<String>,
+    pub default_value: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `format`, when the element has it.
     pub format: Option<QuestionFormat>,
     /// The attribute `helpText`, when the element has it.
-    pub help_text: Option<String>,
+    pub help_text: Option<Box<str>>,
     /// The child that is `QuestionPr`, when there is one.
     pub pr: Option<Box<QuestionPrWith<X>>>,
     /// The attribute `required`, when the element has it.
-    pub required: Option<String>,
+    pub required: Option<Box<str>>,
     /// The attribute `rowSource`, when the element has it.
-    pub row_source: Option<String>,
+    pub row_source: Option<Box<str>>,
     /// The attribute `text`, when the element has it.
-    pub text: Option<String>,
+    pub text: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<QuestionType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -3545,7 +3545,7 @@ impl Eq for QuestionsPrWith<()> {}
 #[non_exhaustive]
 pub struct RangePrWith<X: UserData> {
     /// The attribute `sourceName`, when the element has it.
-    pub source_name: Option<String>,
+    pub source_name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3615,9 +3615,9 @@ impl Eq for SelectionWith<()> {}
 #[non_exhaustive]
 pub struct ServerFormatWith<X: UserData> {
     /// The attribute `culture`, when the element has it.
-    pub culture: Option<String>,
+    pub culture: Option<Box<str>>,
     /// The attribute `format`, when the element has it.
-    pub format: Option<String>,
+    pub format: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3637,7 +3637,7 @@ impl Eq for ServerFormatWith<()> {}
 #[non_exhaustive]
 pub struct SlicerCacheHideItemsWithNoDataWith<X: UserData> {
     /// The attribute `count`, when the element has it.
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     /// The children that are `SlicerCacheOlapLevelName`, in order.
     pub slicer_cache_olap_level_name: Vec<SlicerCacheOlapLevelNameWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -3659,9 +3659,9 @@ impl Eq for SlicerCacheHideItemsWithNoDataWith<()> {}
 #[non_exhaustive]
 pub struct SlicerCacheOlapLevelNameWith<X: UserData> {
     /// The attribute `count`, when the element has it.
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     /// The attribute `uniqueName`, when the element has it.
-    pub unique_name: Option<String>,
+    pub unique_name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3725,25 +3725,25 @@ pub struct StateWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `filterId`, when the element has it.
-    pub filter_id: Option<String>,
+    pub filter_id: Option<Box<str>>,
     /// The attribute `filterPivotName`, when the element has it.
-    pub filter_pivot_name: Option<String>,
+    pub filter_pivot_name: Option<Box<str>>,
     /// The attribute `filterTabId`, when the element has it.
-    pub filter_tab_id: Option<String>,
+    pub filter_tab_id: Option<Box<str>>,
     /// The attribute `filterType`, when the element has it.
     pub filter_type: Option<spreadsheet::PivotFilterTypes>,
     /// The attribute `lastRefreshVersion`, when the element has it.
-    pub last_refresh_version: Option<String>,
+    pub last_refresh_version: Option<Box<str>>,
     /// The attribute `minimalRefreshVersion`, when the element has it.
-    pub minimal_refresh_version: Option<String>,
+    pub minimal_refresh_version: Option<Box<str>>,
     /// The child that is `MovingPeriodState`, when there is one.
     pub moving_period: Option<Box<MovingPeriodStateWith<X>>>,
     /// The attribute `pivotCacheId`, when the element has it.
-    pub pivot_cache_id: Option<String>,
+    pub pivot_cache_id: Option<Box<str>>,
     /// The child that is `Selection`, when there is one.
     pub selection: Option<Box<SelectionWith<X>>>,
     /// The attribute `singleRangeFilterState`, when the element has it.
-    pub single_range_filter_state: Option<String>,
+    pub single_range_filter_state: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3762,21 +3762,21 @@ impl Eq for StateWith<()> {}
 #[non_exhaustive]
 pub struct SurveyWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The child that is `DescriptionPr`, when there is one.
     pub description_pr: Option<Box<DescriptionPrWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `guid`, when the element has it.
-    pub guid: Option<String>,
+    pub guid: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The child that is `SurveyPr`, when there is one.
     pub pr: Option<Box<SurveyPrWith<X>>>,
     /// The child that is `Questions`, which the schema requires.
     pub questions: Box<QuestionsWith<X>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// The child that is `TitlePr`, when there is one.
     pub title_pr: Option<Box<TitlePrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -3818,17 +3818,17 @@ impl Eq for SurveyPrWith<()> {}
 #[non_exhaustive]
 pub struct TableSlicerCacheWith<X: UserData> {
     /// The attribute `column`, when the element has it.
-    pub column: Option<String>,
+    pub column: Option<Box<str>>,
     /// The attribute `crossFilter`, when the element has it.
     pub cross_filter: Option<office_spreadsheetml_2009_9_main::SlicerCacheCrossFilter>,
     /// The attribute `customListSort`, when the element has it.
-    pub custom_list_sort: Option<String>,
+    pub custom_list_sort: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `sortOrder`, when the element has it.
     pub sort_order: Option<office_spreadsheetml_2009_9_main::TabularSlicerCacheSortOrder>,
     /// The attribute `tableId`, when the element has it.
-    pub table_id: Option<String>,
+    pub table_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3848,39 +3848,39 @@ impl Eq for TableSlicerCacheWith<()> {}
 #[non_exhaustive]
 pub struct TextPrWith<X: UserData> {
     /// The attribute `characterSet`, when the element has it.
-    pub character_set: Option<String>,
+    pub character_set: Option<Box<str>>,
     /// The attribute `codePage`, when the element has it.
-    pub code_page: Option<String>,
+    pub code_page: Option<Box<str>>,
     /// The attribute `comma`, when the element has it.
-    pub comma: Option<String>,
+    pub comma: Option<Box<str>>,
     /// The attribute `consecutive`, when the element has it.
-    pub consecutive: Option<String>,
+    pub consecutive: Option<Box<str>>,
     /// The attribute `decimal`, when the element has it.
-    pub decimal: Option<String>,
+    pub decimal: Option<Box<str>>,
     /// The attribute `delimited`, when the element has it.
-    pub delimited: Option<String>,
+    pub delimited: Option<Box<str>>,
     /// The attribute `delimiter`, when the element has it.
-    pub delimiter: Option<String>,
+    pub delimiter: Option<Box<str>>,
     /// The child that is `spreadsheet::Fields`, when there is one.
     pub fields: Option<Box<spreadsheet::FieldsWith<X>>>,
     /// The attribute `fileType`, when the element has it.
     pub file_type: Option<spreadsheet::FileType>,
     /// The attribute `firstRow`, when the element has it.
-    pub first_row: Option<String>,
+    pub first_row: Option<Box<str>>,
     /// The attribute `prompt`, when the element has it.
-    pub prompt: Option<String>,
+    pub prompt: Option<Box<str>>,
     /// The attribute `qualifier`, when the element has it.
     pub qualifier: Option<spreadsheet::Qualifier>,
     /// The attribute `semicolon`, when the element has it.
-    pub semicolon: Option<String>,
+    pub semicolon: Option<Box<str>>,
     /// The attribute `sourceFile`, when the element has it.
-    pub source_file: Option<String>,
+    pub source_file: Option<Box<str>>,
     /// The attribute `space`, when the element has it.
-    pub space: Option<String>,
+    pub space: Option<Box<str>>,
     /// The attribute `tab`, when the element has it.
-    pub tab: Option<String>,
+    pub tab: Option<Box<str>>,
     /// The attribute `thousands`, when the element has it.
-    pub thousands: Option<String>,
+    pub thousands: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3900,29 +3900,29 @@ impl Eq for TextPrWith<()> {}
 #[non_exhaustive]
 pub struct TimelineWith<X: UserData> {
     /// The attribute `cache`, when the element has it.
-    pub cache: Option<String>,
+    pub cache: Option<Box<str>>,
     /// The attribute `caption`, when the element has it.
-    pub caption: Option<String>,
+    pub caption: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `level`, when the element has it.
-    pub level: Option<String>,
+    pub level: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `scrollPosition`, when the element has it.
-    pub scroll_position: Option<String>,
+    pub scroll_position: Option<Box<str>>,
     /// The attribute `selectionLevel`, when the element has it.
-    pub selection_level: Option<String>,
+    pub selection_level: Option<Box<str>>,
     /// The attribute `showHeader`, when the element has it.
-    pub show_header: Option<String>,
+    pub show_header: Option<Box<str>>,
     /// The attribute `showHorizontalScrollbar`, when the element has it.
-    pub show_horizontal_scrollbar: Option<String>,
+    pub show_horizontal_scrollbar: Option<Box<str>>,
     /// The attribute `showSelectionLabel`, when the element has it.
-    pub show_selection_label: Option<String>,
+    pub show_selection_label: Option<Box<str>>,
     /// The attribute `showTimeLevel`, when the element has it.
-    pub show_time_level: Option<String>,
+    pub show_time_level: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
-    pub style: Option<String>,
+    pub style: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3944,11 +3944,11 @@ pub struct TimelineCacheDefinitionWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The child that is `PivotTables`, when there is one.
     pub pivot_tables: Option<Box<PivotTablesWith<X>>>,
     /// The attribute `sourceName`, when the element has it.
-    pub source_name: Option<String>,
+    pub source_name: Option<Box<str>>,
     /// The child that is `State`, which the schema requires.
     pub state: Box<StateWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -3990,7 +3990,7 @@ impl Eq for TimelineCachePivotCachesWith<()> {}
 #[non_exhaustive]
 pub struct TimelineCacheRefWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4030,7 +4030,7 @@ impl Eq for TimelineCacheRefsWith<()> {}
 #[non_exhaustive]
 pub struct TimelinePivotCacheDefinitionWith<X: UserData> {
     /// The attribute `timelineData`, when the element has it.
-    pub timeline_data: Option<String>,
+    pub timeline_data: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4050,7 +4050,7 @@ impl Eq for TimelinePivotCacheDefinitionWith<()> {}
 #[non_exhaustive]
 pub struct TimelineRefWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4092,7 +4092,7 @@ pub struct TimelineStyleWith<X: UserData> {
     /// The child that is `TimelineStyleElements`, when there is one.
     pub elements: Option<Box<TimelineStyleElementsWith<X>>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4112,7 +4112,7 @@ impl Eq for TimelineStyleWith<()> {}
 #[non_exhaustive]
 pub struct TimelineStyleElementWith<X: UserData> {
     /// The attribute `dxfId`, when the element has it.
-    pub dxf_id: Option<String>,
+    pub dxf_id: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<TimelineStyleType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -4188,7 +4188,7 @@ pub enum TimelineStyleTypeMember {
 #[non_exhaustive]
 pub struct TimelineStylesWith<X: UserData> {
     /// The attribute `defaultTimelineStyle`, when the element has it.
-    pub default_timeline_style: Option<String>,
+    pub default_timeline_style: Option<Box<str>>,
     /// The children that are `TimelineStyle`, in order.
     pub timeline_style: Vec<TimelineStyleWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -4255,7 +4255,7 @@ pub struct VWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml201011MainV,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `x15:v` element of the tree a read gives: [`VWith`] holding nothing in `user_data`.
@@ -4750,7 +4750,7 @@ pub trait Visitor: crate::Visitor {
 #[non_exhaustive]
 pub struct WebExtensionWith<X: UserData> {
     /// The attribute `appRef`, when the element has it.
-    pub app_ref: Option<String>,
+    pub app_ref: Option<Box<str>>,
     /// The child that is `office_excel_2006_main::F`, which the schema requires.
     pub f: Box<office_excel_2006_main::FWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -4792,7 +4792,7 @@ impl Eq for WebExtensionsWith<()> {}
 #[non_exhaustive]
 pub struct WorkbookPrWith<X: UserData> {
     /// The attribute `chartTrackingRefBase`, when the element has it.
-    pub chart_tracking_ref_base: Option<String>,
+    pub chart_tracking_ref_base: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4812,19 +4812,19 @@ impl Eq for WorkbookPrWith<()> {}
 #[non_exhaustive]
 pub struct XWith<X: UserData> {
     /// The attribute `b`, when the element has it.
-    pub b: Option<String>,
+    pub b: Option<Box<str>>,
     /// The attribute `bc`, when the element has it.
-    pub bc: Option<String>,
+    pub bc: Option<Box<str>>,
     /// The attribute `fc`, when the element has it.
-    pub fc: Option<String>,
+    pub fc: Option<Box<str>>,
     /// The attribute `i`, when the element has it.
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     /// The attribute `in`, when the element has it.
-    pub r#in: Option<String>,
+    pub r#in: Option<Box<str>>,
     /// The attribute `st`, when the element has it.
-    pub st: Option<String>,
+    pub st: Option<Box<str>>,
     /// The attribute `un`, when the element has it.
-    pub un: Option<String>,
+    pub un: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

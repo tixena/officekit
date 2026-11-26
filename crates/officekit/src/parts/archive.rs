@@ -405,7 +405,7 @@ pub enum PartModel {
     DiagramPersistLayout(office_drawing_2008_diagram::Drawing),
     DiagramStyle(diagram::StyleDefinition),
     Dialogsheet(spreadsheet::DialogSheet),
-    DocumentSettings(wordprocessing::DocumentSettings),
+    DocumentSettings(Box<wordprocessing::DocumentSettings>),
     DocumentTasks(office_tasks_2019_documenttasks::Tasks),
     Drawings(spreadsheet_drawing::WorksheetDrawing),
     Endnotes(wordprocessing::DocumentEndnotes),

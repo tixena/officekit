@@ -233,7 +233,7 @@ pub struct DataDisplayOptions16Mirror {
 pub struct DispNaAsBlankMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 impl From<DataDisplayOptions16Mirror> for super::DataDisplayOptions16 {

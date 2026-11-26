@@ -56,7 +56,7 @@ fn append_row_holds_one_preserved_paragraph_per_cell() {
                             if matches!(
                                 run.content.as_slice(),
                                 [TextRunContent::Text(text)]
-                                    if text.space.as_deref() == Some("preserve") && text.value == " a "
+                                    if text.space.as_deref() == Some("preserve") && &*text.value == " a "
                             )
                     )
             )
@@ -160,7 +160,7 @@ fn every_row_takes_the_rows_inside_content_controls_and_custom_xml_in_order() {
 fn every_cell_takes_the_cells_inside_content_controls_and_custom_xml_in_order() {
     let tagged = |id: &str| {
         let mut cell = TableCell::default();
-        cell.id = Some(id.to_owned());
+        cell.id = Some(Box::from(id));
         ContentCellContent::from(cell)
     };
     let mut control = CellLevelStructuredDocumentTag::default();

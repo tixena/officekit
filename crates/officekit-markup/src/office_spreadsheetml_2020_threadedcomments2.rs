@@ -265,7 +265,7 @@ pub struct ChecksumWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2020Threadedcomments2Checksum,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xltc2:checksum` element of the tree a read gives: [`ChecksumWith`] holding nothing in
@@ -369,14 +369,14 @@ pub struct HyperlinkWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `length`, when the element has it.
-    pub length: Option<String>,
+    pub length: Option<Box<str>>,
     /// The attribute `startIndex`, when the element has it.
-    pub start_index: Option<String>,
+    pub start_index: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `url`, when the element has it.
-    pub url: Option<String>,
+    pub url: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2020Threadedcomments2Hyperlink,
 }

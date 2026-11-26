@@ -28,7 +28,7 @@ fn cell(kind: Option<&str>, value: Option<&str>) -> Cell {
     node.t = kind.map(|text| CellType::from(text.to_owned()));
     node.value = value.map(|text| {
         let mut stored = CellValue::default();
-        stored.value = text.to_owned();
+        stored.value = Box::from(text);
         Box::new(stored)
     });
     node
@@ -57,7 +57,7 @@ fn table(items: Vec<StringItem>) -> SharedStringTable {
 
 fn text(value: &str) -> Text {
     let mut node = Text::default();
-    node.value = value.to_owned();
+    node.value = Box::from(value);
     node
 }
 
@@ -83,7 +83,7 @@ fn a_formula_gives_its_stored_value() {
     let strings = SharedStrings::default();
     let mut sum = cell(None, Some("1229.5"));
     let mut formula = FormulaF::default();
-    formula.value = "SUM(C3:C4)".to_owned();
+    formula.value = Box::from("SUM(C3:C4)");
     sum.formula_f = Some(Box::new(formula.clone()));
     let mut string = cell(Some("str"), Some("mono"));
     string.formula_f = Some(Box::new(formula));

@@ -220,7 +220,7 @@ impl StyleSheet {
             .and_then(|found| found.run_properties.as_deref())
             .cloned();
         for style in &styles.style_definition {
-            let Some(id) = style.style_id.clone() else {
+            let Some(id) = style.style_id.as_deref().map(String::from) else {
                 continue;
             };
             if is_default_paragraph(style) {
@@ -393,7 +393,9 @@ impl StyleSheet {
         EffectiveParagraph {
             properties: ParagraphPropertiesPPrGeneral::read(&paragraph),
             run_properties: RunProperties::read(&runs),
-            style: chain.first().and_then(|style| style.style_id.clone()),
+            style: chain
+                .first()
+                .and_then(|style| style.style_id.as_deref().map(String::from)),
             table_run_properties: table_levels.iter().map(RunProperties::read).collect(),
         }
     }

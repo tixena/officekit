@@ -223,7 +223,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct AggregationInfoMirror {
     pub aggregation_type: Option<super::AggregationType>,
-    pub source_field: Option<String>,
+    pub source_field: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -232,7 +232,7 @@ pub struct AggregationInfoMirror {
 #[rkyv(remote = super::FeatureSupportInfo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FeatureSupportInfoMirror {
-    pub feature_name: Option<String>,
+    pub feature_name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

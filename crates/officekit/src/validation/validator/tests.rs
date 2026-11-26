@@ -297,10 +297,10 @@ fn table_of_one_cell(
 /// A style of `kind` whose id and name are `id`.
 fn typed_style(kind: &str, id: &str) -> StyleDefinition {
     let mut name = PrimaryStyleName::default();
-    name.val = Some(id.to_owned());
+    name.val = Some(Box::from(id));
     let mut style = StyleDefinition::default();
     style.primary_style_name = Some(Box::new(name));
-    style.style_id = Some(id.to_owned());
+    style.style_id = Some(Box::from(id));
     style.r#type = Some(StyleTypes::from(kind.to_owned()));
     style
 }
@@ -334,7 +334,7 @@ fn number(value: &str) -> DecimalNumberValue {
 /// A run of the text `value`.
 fn typed_run(value: &str) -> TextRun {
     let mut text = Text::default();
-    text.value = value.to_owned();
+    text.value = Box::from(value);
     let mut run = TextRun::default();
     run.content = vec![TextRunContent::from(text)];
     run
@@ -731,7 +731,7 @@ fn on_off_document(value: &str) -> Package {
 fn content_controls() -> [Package; 4] {
     let properties = || {
         let mut tag = ProgrammaticTag::default();
-        tag.val = Some("a".to_owned());
+        tag.val = Some(Box::from("a"));
         let mut label = StructuredDocumentTagLabel::default();
         label.val = Some(number("1"));
         let mut tab_index = StructuredDocumentTagNavigationOrderIndex::default();
@@ -790,7 +790,7 @@ fn content_controls() -> [Package; 4] {
 /// Table properties holding every child of `CT_TblPrBase`.
 fn every_table_style_property() -> PreviousTableProperties {
     let mut style = ReferencedTableStyle::default();
-    style.val = Some("T1".to_owned());
+    style.val = Some(Box::from("T1"));
     let mut position = FloatingTablePositioning::default();
     position.tblp_x = Some(SignedMeasurementInTwentiethsOfPoint::from("1".to_owned()));
     let mut overlap = FloatingTableAllowsOverlap::default();
@@ -809,9 +809,9 @@ fn every_table_style_property() -> PreviousTableProperties {
     let mut look = TableStyleConditionalFormattingSettingsException::default();
     look.val = Some(FourDigitHexadecimalValue::from("04A0".to_owned()));
     let mut caption = TableCaption::default();
-    caption.val = Some("c".to_owned());
+    caption.val = Some(Box::from("c"));
     let mut description = TableDescription::default();
-    description.val = Some("d".to_owned());
+    description.val = Some(Box::from("d"));
     let mut properties = PreviousTableProperties::default();
     properties.floating_table_allows_overlap = Some(Box::new(overlap));
     properties.floating_table_positioning = Some(Box::new(position));
@@ -917,21 +917,21 @@ fn a_document_background_refuses_fill() {
 #[test]
 fn a_paragraph_and_the_settings_accept_smart_tags() {
     let mut attribute = CustomXMLAttribute::default();
-    attribute.name = Some("ProductID".to_owned());
-    attribute.val = Some("LA VIVIENDA".to_owned());
+    attribute.name = Some(Box::from("ProductID"));
+    attribute.val = Some(Box::from("LA VIVIENDA"));
     let mut properties = SmartTagProperties::default();
     properties.custom_xml_attribute = vec![attribute];
     let mut tag = InlineLevelSmartTag::default();
     tag.content = vec![ParagraphContent::from(typed_run("LA VIVIENDA"))];
     tag.element = Some(XMLName::from("PersonName".to_owned()));
     tag.properties = Some(Box::new(properties));
-    tag.uri = Some("urn:schemas-microsoft-com:office:smarttags".to_owned());
+    tag.uri = Some(Box::from("urn:schemas-microsoft-com:office:smarttags"));
     let paragraph = typed_paragraph(vec![ParagraphContent::from(tag)]);
     accepted_at_every_version(&paragraph, "w:smartTag");
     let mut tag_type = SupplementarySmartTagInformation::default();
-    tag_type.name = Some("PersonName".to_owned());
-    tag_type.namespaceuri = Some("urn:schemas-microsoft-com:office:smarttags".to_owned());
-    tag_type.url = Some("http://example.com/".to_owned());
+    tag_type.name = Some(Box::from("PersonName"));
+    tag_type.namespaceuri = Some(Box::from("urn:schemas-microsoft-com:office:smarttags"));
+    tag_type.url = Some(Box::from("http://example.com/"));
     let mut settings = DocumentSettings::default();
     settings.supplementary_smart_tag_information = vec![tag_type];
     accepted_at_every_version(&typed_settings(&settings), "w:smartTagType");
@@ -1077,7 +1077,7 @@ fn a_background_accepts_a_drawing() {
 #[test]
 fn an_object_accepts_a_movie() {
     let mut movie = EmbeddedVideo::default();
-    movie.id = Some("rId9".to_owned());
+    movie.id = Some(Box::from("rId9"));
     let mut object = EmbeddedObject::default();
     object.content = Some(Box::new(EmbeddedObjectContent::from(movie)));
     let mut run = TextRun::default();
@@ -1123,18 +1123,18 @@ fn a_content_control_accepts_a_label_and_a_tab_index() {
 fn a_frame_accepts_a_title_and_a_long_description_and_a_frameset_a_title() {
     let title = || {
         let mut title = FrameOrFramesetTitle::default();
-        title.val = Some("t".to_owned());
+        title.val = Some(Box::from("t"));
         Some(Box::new(title))
     };
     let size = || {
         let mut size = FrameSize::default();
-        size.val = Some("x".to_owned());
+        size.val = Some(Box::from("x"));
         Some(Box::new(size))
     };
     let mut name = PrimaryStyleName::default();
-    name.val = Some("n".to_owned());
+    name.val = Some(Box::from("n"));
     let mut description = FrameLongDescription::default();
-    description.id = Some("rId9".to_owned());
+    description.id = Some(Box::from("rId9"));
     let mut margin = LeftAndRightMarginForFrame::default();
     margin.val = Some(MeasurementInPixels::from("1".to_owned()));
     let mut frame = SingleFrameProperties::default();
@@ -1238,9 +1238,9 @@ fn a_style_and_a_table_style_condition_accept_p_style_before_the_other_propertie
 #[test]
 fn the_document_defaults_accept_p_style_and_a_properties_change() {
     let mut style = ReferencedParagraphStyle::default();
-    style.val = Some("S1".to_owned());
+    style.val = Some(Box::from("S1"));
     let mut change = RevisionInformationForParagraphProperties::default();
-    change.author = Some("a".to_owned());
+    change.author = Some(Box::from("a"));
     change.id = Some(number("1"));
     let mut properties = ParagraphPropertiesPPrGeneral::default();
     properties.keep_paragraph_with_next_paragraph = Some(Box::default());
@@ -1316,9 +1316,9 @@ fn a_div_id_that_is_not_an_integer_is_refused() {
 #[test]
 fn a_compatibility_setting_accepts_a_name_newer_than_the_target() {
     let mut setting = CustomCompatibilitySetting::default();
-    setting.name = Some("useWord2013TrackBottomHyphenation".to_owned());
-    setting.uri = Some("http://schemas.microsoft.com/office/word".to_owned());
-    setting.val = Some("1".to_owned());
+    setting.name = Some(Box::from("useWord2013TrackBottomHyphenation"));
+    setting.uri = Some(Box::from("http://schemas.microsoft.com/office/word"));
+    setting.val = Some(Box::from("1"));
     let mut compatibility = CompatibilitySettings::default();
     compatibility.custom_compatibility_setting = vec![setting];
     let mut settings = DocumentSettings::default();

@@ -63657,7 +63657,7 @@ impl super::Transform for wordprocessing::VmlOfficeDrawingElementContent {
         } else if let Self::SkewTransform(arm) = self {
             Self::SkewTransform(Box::new(arm.transform(ctx)))
         } else if let Self::StorageForAlternateMathContent(arm) = self {
-            Self::StorageForAlternateMathContent(Box::new(arm.transform(ctx)))
+            Self::StorageForAlternateMathContent(arm.transform(ctx))
         } else if let Self::TextBoxBottomStroke(arm) = self {
             Self::TextBoxBottomStroke(Box::new(arm.transform(ctx)))
         } else if let Self::TextBoxInteriorStroke(arm) = self {
@@ -65927,7 +65927,7 @@ fn transform_block_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::BlockContent> {
     if let wordprocessing::BlockContent::AnchorForImportedExternalContent(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(wordprocessing::BlockContent::AnchorForImportedExternalContent(node));
     }
     if let wordprocessing::BlockContent::BlockLevelCustomXMLElement(arm) = item {
@@ -69799,7 +69799,7 @@ fn transform_vml_element_2(
         return Some(wordprocessing::VmlElementContent::SkewTransform(node));
     }
     if let wordprocessing::VmlElementContent::StorageForAlternateMathContent(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(wordprocessing::VmlElementContent::StorageForAlternateMathContent(node));
     }
     if let wordprocessing::VmlElementContent::TextBox(arm) = item {

@@ -583,9 +583,9 @@ pub struct ArrayWith<X: UserData> {
     /// The children that are an item of `ArrayContent`, in order.
     pub content: Vec<ArrayContentWith<X>>,
     /// The attribute `lBounds`, when the element has it.
-    pub l_bounds: Option<String>,
+    pub l_bounds: Option<Box<str>>,
     /// The attribute `uBounds`, when the element has it.
-    pub u_bounds: Option<String>,
+    pub u_bounds: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<crate::Unknown>>,
@@ -714,7 +714,7 @@ pub struct BasicStringWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesBasicString,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:bstr` element of the tree a read gives: [`BasicStringWith`] holding nothing in
@@ -734,7 +734,7 @@ pub struct BinaryBlobWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesBinaryBlob,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:blob` element of the tree a read gives: [`BinaryBlobWith`] holding nothing in
@@ -754,7 +754,7 @@ pub struct BinaryBlobObjectWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesBinaryBlobObject,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:oblob` element of the tree a read gives: [`BinaryBlobObjectWith`] holding nothing in
@@ -774,7 +774,7 @@ pub struct BinaryStorageWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesBinaryStorage,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:storage` element of the tree a read gives: [`BinaryStorageWith`] holding nothing in
@@ -794,7 +794,7 @@ pub struct BinaryStorageObjectWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesBinaryStorageObject,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:ostorage` element of the tree a read gives: [`BinaryStorageObjectWith`] holding nothing
@@ -814,7 +814,7 @@ pub struct BinaryStreamWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesBinaryStream,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:stream` element of the tree a read gives: [`BinaryStreamWith`] holding nothing in
@@ -834,7 +834,7 @@ pub struct BinaryStreamObjectWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesBinaryStreamObject,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:ostream` element of the tree a read gives: [`BinaryStreamObjectWith`] holding nothing in
@@ -854,7 +854,7 @@ pub struct BinaryVersionedStreamWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesBinaryVersionedStream,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
     /// The attribute `version`, when the element has it.
     pub version: Option<super::common_simple_types::Guid>,
 }
@@ -876,7 +876,7 @@ pub struct BooleanWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesBoolean,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:bool` element of the tree a read gives: [`BooleanWith`] holding nothing in `user_data`.
@@ -933,7 +933,7 @@ impl Eq for CurrencyWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct CurrencySimpleType(pub String);
+pub struct CurrencySimpleType(pub Box<str>);
 
 /// The `vt:date` element, Date and Time (ECMA-376 Part 1, section 22.4.2.7). Its schema type is
 /// `dateTime`.
@@ -946,7 +946,7 @@ pub struct DateAndTimeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesDateAndTime,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:date` element of the tree a read gives: [`DateAndTimeWith`] holding nothing in
@@ -966,7 +966,7 @@ pub struct DecimalWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesDecimal,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:decimal` element of the tree a read gives: [`DecimalWith`] holding nothing in
@@ -1024,7 +1024,7 @@ impl Eq for ErrorStatusCodeWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct ErrorStatusCodeSimpleType(pub String);
+pub struct ErrorStatusCodeSimpleType(pub Box<str>);
 
 /// The `vt:filetime` element, File Time (ECMA-376 Part 1, section 22.4.2.11). Its schema type is
 /// `dateTime`.
@@ -1037,7 +1037,7 @@ pub struct FileTimeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesFileTime,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:filetime` element of the tree a read gives: [`FileTimeWith`] holding nothing in
@@ -1056,7 +1056,7 @@ pub struct I1With<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesI1,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:i1` element of the tree a read gives: [`I1With`] holding nothing in `user_data`.
@@ -1074,7 +1074,7 @@ pub struct I2With<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesI2,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:i2` element of the tree a read gives: [`I2With`] holding nothing in `user_data`.
@@ -1092,7 +1092,7 @@ pub struct I4With<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesI4,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:i4` element of the tree a read gives: [`I4With`] holding nothing in `user_data`.
@@ -1110,7 +1110,7 @@ pub struct I8With<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesI8,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:i8` element of the tree a read gives: [`I8With`] holding nothing in `user_data`.
@@ -1128,7 +1128,7 @@ pub struct IntegerWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesInteger,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:int` element of the tree a read gives: [`IntegerWith`] holding nothing in `user_data`.
@@ -1146,7 +1146,7 @@ pub struct LpstrWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesLpstr,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:lpstr` element of the tree a read gives: [`LpstrWith`] holding nothing in `user_data`.
@@ -1165,7 +1165,7 @@ pub struct LpwstrWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesLpwstr,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:lpwstr` element of the tree a read gives: [`LpwstrWith`] holding nothing in `user_data`.
@@ -1199,7 +1199,7 @@ pub struct R4With<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesR4,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:r4` element of the tree a read gives: [`R4With`] holding nothing in `user_data`.
@@ -1217,7 +1217,7 @@ pub struct R8With<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesR8,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:r8` element of the tree a read gives: [`R8With`] holding nothing in `user_data`.
@@ -1235,7 +1235,7 @@ pub struct Ui1With<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesUi1,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:ui1` element of the tree a read gives: [`Ui1With`] holding nothing in `user_data`.
@@ -1253,7 +1253,7 @@ pub struct Ui2With<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesUi2,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:ui2` element of the tree a read gives: [`Ui2With`] holding nothing in `user_data`.
@@ -1271,7 +1271,7 @@ pub struct Ui4With<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesUi4,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:ui4` element of the tree a read gives: [`Ui4With`] holding nothing in `user_data`.
@@ -1289,7 +1289,7 @@ pub struct Ui8With<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesUi8,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:ui8` element of the tree a read gives: [`Ui8With`] holding nothing in `user_data`.
@@ -1308,7 +1308,7 @@ pub struct UnsignedIntegerWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesVariantTypesUnsignedInteger,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `vt:uint` element of the tree a read gives: [`UnsignedIntegerWith`] holding nothing in
@@ -1431,7 +1431,7 @@ pub struct VectorWith<X: UserData> {
     /// The children that are an item of `VectorContent`, in order.
     pub content: Vec<VectorContentWith<X>>,
     /// The attribute `size`, when the element has it.
-    pub size: Option<String>,
+    pub size: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<crate::Unknown>>,
@@ -2458,7 +2458,7 @@ impl AsRef<str> for CurrencySimpleType {
 
 impl From<String> for CurrencySimpleType {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -2694,7 +2694,7 @@ impl AsRef<str> for ErrorStatusCodeSimpleType {
 
 impl From<String> for ErrorStatusCodeSimpleType {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 

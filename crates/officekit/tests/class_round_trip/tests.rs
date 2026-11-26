@@ -87,7 +87,7 @@ fn paragraph() -> BlockContent {
     let mut run_properties = RunProperties::default();
     run_properties.content = vec![RunPropertiesContent::from(scale)];
     let mut characters = Text::default();
-    characters.value = "x".to_owned();
+    characters.value = Box::from("x");
     let mut run = TextRun::default();
     run.properties = Some(Box::new(run_properties));
     run.content = vec![TextRunContent::from(characters)];
@@ -118,7 +118,7 @@ fn fonts() -> FontTableRootElement {
     charset.val = Some(TwoDigitHexadecimalValue::from("00".to_owned()));
     let mut font = PropertiesForASingleFont::default();
     font.character_set_supported_by_font = Some(Box::new(charset));
-    font.name = Some("Calibri".to_owned());
+    font.name = Some(Box::from("Calibri"));
     let mut fonts = FontTableRootElement::default();
     fonts.properties_for_a_single_font = vec![font];
     fonts

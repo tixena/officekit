@@ -188,7 +188,7 @@ impl Numbering {
             if let Some(linked) = definition
                 .numbering_style_definition
                 .as_deref()
-                .and_then(|link| link.val.clone())
+                .and_then(|link| link.val.as_deref().map(String::from))
             {
                 built.style_links.entry(linked).or_insert(id);
             }

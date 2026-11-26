@@ -119,7 +119,7 @@ fn table_style(
     formats: Vec<StyleConditionalTableFormattingProperties>,
 ) -> StyleDefinition {
     let mut style = StyleDefinition::default();
-    style.style_id = Some(id.to_owned());
+    style.style_id = Some(Box::from(id));
     style.r#type = Some(StyleTypes::from(StyleTypesMember::Table));
     style.previous_table_properties = table.map(Box::new);
     style.style_conditional_table_formatting_properties = formats;
@@ -140,7 +140,7 @@ fn own_table(
     let mut own = TableProperties::default();
     own.referenced_table_style = style.map(|id| {
         let mut reference = ReferencedTableStyle::default();
-        reference.val = Some(id.to_owned());
+        reference.val = Some(Box::from(id));
         Box::new(reference)
     });
     own.table_style_conditional_formatting_settings_exception = look.map(Box::new);
@@ -478,7 +478,7 @@ fn a_style_takes_what_its_parent_states() {
     );
     let mut child = table_style("Child", None, Vec::new());
     let mut based_on = ParentStyleID::default();
-    based_on.val = Some("Parent".to_owned());
+    based_on.val = Some(Box::from("Parent"));
     child.parent_style_id = Some(Box::new(based_on));
     child.run_properties = Some(Box::new(colored_run("00FF00")));
     let sheet = sheet_of(alloc::vec![parent, child]);
@@ -655,7 +655,7 @@ fn top_size(table: &TableProperties) -> Option<String> {
                 .as_deref()
         })
         .and_then(|top| top.sz.as_ref())
-        .map(|size| size.0.clone())
+        .map(|size| size.0.clone().into())
 }
 
 #[test]
@@ -776,12 +776,12 @@ fn a_row_s_exceptions_lie_over_the_table_s_own_properties_over_the_style_s() {
         .paragraph_border_below_identical_paragraphs
         .as_deref()
         .unwrap();
-    assert_eq!(bottom.sz.as_ref().map(|size| size.0.as_str()), Some("8"));
+    assert_eq!(bottom.sz.as_ref().map(|size| &*size.0), Some("8"));
     let inside = borders
         .table_inside_horizontal_edges_border
         .as_deref()
         .unwrap();
-    assert_eq!(inside.sz.as_ref().map(|size| size.0.as_str()), Some("4"));
+    assert_eq!(inside.sz.as_ref().map(|size| &*size.0), Some("4"));
 }
 
 #[test]

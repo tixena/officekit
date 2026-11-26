@@ -236,13 +236,13 @@ pub struct CNvGrpSpPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CNvPrMirror {
     pub click_hyperlink: Option<Box<drawing::ClickHyperlink>>,
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     pub hyperlink_for_hover: Option<Box<drawing::HyperlinkForHover>>,
     pub id: Option<drawing::DrawingElementID>,
-    pub name: Option<String>,
-    pub title: Option<String>,
+    pub name: Option<Box<str>>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -253,7 +253,7 @@ pub struct CNvPrMirror {
 pub struct CNvSpPrMirror {
     pub extension_list: Option<Box<drawing::ExtensionList>>,
     pub shape_locks: Option<Box<drawing::ShapeLocks>>,
-    pub tx_box: Option<String>,
+    pub tx_box: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -262,8 +262,8 @@ pub struct CNvSpPrMirror {
 #[rkyv(remote = super::DataModelExt)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataModelExtMirror {
-    pub min_ver: Option<String>,
-    pub rel_id: Option<String>,
+    pub min_ver: Option<Box<str>>,
+    pub rel_id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -341,7 +341,7 @@ pub struct NvSpPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SpMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub model_id: Option<String>,
+    pub model_id: Option<Box<str>>,
     pub nv_sp_pr: Box<super::NvSpPr>,
     pub pr: Box<super::SpPr>,
     pub style: Option<Box<super::Style>>,
@@ -408,8 +408,8 @@ pub struct TxBodyMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TxXfrmMirror {
     pub extents: Option<Box<drawing::Extents>>,
-    pub flip_h: Option<String>,
-    pub flip_v: Option<String>,
+    pub flip_h: Option<Box<str>>,
+    pub flip_v: Option<Box<str>>,
     pub offset: Option<Box<drawing::Offset>>,
     pub rot: Option<drawing::Angle>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

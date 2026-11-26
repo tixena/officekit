@@ -79,12 +79,12 @@ let mut xlsx = Xlsx::new(SpreadsheetKind::Workbook)?;
 let sheet = PartName::new("/xl/worksheets/sheet1.xml")?;
 
 let mut value = CellValue::default();
-value.value = "42".to_owned();
+value.value = "42".into();
 let mut cell = Cell::default();
-cell.r = Some("A1".to_owned());
+cell.r = Some("A1".into());
 cell.value = Some(Box::new(value));
 let mut row = Row::default();
-row.r = Some("1".to_owned());
+row.r = Some("1".into());
 row.cell.push(cell);
 
 let mut root = worksheet::load(xlsx.package(), &sheet, xlsx.options())?;
@@ -95,7 +95,7 @@ let again = worksheet::load(xlsx.package(), &sheet, xlsx.options())?;
 let first = again.sheet_data.row.first().and_then(|row| row.cell.first());
 let text = first
     .and_then(|cell| cell.value.as_ref())
-    .map(|value| value.value.as_str());
+    .map(|value| &*value.value);
 assert_eq!(text, Some("42"));
 # Ok(())
 # }
@@ -571,7 +571,7 @@ impl spreadsheet::Context for IsoDates {
     ) -> Option<spreadsheet::DynamicFilter> {
         let iso = iso_date_time(node.max_val.as_deref()?, self.date1904)?;
         let mut filter = node.transform_children(self);
-        filter.max_val_iso = Some(iso);
+        filter.max_val_iso = Some(iso.into());
         Some(filter)
     }
 
@@ -581,7 +581,7 @@ impl spreadsheet::Context for IsoDates {
     ) -> Option<spreadsheet::PivotCacheDefinition> {
         let iso = iso_date_time(node.refreshed_date.as_deref()?, self.date1904)?;
         let mut definition = node.transform_children(self);
-        definition.refreshed_date_iso = Some(iso);
+        definition.refreshed_date_iso = Some(iso.into());
         Some(definition)
     }
 }

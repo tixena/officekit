@@ -154,7 +154,7 @@ impl Body<'_> {
             page.as_bytes(),
         )?;
         let mut chunk = AnchorForImportedExternalContent::default();
-        chunk.id = Some(id);
+        chunk.id = Some(id.into());
         self.blocks.push(BlockContent::from(chunk));
         Ok(())
     }
@@ -306,7 +306,7 @@ impl Body<'_> {
                 let (id, name) = self.bookmarks.add(&heading_text(&heading.children));
                 let mut start = BookmarkStart::default();
                 start.id = Some(id.to_string().into());
-                start.name = Some(name);
+                start.name = Some(name.into());
                 let mut end = BookmarkEnd::default();
                 end.id = Some(id.to_string().into());
                 let mut runs = self.runs();
@@ -350,7 +350,7 @@ impl Body<'_> {
             rows.push(ContentRowContent::from(written));
         }
         let mut style = ReferencedTableStyle::default();
-        style.val = Some(TABLE_GRID.to_owned());
+        style.val = Some(Box::from(TABLE_GRID));
         let mut width = PreferredTableWidth::default();
         width.r#type = Some(TableWidthUnitsMember::Auto.into());
         let mut properties = TableProperties::default();
@@ -459,7 +459,7 @@ impl Format {
         let mut content = Vec::new();
         if let Some(id) = self.character_style {
             let mut reference = ReferencedCharacterStyle::default();
-            reference.val = Some(id.to_owned());
+            reference.val = Some(Box::from(id));
             content.push(RunPropertiesContent::from(reference));
         }
         if self.bold {
@@ -523,15 +523,19 @@ impl Runs<'_> {
         E: Extension,
     {
         let mut hyperlink = Hyperlink::default();
-        hyperlink.tooltip.clone_from(&link.title);
+        hyperlink.tooltip = link.title.as_deref().map(Box::from);
         if let Some(target) = link.target.strip_prefix('#') {
-            hyperlink.anchor = Some(bookmark_name(target));
+            hyperlink.anchor = Some(bookmark_name(target).into());
         } else {
-            hyperlink.id = Some(self.package.relate_external(
-                Some(self.main),
-                &link.target,
-                RelationshipType::HYPERLINK.in_class(ConformanceClass::Transitional),
-            )?);
+            hyperlink.id = Some(
+                self.package
+                    .relate_external(
+                        Some(self.main),
+                        &link.target,
+                        RelationshipType::HYPERLINK.in_class(ConformanceClass::Transitional),
+                    )?
+                    .into(),
+            );
         }
         Ok(hyperlink)
     }
@@ -817,8 +821,8 @@ impl Runs<'_> {
                 }
                 if !piece.is_empty() {
                     let mut characters = Text::default();
-                    characters.space = Some("preserve".to_owned());
-                    piece.clone_into(&mut characters.value);
+                    characters.space = Some(Box::from("preserve"));
+                    characters.value = Box::from(piece);
                     content.push(TextRunContent::from(characters));
                 }
             }
@@ -1166,7 +1170,7 @@ fn numbering_reference(level: usize, instance: usize) -> NumberingDefinitionInst
 /// `w:pStyle` of style `id`.
 fn paragraph_style(id: &str) -> ReferencedParagraphStyle {
     let mut reference = ReferencedParagraphStyle::default();
-    reference.val = Some(id.to_owned());
+    reference.val = Some(Box::from(id));
     reference
 }
 

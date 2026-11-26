@@ -384,8 +384,8 @@ pub struct SldMasterMkLstMirror {
 #[rkyv(remote = super::SldMk)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SldMkMirror {
-    pub c_id: Option<String>,
-    pub sld_id: Option<String>,
+    pub c_id: Option<Box<str>>,
+    pub sld_id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

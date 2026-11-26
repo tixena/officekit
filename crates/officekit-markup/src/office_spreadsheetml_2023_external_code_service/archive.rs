@@ -222,8 +222,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::ExternalCodeService)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ExternalCodeServiceMirror {
-    pub auto_show: Option<String>,
-    pub timeout: Option<String>,
+    pub auto_show: Option<Box<str>>,
+    pub timeout: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

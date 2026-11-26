@@ -333,7 +333,7 @@ pub struct DispNaAsBlankWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing201703ChartDispNaAsBlank,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c16r3:dispNaAsBlank` element of the tree a read gives: [`DispNaAsBlankWith`] holding

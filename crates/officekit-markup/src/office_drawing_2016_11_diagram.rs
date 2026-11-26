@@ -272,7 +272,7 @@ pub struct AutoBuNodeInfoWith<X: UserData> {
     /// The child that is `BuPr`, which the schema requires.
     pub bu_pr: Box<BuPrWith<X>>,
     /// The attribute `lvl`, when the element has it.
-    pub lvl: Option<String>,
+    pub lvl: Option<Box<str>>,
     /// The attribute `ptType`, when the element has it.
     pub pt_type: Option<STorageType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -316,9 +316,9 @@ pub struct BuPrWith<X: UserData> {
     /// The child that is an item of `drawing::TextBulletContent`, which the schema requires.
     pub content: Box<drawing::TextBulletContentWith<X>>,
     /// The attribute `leadZeros`, when the element has it.
-    pub lead_zeros: Option<String>,
+    pub lead_zeros: Option<Box<str>>,
     /// The attribute `prefix`, when the element has it.
-    pub prefix: Option<String>,
+    pub prefix: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

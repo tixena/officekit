@@ -230,7 +230,7 @@ pub struct ColIdMirror {
 #[rkyv(remote = super::CreationId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CreationIdMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -239,8 +239,8 @@ pub struct CreationIdMirror {
 #[rkyv(remote = super::CxnDERefs)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CxnDERefsMirror {
-    pub end: Option<String>,
-    pub st: Option<String>,
+    pub end: Option<Box<str>>,
+    pub st: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -249,7 +249,7 @@ pub struct CxnDERefsMirror {
 #[rkyv(remote = super::PredDERef)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PredDERefMirror {
-    pub pred: Option<String>,
+    pub pred: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

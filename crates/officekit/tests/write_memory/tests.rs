@@ -74,7 +74,7 @@ fn document(count: usize) -> Document {
     body.content = (0..count)
         .map(|index| {
             let mut text = Text::default();
-            text.value = format!("paragraph {index:06}");
+            text.value = format!("paragraph {index:06}").into();
             let mut run = TextRun::default();
             let mut properties = RunProperties::default();
             properties

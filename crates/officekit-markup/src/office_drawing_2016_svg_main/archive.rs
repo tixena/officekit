@@ -222,8 +222,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::SvgBlip)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SvgBlipMirror {
-    pub embed: Option<String>,
-    pub link: Option<String>,
+    pub embed: Option<Box<str>>,
+    pub link: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

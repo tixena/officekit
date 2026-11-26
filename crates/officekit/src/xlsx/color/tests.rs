@@ -56,9 +56,9 @@ fn element(
 ) -> DataBarColor {
     let mut node = DataBarColor::default();
     node.rgb = rgb.map(|value| HexUnsignedInteger::from(value.to_owned()));
-    node.theme = theme.map(str::to_owned);
-    node.indexed = indexed.map(str::to_owned);
-    node.tint = tint.map(str::to_owned);
+    node.theme = theme.map(Box::from);
+    node.indexed = indexed.map(Box::from);
+    node.tint = tint.map(Box::from);
     node
 }
 
@@ -108,11 +108,11 @@ fn the_four_types_give_the_same_value() {
     macro_rules! stated {
         ($node:ty) => {{
             let mut node = <$node>::default();
-            node.auto = Some("1".to_owned());
-            node.indexed = Some("10".to_owned());
+            node.auto = Some(Box::from("1"));
+            node.indexed = Some(Box::from("10"));
             node.rgb = Some(HexUnsignedInteger::from("FF102030".to_owned()));
-            node.theme = Some("4".to_owned());
-            node.tint = Some("-0.25".to_owned());
+            node.theme = Some(Box::from("4"));
+            node.tint = Some(Box::from("-0.25"));
             node
         }};
     }
@@ -134,7 +134,7 @@ fn the_four_types_give_the_same_value() {
 #[test]
 fn a_value_that_is_no_number_of_its_type_is_read_as_absent() {
     let mut node = element(Some("FFF"), Some("one"), Some("-1"), None);
-    node.auto = Some("yes".to_owned());
+    node.auto = Some(Box::from("yes"));
     assert_eq!(SheetColor::from(&node), SheetColor::default());
     assert_eq!(
         SheetColor::from(&element(Some("GG0000"), None, None, None)).rgb,
@@ -165,7 +165,7 @@ fn rgb_comes_before_theme_and_theme_before_indexed() {
 #[test]
 fn an_element_that_states_none_of_the_three_names_no_colour() {
     let mut auto = DataBarColor::default();
-    auto.auto = Some("1".to_owned());
+    auto.auto = Some(Box::from("1"));
     assert_eq!(of(&auto, &themed()), None);
     assert_eq!(of(&DataBarColor::default(), &themed()), None);
 }

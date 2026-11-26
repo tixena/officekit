@@ -54,16 +54,16 @@ fn text(package: &Package, part: &PartName) -> String {
 fn sizes(presentation: &Presentation) -> [(Option<String>, Option<String>); 2] {
     let slides = presentation.slide_size.as_deref().map_or_default(|size| {
         (
-            size.cx.as_ref().map(|cx| cx.0.clone()),
-            size.cy.as_ref().map(|cy| cy.0.clone()),
+            size.cx.as_ref().map(|cx| String::from(&*cx.0)),
+            size.cy.as_ref().map(|cy| String::from(&*cy.0)),
         )
     });
     let notes = &presentation.notes_slide_size;
     [
         slides,
         (
-            notes.cx.as_ref().map(|cx| cx.0.clone()),
-            notes.cy.as_ref().map(|cy| cy.0.clone()),
+            notes.cx.as_ref().map(|cx| String::from(&*cx.0)),
+            notes.cy.as_ref().map(|cy| String::from(&*cy.0)),
         ),
     ]
 }
@@ -80,7 +80,7 @@ fn slide_with_runs(texts: &[&str]) -> PresentationSlideSlide {
         .iter()
         .map(|text| {
             let mut characters = TextString::default();
-            characters.value = (*text).to_owned();
+            characters.value = Box::from(*text);
             let mut run = DrawingRun::default();
             run.text_string = Box::new(characters);
             TextParagraphsContent::from(run)
@@ -118,7 +118,7 @@ fn run_texts(slide_root: &PresentationSlideSlide) -> Vec<String> {
         .iter()
         .filter_map(|content| {
             if let TextParagraphsContent::TextRun(run) = content {
-                Some(run.text_string.value.clone())
+                Some(run.text_string.value.clone().into())
             } else {
                 None
             }
@@ -171,18 +171,15 @@ fn a_new_presentation_holds_a_master_a_blank_layout_and_a_theme_and_no_slide() {
     assert_eq!(package.content_type(&theme_part), Some(theme::CONTENT_TYPE));
 
     let presentation = pptx.presentation().unwrap();
-    let masters: Vec<(Option<String>, Option<String>)> = presentation
+    let masters: Vec<(Option<&str>, Option<&str>)> = presentation
         .list_of_slide_master_ids
         .as_deref()
         .unwrap()
         .slide_master_id
         .iter()
-        .map(|id| (id.id.as_ref().map(|value| value.0.clone()), id.r_id.clone()))
+        .map(|id| (id.id.as_ref().map(|value| &*value.0), id.r_id.as_deref()))
         .collect();
-    assert_eq!(
-        masters,
-        [(Some("2147483648".to_owned()), Some("rId1".to_owned()))]
-    );
+    assert_eq!(masters, [(Some("2147483648"), Some("rId1"))]);
     assert_eq!(
         sizes(&presentation),
         [size("12192000", "6858000"), size("6858000", "9144000")]
@@ -195,7 +192,7 @@ fn a_new_presentation_holds_a_master_a_blank_layout_and_a_theme_and_no_slide() {
             .unwrap()
             .slide_layout_id
             .into_iter()
-            .map(|id| (id.id.map(|value| value.0), id.r_id))
+            .map(|id| (id.id.map(|value| value.0.into()), id.r_id.map(String::from)))
             .collect();
     assert_eq!(
         layouts,
@@ -431,7 +428,7 @@ fn strict_refusals_names_a_presentation_s_legacy_verifier() {
     let mut pptx = Pptx::new(PresentationKind::Presentation).unwrap();
     assert_eq!(pptx.strict_refusals().unwrap(), []);
     let mut verifier = ModificationVerifier::default();
-    verifier.hash_data = Some("AAAA".to_owned());
+    verifier.hash_data = Some(Box::from("AAAA"));
     let mut presentation = pptx.presentation().unwrap();
     presentation.modification_verifier = Some(Box::new(verifier));
     pptx.set_presentation(&presentation).unwrap();

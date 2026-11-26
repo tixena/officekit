@@ -51,12 +51,12 @@ impl officekit_markup::Visitor for Ids {
 
 impl vml::Visitor for Ids {
     fn rectangle(&mut self, node: &Rectangle) -> Descend {
-        self.0.extend(node.id.clone());
+        self.0.extend(node.id.clone().map(String::from));
         Descend::Yes
     }
 
     fn shape_definition(&mut self, node: &ShapeDefinition) -> Descend {
-        self.0.extend(node.id.clone());
+        self.0.extend(node.id.clone().map(String::from));
         Descend::Yes
     }
 }
@@ -66,7 +66,8 @@ impl wordprocessing_drawing::Visitor for Ids {
         &mut self,
         node: &DrawingObjectNonVisualProperties,
     ) -> Descend {
-        self.0.extend(node.id.as_ref().map(|id| id.0.clone()));
+        self.0
+            .extend(node.id.as_ref().map(|id| String::from(&*id.0)));
         Descend::Yes
     }
 }
@@ -143,7 +144,7 @@ fn in_run(content: TextRunContent) -> BlockContent {
 fn doc_pr(id: &str) -> BlockContent {
     let mut properties = DrawingObjectNonVisualProperties::default();
     properties.id = Some(DrawingElementID::from(id.to_owned()));
-    properties.name = Some("Picture".to_owned());
+    properties.name = Some(Box::from("Picture"));
     let mut inline = InlineDrawingMLObject::default();
     inline.drawing_object_non_visual_properties = Box::new(properties);
     let mut drawing = DrawingMLObject::default();
@@ -161,14 +162,14 @@ fn picture(shape: VmlElementContent) -> BlockContent {
 /// A paragraph holding a VML rectangle of `id`.
 fn rect(id: &str) -> BlockContent {
     let mut rectangle = Rectangle::default();
-    rectangle.id = Some(id.to_owned());
+    rectangle.id = Some(Box::from(id));
     picture(VmlElementContent::from(rectangle))
 }
 
 /// A paragraph holding a VML shape of `id`.
 fn shape(id: &str) -> BlockContent {
     let mut definition = ShapeDefinition::default();
-    definition.id = Some(id.to_owned());
+    definition.id = Some(Box::from(id));
     picture(VmlElementContent::from(definition))
 }
 
@@ -262,7 +263,7 @@ fn suffixed_ids_avoid_the_values_of_other_parts() {
 #[test]
 fn a_referenced_id_is_not_renamed() {
     let mut ole = EmbeddedOLEObject::default();
-    ole.shape_id = Some("_x0000_i1025".to_owned());
+    ole.shape_id = Some(Box::from("_x0000_i1025"));
     let mut object = EmbeddedObject::default();
     object.vml_element_content = vec![VmlElementContent::from(ole)];
     let mut package = typed_package(
@@ -287,7 +288,7 @@ fn an_id_outside_the_list_is_not_renamed() {
     let bookmark = |name: &str| {
         let mut start = BookmarkStart::default();
         start.id = Some(DecimalNumberValue::from("0".to_owned()));
-        start.name = Some(name.to_owned());
+        start.name = Some(Box::from(name));
         ParagraphContent::from(start)
     };
     let mut paragraph = Paragraph::default();

@@ -2423,9 +2423,9 @@ pub struct BackstageWith<X: UserData> {
     /// The children that are an item of `BackstageContent`, in order.
     pub content: Vec<BackstageContentWith<X>>,
     /// The attribute `onHide`, when the element has it.
-    pub on_hide: Option<String>,
+    pub on_hide: Option<Box<str>>,
     /// The attribute `onShow`, when the element has it.
-    pub on_show: Option<String>,
+    pub on_show: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2540,28 +2540,28 @@ pub struct BoxBoxWith<X: UserData> {
     /// The children that are an item of `BoxContent`, in order.
     pub content: Vec<BoxContentWith<X>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiBoxBox,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:box` element of the tree a read gives: [`BoxBoxWith`] holding nothing in `user_data`.
@@ -2644,52 +2644,52 @@ pub enum BoxStyleMember {
 #[non_exhaustive]
 pub struct ButtonBackstageFastCommandButtonWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `isDefinitive`, when the element has it.
-    pub is_definitive: Option<String>,
+    pub is_definitive: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiButtonBackstageFastCommandButton,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:button` element of the tree a read gives: [`ButtonBackstageFastCommandButtonWith`]
@@ -2704,54 +2704,54 @@ impl Eq for ButtonBackstageFastCommandButtonWith<()> {}
 #[non_exhaustive]
 pub struct ButtonBackstageGroupButtonWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `isDefinitive`, when the element has it.
-    pub is_definitive: Option<String>,
+    pub is_definitive: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
     pub style: Option<Style2>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiButtonBackstageGroupButton,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:button` element of the tree a read gives: [`ButtonBackstageGroupButtonWith`] holding
@@ -2766,46 +2766,46 @@ impl Eq for ButtonBackstageGroupButtonWith<()> {}
 #[non_exhaustive]
 pub struct ButtonBackstageMenuButtonWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `isDefinitive`, when the element has it.
-    pub is_definitive: Option<String>,
+    pub is_definitive: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiButtonBackstageMenuButton,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:button` element of the tree a read gives: [`ButtonBackstageMenuButtonWith`] holding
@@ -2820,50 +2820,50 @@ impl Eq for ButtonBackstageMenuButtonWith<()> {}
 #[non_exhaustive]
 pub struct ButtonBackstageRegularButtonWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `isDefinitive`, when the element has it.
-    pub is_definitive: Option<String>,
+    pub is_definitive: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiButtonBackstageRegularButton,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:button` element of the tree a read gives: [`ButtonBackstageRegularButtonWith`]
@@ -2878,74 +2878,74 @@ impl Eq for ButtonBackstageRegularButtonWith<()> {}
 #[non_exhaustive]
 pub struct ButtonButtonWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSize`, when the element has it.
-    pub get_size: Option<String>,
+    pub get_size: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `size`, when the element has it.
     pub size: Option<Size>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiButtonButton,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:button` element of the tree a read gives: [`ButtonButtonWith`] holding nothing in
@@ -2960,70 +2960,70 @@ impl Eq for ButtonButtonWith<()> {}
 #[non_exhaustive]
 pub struct ButtonButtonRegularWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiButtonButtonRegular,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:button` element of the tree a read gives: [`ButtonButtonRegularWith`] holding nothing
@@ -3040,28 +3040,28 @@ pub struct ButtonGroupWith<X: UserData> {
     /// The children that are an item of `ButtonGroupContent`, in order.
     pub content: Vec<ButtonGroupContentWith<X>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiButtonGroup,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:buttonGroup` element of the tree a read gives: [`ButtonGroupWith`] holding nothing in
@@ -3110,61 +3110,61 @@ impl Eq for ButtonGroupContentWith<()> {}
 #[non_exhaustive]
 pub struct ButtonVisibleButtonWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3184,27 +3184,27 @@ impl Eq for ButtonVisibleButtonWith<()> {}
 #[non_exhaustive]
 pub struct CategoryTaskFormGroupCategoryWith<X: UserData> {
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// The children that are `TaskTaskFormGroupTask`, in order.
     pub task_task_form_group_task: Vec<TaskTaskFormGroupTaskWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -3213,7 +3213,7 @@ pub struct CategoryTaskFormGroupCategoryWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiCategoryTaskFormGroupCategory,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:category` element of the tree a read gives: [`CategoryTaskFormGroupCategoryWith`]
@@ -3228,27 +3228,27 @@ impl Eq for CategoryTaskFormGroupCategoryWith<()> {}
 #[non_exhaustive]
 pub struct CategoryTaskGroupCategoryWith<X: UserData> {
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// The children that are `TaskTaskGroupTask`, in order.
     pub task_task_group_task: Vec<TaskTaskGroupTaskWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -3257,7 +3257,7 @@ pub struct CategoryTaskGroupCategoryWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiCategoryTaskGroupCategory,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:category` element of the tree a read gives: [`CategoryTaskGroupCategoryWith`] holding
@@ -3272,50 +3272,50 @@ impl Eq for CategoryTaskGroupCategoryWith<()> {}
 #[non_exhaustive]
 pub struct CheckBoxBackstageCheckBoxWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getPressed`, when the element has it.
-    pub get_pressed: Option<String>,
+    pub get_pressed: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiCheckBoxBackstageCheckBox,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:checkBox` element of the tree a read gives: [`CheckBoxBackstageCheckBoxWith`] holding
@@ -3330,40 +3330,40 @@ impl Eq for CheckBoxBackstageCheckBoxWith<()> {}
 #[non_exhaustive]
 pub struct CheckBoxBackstageMenuCheckBoxWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getPressed`, when the element has it.
-    pub get_pressed: Option<String>,
+    pub get_pressed: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiCheckBoxBackstageMenuCheckBox,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:checkBox` element of the tree a read gives: [`CheckBoxBackstageMenuCheckBoxWith`]
@@ -3378,58 +3378,58 @@ impl Eq for CheckBoxBackstageMenuCheckBoxWith<()> {}
 #[non_exhaustive]
 pub struct CheckBoxCheckBoxWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getPressed`, when the element has it.
-    pub get_pressed: Option<String>,
+    pub get_pressed: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiCheckBoxCheckBox,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:checkBox` element of the tree a read gives: [`CheckBoxCheckBoxWith`] holding nothing
@@ -3446,48 +3446,48 @@ pub struct ComboBoxBackstageComboBoxWith<X: UserData> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getItemCount`, when the element has it.
-    pub get_item_count: Option<String>,
+    pub get_item_count: Option<Box<str>>,
     /// The attribute `getItemID`, when the element has it.
-    pub get_item_id: Option<String>,
+    pub get_item_id: Option<Box<str>>,
     /// The attribute `getItemLabel`, when the element has it.
-    pub get_item_label: Option<String>,
+    pub get_item_label: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getText`, when the element has it.
-    pub get_text: Option<String>,
+    pub get_text: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The children that are `ItemBackstageItem`, in order.
     pub item_backstage_item: Vec<ItemBackstageItemWith<X>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onChange`, when the element has it.
-    pub on_change: Option<String>,
+    pub on_change: Option<Box<str>>,
     /// The attribute `sizeString`, when the element has it.
-    pub size_string: Option<String>,
+    pub size_string: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiComboBoxBackstageComboBox,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:comboBox` element of the tree a read gives: [`ComboBoxBackstageComboBoxWith`] holding
@@ -3502,90 +3502,90 @@ impl Eq for ComboBoxBackstageComboBoxWith<()> {}
 #[non_exhaustive]
 pub struct ComboBoxComboBoxWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getItemCount`, when the element has it.
-    pub get_item_count: Option<String>,
+    pub get_item_count: Option<Box<str>>,
     /// The attribute `getItemID`, when the element has it.
-    pub get_item_id: Option<String>,
+    pub get_item_id: Option<Box<str>>,
     /// The attribute `getItemImage`, when the element has it.
-    pub get_item_image: Option<String>,
+    pub get_item_image: Option<Box<str>>,
     /// The attribute `getItemLabel`, when the element has it.
-    pub get_item_label: Option<String>,
+    pub get_item_label: Option<Box<str>>,
     /// The attribute `getItemScreentip`, when the element has it.
-    pub get_item_screentip: Option<String>,
+    pub get_item_screentip: Option<Box<str>>,
     /// The attribute `getItemSupertip`, when the element has it.
-    pub get_item_supertip: Option<String>,
+    pub get_item_supertip: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getText`, when the element has it.
-    pub get_text: Option<String>,
+    pub get_text: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `invalidateContentOnDrop`, when the element has it.
-    pub invalidate_content_on_drop: Option<String>,
+    pub invalidate_content_on_drop: Option<Box<str>>,
     /// The children that are `ItemItem`, in order.
     pub item_item: Vec<ItemItemWith<X>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `maxLength`, when the element has it.
-    pub max_length: Option<String>,
+    pub max_length: Option<Box<str>>,
     /// The attribute `onChange`, when the element has it.
-    pub on_change: Option<String>,
+    pub on_change: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showItemImage`, when the element has it.
-    pub show_item_image: Option<String>,
+    pub show_item_image: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `sizeString`, when the element has it.
-    pub size_string: Option<String>,
+    pub size_string: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiComboBoxComboBox,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:comboBox` element of the tree a read gives: [`ComboBoxComboBoxWith`] holding nothing
@@ -3600,13 +3600,13 @@ impl Eq for ComboBoxComboBoxWith<()> {}
 #[non_exhaustive]
 pub struct CommandWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5947,7 +5947,7 @@ pub struct ContextMenuWith<X: UserData> {
     /// The children that are an item of `ContextMenuContent`, in order.
     pub content: Vec<ContextMenuContentWith<X>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6043,70 +6043,70 @@ impl Eq for ContextualTabsWith<()> {}
 #[non_exhaustive]
 pub struct ControlControlCloneWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSize`, when the element has it.
-    pub get_size: Option<String>,
+    pub get_size: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `size`, when the element has it.
     pub size: Option<Size>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiControlControlClone,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:control` element of the tree a read gives: [`ControlControlCloneWith`] holding
@@ -6121,70 +6121,70 @@ impl Eq for ControlControlCloneWith<()> {}
 #[non_exhaustive]
 pub struct ControlControlCloneQatWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSize`, when the element has it.
-    pub get_size: Option<String>,
+    pub get_size: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `size`, when the element has it.
     pub size: Option<Size>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiControlControlCloneQat,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:control` element of the tree a read gives: [`ControlControlCloneQatWith`] holding
@@ -6199,62 +6199,62 @@ impl Eq for ControlControlCloneQatWith<()> {}
 #[non_exhaustive]
 pub struct ControlControlCloneRegularWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiControlControlCloneRegular,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:control` element of the tree a read gives: [`ControlControlCloneRegularWith`] holding
@@ -6275,9 +6275,9 @@ pub struct CustomUIWith<X: UserData> {
     /// The child that is `ContextMenus`, when there is one.
     pub context_menus: Option<Box<ContextMenusWith<X>>>,
     /// The attribute `loadImage`, when the element has it.
-    pub load_image: Option<String>,
+    pub load_image: Option<Box<str>>,
     /// The attribute `onLoad`, when the element has it.
-    pub on_load: Option<String>,
+    pub on_load: Option<Box<str>>,
     /// The child that is `Ribbon`, when there is one.
     pub ribbon: Option<Box<RibbonWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -6341,56 +6341,56 @@ pub struct DropDownBackstageDropDownWith<X: UserData> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getItemCount`, when the element has it.
-    pub get_item_count: Option<String>,
+    pub get_item_count: Option<Box<str>>,
     /// The attribute `getItemID`, when the element has it.
-    pub get_item_id: Option<String>,
+    pub get_item_id: Option<Box<str>>,
     /// The attribute `getItemLabel`, when the element has it.
-    pub get_item_label: Option<String>,
+    pub get_item_label: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getSelectedItemIndex`, when the element has it.
-    pub get_selected_item_index: Option<String>,
+    pub get_selected_item_index: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The children that are `ItemBackstageItem`, in order.
     pub item_backstage_item: Vec<ItemBackstageItemWith<X>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `sizeString`, when the element has it.
-    pub size_string: Option<String>,
+    pub size_string: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiDropDownBackstageDropDown,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:dropDown` element of the tree a read gives: [`DropDownBackstageDropDownWith`] holding
@@ -6407,90 +6407,90 @@ pub struct DropDownDropDownRegularWith<X: UserData> {
     /// The children that are `ButtonButtonRegular`, in order.
     pub button_button_regular: Vec<ButtonButtonRegularWith<X>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getItemCount`, when the element has it.
-    pub get_item_count: Option<String>,
+    pub get_item_count: Option<Box<str>>,
     /// The attribute `getItemID`, when the element has it.
-    pub get_item_id: Option<String>,
+    pub get_item_id: Option<Box<str>>,
     /// The attribute `getItemImage`, when the element has it.
-    pub get_item_image: Option<String>,
+    pub get_item_image: Option<Box<str>>,
     /// The attribute `getItemLabel`, when the element has it.
-    pub get_item_label: Option<String>,
+    pub get_item_label: Option<Box<str>>,
     /// The attribute `getItemScreentip`, when the element has it.
-    pub get_item_screentip: Option<String>,
+    pub get_item_screentip: Option<Box<str>>,
     /// The attribute `getItemSupertip`, when the element has it.
-    pub get_item_supertip: Option<String>,
+    pub get_item_supertip: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getSelectedItemID`, when the element has it.
-    pub get_selected_item_id: Option<String>,
+    pub get_selected_item_id: Option<Box<str>>,
     /// The attribute `getSelectedItemIndex`, when the element has it.
-    pub get_selected_item_index: Option<String>,
+    pub get_selected_item_index: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The children that are `ItemItem`, in order.
     pub item_item: Vec<ItemItemWith<X>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showItemImage`, when the element has it.
-    pub show_item_image: Option<String>,
+    pub show_item_image: Option<Box<str>>,
     /// The attribute `showItemLabel`, when the element has it.
-    pub show_item_label: Option<String>,
+    pub show_item_label: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `sizeString`, when the element has it.
-    pub size_string: Option<String>,
+    pub size_string: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiDropDownDropDownRegular,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:dropDown` element of the tree a read gives: [`DropDownDropDownRegularWith`] holding
@@ -6505,76 +6505,76 @@ impl Eq for DropDownDropDownRegularWith<()> {}
 #[non_exhaustive]
 pub struct DynamicMenuDynamicMenuWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getContent`, when the element has it.
-    pub get_content: Option<String>,
+    pub get_content: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSize`, when the element has it.
-    pub get_size: Option<String>,
+    pub get_size: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `invalidateContentOnDrop`, when the element has it.
-    pub invalidate_content_on_drop: Option<String>,
+    pub invalidate_content_on_drop: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `size`, when the element has it.
     pub size: Option<Size>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiDynamicMenuDynamicMenu,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:dynamicMenu` element of the tree a read gives: [`DynamicMenuDynamicMenuWith`] holding
@@ -6589,72 +6589,72 @@ impl Eq for DynamicMenuDynamicMenuWith<()> {}
 #[non_exhaustive]
 pub struct DynamicMenuDynamicMenuRegularWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getContent`, when the element has it.
-    pub get_content: Option<String>,
+    pub get_content: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `invalidateContentOnDrop`, when the element has it.
-    pub invalidate_content_on_drop: Option<String>,
+    pub invalidate_content_on_drop: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiDynamicMenuDynamicMenuRegular,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:dynamicMenu` element of the tree a read gives: [`DynamicMenuDynamicMenuRegularWith`]
@@ -6671,42 +6671,42 @@ pub struct EditBoxBackstageEditBoxWith<X: UserData> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getText`, when the element has it.
-    pub get_text: Option<String>,
+    pub get_text: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `maxLength`, when the element has it.
-    pub max_length: Option<String>,
+    pub max_length: Option<Box<str>>,
     /// The attribute `onChange`, when the element has it.
-    pub on_change: Option<String>,
+    pub on_change: Option<Box<str>>,
     /// The attribute `sizeString`, when the element has it.
-    pub size_string: Option<String>,
+    pub size_string: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiEditBoxBackstageEditBox,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:editBox` element of the tree a read gives: [`EditBoxBackstageEditBoxWith`] holding
@@ -6721,72 +6721,72 @@ impl Eq for EditBoxBackstageEditBoxWith<()> {}
 #[non_exhaustive]
 pub struct EditBoxEditBoxWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getText`, when the element has it.
-    pub get_text: Option<String>,
+    pub get_text: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `maxLength`, when the element has it.
-    pub max_length: Option<String>,
+    pub max_length: Option<Box<str>>,
     /// The attribute `onChange`, when the element has it.
-    pub on_change: Option<String>,
+    pub on_change: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `sizeString`, when the element has it.
-    pub size_string: Option<String>,
+    pub size_string: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiEditBoxEditBox,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:editBox` element of the tree a read gives: [`EditBoxEditBoxWith`] holding nothing in
@@ -6861,114 +6861,114 @@ pub struct GalleryGalleryWith<X: UserData> {
     /// The children that are `ButtonButtonRegular`, in order.
     pub button_button_regular: Vec<ButtonButtonRegularWith<X>>,
     /// The attribute `columns`, when the element has it.
-    pub columns: Option<String>,
+    pub columns: Option<Box<str>>,
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getItemCount`, when the element has it.
-    pub get_item_count: Option<String>,
+    pub get_item_count: Option<Box<str>>,
     /// The attribute `getItemHeight`, when the element has it.
-    pub get_item_height: Option<String>,
+    pub get_item_height: Option<Box<str>>,
     /// The attribute `getItemID`, when the element has it.
-    pub get_item_id: Option<String>,
+    pub get_item_id: Option<Box<str>>,
     /// The attribute `getItemImage`, when the element has it.
-    pub get_item_image: Option<String>,
+    pub get_item_image: Option<Box<str>>,
     /// The attribute `getItemLabel`, when the element has it.
-    pub get_item_label: Option<String>,
+    pub get_item_label: Option<Box<str>>,
     /// The attribute `getItemScreentip`, when the element has it.
-    pub get_item_screentip: Option<String>,
+    pub get_item_screentip: Option<Box<str>>,
     /// The attribute `getItemSupertip`, when the element has it.
-    pub get_item_supertip: Option<String>,
+    pub get_item_supertip: Option<Box<str>>,
     /// The attribute `getItemWidth`, when the element has it.
-    pub get_item_width: Option<String>,
+    pub get_item_width: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getSelectedItemID`, when the element has it.
-    pub get_selected_item_id: Option<String>,
+    pub get_selected_item_id: Option<Box<str>>,
     /// The attribute `getSelectedItemIndex`, when the element has it.
-    pub get_selected_item_index: Option<String>,
+    pub get_selected_item_index: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSize`, when the element has it.
-    pub get_size: Option<String>,
+    pub get_size: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `invalidateContentOnDrop`, when the element has it.
-    pub invalidate_content_on_drop: Option<String>,
+    pub invalidate_content_on_drop: Option<Box<str>>,
     /// The attribute `itemHeight`, when the element has it.
-    pub item_height: Option<String>,
+    pub item_height: Option<Box<str>>,
     /// The children that are `ItemItem`, in order.
     pub item_item: Vec<ItemItemWith<X>>,
     /// The attribute `itemWidth`, when the element has it.
-    pub item_width: Option<String>,
+    pub item_width: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `rows`, when the element has it.
-    pub rows: Option<String>,
+    pub rows: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showInRibbon`, when the element has it.
     pub show_in_ribbon: Option<GalleryShowInRibbon>,
     /// The attribute `showItemImage`, when the element has it.
-    pub show_item_image: Option<String>,
+    pub show_item_image: Option<Box<str>>,
     /// The attribute `showItemLabel`, when the element has it.
-    pub show_item_label: Option<String>,
+    pub show_item_label: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `size`, when the element has it.
     pub size: Option<Size>,
     /// The attribute `sizeString`, when the element has it.
-    pub size_string: Option<String>,
+    pub size_string: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiGalleryGallery,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:gallery` element of the tree a read gives: [`GalleryGalleryWith`] holding nothing in
@@ -6985,110 +6985,110 @@ pub struct GalleryGalleryRegularWith<X: UserData> {
     /// The children that are `ButtonButtonRegular`, in order.
     pub button_button_regular: Vec<ButtonButtonRegularWith<X>>,
     /// The attribute `columns`, when the element has it.
-    pub columns: Option<String>,
+    pub columns: Option<Box<str>>,
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getItemCount`, when the element has it.
-    pub get_item_count: Option<String>,
+    pub get_item_count: Option<Box<str>>,
     /// The attribute `getItemHeight`, when the element has it.
-    pub get_item_height: Option<String>,
+    pub get_item_height: Option<Box<str>>,
     /// The attribute `getItemID`, when the element has it.
-    pub get_item_id: Option<String>,
+    pub get_item_id: Option<Box<str>>,
     /// The attribute `getItemImage`, when the element has it.
-    pub get_item_image: Option<String>,
+    pub get_item_image: Option<Box<str>>,
     /// The attribute `getItemLabel`, when the element has it.
-    pub get_item_label: Option<String>,
+    pub get_item_label: Option<Box<str>>,
     /// The attribute `getItemScreentip`, when the element has it.
-    pub get_item_screentip: Option<String>,
+    pub get_item_screentip: Option<Box<str>>,
     /// The attribute `getItemSupertip`, when the element has it.
-    pub get_item_supertip: Option<String>,
+    pub get_item_supertip: Option<Box<str>>,
     /// The attribute `getItemWidth`, when the element has it.
-    pub get_item_width: Option<String>,
+    pub get_item_width: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getSelectedItemID`, when the element has it.
-    pub get_selected_item_id: Option<String>,
+    pub get_selected_item_id: Option<Box<str>>,
     /// The attribute `getSelectedItemIndex`, when the element has it.
-    pub get_selected_item_index: Option<String>,
+    pub get_selected_item_index: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `invalidateContentOnDrop`, when the element has it.
-    pub invalidate_content_on_drop: Option<String>,
+    pub invalidate_content_on_drop: Option<Box<str>>,
     /// The attribute `itemHeight`, when the element has it.
-    pub item_height: Option<String>,
+    pub item_height: Option<Box<str>>,
     /// The children that are `ItemItem`, in order.
     pub item_item: Vec<ItemItemWith<X>>,
     /// The attribute `itemWidth`, when the element has it.
-    pub item_width: Option<String>,
+    pub item_width: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `rows`, when the element has it.
-    pub rows: Option<String>,
+    pub rows: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showInRibbon`, when the element has it.
     pub show_in_ribbon: Option<GalleryShowInRibbon>,
     /// The attribute `showItemImage`, when the element has it.
-    pub show_item_image: Option<String>,
+    pub show_item_image: Option<Box<str>>,
     /// The attribute `showItemLabel`, when the element has it.
-    pub show_item_label: Option<String>,
+    pub show_item_label: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `sizeString`, when the element has it.
-    pub size_string: Option<String>,
+    pub size_string: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiGalleryGalleryRegular,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:gallery` element of the tree a read gives: [`GalleryGalleryRegularWith`] holding
@@ -7129,41 +7129,41 @@ pub struct GroupBackstageGroupWith<X: UserData> {
     /// The child that is `BottomItems`, when there is one.
     pub bottom_items: Option<Box<BottomItemsWith<X>>>,
     /// The attribute `getHelperText`, when the element has it.
-    pub get_helper_text: Option<String>,
+    pub get_helper_text: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getStyle`, when the element has it.
-    pub get_style: Option<String>,
+    pub get_style: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `helperText`, when the element has it.
-    pub helper_text: Option<String>,
+    pub helper_text: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The child that is `PrimaryItem`, when there is one.
     pub primary_item: Option<Box<PrimaryItemWith<X>>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
     pub style: Option<Style>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// The child that is `TopItems`, when there is one.
     pub top_items: Option<Box<TopItemsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -7172,7 +7172,7 @@ pub struct GroupBackstageGroupWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiGroupBackstageGroup,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:group` element of the tree a read gives: [`GroupBackstageGroupWith`] holding nothing
@@ -7191,15 +7191,15 @@ pub struct GroupBoxWith<X: UserData> {
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -7307,60 +7307,60 @@ impl Eq for GroupControlsContentWith<()> {}
 #[non_exhaustive]
 pub struct GroupGroupWith<X: UserData> {
     /// The attribute `autoScale`, when the element has it.
-    pub auto_scale: Option<String>,
+    pub auto_scale: Option<Box<str>>,
     /// The attribute `centerVertically`, when the element has it.
-    pub center_vertically: Option<String>,
+    pub center_vertically: Option<Box<str>>,
     /// The children that are an item of `GroupContent`, in order.
     pub content: Vec<GroupContentWith<X>>,
     /// The child that is `DialogBoxLauncher`, when there is one.
     pub dialog_box_launcher: Option<Box<DialogBoxLauncherWith<X>>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiGroupGroup,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:group` element of the tree a read gives: [`GroupGroupWith`] holding nothing in
@@ -7377,54 +7377,54 @@ pub struct HyperlinkWith<X: UserData> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getTarget`, when the element has it.
-    pub get_target: Option<String>,
+    pub get_target: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// The attribute `target`, when the element has it.
-    pub target: Option<String>,
+    pub target: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiHyperlink,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:hyperlink` element of the tree a read gives: [`HyperlinkWith`] holding nothing in
@@ -7439,34 +7439,34 @@ impl Eq for HyperlinkWith<()> {}
 #[non_exhaustive]
 pub struct ImageControlWith<X: UserData> {
     /// The attribute `altText`, when the element has it.
-    pub alt_text: Option<String>,
+    pub alt_text: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getAltText`, when the element has it.
-    pub get_alt_text: Option<String>,
+    pub get_alt_text: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiImageControl,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:imageControl` element of the tree a read gives: [`ImageControlWith`] holding nothing
@@ -7499,17 +7499,17 @@ impl Eq for ItemBackstageItemWith<()> {}
 #[non_exhaustive]
 pub struct ItemItemWith<X: UserData> {
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -7555,32 +7555,32 @@ pub struct LabelControlBackstageLabelControlWith<X: UserData> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `noWrap`, when the element has it.
-    pub no_wrap: Option<String>,
+    pub no_wrap: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiLabelControlBackstageLabelControl,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:labelControl` element of the tree a read gives:
@@ -7595,50 +7595,50 @@ impl Eq for LabelControlBackstageLabelControlWith<()> {}
 #[non_exhaustive]
 pub struct LabelControlLabelControlWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiLabelControlLabelControl,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:labelControl` element of the tree a read gives: [`LabelControlLabelControlWith`]
@@ -7683,13 +7683,13 @@ pub struct LayoutContainerWith<X: UserData> {
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `layoutChildren`, when the element has it.
     pub layout_children: Option<LayoutChildren>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -7709,48 +7709,48 @@ impl Eq for LayoutContainerWith<()> {}
 #[non_exhaustive]
 pub struct MenuBackstagePrimaryMenuWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The children that are `MenuGroup`, in order.
     pub group: Vec<MenuGroupWith<X>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiMenuBackstagePrimaryMenu,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:menu` element of the tree a read gives: [`MenuBackstagePrimaryMenuWith`] holding
@@ -7765,44 +7765,44 @@ impl Eq for MenuBackstagePrimaryMenuWith<()> {}
 #[non_exhaustive]
 pub struct MenuBackstageSubMenuWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The children that are `MenuGroup`, in order.
     pub group: Vec<MenuGroupWith<X>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiMenuBackstageSubMenu,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:menu` element of the tree a read gives: [`MenuBackstageSubMenuWith`] holding nothing
@@ -7855,17 +7855,17 @@ pub struct MenuGroupWith<X: UserData> {
     /// The children that are an item of `BackstageMenuGroupContent`, in order.
     pub content: Vec<BackstageMenuGroupContentWith<X>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `itemSize`, when the element has it.
     pub item_size: Option<ItemSize>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -7887,74 +7887,74 @@ pub struct MenuMenuWith<X: UserData> {
     /// The children that are an item of `MenuContent`, in order.
     pub content: Vec<MenuContentWith<X>>,
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSize`, when the element has it.
-    pub get_size: Option<String>,
+    pub get_size: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `itemSize`, when the element has it.
     pub item_size: Option<ItemSize>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `size`, when the element has it.
     pub size: Option<Size>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiMenuMenu,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:menu` element of the tree a read gives: [`MenuMenuWith`] holding nothing in
@@ -7971,70 +7971,70 @@ pub struct MenuMenuRegularWith<X: UserData> {
     /// The children that are an item of `MenuContent`, in order.
     pub content: Vec<MenuContentWith<X>>,
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `itemSize`, when the element has it.
     pub item_size: Option<ItemSize>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiMenuMenuRegular,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:menu` element of the tree a read gives: [`MenuMenuRegularWith`] holding nothing in
@@ -8051,11 +8051,11 @@ pub struct MenuMenuRootWith<X: UserData> {
     /// The children that are an item of `MenuContent`, in order.
     pub content: Vec<MenuContentWith<X>>,
     /// The attribute `getTitle`, when the element has it.
-    pub get_title: Option<String>,
+    pub get_title: Option<Box<str>>,
     /// The attribute `itemSize`, when the element has it.
     pub item_size: Option<ItemSize>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8077,70 +8077,70 @@ pub struct MenuMenuWithTitleWith<X: UserData> {
     /// The children that are an item of `MenuWithTitleContent`, in order.
     pub content: Vec<MenuWithTitleContentWith<X>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getTitle`, when the element has it.
-    pub get_title: Option<String>,
+    pub get_title: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `itemSize`, when the element has it.
     pub item_size: Option<ItemSize>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiMenuMenuWithTitle,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:menu` element of the tree a read gives: [`MenuMenuWithTitleWith`] holding nothing in
@@ -8155,23 +8155,23 @@ impl Eq for MenuMenuWithTitleWith<()> {}
 #[non_exhaustive]
 pub struct MenuSeparatorMenuSeparatorWith<X: UserData> {
     /// The attribute `getTitle`, when the element has it.
-    pub get_title: Option<String>,
+    pub get_title: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8191,19 +8191,19 @@ impl Eq for MenuSeparatorMenuSeparatorWith<()> {}
 #[non_exhaustive]
 pub struct MenuSeparatorMenuSeparatorNoTitleWith<X: UserData> {
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8366,46 +8366,46 @@ pub struct RadioGroupWith<X: UserData> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getItemCount`, when the element has it.
-    pub get_item_count: Option<String>,
+    pub get_item_count: Option<Box<str>>,
     /// The attribute `getItemID`, when the element has it.
-    pub get_item_id: Option<String>,
+    pub get_item_id: Option<Box<str>>,
     /// The attribute `getItemLabel`, when the element has it.
-    pub get_item_label: Option<String>,
+    pub get_item_label: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getSelectedItemIndex`, when the element has it.
-    pub get_selected_item_index: Option<String>,
+    pub get_selected_item_index: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The children that are `RadioButton`, in order.
     pub radio_button: Vec<RadioButtonWith<X>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiRadioGroup,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:radioGroup` element of the tree a read gives: [`RadioGroupWith`] holding nothing in
@@ -8422,7 +8422,7 @@ pub struct RibbonWith<X: UserData> {
     /// The children that are an item of `RibbonContent`, in order.
     pub content: Vec<RibbonContentWith<X>>,
     /// The attribute `startFromScratch`, when the element has it.
-    pub start_from_scratch: Option<String>,
+    pub start_from_scratch: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8485,28 +8485,28 @@ impl Eq for SecondColumnWith<()> {}
 #[non_exhaustive]
 pub struct SeparatorWith<X: UserData> {
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiSeparator,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:separator` element of the tree a read gives: [`SeparatorWith`] holding nothing in
@@ -8613,48 +8613,48 @@ pub struct SplitButtonSplitButtonWith<X: UserData> {
     /// The child that is an item of `SplitButtonContent`, when there is one.
     pub content: Option<Box<SplitButtonContentWith<X>>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSize`, when the element has it.
-    pub get_size: Option<String>,
+    pub get_size: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The child that is `MenuMenuRegular`, when there is one.
     pub menu_menu_regular: Option<Box<MenuMenuRegularWith<X>>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `size`, when the element has it.
     pub size: Option<Size>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiSplitButtonSplitButton,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:splitButton` element of the tree a read gives: [`SplitButtonSplitButtonWith`] holding
@@ -8671,44 +8671,44 @@ pub struct SplitButtonSplitButtonRegularWith<X: UserData> {
     /// The child that is an item of `SplitButtonContent`, when there is one.
     pub content: Option<Box<SplitButtonContentWith<X>>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The child that is `MenuMenuRegular`, when there is one.
     pub menu_menu_regular: Option<Box<MenuMenuRegularWith<X>>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiSplitButtonSplitButtonRegular,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:splitButton` element of the tree a read gives: [`SplitButtonSplitButtonRegularWith`]
@@ -8725,44 +8725,44 @@ pub struct SplitButtonSplitButtonWithTitleWith<X: UserData> {
     /// The child that is an item of `SplitButtonContent`, when there is one.
     pub content: Option<Box<SplitButtonContentWith<X>>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The child that is `MenuMenuWithTitle`, when there is one.
     pub menu_menu_with_title: Option<Box<MenuMenuWithTitleWith<X>>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiSplitButtonSplitButtonWithTitle,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:splitButton` element of the tree a read gives:
@@ -8829,60 +8829,60 @@ pub enum Style2Member {
 #[non_exhaustive]
 pub struct TabBackstageTabWith<X: UserData> {
     /// The attribute `columnWidthPercent`, when the element has it.
-    pub column_width_percent: Option<String>,
+    pub column_width_percent: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The child that is `FirstColumn`, when there is one.
     pub first_column: Option<Box<FirstColumnWith<X>>>,
     /// The attribute `firstColumnMaxWidth`, when the element has it.
-    pub first_column_max_width: Option<String>,
+    pub first_column_max_width: Option<Box<str>>,
     /// The attribute `firstColumnMinWidth`, when the element has it.
-    pub first_column_min_width: Option<String>,
+    pub first_column_min_width: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getTitle`, when the element has it.
-    pub get_title: Option<String>,
+    pub get_title: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The child that is `SecondColumn`, when there is one.
     pub second_column: Option<Box<SecondColumnWith<X>>>,
     /// The attribute `secondColumnMaxWidth`, when the element has it.
-    pub second_column_max_width: Option<String>,
+    pub second_column_max_width: Option<Box<str>>,
     /// The attribute `secondColumnMinWidth`, when the element has it.
-    pub second_column_min_width: Option<String>,
+    pub second_column_min_width: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiTabBackstageTab,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:tab` element of the tree a read gives: [`TabBackstageTabWith`] holding nothing in
@@ -8897,9 +8897,9 @@ impl Eq for TabBackstageTabWith<()> {}
 #[non_exhaustive]
 pub struct TabSetWith<X: UserData> {
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The children that are `TabTab`, in order.
     pub tab_tab: Vec<TabTabWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -8908,7 +8908,7 @@ pub struct TabSetWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiTabSet,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:tabSet` element of the tree a read gives: [`TabSetWith`] holding nothing in
@@ -8923,40 +8923,40 @@ impl Eq for TabSetWith<()> {}
 #[non_exhaustive]
 pub struct TabTabWith<X: UserData> {
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The children that are `GroupGroup`, in order.
     pub group_group: Vec<GroupGroupWith<X>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiTabTab,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:tab` element of the tree a read gives: [`TabTabWith`] holding nothing in `user_data`.
@@ -8993,34 +8993,34 @@ pub struct TaskFormGroupWith<X: UserData> {
     /// The children that are `CategoryTaskFormGroupCategory`, in order.
     pub category_task_form_group_category: Vec<CategoryTaskFormGroupCategoryWith<X>>,
     /// The attribute `getHelperText`, when the element has it.
-    pub get_helper_text: Option<String>,
+    pub get_helper_text: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `helperText`, when the element has it.
-    pub helper_text: Option<String>,
+    pub helper_text: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiTaskFormGroup,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:taskFormGroup` element of the tree a read gives: [`TaskFormGroupWith`] holding
@@ -9039,42 +9039,42 @@ pub struct TaskGroupWith<X: UserData> {
     /// The children that are `CategoryTaskGroupCategory`, in order.
     pub category_task_group_category: Vec<CategoryTaskGroupCategoryWith<X>>,
     /// The attribute `getHelperText`, when the element has it.
-    pub get_helper_text: Option<String>,
+    pub get_helper_text: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `helperText`, when the element has it.
-    pub helper_text: Option<String>,
+    pub helper_text: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiTaskGroup,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:taskGroup` element of the tree a read gives: [`TaskGroupWith`] holding nothing in
@@ -9121,54 +9121,54 @@ pub enum TaskSizesMember {
 #[non_exhaustive]
 pub struct TaskTaskFormGroupTaskWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The children that are `GroupBackstageGroup`, in order.
     pub group_backstage_group: Vec<GroupBackstageGroupWith<X>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiTaskTaskFormGroupTask,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:task` element of the tree a read gives: [`TaskTaskFormGroupTaskWith`] holding nothing
@@ -9183,56 +9183,56 @@ impl Eq for TaskTaskFormGroupTaskWith<()> {}
 #[non_exhaustive]
 pub struct TaskTaskGroupTaskWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `isDefinitive`, when the element has it.
-    pub is_definitive: Option<String>,
+    pub is_definitive: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiTaskTaskGroupTask,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:task` element of the tree a read gives: [`TaskTaskGroupTaskWith`] holding nothing in
@@ -9247,46 +9247,46 @@ impl Eq for TaskTaskGroupTaskWith<()> {}
 #[non_exhaustive]
 pub struct ToggleButtonBackstageMenuToggleButtonWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getPressed`, when the element has it.
-    pub get_pressed: Option<String>,
+    pub get_pressed: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiToggleButtonBackstageMenuToggleButton,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:toggleButton` element of the tree a read gives:
@@ -9301,76 +9301,76 @@ impl Eq for ToggleButtonBackstageMenuToggleButtonWith<()> {}
 #[non_exhaustive]
 pub struct ToggleButtonToggleButtonWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getPressed`, when the element has it.
-    pub get_pressed: Option<String>,
+    pub get_pressed: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSize`, when the element has it.
-    pub get_size: Option<String>,
+    pub get_size: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `size`, when the element has it.
     pub size: Option<Size>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiToggleButtonToggleButton,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:toggleButton` element of the tree a read gives: [`ToggleButtonToggleButtonWith`]
@@ -9385,72 +9385,72 @@ impl Eq for ToggleButtonToggleButtonWith<()> {}
 #[non_exhaustive]
 pub struct ToggleButtonToggleButtonRegularWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getPressed`, when the element has it.
-    pub get_pressed: Option<String>,
+    pub get_pressed: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `getVisible`, when the element has it.
-    pub get_visible: Option<String>,
+    pub get_visible: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office200907CustomuiToggleButtonToggleButtonRegular,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `mso14:toggleButton` element of the tree a read gives:
@@ -9465,63 +9465,63 @@ impl Eq for ToggleButtonToggleButtonRegularWith<()> {}
 #[non_exhaustive]
 pub struct ToggleButtonVisibleToggleButtonWith<X: UserData> {
     /// The attribute `description`, when the element has it.
-    pub description: Option<String>,
+    pub description: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `getDescription`, when the element has it.
-    pub get_description: Option<String>,
+    pub get_description: Option<Box<str>>,
     /// The attribute `getEnabled`, when the element has it.
-    pub get_enabled: Option<String>,
+    pub get_enabled: Option<Box<str>>,
     /// The attribute `getImage`, when the element has it.
-    pub get_image: Option<String>,
+    pub get_image: Option<Box<str>>,
     /// The attribute `getKeytip`, when the element has it.
-    pub get_keytip: Option<String>,
+    pub get_keytip: Option<Box<str>>,
     /// The attribute `getLabel`, when the element has it.
-    pub get_label: Option<String>,
+    pub get_label: Option<Box<str>>,
     /// The attribute `getPressed`, when the element has it.
-    pub get_pressed: Option<String>,
+    pub get_pressed: Option<Box<str>>,
     /// The attribute `getScreentip`, when the element has it.
-    pub get_screentip: Option<String>,
+    pub get_screentip: Option<Box<str>>,
     /// The attribute `getShowImage`, when the element has it.
-    pub get_show_image: Option<String>,
+    pub get_show_image: Option<Box<str>>,
     /// The attribute `getShowLabel`, when the element has it.
-    pub get_show_label: Option<String>,
+    pub get_show_label: Option<Box<str>>,
     /// The attribute `getSupertip`, when the element has it.
-    pub get_supertip: Option<String>,
+    pub get_supertip: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `idMso`, when the element has it.
-    pub id_mso: Option<String>,
+    pub id_mso: Option<Box<str>>,
     /// The attribute `idQ`, when the element has it.
-    pub id_q: Option<String>,
+    pub id_q: Option<Box<str>>,
     /// The attribute `image`, when the element has it.
-    pub image: Option<String>,
+    pub image: Option<Box<str>>,
     /// The attribute `imageMso`, when the element has it.
-    pub image_mso: Option<String>,
+    pub image_mso: Option<Box<str>>,
     /// The attribute `insertAfterMso`, when the element has it.
-    pub insert_after_mso: Option<String>,
+    pub insert_after_mso: Option<Box<str>>,
     /// The attribute `insertAfterQ`, when the element has it.
-    pub insert_after_q: Option<String>,
+    pub insert_after_q: Option<Box<str>>,
     /// The attribute `insertBeforeMso`, when the element has it.
-    pub insert_before_mso: Option<String>,
+    pub insert_before_mso: Option<Box<str>>,
     /// The attribute `insertBeforeQ`, when the element has it.
-    pub insert_before_q: Option<String>,
+    pub insert_before_q: Option<Box<str>>,
     /// The attribute `keytip`, when the element has it.
-    pub keytip: Option<String>,
+    pub keytip: Option<Box<str>>,
     /// The attribute `label`, when the element has it.
-    pub label: Option<String>,
+    pub label: Option<Box<str>>,
     /// The attribute `onAction`, when the element has it.
-    pub on_action: Option<String>,
+    pub on_action: Option<Box<str>>,
     /// The attribute `screentip`, when the element has it.
-    pub screentip: Option<String>,
+    pub screentip: Option<Box<str>>,
     /// The attribute `showImage`, when the element has it.
-    pub show_image: Option<String>,
+    pub show_image: Option<Box<str>>,
     /// The attribute `showLabel`, when the element has it.
-    pub show_label: Option<String>,
+    pub show_label: Option<Box<str>>,
     /// The attribute `supertip`, when the element has it.
-    pub supertip: Option<String>,
+    pub supertip: Option<Box<str>>,
     /// The attribute `tag`, when the element has it.
-    pub tag: Option<String>,
+    pub tag: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

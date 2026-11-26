@@ -4636,7 +4636,7 @@ impl Eq for AnchorPointWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct Angle(pub String);
+pub struct Angle(pub Box<str>);
 
 /// Animation Build Type, the simple type `ST_AnimationBuildType` (ECMA-376 Part 1, section
 /// 20.1.10.4), kept as its member or as the text the file carried.
@@ -4737,7 +4737,7 @@ pub enum AnyElementContentWith<X: UserData> {
     /// The element `op:Properties`, a `CustomFileProperties`.
     CustomFileProperties(document_properties_custom::CustomFilePropertiesWith<X>),
     /// The element `ds:datastoreItem`, a `CustomXMLDataProperties`.
-    CustomXMLDataProperties(Box<custom_xml_data_properties::CustomXMLDataPropertiesWith<X>>),
+    CustomXMLDataProperties(custom_xml_data_properties::CustomXMLDataPropertiesWith<X>),
     /// The element `dgm:dataModel`, a `DataModel`.
     DataModel(Box<super::diagram::DataModelWith<X>>),
     /// The element `vt:date`, a `DateAndTime`.
@@ -4950,7 +4950,7 @@ pub enum AnyElementContentWith<X: UserData> {
     StartingAnchorPoint(Box<super::spreadsheet_drawing::StartingAnchorPointWith<X>>),
     /// The element `o:equationxml`, a `StorageForAlternateMathContent`.
     StorageForAlternateMathContent(
-        Box<super::vml_office_drawing::StorageForAlternateMathContentWith<X>>,
+        super::vml_office_drawing::StorageForAlternateMathContentWith<X>,
     ),
     /// The element `dgm:styleDef`, a `StyleDefinition`.
     StyleDefinition(Box<super::diagram::StyleDefinitionWith<X>>),
@@ -5083,9 +5083,9 @@ impl Eq for Apply3DShapePropertiesWith<()> {}
 #[non_exhaustive]
 pub struct AudioEndTimeWith<X: UserData> {
     /// The attribute `time`, when the element has it.
-    pub time: Option<String>,
+    pub time: Option<Box<str>>,
     /// The attribute `track`, when the element has it.
-    pub track: Option<String>,
+    pub track: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5129,11 +5129,11 @@ impl Eq for AudioFromCDWith<()> {}
 #[non_exhaustive]
 pub struct AudioFromFileWith<X: UserData> {
     /// The attribute `contentType`, when the element has it.
-    pub content_type: Option<String>,
+    pub content_type: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `r:link`, when the element has it.
-    pub link: Option<String>,
+    pub link: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5153,9 +5153,9 @@ impl Eq for AudioFromFileWith<()> {}
 #[non_exhaustive]
 pub struct AudioFromWAVFileWith<X: UserData> {
     /// The attribute `r:embed`, when the element has it.
-    pub embed: Option<String>,
+    pub embed: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5175,9 +5175,9 @@ impl Eq for AudioFromWAVFileWith<()> {}
 #[non_exhaustive]
 pub struct AudioStartTimeWith<X: UserData> {
     /// The attribute `time`, when the element has it.
-    pub time: Option<String>,
+    pub time: Option<Box<str>>,
     /// The attribute `track`, when the element has it.
-    pub track: Option<String>,
+    pub track: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5559,11 +5559,11 @@ pub struct BlipWith<X: UserData> {
     /// The attribute `cstate`, when the element has it.
     pub cstate: Option<BlipCompressionType>,
     /// The attribute `r:embed`, when the element has it.
-    pub embed: Option<String>,
+    pub embed: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `r:link`, when the element has it.
-    pub link: Option<String>,
+    pub link: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5723,7 +5723,7 @@ impl Eq for BlueOffsetWith<()> {}
 #[non_exhaustive]
 pub struct BlurEffectWith<X: UserData> {
     /// The attribute `grow`, when the element has it.
-    pub grow: Option<String>,
+    pub grow: Option<Box<str>>,
     /// The attribute `rad`, when the element has it.
     pub rad: Option<PositiveCoordinate>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -5747,17 +5747,17 @@ pub struct BodyPropertiesWith<X: UserData> {
     /// The attribute `anchor`, when the element has it.
     pub anchor: Option<TextAnchoringTypes>,
     /// The attribute `anchorCtr`, when the element has it.
-    pub anchor_ctr: Option<String>,
+    pub anchor_ctr: Option<Box<str>>,
     /// The attribute `bIns`, when the element has it.
     pub b_ins: Option<StCoordinate32>,
     /// The attribute `compatLnSpc`, when the element has it.
-    pub compat_ln_spc: Option<String>,
+    pub compat_ln_spc: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `forceAA`, when the element has it.
-    pub force_aa: Option<String>,
+    pub force_aa: Option<Box<str>>,
     /// The attribute `fromWordArt`, when the element has it.
-    pub from_word_art: Option<String>,
+    pub from_word_art: Option<Box<str>>,
     /// The attribute `horzOverflow`, when the element has it.
     pub horz_overflow: Option<TextHorizontalOverflowTypes>,
     /// The attribute `lIns`, when the element has it.
@@ -5771,13 +5771,13 @@ pub struct BodyPropertiesWith<X: UserData> {
     /// The attribute `rot`, when the element has it.
     pub rot: Option<Angle>,
     /// The attribute `rtlCol`, when the element has it.
-    pub rtl_col: Option<String>,
+    pub rtl_col: Option<Box<str>>,
     /// The child that is `Scene3d`, when there is one.
     pub scene3d: Option<Box<Scene3dWith<X>>>,
     /// The attribute `spcCol`, when the element has it.
     pub spc_col: Option<PositiveCoordinatePoint>,
     /// The attribute `spcFirstLastPara`, when the element has it.
-    pub spc_first_last_para: Option<String>,
+    pub spc_first_last_para: Option<Box<str>>,
     /// The attribute `tIns`, when the element has it.
     pub t_ins: Option<StCoordinate32>,
     /// The child that is an item of `Text3DContent`, when there is one.
@@ -5788,7 +5788,7 @@ pub struct BodyPropertiesWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `upright`, when the element has it.
-    pub upright: Option<String>,
+    pub upright: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DrawingBodyProperties,
     /// The attribute `vert`, when the element has it.
@@ -5932,7 +5932,7 @@ impl Eq for BottomLeftToTopRightBorderLinePropertiesWith<()> {}
 #[non_exhaustive]
 pub struct BuildChartWith<X: UserData> {
     /// The attribute `animBg`, when the element has it.
-    pub anim_bg: Option<String>,
+    pub anim_bg: Option<Box<str>>,
     /// The attribute `bld`, when the element has it.
     pub bld: Option<ChartAnimationBuildType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -5956,7 +5956,7 @@ pub struct BuildDiagramWith<X: UserData> {
     /// The attribute `bld`, when the element has it.
     pub bld: Option<DiagramAnimationBuildType>,
     /// The attribute `rev`, when the element has it.
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6146,7 +6146,7 @@ impl Eq for ChangeColorToWith<()> {}
 #[non_exhaustive]
 pub struct CharacterBulletWith<X: UserData> {
     /// The attribute `char`, when the element has it.
-    pub char: Option<String>,
+    pub char: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6255,9 +6255,9 @@ pub struct ChartToAnimateWith<X: UserData> {
     /// The attribute `bldStep`, when the element has it.
     pub bld_step: Option<ChartAnimationBuildStep>,
     /// The attribute `categoryIdx`, when the element has it.
-    pub category_idx: Option<String>,
+    pub category_idx: Option<Box<str>>,
     /// The attribute `seriesIdx`, when the element has it.
-    pub series_idx: Option<String>,
+    pub series_idx: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6321,25 +6321,25 @@ impl Eq for ChildOffsetWith<()> {}
 #[non_exhaustive]
 pub struct ClickHyperlinkWith<X: UserData> {
     /// The attribute `action`, when the element has it.
-    pub action: Option<String>,
+    pub action: Option<Box<str>>,
     /// The attribute `endSnd`, when the element has it.
-    pub end_snd: Option<String>,
+    pub end_snd: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `highlightClick`, when the element has it.
-    pub highlight_click: Option<String>,
+    pub highlight_click: Option<Box<str>>,
     /// The attribute `history`, when the element has it.
-    pub history: Option<String>,
+    pub history: Option<Box<str>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `invalidUrl`, when the element has it.
-    pub invalid_url: Option<String>,
+    pub invalid_url: Option<Box<str>>,
     /// The child that is `HyperlinkSound`, when there is one.
     pub sound: Option<Box<HyperlinkSoundWith<X>>>,
     /// The attribute `tgtFrame`, when the element has it.
-    pub tgt_frame: Option<String>,
+    pub tgt_frame: Option<Box<str>>,
     /// The attribute `tooltip`, when the element has it.
-    pub tooltip: Option<String>,
+    pub tooltip: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6384,7 +6384,7 @@ pub struct ColorChangeEffectWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `useA`, when the element has it.
-    pub use_a: Option<String>,
+    pub use_a: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DrawingColorChangeEffect,
 }
@@ -6505,7 +6505,7 @@ pub struct ColorSchemeWith<X: UserData> {
     /// The child that is `Light2`, which the schema requires.
     pub light_2: Box<Light2With<X>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6660,13 +6660,13 @@ impl Eq for ComplementWith<()> {}
 #[non_exhaustive]
 pub struct ComplexScriptFontWith<X: UserData> {
     /// The attribute `charset`, when the element has it.
-    pub charset: Option<String>,
+    pub charset: Option<Box<str>>,
     /// The attribute `panose`, when the element has it.
     pub panose: Option<common_simple_types::Panose1Number>,
     /// The attribute `pitchFamily`, when the element has it.
     pub pitch_family: Option<PitchFamily>,
     /// The attribute `typeface`, when the element has it.
-    pub typeface: Option<String>,
+    pub typeface: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6719,7 +6719,7 @@ pub struct ConnectionEndWith<X: UserData> {
     /// The attribute `id`, when the element has it.
     pub id: Option<DrawingElementID>,
     /// The attribute `idx`, when the element has it.
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6767,25 +6767,25 @@ pub struct ConnectionShapeLocksWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `noAdjustHandles`, when the element has it.
-    pub no_adjust_handles: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
     /// The attribute `noChangeArrowheads`, when the element has it.
-    pub no_change_arrowheads: Option<String>,
+    pub no_change_arrowheads: Option<Box<str>>,
     /// The attribute `noChangeAspect`, when the element has it.
-    pub no_change_aspect: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
     /// The attribute `noChangeShapeType`, when the element has it.
-    pub no_change_shape_type: Option<String>,
+    pub no_change_shape_type: Option<Box<str>>,
     /// The attribute `noEditPoints`, when the element has it.
-    pub no_edit_points: Option<String>,
+    pub no_edit_points: Option<Box<str>>,
     /// The attribute `noGrp`, when the element has it.
-    pub no_grp: Option<String>,
+    pub no_grp: Option<Box<str>>,
     /// The attribute `noMove`, when the element has it.
-    pub no_move: Option<String>,
+    pub no_move: Option<Box<str>>,
     /// The attribute `noResize`, when the element has it.
-    pub no_resize: Option<String>,
+    pub no_resize: Option<Box<str>>,
     /// The attribute `noRot`, when the element has it.
-    pub no_rot: Option<String>,
+    pub no_rot: Option<Box<str>>,
     /// The attribute `noSelect`, when the element has it.
-    pub no_select: Option<String>,
+    pub no_select: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6807,7 +6807,7 @@ pub struct ConnectionStartWith<X: UserData> {
     /// The attribute `id`, when the element has it.
     pub id: Option<DrawingElementID>,
     /// The attribute `idx`, when the element has it.
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6829,25 +6829,25 @@ pub struct ContentPartLocksWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `noAdjustHandles`, when the element has it.
-    pub no_adjust_handles: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
     /// The attribute `noChangeArrowheads`, when the element has it.
-    pub no_change_arrowheads: Option<String>,
+    pub no_change_arrowheads: Option<Box<str>>,
     /// The attribute `noChangeAspect`, when the element has it.
-    pub no_change_aspect: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
     /// The attribute `noChangeShapeType`, when the element has it.
-    pub no_change_shape_type: Option<String>,
+    pub no_change_shape_type: Option<Box<str>>,
     /// The attribute `noEditPoints`, when the element has it.
-    pub no_edit_points: Option<String>,
+    pub no_edit_points: Option<Box<str>>,
     /// The attribute `noGrp`, when the element has it.
-    pub no_grp: Option<String>,
+    pub no_grp: Option<Box<str>>,
     /// The attribute `noMove`, when the element has it.
-    pub no_move: Option<String>,
+    pub no_move: Option<Box<str>>,
     /// The attribute `noResize`, when the element has it.
-    pub no_resize: Option<String>,
+    pub no_resize: Option<Box<str>>,
     /// The attribute `noRot`, when the element has it.
-    pub no_rot: Option<String>,
+    pub no_rot: Option<Box<str>>,
     /// The attribute `noSelect`, when the element has it.
-    pub no_select: Option<String>,
+    pub no_select: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6914,7 +6914,7 @@ pub struct CustomColorWith<X: UserData> {
     /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContentWith<X>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -7069,17 +7069,17 @@ pub struct DefaultParagraphStyleWith<X: UserData> {
     /// The child that is `DefaultTextRunProperties`, when there is one.
     pub default_text_run_properties: Option<Box<DefaultTextRunPropertiesWith<X>>>,
     /// The attribute `eaLnBrk`, when the element has it.
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
     /// The attribute `hangingPunct`, when the element has it.
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
     /// The attribute `latinLnBrk`, when the element has it.
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacingWith<X>>>,
     /// The attribute `lvl`, when the element has it.
@@ -7089,7 +7089,7 @@ pub struct DefaultParagraphStyleWith<X: UserData> {
     /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
     /// The attribute `rtl`, when the element has it.
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfterWith<X>>>,
     /// The child that is `SpaceBefore`, when there is one.
@@ -7123,13 +7123,13 @@ impl Eq for DefaultParagraphStyleWith<()> {}
 #[non_exhaustive]
 pub struct DefaultTextRunPropertiesWith<X: UserData> {
     /// The attribute `altLang`, when the element has it.
-    pub alt_lang: Option<String>,
+    pub alt_lang: Option<Box<str>>,
     /// The attribute `b`, when the element has it.
-    pub b: Option<String>,
+    pub b: Option<Box<str>>,
     /// The attribute `baseline`, when the element has it.
     pub baseline: Option<Percentage>,
     /// The attribute `bmk`, when the element has it.
-    pub bmk: Option<String>,
+    pub bmk: Option<Box<str>>,
     /// The attribute `cap`, when the element has it.
     pub cap: Option<TextCapTypes>,
     /// The child that is `ClickHyperlink`, when there is one.
@@ -7137,13 +7137,13 @@ pub struct DefaultTextRunPropertiesWith<X: UserData> {
     /// The child that is `ComplexScriptFont`, when there is one.
     pub complex_script_font: Option<Box<ComplexScriptFontWith<X>>>,
     /// The attribute `dirty`, when the element has it.
-    pub dirty: Option<String>,
+    pub dirty: Option<Box<str>>,
     /// The child that is `EastAsianFont`, when there is one.
     pub east_asian_font: Option<Box<EastAsianFontWith<X>>>,
     /// The child that is an item of `EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<EffectPropertiesContentWith<X>>>,
     /// The attribute `err`, when the element has it.
-    pub err: Option<String>,
+    pub err: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The child that is an item of `FillPropertiesContent`, when there is one.
@@ -7151,29 +7151,29 @@ pub struct DefaultTextRunPropertiesWith<X: UserData> {
     /// The child that is `HighlightColor`, when there is one.
     pub highlight_color: Option<Box<HighlightColorWith<X>>>,
     /// The attribute `i`, when the element has it.
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     /// The attribute `kern`, when the element has it.
     pub kern: Option<TextNonNegativePoint>,
     /// The attribute `kumimoji`, when the element has it.
-    pub kumimoji: Option<String>,
+    pub kumimoji: Option<Box<str>>,
     /// The attribute `lang`, when the element has it.
-    pub lang: Option<String>,
+    pub lang: Option<Box<str>>,
     /// The child that is `LatinFont`, when there is one.
     pub latin_font: Option<Box<LatinFontWith<X>>>,
     /// The child that is `MouseOverHyperlink`, when there is one.
     pub mouse_over_hyperlink: Option<Box<MouseOverHyperlinkWith<X>>>,
     /// The attribute `noProof`, when the element has it.
-    pub no_proof: Option<String>,
+    pub no_proof: Option<Box<str>>,
     /// The attribute `normalizeH`, when the element has it.
-    pub normalize_h: Option<String>,
+    pub normalize_h: Option<Box<str>>,
     /// The child that is `Outline`, when there is one.
     pub outline: Option<Box<OutlineWith<X>>>,
     /// The child that is `RightToLeftRun`, when there is one.
     pub right_to_left_run: Option<Box<RightToLeftRunWith<X>>>,
     /// The attribute `smtClean`, when the element has it.
-    pub smt_clean: Option<String>,
+    pub smt_clean: Option<Box<str>>,
     /// The attribute `smtId`, when the element has it.
-    pub smt_id: Option<String>,
+    pub smt_id: Option<Box<str>>,
     /// The attribute `spc`, when the element has it.
     pub spc: Option<TextPoint>,
     /// The attribute `strike`, when the element has it.
@@ -7398,7 +7398,7 @@ impl Eq for DrawQuadraticBezierCurveToWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct DrawingElementID(pub String);
+pub struct DrawingElementID(pub Box<str>);
 
 /// The `a:duotone` element, Duotone Effect (ECMA-376 Part 1, section 20.1.8.23). Its schema type is
 /// `CT_DuotoneEffect`.
@@ -7426,13 +7426,13 @@ impl Eq for DuotoneEffectWith<()> {}
 #[non_exhaustive]
 pub struct EastAsianFontWith<X: UserData> {
     /// The attribute `charset`, when the element has it.
-    pub charset: Option<String>,
+    pub charset: Option<Box<str>>,
     /// The attribute `panose`, when the element has it.
     pub panose: Option<common_simple_types::Panose1Number>,
     /// The attribute `pitchFamily`, when the element has it.
     pub pitch_family: Option<PitchFamily>,
     /// The attribute `typeface`, when the element has it.
-    pub typeface: Option<String>,
+    pub typeface: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -7473,7 +7473,7 @@ pub struct EffectContainerContWith<X: UserData> {
     /// The children that are an item of `EffectContainerContent`, in order.
     pub content: Vec<EffectContainerContentWith<X>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<EffectContainerType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -7532,7 +7532,7 @@ pub enum EffectContainerContentWith<X: UserData> {
     /// The element `a:fillOverlay`, a `FillOverlayEffect`.
     FillOverlayEffect(Box<FillOverlayEffectWith<X>>),
     /// The element `a:glow`, a `GlowEffect`.
-    GlowEffect(Box<GlowEffectWith<X>>),
+    GlowEffect(GlowEffectWith<X>),
     /// The element `a:grayscl`, a `GrayScaleEffect`.
     GrayScaleEffect(GrayScaleEffectWith<X>),
     /// The element `a:hsl`, a `HueSaturationLuminanceEffect`.
@@ -7575,7 +7575,7 @@ pub struct EffectContainerEffectDagWith<X: UserData> {
     /// The children that are an item of `EffectContainerContent`, in order.
     pub content: Vec<EffectContainerContentWith<X>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<EffectContainerType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -7656,7 +7656,7 @@ pub enum EffectContainerTypeMember {
 #[non_exhaustive]
 pub struct EffectEffectReferenceWith<X: UserData> {
     /// The attribute `ref`, when the element has it.
-    pub r#ref: Option<String>,
+    pub r#ref: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -7793,13 +7793,13 @@ pub enum EndLineCapMember {
 #[non_exhaustive]
 pub struct EndParagraphRunPropertiesWith<X: UserData> {
     /// The attribute `altLang`, when the element has it.
-    pub alt_lang: Option<String>,
+    pub alt_lang: Option<Box<str>>,
     /// The attribute `b`, when the element has it.
-    pub b: Option<String>,
+    pub b: Option<Box<str>>,
     /// The attribute `baseline`, when the element has it.
     pub baseline: Option<Percentage>,
     /// The attribute `bmk`, when the element has it.
-    pub bmk: Option<String>,
+    pub bmk: Option<Box<str>>,
     /// The attribute `cap`, when the element has it.
     pub cap: Option<TextCapTypes>,
     /// The child that is `ClickHyperlink`, when there is one.
@@ -7807,13 +7807,13 @@ pub struct EndParagraphRunPropertiesWith<X: UserData> {
     /// The child that is `ComplexScriptFont`, when there is one.
     pub complex_script_font: Option<Box<ComplexScriptFontWith<X>>>,
     /// The attribute `dirty`, when the element has it.
-    pub dirty: Option<String>,
+    pub dirty: Option<Box<str>>,
     /// The child that is `EastAsianFont`, when there is one.
     pub east_asian_font: Option<Box<EastAsianFontWith<X>>>,
     /// The child that is an item of `EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<EffectPropertiesContentWith<X>>>,
     /// The attribute `err`, when the element has it.
-    pub err: Option<String>,
+    pub err: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The child that is an item of `FillPropertiesContent`, when there is one.
@@ -7821,29 +7821,29 @@ pub struct EndParagraphRunPropertiesWith<X: UserData> {
     /// The child that is `HighlightColor`, when there is one.
     pub highlight_color: Option<Box<HighlightColorWith<X>>>,
     /// The attribute `i`, when the element has it.
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     /// The attribute `kern`, when the element has it.
     pub kern: Option<TextNonNegativePoint>,
     /// The attribute `kumimoji`, when the element has it.
-    pub kumimoji: Option<String>,
+    pub kumimoji: Option<Box<str>>,
     /// The attribute `lang`, when the element has it.
-    pub lang: Option<String>,
+    pub lang: Option<Box<str>>,
     /// The child that is `LatinFont`, when there is one.
     pub latin_font: Option<Box<LatinFontWith<X>>>,
     /// The child that is `MouseOverHyperlink`, when there is one.
     pub mouse_over_hyperlink: Option<Box<MouseOverHyperlinkWith<X>>>,
     /// The attribute `noProof`, when the element has it.
-    pub no_proof: Option<String>,
+    pub no_proof: Option<Box<str>>,
     /// The attribute `normalizeH`, when the element has it.
-    pub normalize_h: Option<String>,
+    pub normalize_h: Option<Box<str>>,
     /// The child that is `Outline`, when there is one.
     pub outline: Option<Box<OutlineWith<X>>>,
     /// The child that is `RightToLeftRun`, when there is one.
     pub right_to_left_run: Option<Box<RightToLeftRunWith<X>>>,
     /// The attribute `smtClean`, when the element has it.
-    pub smt_clean: Option<String>,
+    pub smt_clean: Option<Box<str>>,
     /// The attribute `smtId`, when the element has it.
-    pub smt_id: Option<String>,
+    pub smt_id: Option<Box<str>>,
     /// The attribute `spc`, when the element has it.
     pub spc: Option<TextPoint>,
     /// The attribute `strike`, when the element has it.
@@ -7882,7 +7882,7 @@ pub struct ExtensionWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DrawingExtension,
 }
@@ -8007,7 +8007,7 @@ impl Eq for ExtrusionColorWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct FieldOfViewAngle(pub String);
+pub struct FieldOfViewAngle(pub Box<str>);
 
 /// The `a:fill` element, Fill (ECMA-376 Part 1, section 20.1.4.2.9). Its schema type is
 /// `CT_FillProperties`.
@@ -8274,7 +8274,7 @@ impl Eq for FirstRowWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct FixedAngle(pub String);
+pub struct FixedAngle(pub Box<str>);
 
 /// Fixed Percentage, the simple type `ST_FixedPercentage` (ECMA-376 Part 1, section 20.1.10.24),
 /// kept as its member or as the text the file carried.
@@ -8363,9 +8363,9 @@ impl Eq for FollowedHyperlinkWith<()> {}
 #[non_exhaustive]
 pub struct FontWith<X: UserData> {
     /// The attribute `script`, when the element has it.
-    pub script: Option<String>,
+    pub script: Option<Box<str>>,
     /// The attribute `typeface`, when the element has it.
-    pub typeface: Option<String>,
+    pub typeface: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8498,7 +8498,7 @@ pub struct FontSchemeWith<X: UserData> {
     /// The child that is `MinorFonts`, which the schema requires.
     pub minor_fonts: Box<MinorFontsWith<X>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8546,7 +8546,7 @@ pub struct FormatSchemeWith<X: UserData> {
     /// The child that is `LineStyleList`, which the schema requires.
     pub line_style_list: Box<LineStyleListWith<X>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8632,7 +8632,7 @@ pub struct GradientFillWith<X: UserData> {
     /// The child that is `GradientStopList`, when there is one.
     pub gradient_stop_list: Option<Box<GradientStopListWith<X>>>,
     /// The attribute `rotWithShape`, when the element has it.
-    pub rot_with_shape: Option<String>,
+    pub rot_with_shape: Option<Box<str>>,
     /// The child that is `TileRectangle`, when there is one.
     pub tile_rectangle: Option<Box<TileRectangleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -8768,17 +8768,17 @@ pub struct GraphicFrameLocksWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `noChangeAspect`, when the element has it.
-    pub no_change_aspect: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
     /// The attribute `noDrilldown`, when the element has it.
-    pub no_drilldown: Option<String>,
+    pub no_drilldown: Option<Box<str>>,
     /// The attribute `noGrp`, when the element has it.
-    pub no_grp: Option<String>,
+    pub no_grp: Option<Box<str>>,
     /// The attribute `noMove`, when the element has it.
-    pub no_move: Option<String>,
+    pub no_move: Option<Box<str>>,
     /// The attribute `noResize`, when the element has it.
-    pub no_resize: Option<String>,
+    pub no_resize: Option<Box<str>>,
     /// The attribute `noSelect`, when the element has it.
-    pub no_select: Option<String>,
+    pub no_select: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -8823,7 +8823,7 @@ pub struct GraphicObjectDataWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DrawingGraphicObjectData,
 }
@@ -9011,19 +9011,19 @@ pub struct GroupShapeLocksWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `noChangeAspect`, when the element has it.
-    pub no_change_aspect: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
     /// The attribute `noGrp`, when the element has it.
-    pub no_grp: Option<String>,
+    pub no_grp: Option<Box<str>>,
     /// The attribute `noMove`, when the element has it.
-    pub no_move: Option<String>,
+    pub no_move: Option<Box<str>>,
     /// The attribute `noResize`, when the element has it.
-    pub no_resize: Option<String>,
+    pub no_resize: Option<Box<str>>,
     /// The attribute `noRot`, when the element has it.
-    pub no_rot: Option<String>,
+    pub no_rot: Option<Box<str>>,
     /// The attribute `noSelect`, when the element has it.
-    pub no_select: Option<String>,
+    pub no_select: Option<Box<str>>,
     /// The attribute `noUngrp`, when the element has it.
-    pub no_ungrp: Option<String>,
+    pub no_ungrp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -9048,7 +9048,7 @@ pub struct HeaderCellReferenceWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DrawingHeaderCellReference,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `a:header` element of the tree a read gives: [`HeaderCellReferenceWith`] holding nothing in
@@ -9103,9 +9103,9 @@ impl Eq for HighlightColorWith<()> {}
 #[non_exhaustive]
 pub struct HorizontalRatioWith<X: UserData> {
     /// The attribute `d`, when the element has it.
-    pub d: Option<String>,
+    pub d: Option<Box<str>>,
     /// The attribute `n`, when the element has it.
-    pub n: Option<String>,
+    pub n: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -9254,25 +9254,25 @@ impl Eq for HyperlinkWith<()> {}
 #[non_exhaustive]
 pub struct HyperlinkForHoverWith<X: UserData> {
     /// The attribute `action`, when the element has it.
-    pub action: Option<String>,
+    pub action: Option<Box<str>>,
     /// The attribute `endSnd`, when the element has it.
-    pub end_snd: Option<String>,
+    pub end_snd: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `highlightClick`, when the element has it.
-    pub highlight_click: Option<String>,
+    pub highlight_click: Option<Box<str>>,
     /// The attribute `history`, when the element has it.
-    pub history: Option<String>,
+    pub history: Option<Box<str>>,
     /// The child that is `HyperlinkSound`, when there is one.
     pub hyperlink_sound: Option<Box<HyperlinkSoundWith<X>>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `invalidUrl`, when the element has it.
-    pub invalid_url: Option<String>,
+    pub invalid_url: Option<Box<str>>,
     /// The attribute `tgtFrame`, when the element has it.
-    pub tgt_frame: Option<String>,
+    pub tgt_frame: Option<Box<str>>,
     /// The attribute `tooltip`, when the element has it.
-    pub tooltip: Option<String>,
+    pub tooltip: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -9292,9 +9292,9 @@ impl Eq for HyperlinkForHoverWith<()> {}
 #[non_exhaustive]
 pub struct HyperlinkSoundWith<X: UserData> {
     /// The attribute `r:embed`, when the element has it.
-    pub embed: Option<String>,
+    pub embed: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -9459,13 +9459,13 @@ impl Eq for LastRowWith<()> {}
 #[non_exhaustive]
 pub struct LatinFontWith<X: UserData> {
     /// The attribute `charset`, when the element has it.
-    pub charset: Option<String>,
+    pub charset: Option<Box<str>>,
     /// The attribute `panose`, when the element has it.
     pub panose: Option<common_simple_types::Panose1Number>,
     /// The attribute `pitchFamily`, when the element has it.
     pub pitch_family: Option<PitchFamily>,
     /// The attribute `typeface`, when the element has it.
-    pub typeface: Option<String>,
+    pub typeface: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -10011,7 +10011,7 @@ impl Eq for LineStyleListWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct LineWidth(pub String);
+pub struct LineWidth(pub Box<str>);
 
 /// The `a:lin` element, Linear Gradient Fill (ECMA-376 Part 1, section 20.1.8.41). Its schema type
 /// is `CT_LinearShadeProperties`.
@@ -10021,7 +10021,7 @@ pub struct LinearGradientFillWith<X: UserData> {
     /// The attribute `ang`, when the element has it.
     pub ang: Option<PositiveFixedAngle>,
     /// The attribute `scaled`, when the element has it.
-    pub scaled: Option<String>,
+    pub scaled: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -10047,17 +10047,17 @@ pub struct ListLevel1TextStyleWith<X: UserData> {
     /// The child that is `DefaultTextRunProperties`, when there is one.
     pub default_text_run_properties: Option<Box<DefaultTextRunPropertiesWith<X>>>,
     /// The attribute `eaLnBrk`, when the element has it.
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
     /// The attribute `hangingPunct`, when the element has it.
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
     /// The attribute `latinLnBrk`, when the element has it.
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacingWith<X>>>,
     /// The attribute `lvl`, when the element has it.
@@ -10067,7 +10067,7 @@ pub struct ListLevel1TextStyleWith<X: UserData> {
     /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
     /// The attribute `rtl`, when the element has it.
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfterWith<X>>>,
     /// The child that is `SpaceBefore`, when there is one.
@@ -10107,17 +10107,17 @@ pub struct ListLevel2TextStyleWith<X: UserData> {
     /// The child that is `DefaultTextRunProperties`, when there is one.
     pub default_text_run_properties: Option<Box<DefaultTextRunPropertiesWith<X>>>,
     /// The attribute `eaLnBrk`, when the element has it.
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
     /// The attribute `hangingPunct`, when the element has it.
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
     /// The attribute `latinLnBrk`, when the element has it.
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacingWith<X>>>,
     /// The attribute `lvl`, when the element has it.
@@ -10127,7 +10127,7 @@ pub struct ListLevel2TextStyleWith<X: UserData> {
     /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
     /// The attribute `rtl`, when the element has it.
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfterWith<X>>>,
     /// The child that is `SpaceBefore`, when there is one.
@@ -10167,17 +10167,17 @@ pub struct ListLevel3TextStyleWith<X: UserData> {
     /// The child that is `DefaultTextRunProperties`, when there is one.
     pub default_text_run_properties: Option<Box<DefaultTextRunPropertiesWith<X>>>,
     /// The attribute `eaLnBrk`, when the element has it.
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
     /// The attribute `hangingPunct`, when the element has it.
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
     /// The attribute `latinLnBrk`, when the element has it.
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacingWith<X>>>,
     /// The attribute `lvl`, when the element has it.
@@ -10187,7 +10187,7 @@ pub struct ListLevel3TextStyleWith<X: UserData> {
     /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
     /// The attribute `rtl`, when the element has it.
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfterWith<X>>>,
     /// The child that is `SpaceBefore`, when there is one.
@@ -10227,17 +10227,17 @@ pub struct ListLevel4TextStyleWith<X: UserData> {
     /// The child that is `DefaultTextRunProperties`, when there is one.
     pub default_text_run_properties: Option<Box<DefaultTextRunPropertiesWith<X>>>,
     /// The attribute `eaLnBrk`, when the element has it.
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
     /// The attribute `hangingPunct`, when the element has it.
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
     /// The attribute `latinLnBrk`, when the element has it.
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacingWith<X>>>,
     /// The attribute `lvl`, when the element has it.
@@ -10247,7 +10247,7 @@ pub struct ListLevel4TextStyleWith<X: UserData> {
     /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
     /// The attribute `rtl`, when the element has it.
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfterWith<X>>>,
     /// The child that is `SpaceBefore`, when there is one.
@@ -10287,17 +10287,17 @@ pub struct ListLevel5TextStyleWith<X: UserData> {
     /// The child that is `DefaultTextRunProperties`, when there is one.
     pub default_text_run_properties: Option<Box<DefaultTextRunPropertiesWith<X>>>,
     /// The attribute `eaLnBrk`, when the element has it.
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
     /// The attribute `hangingPunct`, when the element has it.
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
     /// The attribute `latinLnBrk`, when the element has it.
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacingWith<X>>>,
     /// The attribute `lvl`, when the element has it.
@@ -10307,7 +10307,7 @@ pub struct ListLevel5TextStyleWith<X: UserData> {
     /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
     /// The attribute `rtl`, when the element has it.
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfterWith<X>>>,
     /// The child that is `SpaceBefore`, when there is one.
@@ -10347,17 +10347,17 @@ pub struct ListLevel6TextStyleWith<X: UserData> {
     /// The child that is `DefaultTextRunProperties`, when there is one.
     pub default_text_run_properties: Option<Box<DefaultTextRunPropertiesWith<X>>>,
     /// The attribute `eaLnBrk`, when the element has it.
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
     /// The attribute `hangingPunct`, when the element has it.
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
     /// The attribute `latinLnBrk`, when the element has it.
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacingWith<X>>>,
     /// The attribute `lvl`, when the element has it.
@@ -10367,7 +10367,7 @@ pub struct ListLevel6TextStyleWith<X: UserData> {
     /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
     /// The attribute `rtl`, when the element has it.
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfterWith<X>>>,
     /// The child that is `SpaceBefore`, when there is one.
@@ -10407,17 +10407,17 @@ pub struct ListLevel7TextStyleWith<X: UserData> {
     /// The child that is `DefaultTextRunProperties`, when there is one.
     pub default_text_run_properties: Option<Box<DefaultTextRunPropertiesWith<X>>>,
     /// The attribute `eaLnBrk`, when the element has it.
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
     /// The attribute `hangingPunct`, when the element has it.
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
     /// The attribute `latinLnBrk`, when the element has it.
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacingWith<X>>>,
     /// The attribute `lvl`, when the element has it.
@@ -10427,7 +10427,7 @@ pub struct ListLevel7TextStyleWith<X: UserData> {
     /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
     /// The attribute `rtl`, when the element has it.
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfterWith<X>>>,
     /// The child that is `SpaceBefore`, when there is one.
@@ -10467,17 +10467,17 @@ pub struct ListLevel8TextStyleWith<X: UserData> {
     /// The child that is `DefaultTextRunProperties`, when there is one.
     pub default_text_run_properties: Option<Box<DefaultTextRunPropertiesWith<X>>>,
     /// The attribute `eaLnBrk`, when the element has it.
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
     /// The attribute `hangingPunct`, when the element has it.
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
     /// The attribute `latinLnBrk`, when the element has it.
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacingWith<X>>>,
     /// The attribute `lvl`, when the element has it.
@@ -10487,7 +10487,7 @@ pub struct ListLevel8TextStyleWith<X: UserData> {
     /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
     /// The attribute `rtl`, when the element has it.
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfterWith<X>>>,
     /// The child that is `SpaceBefore`, when there is one.
@@ -10527,17 +10527,17 @@ pub struct ListLevel9TextStyleWith<X: UserData> {
     /// The child that is `DefaultTextRunProperties`, when there is one.
     pub default_text_run_properties: Option<Box<DefaultTextRunPropertiesWith<X>>>,
     /// The attribute `eaLnBrk`, when the element has it.
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
     /// The attribute `hangingPunct`, when the element has it.
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
     /// The attribute `latinLnBrk`, when the element has it.
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacingWith<X>>>,
     /// The attribute `lvl`, when the element has it.
@@ -10547,7 +10547,7 @@ pub struct ListLevel9TextStyleWith<X: UserData> {
     /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
     /// The attribute `rtl`, when the element has it.
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfterWith<X>>>,
     /// The child that is `SpaceBefore`, when there is one.
@@ -10856,25 +10856,25 @@ impl Eq for MiterLineJoinWith<()> {}
 #[non_exhaustive]
 pub struct MouseOverHyperlinkWith<X: UserData> {
     /// The attribute `action`, when the element has it.
-    pub action: Option<String>,
+    pub action: Option<Box<str>>,
     /// The attribute `endSnd`, when the element has it.
-    pub end_snd: Option<String>,
+    pub end_snd: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `highlightClick`, when the element has it.
-    pub highlight_click: Option<String>,
+    pub highlight_click: Option<Box<str>>,
     /// The attribute `history`, when the element has it.
-    pub history: Option<String>,
+    pub history: Option<Box<str>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `invalidUrl`, when the element has it.
-    pub invalid_url: Option<String>,
+    pub invalid_url: Option<Box<str>>,
     /// The child that is `HyperlinkSound`, when there is one.
     pub sound: Option<Box<HyperlinkSoundWith<X>>>,
     /// The attribute `tgtFrame`, when the element has it.
-    pub tgt_frame: Option<String>,
+    pub tgt_frame: Option<Box<str>>,
     /// The attribute `tooltip`, when the element has it.
-    pub tooltip: Option<String>,
+    pub tooltip: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -11016,19 +11016,19 @@ pub struct NonVisualDrawingPropertiesWith<X: UserData> {
     /// The child that is `ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `hidden`, when the element has it.
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     /// The child that is `HyperlinkForHover`, when there is one.
     pub hyperlink_for_hover: Option<Box<HyperlinkForHoverWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<DrawingElementID>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -11096,7 +11096,7 @@ pub struct NonVisualPictureDrawingPropertiesWith<X: UserData> {
     /// The child that is `PictureLocks`, when there is one.
     pub picture_locks: Option<Box<PictureLocksWith<X>>>,
     /// The attribute `preferRelativeResize`, when the element has it.
-    pub prefer_relative_resize: Option<String>,
+    pub prefer_relative_resize: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -11232,7 +11232,7 @@ pub struct NonVisualShapeDrawingPropertiesWith<X: UserData> {
     /// The child that is `ShapeLocks`, when there is one.
     pub shape_locks: Option<Box<ShapeLocksWith<X>>>,
     /// The attribute `txBox`, when the element has it.
-    pub tx_box: Option<String>,
+    pub tx_box: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -11429,7 +11429,7 @@ pub struct OuterShadowEffectWith<X: UserData> {
     /// The attribute `ky`, when the element has it.
     pub ky: Option<FixedAngle>,
     /// The attribute `rotWithShape`, when the element has it.
-    pub rot_with_shape: Option<String>,
+    pub rot_with_shape: Option<Box<str>>,
     /// The attribute `sx`, when the element has it.
     pub sx: Option<Percentage>,
     /// The attribute `sy`, when the element has it.
@@ -11671,7 +11671,7 @@ pub enum PercentageMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct PercentageAsDecimalNumber(pub String);
+pub struct PercentageAsDecimalNumber(pub Box<str>);
 
 /// The `a:pic` element, Picture (ECMA-376 Part 1, section 20.1.2.2.30). Its schema type is
 /// `CT_GvmlPicture`.
@@ -11730,9 +11730,9 @@ pub struct PictureFillWith<X: UserData> {
     /// The child that is an item of `FillModeContent`, when there is one.
     pub content: Option<Box<FillModeContentWith<X>>>,
     /// The attribute `dpi`, when the element has it.
-    pub dpi: Option<String>,
+    pub dpi: Option<Box<str>>,
     /// The attribute `rotWithShape`, when the element has it.
-    pub rot_with_shape: Option<String>,
+    pub rot_with_shape: Option<Box<str>>,
     /// The child that is `SourceRectangle`, when there is one.
     pub source_rectangle: Option<Box<SourceRectangleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -11756,27 +11756,27 @@ pub struct PictureLocksWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `noAdjustHandles`, when the element has it.
-    pub no_adjust_handles: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
     /// The attribute `noChangeArrowheads`, when the element has it.
-    pub no_change_arrowheads: Option<String>,
+    pub no_change_arrowheads: Option<Box<str>>,
     /// The attribute `noChangeAspect`, when the element has it.
-    pub no_change_aspect: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
     /// The attribute `noChangeShapeType`, when the element has it.
-    pub no_change_shape_type: Option<String>,
+    pub no_change_shape_type: Option<Box<str>>,
     /// The attribute `noCrop`, when the element has it.
-    pub no_crop: Option<String>,
+    pub no_crop: Option<Box<str>>,
     /// The attribute `noEditPoints`, when the element has it.
-    pub no_edit_points: Option<String>,
+    pub no_edit_points: Option<Box<str>>,
     /// The attribute `noGrp`, when the element has it.
-    pub no_grp: Option<String>,
+    pub no_grp: Option<Box<str>>,
     /// The attribute `noMove`, when the element has it.
-    pub no_move: Option<String>,
+    pub no_move: Option<Box<str>>,
     /// The attribute `noResize`, when the element has it.
-    pub no_resize: Option<String>,
+    pub no_resize: Option<Box<str>>,
     /// The attribute `noRot`, when the element has it.
-    pub no_rot: Option<String>,
+    pub no_rot: Option<Box<str>>,
     /// The attribute `noSelect`, when the element has it.
-    pub no_select: Option<String>,
+    pub no_select: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -11802,7 +11802,7 @@ impl Eq for PictureLocksWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct PitchFamily(pub String);
+pub struct PitchFamily(pub Box<str>);
 
 /// The `a:ahPolar` element, Polar Adjust Handle (ECMA-376 Part 1, section 20.1.9.2). Its schema
 /// type is `CT_PolarAdjustHandle`.
@@ -11810,9 +11810,9 @@ pub struct PitchFamily(pub String);
 #[non_exhaustive]
 pub struct PolarAdjustHandleWith<X: UserData> {
     /// The attribute `gdRefAng`, when the element has it.
-    pub gd_ref_ang: Option<String>,
+    pub gd_ref_ang: Option<Box<str>>,
     /// The attribute `gdRefR`, when the element has it.
-    pub gd_ref_r: Option<String>,
+    pub gd_ref_r: Option<Box<str>>,
     /// The attribute `maxAng`, when the element has it.
     pub max_ang: Option<AdjustableAngleMethods>,
     /// The attribute `maxR`, when the element has it.
@@ -11848,7 +11848,7 @@ impl Eq for PolarAdjustHandleWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct PositiveCoordinate(pub String);
+pub struct PositiveCoordinate(pub Box<str>);
 
 /// Positive Coordinate Point, the simple type `ST_PositiveCoordinate32` (ECMA-376 Part 1, section
 /// 20.1.10.43), kept as the text the file carried.
@@ -11862,7 +11862,7 @@ pub struct PositiveCoordinate(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct PositiveCoordinatePoint(pub String);
+pub struct PositiveCoordinatePoint(pub Box<str>);
 
 /// Positive Fixed Angle, the simple type `ST_PositiveFixedAngle` (ECMA-376 Part 1, section
 /// 20.1.10.44), kept as the text the file carried.
@@ -11876,7 +11876,7 @@ pub struct PositiveCoordinatePoint(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct PositiveFixedAngle(pub String);
+pub struct PositiveFixedAngle(pub Box<str>);
 
 /// Positive Fixed Percentage, the simple type `ST_PositiveFixedPercentage` (ECMA-376 Part 1,
 /// section 20.1.10.45), kept as its member or as the text the file carried.
@@ -11915,7 +11915,7 @@ pub enum PositiveFixedPercentageMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct PositivePercentageAsDecimalNumber(pub String);
+pub struct PositivePercentageAsDecimalNumber(pub Box<str>);
 
 /// Positive Percentage Value with Sign, the simple type `ST_PositivePercentage` (ECMA-376 Part 1,
 /// section 20.1.10.46), kept as its member or as the text the file carried.
@@ -13390,7 +13390,7 @@ pub struct QuickTimeFromFileWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `r:link`, when the element has it.
-    pub link: Option<String>,
+    pub link: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -13412,7 +13412,7 @@ pub struct RGBColorModelHexVariantWith<X: UserData> {
     /// The children that are an item of `ColorTransformContent`, in order.
     pub content: Vec<ColorTransformContentWith<X>>,
     /// The attribute `a14:legacySpreadsheetColorIndex`, when the element has it.
-    pub legacy_spreadsheet_color_index: Option<String>,
+    pub legacy_spreadsheet_color_index: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -13576,7 +13576,7 @@ pub struct ReflectionEffectWith<X: UserData> {
     /// The attribute `ky`, when the element has it.
     pub ky: Option<FixedAngle>,
     /// The attribute `rotWithShape`, when the element has it.
-    pub rot_with_shape: Option<String>,
+    pub rot_with_shape: Option<Box<str>>,
     /// The attribute `stA`, when the element has it.
     pub st_a: Option<PositiveFixedPercentage>,
     /// The attribute `stPos`, when the element has it.
@@ -13987,9 +13987,9 @@ impl Eq for ShapeDefaultWith<()> {}
 #[non_exhaustive]
 pub struct ShapeGuideWith<X: UserData> {
     /// The attribute `fmla`, when the element has it.
-    pub fmla: Option<String>,
+    pub fmla: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -14010,27 +14010,27 @@ pub struct ShapeLocksWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `noAdjustHandles`, when the element has it.
-    pub no_adjust_handles: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
     /// The attribute `noChangeArrowheads`, when the element has it.
-    pub no_change_arrowheads: Option<String>,
+    pub no_change_arrowheads: Option<Box<str>>,
     /// The attribute `noChangeAspect`, when the element has it.
-    pub no_change_aspect: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
     /// The attribute `noChangeShapeType`, when the element has it.
-    pub no_change_shape_type: Option<String>,
+    pub no_change_shape_type: Option<Box<str>>,
     /// The attribute `noEditPoints`, when the element has it.
-    pub no_edit_points: Option<String>,
+    pub no_edit_points: Option<Box<str>>,
     /// The attribute `noGrp`, when the element has it.
-    pub no_grp: Option<String>,
+    pub no_grp: Option<Box<str>>,
     /// The attribute `noMove`, when the element has it.
-    pub no_move: Option<String>,
+    pub no_move: Option<Box<str>>,
     /// The attribute `noResize`, when the element has it.
-    pub no_resize: Option<String>,
+    pub no_resize: Option<Box<str>>,
     /// The attribute `noRot`, when the element has it.
-    pub no_rot: Option<String>,
+    pub no_rot: Option<Box<str>>,
     /// The attribute `noSelect`, when the element has it.
-    pub no_select: Option<String>,
+    pub no_select: Option<Box<str>>,
     /// The attribute `noTextEdit`, when the element has it.
-    pub no_text_edit: Option<String>,
+    pub no_text_edit: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -14052,13 +14052,13 @@ pub struct ShapePathWith<X: UserData> {
     /// The children that are an item of `ShapePathContent`, in order.
     pub content: Vec<ShapePathContentWith<X>>,
     /// The attribute `extrusionOk`, when the element has it.
-    pub extrusion_ok: Option<String>,
+    pub extrusion_ok: Option<Box<str>>,
     /// The attribute `fill`, when the element has it.
     pub fill: Option<PathFillMode>,
     /// The attribute `h`, when the element has it.
     pub h: Option<PositiveCoordinate>,
     /// The attribute `stroke`, when the element has it.
-    pub stroke: Option<String>,
+    pub stroke: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -14474,13 +14474,13 @@ impl Eq for SpacingPointsWith<()> {}
 #[non_exhaustive]
 pub struct SpecifiedWith<X: UserData> {
     /// The attribute `charset`, when the element has it.
-    pub charset: Option<String>,
+    pub charset: Option<Box<str>>,
     /// The attribute `panose`, when the element has it.
     pub panose: Option<common_simple_types::Panose1Number>,
     /// The attribute `pitchFamily`, when the element has it.
     pub pitch_family: Option<PitchFamily>,
     /// The attribute `typeface`, when the element has it.
-    pub typeface: Option<String>,
+    pub typeface: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -14531,7 +14531,7 @@ pub enum StCoordinate32Member {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StCoordinate32Unqualified(pub String);
+pub struct StCoordinate32Unqualified(pub Box<str>);
 
 /// Coordinate, the simple type `ST_CoordinateUnqualified` (ECMA-376 Part 1, section 20.1.10.19),
 /// kept as the text the file carried.
@@ -14545,7 +14545,7 @@ pub struct StCoordinate32Unqualified(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StCoordinateUnqualified(pub String);
+pub struct StCoordinateUnqualified(pub Box<str>);
 
 /// Fixed Percentage, the simple type `ST_FixedPercentageDecimal` (ECMA-376 Part 4, section
 /// 17.2.2.7), kept as the text the file carried.
@@ -14559,7 +14559,7 @@ pub struct StCoordinateUnqualified(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StFixedPercentageDecimal(pub String);
+pub struct StFixedPercentageDecimal(pub Box<str>);
 
 /// Positive Fixed Percentage, the simple type `ST_PositiveFixedPercentageDecimal` (ECMA-376 Part 4,
 /// section 17.2.2.8), kept as the text the file carried.
@@ -14573,7 +14573,7 @@ pub struct StFixedPercentageDecimal(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StPositiveFixedPercentageDecimal(pub String);
+pub struct StPositiveFixedPercentageDecimal(pub Box<str>);
 
 /// Scheme Color, the simple type `ST_SchemeColorVal` (ECMA-376 Part 1, section 20.1.10.54), kept as
 /// its member or as the text the file carried.
@@ -14642,7 +14642,7 @@ pub enum StSchemeColorValMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StTextBulletSizePercent(pub String);
+pub struct StTextBulletSizePercent(pub Box<str>);
 
 /// Text Font Scale Percentage, the simple type `ST_TextFontScalePercent` (ECMA-376 Part 4, section
 /// 17.2.2.10), kept as the text the file carried.
@@ -14656,7 +14656,7 @@ pub struct StTextBulletSizePercent(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StTextFontScalePercent(pub String);
+pub struct StTextFontScalePercent(pub Box<str>);
 
 /// Text Font Scale Percentage, the simple type `ST_TextFontScalePercentOrPercentString` (ECMA-376
 /// Part 1, section 20.1.10.67), kept as its member or as the text the file carried.
@@ -14695,7 +14695,7 @@ pub enum StTextFontScalePercentOrPercentStringMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StTextPointUnqualified(pub String);
+pub struct StTextPointUnqualified(pub Box<str>);
 
 /// Text Spacing Percent, the simple type `ST_TextSpacingPercentOrPercentString` (ECMA-376 Part 1,
 /// section 20.1.10.77), kept as its member or as the text the file carried.
@@ -14734,7 +14734,7 @@ pub enum StTextSpacingPercentOrPercentStringMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StartBulletAtNumber(pub String);
+pub struct StartBulletAtNumber(pub Box<str>);
 
 /// The `a:stretch` element, Stretch (ECMA-376 Part 1, section 20.1.8.56). Its schema type is
 /// `CT_StretchInfoProperties`.
@@ -14768,7 +14768,7 @@ impl Eq for StretchWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct StyleMatrixColumnIndex(pub String);
+pub struct StyleMatrixColumnIndex(pub Box<str>);
 
 /// The `a:sym` element, Symbol Font (ECMA-376 Part 1, section 21.1.2.3.10). Its schema type is
 /// `CT_TextFont`.
@@ -14776,13 +14776,13 @@ pub struct StyleMatrixColumnIndex(pub String);
 #[non_exhaustive]
 pub struct SymbolFontWith<X: UserData> {
     /// The attribute `charset`, when the element has it.
-    pub charset: Option<String>,
+    pub charset: Option<Box<str>>,
     /// The attribute `panose`, when the element has it.
     pub panose: Option<common_simple_types::Panose1Number>,
     /// The attribute `pitchFamily`, when the element has it.
     pub pitch_family: Option<PitchFamily>,
     /// The attribute `typeface`, when the element has it.
-    pub typeface: Option<String>,
+    pub typeface: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -14995,7 +14995,7 @@ pub enum TableBackgroundEffectContentWith<X: UserData> {
     /// The element `a:effect`, a `Effect`.
     Effect(EffectWith<X>),
     /// The element `a:effectRef`, a `EffectReference`.
-    EffectReference(Box<EffectReferenceWith<X>>),
+    EffectReference(EffectReferenceWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -15014,15 +15014,15 @@ pub struct TableCellWith<X: UserData> {
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `gridSpan`, when the element has it.
-    pub grid_span: Option<String>,
+    pub grid_span: Option<Box<str>>,
     /// The attribute `hMerge`, when the element has it.
-    pub h_merge: Option<String>,
+    pub h_merge: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The child that is `TableCellProperties`, when there is one.
     pub properties: Option<Box<TableCellPropertiesWith<X>>>,
     /// The attribute `rowSpan`, when the element has it.
-    pub row_span: Option<String>,
+    pub row_span: Option<Box<str>>,
     /// The child that is `ShapeTextBody`, when there is one.
     pub shape_text_body: Option<Box<ShapeTextBodyWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -15031,7 +15031,7 @@ pub struct TableCellWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DrawingTableCell,
     /// The attribute `vMerge`, when the element has it.
-    pub v_merge: Option<String>,
+    pub v_merge: Option<Box<str>>,
 }
 
 /// The `a:tc` element of the tree a read gives: [`TableCellWith`] holding nothing in `user_data`.
@@ -15083,7 +15083,7 @@ pub struct TableCellPropertiesWith<X: UserData> {
     /// The attribute `anchor`, when the element has it.
     pub anchor: Option<TextAnchoringTypes>,
     /// The attribute `anchorCtr`, when the element has it.
-    pub anchor_ctr: Option<String>,
+    pub anchor_ctr: Option<Box<str>>,
     /// The child that is `BottomBorderLineProperties`, when there is one.
     pub bottom_border_line_properties: Option<Box<BottomBorderLinePropertiesWith<X>>>,
     /// The child that is `BottomLeftToTopRightBorderLineProperties`, when there is one.
@@ -15254,9 +15254,9 @@ impl Eq for TableGridColumnWith<()> {}
 #[non_exhaustive]
 pub struct TablePropertiesWith<X: UserData> {
     /// The attribute `bandCol`, when the element has it.
-    pub band_col: Option<String>,
+    pub band_col: Option<Box<str>>,
     /// The attribute `bandRow`, when the element has it.
-    pub band_row: Option<String>,
+    pub band_row: Option<Box<str>>,
     /// The child that is an item of `EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<EffectPropertiesContentWith<X>>>,
     /// The child that is `ExtensionList`, when there is one.
@@ -15264,15 +15264,15 @@ pub struct TablePropertiesWith<X: UserData> {
     /// The child that is an item of `FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<FillPropertiesContentWith<X>>>,
     /// The attribute `firstCol`, when the element has it.
-    pub first_col: Option<String>,
+    pub first_col: Option<Box<str>>,
     /// The attribute `firstRow`, when the element has it.
-    pub first_row: Option<String>,
+    pub first_row: Option<Box<str>>,
     /// The attribute `lastCol`, when the element has it.
-    pub last_col: Option<String>,
+    pub last_col: Option<Box<str>>,
     /// The attribute `lastRow`, when the element has it.
-    pub last_row: Option<String>,
+    pub last_row: Option<Box<str>>,
     /// The attribute `rtl`, when the element has it.
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     /// The child that is an item of `TablePropertiesStyleContent`, when there is one.
     pub style_content: Option<Box<TablePropertiesStyleContentWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -15367,7 +15367,7 @@ pub struct TableStyleWith<X: UserData> {
     /// The attribute `styleId`, when the element has it.
     pub style_id: Option<common_simple_types::Guid>,
     /// The attribute `styleName`, when the element has it.
-    pub style_name: Option<String>,
+    pub style_name: Option<Box<str>>,
     /// The child that is `TableBackground`, when there is one.
     pub table_background: Option<Box<TableBackgroundWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -15461,7 +15461,7 @@ pub struct TableStyleTblStyleWith<X: UserData> {
     /// The attribute `styleId`, when the element has it.
     pub style_id: Option<common_simple_types::Guid>,
     /// The attribute `styleName`, when the element has it.
-    pub style_name: Option<String>,
+    pub style_name: Option<Box<str>>,
     /// The child that is `TableBackground`, when there is one.
     pub table_background: Option<Box<TableBackgroundWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -15849,7 +15849,7 @@ pub enum TextCapTypesMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct TextColumnCount(pub String);
+pub struct TextColumnCount(pub Box<str>);
 
 /// The `a:txDef` element, Text Default (ECMA-376 Part 1, section 20.1.4.1.28). Its schema type is
 /// `CT_DefaultShapeDefinition`.
@@ -15893,7 +15893,7 @@ pub struct TextFieldWith<X: UserData> {
     /// The child that is `TextString`, when there is one.
     pub text_string: Option<Box<TextStringWith<X>>>,
     /// The attribute `type`, when the element has it.
-    pub r#type: Option<String>,
+    pub r#type: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -15918,7 +15918,7 @@ impl Eq for TextFieldWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct TextFontSize(pub String);
+pub struct TextFontSize(pub Box<str>);
 
 /// Text Horizontal Overflow Types, the simple type `ST_TextHorzOverflowType` (ECMA-376 Part 1,
 /// section 20.1.10.69), kept as its member or as the text the file carried.
@@ -15957,7 +15957,7 @@ pub enum TextHorizontalOverflowTypesMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct TextIndentLevelType(pub String);
+pub struct TextIndentLevelType(pub Box<str>);
 
 /// Text Indentation, the simple type `ST_TextIndent` (ECMA-376 Part 1, section 20.1.10.70), kept as
 /// the text the file carried.
@@ -15971,7 +15971,7 @@ pub struct TextIndentLevelType(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct TextIndentation(pub String);
+pub struct TextIndentation(pub Box<str>);
 
 /// The `a:br` element, Text Line Break (ECMA-376 Part 1, section 21.1.2.2.1). Its schema type is
 /// `CT_TextLineBreak`.
@@ -16045,7 +16045,7 @@ impl Eq for TextListStylesWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct TextMargin(pub String);
+pub struct TextMargin(pub Box<str>);
 
 /// Text Non-Negative Point, the simple type `ST_TextNonNegativePoint` (ECMA-376 Part 1, section
 /// 20.1.10.73), kept as the text the file carried.
@@ -16059,7 +16059,7 @@ pub struct TextMargin(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct TextNonNegativePoint(pub String);
+pub struct TextNonNegativePoint(pub Box<str>);
 
 /// The `a:pPr` element, Text Paragraph Properties (ECMA-376 Part 1, section 21.1.2.2.7). Its schema
 /// type is `CT_TextParagraphProperties`.
@@ -16073,17 +16073,17 @@ pub struct TextParagraphPropertiesWith<X: UserData> {
     /// The child that is `DefaultTextRunProperties`, when there is one.
     pub default_text_run_properties: Option<Box<DefaultTextRunPropertiesWith<X>>>,
     /// The attribute `eaLnBrk`, when the element has it.
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
     /// The attribute `hangingPunct`, when the element has it.
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
     /// The attribute `latinLnBrk`, when the element has it.
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacingWith<X>>>,
     /// The attribute `lvl`, when the element has it.
@@ -16093,7 +16093,7 @@ pub struct TextParagraphPropertiesWith<X: UserData> {
     /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
     /// The attribute `rtl`, when the element has it.
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfterWith<X>>>,
     /// The child that is `SpaceBefore`, when there is one.
@@ -16223,13 +16223,13 @@ impl Eq for TextRunWith<()> {}
 #[non_exhaustive]
 pub struct TextRunPropertiesWith<X: UserData> {
     /// The attribute `altLang`, when the element has it.
-    pub alt_lang: Option<String>,
+    pub alt_lang: Option<Box<str>>,
     /// The attribute `b`, when the element has it.
-    pub b: Option<String>,
+    pub b: Option<Box<str>>,
     /// The attribute `baseline`, when the element has it.
     pub baseline: Option<Percentage>,
     /// The attribute `bmk`, when the element has it.
-    pub bmk: Option<String>,
+    pub bmk: Option<Box<str>>,
     /// The attribute `cap`, when the element has it.
     pub cap: Option<TextCapTypes>,
     /// The child that is `ClickHyperlink`, when there is one.
@@ -16237,13 +16237,13 @@ pub struct TextRunPropertiesWith<X: UserData> {
     /// The child that is `ComplexScriptFont`, when there is one.
     pub complex_script_font: Option<Box<ComplexScriptFontWith<X>>>,
     /// The attribute `dirty`, when the element has it.
-    pub dirty: Option<String>,
+    pub dirty: Option<Box<str>>,
     /// The child that is `EastAsianFont`, when there is one.
     pub east_asian_font: Option<Box<EastAsianFontWith<X>>>,
     /// The child that is an item of `EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<EffectPropertiesContentWith<X>>>,
     /// The attribute `err`, when the element has it.
-    pub err: Option<String>,
+    pub err: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The child that is an item of `FillPropertiesContent`, when there is one.
@@ -16251,29 +16251,29 @@ pub struct TextRunPropertiesWith<X: UserData> {
     /// The child that is `HighlightColor`, when there is one.
     pub highlight_color: Option<Box<HighlightColorWith<X>>>,
     /// The attribute `i`, when the element has it.
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     /// The attribute `kern`, when the element has it.
     pub kern: Option<TextNonNegativePoint>,
     /// The attribute `kumimoji`, when the element has it.
-    pub kumimoji: Option<String>,
+    pub kumimoji: Option<Box<str>>,
     /// The attribute `lang`, when the element has it.
-    pub lang: Option<String>,
+    pub lang: Option<Box<str>>,
     /// The child that is `LatinFont`, when there is one.
     pub latin_font: Option<Box<LatinFontWith<X>>>,
     /// The child that is `MouseOverHyperlink`, when there is one.
     pub mouse_over_hyperlink: Option<Box<MouseOverHyperlinkWith<X>>>,
     /// The attribute `noProof`, when the element has it.
-    pub no_proof: Option<String>,
+    pub no_proof: Option<Box<str>>,
     /// The attribute `normalizeH`, when the element has it.
-    pub normalize_h: Option<String>,
+    pub normalize_h: Option<Box<str>>,
     /// The child that is `Outline`, when there is one.
     pub outline: Option<Box<OutlineWith<X>>>,
     /// The child that is `RightToLeftRun`, when there is one.
     pub right_to_left_run: Option<Box<RightToLeftRunWith<X>>>,
     /// The attribute `smtClean`, when the element has it.
-    pub smt_clean: Option<String>,
+    pub smt_clean: Option<Box<str>>,
     /// The attribute `smtId`, when the element has it.
-    pub smt_id: Option<String>,
+    pub smt_id: Option<Box<str>>,
     /// The attribute `spc`, when the element has it.
     pub spc: Option<TextPoint>,
     /// The attribute `strike`, when the element has it.
@@ -16379,7 +16379,7 @@ impl Eq for TextSpacingContentWith<()> {}
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct TextSpacingPercent(pub String);
+pub struct TextSpacingPercent(pub Box<str>);
 
 /// Text Spacing Point, the simple type `ST_TextSpacingPoint` (ECMA-376 Part 1, section 20.1.10.78),
 /// kept as the text the file carried.
@@ -16393,7 +16393,7 @@ pub struct TextSpacingPercent(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct TextSpacingPoint(pub String);
+pub struct TextSpacingPoint(pub Box<str>);
 
 /// Text Strike Type, the simple type `ST_TextStrikeType` (ECMA-376 Part 1, section 20.1.10.79),
 /// kept as its member or as the text the file carried.
@@ -16433,7 +16433,7 @@ pub struct TextStringWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DrawingTextString,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `a:t` element of the tree a read gives: [`TextStringWith`] holding nothing in `user_data`.
@@ -16637,9 +16637,9 @@ pub struct ThemeWith<X: UserData> {
     /// The child that is `ExtraColorSchemeList`, when there is one.
     pub extra_color_scheme_list: Option<Box<ExtraColorSchemeListWith<X>>>,
     /// The attribute `thm15:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The child that is `ObjectDefaults`, when there is one.
     pub object_defaults: Option<Box<ObjectDefaultsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -16778,7 +16778,7 @@ pub enum ThemeableFillStyleContentWith<X: UserData> {
     /// The element `a:fill`, a `Fill`.
     Fill(FillWith<X>),
     /// The element `a:fillRef`, a `FillReference`.
-    FillReference(Box<FillReferenceWith<X>>),
+    FillReference(FillReferenceWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -16798,7 +16798,7 @@ impl Eq for ThemeableFillStyleContentWith<()> {}
 #[non_exhaustive]
 pub enum ThemeableLineStyleContentWith<X: UserData> {
     /// The element `a:lnRef`, a `LineReference`.
-    LineReference(Box<LineReferenceWith<X>>),
+    LineReference(LineReferenceWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `a:ln`, a `Outline`.
@@ -17267,9 +17267,9 @@ impl Eq for UseShapeTextRectangleWith<()> {}
 #[non_exhaustive]
 pub struct VerticalRatioWith<X: UserData> {
     /// The attribute `d`, when the element has it.
-    pub d: Option<String>,
+    pub d: Option<Box<str>>,
     /// The attribute `n`, when the element has it.
-    pub n: Option<String>,
+    pub n: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -17324,11 +17324,11 @@ pub enum VerticalTextTypesMember {
 #[non_exhaustive]
 pub struct VideoFromFileWith<X: UserData> {
     /// The attribute `contentType`, when the element has it.
-    pub content_type: Option<String>,
+    pub content_type: Option<Box<str>>,
     /// The child that is `ExtensionList`, when there is one.
     pub extension_list: Option<Box<ExtensionListWith<X>>>,
     /// The attribute `r:link`, when the element has it.
-    pub link: Option<String>,
+    pub link: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -17400,9 +17400,9 @@ impl Eq for WholeTableWith<()> {}
 #[non_exhaustive]
 pub struct XYAdjustHandleWith<X: UserData> {
     /// The attribute `gdRefX`, when the element has it.
-    pub gd_ref_x: Option<String>,
+    pub gd_ref_x: Option<Box<str>>,
     /// The attribute `gdRefY`, when the element has it.
-    pub gd_ref_y: Option<String>,
+    pub gd_ref_y: Option<Box<str>>,
     /// The attribute `maxX`, when the element has it.
     pub max_x: Option<AdjustableCoordinateMethods>,
     /// The attribute `maxY`, when the element has it.
@@ -17437,9 +17437,9 @@ pub struct XfrmGroupTransform2DWith<X: UserData> {
     /// The child that is `Extents`, when there is one.
     pub extents: Option<Box<ExtentsWith<X>>>,
     /// The attribute `flipH`, when the element has it.
-    pub flip_h: Option<String>,
+    pub flip_h: Option<Box<str>>,
     /// The attribute `flipV`, when the element has it.
-    pub flip_v: Option<String>,
+    pub flip_v: Option<Box<str>>,
     /// The child that is `Offset`, when there is one.
     pub offset: Option<Box<OffsetWith<X>>>,
     /// The attribute `rot`, when the element has it.
@@ -17464,9 +17464,9 @@ pub struct XfrmTransform2DWith<X: UserData> {
     /// The child that is `Extents`, when there is one.
     pub extents: Option<Box<ExtentsWith<X>>>,
     /// The attribute `flipH`, when the element has it.
-    pub flip_h: Option<String>,
+    pub flip_h: Option<Box<str>>,
     /// The attribute `flipV`, when the element has it.
-    pub flip_v: Option<String>,
+    pub flip_v: Option<Box<str>>,
     /// The child that is `Offset`, when there is one.
     pub offset: Option<Box<OffsetWith<X>>>,
     /// The attribute `rot`, when the element has it.
@@ -18626,7 +18626,7 @@ impl AsRef<str> for Angle {
 
 impl From<String> for Angle {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -18761,42 +18761,43 @@ impl<X: UserData> AnyElementContentWith<X> {
                 BinaryBlobObject, BinaryStorage, BinaryStorageObject, BinaryStream,
                 BinaryStreamObject, Boolean, ClassID, ColorTransformHeaderList, CommentList,
                 Comments, CommentsCollection, Complex, Connections, Currency, CustomFileProperties,
-                DateAndTime, Decimal, DiagramLayoutHeaderList, DocumentEndnotes, DocumentFootnotes,
-                EmbeddedCustomXMLSchemaSupplementaryData, Empty, ErrorStatusCode,
-                ExternalReferenceExternalLink, FileTime, FontTableRootElement, Footer,
-                GlossaryDocumentRootElement, GraphicObject, Header, I1, I2, I4, I8,
-                InclusionExclusionDataForDataSource, InkAnnotationFlag, Integer,
+                CustomXMLDataProperties, DateAndTime, Decimal, DiagramLayoutHeaderList,
+                DocumentEndnotes, DocumentFootnotes, EmbeddedCustomXMLSchemaSupplementaryData,
+                Empty, ErrorStatusCode, ExternalReferenceExternalLink, FileTime,
+                FontTableRootElement, Footer, GlossaryDocumentRootElement, GraphicObject, Header,
+                I1, I2, I4, I8, InclusionExclusionDataForDataSource, InkAnnotationFlag, Integer,
                 ListOfCommentAuthors, ListOfStyleDefinitionHeaders, Lpstr, Lpwstr, Null, OfficeMath,
                 ProgrammableTabList, R4, R8, ReferenceToChartPart, Revisions,
                 RichTextBoxContentContainer, SetOfAdditionalCharacteristics, SetOfFormulas,
-                SetOfHandles, ShapeClippingPath, SingleCells, ThemeManager, ThemeOverride, Ui1, Ui2,
-                Ui4, Ui8, UnsignedInteger, UserShapes, VMLDiagramText, Variant, WorksheetDrawing,
+                SetOfHandles, ShapeClippingPath, SingleCells, StorageForAlternateMathContent,
+                ThemeManager, ThemeOverride, Ui1, Ui2, Ui4, Ui8, UnsignedInteger, UserShapes,
+                VMLDiagramText, Variant, WorksheetDrawing,
             ]
             boxed [
                 AnchorForFloatingDrawingMLObject, ArcSegment, Array, AttachedObjectData,
                 BezierCurve, BinaryVersionedStream, Blip, BottomBorder, CalculationChainInfo,
                 Callout, ChartSheet, ChartSpace, ColorTransformDefinitionHeader,
-                ColorTransformDefinitions, CustomXMLDataProperties, DataModel, DialogSheet,
-                DigitalSignatureLine, Document, DocumentBackground, DocumentSettings,
-                EmbeddedOLEObject, EmbeddedObjectsAndControls, EndingAnchorPoint,
-                ExplicitRelationshipsToDiagramParts, Extrusion, HandoutMaster, ImageData, ImageFile,
-                Ink, InlineDrawingMLObject, LayoutDefinition, LayoutDefinitionHeader, LeftBorder,
-                Line, LineStrokeSettings, LockedCanvasContainer, MathProperties, Metadata,
-                MultiplePathLine, NewShapeDefaults, NotesMaster, NotesSlide, NumberingDefinitions,
-                OfficeMathParagraph, Oval, Picture, PivotCacheDefinition, PivotCacheRecords,
-                PivotTableDefinition, Presentation, PresentationSlideSlide,
-                PresentationWideProperties, PresentationWideViewProperties, QueryTable, Rectangle,
-                RevisionHeaders, RightBorder, RoundedRectangle, ShadowEffect, ShapeDefinition,
-                ShapeFillExtendedProperties, ShapeFillProperties, ShapeGroup, ShapeLayoutProperties,
-                ShapePath, ShapeProtections, ShapeTemplate, SharedStringTable, SkewTransform,
-                SlideLayout, SlideMaster, SlideSynchronizationProperties, Sources, SpreadsheetTable,
-                StartingAnchorPoint, StorageForAlternateMathContent, StyleDefinition,
-                StyleDefinitionHeader, StyleDefinitions, StyleSheet, Table, TableStyleList, TextBox,
-                TextBoxBottomStroke, TextBoxInteriorStroke, TextBoxLeftStroke, TextBoxRightStroke,
-                TextBoxTopStroke, TextLayoutPath, TextWrapping, Theme, TopBorder, UserList,
-                VMLDiagram, Vector, VideoFromFile, VolatileDependencyTypes, WebPageSettings,
-                WordprocessingMLDrawingCanvas, WordprocessingMLShape, WordprocessingMLShapeGroup,
-                Workbook, Worksheet, XMLMappingMapInfo,
+                ColorTransformDefinitions, DataModel, DialogSheet, DigitalSignatureLine, Document,
+                DocumentBackground, DocumentSettings, EmbeddedOLEObject, EmbeddedObjectsAndControls,
+                EndingAnchorPoint, ExplicitRelationshipsToDiagramParts, Extrusion, HandoutMaster,
+                ImageData, ImageFile, Ink, InlineDrawingMLObject, LayoutDefinition,
+                LayoutDefinitionHeader, LeftBorder, Line, LineStrokeSettings, LockedCanvasContainer,
+                MathProperties, Metadata, MultiplePathLine, NewShapeDefaults, NotesMaster,
+                NotesSlide, NumberingDefinitions, OfficeMathParagraph, Oval, Picture,
+                PivotCacheDefinition, PivotCacheRecords, PivotTableDefinition, Presentation,
+                PresentationSlideSlide, PresentationWideProperties, PresentationWideViewProperties,
+                QueryTable, Rectangle, RevisionHeaders, RightBorder, RoundedRectangle, ShadowEffect,
+                ShapeDefinition, ShapeFillExtendedProperties, ShapeFillProperties, ShapeGroup,
+                ShapeLayoutProperties, ShapePath, ShapeProtections, ShapeTemplate,
+                SharedStringTable, SkewTransform, SlideLayout, SlideMaster,
+                SlideSynchronizationProperties, Sources, SpreadsheetTable, StartingAnchorPoint,
+                StyleDefinition, StyleDefinitionHeader, StyleDefinitions, StyleSheet, Table,
+                TableStyleList, TextBox, TextBoxBottomStroke, TextBoxInteriorStroke,
+                TextBoxLeftStroke, TextBoxRightStroke, TextBoxTopStroke, TextLayoutPath,
+                TextWrapping, Theme, TopBorder, UserList, VMLDiagram, Vector, VideoFromFile,
+                VolatileDependencyTypes, WebPageSettings, WordprocessingMLDrawingCanvas,
+                WordprocessingMLShape, WordprocessingMLShapeGroup, Workbook, Worksheet,
+                XMLMappingMapInfo,
             ]
         )
     }
@@ -19083,7 +19084,7 @@ impl<X: UserData> From<custom_xml_data_properties::CustomXMLDataPropertiesWith<X
     for AnyElementContentWith<X>
 {
     fn from(arm: custom_xml_data_properties::CustomXMLDataPropertiesWith<X>) -> Self {
-        Self::CustomXMLDataProperties(Box::new(arm))
+        Self::CustomXMLDataProperties(arm)
     }
 }
 
@@ -19786,7 +19787,7 @@ impl<X: UserData> From<super::vml_office_drawing::StorageForAlternateMathContent
     for AnyElementContentWith<X>
 {
     fn from(arm: super::vml_office_drawing::StorageForAlternateMathContentWith<X>) -> Self {
-        Self::StorageForAlternateMathContent(Box::new(arm))
+        Self::StorageForAlternateMathContent(arm)
     }
 }
 
@@ -26543,7 +26544,7 @@ impl AsRef<str> for DrawingElementID {
 
 impl From<String> for DrawingElementID {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -26800,13 +26801,12 @@ impl<X: UserData> EffectContainerContentWith<X> {
                 AlphaBiLevelEffect, AlphaCeilingEffect, AlphaFloorEffect, AlphaInsetOutsetEffect,
                 AlphaInverseEffect, AlphaModulateEffect, AlphaModulateFixedEffect,
                 AlphaReplaceEffect, BiLevel, DuotoneEffect, EffectEffectReference, FillFillEffect,
-                GrayScaleEffect, SoftEdgeEffect, SolidColorReplacement,
+                GlowEffect, GrayScaleEffect, SoftEdgeEffect, SolidColorReplacement,
             ]
             boxed [
                 BlendEffect, BlurEffect, ColorChangeEffect, EffectContainerCont, FillOverlayEffect,
-                GlowEffect, HueSaturationLuminanceEffect, InnerShadowEffect, LuminanceEffect,
-                OuterShadowEffect, PresetShadow, ReflectionEffect, RelativeOffsetEffect, TintEffect,
-                TransformEffect,
+                HueSaturationLuminanceEffect, InnerShadowEffect, LuminanceEffect, OuterShadowEffect,
+                PresetShadow, ReflectionEffect, RelativeOffsetEffect, TintEffect, TransformEffect,
             ]
         )
     }
@@ -26836,7 +26836,7 @@ impl officekit_markup_base::Read for EffectContainerContent {
             Some((NS_A, "effect")) => Self::EffectEffectReference(item.read()),
             Some((NS_A, "fill")) => Self::FillFillEffect(item.read()),
             Some((NS_A, "fillOverlay")) => Self::FillOverlayEffect(Box::new(item.read())),
-            Some((NS_A, "glow")) => Self::GlowEffect(Box::new(item.read())),
+            Some((NS_A, "glow")) => Self::GlowEffect(item.read()),
             Some((NS_A, "grayscl")) => Self::GrayScaleEffect(item.read()),
             Some((NS_A, "hsl")) => Self::HueSaturationLuminanceEffect(Box::new(item.read())),
             Some((NS_A, "innerShdw")) => Self::InnerShadowEffect(Box::new(item.read())),
@@ -26996,7 +26996,7 @@ impl<X: UserData> From<FillOverlayEffectWith<X>> for EffectContainerContentWith<
 
 impl<X: UserData> From<GlowEffectWith<X>> for EffectContainerContentWith<X> {
     fn from(arm: GlowEffectWith<X>) -> Self {
-        Self::GlowEffect(Box::new(arm))
+        Self::GlowEffect(arm)
     }
 }
 
@@ -28213,7 +28213,7 @@ impl AsRef<str> for FieldOfViewAngle {
 
 impl From<String> for FieldOfViewAngle {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -28914,7 +28914,7 @@ impl AsRef<str> for FixedAngle {
 
 impl From<String> for FixedAngle {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -33209,7 +33209,7 @@ impl AsRef<str> for LineWidth {
 
 impl From<String> for LineWidth {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -36882,7 +36882,7 @@ impl AsRef<str> for PercentageAsDecimalNumber {
 
 impl From<String> for PercentageAsDecimalNumber {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -37177,7 +37177,7 @@ impl AsRef<str> for PitchFamily {
 
 impl From<String> for PitchFamily {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -37290,7 +37290,7 @@ impl AsRef<str> for PositiveCoordinate {
 
 impl From<String> for PositiveCoordinate {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -37335,7 +37335,7 @@ impl AsRef<str> for PositiveCoordinatePoint {
 
 impl From<String> for PositiveCoordinatePoint {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -37380,7 +37380,7 @@ impl AsRef<str> for PositiveFixedAngle {
 
 impl From<String> for PositiveFixedAngle {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -37516,7 +37516,7 @@ impl AsRef<str> for PositivePercentageAsDecimalNumber {
 
 impl From<String> for PositivePercentageAsDecimalNumber {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -42167,7 +42167,7 @@ impl AsRef<str> for StCoordinate32Unqualified {
 
 impl From<String> for StCoordinate32Unqualified {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -42212,7 +42212,7 @@ impl AsRef<str> for StCoordinateUnqualified {
 
 impl From<String> for StCoordinateUnqualified {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -42257,7 +42257,7 @@ impl AsRef<str> for StFixedPercentageDecimal {
 
 impl From<String> for StFixedPercentageDecimal {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -42302,7 +42302,7 @@ impl AsRef<str> for StPositiveFixedPercentageDecimal {
 
 impl From<String> for StPositiveFixedPercentageDecimal {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -42452,7 +42452,7 @@ impl AsRef<str> for StTextBulletSizePercent {
 
 impl From<String> for StTextBulletSizePercent {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -42497,7 +42497,7 @@ impl AsRef<str> for StTextFontScalePercent {
 
 impl From<String> for StTextFontScalePercent {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -42636,7 +42636,7 @@ impl AsRef<str> for StTextPointUnqualified {
 
 impl From<String> for StTextPointUnqualified {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -42771,7 +42771,7 @@ impl AsRef<str> for StartBulletAtNumber {
 
 impl From<String> for StartBulletAtNumber {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -42865,7 +42865,7 @@ impl AsRef<str> for StyleMatrixColumnIndex {
 
 impl From<String> for StyleMatrixColumnIndex {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -43349,9 +43349,9 @@ impl<X: UserData> TableBackgroundEffectContentWith<X> {
     {
         match self {
             Self::Effect(node) => TableBackgroundEffectContentWith::Effect(node.into_user_data()),
-            Self::EffectReference(node) => TableBackgroundEffectContentWith::EffectReference(
-                Box::new((*node).into_user_data()),
-            ),
+            Self::EffectReference(node) => {
+                TableBackgroundEffectContentWith::EffectReference(node.into_user_data())
+            }
             Self::Other(node) => TableBackgroundEffectContentWith::Other(node),
         }
     }
@@ -43365,7 +43365,7 @@ impl officekit_markup_base::Read for TableBackgroundEffectContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_A, "effect")) => Self::Effect(item.read()),
-            Some((NS_A, "effectRef")) => Self::EffectReference(Box::new(item.read())),
+            Some((NS_A, "effectRef")) => Self::EffectReference(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -43389,7 +43389,7 @@ impl<X: UserData> From<EffectWith<X>> for TableBackgroundEffectContentWith<X> {
 
 impl<X: UserData> From<EffectReferenceWith<X>> for TableBackgroundEffectContentWith<X> {
     fn from(arm: EffectReferenceWith<X>) -> Self {
-        Self::EffectReference(Box::new(arm))
+        Self::EffectReference(arm)
     }
 }
 
@@ -45322,7 +45322,7 @@ impl AsRef<str> for TextColumnCount {
 
 impl From<String> for TextColumnCount {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -45495,7 +45495,7 @@ impl AsRef<str> for TextFontSize {
 
 impl From<String> for TextFontSize {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -45628,7 +45628,7 @@ impl AsRef<str> for TextIndentLevelType {
 
 impl From<String> for TextIndentLevelType {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -45673,7 +45673,7 @@ impl AsRef<str> for TextIndentation {
 
 impl From<String> for TextIndentation {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -45855,7 +45855,7 @@ impl AsRef<str> for TextMargin {
 
 impl From<String> for TextMargin {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -45899,7 +45899,7 @@ impl AsRef<str> for TextNonNegativePoint {
 
 impl From<String> for TextNonNegativePoint {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -46659,7 +46659,7 @@ impl AsRef<str> for TextSpacingPercent {
 
 impl From<String> for TextSpacingPercent {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -46704,7 +46704,7 @@ impl AsRef<str> for TextSpacingPoint {
 
 impl From<String> for TextSpacingPoint {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -47720,7 +47720,7 @@ impl<X: UserData> ThemeableFillStyleContentWith<X> {
         match self {
             Self::Fill(node) => ThemeableFillStyleContentWith::Fill(node.into_user_data()),
             Self::FillReference(node) => {
-                ThemeableFillStyleContentWith::FillReference(Box::new((*node).into_user_data()))
+                ThemeableFillStyleContentWith::FillReference(node.into_user_data())
             }
             Self::Other(node) => ThemeableFillStyleContentWith::Other(node),
         }
@@ -47735,7 +47735,7 @@ impl officekit_markup_base::Read for ThemeableFillStyleContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_A, "fill")) => Self::Fill(item.read()),
-            Some((NS_A, "fillRef")) => Self::FillReference(Box::new(item.read())),
+            Some((NS_A, "fillRef")) => Self::FillReference(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -47759,7 +47759,7 @@ impl<X: UserData> From<FillWith<X>> for ThemeableFillStyleContentWith<X> {
 
 impl<X: UserData> From<FillReferenceWith<X>> for ThemeableFillStyleContentWith<X> {
     fn from(arm: FillReferenceWith<X>) -> Self {
-        Self::FillReference(Box::new(arm))
+        Self::FillReference(arm)
     }
 }
 
@@ -47777,7 +47777,7 @@ impl<X: UserData> ThemeableLineStyleContentWith<X> {
     {
         match self {
             Self::LineReference(node) => {
-                ThemeableLineStyleContentWith::LineReference(Box::new((*node).into_user_data()))
+                ThemeableLineStyleContentWith::LineReference(node.into_user_data())
             }
             Self::Other(node) => ThemeableLineStyleContentWith::Other(node),
             Self::Outline(node) => {
@@ -47789,7 +47789,7 @@ impl<X: UserData> ThemeableLineStyleContentWith<X> {
 
 impl<X: UserData> Default for ThemeableLineStyleContentWith<X> {
     fn default() -> Self {
-        Self::LineReference(Box::default())
+        Self::LineReference(LineReferenceWith::default())
     }
 }
 
@@ -47800,7 +47800,7 @@ impl officekit_markup_base::Read for ThemeableLineStyleContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "lnRef")) => Self::LineReference(Box::new(item.read())),
+            Some((NS_A, "lnRef")) => Self::LineReference(item.read()),
             Some((NS_A, "ln")) => Self::Outline(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -47819,7 +47819,7 @@ impl officekit_markup_base::Write for ThemeableLineStyleContent {
 
 impl<X: UserData> From<LineReferenceWith<X>> for ThemeableLineStyleContentWith<X> {
     fn from(arm: LineReferenceWith<X>) -> Self {
-        Self::LineReference(Box::new(arm))
+        Self::LineReference(arm)
     }
 }
 
@@ -49433,9 +49433,7 @@ fn read_any_element_1(item: officekit_markup_base::Item<'_>) -> AnyElementConten
         Some((NS_X, "connections")) => AnyElementContent::Connections(item.read()),
         Some((NS_VT, "cy")) => AnyElementContent::Currency(item.read()),
         Some((NS_OP, "Properties")) => AnyElementContent::CustomFileProperties(item.read()),
-        Some((NS_DS, "datastoreItem")) => {
-            AnyElementContent::CustomXMLDataProperties(Box::new(item.read()))
-        }
+        Some((NS_DS, "datastoreItem")) => AnyElementContent::CustomXMLDataProperties(item.read()),
         Some((NS_DGM, "dataModel")) => AnyElementContent::DataModel(Box::new(item.read())),
         Some((NS_VT, "date")) => AnyElementContent::DateAndTime(item.read()),
         Some((NS_VT, "decimal")) => AnyElementContent::Decimal(item.read()),
@@ -49595,7 +49593,7 @@ fn read_any_element_4(item: officekit_markup_base::Item<'_>) -> AnyElementConten
         Some((NS_X, "table")) => AnyElementContent::SpreadsheetTable(Box::new(item.read())),
         Some((NS_XDR, "from")) => AnyElementContent::StartingAnchorPoint(Box::new(item.read())),
         Some((NS_O, "equationxml")) => {
-            AnyElementContent::StorageForAlternateMathContent(Box::new(item.read()))
+            AnyElementContent::StorageForAlternateMathContent(item.read())
         }
         Some((NS_DGM, "styleDef")) => AnyElementContent::StyleDefinition(Box::new(item.read())),
         Some((NS_DGM, "styleDefHdr")) => {

@@ -50,13 +50,13 @@ impl Which {
         match self {
             Self::Footer => {
                 let mut reference = FooterReference::default();
-                reference.id = Some(id);
+                reference.id = Some(id.into());
                 reference.r#type = Some(kind.into());
                 SectionPropertiesContent::from(reference)
             }
             Self::Header => {
                 let mut reference = HeaderReference::default();
-                reference.id = Some(id);
+                reference.id = Some(id.into());
                 reference.r#type = Some(kind.into());
                 SectionPropertiesContent::from(reference)
             }
@@ -285,7 +285,7 @@ fn paragraph_section<'doc>(
 fn reference(
     item: &mut SectionPropertiesContent,
     which: Which,
-) -> Option<(&mut Option<String>, Cow<'_, str>)> {
+) -> Option<(&mut Option<Box<str>>, Cow<'_, str>)> {
     match (item, which) {
         (SectionPropertiesContent::HeaderReference(found), Which::Header) => Some((
             &mut found.id,
@@ -316,13 +316,13 @@ fn put_reference(
     which: Which,
     kind: HeaderOrFooterTypeMember,
     id: String,
-) -> Option<String> {
+) -> Option<Box<str>> {
     let existing = properties
         .content
         .iter_mut()
         .find_map(|item| reference(item, which).filter(|(_, found)| *found == kind.as_str()));
     if let Some((slot, _)) = existing {
-        return slot.replace(id);
+        return slot.replace(id.into());
     }
     let at = properties
         .content

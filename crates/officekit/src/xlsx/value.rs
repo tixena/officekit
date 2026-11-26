@@ -6,7 +6,7 @@
 //! use officekit_markup::spreadsheet::{Cell, CellType, CellValue, SharedStringTable, StringItem, Text};
 //!
 //! let mut text = Text::default();
-//! text.value = "Total_x0009_due".to_owned();
+//! text.value = "Total_x0009_due".into();
 //! let mut item = StringItem::default();
 //! item.text = Some(Box::new(text));
 //! let mut table = SharedStringTable::default();
@@ -14,7 +14,7 @@
 //! let strings = SharedStrings::new(Some(&table));
 //!
 //! let mut value = CellValue::default();
-//! value.value = "0".to_owned();
+//! value.value = "0".into();
 //! let mut cell = Cell::default();
 //! cell.t = Some(CellType::from("s".to_owned()));
 //! cell.value = Some(Box::new(value));
@@ -140,7 +140,7 @@ pub fn content<'cell>(cell: &'cell Cell, strings: &'cell SharedStrings) -> CellC
                 CellContent::Text(runs(inline.text.as_deref(), &inline.rich_text_run))
             });
     }
-    let Some(value) = cell.value.as_deref().map(|stored| stored.value.as_str()) else {
+    let Some(value) = cell.value.as_deref().map(|stored| &*stored.value) else {
         return CellContent::Blank;
     };
     match kind {

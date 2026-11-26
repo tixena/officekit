@@ -231,7 +231,7 @@ pub struct CalcFeaturesMirror {
 #[rkyv(remote = super::Feature)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FeatureMirror {
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

@@ -232,10 +232,10 @@ pub struct AlternateReferencesMirror {
 #[rkyv(remote = super::Binding)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BindingMirror {
-    pub appref: Option<String>,
+    pub appref: Option<Box<str>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub id: Option<String>,
-    pub r#type: Option<String>,
+    pub id: Option<Box<str>>,
+    pub r#type: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -271,10 +271,10 @@ pub struct PropertiesMirror {
 #[rkyv(remote = super::Property)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PropertyMirror {
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: Option<String>,
+    pub value: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -282,12 +282,12 @@ pub struct PropertyMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferenceMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub id: Option<String>,
-    pub store: Option<String>,
-    pub store_type: Option<String>,
+    pub id: Option<Box<str>>,
+    pub store: Option<Box<str>>,
+    pub store_type: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub version: Option<String>,
+    pub version: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -296,9 +296,9 @@ pub struct ReferenceMirror {
 pub struct SnapshotMirror {
     pub content: Vec<drawing::BlipContent>,
     pub cstate: Option<drawing::BlipCompressionType>,
-    pub embed: Option<String>,
+    pub embed: Option<Box<str>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub link: Option<String>,
+    pub link: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -310,8 +310,8 @@ pub struct WebextensionMirror {
     pub alternate_references: Option<Box<super::AlternateReferences>>,
     pub bindings: Box<super::Bindings>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub frozen: Option<String>,
-    pub id: Option<String>,
+    pub frozen: Option<Box<str>>,
+    pub id: Option<Box<str>>,
     pub properties: Box<super::Properties>,
     pub reference: Box<super::Reference>,
     pub snapshot: Option<Box<super::Snapshot>>,
@@ -323,7 +323,7 @@ pub struct WebextensionMirror {
 #[rkyv(remote = super::Webextensionref)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WebextensionrefMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

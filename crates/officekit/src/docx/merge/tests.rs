@@ -184,7 +184,7 @@ impl wordprocessing_drawing::Visitor for Ids {
         &mut self,
         node: &wordprocessing_drawing::DrawingObjectNonVisualProperties,
     ) -> Descend {
-        self.note("docPr", node.id.as_ref().map(|id| id.0.as_str()));
+        self.note("docPr", node.id.as_ref().map(|id| &*id.0));
         Descend::Yes
     }
 }
@@ -200,13 +200,13 @@ impl officekit_markup::Visitor for Texts {
 
 impl wordprocessing::Visitor for Texts {
     fn text(&mut self, node: &Text) -> Descend {
-        self.0.push(node.value.clone());
+        self.0.push(node.value.clone().into());
         Descend::Yes
     }
 }
 
 fn decimal_text(value: &DecimalNumberValue) -> &str {
-    value.0.as_str()
+    &value.0
 }
 
 fn number(value: &str) -> DecimalNumberValue {
@@ -397,7 +397,7 @@ fn run_of(content: Vec<TextRunContent>) -> TextRun {
 /// A run of the text `value`.
 fn text_run(value: &str) -> ParagraphContent {
     let mut text = Text::default();
-    text.value = value.to_owned();
+    text.value = Box::from(value);
     ParagraphContent::from(run_of(vec![TextRunContent::from(text)]))
 }
 
@@ -412,7 +412,7 @@ fn paragraph(properties: Option<ParagraphProperties>, content: Vec<ParagraphCont
 /// Paragraph properties of the style `style`.
 fn styled(style: &str) -> ParagraphProperties {
     let mut reference = ReferencedParagraphStyle::default();
-    reference.val = Some(style.to_owned());
+    reference.val = Some(Box::from(style));
     let mut properties = ParagraphProperties::default();
     properties.referenced_paragraph_style = Some(Box::new(reference));
     properties
@@ -437,7 +437,7 @@ fn numbered(list: &str, level: bool) -> ParagraphProperties {
 fn bookmark_start(id: &str, mark: &str) -> ParagraphContent {
     let mut start = BookmarkStart::default();
     start.id = Some(number(id));
-    start.name = Some(mark.to_owned());
+    start.name = Some(Box::from(mark));
     ParagraphContent::from(start)
 }
 
@@ -526,10 +526,10 @@ fn endnotes_of(first: i64, notes: Vec<EndnoteContent>, source: bool) -> Vec<u8> 
 /// A style of `kind` whose id and name are `id`.
 fn style(kind: &str, id: &str) -> StyleDefinition {
     let mut style_name = PrimaryStyleName::default();
-    style_name.val = Some(id.to_owned());
+    style_name.val = Some(Box::from(id));
     let mut definition = StyleDefinition::default();
     definition.primary_style_name = Some(Box::new(style_name));
-    definition.style_id = Some(id.to_owned());
+    definition.style_id = Some(Box::from(id));
     definition.r#type = Some(StyleTypes::from(kind.to_owned()));
     definition
 }
@@ -547,7 +547,7 @@ fn sized(mut definition: StyleDefinition, half_points: &str) -> StyleDefinition 
 /// `definition` based on `parent`.
 fn based_on(mut definition: StyleDefinition, parent: &str) -> StyleDefinition {
     let mut reference = ParentStyleID::default();
-    reference.val = Some(parent.to_owned());
+    reference.val = Some(Box::from(parent));
     definition.parent_style_id = Some(Box::new(reference));
     definition
 }
@@ -555,7 +555,7 @@ fn based_on(mut definition: StyleDefinition, parent: &str) -> StyleDefinition {
 /// `definition` linked to the style `linked`.
 fn linked(mut definition: StyleDefinition, linked_style: &str) -> StyleDefinition {
     let mut reference = LinkedStyleReference::default();
-    reference.val = Some(linked_style.to_owned());
+    reference.val = Some(Box::from(linked_style));
     definition.linked_style_reference = Some(Box::new(reference));
     definition
 }
@@ -725,8 +725,8 @@ fn notes_source_document() -> Document {
             ParagraphContent::from(run_of(vec![TextRunContent::from(endnote_reference)])),
         ],
     );
-    clause.para_id = Some("1A2B3C4D".to_owned());
-    clause.text_id = Some("77777777".to_owned());
+    clause.para_id = Some(Box::from("1A2B3C4D"));
+    clause.text_id = Some(Box::from("77777777"));
     let mut range_start = CommentAnchorRangeStart::default();
     range_start.id = Some(number("0"));
     let mut range_end = CommentAnchorRangeEnd::default();
@@ -735,7 +735,7 @@ fn notes_source_document() -> Document {
     mark.id = Some(number("0"));
     let mut hyperlink = Hyperlink::default();
     hyperlink.content = vec![text_run("a hyperlink")];
-    hyperlink.id = Some("rId2".to_owned());
+    hyperlink.id = Some(Box::from("rId2"));
     let commented = paragraph(
         Some(styled("Normal")),
         vec![
@@ -777,7 +777,7 @@ fn notes_source_styles() -> Vec<u8> {
         "ClausulaChar",
     );
     let mut next = StyleForNextParagraph::default();
-    next.val = Some("Normal".to_owned());
+    next.val = Some(Box::from("Normal"));
     clause_style.style_for_next_paragraph = Some(Box::new(next));
     styles_of(
         vec![
@@ -796,7 +796,7 @@ fn notes_source_styles() -> Vec<u8> {
 fn source_footnote() -> FootnoteContent {
     let mut note_link = Hyperlink::default();
     note_link.content = vec![text_run("Imported footnote text.")];
-    note_link.id = Some("rId1".to_owned());
+    note_link.id = Some(Box::from("rId1"));
     let mut footnote = FootnoteContent::default();
     footnote.content = vec![BlockContent::from(paragraph(
         Some(styled("FootnoteText")),
@@ -825,7 +825,7 @@ fn source_endnote() -> EndnoteContent {
 /// The source's comments part, holding comment 0.
 fn source_comments() -> Vec<u8> {
     let mut comment = CommentContent::default();
-    comment.author = Some("Reviewer".to_owned());
+    comment.author = Some(Box::from("Reviewer"));
     comment.content = vec![BlockContent::from(paragraph(
         None,
         vec![text_run("Imported comment text.")],
@@ -927,9 +927,9 @@ fn frame(id: &str, frame_name: &str, uri: &str, content: Vec<AnyElementContent>)
     inline.drawing_object_size.cx = Some(PositiveCoordinate::from("1".to_owned()));
     inline.drawing_object_size.cy = Some(PositiveCoordinate::from("1".to_owned()));
     inline.drawing_object_non_visual_properties.id = Some(id.to_owned().into());
-    inline.drawing_object_non_visual_properties.name = Some(frame_name.to_owned());
+    inline.drawing_object_non_visual_properties.name = Some(Box::from(frame_name));
     inline.graphic_object.data.content = content;
-    inline.graphic_object.data.uri = Some(uri.to_owned());
+    inline.graphic_object.data.uri = Some(Box::from(uri));
     let mut drawing = DrawingMLObject::default();
     drawing.content = vec![DrawingObjectContent::from(inline)];
     run_of(vec![TextRunContent::from(drawing)])
@@ -1032,7 +1032,7 @@ fn pictures_target() -> Docx {
 /// Section properties whose default header is the relationship `rId6`.
 fn headed() -> DocumentFinalSectionProperties {
     let mut reference = HeaderReference::default();
-    reference.id = Some("rId6".to_owned());
+    reference.id = Some(Box::from("rId6"));
     reference.r#type = Some(HeaderOrFooterType::from("default".to_owned()));
     let mut section = DocumentFinalSectionProperties::default();
     section.content = vec![SectionPropertiesContent::from(reference)];
@@ -1052,7 +1052,7 @@ fn pictures_source() -> Docx {
         ))]))
     };
     let mut chart_reference = ReferenceToChartPart::default();
-    chart_reference.id = Some("rId5".to_owned());
+    chart_reference.id = Some(Box::from("rId5"));
     let chart_run = frame(
         "2",
         "c",
@@ -1386,19 +1386,19 @@ fn range_ids_start_above_the_notes_parts_and_map_each_value_once() {
         )),
     );
     let mut inserted = InsertedRunContent::default();
-    inserted.author = Some("A".to_owned());
+    inserted.author = Some(Box::from("A"));
     inserted.content = vec![TrackedRunContent::from(run_of(vec![TextRunContent::from(
         {
             let mut text = Text::default();
-            text.value = "x".to_owned();
+            text.value = Box::from("x");
             text
         },
     )]))];
     inserted.id = Some(number("5"));
     let mut removed = DeletedText::default();
-    removed.value = "y".to_owned();
+    removed.value = Box::from("y");
     let mut deleted = DeletedRunContent::default();
-    deleted.author = Some("A".to_owned());
+    deleted.author = Some(Box::from("A"));
     deleted.content = vec![TrackedRunContent::from(run_of(vec![TextRunContent::from(
         removed,
     )]))];
@@ -1672,7 +1672,7 @@ fn a_styles_part_whose_root_binds_a_prefix_otherwise_is_a_read_error() {
         "",
     ));
     let mut other = StyleDefinition::default();
-    other.style_id = Some("Other".to_owned());
+    other.style_id = Some(Box::from("Other"));
     add(
         &mut source,
         "/word/document.xml",

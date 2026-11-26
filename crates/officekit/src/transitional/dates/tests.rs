@@ -23,10 +23,10 @@ fn rounded(text: &str, date1904: bool, places: usize) -> Option<String> {
 /// A cell of `reference`, of the style `style` and the type `kind` when given, holding `value`.
 fn cell(reference: &str, style: Option<&str>, kind: Option<&str>, value: &str) -> Cell {
     let mut held = CellValue::default();
-    held.value = value.to_owned();
+    held.value = Box::from(value);
     let mut cell = Cell::default();
-    cell.r = Some(reference.to_owned());
-    cell.s = style.map(str::to_owned);
+    cell.r = Some(Box::from(reference));
+    cell.s = style.map(Box::from);
     cell.t = kind.map(|found| CellType::from(found.to_owned()));
     cell.value = Some(Box::new(held));
     cell
@@ -36,7 +36,7 @@ fn cell(reference: &str, style: Option<&str>, kind: Option<&str>, value: &str) -
 fn worksheet(cells: Vec<Cell>) -> Worksheet {
     let mut row = Row::default();
     row.cell = cells;
-    row.r = Some("1".to_owned());
+    row.r = Some(Box::from("1"));
     let mut sheet = Worksheet::default();
     sheet.sheet_data.row = vec![row];
     sheet
@@ -49,13 +49,13 @@ fn cells(sheet: &Worksheet) -> Vec<(String, Option<String>, Option<String>, Stri
             .iter()
             .map(|found| {
                 (
-                    found.r.clone().unwrap_or_default(),
-                    found.s.clone(),
+                    found.r.clone().unwrap_or_default().into(),
+                    found.s.clone().map(String::from),
                     found.t.as_ref().map(spelled),
                     found
                         .value
                         .as_ref()
-                        .map_or_else(String::new, |held| held.value.clone()),
+                        .map_or_else(String::new, |held| held.value.clone().into()),
                 )
             })
             .collect()
@@ -240,13 +240,13 @@ fn a_date_cell_whose_text_is_not_a_date_stays_and_is_refused() {
 /// A worksheet whose one cell, A1, is a date cell holding `date`, built as a caller builds one.
 fn date_sheet(date: &str) -> Worksheet {
     let mut value = CellValue::default();
-    value.value = date.to_owned();
+    value.value = Box::from(date);
     let mut cell = Cell::default();
-    cell.r = Some("A1".to_owned());
+    cell.r = Some(Box::from("A1"));
     cell.t = Some(CellType::from("d".to_owned()));
     cell.value = Some(Box::new(value));
     let mut row = Row::default();
-    row.r = Some("1".to_owned());
+    row.r = Some(Box::from("1"));
     row.cell.push(cell);
     let mut sheet = Worksheet::default();
     sheet.sheet_data.row.push(row);
@@ -263,7 +263,7 @@ fn only_cell(sheet: &Worksheet) -> (Option<String>, &str) {
         .unwrap();
     (
         cell.t.as_ref().map(spelled),
-        cell.value.as_ref().map_or("", |value| value.value.as_str()),
+        cell.value.as_ref().map_or("", |value| &*value.value),
     )
 }
 

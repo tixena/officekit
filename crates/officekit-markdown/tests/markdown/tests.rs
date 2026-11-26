@@ -182,8 +182,8 @@ fn block(content: Vec<ParagraphContent>) -> BlockContent {
 /// The text `value` of a run, its spaces kept.
 fn characters(value: &str) -> TextRunContent {
     let mut characters = WordText::default();
-    characters.space = Some("preserve".to_owned());
-    characters.value = value.to_owned();
+    characters.space = Some(Box::from("preserve"));
+    characters.value = Box::from(value);
     TextRunContent::from(characters)
 }
 
@@ -202,8 +202,8 @@ fn complex_field(instruction: &str, shown: &str) -> Vec<ParagraphContent> {
         run_holding(vec![TextRunContent::from(character)])
     };
     let mut code = FieldCode::default();
-    code.space = Some("preserve".to_owned());
-    code.value = instruction.to_owned();
+    code.space = Some(Box::from("preserve"));
+    code.value = Box::from(instruction);
     [
         character("begin"),
         run_holding(vec![TextRunContent::from(code)]),
@@ -307,17 +307,17 @@ fn run_holding(content: Vec<TextRunContent>) -> TextRun {
 fn simple_field(instruction: &str, shown: &str) -> ParagraphContent {
     let mut field = SimpleField::default();
     field.content = vec![ParagraphContent::from(run(shown))];
-    field.instr = Some(instruction.to_owned());
+    field.instr = Some(Box::from(instruction));
     ParagraphContent::from(field)
 }
 
 /// A style of `kind`, `id` and `name`.
 fn style(kind: &str, id: &str, name: &str) -> StyleDefinition {
     let mut primary = PrimaryStyleName::default();
-    primary.val = Some(name.to_owned());
+    primary.val = Some(Box::from(name));
     let mut style = StyleDefinition::default();
     style.primary_style_name = Some(Box::new(primary));
-    style.style_id = Some(id.to_owned());
+    style.style_id = Some(Box::from(id));
     style.r#type = Some(StyleTypes::from(kind.to_owned()));
     style
 }
@@ -325,7 +325,7 @@ fn style(kind: &str, id: &str, name: &str) -> StyleDefinition {
 /// A paragraph of the style `style` holding the run of `value`.
 fn styled(style: &str, value: &str) -> BlockContent {
     let mut reference = ReferencedParagraphStyle::default();
-    reference.val = Some(style.to_owned());
+    reference.val = Some(Box::from(style));
     let mut properties = ParagraphProperties::default();
     properties.referenced_paragraph_style = Some(Box::new(reference));
     with_properties(properties, plain(value))
@@ -378,11 +378,11 @@ fn formatting() -> BlockContent {
     let mut wrapping = Break::default();
     wrapping.r#type = Some(BreakTypes::from("textWrapping".to_owned()));
     let mut tabbed = WordText::default();
-    tabbed.value = "tabbed".to_owned();
+    tabbed.value = Box::from("tabbed");
     let mut wrapped = WordText::default();
-    wrapped.value = "wrapped".to_owned();
+    wrapped.value = Box::from("wrapped");
     let mut code = ReferencedCharacterStyle::default();
-    code.val = Some("HTMLCode".to_owned());
+    code.val = Some(Box::from("HTMLCode"));
     let bold = || RunPropertiesContent::from(Bold::default());
     let italic = || RunPropertiesContent::from(Italics::default());
     block(
@@ -413,10 +413,10 @@ fn formatting() -> BlockContent {
 fn links(outer: &str) -> BlockContent {
     let mut dashboard = Hyperlink::default();
     dashboard.content = vec![ParagraphContent::from(run("the dashboard"))];
-    dashboard.id = Some(outer.to_owned());
-    dashboard.tooltip = Some("Tip".to_owned());
+    dashboard.id = Some(Box::from(outer));
+    dashboard.tooltip = Some(Box::from("Tip"));
     let mut below = Hyperlink::default();
-    below.anchor = Some("notes".to_owned());
+    below.anchor = Some(Box::from("notes"));
     below.content = vec![ParagraphContent::from(run("below"))];
     let separator = || ParagraphContent::from(run(", "));
     block(
@@ -457,7 +457,7 @@ fn rule() -> BlockContent {
 /// `alt` when given.
 fn vml_shape(alt: Option<&str>, content: ShapeDefinitionContent) -> BlockContent {
     let mut shape = ShapeDefinition::default();
-    shape.alt = alt.map(str::to_owned);
+    shape.alt = alt.map(Box::from);
     shape.content = vec![content];
     let mut picture = VMLObject::default();
     picture.content = vec![VmlElementContent::from(shape)];
@@ -558,9 +558,9 @@ fn word_body(outer: &str, logo: &str, image: &str, chunk: &str) -> Vec<BlockCont
         (914_400, 914_400),
     ))]);
     let mut data = ImageData::default();
-    data.r_id = Some(logo.to_owned());
+    data.r_id = Some(Box::from(logo));
     let mut alt_chunk = AnchorForImportedExternalContent::default();
-    alt_chunk.id = Some(chunk.to_owned());
+    alt_chunk.id = Some(Box::from(chunk));
     let mut boxed = RichTextBoxContentContainer::default();
     boxed.content = vec![plain("Boxed")];
     let mut text_box = TextBox::default();

@@ -233,25 +233,25 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ThemeFamilyMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub id: Option<String>,
-    pub name: Option<String>,
+    pub id: Option<Box<str>>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub vid: Option<String>,
+    pub vid: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ThemeVariant)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ThemeVariantMirror {
-    pub cx: Option<String>,
-    pub cy: Option<String>,
+    pub cx: Option<Box<str>>,
+    pub cy: Option<Box<str>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub id: Option<String>,
-    pub name: Option<String>,
+    pub id: Option<Box<str>>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub vid: Option<String>,
+    pub vid: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]

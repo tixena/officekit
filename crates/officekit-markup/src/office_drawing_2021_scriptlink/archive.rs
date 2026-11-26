@@ -235,7 +235,7 @@ pub struct ScriptLinkMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 impl From<ExtLstMirror> for super::ExtLst {

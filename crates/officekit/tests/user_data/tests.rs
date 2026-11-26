@@ -33,7 +33,7 @@ impl UserData for Placement {
 /// A paragraph of one run holding `text`.
 fn paragraph(text: &str) -> Paragraph {
     let mut characters = Text::default();
-    text.clone_into(&mut characters.value);
+    characters.value = Box::from(text);
     let mut run = TextRun::default();
     run.content = vec![TextRunContent::from(characters)];
     let mut paragraph = Paragraph::default();

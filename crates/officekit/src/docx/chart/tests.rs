@@ -83,9 +83,9 @@ fn shared(reference: &str, index: &str) -> Cell {
 #[cfg(feature = "transitional")]
 fn valued(reference: &str, value: &str) -> Cell {
     let mut held = CellValue::default();
-    held.value = value.to_owned();
+    held.value = Box::from(value);
     let mut cell = Cell::default();
-    cell.r = Some(reference.to_owned());
+    cell.r = Some(Box::from(reference));
     cell.value = Some(Box::new(held));
     cell
 }
@@ -94,11 +94,11 @@ fn valued(reference: &str, value: &str) -> Cell {
 #[cfg(feature = "transitional")]
 fn inline(reference: &str, value: &str) -> Cell {
     let mut text = SheetText::default();
-    text.value = value.to_owned();
+    text.value = Box::from(value);
     let mut string = RichTextInline::default();
     string.text = Some(Box::new(text));
     let mut cell = Cell::default();
-    cell.r = Some(reference.to_owned());
+    cell.r = Some(Box::from(reference));
     cell.rich_text_inline = Some(Box::new(string));
     cell.t = Some(CellType::from("inlineStr".to_owned()));
     cell
@@ -109,7 +109,7 @@ fn inline(reference: &str, value: &str) -> Cell {
 fn row(number: &str, cells: Vec<Cell>) -> Row {
     let mut held = Row::default();
     held.cell = cells;
-    held.r = Some(number.to_owned());
+    held.r = Some(Box::from(number));
     held
 }
 
@@ -128,9 +128,9 @@ fn two_rows() -> Vec<Row> {
 fn workbook_bytes(rows: Vec<Row>) -> Vec<u8> {
     let sheet_named = |sheet_name: &str, number: &str| {
         let mut sheet = SheetInformation::default();
-        sheet.id = Some(format!("rId{number}"));
-        sheet.name = Some(sheet_name.to_owned());
-        sheet.sheet_id = Some(number.to_owned());
+        sheet.id = Some(format!("rId{number}").into());
+        sheet.name = Some(Box::from(sheet_name));
+        sheet.sheet_id = Some(Box::from(number));
         sheet
     };
     let mut book = Workbook::default();
@@ -145,7 +145,7 @@ fn workbook_bytes(rows: Vec<Row>) -> Vec<u8> {
     second.sheet_data.row = vec![row("2", vec![valued("B2", "7"), shared("B3", "3")])];
     let text_of = |value: &str| {
         let mut text = SheetText::default();
-        text.value = value.to_owned();
+        text.value = Box::from(value);
         Box::new(text)
     };
     let plain = |value: &str| {
@@ -206,14 +206,14 @@ fn workbook_bytes(rows: Vec<Row>) -> Vec<u8> {
 /// A point count of `count`.
 fn point_count(count: &str) -> PointCount {
     let mut held = PointCount::default();
-    held.val = Some(count.to_owned());
+    held.val = Some(Box::from(count));
     held
 }
 
 /// The number cache a series holds before a refresh: General, one point, no value.
 fn empty_cache() -> NumberCache {
     let mut format = FormatCode::default();
-    format.value = "General".to_owned();
+    format.value = Box::from("General");
     let mut cache = NumberCache::default();
     cache.format_code = Some(Box::new(format));
     cache.point_count = Some(Box::new(point_count("1")));
@@ -223,7 +223,7 @@ fn empty_cache() -> NumberCache {
 /// A formula of `text`.
 fn formula(text: &str) -> Formula {
     let mut held = Formula::default();
-    held.value = text.to_owned();
+    held.value = Box::from(text);
     held
 }
 
@@ -244,9 +244,9 @@ fn string_cache(count: &str, values: &[&str]) -> StringCache {
         .enumerate()
         .map(|(index, value)| {
             let mut text = NumericValue::default();
-            text.value = (*value).to_owned();
+            text.value = Box::from(*value);
             let mut point = StringPoint::default();
-            point.idx = Some(index.to_string());
+            point.idx = Some(index.to_string().into());
             point.numeric_value = Box::new(text);
             point
         })
@@ -369,16 +369,16 @@ fn number_cached(reference: &NumberReference) -> Cached {
     let cache = reference.number_cache.as_deref();
     Cached {
         cache: "num",
-        count: cache.and_then(|held| held.point_count.as_ref()?.val.clone()),
-        format: cache.and_then(|held| Some(held.format_code.as_ref()?.value.clone())),
-        formula: reference.formula.value.clone(),
+        count: cache.and_then(|held| held.point_count.as_ref()?.val.clone().map(String::from)),
+        format: cache.and_then(|held| Some(held.format_code.as_ref()?.value.clone().into())),
+        formula: reference.formula.value.clone().into(),
         points: cache.map_or_default(|held| {
             held.numeric_point
                 .iter()
                 .map(|point| {
                     (
-                        point.idx.clone().unwrap_or_default(),
-                        point.numeric_value.value.clone(),
+                        point.idx.clone().unwrap_or_default().into(),
+                        point.numeric_value.value.clone().into(),
                     )
                 })
                 .collect()
@@ -392,16 +392,16 @@ fn string_cached(reference: &StringReference) -> Cached {
     let cache = reference.string_cache.as_deref();
     Cached {
         cache: "str",
-        count: cache.and_then(|held| held.point_count.as_ref()?.val.clone()),
+        count: cache.and_then(|held| held.point_count.as_ref()?.val.clone().map(String::from)),
         format: None,
-        formula: reference.formula.value.clone(),
+        formula: reference.formula.value.clone().into(),
         points: cache.map_or_default(|held| {
             held.string_point
                 .iter()
                 .map(|point: &StringPoint| {
                     (
-                        point.idx.clone().unwrap_or_default(),
-                        point.numeric_value.value.clone(),
+                        point.idx.clone().unwrap_or_default().into(),
+                        point.numeric_value.value.clone().into(),
                     )
                 })
                 .collect()
@@ -510,7 +510,7 @@ fn unique_id_extension() -> Extension {
         "{00000000-0001-0000-0000-000000000000}".to_owned(),
     ));
     let mut extension = Extension::default();
-    extension.uri = Some("{C3380CC4-5D6E-409C-BE32-E72D297353CC}".to_owned());
+    extension.uri = Some(Box::from("{C3380CC4-5D6E-409C-BE32-E72D297353CC}"));
     extension.content = Box::new(AnyElementContent::Other(Box::new(Node::Element(unique_id))));
     extension
 }
@@ -560,7 +560,7 @@ fn a_default_extension_writes_an_empty_ext_and_no_drawing() {
 #[test]
 fn the_validator_reports_the_child_a_default_extension_lacks() {
     let mut extension = Extension::default();
-    extension.uri = Some("x".to_owned());
+    extension.uri = Some(Box::from("x"));
     assert_eq!(
         reported_on_ext(
             &chart_with_extension(extension),
@@ -610,7 +610,7 @@ fn the_validator_reports_nothing_on_an_extension_without_its_uri_at_any_target()
 #[test]
 fn an_extension_read_without_its_child_is_written_back_as_it_was() {
     let mut extension = Extension::default();
-    extension.uri = Some("x".to_owned());
+    extension.uri = Some(Box::from("x"));
     let docx = chart_with_extension(extension);
     let text = chart_text(&docx);
     assert!(
@@ -739,9 +739,9 @@ fn a_quoted_sheet_name_finds_its_sheet_and_is_written_back_as_quoted() {
 fn a_formula_that_is_not_one_area_of_a_sheet_leaves_its_cache() {
     let old = || {
         let mut five = NumericValue::default();
-        five.value = "5".to_owned();
+        five.value = Box::from("5");
         let mut point = NumericPoint::default();
-        point.idx = Some("0".to_owned());
+        point.idx = Some(Box::from("0"));
         point.numeric_value = Box::new(five);
         let mut cache = NumberCache::default();
         cache.numeric_point = vec![point];

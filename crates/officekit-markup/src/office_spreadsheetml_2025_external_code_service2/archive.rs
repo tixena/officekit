@@ -222,8 +222,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::ExternalCodeServiceImageAsInput)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ExternalCodeServiceImageAsInputMirror {
-    pub max_height: Option<String>,
-    pub max_width: Option<String>,
+    pub max_height: Option<Box<str>>,
+    pub max_width: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

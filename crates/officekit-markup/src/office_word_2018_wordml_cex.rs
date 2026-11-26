@@ -267,9 +267,9 @@ pub static EXT_LST_SHAPE: officekit_markup_base::Shape = officekit_markup_base::
 #[non_exhaustive]
 pub struct CommentExtensibleWith<X: UserData> {
     /// The attribute `w16cex:dateUtc`, when the element has it.
-    pub date_utc: Option<String>,
+    pub date_utc: Option<Box<str>>,
     /// The attribute `w16cex:durableId`, when the element has it.
-    pub durable_id: Option<String>,
+    pub durable_id: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `w16cex:intelligentPlaceholder`, when the element has it.

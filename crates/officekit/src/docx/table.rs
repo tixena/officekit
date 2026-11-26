@@ -122,8 +122,8 @@ fn mark_header(row: &mut TableRow) {
 
 fn paragraph_of(text: &str) -> Paragraph {
     let mut characters = Text::default();
-    characters.space = Some("preserve".to_owned());
-    text.clone_into(&mut characters.value);
+    characters.space = Some(Box::from("preserve"));
+    characters.value = Box::from(text);
     let mut run = TextRun::default();
     run.content = alloc::vec![TextRunContent::from(characters)];
     let mut paragraph = Paragraph::default();

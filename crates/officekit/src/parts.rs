@@ -1651,7 +1651,7 @@ const MODELS: &[(&str, Modeler)] = &[
     ),
     (
         "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml",
-        |part| part.through(PartModel::DocumentSettings),
+        |part| part.through_boxed(PartModel::DocumentSettings),
     ),
     (
         "application/vnd.openxmlformats-officedocument.wordprocessingml.endnotes+xml",
@@ -2109,7 +2109,7 @@ pub enum PartModel {
     /// The root `x:dialogsheet` of the module `dialogsheet`.
     Dialogsheet(spreadsheet::DialogSheet),
     /// The root `w:settings` of the module `document_settings`.
-    DocumentSettings(wordprocessing::DocumentSettings),
+    DocumentSettings(Box<wordprocessing::DocumentSettings>),
     /// The root `t:Tasks` of the module `document_tasks`.
     DocumentTasks(office_tasks_2019_documenttasks::Tasks),
     /// The root `xdr:wsDr` of the module `drawings`.

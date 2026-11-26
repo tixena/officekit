@@ -231,12 +231,12 @@ pub struct SetOfAdditionalCharacteristicsMirror {
 #[rkyv(remote = super::SingleCharacteristic)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SingleCharacteristicMirror {
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     pub relation: Option<super::CharacteristicRelationshipTypes>,
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
-    pub vocabulary: Option<String>,
+    pub val: Option<Box<str>>,
+    pub vocabulary: Option<Box<str>>,
 }
 
 impl From<SetOfAdditionalCharacteristicsMirror> for super::SetOfAdditionalCharacteristics {

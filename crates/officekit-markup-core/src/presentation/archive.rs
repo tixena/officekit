@@ -246,14 +246,14 @@ pub struct AllSlidesMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct AnimateMirror {
-    pub bounce_end: Option<String>,
-    pub by: Option<String>,
+    pub bounce_end: Option<Box<str>>,
+    pub by: Option<Box<str>>,
     pub calcmode: Option<super::TLAnimateBehaviorCalcMode>,
     #[rkyv(omit_bounds)]
     pub common_behavior: Box<super::CommonBehavior>,
-    pub from: Option<String>,
+    pub from: Option<Box<str>>,
     pub time_animated_value_list: Option<Box<super::TimeAnimatedValueList>>,
-    pub to: Option<String>,
+    pub to: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value_type: Option<super::TLAnimateBehaviorValueType>,
@@ -286,8 +286,8 @@ pub struct AnimateColorBehaviorMirror {
 pub struct AnimateEffectMirror {
     #[rkyv(omit_bounds)]
     pub common_behavior: Box<super::CommonBehavior>,
-    pub filter: Option<String>,
-    pub pr_lst: Option<String>,
+    pub filter: Option<Box<str>>,
+    pub pr_lst: Option<Box<str>>,
     pub progress: Option<Box<super::Progress>>,
     pub transition: Option<super::TimeListAnimateEffectTransition>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -301,15 +301,15 @@ pub struct AnimateEffectMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct AnimateMotionMirror {
-    pub bounce_end: Option<String>,
+    pub bounce_end: Option<Box<str>>,
     pub by_tl_point: Option<Box<super::ByTLPoint>>,
     #[rkyv(omit_bounds)]
     pub common_behavior: Box<super::CommonBehavior>,
     pub from_tl_point: Option<Box<super::FromTLPoint>>,
     pub origin: Option<super::TLAnimateMotionBehaviorOrigin>,
-    pub path: Option<String>,
+    pub path: Option<Box<str>>,
     pub path_edit_mode: Option<super::TLAnimateMotionPathEditMode>,
-    pub pts_types: Option<String>,
+    pub pts_types: Option<Box<str>>,
     pub r_ang: Option<super::super::drawing::Angle>,
     pub rotation_center: Option<Box<super::RotationCenter>>,
     pub to: Option<Box<super::To>>,
@@ -324,7 +324,7 @@ pub struct AnimateMotionMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct AnimateRotationMirror {
-    pub bounce_end: Option<String>,
+    pub bounce_end: Option<Box<str>>,
     pub by: Option<super::super::drawing::Angle>,
     #[rkyv(omit_bounds)]
     pub common_behavior: Box<super::CommonBehavior>,
@@ -341,7 +341,7 @@ pub struct AnimateRotationMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct AnimateScaleMirror {
-    pub bounce_end: Option<String>,
+    pub bounce_end: Option<Box<str>>,
     pub by_tl_point: Option<Box<super::ByTLPoint>>,
     #[rkyv(omit_bounds)]
     pub common_behavior: Box<super::CommonBehavior>,
@@ -349,7 +349,7 @@ pub struct AnimateScaleMirror {
     pub to: Option<Box<super::To>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub zoom_contents: Option<String>,
+    pub zoom_contents: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -358,7 +358,7 @@ pub struct AnimateScaleMirror {
 pub struct AttributeNameMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -379,7 +379,7 @@ pub struct AttributeNameListMirror {
 pub struct AudioMirror {
     #[rkyv(omit_bounds)]
     pub common_media_node_properties: Box<super::CommonMediaNodeProperties>,
-    pub is_narration: Option<String>,
+    pub is_narration: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -405,7 +405,7 @@ pub struct BackgroundPropertiesMirror {
     pub extension_list: Option<Box<super::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub fill_properties_content: Box<super::super::drawing::FillPropertiesContent>,
-    pub shade_to_title: Option<String>,
+    pub shade_to_title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -433,7 +433,7 @@ pub struct BlindsSlideTransitionMirror {
 #[rkyv(remote = super::BoldEmbeddedFont)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BoldEmbeddedFontMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -442,7 +442,7 @@ pub struct BoldEmbeddedFontMirror {
 #[rkyv(remote = super::BoldItalicEmbeddedFont)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BoldItalicEmbeddedFontMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -453,14 +453,14 @@ pub struct BoldItalicEmbeddedFontMirror {
 pub struct BooleanVariantMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BrowseSlideShowMode)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BrowseSlideShowModeMirror {
-    pub show_scrollbar: Option<String>,
+    pub show_scrollbar: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -478,9 +478,9 @@ pub struct BuildAsOneMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BuildDiagramMirror {
     pub bld: Option<super::DiagramBuildTypes>,
-    pub grp_id: Option<String>,
+    pub grp_id: Option<Box<str>>,
     pub spid: Option<super::super::drawing::DrawingElementID>,
-    pub ui_expand: Option<String>,
+    pub ui_expand: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -489,11 +489,11 @@ pub struct BuildDiagramMirror {
 #[rkyv(remote = super::BuildEmbeddedChart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BuildEmbeddedChartMirror {
-    pub anim_bg: Option<String>,
+    pub anim_bg: Option<Box<str>>,
     pub bld: Option<super::EmbeddedChartBuildType>,
-    pub grp_id: Option<String>,
+    pub grp_id: Option<Box<str>>,
     pub spid: Option<super::super::drawing::DrawingElementID>,
-    pub ui_expand: Option<String>,
+    pub ui_expand: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -503,9 +503,9 @@ pub struct BuildEmbeddedChartMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BuildGraphicsMirror {
     pub content: Box<super::BuildGraphicsContent>,
-    pub grp_id: Option<String>,
+    pub grp_id: Option<Box<str>>,
     pub spid: Option<super::super::drawing::DrawingElementID>,
-    pub ui_expand: Option<String>,
+    pub ui_expand: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -524,15 +524,15 @@ pub struct BuildListMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BuildParagraphMirror {
     pub adv_auto: Option<super::Time>,
-    pub anim_bg: Option<String>,
-    pub auto_update_anim_bg: Option<String>,
-    pub bld_lvl: Option<String>,
+    pub anim_bg: Option<Box<str>>,
+    pub auto_update_anim_bg: Option<Box<str>>,
+    pub bld_lvl: Option<Box<str>>,
     pub build: Option<super::ParagraphBuildType>,
-    pub grp_id: Option<String>,
-    pub rev: Option<String>,
+    pub grp_id: Option<Box<str>>,
+    pub rev: Option<Box<str>>,
     pub spid: Option<super::super::drawing::DrawingElementID>,
     pub template_effects_tmpl_lst: Option<Box<super::TemplateEffectsTmplLst>>,
-    pub ui_expand: Option<String>,
+    pub ui_expand: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -677,7 +677,7 @@ pub struct CombSlideTransitionMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommandMirror {
-    pub cmd: Option<String>,
+    pub cmd: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub common_behavior: Box<super::CommonBehavior>,
     pub r#type: Option<super::CommandType>,
@@ -692,9 +692,9 @@ pub struct CommandMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentMirror {
-    pub author_id: Option<String>,
+    pub author_id: Option<Box<str>>,
     pub comments_text_content: Box<super::CommentsTextContent>,
-    pub dt: Option<String>,
+    pub dt: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list_with_modification_flag:
         Option<Box<super::ExtensionListWithModificationFlag>>,
@@ -711,13 +711,13 @@ pub struct CommentMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentAuthorMirror {
-    pub clr_idx: Option<String>,
+    pub clr_idx: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub id: Option<String>,
-    pub initials: Option<String>,
-    pub last_idx: Option<String>,
-    pub name: Option<String>,
+    pub id: Option<Box<str>>,
+    pub initials: Option<Box<str>>,
+    pub last_idx: Option<Box<str>>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -751,7 +751,7 @@ pub struct CommentPositionMirror {
 pub struct CommentsTextContentMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -764,14 +764,14 @@ pub struct CommonBehaviorMirror {
     pub accumulate: Option<super::BehaviorAccumulateType>,
     pub additive: Option<super::BehaviorAdditiveType>,
     pub attribute_name_list: Option<Box<super::AttributeNameList>>,
-    pub by: Option<String>,
+    pub by: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub common_time_node_properties: Box<super::CommonTimeNodeProperties>,
-    pub from: Option<String>,
+    pub from: Option<Box<str>>,
     pub r#override: Option<super::BehaviorOverrideType>,
-    pub rctx: Option<String>,
+    pub rctx: Option<Box<str>>,
     pub target_element: Box<super::TargetElement>,
-    pub to: Option<String>,
+    pub to: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm_type: Option<super::BehaviorTransformType>,
@@ -786,9 +786,9 @@ pub struct CommonBehaviorMirror {
 pub struct CommonMediaNodePropertiesMirror {
     #[rkyv(omit_bounds)]
     pub common_time_node_properties: Box<super::CommonTimeNodeProperties>,
-    pub mute: Option<String>,
-    pub num_sld: Option<String>,
-    pub show_when_stopped: Option<String>,
+    pub mute: Option<Box<str>>,
+    pub num_sld: Option<Box<str>>,
+    pub show_when_stopped: Option<Box<str>>,
     pub target_element: Box<super::TargetElement>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -807,7 +807,7 @@ pub struct CommonSlideDataMirror {
     pub extension_list: Option<Box<super::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub list_of_controls: Option<Box<super::ListOfControls>>,
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub shape_tree: Box<super::ShapeTree>,
     #[rkyv(omit_bounds)]
@@ -822,9 +822,9 @@ pub struct CommonSlideDataMirror {
 pub struct CommonSlideViewPropertiesMirror {
     pub common_view_properties: Box<super::CommonViewProperties>,
     pub list_of_guides: Option<Box<super::ListOfGuides>>,
-    pub show_guides: Option<String>,
-    pub snap_to_grid: Option<String>,
-    pub snap_to_objects: Option<String>,
+    pub show_guides: Option<Box<str>>,
+    pub snap_to_grid: Option<Box<str>>,
+    pub snap_to_objects: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -837,28 +837,28 @@ pub struct CommonSlideViewPropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CommonTimeNodePropertiesMirror {
     pub accel: Option<super::super::drawing::PositiveFixedPercentage>,
-    pub after_effect: Option<String>,
-    pub auto_rev: Option<String>,
-    pub bld_lvl: Option<String>,
+    pub after_effect: Option<Box<str>>,
+    pub auto_rev: Option<Box<str>>,
+    pub bld_lvl: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub children_time_node_list: Option<Box<super::ChildrenTimeNodeList>>,
     pub decel: Option<super::super::drawing::PositiveFixedPercentage>,
-    pub display: Option<String>,
+    pub display: Option<Box<str>>,
     pub dur: Option<super::Time>,
     pub end_conditions_list: Option<Box<super::EndConditionsList>>,
     pub endsync: Option<Box<super::EndSync>>,
-    pub evt_filter: Option<String>,
+    pub evt_filter: Option<Box<str>>,
     pub fill: Option<super::TimeNodeFillType>,
-    pub grp_id: Option<String>,
+    pub grp_id: Option<Box<str>>,
     pub id: Option<super::TimeNodeID>,
     pub iterate: Option<Box<super::Iterate>>,
     pub master_rel: Option<super::TimeNodeMasterRelation>,
-    pub node_ph: Option<String>,
+    pub node_ph: Option<Box<str>>,
     pub node_type: Option<super::TimeNodeType>,
-    pub preset_bounce_end: Option<String>,
+    pub preset_bounce_end: Option<Box<str>>,
     pub preset_class: Option<super::TimeNodePresetClassType>,
-    pub preset_id: Option<String>,
-    pub preset_subtype: Option<String>,
+    pub preset_id: Option<Box<str>>,
+    pub preset_subtype: Option<Box<str>>,
     pub repeat_count: Option<super::Time>,
     pub repeat_dur: Option<super::Time>,
     pub restart: Option<super::TimeNodeRestartType>,
@@ -867,7 +867,7 @@ pub struct CommonTimeNodePropertiesMirror {
     #[rkyv(omit_bounds)]
     pub sub_timenodes_list: Option<Box<super::SubTimeNodesList>>,
     pub sync_behavior: Option<super::TimeNodeSyncType>,
-    pub tm_filter: Option<String>,
+    pub tm_filter: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -878,7 +878,7 @@ pub struct CommonTimeNodePropertiesMirror {
 pub struct CommonViewPropertiesMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub var_scale: Option<String>,
+    pub var_scale: Option<Box<str>>,
     pub view_origin: Box<super::ViewOrigin>,
     pub view_scale: Box<super::ViewScale>,
 }
@@ -917,7 +917,7 @@ pub struct ConnectionShapeMirror {
 #[rkyv(remote = super::ContentPart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ContentPartMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -935,7 +935,7 @@ pub struct CoverSlideTransitionMirror {
 #[rkyv(remote = super::CustomShow)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomShowMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -949,9 +949,9 @@ pub struct CustomShowMirror {
 pub struct CustomShowCustomShowMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub list_of_presentation_slides: Box<super::ListOfPresentationSlides>,
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -960,7 +960,7 @@ pub struct CustomShowCustomShowMirror {
 #[rkyv(remote = super::CustomerData)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomerDataMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -979,7 +979,7 @@ pub struct CustomerDataListMirror {
 #[rkyv(remote = super::CustomerDataTags)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomerDataTagsMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -988,7 +988,7 @@ pub struct CustomerDataTagsMirror {
 #[rkyv(remote = super::CutSlideTransition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CutSlideTransitionMirror {
-    pub thru_blk: Option<String>,
+    pub thru_blk: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1013,7 +1013,7 @@ pub struct DissolveSlideTransitionMirror {
 #[rkyv(remote = super::EmbeddedChartElement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbeddedChartElementMirror {
-    pub lvl: Option<String>,
+    pub lvl: Option<Box<str>>,
     pub r#type: Option<super::ChartSubelementType>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -1028,14 +1028,14 @@ pub struct EmbeddedChartElementMirror {
 pub struct EmbeddedControlMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub img_h: Option<super::super::drawing::PositiveCoordinatePoint>,
     pub img_w: Option<super::super::drawing::PositiveCoordinatePoint>,
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub picture: Option<Box<super::Picture>>,
-    pub show_as_icon: Option<String>,
-    pub spid: Option<String>,
+    pub show_as_icon: Option<Box<str>>,
+    pub spid: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1066,10 +1066,10 @@ pub struct EmbeddedFontListMirror {
 #[rkyv(remote = super::EmbeddedFontName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbeddedFontNameMirror {
-    pub charset: Option<String>,
+    pub charset: Option<Box<str>>,
     pub panose: Option<common_simple_types::Panose1Number>,
     pub pitch_family: Option<super::super::drawing::PitchFamily>,
-    pub typeface: Option<String>,
+    pub typeface: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1097,15 +1097,15 @@ pub struct EmbeddedObjectOrControlMirror {
 pub struct EmbeddedObjectsAndControlsMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::EmbeddedObjectContent>,
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub img_h: Option<super::super::drawing::PositiveCoordinatePoint>,
     pub img_w: Option<super::super::drawing::PositiveCoordinatePoint>,
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub picture: Option<Box<super::Picture>>,
-    pub prog_id: Option<String>,
-    pub show_as_icon: Option<String>,
-    pub spid: Option<String>,
+    pub prog_id: Option<Box<str>>,
+    pub show_as_icon: Option<Box<str>>,
+    pub spid: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1153,7 +1153,7 @@ pub struct ExtensionMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::super::drawing::AnyElementContent>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     pub user_data: (),
 }
 
@@ -1179,7 +1179,7 @@ pub struct ExtensionListMirror {
 pub struct ExtensionListWithModificationFlagMirror {
     #[rkyv(omit_bounds)]
     pub extension: Vec<super::Extension>,
-    pub r#mod: Option<String>,
+    pub r#mod: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1188,7 +1188,7 @@ pub struct ExtensionListWithModificationFlagMirror {
 #[rkyv(remote = super::FadeSlideTransition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FadeSlideTransitionMirror {
-    pub thru_blk: Option<String>,
+    pub thru_blk: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1199,7 +1199,7 @@ pub struct FadeSlideTransitionMirror {
 pub struct FloatValueMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1311,10 +1311,10 @@ pub struct HTMLPublishingPropertiesMirror {
     pub content: Box<super::SlideListContent>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub id: Option<String>,
-    pub show_speaker_notes: Option<String>,
-    pub target: Option<String>,
-    pub title: Option<String>,
+    pub id: Option<Box<str>>,
+    pub show_speaker_notes: Option<Box<str>>,
+    pub target: Option<Box<str>>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1349,7 +1349,7 @@ pub struct HandoutMasterMirror {
 pub struct HandoutMasterIDMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1361,13 +1361,13 @@ pub struct HandoutMasterIDMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct HeaderFooterInformationForASlideMasterMirror {
-    pub dt: Option<String>,
+    pub dt: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list_with_modification_flag:
         Option<Box<super::ExtensionListWithModificationFlag>>,
-    pub ftr: Option<String>,
-    pub hdr: Option<String>,
-    pub sld_num: Option<String>,
+    pub ftr: Option<Box<str>>,
+    pub hdr: Option<Box<str>>,
+    pub sld_num: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1387,7 +1387,7 @@ pub struct HslMirror {
 #[rkyv(remote = super::InkTarget)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InkTargetMirror {
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1398,14 +1398,14 @@ pub struct InkTargetMirror {
 pub struct IntegerMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ItalicEmbeddedFont)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ItalicEmbeddedFontMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1414,7 +1414,7 @@ pub struct ItalicEmbeddedFontMirror {
 #[rkyv(remote = super::Iterate)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IterateMirror {
-    pub backwards: Option<String>,
+    pub backwards: Option<Box<str>>,
     pub content: Box<super::IterateContent>,
     pub r#type: Option<super::IterateType>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1425,9 +1425,9 @@ pub struct IterateMirror {
 #[rkyv(remote = super::KinsokuSettings)]
 #[rkyv(attr(non_exhaustive))]
 pub struct KinsokuSettingsMirror {
-    pub inval_end_chars: Option<String>,
-    pub inval_st_chars: Option<String>,
-    pub lang: Option<String>,
+    pub inval_end_chars: Option<Box<str>>,
+    pub inval_st_chars: Option<Box<str>>,
+    pub lang: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1436,7 +1436,7 @@ pub struct KinsokuSettingsMirror {
 #[rkyv(remote = super::KioskSlideShowMode)]
 #[rkyv(attr(non_exhaustive))]
 pub struct KioskSlideShowModeMirror {
-    pub restart: Option<String>,
+    pub restart: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1451,7 +1451,7 @@ pub struct LinkedObjectOrControlMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub update_automatic: Option<String>,
+    pub update_automatic: Option<Box<str>>,
     pub user_data: (),
 }
 
@@ -1591,22 +1591,22 @@ pub struct ListOfSlideMasterIDsMirror {
 #[rkyv(remote = super::ModificationVerifier)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ModificationVerifierMirror {
-    pub alg_id_ext: Option<String>,
-    pub alg_id_ext_source: Option<String>,
-    pub algorithm_name: Option<String>,
+    pub alg_id_ext: Option<Box<str>>,
+    pub alg_id_ext_source: Option<Box<str>>,
+    pub algorithm_name: Option<Box<str>>,
     pub crypt_algorithm_class: Option<common_simple_types::CryptographicAlgorithmClasses>,
-    pub crypt_algorithm_sid: Option<String>,
+    pub crypt_algorithm_sid: Option<Box<str>>,
     pub crypt_algorithm_type: Option<common_simple_types::CryptographicAlgorithmTypes>,
-    pub crypt_provider: Option<String>,
+    pub crypt_provider: Option<Box<str>>,
     pub crypt_provider_type: Option<common_simple_types::CryptographicProviderTypes>,
-    pub crypt_provider_type_ext: Option<String>,
-    pub crypt_provider_type_ext_source: Option<String>,
-    pub hash_data: Option<String>,
-    pub hash_value: Option<String>,
-    pub salt_data: Option<String>,
-    pub salt_value: Option<String>,
-    pub spin_count: Option<String>,
-    pub spin_value: Option<String>,
+    pub crypt_provider_type_ext: Option<Box<str>>,
+    pub crypt_provider_type_ext_source: Option<Box<str>>,
+    pub hash_data: Option<Box<str>>,
+    pub hash_value: Option<Box<str>>,
+    pub salt_data: Option<Box<str>>,
+    pub salt_value: Option<Box<str>>,
+    pub spin_count: Option<Box<str>>,
+    pub spin_value: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1654,15 +1654,15 @@ pub struct NonVisualConnectorShapeDrawingPropertiesMirror {
 pub struct NonVisualDrawingPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub click_hyperlink: Option<Box<super::super::drawing::ClickHyperlink>>,
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub hyperlink_for_hover: Option<Box<super::super::drawing::HyperlinkForHover>>,
     pub id: Option<super::super::drawing::DrawingElementID>,
-    pub name: Option<String>,
-    pub title: Option<String>,
+    pub name: Option<Box<str>>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1678,7 +1678,7 @@ pub struct NonVisualDrawingPropertiesForAShapeMirror {
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub locks: Option<Box<super::super::drawing::ShapeLocks>>,
-    pub tx_box: Option<String>,
+    pub tx_box: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1724,7 +1724,7 @@ pub struct NonVisualPictureDrawingPropertiesMirror {
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub picture_locks: Option<Box<super::super::drawing::PictureLocks>>,
-    pub prefer_relative_resize: Option<String>,
+    pub prefer_relative_resize: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1741,12 +1741,12 @@ pub struct NonVisualPropertiesMirror {
     pub customer_data_list: Option<Box<super::CustomerDataList>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub is_photo: Option<String>,
+    pub is_photo: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub placeholder_shape: Option<Box<super::PlaceholderShape>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub user_drawn: Option<String>,
+    pub user_drawn: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1848,9 +1848,9 @@ pub struct NormalViewPropertiesMirror {
     pub horz_bar_state: Option<super::SplitterBarState>,
     pub normal_view_restored_left_properties: Box<super::NormalViewRestoredLeftProperties>,
     pub normal_view_restored_top_properties: Box<super::NormalViewRestoredTopProperties>,
-    pub prefer_single_view: Option<String>,
-    pub show_outline_icons: Option<String>,
-    pub snap_vert_splitter: Option<String>,
+    pub prefer_single_view: Option<Box<str>>,
+    pub show_outline_icons: Option<Box<str>>,
+    pub snap_vert_splitter: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub vert_bar_state: Option<super::SplitterBarState>,
@@ -1860,7 +1860,7 @@ pub struct NormalViewPropertiesMirror {
 #[rkyv(remote = super::NormalViewRestoredLeftProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NormalViewRestoredLeftPropertiesMirror {
-    pub auto_adjust: Option<String>,
+    pub auto_adjust: Option<Box<str>>,
     pub sz: Option<super::super::drawing::PositiveFixedPercentage>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -1870,7 +1870,7 @@ pub struct NormalViewRestoredLeftPropertiesMirror {
 #[rkyv(remote = super::NormalViewRestoredTopProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NormalViewRestoredTopPropertiesMirror {
-    pub auto_adjust: Option<String>,
+    pub auto_adjust: Option<Box<str>>,
     pub sz: Option<super::super::drawing::PositiveFixedPercentage>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -1908,7 +1908,7 @@ pub struct NotesMasterMirror {
 pub struct NotesMasterIDMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1927,8 +1927,8 @@ pub struct NotesSlideMirror {
     #[rkyv(omit_bounds)]
     pub extension_list_with_modification_flag:
         Option<Box<super::ExtensionListWithModificationFlag>>,
-    pub show_master_ph_anim: Option<String>,
-    pub show_master_sp: Option<String>,
+    pub show_master_ph_anim: Option<Box<str>>,
+    pub show_master_sp: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2059,12 +2059,12 @@ pub struct PenColorForSlideShowMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct PhotoAlbumInformationMirror {
-    pub bw: Option<String>,
+    pub bw: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub frame: Option<super::PhotoAlbumShapeForPhotoMask>,
     pub layout: Option<super::PhotoAlbumLayoutDefinition>,
-    pub show_captions: Option<String>,
+    pub show_captions: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2100,8 +2100,8 @@ pub struct PictureFillMirror {
     #[rkyv(omit_bounds)]
     pub blip: Option<Box<super::super::drawing::Blip>>,
     pub content: Option<Box<super::super::drawing::FillModeContent>>,
-    pub dpi: Option<String>,
-    pub rot_with_shape: Option<String>,
+    pub dpi: Option<Box<str>>,
+    pub rot_with_shape: Option<Box<str>>,
     pub source_rectangle: Option<Box<super::super::drawing::SourceRectangle>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -2117,8 +2117,8 @@ pub struct PlaceholderShapeMirror {
     #[rkyv(omit_bounds)]
     pub extension_list_with_modification_flag:
         Option<Box<super::ExtensionListWithModificationFlag>>,
-    pub has_custom_prompt: Option<String>,
-    pub idx: Option<String>,
+    pub has_custom_prompt: Option<Box<str>>,
+    pub idx: Option<Box<str>>,
     pub orient: Option<super::Direction>,
     pub sz: Option<super::PlaceholderSize>,
     pub r#type: Option<super::PlaceholderIDs>,
@@ -2141,18 +2141,18 @@ pub struct PlusSlideTransitionMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct PresentationMirror {
-    pub auto_compress_pictures: Option<String>,
+    pub auto_compress_pictures: Option<Box<str>>,
     pub bookmark_id_seed: Option<super::BookmarkIDSeed>,
-    pub compat_mode: Option<String>,
+    pub compat_mode: Option<Box<str>>,
     pub conformance: Option<common_simple_types::DocumentConformanceClassValue>,
     pub customer_data_list: Option<Box<super::CustomerDataList>>,
     #[rkyv(omit_bounds)]
     pub default_text_style: Option<Box<super::PresentationDefaultTextStyle>>,
-    pub embed_true_type_fonts: Option<String>,
+    pub embed_true_type_fonts: Option<Box<str>>,
     pub embedded_font_list: Option<Box<super::EmbeddedFontList>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub first_slide_num: Option<String>,
+    pub first_slide_num: Option<Box<str>>,
     pub kinsoku_settings: Option<Box<super::KinsokuSettings>>,
     #[rkyv(omit_bounds)]
     pub list_of_custom_shows: Option<Box<super::ListOfCustomShows>>,
@@ -2168,14 +2168,14 @@ pub struct PresentationMirror {
     pub notes_slide_size: Box<super::NotesSlideSize>,
     #[rkyv(omit_bounds)]
     pub photo_album_information: Option<Box<super::PhotoAlbumInformation>>,
-    pub remove_personal_info_on_save: Option<String>,
-    pub rtl: Option<String>,
-    pub save_subset_fonts: Option<String>,
+    pub remove_personal_info_on_save: Option<Box<str>>,
+    pub rtl: Option<Box<str>>,
+    pub save_subset_fonts: Option<Box<str>>,
     pub server_zoom: Option<super::super::drawing::Percentage>,
-    pub show_special_pls_on_title_sld: Option<String>,
+    pub show_special_pls_on_title_sld: Option<Box<str>>,
     pub slide_size: Option<Box<super::PresentationSlideSize>>,
     pub smart_tags: Option<Box<super::SmartTags>>,
-    pub strict_first_and_last_chars: Option<String>,
+    pub strict_first_and_last_chars: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2217,7 +2217,7 @@ pub struct PresentationDefaultTextStyleMirror {
 #[rkyv(remote = super::PresentationSlide)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PresentationSlideMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2226,8 +2226,8 @@ pub struct PresentationSlideMirror {
 #[rkyv(remote = super::PresentationSlideOutlineViewSlideEntry)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PresentationSlideOutlineViewSlideEntryMirror {
-    pub collapse: Option<String>,
-    pub id: Option<String>,
+    pub collapse: Option<Box<str>>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2257,9 +2257,9 @@ pub struct PresentationSlideSlideMirror {
     #[rkyv(omit_bounds)]
     pub extension_list_with_modification_flag:
         Option<Box<super::ExtensionListWithModificationFlag>>,
-    pub show: Option<String>,
-    pub show_master_ph_anim: Option<String>,
-    pub show_master_sp: Option<String>,
+    pub show: Option<Box<str>>,
+    pub show_master_ph_anim: Option<Box<str>>,
+    pub show_master_sp: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub timing_information: Option<Box<super::SlideTimingInformation>>,
     #[rkyv(omit_bounds)]
@@ -2299,14 +2299,14 @@ pub struct PresentationWidePropertiesMirror {
 pub struct PresentationWideShowPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub r#loop: Option<String>,
+    pub r#loop: Option<Box<str>>,
     pub pen_color_for_slide_show: Option<Box<super::PenColorForSlideShow>>,
-    pub show_animation: Option<String>,
-    pub show_narration: Option<String>,
+    pub show_animation: Option<Box<str>>,
+    pub show_narration: Option<Box<str>>,
     pub show_type_content: Option<Box<super::ShowTypeContent>>,
     pub slide_list_content: Option<Box<super::SlideListContent>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub use_timings: Option<String>,
+    pub use_timings: Option<Box<str>>,
     pub user_data: (),
 }
 
@@ -2329,7 +2329,7 @@ pub struct PresentationWideViewPropertiesMirror {
     pub notes_view_properties: Option<Box<super::NotesViewProperties>>,
     #[rkyv(omit_bounds)]
     pub outline_view_properties: Option<Box<super::OutlineViewProperties>>,
-    pub show_comments: Option<String>,
+    pub show_comments: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub slide_sorter_view_properties: Option<Box<super::SlideSorterViewProperties>>,
     #[rkyv(omit_bounds)]
@@ -2365,10 +2365,10 @@ pub struct PrintingPropertiesMirror {
     pub clr_mode: Option<super::PrintColorMode>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub frame_slides: Option<String>,
-    pub hidden_slides: Option<String>,
+    pub frame_slides: Option<Box<str>>,
+    pub hidden_slides: Option<Box<str>>,
     pub prn_what: Option<super::DefaultPrintOutput>,
-    pub scale_to_fit_paper: Option<String>,
+    pub scale_to_fit_paper: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2377,10 +2377,10 @@ pub struct PrintingPropertiesMirror {
 #[rkyv(remote = super::ProgrammableExtensibilityTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ProgrammableExtensibilityTagMirror {
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2440,7 +2440,7 @@ pub struct RandomSlideTransitionMirror {
 #[rkyv(remote = super::RegularEmbeddedFont)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RegularEmbeddedFontMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2484,7 +2484,7 @@ pub struct RuntimeNodeTriggerChoiceMirror {
 pub struct SequenceTimeNodeMirror {
     #[rkyv(omit_bounds)]
     pub common_time_node_properties: Box<super::CommonTimeNodeProperties>,
-    pub concurrent: Option<String>,
+    pub concurrent: Option<Box<str>>,
     pub next_ac: Option<super::NextActionType>,
     pub next_conditions_list: Option<Box<super::NextConditionsList>>,
     pub prev_ac: Option<super::PreviousActionType>,
@@ -2525,7 +2525,7 @@ pub struct ShapeMirror {
     #[rkyv(omit_bounds)]
     pub text_body: Option<Box<super::ShapeTextBody>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub use_bg_fill: Option<String>,
+    pub use_bg_fill: Option<Box<str>>,
     pub user_data: (),
 }
 
@@ -2638,7 +2638,7 @@ pub struct SlideIDMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub id: Option<super::SlideIdentifier>,
-    pub r_id: Option<String>,
+    pub r_id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2660,10 +2660,10 @@ pub struct SlideLayoutMirror {
     #[rkyv(omit_bounds)]
     pub header_footer_information_for_a_slide_master:
         Option<Box<super::HeaderFooterInformationForASlideMaster>>,
-    pub matching_name: Option<String>,
-    pub preserve: Option<String>,
-    pub show_master_ph_anim: Option<String>,
-    pub show_master_sp: Option<String>,
+    pub matching_name: Option<Box<str>>,
+    pub preserve: Option<Box<str>>,
+    pub show_master_ph_anim: Option<Box<str>>,
+    pub show_master_sp: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub slide_timing_information: Option<Box<super::SlideTimingInformation>>,
     #[rkyv(omit_bounds)]
@@ -2671,7 +2671,7 @@ pub struct SlideLayoutMirror {
     pub r#type: Option<super::SlideLayoutType>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub user_drawn: Option<String>,
+    pub user_drawn: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2684,7 +2684,7 @@ pub struct SlideLayoutIdMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub id: Option<super::SlideLayoutID>,
-    pub r_id: Option<String>,
+    pub r_id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2707,7 +2707,7 @@ pub struct SlideMasterMirror {
     pub header_footer_information: Option<Box<super::HeaderFooterInformationForASlideMaster>>,
     #[rkyv(omit_bounds)]
     pub list_of_slide_layouts: Option<Box<super::ListOfSlideLayouts>>,
-    pub preserve: Option<String>,
+    pub preserve: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub slide_timing_information: Option<Box<super::SlideTimingInformation>>,
     #[rkyv(omit_bounds)]
@@ -2761,7 +2761,7 @@ pub struct SlideMasterIDMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub id: Option<super::StSlideMasterId>,
-    pub r_id: Option<String>,
+    pub r_id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2871,7 +2871,7 @@ pub struct SlideSorterViewPropertiesMirror {
     pub common_view_properties: Box<super::CommonViewProperties>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub show_formatting: Option<String>,
+    pub show_formatting: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2883,11 +2883,11 @@ pub struct SlideSorterViewPropertiesMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct SlideSynchronizationPropertiesMirror {
-    pub client_inserted_time: Option<String>,
+    pub client_inserted_time: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub server_sld_id: Option<String>,
-    pub server_sld_modified_time: Option<String>,
+    pub server_sld_id: Option<Box<str>>,
+    pub server_sld_modified_time: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2923,10 +2923,10 @@ pub struct SlideTimingInformationMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct SlideTransitionForASlideLayoutMirror {
-    pub adv_click: Option<String>,
-    pub adv_tm: Option<String>,
+    pub adv_click: Option<Box<str>>,
+    pub adv_tm: Option<Box<str>>,
     pub content: Option<Box<super::SlideTransitionContent>>,
-    pub dur: Option<String>,
+    pub dur: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list_with_modification_flag:
         Option<Box<super::ExtensionListWithModificationFlag>>,
@@ -2954,7 +2954,7 @@ pub struct SlideViewPropertiesMirror {
 #[rkyv(remote = super::SmartTags)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SmartTagsMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2963,8 +2963,8 @@ pub struct SmartTagsMirror {
 #[rkyv(remote = super::Sound)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SoundMirror {
-    pub embed: Option<String>,
-    pub name: Option<String>,
+    pub embed: Option<Box<str>>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2982,8 +2982,8 @@ pub struct SoundActionMirror {
 #[rkyv(remote = super::SoundTarget)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SoundTargetMirror {
-    pub embed: Option<String>,
-    pub name: Option<String>,
+    pub embed: Option<Box<str>>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -3011,7 +3011,7 @@ pub struct StartConditionsListMirror {
 #[rkyv(remote = super::StartSoundAction)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StartSoundActionMirror {
-    pub r#loop: Option<String>,
+    pub r#loop: Option<Box<str>>,
     pub sound: Box<super::Sound>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -3031,7 +3031,7 @@ pub struct StopSoundActionMirror {
 pub struct StringValueMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3060,7 +3060,7 @@ pub struct SubTimeNodesListMirror {
 #[rkyv(remote = super::Subshape)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SubshapeMirror {
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -3078,7 +3078,7 @@ pub struct TargetElementMirror {
 #[rkyv(remote = super::TemplateEffectsTmpl)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TemplateEffectsTmplMirror {
-    pub lvl: Option<String>,
+    pub lvl: Option<Box<str>>,
     pub time_node_list: Box<super::TimeNodeList>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -3115,7 +3115,7 @@ pub struct TimeAbsoluteMirror {
 #[rkyv(remote = super::TimeAnimateValue)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TimeAnimateValueMirror {
-    pub fmla: Option<String>,
+    pub fmla: Option<Box<str>>,
     pub tm: Option<super::AnimationTime>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -3204,7 +3204,7 @@ pub struct ValueMirror {
 pub struct VideoMirror {
     #[rkyv(omit_bounds)]
     pub common_media_node_properties: Box<super::CommonMediaNodeProperties>,
-    pub full_scrn: Option<String>,
+    pub full_scrn: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -3236,18 +3236,18 @@ pub struct ViewScaleMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct WebPropertiesMirror {
-    pub allow_png: Option<String>,
+    pub allow_png: Option<Box<str>>,
     pub clr: Option<super::HTMLSlideNavigationControlColors>,
-    pub encoding: Option<String>,
+    pub encoding: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub img_sz: Option<super::HTMLWebScreenSizeTarget>,
-    pub organize_in_folders: Option<String>,
-    pub rely_on_vml: Option<String>,
-    pub resize_graphics: Option<String>,
-    pub show_animation: Option<String>,
+    pub organize_in_folders: Option<Box<str>>,
+    pub rely_on_vml: Option<Box<str>>,
+    pub resize_graphics: Option<Box<str>>,
+    pub show_animation: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub use_long_filenames: Option<String>,
+    pub use_long_filenames: Option<Box<str>>,
     pub user_data: (),
 }
 
@@ -3263,7 +3263,7 @@ pub struct WedgeSlideTransitionMirror {
 #[rkyv(remote = super::WheelSlideTransition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WheelSlideTransitionMirror {
-    pub spokes: Option<String>,
+    pub spokes: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -3282,8 +3282,8 @@ pub struct WipeSlideTransitionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct XfrmMirror {
     pub extents: Option<Box<super::super::drawing::Extents>>,
-    pub flip_h: Option<String>,
-    pub flip_v: Option<String>,
+    pub flip_h: Option<Box<str>>,
+    pub flip_v: Option<Box<str>>,
     pub offset: Option<Box<super::super::drawing::Offset>>,
     pub rot: Option<super::super::drawing::Angle>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3348,7 +3348,7 @@ pub enum BuildListContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum EmbeddedObjectContent {
     EmbeddedObjectOrControl(#[rkyv(omit_bounds)] Box<super::EmbeddedObjectOrControl>),
-    LinkedObjectOrControl(#[rkyv(omit_bounds)] Box<super::LinkedObjectOrControl>),
+    LinkedObjectOrControl(#[rkyv(omit_bounds)] super::LinkedObjectOrControl),
     Other(Box<Node>),
 }
 
@@ -3388,7 +3388,7 @@ pub enum NonVisualPropertiesContent {
     AudioFromFile(#[rkyv(omit_bounds)] Box<super::super::drawing::AudioFromFile>),
     AudioFromWAVFile(Box<super::super::drawing::AudioFromWAVFile>),
     Other(Box<Node>),
-    QuickTimeFromFile(#[rkyv(omit_bounds)] Box<super::super::drawing::QuickTimeFromFile>),
+    QuickTimeFromFile(#[rkyv(omit_bounds)] super::super::drawing::QuickTimeFromFile),
     VideoFromFile(#[rkyv(omit_bounds)] Box<super::super::drawing::VideoFromFile>),
 }
 
@@ -3422,7 +3422,7 @@ pub enum ShowTypeContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum SlideBackgroundContent {
     BackgroundProperties(#[rkyv(omit_bounds)] Box<super::BackgroundProperties>),
-    BackgroundStyleReference(Box<super::BackgroundStyleReference>),
+    BackgroundStyleReference(super::BackgroundStyleReference),
     Other(Box<Node>),
 }
 
@@ -3489,7 +3489,7 @@ pub enum SlideTransitionContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum SoundActionContent {
     Other(Box<Node>),
-    StartSoundAction(Box<super::StartSoundAction>),
+    StartSoundAction(super::StartSoundAction),
     StopSoundAction(super::StopSoundAction),
 }
 
@@ -3500,7 +3500,7 @@ pub enum TargetElementContent {
     BmkTgt(Box<super::super::office_powerpoint_2010_main::BmkTgt>),
     InkTarget(super::InkTarget),
     Other(Box<Node>),
-    ShapeTarget(Box<super::ShapeTarget>),
+    ShapeTarget(super::ShapeTarget),
     SlideTarget(super::SlideTarget),
     SoundTarget(Box<super::SoundTarget>),
 }
@@ -3537,14 +3537,14 @@ pub enum TimeNodeListContent {
     AnimateMotion(#[rkyv(omit_bounds)] Box<super::AnimateMotion>),
     AnimateRotation(#[rkyv(omit_bounds)] Box<super::AnimateRotation>),
     AnimateScale(#[rkyv(omit_bounds)] Box<super::AnimateScale>),
-    Audio(#[rkyv(omit_bounds)] Box<super::Audio>),
+    Audio(#[rkyv(omit_bounds)] super::Audio),
     Command(#[rkyv(omit_bounds)] Box<super::Command>),
     Exclusive(#[rkyv(omit_bounds)] super::Exclusive),
     Other(Box<Node>),
     ParallelTimeNode(#[rkyv(omit_bounds)] super::ParallelTimeNode),
     SequenceTimeNode(#[rkyv(omit_bounds)] Box<super::SequenceTimeNode>),
     SetTimeNodeBehavior(#[rkyv(omit_bounds)] super::SetTimeNodeBehavior),
-    Video(#[rkyv(omit_bounds)] Box<super::Video>),
+    Video(#[rkyv(omit_bounds)] super::Video),
 }
 
 impl From<AGuideMirror> for super::AGuide {

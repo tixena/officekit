@@ -251,7 +251,7 @@ pub struct FWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeExcel2006MainF,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xne:f` element of the tree a read gives: [`FWith`] holding nothing in `user_data`.
@@ -270,7 +270,7 @@ pub struct SqrefWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeExcel2006MainSqref,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xne:sqref` element of the tree a read gives: [`SqrefWith`] holding nothing in `user_data`.

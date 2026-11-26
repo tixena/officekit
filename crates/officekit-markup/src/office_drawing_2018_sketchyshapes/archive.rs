@@ -267,7 +267,7 @@ pub struct LineSketchScribbleMirror {
 pub struct LineSketchStylePropsMirror {
     pub content: Option<Box<drawing::GeometryContent>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub sd: Option<String>,
+    pub sd: Option<Box<str>>,
     pub seed: Option<Box<super::Seed>>,
     pub r#type: Option<Box<super::Type>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -280,7 +280,7 @@ pub struct LineSketchStylePropsMirror {
 pub struct SeedMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]

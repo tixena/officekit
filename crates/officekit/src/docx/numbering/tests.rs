@@ -30,7 +30,7 @@ fn unstarted(
     let mut numbering_format = NumberingFormat::default();
     numbering_format.val = Some(StNumberFormat::from(format));
     let mut level_text = NumberingLevelText::default();
-    level_text.val = Some(text.to_owned());
+    level_text.val = Some(Box::from(text));
     let mut definition = NumberingLevelOverrideDefinition::default();
     definition.ilvl = Some(number(ilvl));
     definition.numbering_format = Some(Box::new(numbering_format));
@@ -71,7 +71,7 @@ fn custom(
     format: &str,
 ) -> NumberingLevelOverrideDefinition {
     if let Some(numbering_format) = definition.numbering_format.as_deref_mut() {
-        numbering_format.format = Some(format.to_owned());
+        numbering_format.format = Some(Box::from(format));
     }
     definition
 }
@@ -185,7 +185,7 @@ fn style_with(
     let mut general = ParagraphPropertiesPPrGeneral::default();
     general.numbering_definition_instance_reference_num_pr = Some(Box::new(numbering));
     let mut style = StyleDefinition::default();
-    style.style_id = Some(id.to_owned());
+    style.style_id = Some(Box::from(id));
     style.r#type = Some(StyleTypes::from(kind));
     style.paragraph_properties_p_pr_general = Some(Box::new(general));
     style
@@ -205,7 +205,7 @@ fn own_paragraph(
     let mut own = ParagraphProperties::default();
     own.referenced_paragraph_style = style.map(|id| {
         let mut reference = ReferencedParagraphStyle::default();
-        reference.val = Some(id.to_owned());
+        reference.val = Some(Box::from(id));
         Box::new(reference)
     });
     own.numbering_definition_instance_reference_num_pr = numbering.map(Box::new);
@@ -216,11 +216,11 @@ fn own_paragraph(
 /// holds `levels` and is that style's definition; the instances 3 naming 0 and 9 naming 7.
 fn linked(levels: Vec<NumberingLevelOverrideDefinition>) -> NumberingDefinitions {
     let mut reference = NumberingStyleReference::default();
-    reference.val = Some("ListStyle".to_owned());
+    reference.val = Some(Box::from("ListStyle"));
     let mut linking = abstract_of(0, Vec::new());
     linking.numbering_style_reference = Some(Box::new(reference));
     let mut definition = NumberingStyleDefinition::default();
-    definition.val = Some("ListStyle".to_owned());
+    definition.val = Some(Box::from("ListStyle"));
     let mut underlying = abstract_of(7, levels);
     underlying.numbering_style_definition = Some(Box::new(definition));
     let mut part = NumberingDefinitions::default();
@@ -287,7 +287,7 @@ fn a_num_style_link_to_a_missing_style_follows_the_style_link() {
 fn the_numbering_style_s_num_wins_over_another_style_link() {
     let mut part = linked(outline());
     let mut definition = NumberingStyleDefinition::default();
-    definition.val = Some("ListStyle".to_owned());
+    definition.val = Some(Box::from("ListStyle"));
     let mut other = abstract_of(
         8,
         Vec::from([level(0, StNumberFormatMember::UpperRoman, "%1")]),
@@ -318,7 +318,7 @@ fn the_numbering_style_s_num_wins_over_another_style_link() {
 #[test]
 fn a_link_back_to_the_same_definition_ends() {
     let mut reference = NumberingStyleReference::default();
-    reference.val = Some("Loop".to_owned());
+    reference.val = Some(Box::from("Loop"));
     let mut looping = abstract_of(
         0,
         Vec::from([level(0, StNumberFormatMember::Decimal, "%1")]),
@@ -354,7 +354,7 @@ fn num_id_zero_a_missing_instance_and_a_missing_level_give_no_level() {
 fn a_level_naming_the_paragraph_style_numbers_its_paragraphs() {
     let mut named = level(1, StNumberFormatMember::Decimal, "%1.%2");
     let mut reference = ReferencedParagraphStyle::default();
-    reference.val = Some("Heading2".to_owned());
+    reference.val = Some(Box::from("Heading2"));
     named.referenced_paragraph_style = Some(Box::new(reference));
     let levels = Vec::from([
         level(0, StNumberFormatMember::Decimal, "%1."),
@@ -570,7 +570,7 @@ fn a_null_level_text_is_the_null_character() {
     }
     let mut empty_null = null.clone();
     if let Some(text) = empty_null.numbering_level_text.as_deref_mut() {
-        text.val = Some(String::new());
+        text.val = Some(Box::default());
     }
     let mut no_text = level(0, StNumberFormatMember::Decimal, "");
     no_text.numbering_level_text = None;
@@ -585,7 +585,7 @@ fn in_language(
     language: &str,
 ) -> NumberingLevelOverrideDefinition {
     let mut languages = LanguagesForRunContent::default();
-    languages.val = Some(language.to_owned());
+    languages.val = Some(Box::from(language));
     let mut properties = RunProperties::default();
     properties.content = Vec::from([RunPropertiesContent::from(languages)]);
     definition.run_properties = Some(Box::new(properties));

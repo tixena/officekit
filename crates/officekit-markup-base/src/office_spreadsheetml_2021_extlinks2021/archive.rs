@@ -231,8 +231,8 @@ pub struct AbsoluteUrlMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AlternateUrlsMirror {
     pub absolute_url: Option<Box<super::AbsoluteUrl>>,
-    pub drive_id: Option<String>,
-    pub item_id: Option<String>,
+    pub drive_id: Option<Box<str>>,
+    pub item_id: Option<Box<str>>,
     pub relative_url: Option<Box<super::RelativeUrl>>,
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),

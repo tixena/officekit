@@ -24215,7 +24215,7 @@ impl super::Transform for drawing::TableBackgroundEffectContent {
         if let Self::Effect(arm) = self {
             Self::Effect(arm.transform(ctx))
         } else if let Self::EffectReference(arm) = self {
-            Self::EffectReference(Box::new(arm.transform(ctx)))
+            Self::EffectReference(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {
@@ -27992,7 +27992,7 @@ impl super::Transform for drawing::ThemeableFillStyleContent {
         if let Self::Fill(arm) = self {
             Self::Fill(arm.transform(ctx))
         } else if let Self::FillReference(arm) = self {
-            Self::FillReference(Box::new(arm.transform(ctx)))
+            Self::FillReference(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {
@@ -28079,7 +28079,7 @@ impl super::Transform for drawing::ThemeableLineStyleContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::LineReference(arm) = self {
-            Self::LineReference(Box::new(arm.transform(ctx)))
+            Self::LineReference(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Outline(arm) = self {
@@ -30165,7 +30165,7 @@ fn transform_effect_container_1(
         return Some(drawing::EffectContainerContent::FillOverlayEffect(node));
     }
     if let drawing::EffectContainerContent::GlowEffect(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(drawing::EffectContainerContent::GlowEffect(node));
     }
     if let drawing::EffectContainerContent::GrayScaleEffect(arm) = item {
@@ -30902,7 +30902,7 @@ fn transform_any_element_2(
         return Some(drawing::AnyElementContent::CustomFileProperties(node));
     }
     if let drawing::AnyElementContent::CustomXMLDataProperties(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(drawing::AnyElementContent::CustomXMLDataProperties(node));
     }
     if let drawing::AnyElementContent::DataModel(arm) = item {
@@ -31357,7 +31357,7 @@ fn transform_any_element_7(
         return Some(drawing::AnyElementContent::StartingAnchorPoint(node));
     }
     if let drawing::AnyElementContent::StorageForAlternateMathContent(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(drawing::AnyElementContent::StorageForAlternateMathContent(
             node,
         ));

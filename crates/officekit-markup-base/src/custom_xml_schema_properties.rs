@@ -251,16 +251,16 @@ pub static EMBEDDED_CUSTOM_XML_SCHEMA_SUPPLEMENTARY_DATA_SHAPE: crate::Shape = c
 #[non_exhaustive]
 pub struct CustomXMLSchemaReferenceWith<X: UserData> {
     /// The attribute `sl:manifestLocation`, when the element has it.
-    pub manifest_location: Option<String>,
+    pub manifest_location: Option<Box<str>>,
     /// The attribute `sl:schemaLanguage`, when the element has it.
-    pub schema_language: Option<String>,
+    pub schema_language: Option<Box<str>>,
     /// The attribute `sl:schemaLocation`, when the element has it.
-    pub schema_location: Option<String>,
+    pub schema_location: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<crate::Unknown>>,
     /// The attribute `sl:uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::CustomXmlSchemaPropertiesCustomXMLSchemaReference,
 }

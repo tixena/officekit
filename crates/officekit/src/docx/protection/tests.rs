@@ -84,11 +84,11 @@ fn protection(docx: &Docx) -> Vec<(&'static str, String)> {
             "cryptSpinCount",
             entry.crypt_spin_count.map(|value| spelled(&value)),
         ),
-        ("hash", entry.hash),
-        ("salt", entry.salt),
-        ("algorithmName", entry.algorithm_name),
-        ("hashValue", entry.hash_value),
-        ("saltValue", entry.salt_value),
+        ("hash", entry.hash.map(String::from)),
+        ("salt", entry.salt.map(String::from)),
+        ("algorithmName", entry.algorithm_name.map(String::from)),
+        ("hashValue", entry.hash_value.map(String::from)),
+        ("saltValue", entry.salt_value.map(String::from)),
         ("spinCount", entry.spin_count.map(|value| spelled(&value))),
     ]
     .into_iter()

@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct DesignPrMirror {
     pub design_tag_lst: Option<Box<super::DesignTagLst>>,
-    pub edt_design_elem: Option<String>,
+    pub edt_design_elem: Option<Box<str>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -234,10 +234,10 @@ pub struct DesignPrMirror {
 #[rkyv(remote = super::DesignTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DesignTagMirror {
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]

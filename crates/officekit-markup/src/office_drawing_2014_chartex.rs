@@ -1492,19 +1492,19 @@ pub static VALUE_COLOR_MIDDLE_POSITION_CONTENT_TAGS: officekit_markup_base::Acce
 #[non_exhaustive]
 pub struct AddressWith<X: UserData> {
     /// The attribute `address1`, when the element has it.
-    pub address1: Option<String>,
+    pub address1: Option<Box<str>>,
     /// The attribute `adminDistrict1`, when the element has it.
-    pub admin_district1: Option<String>,
+    pub admin_district1: Option<Box<str>>,
     /// The attribute `adminDistrict2`, when the element has it.
-    pub admin_district2: Option<String>,
+    pub admin_district2: Option<Box<str>>,
     /// The attribute `countryRegion`, when the element has it.
-    pub country_region: Option<String>,
+    pub country_region: Option<Box<str>>,
     /// The attribute `isoCountryCode`, when the element has it.
-    pub iso_country_code: Option<String>,
+    pub iso_country_code: Option<Box<str>>,
     /// The attribute `locality`, when the element has it.
-    pub locality: Option<String>,
+    pub locality: Option<Box<str>>,
     /// The attribute `postalCode`, when the element has it.
-    pub postal_code: Option<String>,
+    pub postal_code: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1546,9 +1546,9 @@ pub struct AxisWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `hidden`, when the element has it.
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The child that is `MajorGridlines`, when there is one.
     pub major_gridlines: Option<Box<MajorGridlinesWith<X>>>,
     /// The child that is `MajorTickMarks`, when there is one.
@@ -1613,7 +1613,7 @@ pub struct AxisIdWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexAxisId,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:axisId` element of the tree a read gives: [`AxisIdWith`] holding nothing in `user_data`.
@@ -1672,7 +1672,7 @@ pub struct BinCountWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexBinCount,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:binCount` element of the tree a read gives: [`BinCountWith`] holding nothing in
@@ -1692,7 +1692,7 @@ pub struct BinSizeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexBinSize,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:binSize` element of the tree a read gives: [`BinSizeWith`] holding nothing in
@@ -1712,7 +1712,7 @@ pub struct BinaryWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexBinary,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:binary` element of the tree a read gives: [`BinaryWith`] holding nothing in `user_data`.
@@ -1730,9 +1730,9 @@ pub struct BinningWith<X: UserData> {
     /// The attribute `intervalClosed`, when the element has it.
     pub interval_closed: Option<IntervalClosedSide>,
     /// The attribute `overflow`, when the element has it.
-    pub overflow: Option<String>,
+    pub overflow: Option<Box<str>>,
     /// The attribute `underflow`, when the element has it.
-    pub underflow: Option<String>,
+    pub underflow: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1773,7 +1773,7 @@ impl Eq for BinningContentWith<()> {}
 #[non_exhaustive]
 pub struct CatScalingWith<X: UserData> {
     /// The attribute `gapWidth`, when the element has it.
-    pub gap_width: Option<String>,
+    pub gap_width: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1843,7 +1843,7 @@ impl Eq for ChartDataWith<()> {}
 #[non_exhaustive]
 pub struct ChartRelIdWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1871,9 +1871,9 @@ pub struct ChartSpaceWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `fallbackImg`, when the element has it.
-    pub fallback_img: Option<String>,
+    pub fallback_img: Option<Box<str>>,
     /// The attribute `featureList`, when the element has it.
-    pub feature_list: Option<String>,
+    pub feature_list: Option<Box<str>>,
     /// The child that is `FmtOvrs`, when there is one.
     pub fmt_ovrs: Option<Box<FmtOvrsWith<X>>>,
     /// The child that is `PrintSettings`, when there is one.
@@ -1888,7 +1888,7 @@ pub struct ChartSpaceWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexChartSpace,
     /// The attribute `version`, when the element has it.
-    pub version: Option<String>,
+    pub version: Option<Box<str>>,
 }
 
 /// The `cx:chartSpace` element of the tree a read gives: [`ChartSpaceWith`] holding nothing in
@@ -4613,7 +4613,7 @@ pub struct CopyrightWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexCopyright,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:copyright` element of the tree a read gives: [`CopyrightWith`] holding nothing in
@@ -4652,7 +4652,7 @@ pub struct DataWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4697,7 +4697,7 @@ pub struct DataIdWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexDataId,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `cx:dataId` element of the tree a read gives: [`DataIdWith`] holding nothing in `user_data`.
@@ -4713,7 +4713,7 @@ pub struct DataLabelWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `idx`, when the element has it.
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     /// The child that is `NumFmt`, when there is one.
     pub num_fmt: Option<Box<NumFmtWith<X>>>,
     /// The attribute `pos`, when the element has it.
@@ -4745,7 +4745,7 @@ impl Eq for DataLabelWith<()> {}
 #[non_exhaustive]
 pub struct DataLabelHiddenWith<X: UserData> {
     /// The attribute `idx`, when the element has it.
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4841,7 +4841,7 @@ pub struct DataPtWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `idx`, when the element has it.
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -4867,7 +4867,7 @@ pub struct EntityTypeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexEntityType,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:entityType` element of the tree a read gives: [`EntityTypeWith`] holding nothing in
@@ -4887,7 +4887,7 @@ pub struct EvenFooterWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexEvenFooter,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:evenFooter` element of the tree a read gives: [`EvenFooterWith`] holding nothing in
@@ -4907,7 +4907,7 @@ pub struct EvenHeaderWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexEvenHeader,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:evenHeader` element of the tree a read gives: [`EvenHeaderWith`] holding nothing in
@@ -4927,7 +4927,7 @@ pub struct ExtWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexExt,
 }
@@ -4962,9 +4962,9 @@ impl Eq for ExtLstWith<()> {}
 #[non_exhaustive]
 pub struct ExternalDataWith<X: UserData> {
     /// The attribute `cx:autoUpdate`, when the element has it.
-    pub auto_update: Option<String>,
+    pub auto_update: Option<Box<str>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5007,7 +5007,7 @@ pub struct FWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexF,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:f` element of the tree a read gives: [`FWith`] holding nothing in `user_data`.
@@ -5026,7 +5026,7 @@ pub struct FirstFooterWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexFirstFooter,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:firstFooter` element of the tree a read gives: [`FirstFooterWith`] holding nothing in
@@ -5046,7 +5046,7 @@ pub struct FirstHeaderWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexFirstHeader,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:firstHeader` element of the tree a read gives: [`FirstHeaderWith`] holding nothing in
@@ -5063,7 +5063,7 @@ pub struct FmtOvrWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `idx`, when the element has it.
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -5106,7 +5106,7 @@ pub struct GeoCacheWith<X: UserData> {
     /// The children that are an item of `GeographyCacheContent`, in order.
     pub content: Vec<GeographyCacheContentWith<X>>,
     /// The attribute `provider`, when the element has it.
-    pub provider: Option<String>,
+    pub provider: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5146,7 +5146,7 @@ impl Eq for GeoChildEntitiesWith<()> {}
 #[non_exhaustive]
 pub struct GeoChildEntitiesQueryWith<X: UserData> {
     /// The attribute `entityId`, when the element has it.
-    pub entity_id: Option<String>,
+    pub entity_id: Option<Box<str>>,
     /// The child that is `GeoChildTypes`, when there is one.
     pub geo_child_types: Option<Box<GeoChildTypesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -5232,24 +5232,24 @@ pub struct GeoDataWith<X: UserData> {
     /// The child that is `Copyrights`, when there is one.
     pub copyrights: Option<Box<CopyrightsWith<X>>>,
     /// The attribute `east`, when the element has it.
-    pub east: Option<String>,
+    pub east: Option<Box<str>>,
     /// The attribute `entityId`, when the element has it.
-    pub entity_id: Option<String>,
+    pub entity_id: Option<Box<str>>,
     /// The attribute `entityName`, when the element has it.
-    pub entity_name: Option<String>,
+    pub entity_name: Option<Box<str>>,
     /// The child that is `GeoPolygons`, when there is one.
     pub geo_polygons: Option<Box<GeoPolygonsWith<X>>>,
     /// The attribute `north`, when the element has it.
-    pub north: Option<String>,
+    pub north: Option<Box<str>>,
     /// The attribute `south`, when the element has it.
-    pub south: Option<String>,
+    pub south: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexGeoData,
     /// The attribute `west`, when the element has it.
-    pub west: Option<String>,
+    pub west: Option<Box<str>>,
 }
 
 /// The `cx:geoData` element of the tree a read gives: [`GeoDataWith`] holding nothing in
@@ -5264,7 +5264,7 @@ impl Eq for GeoDataWith<()> {}
 #[non_exhaustive]
 pub struct GeoDataEntityQueryWith<X: UserData> {
     /// The attribute `entityId`, when the element has it.
-    pub entity_id: Option<String>,
+    pub entity_id: Option<Box<str>>,
     /// The attribute `entityType`, when the element has it.
     pub entity_type: Option<StEntityType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -5330,9 +5330,9 @@ pub struct GeoDataPointQueryWith<X: UserData> {
     /// The attribute `entityType`, when the element has it.
     pub entity_type: Option<StEntityType>,
     /// The attribute `latitude`, when the element has it.
-    pub latitude: Option<String>,
+    pub latitude: Option<Box<str>>,
     /// The attribute `longitude`, when the element has it.
-    pub longitude: Option<String>,
+    pub longitude: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5352,7 +5352,7 @@ impl Eq for GeoDataPointQueryWith<()> {}
 #[non_exhaustive]
 pub struct GeoDataPointToEntityQueryWith<X: UserData> {
     /// The attribute `entityId`, when the element has it.
-    pub entity_id: Option<String>,
+    pub entity_id: Option<Box<str>>,
     /// The attribute `entityType`, when the element has it.
     pub entity_type: Option<StEntityType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -5416,7 +5416,7 @@ impl Eq for GeoDataPointToEntityQueryResultsWith<()> {}
 #[non_exhaustive]
 pub struct GeoEntityWith<X: UserData> {
     /// The attribute `entityName`, when the element has it.
-    pub entity_name: Option<String>,
+    pub entity_name: Option<Box<str>>,
     /// The attribute `entityType`, when the element has it.
     pub entity_type: Option<StEntityType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -5438,9 +5438,9 @@ impl Eq for GeoEntityWith<()> {}
 #[non_exhaustive]
 pub struct GeoHierarchyEntityWith<X: UserData> {
     /// The attribute `entityId`, when the element has it.
-    pub entity_id: Option<String>,
+    pub entity_id: Option<Box<str>>,
     /// The attribute `entityName`, when the element has it.
-    pub entity_name: Option<String>,
+    pub entity_name: Option<Box<str>>,
     /// The attribute `entityType`, when the element has it.
     pub entity_type: Option<StEntityType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -5464,13 +5464,13 @@ pub struct GeoLocationWith<X: UserData> {
     /// The child that is `Address`, when there is one.
     pub address: Option<Box<AddressWith<X>>>,
     /// The attribute `entityName`, when the element has it.
-    pub entity_name: Option<String>,
+    pub entity_name: Option<Box<str>>,
     /// The attribute `entityType`, when the element has it.
     pub entity_type: Option<StEntityType>,
     /// The attribute `latitude`, when the element has it.
-    pub latitude: Option<String>,
+    pub latitude: Option<Box<str>>,
     /// The attribute `longitude`, when the element has it.
-    pub longitude: Option<String>,
+    pub longitude: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5490,15 +5490,15 @@ impl Eq for GeoLocationWith<()> {}
 #[non_exhaustive]
 pub struct GeoLocationQueryWith<X: UserData> {
     /// The attribute `adminDistrict1`, when the element has it.
-    pub admin_district1: Option<String>,
+    pub admin_district1: Option<Box<str>>,
     /// The attribute `adminDistrict2`, when the element has it.
-    pub admin_district2: Option<String>,
+    pub admin_district2: Option<Box<str>>,
     /// The attribute `countryRegion`, when the element has it.
-    pub country_region: Option<String>,
+    pub country_region: Option<Box<str>>,
     /// The attribute `entityType`, when the element has it.
     pub entity_type: Option<StEntityType>,
     /// The attribute `postalCode`, when the element has it.
-    pub postal_code: Option<String>,
+    pub postal_code: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5614,7 +5614,7 @@ pub enum GeoMappingLevelMember {
 #[non_exhaustive]
 pub struct GeoParentEntitiesQueryWith<X: UserData> {
     /// The attribute `entityId`, when the element has it.
-    pub entity_id: Option<String>,
+    pub entity_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5678,7 +5678,7 @@ impl Eq for GeoParentEntitiesQueryResultsWith<()> {}
 #[non_exhaustive]
 pub struct GeoParentEntityWith<X: UserData> {
     /// The attribute `entityId`, when the element has it.
-    pub entity_id: Option<String>,
+    pub entity_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5698,11 +5698,11 @@ impl Eq for GeoParentEntityWith<()> {}
 #[non_exhaustive]
 pub struct GeoPolygonWith<X: UserData> {
     /// The attribute `numPoints`, when the element has it.
-    pub num_points: Option<String>,
+    pub num_points: Option<Box<str>>,
     /// The attribute `pcaRings`, when the element has it.
-    pub pca_rings: Option<String>,
+    pub pca_rings: Option<Box<str>>,
     /// The attribute `polygonId`, when the element has it.
-    pub polygon_id: Option<String>,
+    pub polygon_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5770,11 +5770,11 @@ pub enum GeoProjectionTypeMember {
 #[non_exhaustive]
 pub struct GeographyWith<X: UserData> {
     /// The attribute `attribution`, when the element has it.
-    pub attribution: Option<String>,
+    pub attribution: Option<Box<str>>,
     /// The attribute `cultureLanguage`, when the element has it.
-    pub culture_language: Option<String>,
+    pub culture_language: Option<Box<str>>,
     /// The attribute `cultureRegion`, when the element has it.
-    pub culture_region: Option<String>,
+    pub culture_region: Option<Box<str>>,
     /// The child that is `GeoCache`, when there is one.
     pub geo_cache: Option<Box<GeoCacheWith<X>>>,
     /// The attribute `projectionType`, when the element has it.
@@ -5822,11 +5822,11 @@ impl Eq for GeographyCacheContentWith<()> {}
 #[non_exhaustive]
 pub struct HeaderFooterWith<X: UserData> {
     /// The attribute `alignWithMargins`, when the element has it.
-    pub align_with_margins: Option<String>,
+    pub align_with_margins: Option<Box<str>>,
     /// The attribute `differentFirst`, when the element has it.
-    pub different_first: Option<String>,
+    pub different_first: Option<Box<str>>,
     /// The attribute `differentOddEven`, when the element has it.
-    pub different_odd_even: Option<String>,
+    pub different_odd_even: Option<Box<str>>,
     /// The child that is `EvenFooter`, when there is one.
     pub even_footer: Option<Box<EvenFooterWith<X>>>,
     /// The child that is `EvenHeader`, when there is one.
@@ -5863,7 +5863,7 @@ pub struct IdxWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexIdx,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `cx:idx` element of the tree a read gives: [`IdxWith`] holding nothing in `user_data`.
@@ -5942,7 +5942,7 @@ pub struct LegendWith<X: UserData> {
     /// The child that is `Offset`, when there is one.
     pub offset: Option<Box<OffsetWith<X>>>,
     /// The attribute `overlay`, when the element has it.
-    pub overlay: Option<String>,
+    pub overlay: Option<Box<str>>,
     /// The attribute `pos`, when the element has it.
     pub pos: Option<SidePos>,
     /// The child that is `SpPr`, when there is one.
@@ -5967,11 +5967,11 @@ impl Eq for LegendWith<()> {}
 #[non_exhaustive]
 pub struct LvlNumericLevelWith<X: UserData> {
     /// The attribute `formatCode`, when the element has it.
-    pub format_code: Option<String>,
+    pub format_code: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `ptCount`, when the element has it.
-    pub pt_count: Option<String>,
+    pub pt_count: Option<Box<str>>,
     /// The children that are `PtNumericValue`, in order.
     pub pt_numeric_value: Vec<PtNumericValueWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -5993,9 +5993,9 @@ impl Eq for LvlNumericLevelWith<()> {}
 #[non_exhaustive]
 pub struct LvlStringLevelWith<X: UserData> {
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `ptCount`, when the element has it.
-    pub pt_count: Option<String>,
+    pub pt_count: Option<Box<str>>,
     /// The children that are `PtStringValue`, in order.
     pub pt_string_value: Vec<PtStringValueWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -6223,7 +6223,7 @@ pub struct NfWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexNf,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:nf` element of the tree a read gives: [`NfWith`] holding nothing in `user_data`.
@@ -6258,9 +6258,9 @@ impl Eq for NumDimWith<()> {}
 #[non_exhaustive]
 pub struct NumFmtWith<X: UserData> {
     /// The attribute `formatCode`, when the element has it.
-    pub format_code: Option<String>,
+    pub format_code: Option<Box<str>>,
     /// The attribute `sourceLinked`, when the element has it.
-    pub source_linked: Option<String>,
+    pub source_linked: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6284,7 +6284,7 @@ pub struct NumberWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexNumber,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `cx:number` element of the tree a read gives: [`NumberWith`] holding nothing in `user_data`.
@@ -6357,7 +6357,7 @@ pub struct OddFooterWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexOddFooter,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:oddFooter` element of the tree a read gives: [`OddFooterWith`] holding nothing in
@@ -6377,7 +6377,7 @@ pub struct OddHeaderWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexOddHeader,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:oddHeader` element of the tree a read gives: [`OddHeaderWith`] holding nothing in
@@ -6392,9 +6392,9 @@ impl Eq for OddHeaderWith<()> {}
 #[non_exhaustive]
 pub struct OffsetWith<X: UserData> {
     /// The attribute `left`, when the element has it.
-    pub left: Option<String>,
+    pub left: Option<Box<str>>,
     /// The attribute `top`, when the element has it.
-    pub top: Option<String>,
+    pub top: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6418,7 +6418,7 @@ pub struct Openxmlsdk49BECFFA3B034D138272D6CCB22579E3With<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexOpenxmlsdk49BECFFA3B034D138272D6CCB22579E3,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:openxmlsdk_49BECFFA_3B03_4D13_8272_D6CCB22579E3` element of the tree a read gives:
@@ -6434,17 +6434,17 @@ impl Eq for Openxmlsdk49BECFFA3B034D138272D6CCB22579E3With<()> {}
 #[non_exhaustive]
 pub struct PageMarginsWith<X: UserData> {
     /// The attribute `b`, when the element has it.
-    pub b: Option<String>,
+    pub b: Option<Box<str>>,
     /// The attribute `footer`, when the element has it.
-    pub footer: Option<String>,
+    pub footer: Option<Box<str>>,
     /// The attribute `header`, when the element has it.
-    pub header: Option<String>,
+    pub header: Option<Box<str>>,
     /// The attribute `l`, when the element has it.
-    pub l: Option<String>,
+    pub l: Option<Box<str>>,
     /// The attribute `r`, when the element has it.
-    pub r: Option<String>,
+    pub r: Option<Box<str>>,
     /// The attribute `t`, when the element has it.
-    pub t: Option<String>,
+    pub t: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -6490,28 +6490,28 @@ pub enum PageOrientationMember {
 #[non_exhaustive]
 pub struct PageSetupWith<X: UserData> {
     /// The attribute `blackAndWhite`, when the element has it.
-    pub black_and_white: Option<String>,
+    pub black_and_white: Option<Box<str>>,
     /// The attribute `copies`, when the element has it.
-    pub copies: Option<String>,
+    pub copies: Option<Box<str>>,
     /// The attribute `draft`, when the element has it.
-    pub draft: Option<String>,
+    pub draft: Option<Box<str>>,
     /// The attribute `firstPageNumber`, when the element has it.
-    pub first_page_number: Option<String>,
+    pub first_page_number: Option<Box<str>>,
     /// The attribute `horizontalDpi`, when the element has it.
-    pub horizontal_dpi: Option<String>,
+    pub horizontal_dpi: Option<Box<str>>,
     /// The attribute `orientation`, when the element has it.
     pub orientation: Option<PageOrientation>,
     /// The attribute `paperSize`, when the element has it.
-    pub paper_size: Option<String>,
+    pub paper_size: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `useFirstPageNumber`, when the element has it.
-    pub use_first_page_number: Option<String>,
+    pub use_first_page_number: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexPageSetup,
     /// The attribute `verticalDpi`, when the element has it.
-    pub vertical_dpi: Option<String>,
+    pub vertical_dpi: Option<Box<str>>,
 }
 
 /// The `cx:pageSetup` element of the tree a read gives: [`PageSetupWith`] holding nothing in
@@ -6551,7 +6551,7 @@ pub struct PercentWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexPercent,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `cx:percent` element of the tree a read gives: [`PercentWith`] holding nothing in
@@ -6688,14 +6688,14 @@ impl Eq for PrintSettingsWith<()> {}
 #[non_exhaustive]
 pub struct PtNumericValueWith<X: UserData> {
     /// The attribute `idx`, when the element has it.
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexPtNumericValue,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:pt` element of the tree a read gives: [`PtNumericValueWith`] holding nothing in
@@ -6710,14 +6710,14 @@ impl Eq for PtNumericValueWith<()> {}
 #[non_exhaustive]
 pub struct PtStringValueWith<X: UserData> {
     /// The attribute `idx`, when the element has it.
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexPtStringValue,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:pt` element of the tree a read gives: [`PtStringValueWith`] holding nothing in
@@ -6804,7 +6804,7 @@ pub struct SeparatorWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexSeparator,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:separator` element of the tree a read gives: [`SeparatorWith`] holding nothing in
@@ -6829,21 +6829,21 @@ pub struct SeriesWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `formatIdx`, when the element has it.
-    pub format_idx: Option<String>,
+    pub format_idx: Option<Box<str>>,
     /// The attribute `hidden`, when the element has it.
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     /// The attribute `layoutId`, when the element has it.
     pub layout_id: Option<SeriesLayout>,
     /// The child that is `LayoutPr`, when there is one.
     pub layout_pr: Option<Box<LayoutPrWith<X>>>,
     /// The attribute `ownerIdx`, when the element has it.
-    pub owner_idx: Option<String>,
+    pub owner_idx: Option<Box<str>>,
     /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// The child that is `Tx`, when there is one.
     pub tx: Option<Box<TxWith<X>>>,
     /// The attribute `uniqueId`, when the element has it.
-    pub unique_id: Option<String>,
+    pub unique_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -7290,7 +7290,7 @@ pub struct TitleChartTitleWith<X: UserData> {
     /// The child that is `Offset`, when there is one.
     pub offset: Option<Box<OffsetWith<X>>>,
     /// The attribute `overlay`, when the element has it.
-    pub overlay: Option<String>,
+    pub overlay: Option<Box<str>>,
     /// The attribute `pos`, when the element has it.
     pub pos: Option<SidePos>,
     /// The child that is `SpPr`, when there is one.
@@ -7433,7 +7433,7 @@ pub struct VWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexV,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cx:v` element of the tree a read gives: [`VWith`] holding nothing in `user_data`.
@@ -7447,13 +7447,13 @@ impl Eq for VWith<()> {}
 #[non_exhaustive]
 pub struct ValScalingWith<X: UserData> {
     /// The attribute `majorUnit`, when the element has it.
-    pub major_unit: Option<String>,
+    pub major_unit: Option<Box<str>>,
     /// The attribute `max`, when the element has it.
-    pub max: Option<String>,
+    pub max: Option<Box<str>>,
     /// The attribute `min`, when the element has it.
-    pub min: Option<String>,
+    pub min: Option<Box<str>>,
     /// The attribute `minorUnit`, when the element has it.
-    pub minor_unit: Option<String>,
+    pub minor_unit: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -7519,7 +7519,7 @@ impl Eq for ValueColorMiddlePositionContentWith<()> {}
 #[non_exhaustive]
 pub struct ValueColorPositionsWith<X: UserData> {
     /// The attribute `count`, when the element has it.
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     /// The child that is `Max`, when there is one.
     pub max: Option<Box<MaxWith<X>>>,
     /// The child that is `Mid`, when there is one.
@@ -7569,16 +7569,16 @@ impl Eq for ValueColorsWith<()> {}
 #[non_exhaustive]
 pub struct VisibilityDataLabelVisibilitiesWith<X: UserData> {
     /// The attribute `categoryName`, when the element has it.
-    pub category_name: Option<String>,
+    pub category_name: Option<Box<str>>,
     /// The attribute `seriesName`, when the element has it.
-    pub series_name: Option<String>,
+    pub series_name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2014ChartexVisibilityDataLabelVisibilities,
     /// The attribute `value`, when the element has it.
-    pub value: Option<String>,
+    pub value: Option<Box<str>>,
 }
 
 /// The `cx:visibility` element of the tree a read gives: [`VisibilityDataLabelVisibilitiesWith`]
@@ -7593,15 +7593,15 @@ impl Eq for VisibilityDataLabelVisibilitiesWith<()> {}
 #[non_exhaustive]
 pub struct VisibilitySeriesElementVisibilitiesWith<X: UserData> {
     /// The attribute `connectorLines`, when the element has it.
-    pub connector_lines: Option<String>,
+    pub connector_lines: Option<Box<str>>,
     /// The attribute `meanLine`, when the element has it.
-    pub mean_line: Option<String>,
+    pub mean_line: Option<Box<str>>,
     /// The attribute `meanMarker`, when the element has it.
-    pub mean_marker: Option<String>,
+    pub mean_marker: Option<Box<str>>,
     /// The attribute `nonoutliers`, when the element has it.
-    pub nonoutliers: Option<String>,
+    pub nonoutliers: Option<Box<str>>,
     /// The attribute `outliers`, when the element has it.
-    pub outliers: Option<String>,
+    pub outliers: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

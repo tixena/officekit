@@ -235,14 +235,14 @@ pub struct FbMirror {
     pub t: Option<super::RichValueFallbackType>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::K)]
 #[rkyv(attr(non_exhaustive))]
 pub struct KMirror {
-    pub n: Option<String>,
+    pub n: Option<Box<str>>,
     pub t: Option<super::RichValueValueType>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -253,7 +253,7 @@ pub struct KMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RvMirror {
     pub fb: Option<Box<super::Fb>>,
-    pub s: Option<String>,
+    pub s: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub v: Vec<super::V>,
@@ -263,7 +263,7 @@ pub struct RvMirror {
 #[rkyv(remote = super::RvData)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RvDataMirror {
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub rv: Vec<super::Rv>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -274,7 +274,7 @@ pub struct RvDataMirror {
 #[rkyv(remote = super::RvStructures)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RvStructuresMirror {
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub s: Vec<super::S>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -285,7 +285,7 @@ pub struct RvStructuresMirror {
 #[rkyv(remote = super::Rvb)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RvbMirror {
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -295,7 +295,7 @@ pub struct RvbMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SMirror {
     pub k: Vec<super::K>,
-    pub t: Option<String>,
+    pub t: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -306,7 +306,7 @@ pub struct SMirror {
 pub struct VMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 impl From<ExtLstMirror> for super::ExtLst {

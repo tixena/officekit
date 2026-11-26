@@ -809,7 +809,7 @@ pub struct AmbientLightWith<X: UserData> {
     /// The child that is `Clr`, which the schema requires.
     pub clr: Box<ClrWith<X>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionListWith<X>>>,
     /// The child that is `Illuminance`, which the schema requires.
@@ -833,7 +833,7 @@ impl Eq for AmbientLightWith<()> {}
 #[non_exhaustive]
 pub struct AttrSrcUrlWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -857,11 +857,11 @@ pub struct BlipWith<X: UserData> {
     /// The attribute `cstate`, when the element has it.
     pub cstate: Option<drawing::BlipCompressionType>,
     /// The attribute `r:embed`, when the element has it.
-    pub embed: Option<String>,
+    pub embed: Option<Box<str>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
     /// The attribute `r:link`, when the element has it.
-    pub link: Option<String>,
+    pub link: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1672,11 +1672,11 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct DirLightWith<X: UserData> {
     /// The attribute `angularRad`, when the element has it.
-    pub angular_rad: Option<String>,
+    pub angular_rad: Option<Box<str>>,
     /// The child that is `Clr`, which the schema requires.
     pub clr: Box<ClrWith<X>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionListWith<X>>>,
     /// The child that is `Illuminance`, which the schema requires.
@@ -1709,7 +1709,7 @@ pub struct ExtWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2017Model3dExt,
 }
@@ -1850,7 +1850,7 @@ pub enum Model3DCameraContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `am3d:perspective`, a `Perspective`.
-    Perspective(Box<PerspectiveWith<X>>),
+    Perspective(PerspectiveWith<X>),
 }
 
 /// [`Model3DCameraContentWith`] of the tree a read gives, where no node holds anything in
@@ -1938,7 +1938,7 @@ pub enum Model3DExtensionContentWith<X: UserData> {
     /// The element `op:Properties`, a `CustomFileProperties`.
     CustomFileProperties(document_properties_custom::CustomFilePropertiesWith<X>),
     /// The element `ds:datastoreItem`, a `CustomXMLDataProperties`.
-    CustomXMLDataProperties(Box<custom_xml_data_properties::CustomXMLDataPropertiesWith<X>>),
+    CustomXMLDataProperties(custom_xml_data_properties::CustomXMLDataPropertiesWith<X>),
     /// The element `dgm:dataModel`, a `DataModel`.
     DataModel(Box<diagram::DataModelWith<X>>),
     /// The element `vt:date`, a `DateAndTime`.
@@ -2152,7 +2152,7 @@ pub enum Model3DExtensionContentWith<X: UserData> {
     /// The element `xdr:from`, a `StartingAnchorPoint`.
     StartingAnchorPoint(Box<spreadsheet_drawing::StartingAnchorPointWith<X>>),
     /// The element `o:equationxml`, a `StorageForAlternateMathContent`.
-    StorageForAlternateMathContent(Box<vml_office_drawing::StorageForAlternateMathContentWith<X>>),
+    StorageForAlternateMathContent(vml_office_drawing::StorageForAlternateMathContentWith<X>),
     /// The element `dgm:styleDef`, a `StyleDefinition`.
     StyleDefinition(Box<diagram::StyleDefinitionWith<X>>),
     /// The element `dgm:styleDefHdr`, a `StyleDefinitionHeader`.
@@ -2274,7 +2274,7 @@ impl Eq for Model3DLightContentWith<()> {}
 #[non_exhaustive]
 pub enum Model3DViewportContentWith<X: UserData> {
     /// The element `am3d:objViewport`, a `ObjViewport`.
-    ObjViewport(Box<ObjViewportWith<X>>),
+    ObjViewport(ObjViewportWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `am3d:winViewport`, a `WinViewport`.
@@ -2299,13 +2299,13 @@ pub struct Model3dWith<X: UserData> {
     /// The child that is `Camera`, which the schema requires.
     pub camera: Box<CameraWith<X>>,
     /// The attribute `r:embed`, when the element has it.
-    pub embed: Option<String>,
+    pub embed: Option<Box<str>>,
     /// The child that is `ExtLstModel3DExtensionList`, when there is one.
     pub ext_lst_model3d_extension_list: Option<Box<ExtLstModel3DExtensionListWith<X>>>,
     /// The children that are an item of `Model3DLightContent`, in order.
     pub light_content: Vec<Model3DLightContentWith<X>>,
     /// The attribute `r:link`, when the element has it.
-    pub link: Option<String>,
+    pub link: Option<Box<str>>,
     /// The child that is `Raster`, when there is one.
     pub raster: Option<Box<RasterWith<X>>>,
     /// The child that is `SpPr`, which the schema requires.
@@ -2340,7 +2340,7 @@ pub struct ObjViewportWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2017Model3dObjViewport,
     /// The attribute `viewportSz`, when the element has it.
-    pub viewport_sz: Option<String>,
+    pub viewport_sz: Option<Box<str>>,
 }
 
 /// The `am3d:objViewport` element of the tree a read gives: [`ObjViewportWith`] holding nothing in
@@ -2379,7 +2379,7 @@ pub struct PerspectiveWith<X: UserData> {
     /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionListWith<X>>>,
     /// The attribute `fov`, when the element has it.
-    pub fov: Option<String>,
+    pub fov: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2472,7 +2472,7 @@ pub struct PtLightWith<X: UserData> {
     /// The child that is `Clr`, which the schema requires.
     pub clr: Box<ClrWith<X>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionListWith<X>>>,
     /// The child that is `Intensity`, which the schema requires.
@@ -2480,7 +2480,7 @@ pub struct PtLightWith<X: UserData> {
     /// The child that is `Pos`, which the schema requires.
     pub pos: Box<PosWith<X>>,
     /// The attribute `rad`, when the element has it.
-    pub rad: Option<String>,
+    pub rad: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2502,9 +2502,9 @@ pub struct RasterWith<X: UserData> {
     /// The child that is `Blip`, when there is one.
     pub blip: Option<Box<BlipWith<X>>>,
     /// The attribute `rName`, when the element has it.
-    pub r_name: Option<String>,
+    pub r_name: Option<Box<str>>,
     /// The attribute `rVer`, when the element has it.
-    pub r_ver: Option<String>,
+    pub r_ver: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2524,11 +2524,11 @@ impl Eq for RasterWith<()> {}
 #[non_exhaustive]
 pub struct RotWith<X: UserData> {
     /// The attribute `ax`, when the element has it.
-    pub ax: Option<String>,
+    pub ax: Option<Box<str>>,
     /// The attribute `ay`, when the element has it.
-    pub ay: Option<String>,
+    pub ay: Option<Box<str>>,
     /// The attribute `az`, when the element has it.
-    pub az: Option<String>,
+    pub az: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2607,7 +2607,7 @@ pub struct SpotLightWith<X: UserData> {
     /// The child that is `Clr`, which the schema requires.
     pub clr: Box<ClrWith<X>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionListWith<X>>>,
     /// The child that is `Intensity`, which the schema requires.
@@ -2617,9 +2617,9 @@ pub struct SpotLightWith<X: UserData> {
     /// The child that is `Pos`, which the schema requires.
     pub pos: Box<PosWith<X>>,
     /// The attribute `rad`, when the element has it.
-    pub rad: Option<String>,
+    pub rad: Option<Box<str>>,
     /// The attribute `spotAng`, when the element has it.
-    pub spot_ang: Option<String>,
+    pub spot_ang: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2639,9 +2639,9 @@ impl Eq for SpotLightWith<()> {}
 #[non_exhaustive]
 pub struct SxWith<X: UserData> {
     /// The attribute `d`, when the element has it.
-    pub d: Option<String>,
+    pub d: Option<Box<str>>,
     /// The attribute `n`, when the element has it.
-    pub n: Option<String>,
+    pub n: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2660,9 +2660,9 @@ impl Eq for SxWith<()> {}
 #[non_exhaustive]
 pub struct SyWith<X: UserData> {
     /// The attribute `d`, when the element has it.
-    pub d: Option<String>,
+    pub d: Option<Box<str>>,
     /// The attribute `n`, when the element has it.
-    pub n: Option<String>,
+    pub n: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2699,9 +2699,9 @@ impl Eq for SzPositiveRatioWith<()> {}
 #[non_exhaustive]
 pub struct SzRatioWith<X: UserData> {
     /// The attribute `d`, when the element has it.
-    pub d: Option<String>,
+    pub d: Option<Box<str>>,
     /// The attribute `n`, when the element has it.
-    pub n: Option<String>,
+    pub n: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3723,9 +3723,7 @@ impl<X: UserData> Model3DCameraContentWith<X> {
                 Model3DCameraContentWith::Orthographic(node.into_user_data())
             }
             Self::Other(node) => Model3DCameraContentWith::Other(node),
-            Self::Perspective(node) => {
-                Model3DCameraContentWith::Perspective(Box::new((*node).into_user_data()))
-            }
+            Self::Perspective(node) => Model3DCameraContentWith::Perspective(node.into_user_data()),
         }
     }
 }
@@ -3744,7 +3742,7 @@ impl officekit_markup_base::Read for Model3DCameraContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_AM3D, "orthographic")) => Self::Orthographic(item.read()),
-            Some((NS_AM3D, "perspective")) => Self::Perspective(Box::new(item.read())),
+            Some((NS_AM3D, "perspective")) => Self::Perspective(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -3768,7 +3766,7 @@ impl<X: UserData> From<OrthographicWith<X>> for Model3DCameraContentWith<X> {
 
 impl<X: UserData> From<PerspectiveWith<X>> for Model3DCameraContentWith<X> {
     fn from(arm: PerspectiveWith<X>) -> Self {
-        Self::Perspective(Box::new(arm))
+        Self::Perspective(arm)
     }
 }
 
@@ -3790,42 +3788,43 @@ impl<X: UserData> Model3DExtensionContentWith<X> {
                 BinaryBlobObject, BinaryStorage, BinaryStorageObject, BinaryStream,
                 BinaryStreamObject, Boolean, ClassID, ColorTransformHeaderList, CommentList,
                 Comments, CommentsCollection, Complex, Connections, Currency, CustomFileProperties,
-                DateAndTime, Decimal, DiagramLayoutHeaderList, DocumentEndnotes, DocumentFootnotes,
-                EmbeddedCustomXMLSchemaSupplementaryData, Empty, ErrorStatusCode,
-                ExternalReferenceExternalLink, FileTime, FontTableRootElement, Footer,
-                GlossaryDocumentRootElement, GraphicObject, Header, I1, I2, I4, I8,
-                InclusionExclusionDataForDataSource, InkAnnotationFlag, Integer,
+                CustomXMLDataProperties, DateAndTime, Decimal, DiagramLayoutHeaderList,
+                DocumentEndnotes, DocumentFootnotes, EmbeddedCustomXMLSchemaSupplementaryData,
+                Empty, ErrorStatusCode, ExternalReferenceExternalLink, FileTime,
+                FontTableRootElement, Footer, GlossaryDocumentRootElement, GraphicObject, Header,
+                I1, I2, I4, I8, InclusionExclusionDataForDataSource, InkAnnotationFlag, Integer,
                 ListOfCommentAuthors, ListOfStyleDefinitionHeaders, Lpstr, Lpwstr, Null, OfficeMath,
                 ProgrammableTabList, R4, R8, ReferenceToChartPart, Revisions,
                 RichTextBoxContentContainer, SetOfAdditionalCharacteristics, SetOfFormulas,
-                SetOfHandles, ShapeClippingPath, SingleCells, ThemeManager, ThemeOverride, Ui1, Ui2,
-                Ui4, Ui8, UnsignedInteger, UserShapes, VMLDiagramText, Variant, WorksheetDrawing,
+                SetOfHandles, ShapeClippingPath, SingleCells, StorageForAlternateMathContent,
+                ThemeManager, ThemeOverride, Ui1, Ui2, Ui4, Ui8, UnsignedInteger, UserShapes,
+                VMLDiagramText, Variant, WorksheetDrawing,
             ]
             boxed [
                 AnchorForFloatingDrawingMLObject, ArcSegment, Array, AttachedObjectData,
                 BezierCurve, BinaryVersionedStream, Blip, BottomBorder, CalculationChainInfo,
                 Callout, ChartSheet, ChartSpace, ColorTransformDefinitionHeader,
-                ColorTransformDefinitions, CustomXMLDataProperties, DataModel, DialogSheet,
-                DigitalSignatureLine, Document, DocumentBackground, DocumentSettings, DrawingTable,
-                EmbedAnim, EmbeddedOLEObject, EmbeddedObjectsAndControls, EndingAnchorPoint,
-                ExplicitRelationshipsToDiagramParts, Extrusion, HandoutMaster, ImageData, ImageFile,
-                Ink, InlineDrawingMLObject, LayoutDefinition, LayoutDefinitionHeader, LeftBorder,
-                Line, LineStrokeSettings, LockedCanvasContainer, MathProperties, Metadata,
-                MultiplePathLine, NewShapeDefaults, NotesMaster, NotesSlide, NumberingDefinitions,
-                OfficeMathParagraph, Oval, Picture, PivotCacheDefinition, PivotCacheRecords,
-                PivotTableDefinition, PosterFrame, Presentation, PresentationSlideSlide,
-                PresentationWideProperties, PresentationWideViewProperties, QueryTable, Rectangle,
-                RevisionHeaders, RightBorder, RoundedRectangle, ShadowEffect, ShapeDefinition,
-                ShapeFillExtendedProperties, ShapeFillProperties, ShapeGroup, ShapeLayoutProperties,
-                ShapePath, ShapeProtections, ShapeTemplate, SharedStringTable, SkewTransform,
-                SlideLayout, SlideMaster, SlideSynchronizationProperties, Sources, SpreadsheetTable,
-                StartingAnchorPoint, StorageForAlternateMathContent, StyleDefinition,
-                StyleDefinitionHeader, StyleDefinitions, StyleSheet, TableStyleList, TextBox,
-                TextBoxBottomStroke, TextBoxInteriorStroke, TextBoxLeftStroke, TextBoxRightStroke,
-                TextBoxTopStroke, TextLayoutPath, TextWrapping, Theme, TopBorder, UserList,
-                VMLDiagram, Vector, VideoFromFile, VolatileDependencyTypes, WebPageSettings,
-                WordprocessingMLDrawingCanvas, WordprocessingMLShape, WordprocessingMLShapeGroup,
-                Workbook, Worksheet, XMLMappingMapInfo,
+                ColorTransformDefinitions, DataModel, DialogSheet, DigitalSignatureLine, Document,
+                DocumentBackground, DocumentSettings, DrawingTable, EmbedAnim, EmbeddedOLEObject,
+                EmbeddedObjectsAndControls, EndingAnchorPoint, ExplicitRelationshipsToDiagramParts,
+                Extrusion, HandoutMaster, ImageData, ImageFile, Ink, InlineDrawingMLObject,
+                LayoutDefinition, LayoutDefinitionHeader, LeftBorder, Line, LineStrokeSettings,
+                LockedCanvasContainer, MathProperties, Metadata, MultiplePathLine, NewShapeDefaults,
+                NotesMaster, NotesSlide, NumberingDefinitions, OfficeMathParagraph, Oval, Picture,
+                PivotCacheDefinition, PivotCacheRecords, PivotTableDefinition, PosterFrame,
+                Presentation, PresentationSlideSlide, PresentationWideProperties,
+                PresentationWideViewProperties, QueryTable, Rectangle, RevisionHeaders, RightBorder,
+                RoundedRectangle, ShadowEffect, ShapeDefinition, ShapeFillExtendedProperties,
+                ShapeFillProperties, ShapeGroup, ShapeLayoutProperties, ShapePath, ShapeProtections,
+                ShapeTemplate, SharedStringTable, SkewTransform, SlideLayout, SlideMaster,
+                SlideSynchronizationProperties, Sources, SpreadsheetTable, StartingAnchorPoint,
+                StyleDefinition, StyleDefinitionHeader, StyleDefinitions, StyleSheet,
+                TableStyleList, TextBox, TextBoxBottomStroke, TextBoxInteriorStroke,
+                TextBoxLeftStroke, TextBoxRightStroke, TextBoxTopStroke, TextLayoutPath,
+                TextWrapping, Theme, TopBorder, UserList, VMLDiagram, Vector, VideoFromFile,
+                VolatileDependencyTypes, WebPageSettings, WordprocessingMLDrawingCanvas,
+                WordprocessingMLShape, WordprocessingMLShapeGroup, Workbook, Worksheet,
+                XMLMappingMapInfo,
             ]
         )
     }
@@ -4112,7 +4111,7 @@ impl<X: UserData> From<custom_xml_data_properties::CustomXMLDataPropertiesWith<X
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: custom_xml_data_properties::CustomXMLDataPropertiesWith<X>) -> Self {
-        Self::CustomXMLDataProperties(Box::new(arm))
+        Self::CustomXMLDataProperties(arm)
     }
 }
 
@@ -4845,7 +4844,7 @@ impl<X: UserData> From<vml_office_drawing::StorageForAlternateMathContentWith<X>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: vml_office_drawing::StorageForAlternateMathContentWith<X>) -> Self {
-        Self::StorageForAlternateMathContent(Box::new(arm))
+        Self::StorageForAlternateMathContent(arm)
     }
 }
 
@@ -5866,7 +5865,7 @@ impl<X: UserData> Model3DViewportContentWith<X> {
     {
         match self {
             Self::ObjViewport(node) => {
-                Model3DViewportContentWith::ObjViewport(Box::new((*node).into_user_data()))
+                Model3DViewportContentWith::ObjViewport(node.into_user_data())
             }
             Self::Other(node) => Model3DViewportContentWith::Other(node),
             Self::WinViewport(node) => {
@@ -5878,7 +5877,7 @@ impl<X: UserData> Model3DViewportContentWith<X> {
 
 impl<X: UserData> Default for Model3DViewportContentWith<X> {
     fn default() -> Self {
-        Self::ObjViewport(Box::default())
+        Self::ObjViewport(ObjViewportWith::default())
     }
 }
 
@@ -5889,7 +5888,7 @@ impl officekit_markup_base::Read for Model3DViewportContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_AM3D, "objViewport")) => Self::ObjViewport(Box::new(item.read())),
+            Some((NS_AM3D, "objViewport")) => Self::ObjViewport(item.read()),
             Some((NS_AM3D, "winViewport")) => Self::WinViewport(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -5908,7 +5907,7 @@ impl officekit_markup_base::Write for Model3DViewportContent {
 
 impl<X: UserData> From<ObjViewportWith<X>> for Model3DViewportContentWith<X> {
     fn from(arm: ObjViewportWith<X>) -> Self {
-        Self::ObjViewport(Box::new(arm))
+        Self::ObjViewport(arm)
     }
 }
 
@@ -7166,7 +7165,7 @@ fn read_model3d_extension_1(item: officekit_markup_base::Item<'_>) -> Model3DExt
         Some((NS_VT, "cy")) => Model3DExtensionContent::Currency(item.read()),
         Some((NS_OP, "Properties")) => Model3DExtensionContent::CustomFileProperties(item.read()),
         Some((NS_DS, "datastoreItem")) => {
-            Model3DExtensionContent::CustomXMLDataProperties(Box::new(item.read()))
+            Model3DExtensionContent::CustomXMLDataProperties(item.read())
         }
         Some((NS_DGM, "dataModel")) => Model3DExtensionContent::DataModel(Box::new(item.read())),
         Some((NS_VT, "date")) => Model3DExtensionContent::DateAndTime(item.read()),
@@ -7368,7 +7367,7 @@ fn read_model3d_extension_4(item: officekit_markup_base::Item<'_>) -> Model3DExt
             Model3DExtensionContent::StartingAnchorPoint(Box::new(item.read()))
         }
         Some((NS_O, "equationxml")) => {
-            Model3DExtensionContent::StorageForAlternateMathContent(Box::new(item.read()))
+            Model3DExtensionContent::StorageForAlternateMathContent(item.read())
         }
         Some((NS_DGM, "styleDef")) => {
             Model3DExtensionContent::StyleDefinition(Box::new(item.read()))

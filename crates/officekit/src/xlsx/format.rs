@@ -13,7 +13,7 @@
 //! let xlsx = Xlsx::new(SpreadsheetKind::Workbook)?;
 //! let formats = xlsx.cell_formats()?;
 //! let mut cell = Cell::default();
-//! cell.s = Some("0".to_owned());
+//! cell.s = Some("0".into());
 //! let format = formats.format(CellFormats::index(&[], &Row::default(), Some(&cell), 1));
 //! assert_eq!(format.number_format, "General");
 //! let font = format.font.or(formats.normal_font()).map(FontProperties::from).unwrap_or_default();

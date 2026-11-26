@@ -501,7 +501,7 @@ pub struct FbWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2017RichdataFb,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xlrd:fb` element of the tree a read gives: [`FbWith`] holding nothing in `user_data`.
@@ -515,7 +515,7 @@ impl Eq for FbWith<()> {}
 #[non_exhaustive]
 pub struct KWith<X: UserData> {
     /// The attribute `n`, when the element has it.
-    pub n: Option<String>,
+    pub n: Option<Box<str>>,
     /// The attribute `t`, when the element has it.
     pub t: Option<RichValueValueType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -602,7 +602,7 @@ pub struct RvWith<X: UserData> {
     /// The child that is `Fb`, when there is one.
     pub fb: Option<Box<FbWith<X>>>,
     /// The attribute `s`, when the element has it.
-    pub s: Option<String>,
+    pub s: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -623,7 +623,7 @@ impl Eq for RvWith<()> {}
 #[non_exhaustive]
 pub struct RvDataWith<X: UserData> {
     /// The attribute `count`, when the element has it.
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The children that are `Rv`, in order.
@@ -647,7 +647,7 @@ impl Eq for RvDataWith<()> {}
 #[non_exhaustive]
 pub struct RvStructuresWith<X: UserData> {
     /// The attribute `count`, when the element has it.
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The children that are `S`, in order.
@@ -671,7 +671,7 @@ impl Eq for RvStructuresWith<()> {}
 #[non_exhaustive]
 pub struct RvbWith<X: UserData> {
     /// The attribute `i`, when the element has it.
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -692,7 +692,7 @@ pub struct SWith<X: UserData> {
     /// The children that are `K`, in order.
     pub k: Vec<KWith<X>>,
     /// The attribute `t`, when the element has it.
-    pub t: Option<String>,
+    pub t: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -716,7 +716,7 @@ pub struct VWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2017RichdataV,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xlrd:v` element of the tree a read gives: [`VWith`] holding nothing in `user_data`.

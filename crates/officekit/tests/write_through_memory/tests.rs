@@ -169,7 +169,7 @@ fn is_repeat(sdt: &BlockLevelStructuredDocumentTag) -> bool {
 
 fn paragraph(value: &str) -> Paragraph {
     let mut text = Text::default();
-    text.value = value.to_owned();
+    text.value = Box::from(value);
     let mut run = TextRun::default();
     run.content.push(TextRunContent::from(text));
     let mut paragraph = Paragraph::default();
@@ -204,7 +204,7 @@ fn row(block: BlockContent) -> ContentRowContent {
 /// A header row, a row whose cell holds a "repeat" control, and a total row.
 fn template() -> Table {
     let mut name = FriendlyName::default();
-    name.val = Some("repeat".to_owned());
+    name.val = Some(Box::from("repeat"));
     let mut properties = StructuredDocumentTagProperties::default();
     properties.friendly_name = Some(Box::new(name));
     let mut content = BlockLevelStructuredDocumentTagContent::default();

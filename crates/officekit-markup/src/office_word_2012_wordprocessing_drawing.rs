@@ -287,16 +287,16 @@ pub trait Visitor: crate::Visitor {
 #[non_exhaustive]
 pub struct WebVideoPrWith<X: UserData> {
     /// The attribute `embeddedHtml`, when the element has it.
-    pub embedded_html: Option<String>,
+    pub embedded_html: Option<Box<str>>,
     /// The attribute `h`, when the element has it.
-    pub h: Option<String>,
+    pub h: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2012WordprocessingDrawingWebVideoPr,
     /// The attribute `w`, when the element has it.
-    pub w: Option<String>,
+    pub w: Option<Box<str>>,
 }
 
 /// The `wp15:webVideoPr` element of the tree a read gives: [`WebVideoPrWith`] holding nothing in

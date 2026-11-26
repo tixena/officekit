@@ -462,7 +462,7 @@ impl Eq for AtrbtnWith<()> {}
 #[non_exhaustive]
 pub struct CommentWith<X: UserData> {
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -799,9 +799,9 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct DateWith<X: UserData> {
     /// The attribute `endDt`, when the element has it.
-    pub end_dt: Option<String>,
+    pub end_dt: Option<Box<str>>,
     /// The attribute `stDt`, when the element has it.
-    pub st_dt: Option<String>,
+    pub st_dt: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -828,9 +828,9 @@ pub struct EventWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `time`, when the element has it.
-    pub time: Option<String>,
+    pub time: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -895,7 +895,7 @@ pub struct PcntCmpltWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficePowerpoint201912MainPcntCmplt,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `p1912:pcntCmplt` element of the tree a read gives: [`PcntCmpltWith`] holding nothing in
@@ -915,7 +915,7 @@ pub struct PriWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficePowerpoint201912MainPri,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `p1912:pri` element of the tree a read gives: [`PriWith`] holding nothing in `user_data`.
@@ -933,7 +933,7 @@ pub struct TaskHistoryDetailsWith<X: UserData> {
     /// The child that is `History`, which the schema requires.
     pub history: Box<HistoryWith<X>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -996,7 +996,7 @@ pub struct TitleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficePowerpoint201912MainTitle,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `p1912:title` element of the tree a read gives: [`TitleWith`] holding nothing in
@@ -1047,7 +1047,7 @@ impl Eq for UnasgnAllWith<()> {}
 #[non_exhaustive]
 pub struct UndoWith<X: UserData> {
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

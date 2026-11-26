@@ -1128,17 +1128,17 @@ pub struct BodyPrWith<X: UserData> {
     /// The attribute `anchor`, when the element has it.
     pub anchor: Option<drawing::TextAnchoringTypes>,
     /// The attribute `anchorCtr`, when the element has it.
-    pub anchor_ctr: Option<String>,
+    pub anchor_ctr: Option<Box<str>>,
     /// The attribute `bIns`, when the element has it.
     pub b_ins: Option<drawing::StCoordinate32>,
     /// The attribute `compatLnSpc`, when the element has it.
-    pub compat_ln_spc: Option<String>,
+    pub compat_ln_spc: Option<Box<str>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
     /// The attribute `forceAA`, when the element has it.
-    pub force_aa: Option<String>,
+    pub force_aa: Option<Box<str>>,
     /// The attribute `fromWordArt`, when the element has it.
-    pub from_word_art: Option<String>,
+    pub from_word_art: Option<Box<str>>,
     /// The attribute `horzOverflow`, when the element has it.
     pub horz_overflow: Option<drawing::TextHorizontalOverflowTypes>,
     /// The attribute `lIns`, when the element has it.
@@ -1152,13 +1152,13 @@ pub struct BodyPrWith<X: UserData> {
     /// The attribute `rot`, when the element has it.
     pub rot: Option<drawing::Angle>,
     /// The attribute `rtlCol`, when the element has it.
-    pub rtl_col: Option<String>,
+    pub rtl_col: Option<Box<str>>,
     /// The child that is `drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<drawing::Scene3dWith<X>>>,
     /// The attribute `spcCol`, when the element has it.
     pub spc_col: Option<drawing::PositiveCoordinatePoint>,
     /// The attribute `spcFirstLastPara`, when the element has it.
-    pub spc_first_last_para: Option<String>,
+    pub spc_first_last_para: Option<Box<str>>,
     /// The attribute `tIns`, when the element has it.
     pub t_ins: Option<drawing::StCoordinate32>,
     /// The child that is an item of `drawing::Text3DContent`, when there is one.
@@ -1169,7 +1169,7 @@ pub struct BodyPrWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `upright`, when the element has it.
-    pub upright: Option<String>,
+    pub upright: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2012ChartStyleBodyPr,
     /// The attribute `vert`, when the element has it.
@@ -1347,7 +1347,7 @@ pub struct ChartStyleWith<X: UserData> {
     /// The child that is `HiLoLine`, which the schema requires.
     pub hi_lo_line: Box<HiLoLineWith<X>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The child that is `LeaderLine`, which the schema requires.
     pub leader_line: Box<LeaderLineWith<X>>,
     /// The child that is `LegendStyleEntry`, which the schema requires.
@@ -1395,9 +1395,9 @@ pub struct ColorStyleWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `meth`, when the element has it.
-    pub meth: Option<String>,
+    pub meth: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2779,7 +2779,7 @@ impl Eq for DataPointMarkerWith<()> {}
 #[non_exhaustive]
 pub struct DataPointMarkerLayoutWith<X: UserData> {
     /// The attribute `size`, when the element has it.
-    pub size: Option<String>,
+    pub size: Option<Box<str>>,
     /// The attribute `symbol`, when the element has it.
     pub symbol: Option<MarkerStyle>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -2837,19 +2837,19 @@ impl Eq for DataPointWireframeWith<()> {}
 #[non_exhaustive]
 pub struct DataSeriesWith<X: UserData> {
     /// The attribute `doughnutHoleSize`, when the element has it.
-    pub doughnut_hole_size: Option<String>,
+    pub doughnut_hole_size: Option<Box<str>>,
     /// The attribute `dropLines`, when the element has it.
     pub drop_lines: Option<Boolean>,
     /// The attribute `gapDepth`, when the element has it.
-    pub gap_depth: Option<String>,
+    pub gap_depth: Option<Box<str>>,
     /// The attribute `gapWidth`, when the element has it.
-    pub gap_width: Option<String>,
+    pub gap_width: Option<Box<str>>,
     /// The attribute `hiloLines`, when the element has it.
     pub hilo_lines: Option<Boolean>,
     /// The attribute `markerVisible`, when the element has it.
     pub marker_visible: Option<Boolean>,
     /// The attribute `overlap`, when the element has it.
-    pub overlap: Option<String>,
+    pub overlap: Option<Box<str>>,
     /// The attribute `seriesLines`, when the element has it.
     pub series_lines: Option<Boolean>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -2933,13 +2933,13 @@ impl Eq for DataTableStyleEntryWith<()> {}
 #[non_exhaustive]
 pub struct DefRPrWith<X: UserData> {
     /// The attribute `altLang`, when the element has it.
-    pub alt_lang: Option<String>,
+    pub alt_lang: Option<Box<str>>,
     /// The attribute `b`, when the element has it.
-    pub b: Option<String>,
+    pub b: Option<Box<str>>,
     /// The attribute `baseline`, when the element has it.
     pub baseline: Option<drawing::Percentage>,
     /// The attribute `bmk`, when the element has it.
-    pub bmk: Option<String>,
+    pub bmk: Option<Box<str>>,
     /// The attribute `cap`, when the element has it.
     pub cap: Option<drawing::TextCapTypes>,
     /// The child that is `drawing::ClickHyperlink`, when there is one.
@@ -2947,13 +2947,13 @@ pub struct DefRPrWith<X: UserData> {
     /// The child that is `drawing::ComplexScriptFont`, when there is one.
     pub complex_script_font: Option<Box<drawing::ComplexScriptFontWith<X>>>,
     /// The attribute `dirty`, when the element has it.
-    pub dirty: Option<String>,
+    pub dirty: Option<Box<str>>,
     /// The child that is `drawing::EastAsianFont`, when there is one.
     pub east_asian_font: Option<Box<drawing::EastAsianFontWith<X>>>,
     /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContentWith<X>>>,
     /// The attribute `err`, when the element has it.
-    pub err: Option<String>,
+    pub err: Option<Box<str>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
     /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
@@ -2961,29 +2961,29 @@ pub struct DefRPrWith<X: UserData> {
     /// The child that is `drawing::HighlightColor`, when there is one.
     pub highlight_color: Option<Box<drawing::HighlightColorWith<X>>>,
     /// The attribute `i`, when the element has it.
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     /// The attribute `kern`, when the element has it.
     pub kern: Option<drawing::TextNonNegativePoint>,
     /// The attribute `kumimoji`, when the element has it.
-    pub kumimoji: Option<String>,
+    pub kumimoji: Option<Box<str>>,
     /// The attribute `lang`, when the element has it.
-    pub lang: Option<String>,
+    pub lang: Option<Box<str>>,
     /// The child that is `drawing::LatinFont`, when there is one.
     pub latin_font: Option<Box<drawing::LatinFontWith<X>>>,
     /// The child that is `drawing::MouseOverHyperlink`, when there is one.
     pub mouse_over_hyperlink: Option<Box<drawing::MouseOverHyperlinkWith<X>>>,
     /// The attribute `noProof`, when the element has it.
-    pub no_proof: Option<String>,
+    pub no_proof: Option<Box<str>>,
     /// The attribute `normalizeH`, when the element has it.
-    pub normalize_h: Option<String>,
+    pub normalize_h: Option<Box<str>>,
     /// The child that is `drawing::Outline`, when there is one.
     pub outline: Option<Box<drawing::OutlineWith<X>>>,
     /// The child that is `drawing::RightToLeftRun`, when there is one.
     pub right_to_left_run: Option<Box<drawing::RightToLeftRunWith<X>>>,
     /// The attribute `smtClean`, when the element has it.
-    pub smt_clean: Option<String>,
+    pub smt_clean: Option<Box<str>>,
     /// The attribute `smtId`, when the element has it.
-    pub smt_id: Option<String>,
+    pub smt_id: Option<Box<str>>,
     /// The attribute `spc`, when the element has it.
     pub spc: Option<drawing::TextPoint>,
     /// The attribute `strike`, when the element has it.
@@ -3226,7 +3226,7 @@ pub struct FontRefWith<X: UserData> {
     /// The attribute `idx`, when the element has it.
     pub idx: Option<drawing::FontCollectionIndex>,
     /// The attribute `mods`, when the element has it.
-    pub mods: Option<String>,
+    pub mods: Option<Box<str>>,
     /// The child that is `StyleClr`, when there is one.
     pub style_clr: Option<Box<StyleClrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -3487,7 +3487,7 @@ pub struct LineWidthScaleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2012ChartStyleLineWidthScale,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `cs:lineWidthScale` element of the tree a read gives: [`LineWidthScaleWith`] holding nothing
@@ -3765,7 +3765,7 @@ pub struct StyleClrWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2012ChartStyleStyleClr,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `cs:styleClr` element of the tree a read gives: [`StyleClrWith`] holding nothing in
@@ -4069,17 +4069,17 @@ impl Eq for VariationWith<()> {}
 #[non_exhaustive]
 pub struct View3DWith<X: UserData> {
     /// The attribute `depthPercent`, when the element has it.
-    pub depth_percent: Option<String>,
+    pub depth_percent: Option<Box<str>>,
     /// The attribute `heightPercent`, when the element has it.
-    pub height_percent: Option<String>,
+    pub height_percent: Option<Box<str>>,
     /// The attribute `perspective`, when the element has it.
-    pub perspective: Option<String>,
+    pub perspective: Option<Box<str>>,
     /// The attribute `rAngAx`, when the element has it.
     pub r_ang_ax: Option<Boolean>,
     /// The attribute `rotX`, when the element has it.
-    pub rot_x: Option<String>,
+    pub rot_x: Option<Box<str>>,
     /// The attribute `rotY`, when the element has it.
-    pub rot_y: Option<String>,
+    pub rot_y: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

@@ -223,14 +223,14 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::AnimPr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AnimPrMirror {
-    pub auto: Option<String>,
-    pub count: Option<String>,
-    pub end: Option<String>,
+    pub auto: Option<Box<str>>,
+    pub count: Option<Box<str>>,
+    pub end: Option<Box<str>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub length: Option<String>,
-    pub name: Option<String>,
-    pub offset: Option<String>,
-    pub st: Option<String>,
+    pub length: Option<Box<str>>,
+    pub name: Option<Box<str>>,
+    pub offset: Option<Box<str>>,
+    pub st: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

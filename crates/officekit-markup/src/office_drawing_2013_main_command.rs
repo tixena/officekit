@@ -1342,9 +1342,9 @@ pub struct BlipFillBlipFillPropertiesWith<X: UserData> {
     /// The child that is an item of `drawing::FillModeContent`, when there is one.
     pub content: Option<Box<drawing::FillModeContentWith<X>>>,
     /// The attribute `dpi`, when the element has it.
-    pub dpi: Option<String>,
+    pub dpi: Option<Box<str>>,
     /// The attribute `rotWithShape`, when the element has it.
-    pub rot_with_shape: Option<String>,
+    pub rot_with_shape: Option<Box<str>>,
     /// The child that is `drawing::SourceRectangle`, when there is one.
     pub source_rectangle: Option<Box<drawing::SourceRectangleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1394,17 +1394,17 @@ pub struct BodyPrWith<X: UserData> {
     /// The attribute `anchor`, when the element has it.
     pub anchor: Option<drawing::TextAnchoringTypes>,
     /// The attribute `anchorCtr`, when the element has it.
-    pub anchor_ctr: Option<String>,
+    pub anchor_ctr: Option<Box<str>>,
     /// The attribute `bIns`, when the element has it.
     pub b_ins: Option<drawing::StCoordinate32>,
     /// The attribute `compatLnSpc`, when the element has it.
-    pub compat_ln_spc: Option<String>,
+    pub compat_ln_spc: Option<Box<str>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
     /// The attribute `forceAA`, when the element has it.
-    pub force_aa: Option<String>,
+    pub force_aa: Option<Box<str>>,
     /// The attribute `fromWordArt`, when the element has it.
-    pub from_word_art: Option<String>,
+    pub from_word_art: Option<Box<str>>,
     /// The attribute `horzOverflow`, when the element has it.
     pub horz_overflow: Option<drawing::TextHorizontalOverflowTypes>,
     /// The attribute `lIns`, when the element has it.
@@ -1418,13 +1418,13 @@ pub struct BodyPrWith<X: UserData> {
     /// The attribute `rot`, when the element has it.
     pub rot: Option<drawing::Angle>,
     /// The attribute `rtlCol`, when the element has it.
-    pub rtl_col: Option<String>,
+    pub rtl_col: Option<Box<str>>,
     /// The child that is `drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<drawing::Scene3dWith<X>>>,
     /// The attribute `spcCol`, when the element has it.
     pub spc_col: Option<drawing::PositiveCoordinatePoint>,
     /// The attribute `spcFirstLastPara`, when the element has it.
-    pub spc_first_last_para: Option<String>,
+    pub spc_first_last_para: Option<Box<str>>,
     /// The attribute `tIns`, when the element has it.
     pub t_ins: Option<drawing::StCoordinate32>,
     /// The child that is an item of `drawing::Text3DContent`, when there is one.
@@ -1435,7 +1435,7 @@ pub struct BodyPrWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `upright`, when the element has it.
-    pub upright: Option<String>,
+    pub upright: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2013MainCommandBodyPr,
     /// The attribute `vert`, when the element has it.
@@ -1458,13 +1458,13 @@ impl Eq for BodyPrWith<()> {}
 #[non_exhaustive]
 pub struct BoundsWith<X: UserData> {
     /// The attribute `b`, when the element has it.
-    pub b: Option<String>,
+    pub b: Option<Box<str>>,
     /// The attribute `l`, when the element has it.
-    pub l: Option<String>,
+    pub l: Option<Box<str>>,
     /// The attribute `r`, when the element has it.
-    pub r: Option<String>,
+    pub r: Option<Box<str>>,
     /// The attribute `t`, when the element has it.
-    pub t: Option<String>,
+    pub t: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1504,25 +1504,25 @@ pub struct CNvCxnSpPrModifyNonVisualConnectorPropsWith<X: UserData> {
     /// The child that is `EndCxnConnection`, when there is one.
     pub end_cxn_connection: Option<Box<EndCxnConnectionWith<X>>>,
     /// The attribute `noAdjustHandles`, when the element has it.
-    pub no_adjust_handles: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
     /// The attribute `noChangeArrowheads`, when the element has it.
-    pub no_change_arrowheads: Option<String>,
+    pub no_change_arrowheads: Option<Box<str>>,
     /// The attribute `noChangeAspect`, when the element has it.
-    pub no_change_aspect: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
     /// The attribute `noChangeShapeType`, when the element has it.
-    pub no_change_shape_type: Option<String>,
+    pub no_change_shape_type: Option<Box<str>>,
     /// The attribute `noEditPoints`, when the element has it.
-    pub no_edit_points: Option<String>,
+    pub no_edit_points: Option<Box<str>>,
     /// The attribute `noGrp`, when the element has it.
-    pub no_grp: Option<String>,
+    pub no_grp: Option<Box<str>>,
     /// The attribute `noMove`, when the element has it.
-    pub no_move: Option<String>,
+    pub no_move: Option<Box<str>>,
     /// The attribute `noResize`, when the element has it.
-    pub no_resize: Option<String>,
+    pub no_resize: Option<Box<str>>,
     /// The attribute `noRot`, when the element has it.
-    pub no_rot: Option<String>,
+    pub no_rot: Option<Box<str>>,
     /// The attribute `noSelect`, when the element has it.
-    pub no_select: Option<String>,
+    pub no_select: Option<Box<str>>,
     /// The child that is `StCxnConnection`, when there is one.
     pub st_cxn_connection: Option<Box<StCxnConnectionWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1586,17 +1586,17 @@ impl Eq for CNvCxnSpPrResetNonVisualConnectorPropsWith<()> {}
 #[non_exhaustive]
 pub struct CNvGraphicFramePrWith<X: UserData> {
     /// The attribute `noChangeAspect`, when the element has it.
-    pub no_change_aspect: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
     /// The attribute `noDrilldown`, when the element has it.
-    pub no_drilldown: Option<String>,
+    pub no_drilldown: Option<Box<str>>,
     /// The attribute `noGrp`, when the element has it.
-    pub no_grp: Option<String>,
+    pub no_grp: Option<Box<str>>,
     /// The attribute `noMove`, when the element has it.
-    pub no_move: Option<String>,
+    pub no_move: Option<Box<str>>,
     /// The attribute `noResize`, when the element has it.
-    pub no_resize: Option<String>,
+    pub no_resize: Option<Box<str>>,
     /// The attribute `noSelect`, when the element has it.
-    pub no_select: Option<String>,
+    pub no_select: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1616,19 +1616,19 @@ impl Eq for CNvGraphicFramePrWith<()> {}
 #[non_exhaustive]
 pub struct CNvGrpSpPrModifyNonVisualGroupDrawingShapePropsWith<X: UserData> {
     /// The attribute `noChangeAspect`, when the element has it.
-    pub no_change_aspect: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
     /// The attribute `noGrp`, when the element has it.
-    pub no_grp: Option<String>,
+    pub no_grp: Option<Box<str>>,
     /// The attribute `noMove`, when the element has it.
-    pub no_move: Option<String>,
+    pub no_move: Option<Box<str>>,
     /// The attribute `noResize`, when the element has it.
-    pub no_resize: Option<String>,
+    pub no_resize: Option<Box<str>>,
     /// The attribute `noRot`, when the element has it.
-    pub no_rot: Option<String>,
+    pub no_rot: Option<Box<str>>,
     /// The attribute `noSelect`, when the element has it.
-    pub no_select: Option<String>,
+    pub no_select: Option<Box<str>>,
     /// The attribute `noUngrp`, when the element has it.
-    pub no_ungrp: Option<String>,
+    pub no_ungrp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1672,27 +1672,27 @@ impl Eq for CNvGrpSpPrNonVisualGroupDrawingShapePropsWith<()> {}
 #[non_exhaustive]
 pub struct CNvInkPrWith<X: UserData> {
     /// The attribute `isComment`, when the element has it.
-    pub is_comment: Option<String>,
+    pub is_comment: Option<Box<str>>,
     /// The attribute `noAdjustHandles`, when the element has it.
-    pub no_adjust_handles: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
     /// The attribute `noChangeArrowheads`, when the element has it.
-    pub no_change_arrowheads: Option<String>,
+    pub no_change_arrowheads: Option<Box<str>>,
     /// The attribute `noChangeAspect`, when the element has it.
-    pub no_change_aspect: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
     /// The attribute `noChangeShapeType`, when the element has it.
-    pub no_change_shape_type: Option<String>,
+    pub no_change_shape_type: Option<Box<str>>,
     /// The attribute `noEditPoints`, when the element has it.
-    pub no_edit_points: Option<String>,
+    pub no_edit_points: Option<Box<str>>,
     /// The attribute `noGrp`, when the element has it.
-    pub no_grp: Option<String>,
+    pub no_grp: Option<Box<str>>,
     /// The attribute `noMove`, when the element has it.
-    pub no_move: Option<String>,
+    pub no_move: Option<Box<str>>,
     /// The attribute `noResize`, when the element has it.
-    pub no_resize: Option<String>,
+    pub no_resize: Option<Box<str>>,
     /// The attribute `noRot`, when the element has it.
-    pub no_rot: Option<String>,
+    pub no_rot: Option<Box<str>>,
     /// The attribute `noSelect`, when the element has it.
-    pub no_select: Option<String>,
+    pub no_select: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1712,29 +1712,29 @@ impl Eq for CNvInkPrWith<()> {}
 #[non_exhaustive]
 pub struct CNvPicPrModifyNonVisualPicturePropsWith<X: UserData> {
     /// The attribute `noAdjustHandles`, when the element has it.
-    pub no_adjust_handles: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
     /// The attribute `noChangeArrowheads`, when the element has it.
-    pub no_change_arrowheads: Option<String>,
+    pub no_change_arrowheads: Option<Box<str>>,
     /// The attribute `noChangeAspect`, when the element has it.
-    pub no_change_aspect: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
     /// The attribute `noChangeShapeType`, when the element has it.
-    pub no_change_shape_type: Option<String>,
+    pub no_change_shape_type: Option<Box<str>>,
     /// The attribute `noCrop`, when the element has it.
-    pub no_crop: Option<String>,
+    pub no_crop: Option<Box<str>>,
     /// The attribute `noEditPoints`, when the element has it.
-    pub no_edit_points: Option<String>,
+    pub no_edit_points: Option<Box<str>>,
     /// The attribute `noGrp`, when the element has it.
-    pub no_grp: Option<String>,
+    pub no_grp: Option<Box<str>>,
     /// The attribute `noMove`, when the element has it.
-    pub no_move: Option<String>,
+    pub no_move: Option<Box<str>>,
     /// The attribute `noResize`, when the element has it.
-    pub no_resize: Option<String>,
+    pub no_resize: Option<Box<str>>,
     /// The attribute `noRot`, when the element has it.
-    pub no_rot: Option<String>,
+    pub no_rot: Option<Box<str>>,
     /// The attribute `noSelect`, when the element has it.
-    pub no_select: Option<String>,
+    pub no_select: Option<Box<str>>,
     /// The attribute `preferRelativeResize`, when the element has it.
-    pub prefer_relative_resize: Option<String>,
+    pub prefer_relative_resize: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1774,17 +1774,17 @@ impl Eq for CNvPicPrResetNonVisualPicturePropsWith<()> {}
 #[non_exhaustive]
 pub struct CNvPrModifyNonVisualDrawingPropsWith<X: UserData> {
     /// The attribute `decor`, when the element has it.
-    pub decor: Option<String>,
+    pub decor: Option<Box<str>>,
     /// The attribute `descr`, when the element has it.
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     /// The attribute `hidden`, when the element has it.
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `scriptLink`, when the element has it.
-    pub script_link: Option<String>,
+    pub script_link: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1806,19 +1806,19 @@ pub struct CNvPrNonVisualDrawingPropsWith<X: UserData> {
     /// The child that is `drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
     /// The attribute `hidden`, when the element has it.
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     /// The child that is `drawing::HyperlinkForHover`, when there is one.
     pub hyperlink_for_hover: Option<Box<drawing::HyperlinkForHoverWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<drawing::DrawingElementID>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1838,29 +1838,29 @@ impl Eq for CNvPrNonVisualDrawingPropsWith<()> {}
 #[non_exhaustive]
 pub struct CNvSpPrWith<X: UserData> {
     /// The attribute `noAdjustHandles`, when the element has it.
-    pub no_adjust_handles: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
     /// The attribute `noChangeArrowheads`, when the element has it.
-    pub no_change_arrowheads: Option<String>,
+    pub no_change_arrowheads: Option<Box<str>>,
     /// The attribute `noChangeAspect`, when the element has it.
-    pub no_change_aspect: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
     /// The attribute `noChangeShapeType`, when the element has it.
-    pub no_change_shape_type: Option<String>,
+    pub no_change_shape_type: Option<Box<str>>,
     /// The attribute `noEditPoints`, when the element has it.
-    pub no_edit_points: Option<String>,
+    pub no_edit_points: Option<Box<str>>,
     /// The attribute `noGrp`, when the element has it.
-    pub no_grp: Option<String>,
+    pub no_grp: Option<Box<str>>,
     /// The attribute `noMove`, when the element has it.
-    pub no_move: Option<String>,
+    pub no_move: Option<Box<str>>,
     /// The attribute `noResize`, when the element has it.
-    pub no_resize: Option<String>,
+    pub no_resize: Option<Box<str>>,
     /// The attribute `noRot`, when the element has it.
-    pub no_rot: Option<String>,
+    pub no_rot: Option<Box<str>>,
     /// The attribute `noSelect`, when the element has it.
-    pub no_select: Option<String>,
+    pub no_select: Option<Box<str>>,
     /// The attribute `noTextEdit`, when the element has it.
-    pub no_text_edit: Option<String>,
+    pub no_text_edit: Option<Box<str>>,
     /// The attribute `txBox`, when the element has it.
-    pub tx_box: Option<String>,
+    pub tx_box: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1908,12 +1908,12 @@ pub struct CompressPicPrWith<X: UserData> {
     /// The attribute `cstate`, when the element has it.
     pub cstate: Option<drawing::BlipCompressionType>,
     /// The attribute `removeCrop`, when the element has it.
-    pub remove_crop: Option<String>,
+    pub remove_crop: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `useLocalDpi`, when the element has it.
-    pub use_local_dpi: Option<String>,
+    pub use_local_dpi: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2013MainCommandCompressPicPr,
 }
@@ -4128,9 +4128,9 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct ContextTextCharRangeContextWith<X: UserData> {
     /// The attribute `hash`, when the element has it.
-    pub hash: Option<String>,
+    pub hash: Option<Box<str>>,
     /// The attribute `len`, when the element has it.
-    pub len: Option<String>,
+    pub len: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4150,9 +4150,9 @@ impl Eq for ContextTextCharRangeContextWith<()> {}
 #[non_exhaustive]
 pub struct CxnSpMkWith<X: UserData> {
     /// The attribute `creationId`, when the element has it.
-    pub creation_id: Option<String>,
+    pub creation_id: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4428,7 +4428,7 @@ pub struct EndCxnConnectionWith<X: UserData> {
     /// The attribute `id`, when the element has it.
     pub id: Option<drawing::DrawingElementID>,
     /// The attribute `idx`, when the element has it.
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4598,9 +4598,9 @@ impl Eq for GeomWith<()> {}
 #[non_exhaustive]
 pub struct GraphicFrameMkWith<X: UserData> {
     /// The attribute `creationId`, when the element has it.
-    pub creation_id: Option<String>,
+    pub creation_id: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4719,18 +4719,18 @@ pub struct GrpCmdWith<X: UserData> {
     /// The child that is `DgMkLst`, which the schema requires.
     pub dg_mk_lst: Box<DgMkLstWith<X>>,
     /// The attribute `grpId`, when the element has it.
-    pub grp_id: Option<String>,
+    pub grp_id: Option<Box<str>>,
     /// The child that is `GrpSpPrGroupShapeProperties`, when there is one.
     pub grp_sp_pr_group_shape_properties: Option<Box<GrpSpPrGroupShapePropertiesWith<X>>>,
     /// The attribute `preventRegroup`, when the element has it.
-    pub prevent_regroup: Option<String>,
+    pub prevent_regroup: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2013MainCommandGrpCmd,
     /// The attribute `verId`, when the element has it.
-    pub ver_id: Option<String>,
+    pub ver_id: Option<Box<str>>,
 }
 
 /// The `oac:grpCmd` element of the tree a read gives: [`GrpCmdWith`] holding nothing in
@@ -4745,9 +4745,9 @@ impl Eq for GrpCmdWith<()> {}
 #[non_exhaustive]
 pub struct GrpSpMkWith<X: UserData> {
     /// The attribute `creationId`, when the element has it.
-    pub creation_id: Option<String>,
+    pub creation_id: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4992,7 +4992,7 @@ pub struct ImgDataWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2013MainCommandImgData,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `oac:imgData` element of the tree a read gives: [`ImgDataWith`] holding nothing in
@@ -5007,7 +5007,7 @@ impl Eq for ImgDataWith<()> {}
 #[non_exhaustive]
 pub struct ImgLinkWith<X: UserData> {
     /// The attribute `tgt`, when the element has it.
-    pub tgt: Option<String>,
+    pub tgt: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5029,7 +5029,7 @@ pub struct ImgUrlWith<X: UserData> {
     /// The attribute `linkage`, when the element has it.
     pub linkage: Option<CTResourceLinkage>,
     /// The attribute `src`, when the element has it.
-    pub src: Option<String>,
+    pub src: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5049,9 +5049,9 @@ impl Eq for ImgUrlWith<()> {}
 #[non_exhaustive]
 pub struct InkMkWith<X: UserData> {
     /// The attribute `creationId`, when the element has it.
-    pub creation_id: Option<String>,
+    pub creation_id: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5407,7 +5407,7 @@ pub struct OrigImgDataWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2013MainCommandOrigImgData,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `oac:origImgData` element of the tree a read gives: [`OrigImgDataWith`] holding nothing in
@@ -5428,17 +5428,17 @@ pub struct PPrWith<X: UserData> {
     /// The child that is `drawing::DefaultTextRunProperties`, when there is one.
     pub default_text_run_properties: Option<Box<drawing::DefaultTextRunPropertiesWith<X>>>,
     /// The attribute `eaLnBrk`, when the element has it.
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
     /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<drawing::FontAlignmentTypes>,
     /// The attribute `hangingPunct`, when the element has it.
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     /// The attribute `indent`, when the element has it.
     pub indent: Option<drawing::TextIndentation>,
     /// The attribute `latinLnBrk`, when the element has it.
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     /// The child that is `drawing::LineSpacing`, when there is one.
     pub line_spacing: Option<Box<drawing::LineSpacingWith<X>>>,
     /// The attribute `lvl`, when the element has it.
@@ -5448,7 +5448,7 @@ pub struct PPrWith<X: UserData> {
     /// The attribute `marR`, when the element has it.
     pub mar_r: Option<drawing::TextMargin>,
     /// The attribute `rtl`, when the element has it.
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     /// The child that is `drawing::SpaceAfter`, when there is one.
     pub space_after: Option<Box<drawing::SpaceAfterWith<X>>>,
     /// The child that is `drawing::SpaceBefore`, when there is one.
@@ -5481,9 +5481,9 @@ impl Eq for PPrWith<()> {}
 #[non_exhaustive]
 pub struct PicMkWith<X: UserData> {
     /// The attribute `creationId`, when the element has it.
-    pub creation_id: Option<String>,
+    pub creation_id: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5527,7 +5527,7 @@ pub struct ResetWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2013MainCommandReset,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `oac:reset` element of the tree a read gives: [`ResetWith`] holding nothing in `user_data`.
@@ -5582,7 +5582,7 @@ pub struct SndDataWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2013MainCommandSndData,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `oac:sndData` element of the tree a read gives: [`SndDataWith`] holding nothing in
@@ -5614,9 +5614,9 @@ impl Eq for Sp3dWith<()> {}
 #[non_exhaustive]
 pub struct SpMkWith<X: UserData> {
     /// The attribute `creationId`, when the element has it.
-    pub creation_id: Option<String>,
+    pub creation_id: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5785,7 +5785,7 @@ pub struct StCxnConnectionWith<X: UserData> {
     /// The attribute `id`, when the element has it.
     pub id: Option<drawing::DrawingElementID>,
     /// The attribute `idx`, when the element has it.
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -5991,7 +5991,7 @@ pub struct UseBoundsWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2013MainCommandUseBounds,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `oac:useBounds` element of the tree a read gives: [`UseBoundsWith`] holding nothing in
@@ -6746,24 +6746,24 @@ impl Eq for XfrmEmptyWith<()> {}
 #[non_exhaustive]
 pub struct XfrmModifyTransformPropsWith<X: UserData> {
     /// The attribute `cx`, when the element has it.
-    pub cx: Option<String>,
+    pub cx: Option<Box<str>>,
     /// The attribute `cy`, when the element has it.
-    pub cy: Option<String>,
+    pub cy: Option<Box<str>>,
     /// The attribute `flipH`, when the element has it.
-    pub flip_h: Option<String>,
+    pub flip_h: Option<Box<str>>,
     /// The attribute `flipV`, when the element has it.
-    pub flip_v: Option<String>,
+    pub flip_v: Option<Box<str>>,
     /// The attribute `rot`, when the element has it.
-    pub rot: Option<String>,
+    pub rot: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2013MainCommandXfrmModifyTransformProps,
     /// The attribute `x`, when the element has it.
-    pub x: Option<String>,
+    pub x: Option<Box<str>>,
     /// The attribute `y`, when the element has it.
-    pub y: Option<String>,
+    pub y: Option<Box<str>>,
 }
 
 /// The `oac:xfrm` element of the tree a read gives: [`XfrmModifyTransformPropsWith`] holding
@@ -6780,9 +6780,9 @@ pub struct XfrmTransform2DWith<X: UserData> {
     /// The child that is `drawing::Extents`, when there is one.
     pub extents: Option<Box<drawing::ExtentsWith<X>>>,
     /// The attribute `flipH`, when the element has it.
-    pub flip_h: Option<String>,
+    pub flip_h: Option<Box<str>>,
     /// The attribute `flipV`, when the element has it.
-    pub flip_v: Option<String>,
+    pub flip_v: Option<Box<str>>,
     /// The child that is `drawing::Offset`, when there is one.
     pub offset: Option<Box<drawing::OffsetWith<X>>>,
     /// The attribute `rot`, when the element has it.

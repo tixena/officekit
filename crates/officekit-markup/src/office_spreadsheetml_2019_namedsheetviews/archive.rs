@@ -225,11 +225,11 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::ColumnFilter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ColumnFilterMirror {
-    pub col_id: Option<String>,
+    pub col_id: Option<Box<str>>,
     pub dxf: Option<Box<super::Dxf>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub filter: Vec<super::Filter>,
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -262,10 +262,10 @@ pub struct ExtLstMirror {
 #[rkyv(remote = super::Filter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FilterMirror {
-    pub col_id: Option<String>,
+    pub col_id: Option<Box<str>>,
     pub content: Option<Box<spreadsheet::AutoFilterColumnContent>>,
-    pub hidden_button: Option<String>,
-    pub show_button: Option<String>,
+    pub hidden_button: Option<Box<str>>,
+    pub show_button: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -275,8 +275,8 @@ pub struct FilterMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct NamedSheetViewMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub id: Option<String>,
-    pub name: Option<String>,
+    pub id: Option<Box<str>>,
+    pub name: Option<Box<str>>,
     pub nsv_filter: Vec<super::NsvFilter>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -298,10 +298,10 @@ pub struct NamedSheetViewsMirror {
 pub struct NsvFilterMirror {
     pub column_filter: Vec<super::ColumnFilter>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub filter_id: Option<String>,
-    pub r#ref: Option<String>,
+    pub filter_id: Option<Box<str>>,
+    pub r#ref: Option<Box<str>>,
     pub sort_rules: Option<Box<super::SortRules>>,
-    pub table_id: Option<String>,
+    pub table_id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -310,13 +310,13 @@ pub struct NsvFilterMirror {
 #[rkyv(remote = super::RichSortCondition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RichSortConditionMirror {
-    pub custom_list: Option<String>,
-    pub descending: Option<String>,
-    pub dxf_id: Option<String>,
-    pub icon_id: Option<String>,
+    pub custom_list: Option<Box<str>>,
+    pub descending: Option<Box<str>>,
+    pub dxf_id: Option<Box<str>>,
+    pub icon_id: Option<Box<str>>,
     pub icon_set: Option<office_spreadsheetml_2009_9_main::IconSetType>,
-    pub r#ref: Option<String>,
-    pub rich_sort_key: Option<String>,
+    pub r#ref: Option<Box<str>>,
+    pub rich_sort_key: Option<Box<str>>,
     pub sort_by: Option<spreadsheet::SortBy>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -326,12 +326,12 @@ pub struct RichSortConditionMirror {
 #[rkyv(remote = super::SortCondition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SortConditionMirror {
-    pub custom_list: Option<String>,
-    pub descending: Option<String>,
-    pub dxf_id: Option<String>,
-    pub icon_id: Option<String>,
+    pub custom_list: Option<Box<str>>,
+    pub descending: Option<Box<str>>,
+    pub dxf_id: Option<Box<str>>,
+    pub icon_id: Option<Box<str>>,
     pub icon_set: Option<office_spreadsheetml_2009_9_main::IconSetType>,
-    pub r#ref: Option<String>,
+    pub r#ref: Option<Box<str>>,
     pub sort_by: Option<spreadsheet::SortBy>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -341,10 +341,10 @@ pub struct SortConditionMirror {
 #[rkyv(remote = super::SortRule)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SortRuleMirror {
-    pub col_id: Option<String>,
+    pub col_id: Option<Box<str>>,
     pub content: Option<Box<super::SortRuleContent>>,
     pub dxf: Option<Box<super::Dxf>>,
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -353,7 +353,7 @@ pub struct SortRuleMirror {
 #[rkyv(remote = super::SortRules)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SortRulesMirror {
-    pub case_sensitive: Option<String>,
+    pub case_sensitive: Option<Box<str>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub sort_method: Option<spreadsheet::SortMethod>,
     pub sort_rule: Vec<super::SortRule>,

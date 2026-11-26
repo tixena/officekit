@@ -99,7 +99,7 @@ let mut docx = Docx::new(WordprocessingKind::Document)?;
 let mut document = docx.main_document()?;
 
 let mut text = Text::default();
-text.value = "Hello".to_owned();
+text.value = "Hello".into();
 let mut run = TextRun::default();
 run.content.push(TextRunContent::from(text));
 let mut paragraph = Paragraph::default();
@@ -125,7 +125,7 @@ for block in &body.content {
             if let ParagraphContent::TextRun(run) = item {
                 for part in &run.content {
                     if let TextRunContent::Text(text) = part {
-                        found.push(text.value.as_str());
+                        found.push(&*text.value);
                     }
                 }
             }
@@ -181,7 +181,7 @@ let mut docx = Docx::new(WordprocessingKind::Document)?;
 let mut document = docx.main_document()?;
 
 let mut text = Text::default();
-text.value = "Dear {{name}},".to_owned();
+text.value = "Dear {{name}},".into();
 let mut run = TextRun::default();
 run.content.push(TextRunContent::from(text));
 let mut paragraph = Paragraph::default();
@@ -200,7 +200,7 @@ for block in &mut body.content {
             if let ParagraphContent::TextRun(run) = item {
                 for part in &mut run.content {
                     if let TextRunContent::Text(text) = part {
-                        text.value = text.value.replace("{{name}}", "Ada");
+                        text.value = text.value.replace("{{name}}", "Ada").into();
                     }
                 }
             }

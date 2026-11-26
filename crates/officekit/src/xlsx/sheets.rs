@@ -86,7 +86,7 @@ pub(super) fn of(
             };
             package.contains(part).then(|| SheetEntry {
                 kind: SheetKind::of(&relationship.type_uri),
-                name: sheet.name.clone().unwrap_or_default(),
+                name: sheet.name.as_deref().map_or_default(String::from),
                 part: part.clone(),
                 position,
                 state: sheet

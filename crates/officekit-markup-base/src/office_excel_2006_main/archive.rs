@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct FMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -233,7 +233,7 @@ pub struct FMirror {
 pub struct SqrefMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 impl From<FMirror> for super::F {

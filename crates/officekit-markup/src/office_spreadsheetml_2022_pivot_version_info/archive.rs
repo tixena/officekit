@@ -234,7 +234,7 @@ pub struct CacheVersionInfoMirror {
 pub struct LastRefreshFeatureMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -243,7 +243,7 @@ pub struct LastRefreshFeatureMirror {
 pub struct LastUpdateFeatureMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -262,7 +262,7 @@ pub struct PivotVersionInfoMirror {
 pub struct RequiredFeatureMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 impl From<CacheVersionInfoMirror> for super::CacheVersionInfo {

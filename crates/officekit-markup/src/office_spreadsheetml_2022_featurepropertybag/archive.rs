@@ -225,7 +225,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct AMirror {
     pub content: Vec<super::ArrayFeaturePropertyContent>,
-    pub k: Option<String>,
+    pub k: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -234,10 +234,10 @@ pub struct AMirror {
 #[rkyv(remote = super::BBoolFeatureProperty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BBoolFeaturePropertyMirror {
-    pub k: Option<String>,
+    pub k: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -246,18 +246,18 @@ pub struct BBoolFeaturePropertyMirror {
 pub struct BBooleanMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Bag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BagMirror {
-    pub att: Option<String>,
-    pub bag_ext_id: Option<String>,
+    pub att: Option<Box<str>>,
+    pub bag_ext_id: Option<Box<str>>,
     pub content: Vec<super::FeaturePropertyBagContent>,
-    pub ext_ref: Option<String>,
-    pub r#type: Option<String>,
+    pub ext_ref: Option<Box<str>>,
+    pub r#type: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -275,10 +275,10 @@ pub struct BagExtMirror {
 #[rkyv(remote = super::BagIdBagFeatureProperty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BagIdBagFeaturePropertyMirror {
-    pub k: Option<String>,
+    pub k: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -287,7 +287,7 @@ pub struct BagIdBagFeaturePropertyMirror {
 pub struct BagIdUnsignedIntMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -324,10 +324,10 @@ pub struct ColumnTotalsRevDxfMirror {
 #[rkyv(remote = super::DDecimalFeatureProperty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DDecimalFeaturePropertyMirror {
-    pub k: Option<String>,
+    pub k: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -336,14 +336,14 @@ pub struct DDecimalFeaturePropertyMirror {
 pub struct DDoubleMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DXFComplement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DXFComplementMirror {
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -388,7 +388,7 @@ pub struct ExtLstMirror {
 pub struct FeaturePropertyBagsMirror {
     pub bag: Vec<super::Bag>,
     pub bag_ext: Vec<super::BagExt>,
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -429,10 +429,10 @@ pub struct HeaderRowRevDxfMirror {
 #[rkyv(remote = super::IIntFeatureProperty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IIntFeaturePropertyMirror {
-    pub k: Option<String>,
+    pub k: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -441,17 +441,17 @@ pub struct IIntFeaturePropertyMirror {
 pub struct IIntegerMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RelRelFeatureProperty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RelRelFeaturePropertyMirror {
-    pub k: Option<String>,
+    pub k: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -460,7 +460,7 @@ pub struct RelRelFeaturePropertyMirror {
 pub struct RelStringMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -479,17 +479,17 @@ pub struct RevdxfMirror {
 pub struct SStringMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SStringFeatureProperty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SStringFeaturePropertyMirror {
-    pub k: Option<String>,
+    pub k: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -526,7 +526,7 @@ pub struct TotalsRowRevDxfMirror {
 #[rkyv(remote = super::XfComplement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct XfComplementMirror {
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

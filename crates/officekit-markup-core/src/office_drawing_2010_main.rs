@@ -699,7 +699,7 @@ pub static PICTURE_EFFECT_CONTENT_TAGS: officekit_markup_base::Accept =
 #[non_exhaustive]
 pub struct ArtisticBlurWith<X: UserData> {
     /// The attribute `radius`, when the element has it.
-    pub radius: Option<String>,
+    pub radius: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -719,9 +719,9 @@ impl Eq for ArtisticBlurWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticCementWith<X: UserData> {
     /// The attribute `crackSpacing`, when the element has it.
-    pub crack_spacing: Option<String>,
+    pub crack_spacing: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -741,9 +741,9 @@ impl Eq for ArtisticCementWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticChalkSketchWith<X: UserData> {
     /// The attribute `pressure`, when the element has it.
-    pub pressure: Option<String>,
+    pub pressure: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -763,9 +763,9 @@ impl Eq for ArtisticChalkSketchWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticCrisscrossEtchingWith<X: UserData> {
     /// The attribute `pressure`, when the element has it.
-    pub pressure: Option<String>,
+    pub pressure: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -785,9 +785,9 @@ impl Eq for ArtisticCrisscrossEtchingWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticCutoutWith<X: UserData> {
     /// The attribute `numberOfShades`, when the element has it.
-    pub number_of_shades: Option<String>,
+    pub number_of_shades: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -807,9 +807,9 @@ impl Eq for ArtisticCutoutWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticFilmGrainWith<X: UserData> {
     /// The attribute `grainSize`, when the element has it.
-    pub grain_size: Option<String>,
+    pub grain_size: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -829,9 +829,9 @@ impl Eq for ArtisticFilmGrainWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticGlassWith<X: UserData> {
     /// The attribute `scaling`, when the element has it.
-    pub scaling: Option<String>,
+    pub scaling: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -851,9 +851,9 @@ impl Eq for ArtisticGlassWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticGlowDiffusedWith<X: UserData> {
     /// The attribute `intensity`, when the element has it.
-    pub intensity: Option<String>,
+    pub intensity: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -873,9 +873,9 @@ impl Eq for ArtisticGlowDiffusedWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticGlowEdgesWith<X: UserData> {
     /// The attribute `smoothness`, when the element has it.
-    pub smoothness: Option<String>,
+    pub smoothness: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -895,9 +895,9 @@ impl Eq for ArtisticGlowEdgesWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticLightScreenWith<X: UserData> {
     /// The attribute `gridSize`, when the element has it.
-    pub grid_size: Option<String>,
+    pub grid_size: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -917,9 +917,9 @@ impl Eq for ArtisticLightScreenWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticLineDrawingWith<X: UserData> {
     /// The attribute `pencilSize`, when the element has it.
-    pub pencil_size: Option<String>,
+    pub pencil_size: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -939,9 +939,9 @@ impl Eq for ArtisticLineDrawingWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticMarkerWith<X: UserData> {
     /// The attribute `size`, when the element has it.
-    pub size: Option<String>,
+    pub size: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -961,9 +961,9 @@ impl Eq for ArtisticMarkerWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticMosiaicBubblesWith<X: UserData> {
     /// The attribute `pressure`, when the element has it.
-    pub pressure: Option<String>,
+    pub pressure: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -983,9 +983,9 @@ impl Eq for ArtisticMosiaicBubblesWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticPaintBrushWith<X: UserData> {
     /// The attribute `brushSize`, when the element has it.
-    pub brush_size: Option<String>,
+    pub brush_size: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1005,9 +1005,9 @@ impl Eq for ArtisticPaintBrushWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticPaintStrokesWith<X: UserData> {
     /// The attribute `intensity`, when the element has it.
-    pub intensity: Option<String>,
+    pub intensity: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1027,9 +1027,9 @@ impl Eq for ArtisticPaintStrokesWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticPastelsSmoothWith<X: UserData> {
     /// The attribute `scaling`, when the element has it.
-    pub scaling: Option<String>,
+    pub scaling: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1049,9 +1049,9 @@ impl Eq for ArtisticPastelsSmoothWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticPencilGrayscaleWith<X: UserData> {
     /// The attribute `pencilSize`, when the element has it.
-    pub pencil_size: Option<String>,
+    pub pencil_size: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1071,9 +1071,9 @@ impl Eq for ArtisticPencilGrayscaleWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticPencilSketchWith<X: UserData> {
     /// The attribute `pressure`, when the element has it.
-    pub pressure: Option<String>,
+    pub pressure: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1093,9 +1093,9 @@ impl Eq for ArtisticPencilSketchWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticPhotocopyWith<X: UserData> {
     /// The attribute `detail`, when the element has it.
-    pub detail: Option<String>,
+    pub detail: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1115,9 +1115,9 @@ impl Eq for ArtisticPhotocopyWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticPlasticWrapWith<X: UserData> {
     /// The attribute `smoothness`, when the element has it.
-    pub smoothness: Option<String>,
+    pub smoothness: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1137,9 +1137,9 @@ impl Eq for ArtisticPlasticWrapWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticTexturizerWith<X: UserData> {
     /// The attribute `scaling`, when the element has it.
-    pub scaling: Option<String>,
+    pub scaling: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1159,9 +1159,9 @@ impl Eq for ArtisticTexturizerWith<()> {}
 #[non_exhaustive]
 pub struct ArtisticWatercolorSpongeWith<X: UserData> {
     /// The attribute `brushSize`, when the element has it.
-    pub brush_size: Option<String>,
+    pub brush_size: Option<Box<str>>,
     /// The attribute `trans`, when the element has it.
-    pub trans: Option<String>,
+    pub trans: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1186,13 +1186,13 @@ pub struct BackgroundMarkWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2010MainBackgroundMark,
     /// The attribute `x1`, when the element has it.
-    pub x1: Option<String>,
+    pub x1: Option<Box<str>>,
     /// The attribute `x2`, when the element has it.
-    pub x2: Option<String>,
+    pub x2: Option<Box<str>>,
     /// The attribute `y1`, when the element has it.
-    pub y1: Option<String>,
+    pub y1: Option<Box<str>>,
     /// The attribute `y2`, when the element has it.
-    pub y2: Option<String>,
+    pub y2: Option<Box<str>>,
 }
 
 /// The `a14:backgroundMark` element of the tree a read gives: [`BackgroundMarkWith`] holding
@@ -1207,17 +1207,17 @@ impl Eq for BackgroundMarkWith<()> {}
 #[non_exhaustive]
 pub struct BackgroundRemovalWith<X: UserData> {
     /// The attribute `b`, when the element has it.
-    pub b: Option<String>,
+    pub b: Option<Box<str>>,
     /// The children that are `BackgroundMark`, in order.
     pub background_mark: Vec<BackgroundMarkWith<X>>,
     /// The children that are `ForegroundMark`, in order.
     pub foreground_mark: Vec<ForegroundMarkWith<X>>,
     /// The attribute `l`, when the element has it.
-    pub l: Option<String>,
+    pub l: Option<Box<str>>,
     /// The attribute `r`, when the element has it.
-    pub r: Option<String>,
+    pub r: Option<Box<str>>,
     /// The attribute `t`, when the element has it.
-    pub t: Option<String>,
+    pub t: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1237,9 +1237,9 @@ impl Eq for BackgroundRemovalWith<()> {}
 #[non_exhaustive]
 pub struct BrightnessContrastWith<X: UserData> {
     /// The attribute `bright`, when the element has it.
-    pub bright: Option<String>,
+    pub bright: Option<Box<str>>,
     /// The attribute `contrast`, when the element has it.
-    pub contrast: Option<String>,
+    pub contrast: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1263,7 +1263,7 @@ pub struct CNvContentPartPrWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `isComment`, when the element has it.
-    pub is_comment: Option<String>,
+    pub is_comment: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1285,19 +1285,19 @@ pub struct CNvPrWith<X: UserData> {
     /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
     /// The attribute `hidden`, when the element has it.
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHoverWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1316,9 +1316,9 @@ impl Eq for CNvPrWith<()> {}
 #[non_exhaustive]
 pub struct CameraToolWith<X: UserData> {
     /// The attribute `cellRange`, when the element has it.
-    pub cell_range: Option<String>,
+    pub cell_range: Option<Box<str>>,
     /// The attribute `spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1338,7 +1338,7 @@ impl Eq for CameraToolWith<()> {}
 #[non_exhaustive]
 pub struct ColorTemperatureWith<X: UserData> {
     /// The attribute `colorTemp`, when the element has it.
-    pub color_temp: Option<String>,
+    pub color_temp: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1358,7 +1358,7 @@ impl Eq for ColorTemperatureWith<()> {}
 #[non_exhaustive]
 pub struct CompatExtWith<X: UserData> {
     /// The attribute `spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1382,7 +1382,7 @@ pub struct ContentPartWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The child that is `NvContentPartPr`, when there is one.
     pub nv_content_part_pr: Option<Box<NvContentPartPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1408,25 +1408,25 @@ pub struct CpLocksWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `noAdjustHandles`, when the element has it.
-    pub no_adjust_handles: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
     /// The attribute `noChangeArrowheads`, when the element has it.
-    pub no_change_arrowheads: Option<String>,
+    pub no_change_arrowheads: Option<Box<str>>,
     /// The attribute `noChangeAspect`, when the element has it.
-    pub no_change_aspect: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
     /// The attribute `noChangeShapeType`, when the element has it.
-    pub no_change_shape_type: Option<String>,
+    pub no_change_shape_type: Option<Box<str>>,
     /// The attribute `noEditPoints`, when the element has it.
-    pub no_edit_points: Option<String>,
+    pub no_edit_points: Option<Box<str>>,
     /// The attribute `noGrp`, when the element has it.
-    pub no_grp: Option<String>,
+    pub no_grp: Option<Box<str>>,
     /// The attribute `noMove`, when the element has it.
-    pub no_move: Option<String>,
+    pub no_move: Option<Box<str>>,
     /// The attribute `noResize`, when the element has it.
-    pub no_resize: Option<String>,
+    pub no_resize: Option<Box<str>>,
     /// The attribute `noRot`, when the element has it.
-    pub no_rot: Option<String>,
+    pub no_rot: Option<Box<str>>,
     /// The attribute `noSelect`, when the element has it.
-    pub no_select: Option<String>,
+    pub no_select: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1471,13 +1471,13 @@ pub struct ForegroundMarkWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2010MainForegroundMark,
     /// The attribute `x1`, when the element has it.
-    pub x1: Option<String>,
+    pub x1: Option<Box<str>>,
     /// The attribute `x2`, when the element has it.
-    pub x2: Option<String>,
+    pub x2: Option<Box<str>>,
     /// The attribute `y1`, when the element has it.
-    pub y1: Option<String>,
+    pub y1: Option<Box<str>>,
     /// The attribute `y2`, when the element has it.
-    pub y2: Option<String>,
+    pub y2: Option<Box<str>>,
 }
 
 /// The `a14:foregroundMark` element of the tree a read gives: [`ForegroundMarkWith`] holding
@@ -1641,7 +1641,7 @@ pub struct ImgEffectWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2010MainImgEffect,
     /// The attribute `visible`, when the element has it.
-    pub visible: Option<String>,
+    pub visible: Option<Box<str>>,
 }
 
 /// The `a14:imgEffect` element of the tree a read gives: [`ImgEffectWith`] holding nothing in
@@ -1656,7 +1656,7 @@ impl Eq for ImgEffectWith<()> {}
 #[non_exhaustive]
 pub struct ImgLayerWith<X: UserData> {
     /// The attribute `r:embed`, when the element has it.
-    pub embed: Option<String>,
+    pub embed: Option<Box<str>>,
     /// The children that are `ImgEffect`, in order.
     pub img_effect: Vec<ImgEffectWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1703,7 +1703,7 @@ pub struct IsCanvasWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2010MainIsCanvas,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `a14:isCanvas` element of the tree a read gives: [`IsCanvasWith`] holding nothing in
@@ -1829,7 +1829,7 @@ impl Eq for PictureEffectContentWith<()> {}
 #[non_exhaustive]
 pub struct SaturationWith<X: UserData> {
     /// The attribute `sat`, when the element has it.
-    pub sat: Option<String>,
+    pub sat: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1854,7 +1854,7 @@ pub struct ShadowObscuredWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2010MainShadowObscured,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `a14:shadowObscured` element of the tree a read gives: [`ShadowObscuredWith`] holding
@@ -1869,7 +1869,7 @@ impl Eq for ShadowObscuredWith<()> {}
 #[non_exhaustive]
 pub struct SharpenSoftenWith<X: UserData> {
     /// The attribute `amount`, when the element has it.
-    pub amount: Option<String>,
+    pub amount: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1894,7 +1894,7 @@ pub struct UseLocalDpiWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2010MainUseLocalDpi,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `a14:useLocalDpi` element of the tree a read gives: [`UseLocalDpiWith`] holding nothing in
@@ -1911,9 +1911,9 @@ pub struct XfrmWith<X: UserData> {
     /// The child that is `super::drawing::Extents`, when there is one.
     pub extents: Option<Box<super::drawing::ExtentsWith<X>>>,
     /// The attribute `flipH`, when the element has it.
-    pub flip_h: Option<String>,
+    pub flip_h: Option<Box<str>>,
     /// The attribute `flipV`, when the element has it.
-    pub flip_v: Option<String>,
+    pub flip_v: Option<Box<str>>,
     /// The child that is `super::drawing::Offset`, when there is one.
     pub offset: Option<Box<super::drawing::OffsetWith<X>>>,
     /// The attribute `rot`, when the element has it.

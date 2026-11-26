@@ -358,7 +358,7 @@ pub struct DesignPrWith<X: UserData> {
     /// The child that is `DesignTagLst`, when there is one.
     pub design_tag_lst: Option<Box<DesignTagLstWith<X>>>,
     /// The attribute `edtDesignElem`, when the element has it.
-    pub edt_design_elem: Option<String>,
+    pub edt_design_elem: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -380,14 +380,14 @@ impl Eq for DesignPrWith<()> {}
 #[non_exhaustive]
 pub struct DesignTagWith<X: UserData> {
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficePowerpoint202002MainDesignTag,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `p202:designTag` element of the tree a read gives: [`DesignTagWith`] holding nothing in

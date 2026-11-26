@@ -261,21 +261,21 @@ pub static ANIM_PR_SHAPE: officekit_markup_base::Shape = officekit_markup_base::
 #[non_exhaustive]
 pub struct AnimPrWith<X: UserData> {
     /// The attribute `auto`, when the element has it.
-    pub auto: Option<String>,
+    pub auto: Option<Box<str>>,
     /// The attribute `count`, when the element has it.
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     /// The attribute `end`, when the element has it.
-    pub end: Option<String>,
+    pub end: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `length`, when the element has it.
-    pub length: Option<String>,
+    pub length: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `offset`, when the element has it.
-    pub offset: Option<String>,
+    pub offset: Option<Box<str>>,
     /// The attribute `st`, when the element has it.
-    pub st: Option<String>,
+    pub st: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

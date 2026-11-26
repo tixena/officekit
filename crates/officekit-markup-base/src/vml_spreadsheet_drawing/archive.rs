@@ -225,7 +225,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct AnchorMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -271,7 +271,7 @@ pub struct AutomaticallySizeMirror {
 pub struct CallbackTypeMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -280,7 +280,7 @@ pub struct CallbackTypeMirror {
 pub struct CameraSourceRangeMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -307,7 +307,7 @@ pub struct CancelButtonMirror {
 pub struct CheckedMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -316,7 +316,7 @@ pub struct CheckedMirror {
 pub struct ClipboardFormatMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -325,7 +325,7 @@ pub struct ClipboardFormatMirror {
 pub struct CommentColumnTargetMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -334,7 +334,7 @@ pub struct CommentColumnTargetMirror {
 pub struct CommentRowTargetMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -424,7 +424,7 @@ pub struct DropdownColorToggleMirror {
 pub struct DropdownMaximumLinesMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -433,7 +433,7 @@ pub struct DropdownMaximumLinesMirror {
 pub struct DropdownStyleMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -487,7 +487,7 @@ pub struct FontAutoScaleMirror {
 pub struct HTMLScriptAttributesMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -496,7 +496,7 @@ pub struct HTMLScriptAttributesMirror {
 pub struct HTMLScriptLanguageMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -505,7 +505,7 @@ pub struct HTMLScriptLanguageMirror {
 pub struct HTMLScriptLocationMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -514,7 +514,7 @@ pub struct HTMLScriptLocationMirror {
 pub struct HTMLScriptTextMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -532,7 +532,7 @@ pub struct HelpButtonMirror {
 pub struct HorizontalTextAlignmentMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -541,7 +541,7 @@ pub struct HorizontalTextAlignmentMirror {
 pub struct LinkedFormulaMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -550,7 +550,7 @@ pub struct LinkedFormulaMirror {
 pub struct LinkedFormulaGroupBoxMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -559,7 +559,7 @@ pub struct LinkedFormulaGroupBoxMirror {
 pub struct ListItemsSourceRangeMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -586,7 +586,7 @@ pub struct MacroDisableToggleMirror {
 pub struct MinimumWidthMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -613,7 +613,7 @@ pub struct MultiLineMirror {
 pub struct MultipleSelectionsMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -622,7 +622,7 @@ pub struct MultipleSelectionsMirror {
 pub struct NonLinkedListItemMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -640,7 +640,7 @@ pub struct PasswordEditMirror {
 pub struct PrimaryKeyboardAcceleratorMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -667,7 +667,7 @@ pub struct RecalculationToggleMirror {
 pub struct ReferenceToCustomFunctionMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -685,7 +685,7 @@ pub struct ResizeWithCellsMirror {
 pub struct ScrollBarIncrementMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -694,7 +694,7 @@ pub struct ScrollBarIncrementMirror {
 pub struct ScrollBarMaximumMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -703,7 +703,7 @@ pub struct ScrollBarMaximumMirror {
 pub struct ScrollBarMinimumMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -721,7 +721,7 @@ pub struct ScrollBarOrientationMirror {
 pub struct ScrollBarPageIncrementMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -730,7 +730,7 @@ pub struct ScrollBarPageIncrementMirror {
 pub struct ScrollBarPositionMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -739,7 +739,7 @@ pub struct ScrollBarPositionMirror {
 pub struct ScrollBarWidthMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -748,7 +748,7 @@ pub struct ScrollBarWidthMirror {
 pub struct SecondaryKeyboardAcceleratorMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -757,7 +757,7 @@ pub struct SecondaryKeyboardAcceleratorMirror {
 pub struct SelectedEntryMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -766,7 +766,7 @@ pub struct SelectedEntryMirror {
 pub struct SelectionTypeMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -775,7 +775,7 @@ pub struct SelectionTypeMirror {
 pub struct TextFormulaMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -811,7 +811,7 @@ pub struct ValidIDMirror {
 pub struct ValidationTypeMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -829,7 +829,7 @@ pub struct VerticalScrollMirror {
 pub struct VerticalTextAlignmentMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]

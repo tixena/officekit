@@ -280,7 +280,7 @@ pub struct ReadonlyRecommendedWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficePowerpoint201710MainReadonlyRecommended,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `p1710:readonlyRecommended` element of the tree a read gives: [`ReadonlyRecommendedWith`]

@@ -103,12 +103,12 @@ fn margins(width: &str) -> Package {
     let mut properties = PreviousTableProperties::default();
     properties.table_cell_margin_exceptions = Some(Box::new(cell_margins));
     let mut name = PrimaryStyleName::default();
-    name.val = Some("Normal Table".to_owned());
+    name.val = Some(Box::from("Normal Table"));
     let mut style = StyleDefinition::default();
     style.default = Some(OnOffValue::from("1".to_owned()));
     style.previous_table_properties = Some(Box::new(properties));
     style.primary_style_name = Some(Box::new(name));
-    style.style_id = Some("TableNormal".to_owned());
+    style.style_id = Some(Box::from("TableNormal"));
     style.r#type = Some(StyleTypes::from("table".to_owned()));
     let mut styles = StyleDefinitions::default();
     styles.style_definition = vec![style];

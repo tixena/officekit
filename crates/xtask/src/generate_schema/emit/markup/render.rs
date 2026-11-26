@@ -547,7 +547,7 @@ fn held_value(names: &Names<'_>, value: Value, form: Form) -> String {
                 names.path(simple.module, &simple.name)
             }
         }
-        Value::Text => "String".to_owned(),
+        Value::Text => "Box<str>".to_owned(),
     }
 }
 

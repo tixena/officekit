@@ -307,7 +307,7 @@ impl Eq for SetOfAdditionalCharacteristicsWith<()> {}
 #[non_exhaustive]
 pub struct SingleCharacteristicWith<X: UserData> {
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `relation`, when the element has it.
     pub relation: Option<CharacteristicRelationshipTypes>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -316,9 +316,9 @@ pub struct SingleCharacteristicWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::AdditionalCharacteristicsSingleCharacteristic,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
     /// The attribute `vocabulary`, when the element has it.
-    pub vocabulary: Option<String>,
+    pub vocabulary: Option<Box<str>>,
 }
 
 /// The `ac:characteristic` element of the tree a read gives: [`SingleCharacteristicWith`] holding

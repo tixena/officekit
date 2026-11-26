@@ -235,7 +235,7 @@ pub struct BackgroundPrMirror {
 #[rkyv(remote = super::NonVisualGroupProps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonVisualGroupPropsMirror {
-    pub is_legacy_group: Option<String>,
+    pub is_legacy_group: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -244,9 +244,9 @@ pub struct NonVisualGroupPropsMirror {
 #[rkyv(remote = super::ObjectPr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ObjectPrMirror {
-    pub is_active_x: Option<String>,
-    pub link_type: Option<String>,
-    pub object_id: Option<String>,
+    pub is_active_x: Option<Box<str>>,
+    pub link_type: Option<Box<str>>,
+    pub object_id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -255,18 +255,18 @@ pub struct ObjectPrMirror {
 #[rkyv(remote = super::SignatureLine)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SignatureLineMirror {
-    pub addl_xml: Option<String>,
-    pub allow_comments: Option<String>,
-    pub id: Option<String>,
-    pub is_signature_line: Option<String>,
-    pub prov_id: Option<String>,
-    pub show_sign_date: Option<String>,
-    pub sig_prov_url: Option<String>,
-    pub signing_instructions: Option<String>,
-    pub signing_instructions_set: Option<String>,
-    pub suggested_signer: Option<String>,
-    pub suggested_signer2: Option<String>,
-    pub suggested_signer_email: Option<String>,
+    pub addl_xml: Option<Box<str>>,
+    pub allow_comments: Option<Box<str>>,
+    pub id: Option<Box<str>>,
+    pub is_signature_line: Option<Box<str>>,
+    pub prov_id: Option<Box<str>>,
+    pub show_sign_date: Option<Box<str>>,
+    pub sig_prov_url: Option<Box<str>>,
+    pub signing_instructions: Option<Box<str>>,
+    pub signing_instructions_set: Option<Box<str>>,
+    pub suggested_signer: Option<Box<str>>,
+    pub suggested_signer2: Option<Box<str>>,
+    pub suggested_signer_email: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

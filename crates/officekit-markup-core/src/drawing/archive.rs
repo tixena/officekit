@@ -422,8 +422,8 @@ pub struct Apply3DShapePropertiesMirror {
 #[rkyv(remote = super::AudioEndTime)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AudioEndTimeMirror {
-    pub time: Option<String>,
-    pub track: Option<String>,
+    pub time: Option<Box<str>>,
+    pub track: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -450,10 +450,10 @@ pub struct AudioFromCDMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct AudioFromFileMirror {
-    pub content_type: Option<String>,
+    pub content_type: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub link: Option<String>,
+    pub link: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -462,8 +462,8 @@ pub struct AudioFromFileMirror {
 #[rkyv(remote = super::AudioFromWAVFile)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AudioFromWAVFileMirror {
-    pub embed: Option<String>,
-    pub name: Option<String>,
+    pub embed: Option<Box<str>>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -472,8 +472,8 @@ pub struct AudioFromWAVFileMirror {
 #[rkyv(remote = super::AudioStartTime)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AudioStartTimeMirror {
-    pub time: Option<String>,
-    pub track: Option<String>,
+    pub time: Option<Box<str>>,
+    pub track: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -630,10 +630,10 @@ pub struct BlipMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::BlipContent>,
     pub cstate: Option<super::BlipCompressionType>,
-    pub embed: Option<String>,
+    pub embed: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub link: Option<String>,
+    pub link: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -669,7 +669,7 @@ pub struct BlueOffsetMirror {
 #[rkyv(remote = super::BlurEffect)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BlurEffectMirror {
-    pub grow: Option<String>,
+    pub grow: Option<Box<str>>,
     pub rad: Option<super::PositiveCoordinate>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -683,30 +683,30 @@ pub struct BlurEffectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BodyPropertiesMirror {
     pub anchor: Option<super::TextAnchoringTypes>,
-    pub anchor_ctr: Option<String>,
+    pub anchor_ctr: Option<Box<str>>,
     pub b_ins: Option<super::StCoordinate32>,
-    pub compat_ln_spc: Option<String>,
+    pub compat_ln_spc: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub force_aa: Option<String>,
-    pub from_word_art: Option<String>,
+    pub force_aa: Option<Box<str>>,
+    pub from_word_art: Option<Box<str>>,
     pub horz_overflow: Option<super::TextHorizontalOverflowTypes>,
     pub l_ins: Option<super::StCoordinate32>,
     pub num_col: Option<super::TextColumnCount>,
     pub preset_text_warp: Option<Box<super::PresetTextWarp>>,
     pub r_ins: Option<super::StCoordinate32>,
     pub rot: Option<super::Angle>,
-    pub rtl_col: Option<String>,
+    pub rtl_col: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub scene3d: Option<Box<super::Scene3d>>,
     pub spc_col: Option<super::PositiveCoordinatePoint>,
-    pub spc_first_last_para: Option<String>,
+    pub spc_first_last_para: Option<Box<str>>,
     pub t_ins: Option<super::StCoordinate32>,
     #[rkyv(omit_bounds)]
     pub text3d_content: Option<Box<super::Text3DContent>>,
     pub text_autofit_content: Option<Box<super::TextAutofitContent>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub upright: Option<String>,
+    pub upright: Option<Box<str>>,
     pub user_data: (),
     pub vert: Option<super::VerticalTextTypes>,
     pub vert_overflow: Option<super::TextVerticalOverflow>,
@@ -785,7 +785,7 @@ pub struct BottomLeftToTopRightBorderLinePropertiesMirror {
 #[rkyv(remote = super::BuildChart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BuildChartMirror {
-    pub anim_bg: Option<String>,
+    pub anim_bg: Option<Box<str>>,
     pub bld: Option<super::ChartAnimationBuildType>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -796,7 +796,7 @@ pub struct BuildChartMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BuildDiagramMirror {
     pub bld: Option<super::DiagramAnimationBuildType>,
-    pub rev: Option<String>,
+    pub rev: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -877,7 +877,7 @@ pub struct ChangeColorToMirror {
 #[rkyv(remote = super::CharacterBullet)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CharacterBulletMirror {
-    pub char: Option<String>,
+    pub char: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -887,8 +887,8 @@ pub struct CharacterBulletMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ChartToAnimateMirror {
     pub bld_step: Option<super::ChartAnimationBuildStep>,
-    pub category_idx: Option<String>,
-    pub series_idx: Option<String>,
+    pub category_idx: Option<Box<str>>,
+    pub series_idx: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -920,17 +920,17 @@ pub struct ChildOffsetMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct ClickHyperlinkMirror {
-    pub action: Option<String>,
-    pub end_snd: Option<String>,
+    pub action: Option<Box<str>>,
+    pub end_snd: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub highlight_click: Option<String>,
-    pub history: Option<String>,
-    pub id: Option<String>,
-    pub invalid_url: Option<String>,
+    pub highlight_click: Option<Box<str>>,
+    pub history: Option<Box<str>>,
+    pub id: Option<Box<str>>,
+    pub invalid_url: Option<Box<str>>,
     pub sound: Option<Box<super::HyperlinkSound>>,
-    pub tgt_frame: Option<String>,
-    pub tooltip: Option<String>,
+    pub tgt_frame: Option<Box<str>>,
+    pub tooltip: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -950,7 +950,7 @@ pub struct ColorChangeEffectMirror {
     pub change_color_from: Box<super::ChangeColorFrom>,
     pub change_color_to: Box<super::ChangeColorTo>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub use_a: Option<String>,
+    pub use_a: Option<Box<str>>,
     pub user_data: (),
 }
 
@@ -1000,7 +1000,7 @@ pub struct ColorSchemeMirror {
     pub hyperlink: Box<super::Hyperlink>,
     pub light_1: Box<super::Light1>,
     pub light_2: Box<super::Light2>,
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1026,10 +1026,10 @@ pub struct ComplementMirror {
 #[rkyv(remote = super::ComplexScriptFont)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ComplexScriptFontMirror {
-    pub charset: Option<String>,
+    pub charset: Option<Box<str>>,
     pub panose: Option<common_simple_types::Panose1Number>,
     pub pitch_family: Option<super::PitchFamily>,
-    pub typeface: Option<String>,
+    pub typeface: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1039,7 +1039,7 @@ pub struct ComplexScriptFontMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ConnectionEndMirror {
     pub id: Option<super::DrawingElementID>,
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1071,16 +1071,16 @@ pub struct ConnectionShapeMirror {
 pub struct ConnectionShapeLocksMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub no_adjust_handles: Option<String>,
-    pub no_change_arrowheads: Option<String>,
-    pub no_change_aspect: Option<String>,
-    pub no_change_shape_type: Option<String>,
-    pub no_edit_points: Option<String>,
-    pub no_grp: Option<String>,
-    pub no_move: Option<String>,
-    pub no_resize: Option<String>,
-    pub no_rot: Option<String>,
-    pub no_select: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
+    pub no_change_arrowheads: Option<Box<str>>,
+    pub no_change_aspect: Option<Box<str>>,
+    pub no_change_shape_type: Option<Box<str>>,
+    pub no_edit_points: Option<Box<str>>,
+    pub no_grp: Option<Box<str>>,
+    pub no_move: Option<Box<str>>,
+    pub no_resize: Option<Box<str>>,
+    pub no_rot: Option<Box<str>>,
+    pub no_select: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1090,7 +1090,7 @@ pub struct ConnectionShapeLocksMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ConnectionStartMirror {
     pub id: Option<super::DrawingElementID>,
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1104,16 +1104,16 @@ pub struct ConnectionStartMirror {
 pub struct ContentPartLocksMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub no_adjust_handles: Option<String>,
-    pub no_change_arrowheads: Option<String>,
-    pub no_change_aspect: Option<String>,
-    pub no_change_shape_type: Option<String>,
-    pub no_edit_points: Option<String>,
-    pub no_grp: Option<String>,
-    pub no_move: Option<String>,
-    pub no_resize: Option<String>,
-    pub no_rot: Option<String>,
-    pub no_select: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
+    pub no_change_arrowheads: Option<Box<str>>,
+    pub no_change_aspect: Option<Box<str>>,
+    pub no_change_shape_type: Option<Box<str>>,
+    pub no_edit_points: Option<Box<str>>,
+    pub no_grp: Option<Box<str>>,
+    pub no_move: Option<Box<str>>,
+    pub no_resize: Option<Box<str>>,
+    pub no_rot: Option<Box<str>>,
+    pub no_select: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1132,7 +1132,7 @@ pub struct ContourColorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomColorMirror {
     pub content: Box<super::ColorContent>,
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1208,18 +1208,18 @@ pub struct DefaultParagraphStyleMirror {
     pub def_tab_sz: Option<super::StCoordinate32>,
     #[rkyv(omit_bounds)]
     pub default_text_run_properties: Option<Box<super::DefaultTextRunProperties>>,
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub font_algn: Option<super::FontAlignmentTypes>,
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     pub indent: Option<super::TextIndentation>,
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     pub line_spacing: Option<Box<super::LineSpacing>>,
     pub lvl: Option<super::TextIndentLevelType>,
     pub mar_l: Option<super::TextMargin>,
     pub mar_r: Option<super::TextMargin>,
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     pub space_after: Option<Box<super::SpaceAfter>>,
     pub space_before: Option<Box<super::SpaceBefore>>,
     pub tab_list: Option<Box<super::TabList>>,
@@ -1239,38 +1239,38 @@ pub struct DefaultParagraphStyleMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultTextRunPropertiesMirror {
-    pub alt_lang: Option<String>,
-    pub b: Option<String>,
+    pub alt_lang: Option<Box<str>>,
+    pub b: Option<Box<str>>,
     pub baseline: Option<super::Percentage>,
-    pub bmk: Option<String>,
+    pub bmk: Option<Box<str>>,
     pub cap: Option<super::TextCapTypes>,
     #[rkyv(omit_bounds)]
     pub click_hyperlink: Option<Box<super::ClickHyperlink>>,
     pub complex_script_font: Option<Box<super::ComplexScriptFont>>,
-    pub dirty: Option<String>,
+    pub dirty: Option<Box<str>>,
     pub east_asian_font: Option<Box<super::EastAsianFont>>,
     #[rkyv(omit_bounds)]
     pub effect_properties_content: Option<Box<super::EffectPropertiesContent>>,
-    pub err: Option<String>,
+    pub err: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::FillPropertiesContent>>,
     pub highlight_color: Option<Box<super::HighlightColor>>,
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     pub kern: Option<super::TextNonNegativePoint>,
-    pub kumimoji: Option<String>,
-    pub lang: Option<String>,
+    pub kumimoji: Option<Box<str>>,
+    pub lang: Option<Box<str>>,
     pub latin_font: Option<Box<super::LatinFont>>,
     #[rkyv(omit_bounds)]
     pub mouse_over_hyperlink: Option<Box<super::MouseOverHyperlink>>,
-    pub no_proof: Option<String>,
-    pub normalize_h: Option<String>,
+    pub no_proof: Option<Box<str>>,
+    pub normalize_h: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub outline: Option<Box<super::Outline>>,
     pub right_to_left_run: Option<Box<super::RightToLeftRun>>,
-    pub smt_clean: Option<String>,
-    pub smt_id: Option<String>,
+    pub smt_clean: Option<Box<str>>,
+    pub smt_id: Option<Box<str>>,
     pub spc: Option<super::TextPoint>,
     pub strike: Option<super::TextStrikeType>,
     pub symbol_font: Option<Box<super::SymbolFont>>,
@@ -1346,10 +1346,10 @@ pub struct DuotoneEffectMirror {
 #[rkyv(remote = super::EastAsianFont)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EastAsianFontMirror {
-    pub charset: Option<String>,
+    pub charset: Option<Box<str>>,
     pub panose: Option<common_simple_types::Panose1Number>,
     pub pitch_family: Option<super::PitchFamily>,
-    pub typeface: Option<String>,
+    pub typeface: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1376,7 +1376,7 @@ pub struct EffectMirror {
 pub struct EffectContainerContMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::EffectContainerContent>,
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     pub r#type: Option<super::EffectContainerType>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -1391,7 +1391,7 @@ pub struct EffectContainerContMirror {
 pub struct EffectContainerEffectDagMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::EffectContainerContent>,
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     pub r#type: Option<super::EffectContainerType>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -1421,7 +1421,7 @@ pub struct EffectContainerEffectLstMirror {
 #[rkyv(remote = super::EffectEffectReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EffectEffectReferenceMirror {
-    pub r#ref: Option<String>,
+    pub r#ref: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1473,38 +1473,38 @@ pub struct EffectStyleListMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct EndParagraphRunPropertiesMirror {
-    pub alt_lang: Option<String>,
-    pub b: Option<String>,
+    pub alt_lang: Option<Box<str>>,
+    pub b: Option<Box<str>>,
     pub baseline: Option<super::Percentage>,
-    pub bmk: Option<String>,
+    pub bmk: Option<Box<str>>,
     pub cap: Option<super::TextCapTypes>,
     #[rkyv(omit_bounds)]
     pub click_hyperlink: Option<Box<super::ClickHyperlink>>,
     pub complex_script_font: Option<Box<super::ComplexScriptFont>>,
-    pub dirty: Option<String>,
+    pub dirty: Option<Box<str>>,
     pub east_asian_font: Option<Box<super::EastAsianFont>>,
     #[rkyv(omit_bounds)]
     pub effect_properties_content: Option<Box<super::EffectPropertiesContent>>,
-    pub err: Option<String>,
+    pub err: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::FillPropertiesContent>>,
     pub highlight_color: Option<Box<super::HighlightColor>>,
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     pub kern: Option<super::TextNonNegativePoint>,
-    pub kumimoji: Option<String>,
-    pub lang: Option<String>,
+    pub kumimoji: Option<Box<str>>,
+    pub lang: Option<Box<str>>,
     pub latin_font: Option<Box<super::LatinFont>>,
     #[rkyv(omit_bounds)]
     pub mouse_over_hyperlink: Option<Box<super::MouseOverHyperlink>>,
-    pub no_proof: Option<String>,
-    pub normalize_h: Option<String>,
+    pub no_proof: Option<Box<str>>,
+    pub normalize_h: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub outline: Option<Box<super::Outline>>,
     pub right_to_left_run: Option<Box<super::RightToLeftRun>>,
-    pub smt_clean: Option<String>,
-    pub smt_id: Option<String>,
+    pub smt_clean: Option<Box<str>>,
+    pub smt_id: Option<Box<str>>,
     pub spc: Option<super::TextPoint>,
     pub strike: Option<super::TextStrikeType>,
     pub symbol_font: Option<Box<super::SymbolFont>>,
@@ -1528,7 +1528,7 @@ pub struct ExtensionMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::AnyElementContent>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     pub user_data: (),
 }
 
@@ -1738,8 +1738,8 @@ pub struct FollowedHyperlinkMirror {
 #[rkyv(remote = super::Font)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FontMirror {
-    pub script: Option<String>,
-    pub typeface: Option<String>,
+    pub script: Option<Box<str>>,
+    pub typeface: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1784,7 +1784,7 @@ pub struct FontSchemeMirror {
     pub major_font: Box<super::MajorFont>,
     #[rkyv(omit_bounds)]
     pub minor_fonts: Box<super::MinorFonts>,
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1813,7 +1813,7 @@ pub struct FormatSchemeMirror {
     pub fill_style_list: Box<super::FillStyleList>,
     #[rkyv(omit_bounds)]
     pub line_style_list: Box<super::LineStyleList>,
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1843,7 +1843,7 @@ pub struct GradientFillMirror {
     pub content: Option<Box<super::GradientFillContent>>,
     pub flip: Option<super::TileFlipMode>,
     pub gradient_stop_list: Option<Box<super::GradientStopList>>,
-    pub rot_with_shape: Option<String>,
+    pub rot_with_shape: Option<Box<str>>,
     pub tile_rectangle: Option<Box<super::TileRectangle>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -1895,12 +1895,12 @@ pub struct GraphicFrameMirror {
 pub struct GraphicFrameLocksMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub no_change_aspect: Option<String>,
-    pub no_drilldown: Option<String>,
-    pub no_grp: Option<String>,
-    pub no_move: Option<String>,
-    pub no_resize: Option<String>,
-    pub no_select: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
+    pub no_drilldown: Option<Box<str>>,
+    pub no_grp: Option<Box<str>>,
+    pub no_move: Option<Box<str>>,
+    pub no_resize: Option<Box<str>>,
+    pub no_select: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1928,7 +1928,7 @@ pub struct GraphicObjectDataMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::AnyElementContent>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     pub user_data: (),
 }
 
@@ -2011,13 +2011,13 @@ pub struct GroupShapeMirror {
 pub struct GroupShapeLocksMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub no_change_aspect: Option<String>,
-    pub no_grp: Option<String>,
-    pub no_move: Option<String>,
-    pub no_resize: Option<String>,
-    pub no_rot: Option<String>,
-    pub no_select: Option<String>,
-    pub no_ungrp: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
+    pub no_grp: Option<Box<str>>,
+    pub no_move: Option<Box<str>>,
+    pub no_resize: Option<Box<str>>,
+    pub no_rot: Option<Box<str>>,
+    pub no_select: Option<Box<str>>,
+    pub no_ungrp: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2028,7 +2028,7 @@ pub struct GroupShapeLocksMirror {
 pub struct HeaderCellReferenceMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2053,8 +2053,8 @@ pub struct HighlightColorMirror {
 #[rkyv(remote = super::HorizontalRatio)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HorizontalRatioMirror {
-    pub d: Option<String>,
-    pub n: Option<String>,
+    pub d: Option<Box<str>>,
+    pub n: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2125,17 +2125,17 @@ pub struct HyperlinkMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct HyperlinkForHoverMirror {
-    pub action: Option<String>,
-    pub end_snd: Option<String>,
+    pub action: Option<Box<str>>,
+    pub end_snd: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub highlight_click: Option<String>,
-    pub history: Option<String>,
+    pub highlight_click: Option<Box<str>>,
+    pub history: Option<Box<str>>,
     pub hyperlink_sound: Option<Box<super::HyperlinkSound>>,
-    pub id: Option<String>,
-    pub invalid_url: Option<String>,
-    pub tgt_frame: Option<String>,
-    pub tooltip: Option<String>,
+    pub id: Option<Box<str>>,
+    pub invalid_url: Option<Box<str>>,
+    pub tgt_frame: Option<Box<str>>,
+    pub tooltip: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2144,8 +2144,8 @@ pub struct HyperlinkForHoverMirror {
 #[rkyv(remote = super::HyperlinkSound)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HyperlinkSoundMirror {
-    pub embed: Option<String>,
-    pub name: Option<String>,
+    pub embed: Option<Box<str>>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2238,10 +2238,10 @@ pub struct LastRowMirror {
 #[rkyv(remote = super::LatinFont)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LatinFontMirror {
-    pub charset: Option<String>,
+    pub charset: Option<Box<str>>,
     pub panose: Option<common_simple_types::Panose1Number>,
     pub pitch_family: Option<super::PitchFamily>,
-    pub typeface: Option<String>,
+    pub typeface: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2386,7 +2386,7 @@ pub struct LineStyleListMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct LinearGradientFillMirror {
     pub ang: Option<super::PositiveFixedAngle>,
-    pub scaled: Option<String>,
+    pub scaled: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2402,18 +2402,18 @@ pub struct ListLevel1TextStyleMirror {
     pub def_tab_sz: Option<super::StCoordinate32>,
     #[rkyv(omit_bounds)]
     pub default_text_run_properties: Option<Box<super::DefaultTextRunProperties>>,
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub font_algn: Option<super::FontAlignmentTypes>,
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     pub indent: Option<super::TextIndentation>,
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     pub line_spacing: Option<Box<super::LineSpacing>>,
     pub lvl: Option<super::TextIndentLevelType>,
     pub mar_l: Option<super::TextMargin>,
     pub mar_r: Option<super::TextMargin>,
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     pub space_after: Option<Box<super::SpaceAfter>>,
     pub space_before: Option<Box<super::SpaceBefore>>,
     pub tab_list: Option<Box<super::TabList>>,
@@ -2437,18 +2437,18 @@ pub struct ListLevel2TextStyleMirror {
     pub def_tab_sz: Option<super::StCoordinate32>,
     #[rkyv(omit_bounds)]
     pub default_text_run_properties: Option<Box<super::DefaultTextRunProperties>>,
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub font_algn: Option<super::FontAlignmentTypes>,
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     pub indent: Option<super::TextIndentation>,
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     pub line_spacing: Option<Box<super::LineSpacing>>,
     pub lvl: Option<super::TextIndentLevelType>,
     pub mar_l: Option<super::TextMargin>,
     pub mar_r: Option<super::TextMargin>,
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     pub space_after: Option<Box<super::SpaceAfter>>,
     pub space_before: Option<Box<super::SpaceBefore>>,
     pub tab_list: Option<Box<super::TabList>>,
@@ -2472,18 +2472,18 @@ pub struct ListLevel3TextStyleMirror {
     pub def_tab_sz: Option<super::StCoordinate32>,
     #[rkyv(omit_bounds)]
     pub default_text_run_properties: Option<Box<super::DefaultTextRunProperties>>,
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub font_algn: Option<super::FontAlignmentTypes>,
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     pub indent: Option<super::TextIndentation>,
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     pub line_spacing: Option<Box<super::LineSpacing>>,
     pub lvl: Option<super::TextIndentLevelType>,
     pub mar_l: Option<super::TextMargin>,
     pub mar_r: Option<super::TextMargin>,
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     pub space_after: Option<Box<super::SpaceAfter>>,
     pub space_before: Option<Box<super::SpaceBefore>>,
     pub tab_list: Option<Box<super::TabList>>,
@@ -2507,18 +2507,18 @@ pub struct ListLevel4TextStyleMirror {
     pub def_tab_sz: Option<super::StCoordinate32>,
     #[rkyv(omit_bounds)]
     pub default_text_run_properties: Option<Box<super::DefaultTextRunProperties>>,
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub font_algn: Option<super::FontAlignmentTypes>,
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     pub indent: Option<super::TextIndentation>,
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     pub line_spacing: Option<Box<super::LineSpacing>>,
     pub lvl: Option<super::TextIndentLevelType>,
     pub mar_l: Option<super::TextMargin>,
     pub mar_r: Option<super::TextMargin>,
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     pub space_after: Option<Box<super::SpaceAfter>>,
     pub space_before: Option<Box<super::SpaceBefore>>,
     pub tab_list: Option<Box<super::TabList>>,
@@ -2542,18 +2542,18 @@ pub struct ListLevel5TextStyleMirror {
     pub def_tab_sz: Option<super::StCoordinate32>,
     #[rkyv(omit_bounds)]
     pub default_text_run_properties: Option<Box<super::DefaultTextRunProperties>>,
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub font_algn: Option<super::FontAlignmentTypes>,
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     pub indent: Option<super::TextIndentation>,
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     pub line_spacing: Option<Box<super::LineSpacing>>,
     pub lvl: Option<super::TextIndentLevelType>,
     pub mar_l: Option<super::TextMargin>,
     pub mar_r: Option<super::TextMargin>,
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     pub space_after: Option<Box<super::SpaceAfter>>,
     pub space_before: Option<Box<super::SpaceBefore>>,
     pub tab_list: Option<Box<super::TabList>>,
@@ -2577,18 +2577,18 @@ pub struct ListLevel6TextStyleMirror {
     pub def_tab_sz: Option<super::StCoordinate32>,
     #[rkyv(omit_bounds)]
     pub default_text_run_properties: Option<Box<super::DefaultTextRunProperties>>,
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub font_algn: Option<super::FontAlignmentTypes>,
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     pub indent: Option<super::TextIndentation>,
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     pub line_spacing: Option<Box<super::LineSpacing>>,
     pub lvl: Option<super::TextIndentLevelType>,
     pub mar_l: Option<super::TextMargin>,
     pub mar_r: Option<super::TextMargin>,
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     pub space_after: Option<Box<super::SpaceAfter>>,
     pub space_before: Option<Box<super::SpaceBefore>>,
     pub tab_list: Option<Box<super::TabList>>,
@@ -2612,18 +2612,18 @@ pub struct ListLevel7TextStyleMirror {
     pub def_tab_sz: Option<super::StCoordinate32>,
     #[rkyv(omit_bounds)]
     pub default_text_run_properties: Option<Box<super::DefaultTextRunProperties>>,
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub font_algn: Option<super::FontAlignmentTypes>,
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     pub indent: Option<super::TextIndentation>,
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     pub line_spacing: Option<Box<super::LineSpacing>>,
     pub lvl: Option<super::TextIndentLevelType>,
     pub mar_l: Option<super::TextMargin>,
     pub mar_r: Option<super::TextMargin>,
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     pub space_after: Option<Box<super::SpaceAfter>>,
     pub space_before: Option<Box<super::SpaceBefore>>,
     pub tab_list: Option<Box<super::TabList>>,
@@ -2647,18 +2647,18 @@ pub struct ListLevel8TextStyleMirror {
     pub def_tab_sz: Option<super::StCoordinate32>,
     #[rkyv(omit_bounds)]
     pub default_text_run_properties: Option<Box<super::DefaultTextRunProperties>>,
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub font_algn: Option<super::FontAlignmentTypes>,
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     pub indent: Option<super::TextIndentation>,
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     pub line_spacing: Option<Box<super::LineSpacing>>,
     pub lvl: Option<super::TextIndentLevelType>,
     pub mar_l: Option<super::TextMargin>,
     pub mar_r: Option<super::TextMargin>,
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     pub space_after: Option<Box<super::SpaceAfter>>,
     pub space_before: Option<Box<super::SpaceBefore>>,
     pub tab_list: Option<Box<super::TabList>>,
@@ -2682,18 +2682,18 @@ pub struct ListLevel9TextStyleMirror {
     pub def_tab_sz: Option<super::StCoordinate32>,
     #[rkyv(omit_bounds)]
     pub default_text_run_properties: Option<Box<super::DefaultTextRunProperties>>,
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub font_algn: Option<super::FontAlignmentTypes>,
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     pub indent: Option<super::TextIndentation>,
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     pub line_spacing: Option<Box<super::LineSpacing>>,
     pub lvl: Option<super::TextIndentLevelType>,
     pub mar_l: Option<super::TextMargin>,
     pub mar_r: Option<super::TextMargin>,
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     pub space_after: Option<Box<super::SpaceAfter>>,
     pub space_before: Option<Box<super::SpaceBefore>>,
     pub tab_list: Option<Box<super::TabList>>,
@@ -2846,17 +2846,17 @@ pub struct MiterLineJoinMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct MouseOverHyperlinkMirror {
-    pub action: Option<String>,
-    pub end_snd: Option<String>,
+    pub action: Option<Box<str>>,
+    pub end_snd: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub highlight_click: Option<String>,
-    pub history: Option<String>,
-    pub id: Option<String>,
-    pub invalid_url: Option<String>,
+    pub highlight_click: Option<Box<str>>,
+    pub history: Option<Box<str>>,
+    pub id: Option<Box<str>>,
+    pub invalid_url: Option<Box<str>>,
     pub sound: Option<Box<super::HyperlinkSound>>,
-    pub tgt_frame: Option<String>,
-    pub tooltip: Option<String>,
+    pub tgt_frame: Option<Box<str>>,
+    pub tooltip: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2929,15 +2929,15 @@ pub struct NonVisualConnectorShapeDrawingPropertiesMirror {
 pub struct NonVisualDrawingPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub click_hyperlink: Option<Box<super::ClickHyperlink>>,
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub hyperlink_for_hover: Option<Box<super::HyperlinkForHover>>,
     pub id: Option<super::DrawingElementID>,
-    pub name: Option<String>,
-    pub title: Option<String>,
+    pub name: Option<Box<str>>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2983,7 +2983,7 @@ pub struct NonVisualPictureDrawingPropertiesMirror {
     pub extension_list: Option<Box<super::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub picture_locks: Option<Box<super::PictureLocks>>,
-    pub prefer_relative_resize: Option<String>,
+    pub prefer_relative_resize: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -3076,7 +3076,7 @@ pub struct NonVisualShapeDrawingPropertiesMirror {
     pub extension_list: Option<Box<super::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub shape_locks: Option<Box<super::ShapeLocks>>,
-    pub tx_box: Option<String>,
+    pub tx_box: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -3172,7 +3172,7 @@ pub struct OuterShadowEffectMirror {
     pub dist: Option<super::PositiveCoordinate>,
     pub kx: Option<super::FixedAngle>,
     pub ky: Option<super::FixedAngle>,
-    pub rot_with_shape: Option<String>,
+    pub rot_with_shape: Option<Box<str>>,
     pub sx: Option<super::Percentage>,
     pub sy: Option<super::Percentage>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3290,8 +3290,8 @@ pub struct PictureFillMirror {
     #[rkyv(omit_bounds)]
     pub blip: Option<Box<super::Blip>>,
     pub content: Option<Box<super::FillModeContent>>,
-    pub dpi: Option<String>,
-    pub rot_with_shape: Option<String>,
+    pub dpi: Option<Box<str>>,
+    pub rot_with_shape: Option<Box<str>>,
     pub source_rectangle: Option<Box<super::SourceRectangle>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -3306,17 +3306,17 @@ pub struct PictureFillMirror {
 pub struct PictureLocksMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub no_adjust_handles: Option<String>,
-    pub no_change_arrowheads: Option<String>,
-    pub no_change_aspect: Option<String>,
-    pub no_change_shape_type: Option<String>,
-    pub no_crop: Option<String>,
-    pub no_edit_points: Option<String>,
-    pub no_grp: Option<String>,
-    pub no_move: Option<String>,
-    pub no_resize: Option<String>,
-    pub no_rot: Option<String>,
-    pub no_select: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
+    pub no_change_arrowheads: Option<Box<str>>,
+    pub no_change_aspect: Option<Box<str>>,
+    pub no_change_shape_type: Option<Box<str>>,
+    pub no_crop: Option<Box<str>>,
+    pub no_edit_points: Option<Box<str>>,
+    pub no_grp: Option<Box<str>>,
+    pub no_move: Option<Box<str>>,
+    pub no_resize: Option<Box<str>>,
+    pub no_rot: Option<Box<str>>,
+    pub no_select: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -3325,8 +3325,8 @@ pub struct PictureLocksMirror {
 #[rkyv(remote = super::PolarAdjustHandle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PolarAdjustHandleMirror {
-    pub gd_ref_ang: Option<String>,
-    pub gd_ref_r: Option<String>,
+    pub gd_ref_ang: Option<Box<str>>,
+    pub gd_ref_r: Option<Box<str>>,
     pub max_ang: Option<super::AdjustableAngleMethods>,
     pub max_r: Option<super::AdjustableCoordinateMethods>,
     pub min_ang: Option<super::AdjustableAngleMethods>,
@@ -3396,7 +3396,7 @@ pub struct PresetTextWarpMirror {
 pub struct QuickTimeFromFileMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub link: Option<String>,
+    pub link: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -3406,7 +3406,7 @@ pub struct QuickTimeFromFileMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RGBColorModelHexVariantMirror {
     pub content: Vec<super::ColorTransformContent>,
-    pub legacy_spreadsheet_color_index: Option<String>,
+    pub legacy_spreadsheet_color_index: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::HexadecimalColorValue>,
@@ -3464,7 +3464,7 @@ pub struct ReflectionEffectMirror {
     pub fade_dir: Option<super::PositiveFixedAngle>,
     pub kx: Option<super::FixedAngle>,
     pub ky: Option<super::FixedAngle>,
-    pub rot_with_shape: Option<String>,
+    pub rot_with_shape: Option<Box<str>>,
     pub st_a: Option<super::PositiveFixedPercentage>,
     pub st_pos: Option<super::PositiveFixedPercentage>,
     pub sx: Option<super::Percentage>,
@@ -3671,8 +3671,8 @@ pub struct ShapeDefaultMirror {
 #[rkyv(remote = super::ShapeGuide)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeGuideMirror {
-    pub fmla: Option<String>,
-    pub name: Option<String>,
+    pub fmla: Option<Box<str>>,
+    pub name: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -3686,17 +3686,17 @@ pub struct ShapeGuideMirror {
 pub struct ShapeLocksMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub no_adjust_handles: Option<String>,
-    pub no_change_arrowheads: Option<String>,
-    pub no_change_aspect: Option<String>,
-    pub no_change_shape_type: Option<String>,
-    pub no_edit_points: Option<String>,
-    pub no_grp: Option<String>,
-    pub no_move: Option<String>,
-    pub no_resize: Option<String>,
-    pub no_rot: Option<String>,
-    pub no_select: Option<String>,
-    pub no_text_edit: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
+    pub no_change_arrowheads: Option<Box<str>>,
+    pub no_change_aspect: Option<Box<str>>,
+    pub no_change_shape_type: Option<Box<str>>,
+    pub no_edit_points: Option<Box<str>>,
+    pub no_grp: Option<Box<str>>,
+    pub no_move: Option<Box<str>>,
+    pub no_resize: Option<Box<str>>,
+    pub no_rot: Option<Box<str>>,
+    pub no_select: Option<Box<str>>,
+    pub no_text_edit: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -3706,10 +3706,10 @@ pub struct ShapeLocksMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapePathMirror {
     pub content: Vec<super::ShapePathContent>,
-    pub extrusion_ok: Option<String>,
+    pub extrusion_ok: Option<Box<str>>,
     pub fill: Option<super::PathFillMode>,
     pub h: Option<super::PositiveCoordinate>,
-    pub stroke: Option<String>,
+    pub stroke: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<super::PositiveCoordinate>,
@@ -3911,10 +3911,10 @@ pub struct SpacingPointsMirror {
 #[rkyv(remote = super::Specified)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SpecifiedMirror {
-    pub charset: Option<String>,
+    pub charset: Option<Box<str>>,
     pub panose: Option<common_simple_types::Panose1Number>,
     pub pitch_family: Option<super::PitchFamily>,
-    pub typeface: Option<String>,
+    pub typeface: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -3932,10 +3932,10 @@ pub struct StretchMirror {
 #[rkyv(remote = super::SymbolFont)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SymbolFontMirror {
-    pub charset: Option<String>,
+    pub charset: Option<Box<str>>,
     pub panose: Option<common_simple_types::Panose1Number>,
     pub pitch_family: Option<super::PitchFamily>,
-    pub typeface: Option<String>,
+    pub typeface: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -4011,17 +4011,17 @@ pub struct TableBackgroundMirror {
 pub struct TableCellMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub grid_span: Option<String>,
-    pub h_merge: Option<String>,
-    pub id: Option<String>,
+    pub grid_span: Option<Box<str>>,
+    pub h_merge: Option<Box<str>>,
+    pub id: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub properties: Option<Box<super::TableCellProperties>>,
-    pub row_span: Option<String>,
+    pub row_span: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub shape_text_body: Option<Box<super::ShapeTextBody>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub v_merge: Option<String>,
+    pub v_merge: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4061,7 +4061,7 @@ pub struct TableCellBordersMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TableCellPropertiesMirror {
     pub anchor: Option<super::TextAnchoringTypes>,
-    pub anchor_ctr: Option<String>,
+    pub anchor_ctr: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub bottom_border_line_properties: Option<Box<super::BottomBorderLineProperties>>,
     #[rkyv(omit_bounds)]
@@ -4163,19 +4163,19 @@ pub struct TableGridColumnMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct TablePropertiesMirror {
-    pub band_col: Option<String>,
-    pub band_row: Option<String>,
+    pub band_col: Option<Box<str>>,
+    pub band_row: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub effect_properties_content: Option<Box<super::EffectPropertiesContent>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::FillPropertiesContent>>,
-    pub first_col: Option<String>,
-    pub first_row: Option<String>,
-    pub last_col: Option<String>,
-    pub last_row: Option<String>,
-    pub rtl: Option<String>,
+    pub first_col: Option<Box<str>>,
+    pub first_row: Option<Box<str>>,
+    pub last_col: Option<Box<str>>,
+    pub last_row: Option<Box<str>>,
+    pub rtl: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub style_content: Option<Box<super::TablePropertiesStyleContent>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4232,7 +4232,7 @@ pub struct TableStyleMirror {
     #[rkyv(omit_bounds)]
     pub southwest_cell: Option<Box<super::SouthwestCell>>,
     pub style_id: Option<common_simple_types::Guid>,
-    pub style_name: Option<String>,
+    pub style_name: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub table_background: Option<Box<super::TableBackground>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4298,7 +4298,7 @@ pub struct TableStyleTblStyleMirror {
     #[rkyv(omit_bounds)]
     pub southwest_cell: Option<Box<super::SouthwestCell>>,
     pub style_id: Option<common_simple_types::Guid>,
-    pub style_name: Option<String>,
+    pub style_name: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub table_background: Option<Box<super::TableBackground>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4351,7 +4351,7 @@ pub struct TextFieldMirror {
     #[rkyv(omit_bounds)]
     pub text_run_properties: Option<Box<super::TextRunProperties>>,
     pub text_string: Option<Box<super::TextString>>,
-    pub r#type: Option<String>,
+    pub r#type: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -4413,18 +4413,18 @@ pub struct TextParagraphPropertiesMirror {
     pub def_tab_sz: Option<super::StCoordinate32>,
     #[rkyv(omit_bounds)]
     pub default_text_run_properties: Option<Box<super::DefaultTextRunProperties>>,
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub font_algn: Option<super::FontAlignmentTypes>,
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     pub indent: Option<super::TextIndentation>,
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     pub line_spacing: Option<Box<super::LineSpacing>>,
     pub lvl: Option<super::TextIndentLevelType>,
     pub mar_l: Option<super::TextMargin>,
     pub mar_r: Option<super::TextMargin>,
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     pub space_after: Option<Box<super::SpaceAfter>>,
     pub space_before: Option<Box<super::SpaceBefore>>,
     pub tab_list: Option<Box<super::TabList>>,
@@ -4475,38 +4475,38 @@ pub struct TextRunMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextRunPropertiesMirror {
-    pub alt_lang: Option<String>,
-    pub b: Option<String>,
+    pub alt_lang: Option<Box<str>>,
+    pub b: Option<Box<str>>,
     pub baseline: Option<super::Percentage>,
-    pub bmk: Option<String>,
+    pub bmk: Option<Box<str>>,
     pub cap: Option<super::TextCapTypes>,
     #[rkyv(omit_bounds)]
     pub click_hyperlink: Option<Box<super::ClickHyperlink>>,
     pub complex_script_font: Option<Box<super::ComplexScriptFont>>,
-    pub dirty: Option<String>,
+    pub dirty: Option<Box<str>>,
     pub east_asian_font: Option<Box<super::EastAsianFont>>,
     #[rkyv(omit_bounds)]
     pub effect_properties_content: Option<Box<super::EffectPropertiesContent>>,
-    pub err: Option<String>,
+    pub err: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::FillPropertiesContent>>,
     pub highlight_color: Option<Box<super::HighlightColor>>,
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     pub kern: Option<super::TextNonNegativePoint>,
-    pub kumimoji: Option<String>,
-    pub lang: Option<String>,
+    pub kumimoji: Option<Box<str>>,
+    pub lang: Option<Box<str>>,
     pub latin_font: Option<Box<super::LatinFont>>,
     #[rkyv(omit_bounds)]
     pub mouse_over_hyperlink: Option<Box<super::MouseOverHyperlink>>,
-    pub no_proof: Option<String>,
-    pub normalize_h: Option<String>,
+    pub no_proof: Option<Box<str>>,
+    pub normalize_h: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub outline: Option<Box<super::Outline>>,
     pub right_to_left_run: Option<Box<super::RightToLeftRun>>,
-    pub smt_clean: Option<String>,
-    pub smt_id: Option<String>,
+    pub smt_clean: Option<Box<str>>,
+    pub smt_id: Option<Box<str>>,
     pub spc: Option<super::TextPoint>,
     pub strike: Option<super::TextStrikeType>,
     pub symbol_font: Option<Box<super::SymbolFont>>,
@@ -4542,7 +4542,7 @@ pub struct TextShapeMirror {
 pub struct TextStringMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4559,8 +4559,8 @@ pub struct ThemeMirror {
     pub extension_list: Option<Box<super::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub extra_color_scheme_list: Option<Box<super::ExtraColorSchemeList>>,
-    pub id: Option<String>,
-    pub name: Option<String>,
+    pub id: Option<Box<str>>,
+    pub name: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub object_defaults: Option<Box<super::ObjectDefaults>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4838,8 +4838,8 @@ pub struct UseShapeTextRectangleMirror {
 #[rkyv(remote = super::VerticalRatio)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VerticalRatioMirror {
-    pub d: Option<String>,
-    pub n: Option<String>,
+    pub d: Option<Box<str>>,
+    pub n: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -4851,10 +4851,10 @@ pub struct VerticalRatioMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct VideoFromFileMirror {
-    pub content_type: Option<String>,
+    pub content_type: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub link: Option<String>,
+    pub link: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -4899,8 +4899,8 @@ pub struct WholeTableMirror {
 #[rkyv(remote = super::XYAdjustHandle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct XYAdjustHandleMirror {
-    pub gd_ref_x: Option<String>,
-    pub gd_ref_y: Option<String>,
+    pub gd_ref_x: Option<Box<str>>,
+    pub gd_ref_y: Option<Box<str>>,
     pub max_x: Option<super::AdjustableCoordinateMethods>,
     pub max_y: Option<super::AdjustableCoordinateMethods>,
     pub min_x: Option<super::AdjustableCoordinateMethods>,
@@ -4917,8 +4917,8 @@ pub struct XfrmGroupTransform2DMirror {
     pub child_extents: Option<Box<super::ChildExtents>>,
     pub child_offset: Option<Box<super::ChildOffset>>,
     pub extents: Option<Box<super::Extents>>,
-    pub flip_h: Option<String>,
-    pub flip_v: Option<String>,
+    pub flip_h: Option<Box<str>>,
+    pub flip_v: Option<Box<str>>,
     pub offset: Option<Box<super::Offset>>,
     pub rot: Option<super::Angle>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4930,8 +4930,8 @@ pub struct XfrmGroupTransform2DMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct XfrmTransform2DMirror {
     pub extents: Option<Box<super::Extents>>,
-    pub flip_h: Option<String>,
-    pub flip_v: Option<String>,
+    pub flip_h: Option<Box<str>>,
+    pub flip_v: Option<Box<str>>,
     pub offset: Option<Box<super::Offset>>,
     pub rot: Option<super::Angle>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -4987,7 +4987,7 @@ pub enum AnyElementContent {
     Connections(#[rkyv(omit_bounds)] super::super::spreadsheet::Connections),
     Currency(document_properties_variant_types::Currency),
     CustomFileProperties(document_properties_custom::CustomFileProperties),
-    CustomXMLDataProperties(Box<custom_xml_data_properties::CustomXMLDataProperties>),
+    CustomXMLDataProperties(custom_xml_data_properties::CustomXMLDataProperties),
     DataModel(#[rkyv(omit_bounds)] Box<super::super::diagram::DataModel>),
     DateAndTime(document_properties_variant_types::DateAndTime),
     Decimal(document_properties_variant_types::Decimal),
@@ -5120,7 +5120,7 @@ pub enum AnyElementContent {
     SpreadsheetTable(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::Table>),
     StartingAnchorPoint(Box<super::super::spreadsheet_drawing::StartingAnchorPoint>),
     StorageForAlternateMathContent(
-        #[rkyv(omit_bounds)] Box<super::super::vml_office_drawing::StorageForAlternateMathContent>,
+        #[rkyv(omit_bounds)] super::super::vml_office_drawing::StorageForAlternateMathContent,
     ),
     StyleDefinition(#[rkyv(omit_bounds)] Box<super::super::diagram::StyleDefinition>),
     StyleDefinitionHeader(#[rkyv(omit_bounds)] Box<super::super::diagram::StyleDefinitionHeader>),
@@ -5292,7 +5292,7 @@ pub enum EffectContainerContent {
     EffectEffectReference(super::EffectEffectReference),
     FillFillEffect(#[rkyv(omit_bounds)] super::FillFillEffect),
     FillOverlayEffect(#[rkyv(omit_bounds)] Box<super::FillOverlayEffect>),
-    GlowEffect(Box<super::GlowEffect>),
+    GlowEffect(super::GlowEffect),
     GrayScaleEffect(super::GrayScaleEffect),
     HueSaturationLuminanceEffect(Box<super::HueSaturationLuminanceEffect>),
     InnerShadowEffect(Box<super::InnerShadowEffect>),
@@ -5449,7 +5449,7 @@ pub enum ShapePathContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum TableBackgroundEffectContent {
     Effect(#[rkyv(omit_bounds)] super::Effect),
-    EffectReference(Box<super::EffectReference>),
+    EffectReference(super::EffectReference),
     Other(Box<Node>),
 }
 
@@ -5605,7 +5605,7 @@ pub enum TextUnderlineLineContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum ThemeableFillStyleContent {
     Fill(#[rkyv(omit_bounds)] super::Fill),
-    FillReference(Box<super::FillReference>),
+    FillReference(super::FillReference),
     Other(Box<Node>),
 }
 
@@ -5616,7 +5616,7 @@ pub enum ThemeableFillStyleContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum ThemeableLineStyleContent {
-    LineReference(Box<super::LineReference>),
+    LineReference(super::LineReference),
     Other(Box<Node>),
     Outline(#[rkyv(omit_bounds)] Box<super::Outline>),
 }

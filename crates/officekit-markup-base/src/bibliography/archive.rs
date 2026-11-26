@@ -225,7 +225,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct AbbreviatedCaseNumberMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -234,7 +234,7 @@ pub struct AbbreviatedCaseNumberMirror {
 pub struct AlbumTitleMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -270,7 +270,7 @@ pub struct BookAuthorMirror {
 pub struct BookTitleMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -279,7 +279,7 @@ pub struct BookTitleMirror {
 pub struct BroadcastTitleMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -288,7 +288,7 @@ pub struct BroadcastTitleMirror {
 pub struct BroadcasterMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -297,7 +297,7 @@ pub struct BroadcasterMirror {
 pub struct CaseNumberMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -306,7 +306,7 @@ pub struct CaseNumberMirror {
 pub struct ChapterNumberMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -315,7 +315,7 @@ pub struct ChapterNumberMirror {
 pub struct CityMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -324,7 +324,7 @@ pub struct CityMirror {
 pub struct CommentsMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -360,7 +360,7 @@ pub struct ConductorMirror {
 pub struct ConferenceOrProceedingsNameMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -378,7 +378,7 @@ pub struct ContributorsListMirror {
 pub struct CorporateAuthorMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -396,7 +396,7 @@ pub struct CounselMirror {
 pub struct CountryOrRegionMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -405,7 +405,7 @@ pub struct CountryOrRegionMirror {
 pub struct CourtMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -414,7 +414,7 @@ pub struct CourtMirror {
 pub struct DayMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -423,7 +423,7 @@ pub struct DayMirror {
 pub struct DayAccessedMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -432,7 +432,7 @@ pub struct DayAccessedMirror {
 pub struct DepartmentMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -450,7 +450,7 @@ pub struct DirectorMirror {
 pub struct DistributorMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -468,7 +468,7 @@ pub struct EditorMirror {
 pub struct EditorEditionMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -477,7 +477,7 @@ pub struct EditorEditionMirror {
 pub struct GuidMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -486,7 +486,7 @@ pub struct GuidMirror {
 pub struct InstitutionMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -495,7 +495,7 @@ pub struct InstitutionMirror {
 pub struct InternetSiteTitleMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -531,7 +531,7 @@ pub struct InventorMirror {
 pub struct IssueMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -540,7 +540,7 @@ pub struct IssueMirror {
 pub struct JournalNameMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -549,7 +549,7 @@ pub struct JournalNameMirror {
 pub struct LocaleIDMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -558,7 +558,7 @@ pub struct LocaleIDMirror {
 pub struct MediumMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -567,7 +567,7 @@ pub struct MediumMirror {
 pub struct MonthMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -576,7 +576,7 @@ pub struct MonthMirror {
 pub struct MonthAccessedMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -594,7 +594,7 @@ pub struct NameListMirror {
 pub struct NumberOfVolumesMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -603,7 +603,7 @@ pub struct NumberOfVolumesMirror {
 pub struct PagesMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -612,7 +612,7 @@ pub struct PagesMirror {
 pub struct PatentNumberMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -621,7 +621,7 @@ pub struct PatentNumberMirror {
 pub struct PatentTypeMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -639,7 +639,7 @@ pub struct PerformerMirror {
 pub struct PeriodicalTitleMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -659,7 +659,7 @@ pub struct PersonMirror {
 pub struct PersonsFirstOrGivenNameMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -668,7 +668,7 @@ pub struct PersonsFirstOrGivenNameMirror {
 pub struct PersonsLastOrFamilyNameMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -677,7 +677,7 @@ pub struct PersonsLastOrFamilyNameMirror {
 pub struct PersonsMiddleOrOtherNameMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -695,7 +695,7 @@ pub struct ProducerNameMirror {
 pub struct ProductionCompanyMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -704,7 +704,7 @@ pub struct ProductionCompanyMirror {
 pub struct PublicationTitleMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -713,7 +713,7 @@ pub struct PublicationTitleMirror {
 pub struct PublisherMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -722,7 +722,7 @@ pub struct PublisherMirror {
 pub struct RecordingNumberMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -731,7 +731,7 @@ pub struct RecordingNumberMirror {
 pub struct ReferenceOrderMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -740,7 +740,7 @@ pub struct ReferenceOrderMirror {
 pub struct ReporterMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -749,7 +749,7 @@ pub struct ReporterMirror {
 pub struct ShortTitleMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -774,11 +774,11 @@ pub struct SourceTypeMirror {
 #[rkyv(remote = super::Sources)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SourcesMirror {
-    pub selected_style: Option<String>,
+    pub selected_style: Option<Box<str>>,
     pub source: Vec<super::Source>,
-    pub style_name: Option<String>,
+    pub style_name: Option<Box<str>>,
     pub unknown: Option<Box<crate::Unknown>>,
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     pub user_data: (),
 }
 
@@ -788,7 +788,7 @@ pub struct SourcesMirror {
 pub struct StandardNumberMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -797,7 +797,7 @@ pub struct StandardNumberMirror {
 pub struct StateOrProvinceMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -806,7 +806,7 @@ pub struct StateOrProvinceMirror {
 pub struct StationMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -815,7 +815,7 @@ pub struct StationMirror {
 pub struct TagMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -824,7 +824,7 @@ pub struct TagMirror {
 pub struct TheaterMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -833,7 +833,7 @@ pub struct TheaterMirror {
 pub struct ThesisTypeMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -842,7 +842,7 @@ pub struct ThesisTypeMirror {
 pub struct TitleMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -860,7 +860,7 @@ pub struct TranslatorMirror {
 pub struct UrlMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -869,7 +869,7 @@ pub struct UrlMirror {
 pub struct VersionMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -878,7 +878,7 @@ pub struct VersionMirror {
 pub struct VolumeMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -896,7 +896,7 @@ pub struct WriterMirror {
 pub struct YearMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -905,7 +905,7 @@ pub struct YearMirror {
 pub struct YearAccessedMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]

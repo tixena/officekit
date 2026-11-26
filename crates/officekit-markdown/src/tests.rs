@@ -325,35 +325,38 @@ fn paragraph_line(paragraph: &Paragraph, relationships: &[Relationship]) -> Stri
     let mut marks = alloc::vec![
         own.and_then(|properties| properties.referenced_paragraph_style.as_ref())
             .and_then(|style| style.val.clone())
-            .unwrap_or_else(|| "-".to_owned())
+            .unwrap_or_else(|| Box::from("-"))
     ];
     if let Some(numbering) = own.and_then(|properties| {
         properties
             .numbering_definition_instance_reference_num_pr
             .as_ref()
     }) {
-        marks.push(format!(
-            "num={}/{}",
-            value(
-                numbering
-                    .numbering_definition_instance_reference_num_id
-                    .as_ref()
-                    .and_then(|instance| instance.val.as_ref())
-            ),
-            value(
-                numbering
-                    .numbering_level_reference
-                    .as_ref()
-                    .and_then(|level| level.val.as_ref())
+        marks.push(
+            format!(
+                "num={}/{}",
+                value(
+                    numbering
+                        .numbering_definition_instance_reference_num_id
+                        .as_ref()
+                        .and_then(|instance| instance.val.as_ref())
+                ),
+                value(
+                    numbering
+                        .numbering_level_reference
+                        .as_ref()
+                        .and_then(|level| level.val.as_ref())
+                )
             )
-        ));
+            .into(),
+        );
     }
     if let Some(indentation) = own.and_then(|properties| properties.paragraph_indentation.as_ref())
     {
-        marks.push(format!("left={}", value(indentation.left.as_ref())));
+        marks.push(format!("left={}", value(indentation.left.as_ref())).into());
     }
     if let Some(alignment) = own.and_then(|properties| properties.paragraph_alignment.as_ref()) {
-        marks.push(format!("jc={}", value(alignment.val.as_ref())));
+        marks.push(format!("jc={}", value(alignment.val.as_ref())).into());
     }
     let content: Vec<String> = paragraph
         .content
@@ -395,7 +398,7 @@ fn reopened(docx: &Docx) -> Docx {
 
 fn run_mark(property: &RunPropertiesContent) -> String {
     if let RunPropertiesContent::ReferencedCharacterStyle(style) = property {
-        style.val.clone().unwrap_or_default()
+        style.val.as_deref().map_or_default(String::from)
     } else if matches!(property, RunPropertiesContent::Bold(_)) {
         "b".to_owned()
     } else if matches!(property, RunPropertiesContent::Italics(_)) {
@@ -408,7 +411,7 @@ fn run_mark(property: &RunPropertiesContent) -> String {
 fn run_piece(content: &TextRunContent) -> String {
     if let TextRunContent::Text(characters) = content {
         assert_eq!(characters.space.as_deref(), Some("preserve"));
-        characters.value.clone()
+        String::from(&*characters.value)
     } else if matches!(content, TextRunContent::TabCharacter(_)) {
         "<tab/>".to_owned()
     } else if matches!(content, TextRunContent::Break(_)) {
@@ -697,11 +700,11 @@ fn validation_errors(docx: &Docx) -> Vec<String> {
 /// A style as its id, name, type and formatting, joined by `|`.
 fn style_line(style: &StyleDefinition) -> String {
     let mut parts = alloc::vec![
-        style.style_id.clone().unwrap_or_default(),
+        style.style_id.as_deref().map_or_default(String::from),
         style
             .primary_style_name
             .as_ref()
-            .and_then(|name| name.val.clone())
+            .and_then(|name| name.val.as_deref().map(String::from))
             .unwrap_or_default(),
         value(style.r#type.as_ref()).into_owned(),
     ];

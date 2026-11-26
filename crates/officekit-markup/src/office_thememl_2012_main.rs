@@ -385,16 +385,16 @@ pub struct ThemeFamilyWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeThememl2012MainThemeFamily,
     /// The attribute `vid`, when the element has it.
-    pub vid: Option<String>,
+    pub vid: Option<Box<str>>,
 }
 
 /// The `thm15:themeFamily` element of the tree a read gives: [`ThemeFamilyWith`] holding nothing in
@@ -409,22 +409,22 @@ impl Eq for ThemeFamilyWith<()> {}
 #[non_exhaustive]
 pub struct ThemeVariantWith<X: UserData> {
     /// The attribute `cx`, when the element has it.
-    pub cx: Option<String>,
+    pub cx: Option<Box<str>>,
     /// The attribute `cy`, when the element has it.
-    pub cy: Option<String>,
+    pub cy: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeThememl2012MainThemeVariant,
     /// The attribute `vid`, when the element has it.
-    pub vid: Option<String>,
+    pub vid: Option<Box<str>>,
 }
 
 /// The `thm15:themeVariant` element of the tree a read gives: [`ThemeVariantWith`] holding nothing

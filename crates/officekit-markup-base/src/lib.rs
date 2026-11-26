@@ -89,7 +89,7 @@
 //! assert_eq!(unknown.children.len(), 1);
 //! assert_eq!(unknown.children[0].after, 1);
 //!
-//! properties.custom_file_property[1].name = Some("Signed".to_owned());
+//! properties.custom_file_property[1].name = Some("Signed".into());
 //! let element = write::custom_file_properties(&properties, &mut Scope::default());
 //! let mut part = Document::new("", element);
 //! part.declaration = None;
@@ -830,6 +830,12 @@ impl<T> Nodes for Vec<T> {
 
     fn nodes(&self) -> &[T] {
         self.as_slice()
+    }
+}
+
+impl Spelling for Box<str> {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(self)
     }
 }
 

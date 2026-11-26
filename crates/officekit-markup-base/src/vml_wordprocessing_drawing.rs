@@ -415,7 +415,7 @@ pub struct BottomBorderWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlWordprocessingDrawingBottomBorder,
     /// The attribute `width`, when the element has it.
-    pub width: Option<String>,
+    pub width: Option<Box<str>>,
 }
 
 /// The `w10:borderbottom` element of the tree a read gives: [`BottomBorderWith`] holding nothing in
@@ -468,7 +468,7 @@ pub struct LeftBorderWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlWordprocessingDrawingLeftBorder,
     /// The attribute `width`, when the element has it.
-    pub width: Option<String>,
+    pub width: Option<Box<str>>,
 }
 
 /// The `w10:borderleft` element of the tree a read gives: [`LeftBorderWith`] holding nothing in
@@ -492,7 +492,7 @@ pub struct RightBorderWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlWordprocessingDrawingRightBorder,
     /// The attribute `width`, when the element has it.
-    pub width: Option<String>,
+    pub width: Option<Box<str>>,
 }
 
 /// The `w10:borderright` element of the tree a read gives: [`RightBorderWith`] holding nothing in
@@ -602,7 +602,7 @@ pub struct TopBorderWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlWordprocessingDrawingTopBorder,
     /// The attribute `width`, when the element has it.
-    pub width: Option<String>,
+    pub width: Option<Box<str>>,
 }
 
 /// The `w10:bordertop` element of the tree a read gives: [`TopBorderWith`] holding nothing in

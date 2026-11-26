@@ -12,7 +12,7 @@
 //! assert_eq!(found.right[0].content, Content::Date);
 //!
 //! let mut header = OddHeader::default();
-//! header.value = "&CPage &P of &N".to_owned();
+//! header.value = "&CPage &P of &N".into();
 //! let mut settings = HeaderFooterSettings::default();
 //! settings.odd_header = Some(Box::new(header));
 //! let page = HeaderFooter::for_page(&settings, true, false);
@@ -127,37 +127,21 @@ impl<'sheet> HeaderFooter<'sheet> {
     /// and `first`, the even ones when `differentOddEven` is on and `even`, else the odd ones.
     #[must_use = "this only returns the value"]
     pub fn for_page(settings: &'sheet HeaderFooterSettings, first: bool, even: bool) -> Self {
-        let on =
-            |value: Option<&String>| value.map(String::as_str).and_then(boolean).unwrap_or(false);
-        if first && on(settings.different_first.as_ref()) {
+        let on = |value: Option<&str>| value.and_then(boolean).unwrap_or(false);
+        if first && on(settings.different_first.as_deref()) {
             Self::new(
-                settings
-                    .first_page_header
-                    .as_ref()
-                    .map(|text| text.value.as_str()),
-                settings
-                    .first_page_footer
-                    .as_ref()
-                    .map(|text| text.value.as_str()),
+                settings.first_page_header.as_ref().map(|text| &*text.value),
+                settings.first_page_footer.as_ref().map(|text| &*text.value),
             )
-        } else if even && on(settings.different_odd_even.as_ref()) {
+        } else if even && on(settings.different_odd_even.as_deref()) {
             Self::new(
-                settings
-                    .even_page_header
-                    .as_ref()
-                    .map(|text| text.value.as_str()),
-                settings
-                    .even_page_footer
-                    .as_ref()
-                    .map(|text| text.value.as_str()),
+                settings.even_page_header.as_ref().map(|text| &*text.value),
+                settings.even_page_footer.as_ref().map(|text| &*text.value),
             )
         } else {
             Self::new(
-                settings.odd_header.as_ref().map(|text| text.value.as_str()),
-                settings
-                    .odd_page_footer
-                    .as_ref()
-                    .map(|text| text.value.as_str()),
+                settings.odd_header.as_ref().map(|text| &*text.value),
+                settings.odd_page_footer.as_ref().map(|text| &*text.value),
             )
         }
     }

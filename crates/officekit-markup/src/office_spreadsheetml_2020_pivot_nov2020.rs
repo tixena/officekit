@@ -340,14 +340,14 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct DataFieldFutureDataWith<X: UserData> {
     /// The attribute `sourceField`, when the element has it.
-    pub source_field: Option<String>,
+    pub source_field: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2020PivotNov2020DataFieldFutureData,
     /// The attribute `version`, when the element has it.
-    pub version: Option<String>,
+    pub version: Option<Box<str>>,
 }
 
 /// The `xxpim:dataFieldFutureData` element of the tree a read gives: [`DataFieldFutureDataWith`]
@@ -367,7 +367,7 @@ pub struct IgnorableAfterVersionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2020PivotNov2020IgnorableAfterVersion,
     /// The attribute `version`, when the element has it.
-    pub version: Option<String>,
+    pub version: Option<Box<str>>,
 }
 
 /// The `xxpim:ignorableAfterVersion` element of the tree a read gives:
@@ -387,7 +387,7 @@ pub struct ImplicitMeasureSupportWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2020PivotNov2020ImplicitMeasureSupport,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xxpim:implicitMeasureSupport` element of the tree a read gives:

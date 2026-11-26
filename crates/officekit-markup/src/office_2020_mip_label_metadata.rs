@@ -364,7 +364,7 @@ pub struct ExtWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// The attribute `uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::Office2020MipLabelMetadataExt,
 }
@@ -400,23 +400,23 @@ impl Eq for ExtLstWith<()> {}
 #[non_exhaustive]
 pub struct LabelWith<X: UserData> {
     /// The attribute `actionId`, when the element has it.
-    pub action_id: Option<String>,
+    pub action_id: Option<Box<str>>,
     /// The attribute `contentBits`, when the element has it.
-    pub content_bits: Option<String>,
+    pub content_bits: Option<Box<str>>,
     /// The attribute `enabled`, when the element has it.
-    pub enabled: Option<String>,
+    pub enabled: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `method`, when the element has it.
-    pub method: Option<String>,
+    pub method: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `removed`, when the element has it.
-    pub removed: Option<String>,
+    pub removed: Option<Box<str>>,
     /// The attribute `setDate`, when the element has it.
-    pub set_date: Option<String>,
+    pub set_date: Option<Box<str>>,
     /// The attribute `siteId`, when the element has it.
-    pub site_id: Option<String>,
+    pub site_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

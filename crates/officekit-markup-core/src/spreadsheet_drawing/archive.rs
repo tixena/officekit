@@ -240,8 +240,8 @@ pub struct AbsoluteAnchorShapeSizeMirror {
 #[rkyv(remote = super::ClientData)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ClientDataMirror {
-    pub f_locks_with_sheet: Option<String>,
-    pub f_prints_with_sheet: Option<String>,
+    pub f_locks_with_sheet: Option<Box<str>>,
+    pub f_prints_with_sheet: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -275,7 +275,7 @@ pub struct ConnectionNonVisualShapePropertiesMirror {
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub shape_locks: Option<Box<super::super::drawing::ShapeLocks>>,
-    pub tx_box: Option<String>,
+    pub tx_box: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -287,8 +287,8 @@ pub struct ConnectionNonVisualShapePropertiesMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct ConnectionShapeMirror {
-    pub f_published: Option<String>,
-    pub r#macro: Option<String>,
+    pub f_published: Option<Box<str>>,
+    pub r#macro: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub non_visual_properties: Box<super::NonVisualPropertiesForAConnectionShape>,
     #[rkyv(omit_bounds)]
@@ -302,7 +302,7 @@ pub struct ConnectionShapeMirror {
 #[rkyv(remote = super::ContentPart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ContentPartMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -326,10 +326,10 @@ pub struct EndingAnchorPointMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct GraphicFrameMirror {
-    pub f_published: Option<String>,
+    pub f_published: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub graphic_object: Box<super::super::drawing::GraphicObject>,
-    pub r#macro: Option<String>,
+    pub r#macro: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub non_visual_properties: Box<super::NonVisualPropertiesForAGraphicFrame>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -401,15 +401,15 @@ pub struct NonVisualConnectorShapeDrawingPropertiesMirror {
 pub struct NonVisualDrawingPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub click_hyperlink: Option<Box<super::super::drawing::ClickHyperlink>>,
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub hyperlink_for_hover: Option<Box<super::super::drawing::HyperlinkForHover>>,
     pub id: Option<super::super::drawing::DrawingElementID>,
-    pub name: Option<String>,
-    pub title: Option<String>,
+    pub name: Option<Box<str>>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -455,7 +455,7 @@ pub struct NonVisualPictureDrawingPropertiesMirror {
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub picture_locks: Option<Box<super::super::drawing::PictureLocks>>,
-    pub prefer_relative_resize: Option<String>,
+    pub prefer_relative_resize: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -560,10 +560,10 @@ pub struct OneCellAnchorShapeSizeMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct PictureMirror {
-    pub f_published: Option<String>,
+    pub f_published: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub fill: Box<super::PictureFill>,
-    pub r#macro: Option<String>,
+    pub r#macro: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub non_visual_properties: Box<super::NonVisualPropertiesForAPicture>,
     #[rkyv(omit_bounds)]
@@ -583,8 +583,8 @@ pub struct PictureFillMirror {
     #[rkyv(omit_bounds)]
     pub blip: Option<Box<super::super::drawing::Blip>>,
     pub content: Option<Box<super::super::drawing::FillModeContent>>,
-    pub dpi: Option<String>,
-    pub rot_with_shape: Option<String>,
+    pub dpi: Option<Box<str>>,
+    pub rot_with_shape: Option<Box<str>>,
     pub source_rectangle: Option<Box<super::super::drawing::SourceRectangle>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -625,9 +625,9 @@ pub struct RowOffsetMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeMirror {
-    pub f_locks_text: Option<String>,
-    pub f_published: Option<String>,
-    pub r#macro: Option<String>,
+    pub f_locks_text: Option<Box<str>>,
+    pub f_published: Option<Box<str>>,
+    pub r#macro: Option<Box<str>>,
     #[rkyv(omit_bounds)]
     pub non_visual_properties: Box<super::NonVisualPropertiesForAShape>,
     #[rkyv(omit_bounds)]
@@ -635,7 +635,7 @@ pub struct ShapeMirror {
     pub style: Option<Box<super::ShapeStyle>>,
     #[rkyv(omit_bounds)]
     pub text_body: Option<Box<super::ShapeTextBody>>,
-    pub textlink: Option<String>,
+    pub textlink: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -752,8 +752,8 @@ pub struct WorksheetDrawingMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct XfrmMirror {
     pub extents: Option<Box<super::super::drawing::Extents>>,
-    pub flip_h: Option<String>,
-    pub flip_v: Option<String>,
+    pub flip_h: Option<Box<str>>,
+    pub flip_v: Option<Box<str>>,
     pub offset: Option<Box<super::super::drawing::Offset>>,
     pub rot: Option<super::super::drawing::Angle>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

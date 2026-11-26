@@ -222,9 +222,9 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::RichInfo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RichInfoMirror {
-    pub id: Option<String>,
-    pub pivot_cache_guid: Option<String>,
-    pub pivot_ignore_invalid_cache: Option<String>,
+    pub id: Option<Box<str>>,
+    pub pivot_cache_guid: Option<Box<str>>,
+    pub pivot_ignore_invalid_cache: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

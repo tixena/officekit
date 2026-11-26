@@ -280,11 +280,11 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct RichInfoWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `pivotCacheGuid`, when the element has it.
-    pub pivot_cache_guid: Option<String>,
+    pub pivot_cache_guid: Option<Box<str>>,
     /// The attribute `pivotIgnoreInvalidCache`, when the element has it.
-    pub pivot_ignore_invalid_cache: Option<String>,
+    pub pivot_ignore_invalid_cache: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

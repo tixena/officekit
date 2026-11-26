@@ -225,7 +225,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct ApplicationNameMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -243,7 +243,7 @@ pub struct ApplicationSpecificFilePropertiesMirror {
 pub struct ApplicationVersionMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -252,7 +252,7 @@ pub struct ApplicationVersionMirror {
 pub struct CharactersWithSpacesMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -270,7 +270,7 @@ pub struct DigitalSignatureMirror {
 pub struct DocumentSecurityMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -297,7 +297,7 @@ pub struct HyperlinkListMirror {
 pub struct HyperlinksChangedMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -306,7 +306,7 @@ pub struct HyperlinksChangedMirror {
 pub struct IntendedFormatOfPresentationMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -315,7 +315,7 @@ pub struct IntendedFormatOfPresentationMirror {
 pub struct LinksUpToDateMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -324,7 +324,7 @@ pub struct LinksUpToDateMirror {
 pub struct NameOfCompanyMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -333,7 +333,7 @@ pub struct NameOfCompanyMirror {
 pub struct NameOfDocumentTemplateMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -342,7 +342,7 @@ pub struct NameOfDocumentTemplateMirror {
 pub struct NameOfManagerMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -351,7 +351,7 @@ pub struct NameOfManagerMirror {
 pub struct NumberOfHiddenSlidesMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -360,7 +360,7 @@ pub struct NumberOfHiddenSlidesMirror {
 pub struct NumberOfLinesMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -369,7 +369,7 @@ pub struct NumberOfLinesMirror {
 pub struct NumberOfSlidesContainingNotesMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -387,7 +387,7 @@ pub struct PartTitlesMirror {
 pub struct RelativeHyperlinkBaseMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -396,7 +396,7 @@ pub struct RelativeHyperlinkBaseMirror {
 pub struct SharedDocumentMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -405,7 +405,7 @@ pub struct SharedDocumentMirror {
 pub struct SlidesMetadataElementMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -414,7 +414,7 @@ pub struct SlidesMetadataElementMirror {
 pub struct ThumbnailDisplayModeMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -423,7 +423,7 @@ pub struct ThumbnailDisplayModeMirror {
 pub struct TotalEditTimeMetadataElementMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -432,7 +432,7 @@ pub struct TotalEditTimeMetadataElementMirror {
 pub struct TotalNumberOfCharactersMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -441,7 +441,7 @@ pub struct TotalNumberOfCharactersMirror {
 pub struct TotalNumberOfMultimediaClipsMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -450,7 +450,7 @@ pub struct TotalNumberOfMultimediaClipsMirror {
 pub struct TotalNumberOfPagesMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -459,7 +459,7 @@ pub struct TotalNumberOfPagesMirror {
 pub struct TotalNumberOfParagraphsMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -468,7 +468,7 @@ pub struct TotalNumberOfParagraphsMirror {
 pub struct WordCountMirror {
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]

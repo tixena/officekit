@@ -232,10 +232,10 @@ pub struct ExtLstMirror {
 #[rkyv(remote = super::Mention)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MentionMirror {
-    pub length: Option<String>,
-    pub mention_id: Option<String>,
-    pub mentionperson_id: Option<String>,
-    pub start_index: Option<String>,
+    pub length: Option<Box<str>>,
+    pub mention_id: Option<Box<str>>,
+    pub mentionperson_id: Option<Box<str>>,
+    pub start_index: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -253,13 +253,13 @@ pub struct MentionsMirror {
 #[rkyv(remote = super::Person)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PersonMirror {
-    pub display_name: Option<String>,
+    pub display_name: Option<Box<str>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub id: Option<String>,
-    pub provider_id: Option<String>,
+    pub id: Option<Box<str>>,
+    pub provider_id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub user_id: Option<String>,
+    pub user_id: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -278,21 +278,21 @@ pub struct PersonListMirror {
 pub struct TextMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ThreadedComment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ThreadedCommentMirror {
-    pub d_t: Option<String>,
-    pub done: Option<String>,
+    pub d_t: Option<Box<str>>,
+    pub done: Option<Box<str>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub mentions: Option<Box<super::Mentions>>,
-    pub parent_id: Option<String>,
-    pub person_id: Option<String>,
-    pub r#ref: Option<String>,
+    pub parent_id: Option<Box<str>>,
+    pub person_id: Option<Box<str>>,
+    pub r#ref: Option<Box<str>>,
     pub text: Option<Box<super::Text>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),

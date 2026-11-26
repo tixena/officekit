@@ -233,10 +233,10 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct MsFormMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub id: Option<String>,
-    pub is_form_connected: Option<String>,
-    pub latest_event_marker: Option<String>,
-    pub max_response_id: Option<String>,
+    pub id: Option<Box<str>>,
+    pub is_form_connected: Option<Box<str>>,
+    pub latest_event_marker: Option<Box<str>>,
+    pub max_response_id: Option<Box<str>>,
     pub synced_question_id: Vec<super::SyncedQuestionId>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -247,7 +247,7 @@ pub struct MsFormMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct QuestionMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -258,7 +258,7 @@ pub struct QuestionMirror {
 pub struct SyncedQuestionIdMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 impl From<ExtLstMirror> for super::ExtLst {

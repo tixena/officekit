@@ -366,7 +366,7 @@ pub struct LastEditFeatureWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2023DataSourceVersioningLastEditFeature,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xxdsv:lastEditFeature` element of the tree a read gives: [`LastEditFeatureWith`] holding
@@ -386,7 +386,7 @@ pub struct LastRefreshFeatureWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2023DataSourceVersioningLastRefreshFeature,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xxdsv:lastRefreshFeature` element of the tree a read gives: [`LastRefreshFeatureWith`]
@@ -406,7 +406,7 @@ pub struct RequiredFeatureWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2023DataSourceVersioningRequiredFeature,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xxdsv:requiredFeature` element of the tree a read gives: [`RequiredFeatureWith`] holding

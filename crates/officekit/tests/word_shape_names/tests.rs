@@ -24,12 +24,12 @@ mod whole_file {
     fn document_with(shape: WordprocessingMLShape) -> Document {
         let mut data = GraphicObjectData::default();
         data.content = vec![AnyElementContent::from(shape)];
-        data.uri = Some(WPS.to_owned());
+        data.uri = Some(Box::from(WPS));
         let mut graphic = GraphicObject::default();
         graphic.data = Box::new(data);
         let mut properties = DrawingObjectNonVisualProperties::default();
         properties.id = Some(DrawingElementID::from("1".to_owned()));
-        properties.name = Some("Text Box 1".to_owned());
+        properties.name = Some(Box::from("Text Box 1"));
         let mut size = DrawingObjectSize::default();
         size.cx = Some(PositiveCoordinate::from("914400".to_owned()));
         size.cy = Some(PositiveCoordinate::from("457200".to_owned()));

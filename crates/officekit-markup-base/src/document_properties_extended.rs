@@ -470,7 +470,7 @@ pub struct ApplicationNameWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedApplicationName,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:Application` element of the tree a read gives: [`ApplicationNameWith`] holding nothing
@@ -583,7 +583,7 @@ pub struct ApplicationVersionWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedApplicationVersion,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:AppVersion` element of the tree a read gives: [`ApplicationVersionWith`] holding nothing
@@ -602,7 +602,7 @@ pub struct CharactersWithSpacesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedCharactersWithSpaces,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:CharactersWithSpaces` element of the tree a read gives: [`CharactersWithSpacesWith`]
@@ -643,7 +643,7 @@ pub struct DocumentSecurityWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedDocumentSecurity,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:DocSecurity` element of the tree a read gives: [`DocumentSecurityWith`] holding nothing
@@ -705,7 +705,7 @@ pub struct HyperlinksChangedWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedHyperlinksChanged,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:HyperlinksChanged` element of the tree a read gives: [`HyperlinksChangedWith`] holding
@@ -725,7 +725,7 @@ pub struct IntendedFormatOfPresentationWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedIntendedFormatOfPresentation,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:PresentationFormat` element of the tree a read gives:
@@ -745,7 +745,7 @@ pub struct LinksUpToDateWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedLinksUpToDate,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:LinksUpToDate` element of the tree a read gives: [`LinksUpToDateWith`] holding nothing
@@ -765,7 +765,7 @@ pub struct NameOfCompanyWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedNameOfCompany,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:Company` element of the tree a read gives: [`NameOfCompanyWith`] holding nothing in
@@ -785,7 +785,7 @@ pub struct NameOfDocumentTemplateWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedNameOfDocumentTemplate,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:Template` element of the tree a read gives: [`NameOfDocumentTemplateWith`] holding
@@ -805,7 +805,7 @@ pub struct NameOfManagerWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedNameOfManager,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:Manager` element of the tree a read gives: [`NameOfManagerWith`] holding nothing in
@@ -825,7 +825,7 @@ pub struct NumberOfHiddenSlidesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedNumberOfHiddenSlides,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:HiddenSlides` element of the tree a read gives: [`NumberOfHiddenSlidesWith`] holding
@@ -845,7 +845,7 @@ pub struct NumberOfLinesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedNumberOfLines,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:Lines` element of the tree a read gives: [`NumberOfLinesWith`] holding nothing in
@@ -865,7 +865,7 @@ pub struct NumberOfSlidesContainingNotesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedNumberOfSlidesContainingNotes,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:Notes` element of the tree a read gives: [`NumberOfSlidesContainingNotesWith`] holding
@@ -906,7 +906,7 @@ pub struct RelativeHyperlinkBaseWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedRelativeHyperlinkBase,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:HyperlinkBase` element of the tree a read gives: [`RelativeHyperlinkBaseWith`] holding
@@ -926,7 +926,7 @@ pub struct SharedDocumentWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedSharedDocument,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:SharedDoc` element of the tree a read gives: [`SharedDocumentWith`] holding nothing in
@@ -946,7 +946,7 @@ pub struct SlidesMetadataElementWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedSlidesMetadataElement,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:Slides` element of the tree a read gives: [`SlidesMetadataElementWith`] holding nothing
@@ -966,7 +966,7 @@ pub struct ThumbnailDisplayModeWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedThumbnailDisplayMode,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:ScaleCrop` element of the tree a read gives: [`ThumbnailDisplayModeWith`] holding
@@ -986,7 +986,7 @@ pub struct TotalEditTimeMetadataElementWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedTotalEditTimeMetadataElement,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:TotalTime` element of the tree a read gives: [`TotalEditTimeMetadataElementWith`]
@@ -1006,7 +1006,7 @@ pub struct TotalNumberOfCharactersWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedTotalNumberOfCharacters,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:Characters` element of the tree a read gives: [`TotalNumberOfCharactersWith`] holding
@@ -1026,7 +1026,7 @@ pub struct TotalNumberOfMultimediaClipsWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedTotalNumberOfMultimediaClips,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:MMClips` element of the tree a read gives: [`TotalNumberOfMultimediaClipsWith`] holding
@@ -1046,7 +1046,7 @@ pub struct TotalNumberOfPagesWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedTotalNumberOfPages,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:Pages` element of the tree a read gives: [`TotalNumberOfPagesWith`] holding nothing in
@@ -1066,7 +1066,7 @@ pub struct TotalNumberOfParagraphsWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedTotalNumberOfParagraphs,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:Paragraphs` element of the tree a read gives: [`TotalNumberOfParagraphsWith`] holding
@@ -1086,7 +1086,7 @@ pub struct WordCountWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::DocumentPropertiesExtendedWordCount,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `ap:Words` element of the tree a read gives: [`WordCountWith`] holding nothing in

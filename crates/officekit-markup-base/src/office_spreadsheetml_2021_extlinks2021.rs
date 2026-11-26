@@ -276,9 +276,9 @@ pub struct AlternateUrlsWith<X: UserData> {
     /// The child that is `AbsoluteUrl`, when there is one.
     pub absolute_url: Option<Box<AbsoluteUrlWith<X>>>,
     /// The attribute `driveId`, when the element has it.
-    pub drive_id: Option<String>,
+    pub drive_id: Option<Box<str>>,
     /// The attribute `itemId`, when the element has it.
-    pub item_id: Option<String>,
+    pub item_id: Option<Box<str>>,
     /// The child that is `RelativeUrl`, when there is one.
     pub relative_url: Option<Box<RelativeUrlWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it

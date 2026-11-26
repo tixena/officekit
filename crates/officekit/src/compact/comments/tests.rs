@@ -73,12 +73,12 @@ fn kept(id: &str) -> BlockContent {
 /// ids `paragraphs`.
 fn comment(id: &str, paragraphs: &[&str]) -> CommentContent {
     let mut entry = CommentContent::default();
-    entry.author = Some("A".to_owned());
+    entry.author = Some(Box::from("A"));
     entry.content = paragraphs
         .iter()
         .map(|paragraph_id| {
             let mut note = paragraph(vec![plain_run("note")]);
-            note.para_id = Some((*paragraph_id).to_owned());
+            note.para_id = Some(Box::from(*paragraph_id));
             BlockContent::from(note)
         })
         .collect();
@@ -107,7 +107,7 @@ fn comments_parts() -> [(&'static str, &'static str, String); 4] {
         .map(|(paragraph_id, _durable)| {
             let mut entry = CommentEx::default();
             entry.done = Some(OnOffValue::from("0".to_owned()));
-            entry.para_id = Some((*paragraph_id).to_owned());
+            entry.para_id = Some(Box::from(*paragraph_id));
             entry
         })
         .collect();
@@ -116,8 +116,8 @@ fn comments_parts() -> [(&'static str, &'static str, String); 4] {
         .iter()
         .map(|(paragraph_id, durable)| {
             let mut entry = CommentId::default();
-            entry.durable_id = Some((*durable).to_owned());
-            entry.para_id = Some((*paragraph_id).to_owned());
+            entry.durable_id = Some(Box::from(*durable));
+            entry.para_id = Some(Box::from(*paragraph_id));
             entry
         })
         .collect();
@@ -126,8 +126,8 @@ fn comments_parts() -> [(&'static str, &'static str, String); 4] {
         .iter()
         .map(|(_paragraph_id, durable)| {
             let mut entry = CommentExtensible::default();
-            entry.date_utc = Some("2026-10-16T00:00:00Z".to_owned());
-            entry.durable_id = Some((*durable).to_owned());
+            entry.date_utc = Some(Box::from("2026-10-16T00:00:00Z"));
+            entry.durable_id = Some(Box::from(*durable));
             entry
         })
         .collect();
@@ -186,7 +186,7 @@ fn comment_ids(word: &Package, part: &str) -> Vec<String> {
     read::comments_collection(&root_of(word, part))
         .comment_content
         .iter()
-        .filter_map(|entry| entry.id.as_ref().map(|id| id.0.clone()))
+        .filter_map(|entry| entry.id.as_ref().map(|id| id.0.clone().into()))
         .collect()
 }
 
@@ -198,17 +198,17 @@ fn recorded(word: &Package) -> [Vec<String>; 4] {
         extended_read::comments_ex(&root_of(word, "/word/commentsExtended.xml"))
             .comment_ex
             .iter()
-            .filter_map(|entry| entry.para_id.clone())
+            .filter_map(|entry| entry.para_id.clone().map(String::from))
             .collect(),
         ids_read::comments_ids(&root_of(word, "/word/commentsIds.xml"))
             .comment_id
             .iter()
-            .filter_map(|entry| entry.durable_id.clone())
+            .filter_map(|entry| entry.durable_id.clone().map(String::from))
             .collect(),
         extensible_read::comments_extensible(&root_of(word, "/word/commentsExtensible.xml"))
             .comment_extensible
             .iter()
-            .filter_map(|entry| entry.durable_id.clone())
+            .filter_map(|entry| entry.durable_id.clone().map(String::from))
             .collect(),
     ]
 }

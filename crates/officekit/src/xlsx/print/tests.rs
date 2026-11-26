@@ -10,9 +10,9 @@ fn workbook(names: &[(&str, Option<&str>, &str)]) -> Workbook {
     let mut defined = DefinedNames::default();
     for &(name, sheet, text) in names {
         let mut one = DefinedName::default();
-        one.name = Some(name.to_owned());
-        one.local_sheet_id = sheet.map(str::to_owned);
-        one.value = text.to_owned();
+        one.name = Some(Box::from(name));
+        one.local_sheet_id = sheet.map(Box::from);
+        one.value = Box::from(text);
         defined.defined_name.push(one);
     }
     let mut workbook = Workbook::default();

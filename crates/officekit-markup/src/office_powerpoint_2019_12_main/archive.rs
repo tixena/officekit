@@ -258,7 +258,7 @@ pub struct AtrbtnMirror {
 #[rkyv(remote = super::Comment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -267,8 +267,8 @@ pub struct CommentMirror {
 #[rkyv(remote = super::Date)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateMirror {
-    pub end_dt: Option<String>,
-    pub st_dt: Option<String>,
+    pub end_dt: Option<Box<str>>,
+    pub st_dt: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -281,8 +281,8 @@ pub struct EventMirror {
     pub atrbtn: Box<super::Atrbtn>,
     pub content: Option<Box<super::TaskHistoryEventContent>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub id: Option<String>,
-    pub time: Option<String>,
+    pub id: Option<Box<str>>,
+    pub time: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -311,7 +311,7 @@ pub struct HistoryMirror {
 pub struct PcntCmpltMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -320,7 +320,7 @@ pub struct PcntCmpltMirror {
 pub struct PriMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -329,7 +329,7 @@ pub struct PriMirror {
 pub struct TaskHistoryDetailsMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub history: Box<super::History>,
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -340,7 +340,7 @@ pub struct TaskHistoryDetailsMirror {
 pub struct TitleMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -363,7 +363,7 @@ pub struct UnasgnAllMirror {
 #[rkyv(remote = super::Undo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UndoMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

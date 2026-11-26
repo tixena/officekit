@@ -279,9 +279,9 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct ExternalCodeServiceWith<X: UserData> {
     /// The attribute `autoShow`, when the element has it.
-    pub auto_show: Option<String>,
+    pub auto_show: Option<Box<str>>,
     /// The attribute `timeout`, when the element has it.
-    pub timeout: Option<String>,
+    pub timeout: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

@@ -96,11 +96,11 @@ pub fn convert_date_cells(
                 continue;
             };
             let written = serial.to_string();
-            let date = mem::replace(&mut value.value, written.clone());
+            let date = mem::replace(&mut value.value, Box::from(written.as_str()));
             cell.t = None;
             warnings.push(SaveWarning::DateCellConverted {
-                cell: cell.r.clone().unwrap_or_default(),
-                date,
+                cell: cell.r.as_deref().map_or_default(String::from),
+                date: date.into_string(),
                 part: part.clone(),
                 serial: written,
             });

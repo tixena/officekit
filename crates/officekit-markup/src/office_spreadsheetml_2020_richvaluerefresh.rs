@@ -309,11 +309,11 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct RefreshIntervalWith<X: UserData> {
     /// The attribute `interval`, when the element has it.
-    pub interval: Option<String>,
+    pub interval: Option<Box<str>>,
     /// The attribute `resourceIdInt`, when the element has it.
-    pub resource_id_int: Option<String>,
+    pub resource_id_int: Option<Box<str>>,
     /// The attribute `resourceIdStr`, when the element has it.
-    pub resource_id_str: Option<String>,
+    pub resource_id_str: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

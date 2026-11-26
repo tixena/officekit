@@ -222,7 +222,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::PicAttrSrcUrl)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PicAttrSrcUrlMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

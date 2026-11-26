@@ -283,11 +283,11 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct PivotTableDefinition16With<X: UserData> {
     /// The attribute `EnabledSubtotalsDefault`, when the element has it.
-    pub enabled_subtotals_default: Option<String>,
+    pub enabled_subtotals_default: Option<Box<str>>,
     /// The attribute `InsertBlankRowDefault`, when the element has it.
-    pub insert_blank_row_default: Option<String>,
+    pub insert_blank_row_default: Option<Box<str>>,
     /// The attribute `SubtotalsOnTopDefault`, when the element has it.
-    pub subtotals_on_top_default: Option<String>,
+    pub subtotals_on_top_default: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

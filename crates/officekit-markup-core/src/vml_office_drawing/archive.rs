@@ -227,18 +227,18 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct CalloutMirror {
     pub accentbar: Option<common_simple_types::BooleanValue>,
     pub angle: Option<super::CalloutAngles>,
-    pub distance: Option<String>,
-    pub drop: Option<String>,
+    pub distance: Option<Box<str>>,
+    pub drop: Option<Box<str>>,
     pub dropauto: Option<common_simple_types::BooleanValue>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub gap: Option<String>,
-    pub length: Option<String>,
+    pub gap: Option<Box<str>>,
+    pub length: Option<Box<str>>,
     pub lengthspecified: Option<common_simple_types::BooleanValue>,
     pub minusx: Option<common_simple_types::BooleanValue>,
     pub minusy: Option<common_simple_types::BooleanValue>,
     pub on: Option<common_simple_types::BooleanValue>,
     pub textborder: Option<common_simple_types::BooleanValue>,
-    pub r#type: Option<String>,
+    pub r#type: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -257,9 +257,9 @@ pub struct ComplexMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DiagramRelationshipMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub idcntr: Option<String>,
-    pub iddest: Option<String>,
-    pub idsrc: Option<String>,
+    pub idcntr: Option<Box<str>>,
+    pub iddest: Option<Box<str>>,
+    pub idsrc: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -278,19 +278,19 @@ pub struct DiagramRelationshipTableMirror {
 #[rkyv(remote = super::DigitalSignatureLine)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DigitalSignatureLineMirror {
-    pub addlxml: Option<String>,
+    pub addlxml: Option<Box<str>>,
     pub allowcomments: Option<common_simple_types::BooleanValue>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
     pub id: Option<common_simple_types::Guid>,
     pub issignatureline: Option<common_simple_types::BooleanValue>,
     pub provid: Option<common_simple_types::Guid>,
     pub showsigndate: Option<common_simple_types::BooleanValue>,
-    pub signinginstructions: Option<String>,
+    pub signinginstructions: Option<Box<str>>,
     pub signinginstructionsset: Option<common_simple_types::BooleanValue>,
-    pub sigprovurl: Option<String>,
-    pub suggestedsigner: Option<String>,
-    pub suggestedsigner2: Option<String>,
-    pub suggestedsigneremail: Option<String>,
+    pub sigprovurl: Option<Box<str>>,
+    pub suggestedsigner: Option<Box<str>>,
+    pub suggestedsigner2: Option<Box<str>>,
+    pub suggestedsigneremail: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -303,10 +303,10 @@ pub struct EmbeddedOLEObjectMirror {
     pub embedded_object_alternate_image_request:
         Option<Box<super::EmbeddedObjectAlternateImageRequest>>,
     pub embedded_object_cannot_be_refreshed: Option<Box<super::EmbeddedObjectCannotBeRefreshed>>,
-    pub id: Option<String>,
-    pub object_id: Option<String>,
-    pub prog_id: Option<String>,
-    pub shape_id: Option<String>,
+    pub id: Option<Box<str>>,
+    pub object_id: Option<Box<str>>,
+    pub prog_id: Option<Box<str>>,
+    pub shape_id: Option<Box<str>>,
     pub r#type: Option<super::OLEType>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub update_mode: Option<super::OLEUpdateMode>,
@@ -320,7 +320,7 @@ pub struct EmbeddedOLEObjectMirror {
 pub struct EmbeddedObjectAlternateImageRequestMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -337,40 +337,40 @@ pub struct EmbeddedObjectCannotBeRefreshedMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtrusionMirror {
     pub autorotationcenter: Option<common_simple_types::BooleanValue>,
-    pub backdepth: Option<String>,
-    pub brightness: Option<String>,
-    pub color: Option<String>,
+    pub backdepth: Option<Box<str>>,
+    pub brightness: Option<Box<str>>,
+    pub color: Option<Box<str>>,
     pub colormode: Option<super::ExtrusionColorTypes>,
-    pub diffusity: Option<String>,
-    pub edge: Option<String>,
+    pub diffusity: Option<Box<str>>,
+    pub edge: Option<Box<str>>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub facet: Option<String>,
-    pub foredepth: Option<String>,
+    pub facet: Option<Box<str>>,
+    pub foredepth: Option<Box<str>>,
     pub lightface: Option<common_simple_types::BooleanValue>,
     pub lightharsh: Option<common_simple_types::BooleanValue>,
     pub lightharsh2: Option<common_simple_types::BooleanValue>,
-    pub lightlevel: Option<String>,
-    pub lightlevel2: Option<String>,
-    pub lightposition: Option<String>,
-    pub lightposition2: Option<String>,
+    pub lightlevel: Option<Box<str>>,
+    pub lightlevel2: Option<Box<str>>,
+    pub lightposition: Option<Box<str>>,
+    pub lightposition2: Option<Box<str>>,
     pub lockrotationcenter: Option<common_simple_types::BooleanValue>,
     pub metal: Option<common_simple_types::BooleanValue>,
     pub on: Option<common_simple_types::BooleanValue>,
-    pub orientation: Option<String>,
-    pub orientationangle: Option<String>,
+    pub orientation: Option<Box<str>>,
+    pub orientationangle: Option<Box<str>>,
     pub plane: Option<super::ExtrusionPlanes>,
     pub render: Option<super::ExtrusionRenderingTypes>,
-    pub rotationangle: Option<String>,
-    pub rotationcenter: Option<String>,
-    pub shininess: Option<String>,
-    pub skewamt: Option<String>,
-    pub skewangle: Option<String>,
-    pub specularity: Option<String>,
+    pub rotationangle: Option<Box<str>>,
+    pub rotationcenter: Option<Box<str>>,
+    pub shininess: Option<Box<str>>,
+    pub skewamt: Option<Box<str>>,
+    pub skewangle: Option<Box<str>>,
+    pub specularity: Option<Box<str>>,
     pub r#type: Option<super::ExtrusionType>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub viewpoint: Option<String>,
-    pub viewpointorigin: Option<String>,
+    pub viewpoint: Option<Box<str>>,
+    pub viewpointorigin: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -378,8 +378,8 @@ pub struct ExtrusionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct InkMirror {
     pub annotation: Option<common_simple_types::BooleanValue>,
-    pub content_type: Option<String>,
-    pub i: Option<String>,
+    pub content_type: Option<Box<str>>,
+    pub i: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -388,7 +388,7 @@ pub struct InkMirror {
 #[rkyv(remote = super::MostRecentlyUsedColors)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MostRecentlyUsedColorsMirror {
-    pub colors: Option<String>,
+    pub colors: Option<Box<str>>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -406,11 +406,11 @@ pub struct NewShapeDefaultsMirror {
     pub content: Vec<super::NewShapeDefaultsContent>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
     pub fill: Option<common_simple_types::BooleanValue>,
-    pub fillcolor: Option<String>,
-    pub spidmax: Option<String>,
+    pub fillcolor: Option<Box<str>>,
+    pub spidmax: Option<Box<str>>,
     pub stroke: Option<common_simple_types::BooleanValue>,
-    pub strokecolor: Option<String>,
-    pub style: Option<String>,
+    pub strokecolor: Option<Box<str>>,
+    pub style: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -419,8 +419,8 @@ pub struct NewShapeDefaultsMirror {
 #[rkyv(remote = super::RegroupEntry)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RegroupEntryMirror {
-    pub new: Option<String>,
-    pub old: Option<String>,
+    pub new: Option<Box<str>>,
+    pub old: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -430,8 +430,8 @@ pub struct RegroupEntryMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RuleMirror {
     pub how: Option<super::StHow>,
-    pub id: Option<String>,
-    pub idref: Option<String>,
+    pub id: Option<Box<str>>,
+    pub idref: Option<Box<str>>,
     pub shape_reference: Vec<super::ShapeReference>,
     pub r#type: Option<super::RuleType>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -454,7 +454,7 @@ pub struct RuleSetMirror {
 pub struct ShapeClippingPathMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub v: Option<String>,
+    pub v: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -481,7 +481,7 @@ pub struct ShapeGroupingHistoryMirror {
 #[rkyv(remote = super::ShapeIDMap)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeIDMapMirror {
-    pub data: Option<String>,
+    pub data: Option<Box<str>>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -521,9 +521,9 @@ pub struct ShapeProtectionsMirror {
 #[rkyv(remote = super::ShapeReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeReferenceMirror {
-    pub connectloc: Option<String>,
+    pub connectloc: Option<Box<str>>,
     pub end: Option<common_simple_types::BooleanValueWithBlankFalseState>,
-    pub idref: Option<String>,
+    pub idref: Option<Box<str>>,
     pub start: Option<common_simple_types::BooleanValueWithBlankFalseState>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -534,11 +534,11 @@ pub struct ShapeReferenceMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SkewTransformMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub id: Option<String>,
-    pub matrix: Option<String>,
-    pub offset: Option<String>,
+    pub id: Option<Box<str>>,
+    pub matrix: Option<Box<str>>,
+    pub offset: Option<Box<str>>,
     pub on: Option<common_simple_types::BooleanValue>,
-    pub origin: Option<String>,
+    pub origin: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -552,7 +552,7 @@ pub struct SkewTransformMirror {
 pub struct StorageForAlternateMathContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::super::drawing::AnyElementContent>,
-    pub content_type: Option<String>,
+    pub content_type: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -561,10 +561,10 @@ pub struct StorageForAlternateMathContentMirror {
 #[rkyv(remote = super::TextBoxBottomStroke)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextBoxBottomStrokeMirror {
-    pub althref: Option<String>,
-    pub color: Option<String>,
-    pub color2: Option<String>,
-    pub dashstyle: Option<String>,
+    pub althref: Option<Box<str>>,
+    pub color: Option<Box<str>>,
+    pub color2: Option<Box<str>>,
+    pub dashstyle: Option<Box<str>>,
     pub endarrow: Option<super::super::vml::StrokeArrowheadType>,
     pub endarrowlength: Option<super::super::vml::StrokeArrowheadLength>,
     pub endarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
@@ -572,34 +572,34 @@ pub struct TextBoxBottomStrokeMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
     pub filltype: Option<super::super::vml::ShapeFillType>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
     pub imageaspect: Option<super::super::vml::ImageScalingBehavior>,
-    pub imagesize: Option<String>,
+    pub imagesize: Option<Box<str>>,
     pub insetpen: Option<common_simple_types::BooleanValue>,
     pub joinstyle: Option<super::super::vml::LineJoinType>,
     pub linestyle: Option<super::super::vml::StrokeLineStyle>,
-    pub miterlimit: Option<String>,
+    pub miterlimit: Option<Box<str>>,
     pub on: Option<common_simple_types::BooleanValue>,
-    pub opacity: Option<String>,
-    pub src: Option<String>,
+    pub opacity: Option<Box<str>>,
+    pub src: Option<Box<str>>,
     pub startarrow: Option<super::super::vml::StrokeArrowheadType>,
     pub startarrowlength: Option<super::super::vml::StrokeArrowheadLength>,
     pub startarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub weight: Option<String>,
+    pub weight: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextBoxInteriorStroke)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextBoxInteriorStrokeMirror {
-    pub althref: Option<String>,
-    pub color: Option<String>,
-    pub color2: Option<String>,
-    pub dashstyle: Option<String>,
+    pub althref: Option<Box<str>>,
+    pub color: Option<Box<str>>,
+    pub color2: Option<Box<str>>,
+    pub dashstyle: Option<Box<str>>,
     pub endarrow: Option<super::super::vml::StrokeArrowheadType>,
     pub endarrowlength: Option<super::super::vml::StrokeArrowheadLength>,
     pub endarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
@@ -607,34 +607,34 @@ pub struct TextBoxInteriorStrokeMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
     pub filltype: Option<super::super::vml::ShapeFillType>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
     pub imageaspect: Option<super::super::vml::ImageScalingBehavior>,
-    pub imagesize: Option<String>,
+    pub imagesize: Option<Box<str>>,
     pub insetpen: Option<common_simple_types::BooleanValue>,
     pub joinstyle: Option<super::super::vml::LineJoinType>,
     pub linestyle: Option<super::super::vml::StrokeLineStyle>,
-    pub miterlimit: Option<String>,
+    pub miterlimit: Option<Box<str>>,
     pub on: Option<common_simple_types::BooleanValue>,
-    pub opacity: Option<String>,
-    pub src: Option<String>,
+    pub opacity: Option<Box<str>>,
+    pub src: Option<Box<str>>,
     pub startarrow: Option<super::super::vml::StrokeArrowheadType>,
     pub startarrowlength: Option<super::super::vml::StrokeArrowheadLength>,
     pub startarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub weight: Option<String>,
+    pub weight: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextBoxLeftStroke)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextBoxLeftStrokeMirror {
-    pub althref: Option<String>,
-    pub color: Option<String>,
-    pub color2: Option<String>,
-    pub dashstyle: Option<String>,
+    pub althref: Option<Box<str>>,
+    pub color: Option<Box<str>>,
+    pub color2: Option<Box<str>>,
+    pub dashstyle: Option<Box<str>>,
     pub endarrow: Option<super::super::vml::StrokeArrowheadType>,
     pub endarrowlength: Option<super::super::vml::StrokeArrowheadLength>,
     pub endarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
@@ -642,34 +642,34 @@ pub struct TextBoxLeftStrokeMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
     pub filltype: Option<super::super::vml::ShapeFillType>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
     pub imageaspect: Option<super::super::vml::ImageScalingBehavior>,
-    pub imagesize: Option<String>,
+    pub imagesize: Option<Box<str>>,
     pub insetpen: Option<common_simple_types::BooleanValue>,
     pub joinstyle: Option<super::super::vml::LineJoinType>,
     pub linestyle: Option<super::super::vml::StrokeLineStyle>,
-    pub miterlimit: Option<String>,
+    pub miterlimit: Option<Box<str>>,
     pub on: Option<common_simple_types::BooleanValue>,
-    pub opacity: Option<String>,
-    pub src: Option<String>,
+    pub opacity: Option<Box<str>>,
+    pub src: Option<Box<str>>,
     pub startarrow: Option<super::super::vml::StrokeArrowheadType>,
     pub startarrowlength: Option<super::super::vml::StrokeArrowheadLength>,
     pub startarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub weight: Option<String>,
+    pub weight: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextBoxRightStroke)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextBoxRightStrokeMirror {
-    pub althref: Option<String>,
-    pub color: Option<String>,
-    pub color2: Option<String>,
-    pub dashstyle: Option<String>,
+    pub althref: Option<Box<str>>,
+    pub color: Option<Box<str>>,
+    pub color2: Option<Box<str>>,
+    pub dashstyle: Option<Box<str>>,
     pub endarrow: Option<super::super::vml::StrokeArrowheadType>,
     pub endarrowlength: Option<super::super::vml::StrokeArrowheadLength>,
     pub endarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
@@ -677,34 +677,34 @@ pub struct TextBoxRightStrokeMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
     pub filltype: Option<super::super::vml::ShapeFillType>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
     pub imageaspect: Option<super::super::vml::ImageScalingBehavior>,
-    pub imagesize: Option<String>,
+    pub imagesize: Option<Box<str>>,
     pub insetpen: Option<common_simple_types::BooleanValue>,
     pub joinstyle: Option<super::super::vml::LineJoinType>,
     pub linestyle: Option<super::super::vml::StrokeLineStyle>,
-    pub miterlimit: Option<String>,
+    pub miterlimit: Option<Box<str>>,
     pub on: Option<common_simple_types::BooleanValue>,
-    pub opacity: Option<String>,
-    pub src: Option<String>,
+    pub opacity: Option<Box<str>>,
+    pub src: Option<Box<str>>,
     pub startarrow: Option<super::super::vml::StrokeArrowheadType>,
     pub startarrowlength: Option<super::super::vml::StrokeArrowheadLength>,
     pub startarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub weight: Option<String>,
+    pub weight: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextBoxTopStroke)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextBoxTopStrokeMirror {
-    pub althref: Option<String>,
-    pub color: Option<String>,
-    pub color2: Option<String>,
-    pub dashstyle: Option<String>,
+    pub althref: Option<Box<str>>,
+    pub color: Option<Box<str>>,
+    pub color2: Option<Box<str>>,
+    pub dashstyle: Option<Box<str>>,
     pub endarrow: Option<super::super::vml::StrokeArrowheadType>,
     pub endarrowlength: Option<super::super::vml::StrokeArrowheadLength>,
     pub endarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
@@ -712,24 +712,24 @@ pub struct TextBoxTopStrokeMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
     pub filltype: Option<super::super::vml::ShapeFillType>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
     pub imageaspect: Option<super::super::vml::ImageScalingBehavior>,
-    pub imagesize: Option<String>,
+    pub imagesize: Option<Box<str>>,
     pub insetpen: Option<common_simple_types::BooleanValue>,
     pub joinstyle: Option<super::super::vml::LineJoinType>,
     pub linestyle: Option<super::super::vml::StrokeLineStyle>,
-    pub miterlimit: Option<String>,
+    pub miterlimit: Option<Box<str>>,
     pub on: Option<common_simple_types::BooleanValue>,
-    pub opacity: Option<String>,
-    pub src: Option<String>,
+    pub opacity: Option<Box<str>>,
+    pub src: Option<Box<str>>,
     pub startarrow: Option<super::super::vml::StrokeArrowheadType>,
     pub startarrowlength: Option<super::super::vml::StrokeArrowheadLength>,
     pub startarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub weight: Option<String>,
+    pub weight: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -737,10 +737,10 @@ pub struct TextBoxTopStrokeMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct UIDefaultColorsMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extrusioncolor: Option<String>,
-    pub fillcolor: Option<String>,
-    pub shadowcolor: Option<String>,
-    pub strokecolor: Option<String>,
+    pub extrusioncolor: Option<Box<str>>,
+    pub fillcolor: Option<Box<str>>,
+    pub shadowcolor: Option<Box<str>>,
+    pub strokecolor: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -751,12 +751,12 @@ pub struct UIDefaultColorsMirror {
 pub struct VMLDiagramMirror {
     pub autoformat: Option<common_simple_types::BooleanValue>,
     pub autolayout: Option<common_simple_types::BooleanValue>,
-    pub constrainbounds: Option<String>,
-    pub dgmbasetextscale: Option<String>,
-    pub dgmfontsize: Option<String>,
-    pub dgmscalex: Option<String>,
-    pub dgmscaley: Option<String>,
-    pub dgmstyle: Option<String>,
+    pub constrainbounds: Option<Box<str>>,
+    pub dgmbasetextscale: Option<Box<str>>,
+    pub dgmfontsize: Option<Box<str>>,
+    pub dgmscalex: Option<Box<str>>,
+    pub dgmscaley: Option<Box<str>>,
+    pub dgmstyle: Option<Box<str>>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
     pub relationship_table: Option<Box<super::DiagramRelationshipTable>>,
     pub reverse: Option<common_simple_types::BooleanValue>,
@@ -770,7 +770,7 @@ pub struct VMLDiagramMirror {
 pub struct WordprocessingMLFieldSwitchesMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]

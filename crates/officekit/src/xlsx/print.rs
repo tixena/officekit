@@ -12,9 +12,9 @@
 //!     ("_xlnm.Print_Area", "2", "Fit!$A$1:$T$100"),
 //! ] {
 //!     let mut defined = DefinedName::default();
-//!     defined.name = Some(name.to_owned());
-//!     defined.local_sheet_id = Some(sheet.to_owned());
-//!     defined.value = text.to_owned();
+//!     defined.name = Some(name.into());
+//!     defined.local_sheet_id = Some(sheet.into());
+//!     defined.value = text.into();
 //!     names.defined_name.push(defined);
 //! }
 //! let mut workbook = Workbook::default();
@@ -89,7 +89,7 @@ fn areas<'workbook>(
                 .local_sheet_id
                 .as_deref()
                 .and_then(|id| id.parse::<u32>().ok());
-            (named && sheet == Some(position)).then_some(defined.value.as_str())
+            (named && sheet == Some(position)).then_some(&*defined.value)
         })
     });
     text.into_iter().flat_map(parts).filter_map(sheet_area)

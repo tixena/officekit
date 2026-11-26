@@ -383,24 +383,24 @@ impl Eq for ExtLstWith<()> {}
 #[non_exhaustive]
 pub struct TaskpaneWith<X: UserData> {
     /// The attribute `dockstate`, when the element has it.
-    pub dockstate: Option<String>,
+    pub dockstate: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `locked`, when the element has it.
-    pub locked: Option<String>,
+    pub locked: Option<Box<str>>,
     /// The attribute `row`, when the element has it.
-    pub row: Option<String>,
+    pub row: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWebextensionsTaskpanes201011Taskpane,
     /// The attribute `visibility`, when the element has it.
-    pub visibility: Option<String>,
+    pub visibility: Option<Box<str>>,
     /// The child that is `Webextensionref`, which the schema requires.
     pub webextensionref: Box<WebextensionrefWith<X>>,
     /// The attribute `width`, when the element has it.
-    pub width: Option<String>,
+    pub width: Option<Box<str>>,
 }
 
 /// The `wetp:taskpane` element of the tree a read gives: [`TaskpaneWith`] holding nothing in
@@ -464,7 +464,7 @@ pub trait Visitor: crate::Visitor {
 #[non_exhaustive]
 pub struct WebextensionrefWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

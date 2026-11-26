@@ -222,11 +222,11 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::CustomXMLSchemaReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXMLSchemaReferenceMirror {
-    pub manifest_location: Option<String>,
-    pub schema_language: Option<String>,
-    pub schema_location: Option<String>,
+    pub manifest_location: Option<Box<str>>,
+    pub schema_language: Option<Box<str>>,
+    pub schema_location: Option<Box<str>>,
     pub unknown: Option<Box<crate::Unknown>>,
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     pub user_data: (),
 }
 

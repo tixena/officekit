@@ -224,8 +224,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct DynamicArrayPropertiesMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub f_collapsed: Option<String>,
-    pub f_dynamic: Option<String>,
+    pub f_collapsed: Option<Box<str>>,
+    pub f_dynamic: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

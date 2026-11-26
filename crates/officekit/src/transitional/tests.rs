@@ -79,7 +79,7 @@ fn justified(alignment: &str, value: Option<&str>) -> Paragraph {
     paragraph.properties = Some(Box::new(properties));
     if let Some(text) = value {
         let mut characters = Text::default();
-        characters.value = text.to_owned();
+        characters.value = Box::from(text);
         let mut run = TextRun::default();
         run.content = vec![TextRunContent::from(characters)];
         paragraph.content = vec![ParagraphContent::from(run)];
@@ -90,9 +90,9 @@ fn justified(alignment: &str, value: Option<&str>) -> Paragraph {
 /// A cell `A1` of the type `kind` holding `value`.
 fn typed_cell(kind: &str, value: &str) -> Cell {
     let mut held = CellValue::default();
-    held.value = value.to_owned();
+    held.value = Box::from(value);
     let mut cell = Cell::default();
-    cell.r = Some("A1".to_owned());
+    cell.r = Some(Box::from("A1"));
     cell.t = Some(CellType::from(kind.to_owned()));
     cell.value = Some(Box::new(held));
     cell
@@ -127,8 +127,8 @@ fn a_transitional_paragraph_writes_back_unchanged() {
 #[test]
 fn spreadsheet_string_elements_read_back_with_their_space() {
     let mut text = SpreadsheetText::default();
-    text.space = Some("preserve".to_owned());
-    text.value = " two".to_owned();
+    text.space = Some(Box::from("preserve"));
+    text.value = Box::from(" two");
     assert_eq!(
         written(&text),
         format!("<x:t xmlns:x=\"{X}\" xml:space=\"preserve\"> two</x:t>")
@@ -137,8 +137,8 @@ fn spreadsheet_string_elements_read_back_with_their_space() {
     assert_eq!(read_text.space, text.space);
     assert_eq!(read_text.value, text.value);
     let mut value = CellValue::default();
-    value.space = Some("preserve".to_owned());
-    value.value = " 1".to_owned();
+    value.space = Some(Box::from("preserve"));
+    value.value = Box::from(" 1");
     let read_value = CellValue::from_transitional(&value.to_transitional().unwrap()).unwrap();
     assert_eq!(read_value.space, value.space);
     assert_eq!(read_value.value, value.value);
@@ -147,7 +147,7 @@ fn spreadsheet_string_elements_read_back_with_their_space() {
 #[test]
 fn spreadsheet_text_with_no_space_writes_no_attribute() {
     let mut text = SpreadsheetText::default();
-    text.value = "two".to_owned();
+    text.value = Box::from("two");
     assert_eq!(written(&text), format!("<x:t xmlns:x=\"{X}\">two</x:t>"));
 }
 
@@ -158,7 +158,7 @@ fn a_read_holds_xml_space_on_the_field_of_spreadsheet_text() {
     )))
     .unwrap();
     assert_eq!(text.space.as_deref(), Some("preserve"));
-    assert_eq!(text.value, " two");
+    assert_eq!(text.value, Box::from(" two"));
     assert_eq!(text.unknown().unwrap().attributes, []);
 }
 
@@ -195,7 +195,7 @@ fn a_date_cell_has_no_transitional_form() {
     );
     let mut row = Row::default();
     row.cell = vec![typed_cell("d", "2026-10-14")];
-    row.r = Some("1".to_owned());
+    row.r = Some(Box::from("1"));
     let mut sheet = Worksheet::default();
     sheet.sheet_data.row = vec![row];
     assert_eq!(refused(&sheet), Some("c/@t"));

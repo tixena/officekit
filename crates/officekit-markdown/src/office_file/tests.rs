@@ -85,7 +85,7 @@ fn paragraphs(docx: &Docx) -> Vec<String> {
             let style = properties
                 .and_then(|own| own.referenced_paragraph_style.as_ref())
                 .and_then(|style| style.val.clone())
-                .unwrap_or_else(|| "-".to_owned());
+                .unwrap_or_else(|| Box::from("-"));
             let numbered = properties
                 .is_some_and(|own| own.numbering_definition_instance_reference_num_pr.is_some());
             let text: String = paragraph
@@ -101,7 +101,7 @@ fn paragraphs(docx: &Docx) -> Vec<String> {
                 .flatten()
                 .filter_map(|piece| {
                     if let TextRunContent::Text(characters) = piece {
-                        Some(characters.value.as_str())
+                        Some(&*characters.value)
                     } else {
                         None
                     }

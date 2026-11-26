@@ -234,7 +234,7 @@ pub struct BottomBorderMirror {
     pub r#type: Option<super::BorderType>,
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub width: Option<String>,
+    pub width: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -245,7 +245,7 @@ pub struct LeftBorderMirror {
     pub r#type: Option<super::BorderType>,
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub width: Option<String>,
+    pub width: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -256,7 +256,7 @@ pub struct RightBorderMirror {
     pub r#type: Option<super::BorderType>,
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub width: Option<String>,
+    pub width: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -279,7 +279,7 @@ pub struct TopBorderMirror {
     pub r#type: Option<super::BorderType>,
     pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
-    pub width: Option<String>,
+    pub width: Option<Box<str>>,
 }
 
 impl From<AnchorLocationIsLockedMirror> for super::AnchorLocationIsLocked {

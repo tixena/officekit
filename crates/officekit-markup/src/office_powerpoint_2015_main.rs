@@ -279,7 +279,7 @@ pub struct DesignElemWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficePowerpoint2015MainDesignElem,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `p16:designElem` element of the tree a read gives: [`DesignElemWith`] holding nothing in

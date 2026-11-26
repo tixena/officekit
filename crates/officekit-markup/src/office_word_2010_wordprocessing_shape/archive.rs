@@ -226,27 +226,27 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct BodyPrMirror {
     pub anchor: Option<drawing::TextAnchoringTypes>,
-    pub anchor_ctr: Option<String>,
+    pub anchor_ctr: Option<Box<str>>,
     pub b_ins: Option<drawing::StCoordinate32>,
-    pub compat_ln_spc: Option<String>,
+    pub compat_ln_spc: Option<Box<str>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub force_aa: Option<String>,
-    pub from_word_art: Option<String>,
+    pub force_aa: Option<Box<str>>,
+    pub from_word_art: Option<Box<str>>,
     pub horz_overflow: Option<drawing::TextHorizontalOverflowTypes>,
     pub l_ins: Option<drawing::StCoordinate32>,
     pub num_col: Option<drawing::TextColumnCount>,
     pub preset_text_warp: Option<Box<drawing::PresetTextWarp>>,
     pub r_ins: Option<drawing::StCoordinate32>,
     pub rot: Option<drawing::Angle>,
-    pub rtl_col: Option<String>,
+    pub rtl_col: Option<Box<str>>,
     pub scene3d: Option<Box<drawing::Scene3d>>,
     pub spc_col: Option<drawing::PositiveCoordinatePoint>,
-    pub spc_first_last_para: Option<String>,
+    pub spc_first_last_para: Option<Box<str>>,
     pub t_ins: Option<drawing::StCoordinate32>,
     pub text3d_content: Option<Box<drawing::Text3DContent>>,
     pub text_autofit_content: Option<Box<drawing::TextAutofitContent>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub upright: Option<String>,
+    pub upright: Option<Box<str>>,
     pub user_data: (),
     pub vert: Option<drawing::VerticalTextTypes>,
     pub vert_overflow: Option<drawing::TextVerticalOverflow>,
@@ -270,13 +270,13 @@ pub struct CNvCnPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CNvPrMirror {
     pub click_hyperlink: Option<Box<drawing::ClickHyperlink>>,
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     pub hyperlink_for_hover: Option<Box<drawing::HyperlinkForHover>>,
     pub id: Option<drawing::DrawingElementID>,
-    pub name: Option<String>,
-    pub title: Option<String>,
+    pub name: Option<Box<str>>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -287,7 +287,7 @@ pub struct CNvPrMirror {
 pub struct CNvSpPrMirror {
     pub extension_list: Option<Box<drawing::ExtensionList>>,
     pub shape_locks: Option<Box<drawing::ShapeLocks>>,
-    pub tx_box: Option<String>,
+    pub tx_box: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -306,8 +306,8 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct LinkedTxbxMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub id: Option<String>,
-    pub seq: Option<String>,
+    pub id: Option<Box<str>>,
+    pub seq: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -346,7 +346,7 @@ pub struct StyleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TxbxMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub rich_text_box_content_container: Option<Box<wordprocessing::RichTextBoxContentContainer>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -359,7 +359,7 @@ pub struct WspMirror {
     pub body_pr: Box<super::BodyPr>,
     pub c_nv_pr: Option<Box<super::CNvPr>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub normal_east_asian_flow: Option<String>,
+    pub normal_east_asian_flow: Option<Box<str>>,
     pub shape_non_visual_properties_content: Box<super::ShapeNonVisualPropertiesContent>,
     pub shape_text_content: Option<Box<super::ShapeTextContent>>,
     pub sp_pr: Box<super::SpPr>,

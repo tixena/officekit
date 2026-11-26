@@ -227,7 +227,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct ApplyToEndMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -236,7 +236,7 @@ pub struct ApplyToEndMirror {
 pub struct ApplyToFrontMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -245,7 +245,7 @@ pub struct ApplyToFrontMirror {
 pub struct ApplyToSidesMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -331,7 +331,7 @@ pub struct AreaChartsMirror {
 pub struct AutoTitleIsDeletedMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -340,7 +340,7 @@ pub struct AutoTitleIsDeletedMirror {
 pub struct AutomaticCategoryAxisMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -349,7 +349,7 @@ pub struct AutomaticCategoryAxisMirror {
 pub struct AxisIDMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -393,7 +393,7 @@ pub struct BackWallMirror {
 pub struct BackwardMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -539,7 +539,7 @@ pub struct BaseTimeUnitMirror {
 pub struct Bubble3DMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -736,7 +736,7 @@ pub struct ChartExtensibilityMirror {
 pub struct ChartObjectMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -833,7 +833,7 @@ pub struct CrossesMirror {
 pub struct CrossingAxisIDMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -842,7 +842,7 @@ pub struct CrossingAxisIDMirror {
 pub struct CrossingValueMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -851,7 +851,7 @@ pub struct CrossingValueMirror {
 pub struct CustomDisplayUnitMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -869,7 +869,7 @@ pub struct CustomSplitMirror {
 pub struct DataCannotBeChangedMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -963,7 +963,7 @@ pub struct DataTableMirror {
 pub struct Date1904Mirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1013,7 +1013,7 @@ pub struct DateAxisMirror {
 pub struct DeleteMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1040,7 +1040,7 @@ pub struct DisplayBlanksAsMirror {
 pub struct DisplayEquationMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1049,7 +1049,7 @@ pub struct DisplayEquationMirror {
 pub struct DisplayRSquaredValueMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1139,7 +1139,7 @@ pub struct DropLinesMirror {
 pub struct EditingLanguageMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1166,7 +1166,7 @@ pub struct ErrorBarTypeMirror {
 pub struct ErrorBarValueMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1208,7 +1208,7 @@ pub struct ErrorBarsMirror {
 pub struct EvenFooterMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1217,7 +1217,7 @@ pub struct EvenFooterMirror {
 pub struct EvenHeaderMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1226,7 +1226,7 @@ pub struct EvenHeaderMirror {
 pub struct ExplosionMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1239,7 +1239,7 @@ pub struct ExtensionMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::super::drawing::AnyElementContent>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     pub user_data: (),
 }
 
@@ -1247,7 +1247,7 @@ pub struct ExtensionMirror {
 #[rkyv(remote = super::ExternalDataRelationship)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ExternalDataRelationshipMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub update_automatically: Option<Box<super::UpdateAutomatically>>,
     pub user_data: (),
@@ -1259,7 +1259,7 @@ pub struct ExternalDataRelationshipMirror {
 pub struct FirstFooterMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1268,7 +1268,7 @@ pub struct FirstFooterMirror {
 pub struct FirstHeaderMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1303,7 +1303,7 @@ pub struct FloorMirror {
 pub struct FormatCodeMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1312,7 +1312,7 @@ pub struct FormatCodeMirror {
 pub struct FormatIDMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1321,7 +1321,7 @@ pub struct FormatIDMirror {
 pub struct FormattingMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1330,7 +1330,7 @@ pub struct FormattingMirror {
 pub struct FormulaMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1339,7 +1339,7 @@ pub struct FormulaMirror {
 pub struct ForwardMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1373,9 +1373,9 @@ pub struct GroupingMirror {
 #[rkyv(remote = super::HeaderAndFooter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HeaderAndFooterMirror {
-    pub align_with_margins: Option<String>,
-    pub different_first: Option<String>,
-    pub different_odd_even: Option<String>,
+    pub align_with_margins: Option<Box<str>>,
+    pub different_first: Option<Box<str>>,
+    pub different_odd_even: Option<Box<str>>,
     pub even_footer: Option<Box<super::EvenFooter>>,
     pub even_header: Option<Box<super::EvenHeader>>,
     pub first_footer: Option<Box<super::FirstFooter>>,
@@ -1392,7 +1392,7 @@ pub struct HeaderAndFooterMirror {
 pub struct HeightMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1441,7 +1441,7 @@ pub struct HoleSizeMirror {
 pub struct IndexMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1450,7 +1450,7 @@ pub struct IndexMirror {
 pub struct InterceptMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1459,7 +1459,7 @@ pub struct InterceptMirror {
 pub struct InvertIfNegativeMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1523,7 +1523,7 @@ pub struct LeaderLinesMirror {
 pub struct LeftMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1539,7 +1539,7 @@ pub struct LeftModeMirror {
 #[rkyv(remote = super::LegacyDrawingForHeadersAndFooters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LegacyDrawingForHeadersAndFootersMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1780,7 +1780,7 @@ pub struct MarkerMirror {
 pub struct MaximumMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1789,7 +1789,7 @@ pub struct MaximumMirror {
 pub struct MinimumMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1882,7 +1882,7 @@ pub struct MultiLevelStringReferenceMirror {
 pub struct NoEndCapMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1891,7 +1891,7 @@ pub struct NoEndCapMirror {
 pub struct NoMultiLevelLabelsMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1914,8 +1914,8 @@ pub struct NumberCacheMirror {
 #[rkyv(remote = super::NumberFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberFormatMirror {
-    pub format_code: Option<String>,
-    pub source_linked: Option<String>,
+    pub format_code: Option<Box<str>>,
+    pub source_linked: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1956,8 +1956,8 @@ pub struct NumberReferenceMirror {
 #[rkyv(remote = super::NumericPoint)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumericPointMirror {
-    pub format_code: Option<String>,
-    pub idx: Option<String>,
+    pub format_code: Option<Box<str>>,
+    pub idx: Option<Box<str>>,
     pub numeric_value: Box<super::NumericValue>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -1969,7 +1969,7 @@ pub struct NumericPointMirror {
 pub struct NumericValueMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1978,7 +1978,7 @@ pub struct NumericValueMirror {
 pub struct OddFooterMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1987,7 +1987,7 @@ pub struct OddFooterMirror {
 pub struct OddHeaderMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1996,7 +1996,7 @@ pub struct OddHeaderMirror {
 pub struct OrderMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2014,19 +2014,19 @@ pub struct OverlapMirror {
 pub struct OverlayMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PageMargins)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PageMarginsMirror {
-    pub b: Option<String>,
-    pub footer: Option<String>,
-    pub header: Option<String>,
-    pub l: Option<String>,
-    pub r: Option<String>,
-    pub t: Option<String>,
+    pub b: Option<Box<str>>,
+    pub footer: Option<Box<str>>,
+    pub header: Option<Box<str>>,
+    pub l: Option<Box<str>>,
+    pub r: Option<Box<str>>,
+    pub t: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2035,19 +2035,19 @@ pub struct PageMarginsMirror {
 #[rkyv(remote = super::PageSetup)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PageSetupMirror {
-    pub black_and_white: Option<String>,
-    pub copies: Option<String>,
-    pub draft: Option<String>,
-    pub first_page_number: Option<String>,
-    pub horizontal_dpi: Option<String>,
+    pub black_and_white: Option<Box<str>>,
+    pub copies: Option<Box<str>>,
+    pub draft: Option<Box<str>>,
+    pub first_page_number: Option<Box<str>>,
+    pub horizontal_dpi: Option<Box<str>>,
     pub orientation: Option<super::PrintedPageOrientation>,
     pub paper_height: Option<common_simple_types::PositiveUniversalMeasurement>,
-    pub paper_size: Option<String>,
+    pub paper_size: Option<Box<str>>,
     pub paper_width: Option<common_simple_types::PositiveUniversalMeasurement>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub use_first_page_number: Option<String>,
+    pub use_first_page_number: Option<Box<str>>,
     pub user_data: (),
-    pub vertical_dpi: Option<String>,
+    pub vertical_dpi: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2240,7 +2240,7 @@ pub struct PivotFormatsMirror {
 pub struct PivotNameMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2287,7 +2287,7 @@ pub struct PlotAreaMirror {
 pub struct PlotVisibleOnlyMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2309,7 +2309,7 @@ pub struct PlusMirror {
 pub struct PointCountMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2409,7 +2409,7 @@ pub struct RadarStyleMirror {
 #[rkyv(remote = super::ReferenceToChartDrawingPart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferenceToChartDrawingPartMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2418,7 +2418,7 @@ pub struct ReferenceToChartDrawingPartMirror {
 #[rkyv(remote = super::ReferenceToChartPart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferenceToChartPartMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -2446,7 +2446,7 @@ pub struct RichTextMirror {
 pub struct RightAngleAxesMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2455,7 +2455,7 @@ pub struct RightAngleAxesMirror {
 pub struct RoundedCornersMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2544,7 +2544,7 @@ pub struct ScatterStyleMirror {
 pub struct SecondPiePointMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2562,7 +2562,7 @@ pub struct SecondPieSizeMirror {
 pub struct SelectionMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2571,7 +2571,7 @@ pub struct SelectionMirror {
 pub struct SeparatorMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2677,7 +2677,7 @@ pub struct ShapePropertiesMirror {
 pub struct ShowBubbleSizeMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2686,7 +2686,7 @@ pub struct ShowBubbleSizeMirror {
 pub struct ShowCategoryNameMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2695,7 +2695,7 @@ pub struct ShowCategoryNameMirror {
 pub struct ShowDataLabelsOverMaximumMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2704,7 +2704,7 @@ pub struct ShowDataLabelsOverMaximumMirror {
 pub struct ShowHorizontalBorderMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2713,7 +2713,7 @@ pub struct ShowHorizontalBorderMirror {
 pub struct ShowLeaderLinesMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2722,7 +2722,7 @@ pub struct ShowLeaderLinesMirror {
 pub struct ShowLegendKeyMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2731,7 +2731,7 @@ pub struct ShowLegendKeyMirror {
 pub struct ShowLegendKeysMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2740,7 +2740,7 @@ pub struct ShowLegendKeysMirror {
 pub struct ShowMarkerMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2749,7 +2749,7 @@ pub struct ShowMarkerMirror {
 pub struct ShowNegativeBubblesMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2758,7 +2758,7 @@ pub struct ShowNegativeBubblesMirror {
 pub struct ShowOutlineBorderMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2767,7 +2767,7 @@ pub struct ShowOutlineBorderMirror {
 pub struct ShowPercentMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2776,7 +2776,7 @@ pub struct ShowPercentMirror {
 pub struct ShowSeriesNameMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2785,7 +2785,7 @@ pub struct ShowSeriesNameMirror {
 pub struct ShowValueMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2794,7 +2794,7 @@ pub struct ShowValueMirror {
 pub struct ShowVerticalBorderMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2838,7 +2838,7 @@ pub struct SizeRepresentsMirror {
 pub struct SmoothingMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2847,7 +2847,7 @@ pub struct SmoothingMirror {
 pub struct SplitPositionMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2917,7 +2917,7 @@ pub struct StringLiteralMirror {
 #[rkyv(remote = super::StringPoint)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StringPointMirror {
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     pub numeric_value: Box<super::NumericValue>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -3099,7 +3099,7 @@ pub struct TitleMirror {
 pub struct TopMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3139,7 +3139,7 @@ pub struct TrendlineLabelMirror {
 pub struct TrendlineNameMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3214,7 +3214,7 @@ pub struct UpDownBarsMirror {
 pub struct UpdateAutomaticallyMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3223,7 +3223,7 @@ pub struct UpdateAutomaticallyMirror {
 pub struct UserInterfaceMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3297,7 +3297,7 @@ pub struct ValuesMirror {
 pub struct VaryColorsByPointMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3325,7 +3325,7 @@ pub struct ViewIn3DMirror {
 pub struct WidthMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3343,7 +3343,7 @@ pub struct WidthModeMirror {
 pub struct WireframeMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]

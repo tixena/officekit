@@ -275,9 +275,9 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct SvgBlipWith<X: UserData> {
     /// The attribute `r:embed`, when the element has it.
-    pub embed: Option<String>,
+    pub embed: Option<Box<str>>,
     /// The attribute `r:link`, when the element has it.
-    pub link: Option<String>,
+    pub link: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

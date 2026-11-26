@@ -212,9 +212,9 @@ fn number(value: &str) -> DecimalNumberValue {
 /// table part of `column` when given.
 fn spreadsheet(sheet: &Worksheet, column: Option<TableColumn>) -> Package {
     let mut information = SheetInformation::default();
-    information.id = Some("rId1".to_owned());
-    information.name = Some("S".to_owned());
-    information.sheet_id = Some("1".to_owned());
+    information.id = Some(Box::from("rId1"));
+    information.name = Some(Box::from("S"));
+    information.sheet_id = Some(Box::from("1"));
     let mut workbook = Workbook::default();
     workbook.sheets.sheet_information = vec![information];
     let mut format = Format::default();
@@ -223,7 +223,7 @@ fn spreadsheet(sheet: &Worksheet, column: Option<TableColumn>) -> Package {
     format.font_id = Some(FontId::from("0".to_owned()));
     format.num_fmt_id = Some(NumberFormatId::from("0".to_owned()));
     let mut formats = CellFormats::default();
-    formats.count = Some("1".to_owned());
+    formats.count = Some(Box::from("1"));
     formats.format = vec![format];
     let mut styles = StyleSheet::default();
     styles.cell_formats = Some(Box::new(formats));
@@ -258,12 +258,12 @@ fn spreadsheet(sheet: &Worksheet, column: Option<TableColumn>) -> Package {
     ];
     if let Some(table_column) = column {
         let mut table = Table::default();
-        table.columns.count = Some("1".to_owned());
+        table.columns.count = Some(Box::from("1"));
         table.columns.table_column = vec![table_column];
-        table.display_name = Some("T".to_owned());
-        table.id = Some("1".to_owned());
-        table.name = Some("T".to_owned());
-        table.r#ref = Some("A1:A2".to_owned());
+        table.display_name = Some(Box::from("T"));
+        table.id = Some(Box::from("1"));
+        table.name = Some(Box::from("T"));
+        table.r#ref = Some(Box::from("A1:A2"));
         parts.push((
             "/xl/tables/table1.xml",
             TABLE,
@@ -279,7 +279,7 @@ fn spreadsheet(sheet: &Worksheet, column: Option<TableColumn>) -> Package {
 fn sheet_of_cells(cells: Vec<Cell>) -> Worksheet {
     let mut row = Row::default();
     row.cell = cells;
-    row.r = Some("1".to_owned());
+    row.r = Some(Box::from("1"));
     let mut sheet = Worksheet::default();
     sheet.sheet_data.row = vec![row];
     sheet
@@ -326,8 +326,8 @@ fn a_value_out_of_range_is_outside_the_constraint() {
     let mut properties = ParagraphProperties::default();
     properties.associated_outline_level = Some(Box::new(level));
     let mut identified = Paragraph::default();
-    identified.para_id = Some("80000001".to_owned());
-    identified.text_id = Some("7FFFFFFF".to_owned());
+    identified.para_id = Some(Box::from("80000001"));
+    identified.text_id = Some(Box::from("7FFFFFFF"));
     let package = word(
         vec![paragraph_with(properties), BlockContent::from(identified)],
         &[],
@@ -351,7 +351,7 @@ fn a_value_out_of_range_is_outside_the_constraint() {
 fn a_value_too_long_is_outside_the_constraint() {
     let styled = |length: usize| {
         let mut style = ReferencedParagraphStyle::default();
-        style.val = Some("s".repeat(length));
+        style.val = Some("s".repeat(length).into());
         let mut properties = ParagraphProperties::default();
         properties.referenced_paragraph_style = Some(Box::new(style));
         word(vec![paragraph_with(properties)], &[])
@@ -369,7 +369,7 @@ fn a_value_too_long_is_outside_the_constraint() {
 #[test]
 fn a_value_off_its_pattern_is_outside_the_constraint() {
     let mut symbol = RadixPointForFieldCodeEvaluation::default();
-    symbol.val = Some("ab".to_owned());
+    symbol.val = Some(Box::from("ab"));
     let mut settings = DocumentSettings::default();
     settings.radix_point_for_field_code_evaluation = Some(Box::new(symbol));
     assert_eq!(
@@ -386,7 +386,7 @@ fn a_bookmark_id_held_twice_is_reported_once_on_the_last() {
     let bookmark = |id: &str, name: &str| {
         let mut start = BookmarkStart::default();
         start.id = Some(number(id));
-        start.name = Some(name.to_owned());
+        start.name = Some(Box::from(name));
         paragraph_of(vec![ParagraphContent::from(start)])
     };
     let package = word(
@@ -438,10 +438,10 @@ fn a_footnote_reference_to_a_missing_footnote_is_reported() {
 #[test]
 fn an_id_naming_no_relationship_is_reported() {
     let mut text = Text::default();
-    text.value = "x".to_owned();
+    text.value = Box::from("x");
     let mut hyperlink = Hyperlink::default();
     hyperlink.content = vec![run_of(TextRunContent::from(text))];
-    hyperlink.id = Some("rId99".to_owned());
+    hyperlink.id = Some(Box::from("rId99"));
     let package = word(
         vec![paragraph_of(vec![ParagraphContent::from(hyperlink)])],
         &[],
@@ -485,7 +485,7 @@ fn a_header_reference_naming_a_footer_relationship_is_reported() {
     header.content = vec![BlockContent::from(Paragraph::default())];
     let reference = |kind: &str, id: &str| {
         let mut reference = HeaderReference::default();
-        reference.id = Some(id.to_owned());
+        reference.id = Some(Box::from(id));
         reference.r#type = Some(HeaderOrFooterType::from(kind.to_owned()));
         SectionPropertiesContent::from(reference)
     };
@@ -549,9 +549,9 @@ fn a_required_attribute_left_out_cannot_be_omitted() {
 #[test]
 fn a_value_the_other_attribute_does_not_allow_conflicts_with_it() {
     let mut setting = CustomCompatibilitySetting::default();
-    setting.name = Some("compatibilityMode".to_owned());
-    setting.uri = Some("http://schemas.microsoft.com/office/word".to_owned());
-    setting.val = Some("13".to_owned());
+    setting.name = Some(Box::from("compatibilityMode"));
+    setting.uri = Some(Box::from("http://schemas.microsoft.com/office/word"));
+    setting.val = Some(Box::from("13"));
     let mut compatibility = CompatibilitySettings::default();
     compatibility.custom_compatibility_setting = vec![setting];
     let mut settings = DocumentSettings::default();
@@ -569,7 +569,7 @@ fn a_value_the_other_attribute_does_not_allow_conflicts_with_it() {
 fn two_mutually_exclusive_attributes_are_reported() {
     let mut color = SheetTabColor::default();
     color.rgb = Some(HexUnsignedInteger::from("FF0000FF".to_owned()));
-    color.theme = Some("1".to_owned());
+    color.theme = Some(Box::from("1"));
     let mut properties = SheetProperties::default();
     properties.sheet_tab_color = Some(Box::new(color));
     let mut sheet = Worksheet::default();
@@ -586,9 +586,9 @@ fn two_mutually_exclusive_attributes_are_reported() {
 #[test]
 fn a_minimum_above_its_maximum_exceeds_it() {
     let mut column = ColumnWidthFormatting::default();
-    column.max = Some("2".to_owned());
-    column.min = Some("5".to_owned());
-    column.width = Some("9".to_owned());
+    column.max = Some(Box::from("2"));
+    column.min = Some(Box::from("5"));
+    column.width = Some(Box::from("9"));
     let mut columns = ColumnInformation::default();
     columns.column_width_formatting = vec![column];
     let mut sheet = Worksheet::default();
@@ -605,12 +605,12 @@ fn a_minimum_above_its_maximum_exceeds_it() {
 #[test]
 fn a_shared_formula_requires_its_index() {
     let mut formula = FormulaF::default();
-    formula.r#ref = Some("B1:B2".to_owned());
+    formula.r#ref = Some(Box::from("B1:B2"));
     formula.t = Some(FormulaType::from("shared".to_owned()));
-    formula.value = "A1".to_owned();
+    formula.value = Box::from("A1");
     let mut cell = Cell::default();
     cell.formula_f = Some(Box::new(formula));
-    cell.r = Some("B1".to_owned());
+    cell.r = Some(Box::from("B1"));
     assert_eq!(
         semantic(
             &spreadsheet(&sheet_of_cells(vec![cell]), None),
@@ -627,13 +627,13 @@ fn a_shared_formula_requires_its_index() {
 #[test]
 fn a_source_range_must_be_absent_unless_the_source_is_a_range() {
     let mut item = WebPublishingItem::default();
-    item.destination_file = Some("f.htm".to_owned());
-    item.div_id = Some("d".to_owned());
-    item.id = Some("1".to_owned());
-    item.source_ref = Some("A1".to_owned());
+    item.destination_file = Some(Box::from("f.htm"));
+    item.div_id = Some(Box::from("d"));
+    item.id = Some(Box::from("1"));
+    item.source_ref = Some(Box::from("A1"));
     item.source_type = Some(WebSourceType::from("sheet".to_owned()));
     let mut items = WebPublishingItems::default();
-    items.count = Some("1".to_owned());
+    items.count = Some(Box::from("1"));
     items.web_publishing_item = vec![item];
     let mut sheet = Worksheet::default();
     sheet.web_publishing_items = Some(Box::new(items));
@@ -650,10 +650,10 @@ fn a_source_range_must_be_absent_unless_the_source_is_a_range() {
 #[test]
 fn a_totals_label_must_be_absent_for_a_custom_function() {
     let mut column = TableColumn::default();
-    column.id = Some("1".to_owned());
-    column.name = Some("C".to_owned());
+    column.id = Some(Box::from("1"));
+    column.name = Some(Box::from("C"));
     column.totals_row_function = Some(TotalsRowFunctionTypes::from("custom".to_owned()));
-    column.totals_row_label = Some("x".to_owned());
+    column.totals_row_label = Some(Box::from("x"));
     assert_eq!(
         semantic(
             &spreadsheet(&Worksheet::default(), Some(column)),
@@ -670,10 +670,10 @@ fn a_totals_label_must_be_absent_for_a_custom_function() {
 fn a_style_index_past_the_cell_formats_is_reported() {
     let styled = |reference: &str, style: &str| {
         let mut value = CellValue::default();
-        value.value = "1".to_owned();
+        value.value = Box::from("1");
         let mut cell = Cell::default();
-        cell.r = Some(reference.to_owned());
-        cell.s = Some(style.to_owned());
+        cell.r = Some(Box::from(reference));
+        cell.s = Some(Box::from(style));
         cell.value = Some(Box::new(value));
         cell
     };

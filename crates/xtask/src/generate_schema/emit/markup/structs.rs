@@ -246,7 +246,11 @@ impl Catalog {
     /// Box every arm whose struct takes more than `enums::INLINE_BYTES`, so an
     /// enum takes at most that and its tag.
     fn box_large_arms(&mut self) {
-        let sizes: Vec<usize> = self.nodes.iter().map(struct_size).collect();
+        let sizes: Vec<usize> = self
+            .nodes
+            .iter()
+            .map(|node| struct_size(&self.simples, node))
+            .collect();
         for found in &mut self.enums {
             found.boxed = found
                 .arms
@@ -263,7 +267,13 @@ impl Catalog {
     pub fn boxed_arms(&self, arms: &[usize]) -> BTreeSet<usize> {
         large_variants(
             arms.iter()
-                .map(|arm| (self.nodes.get(*arm).map_or(0, struct_size), Some(*arm)))
+                .map(|arm| {
+                    let size = self
+                        .nodes
+                        .get(*arm)
+                        .map_or(0, |node| struct_size(&self.simples, node));
+                    (size, Some(*arm))
+                })
                 .collect(),
         )
     }
@@ -1883,12 +1893,23 @@ fn large_variants(mut variants: Vec<(usize, Option<usize>)>) -> BTreeSet<usize> 
     boxed
 }
 
-/// The bytes a generated struct takes: its unknown content, a `String` per
-/// attribute or text value, a `Vec` per list, and a `Box` per single child.
-fn struct_size(node: &Node) -> usize {
-    let attributes = node.attributes.len() * mem::size_of::<Option<String>>();
+/// The bytes a generated struct takes: its unknown content, a `Box<str>` per
+/// attribute or text value kept as text, a `String`'s bytes per value with
+/// members, a `Vec` per list, and a `Box` per single child.
+fn struct_size(simples: &[Simple], node: &Node) -> usize {
+    let value_size = |value: &Value| match value {
+        Value::Simple(index) if simples.get(*index).is_some_and(Simple::has_member) => {
+            mem::size_of::<String>()
+        }
+        Value::Simple(_) | Value::Text => mem::size_of::<Box<str>>(),
+    };
+    let attributes: usize = node
+        .attributes
+        .iter()
+        .map(|attribute| value_size(&attribute.value))
+        .sum();
     let body = match &node.body {
-        Body::Text(_) => mem::size_of::<String>(),
+        Body::Text(value) => value_size(value),
         Body::Children(children) => children
             .iter()
             .map(|child| match child.occurs {

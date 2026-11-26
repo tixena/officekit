@@ -225,7 +225,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct ChecksumMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -242,10 +242,10 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct HyperlinkMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub length: Option<String>,
-    pub start_index: Option<String>,
+    pub length: Option<Box<str>>,
+    pub start_index: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub url: Option<String>,
+    pub url: Option<Box<str>>,
     pub user_data: (),
 }
 

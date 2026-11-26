@@ -222,7 +222,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::CmMK)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CmMKMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -241,7 +241,7 @@ pub struct CmMkLstMirror {
 #[rkyv(remote = super::CmRplyMk)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CmRplyMkMirror {
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

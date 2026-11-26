@@ -266,7 +266,7 @@ fn one_slide_on(pptx: &mut Pptx, layout: &PartName) -> SlideParts {
         .unwrap();
     let mut entry = SlideID::default();
     entry.id = Some("256".to_owned().into());
-    entry.r_id = Some(id);
+    entry.r_id = Some(id.into());
     let mut list = ListOfSlideIDs::default();
     list.slide_id.push(entry);
     let mut presentation = pptx.presentation().unwrap();

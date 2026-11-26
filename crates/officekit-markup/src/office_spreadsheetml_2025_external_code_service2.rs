@@ -279,9 +279,9 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct ExternalCodeServiceImageAsInputWith<X: UserData> {
     /// The attribute `maxHeight`, when the element has it.
-    pub max_height: Option<String>,
+    pub max_height: Option<Box<str>>,
     /// The attribute `maxWidth`, when the element has it.
-    pub max_width: Option<String>,
+    pub max_width: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

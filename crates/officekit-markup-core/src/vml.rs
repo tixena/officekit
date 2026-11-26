@@ -1337,15 +1337,15 @@ pub struct ArcSegmentWith<X: UserData> {
     /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
     /// The attribute `alt`, when the element has it.
-    pub alt: Option<String>,
+    pub alt: Option<Box<str>>,
     /// The attribute `o:borderbottomcolor`, when the element has it.
-    pub borderbottomcolor: Option<String>,
+    pub borderbottomcolor: Option<Box<str>>,
     /// The attribute `o:borderleftcolor`, when the element has it.
-    pub borderleftcolor: Option<String>,
+    pub borderleftcolor: Option<Box<str>>,
     /// The attribute `o:borderrightcolor`, when the element has it.
-    pub borderrightcolor: Option<String>,
+    pub borderrightcolor: Option<Box<str>>,
     /// The attribute `o:bordertopcolor`, when the element has it.
-    pub bordertopcolor: Option<String>,
+    pub bordertopcolor: Option<Box<str>>,
     /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:button`, when the element has it.
@@ -1357,9 +1357,9 @@ pub struct ArcSegmentWith<X: UserData> {
     /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
     /// The attribute `chromakey`, when the element has it.
-    pub chromakey: Option<String>,
+    pub chromakey: Option<Box<str>>,
     /// The attribute `class`, when the element has it.
-    pub class: Option<String>,
+    pub class: Option<Box<str>>,
     /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:cliptowrap`, when the element has it.
@@ -1369,21 +1369,21 @@ pub struct ArcSegmentWith<X: UserData> {
     /// The children that are an item of `ShapeElementContent`, in order.
     pub content: Vec<ShapeElementContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
-    pub coordorigin: Option<String>,
+    pub coordorigin: Option<Box<str>>,
     /// The attribute `coordsize`, when the element has it.
-    pub coordsize: Option<String>,
+    pub coordsize: Option<Box<str>>,
     /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmnodekind`, when the element has it.
-    pub dgmnodekind: Option<String>,
+    pub dgmnodekind: Option<Box<str>>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `endAngle`, when the element has it.
-    pub end_angle: Option<String>,
+    pub end_angle: Option<Box<str>>,
     /// The attribute `fillcolor`, when the element has it.
-    pub fillcolor: Option<String>,
+    pub fillcolor: Option<Box<str>>,
     /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:forcedash`, when the element has it.
@@ -1393,15 +1393,15 @@ pub struct ArcSegmentWith<X: UserData> {
     /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
     /// The attribute `href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:hrpct`, when the element has it.
-    pub hrpct: Option<String>,
+    pub hrpct: Option<Box<str>>,
     /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
     /// The attribute `insetpen`, when the element has it.
@@ -1413,31 +1413,31 @@ pub struct ArcSegmentWith<X: UserData> {
     /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
     /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:regroupid`, when the element has it.
-    pub regroupid: Option<String>,
+    pub regroupid: Option<Box<str>>,
     /// The attribute `o:spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// The attribute `o:spt`, when the element has it.
-    pub spt: Option<String>,
+    pub spt: Option<Box<str>>,
     /// The attribute `startAngle`, when the element has it.
-    pub start_angle: Option<String>,
+    pub start_angle: Option<Box<str>>,
     /// The attribute `strokecolor`, when the element has it.
-    pub strokecolor: Option<String>,
+    pub strokecolor: Option<Box<str>>,
     /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
     /// The attribute `strokeweight`, when the element has it.
-    pub strokeweight: Option<String>,
+    pub strokeweight: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
-    pub style: Option<String>,
+    pub style: Option<Box<str>>,
     /// The attribute `target`, when the element has it.
-    pub target: Option<String>,
+    pub target: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1448,7 +1448,7 @@ pub struct ArcSegmentWith<X: UserData> {
     /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
     /// The attribute `wrapcoords`, when the element has it.
-    pub wrapcoords: Option<String>,
+    pub wrapcoords: Option<Box<str>>,
 }
 
 /// The `v:arc` element of the tree a read gives: [`ArcSegmentWith`] holding nothing in `user_data`.
@@ -1466,15 +1466,15 @@ pub struct BezierCurveWith<X: UserData> {
     /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
     /// The attribute `alt`, when the element has it.
-    pub alt: Option<String>,
+    pub alt: Option<Box<str>>,
     /// The attribute `o:borderbottomcolor`, when the element has it.
-    pub borderbottomcolor: Option<String>,
+    pub borderbottomcolor: Option<Box<str>>,
     /// The attribute `o:borderleftcolor`, when the element has it.
-    pub borderleftcolor: Option<String>,
+    pub borderleftcolor: Option<Box<str>>,
     /// The attribute `o:borderrightcolor`, when the element has it.
-    pub borderrightcolor: Option<String>,
+    pub borderrightcolor: Option<Box<str>>,
     /// The attribute `o:bordertopcolor`, when the element has it.
-    pub bordertopcolor: Option<String>,
+    pub bordertopcolor: Option<Box<str>>,
     /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:button`, when the element has it.
@@ -1486,9 +1486,9 @@ pub struct BezierCurveWith<X: UserData> {
     /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
     /// The attribute `chromakey`, when the element has it.
-    pub chromakey: Option<String>,
+    pub chromakey: Option<Box<str>>,
     /// The attribute `class`, when the element has it.
-    pub class: Option<String>,
+    pub class: Option<Box<str>>,
     /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:cliptowrap`, when the element has it.
@@ -1498,43 +1498,43 @@ pub struct BezierCurveWith<X: UserData> {
     /// The children that are an item of `ShapeElementContent`, in order.
     pub content: Vec<ShapeElementContentWith<X>>,
     /// The attribute `control1`, when the element has it.
-    pub control1: Option<String>,
+    pub control1: Option<Box<str>>,
     /// The attribute `control2`, when the element has it.
-    pub control2: Option<String>,
+    pub control2: Option<Box<str>>,
     /// The attribute `coordorigin`, when the element has it.
-    pub coordorigin: Option<String>,
+    pub coordorigin: Option<Box<str>>,
     /// The attribute `coordsize`, when the element has it.
-    pub coordsize: Option<String>,
+    pub coordsize: Option<Box<str>>,
     /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmnodekind`, when the element has it.
-    pub dgmnodekind: Option<String>,
+    pub dgmnodekind: Option<Box<str>>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `fillcolor`, when the element has it.
-    pub fillcolor: Option<String>,
+    pub fillcolor: Option<Box<str>>,
     /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
     /// The attribute `from`, when the element has it.
-    pub from: Option<String>,
+    pub from: Option<Box<str>>,
     /// The attribute `o:hr`, when the element has it.
     pub hr: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
     /// The attribute `href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:hrpct`, when the element has it.
-    pub hrpct: Option<String>,
+    pub hrpct: Option<Box<str>>,
     /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
     /// The attribute `insetpen`, when the element has it.
@@ -1546,31 +1546,31 @@ pub struct BezierCurveWith<X: UserData> {
     /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
     /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:regroupid`, when the element has it.
-    pub regroupid: Option<String>,
+    pub regroupid: Option<Box<str>>,
     /// The attribute `o:spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// The attribute `o:spt`, when the element has it.
-    pub spt: Option<String>,
+    pub spt: Option<Box<str>>,
     /// The attribute `strokecolor`, when the element has it.
-    pub strokecolor: Option<String>,
+    pub strokecolor: Option<Box<str>>,
     /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
     /// The attribute `strokeweight`, when the element has it.
-    pub strokeweight: Option<String>,
+    pub strokeweight: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
-    pub style: Option<String>,
+    pub style: Option<Box<str>>,
     /// The attribute `target`, when the element has it.
-    pub target: Option<String>,
+    pub target: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// The attribute `to`, when the element has it.
-    pub to: Option<String>,
+    pub to: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1581,7 +1581,7 @@ pub struct BezierCurveWith<X: UserData> {
     /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
     /// The attribute `wrapcoords`, when the element has it.
-    pub wrapcoords: Option<String>,
+    pub wrapcoords: Option<Box<str>>,
 }
 
 /// The `v:curve` element of the tree a read gives: [`BezierCurveWith`] holding nothing in
@@ -1602,11 +1602,11 @@ pub struct DocumentBackgroundWith<X: UserData> {
     /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
     /// The attribute `fillcolor`, when the element has it.
-    pub fillcolor: Option<String>,
+    pub fillcolor: Option<Box<str>>,
     /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The child that is `ShapeFillProperties`, when there is one.
     pub shape_fill_properties: Option<Box<ShapeFillPropertiesWith<X>>>,
     /// The attribute `o:targetscreensize`, when the element has it.
@@ -1661,53 +1661,53 @@ pub enum GradientFillComputationTypeMember {
 #[non_exhaustive]
 pub struct ImageDataWith<X: UserData> {
     /// The attribute `o:althref`, when the element has it.
-    pub althref: Option<String>,
+    pub althref: Option<Box<str>>,
     /// The attribute `bilevel`, when the element has it.
     pub bilevel: Option<common_simple_types::BooleanValue>,
     /// The attribute `blacklevel`, when the element has it.
-    pub blacklevel: Option<String>,
+    pub blacklevel: Option<Box<str>>,
     /// The attribute `chromakey`, when the element has it.
-    pub chromakey: Option<String>,
+    pub chromakey: Option<Box<str>>,
     /// The attribute `cropbottom`, when the element has it.
-    pub cropbottom: Option<String>,
+    pub cropbottom: Option<Box<str>>,
     /// The attribute `cropleft`, when the element has it.
-    pub cropleft: Option<String>,
+    pub cropleft: Option<Box<str>>,
     /// The attribute `cropright`, when the element has it.
-    pub cropright: Option<String>,
+    pub cropright: Option<Box<str>>,
     /// The attribute `croptop`, when the element has it.
-    pub croptop: Option<String>,
+    pub croptop: Option<Box<str>>,
     /// The attribute `o:detectmouseclick`, when the element has it.
     pub detectmouseclick: Option<common_simple_types::BooleanValue>,
     /// The attribute `embosscolor`, when the element has it.
-    pub embosscolor: Option<String>,
+    pub embosscolor: Option<Box<str>>,
     /// The attribute `gain`, when the element has it.
-    pub gain: Option<String>,
+    pub gain: Option<Box<str>>,
     /// The attribute `gamma`, when the element has it.
-    pub gamma: Option<String>,
+    pub gamma: Option<Box<str>>,
     /// The attribute `grayscale`, when the element has it.
     pub grayscale: Option<common_simple_types::BooleanValue>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `o:movie`, when the element has it.
-    pub movie: Option<String>,
+    pub movie: Option<Box<str>>,
     /// The attribute `o:href`, when the element has it.
-    pub o_href: Option<String>,
+    pub o_href: Option<Box<str>>,
     /// The attribute `o:oleid`, when the element has it.
-    pub oleid: Option<String>,
+    pub oleid: Option<Box<str>>,
     /// The attribute `r:pict`, when the element has it.
-    pub pict: Option<String>,
+    pub pict: Option<Box<str>>,
     /// The attribute `r:href`, when the element has it.
-    pub r_href: Option<String>,
+    pub r_href: Option<Box<str>>,
     /// The attribute `r:id`, when the element has it.
-    pub r_id: Option<String>,
+    pub r_id: Option<Box<str>>,
     /// The attribute `recolortarget`, when the element has it.
-    pub recolortarget: Option<String>,
+    pub recolortarget: Option<Box<str>>,
     /// The attribute `o:relid`, when the element has it.
-    pub relid: Option<String>,
+    pub relid: Option<Box<str>>,
     /// The attribute `src`, when the element has it.
-    pub src: Option<String>,
+    pub src: Option<Box<str>>,
     /// The attribute `o:title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1731,19 +1731,19 @@ pub struct ImageFileWith<X: UserData> {
     /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
     /// The attribute `alt`, when the element has it.
-    pub alt: Option<String>,
+    pub alt: Option<Box<str>>,
     /// The attribute `bilevel`, when the element has it.
     pub bilevel: Option<common_simple_types::BooleanValue>,
     /// The attribute `blacklevel`, when the element has it.
-    pub blacklevel: Option<String>,
+    pub blacklevel: Option<Box<str>>,
     /// The attribute `o:borderbottomcolor`, when the element has it.
-    pub borderbottomcolor: Option<String>,
+    pub borderbottomcolor: Option<Box<str>>,
     /// The attribute `o:borderleftcolor`, when the element has it.
-    pub borderleftcolor: Option<String>,
+    pub borderleftcolor: Option<Box<str>>,
     /// The attribute `o:borderrightcolor`, when the element has it.
-    pub borderrightcolor: Option<String>,
+    pub borderrightcolor: Option<Box<str>>,
     /// The attribute `o:bordertopcolor`, when the element has it.
-    pub bordertopcolor: Option<String>,
+    pub bordertopcolor: Option<Box<str>>,
     /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:button`, when the element has it.
@@ -1755,9 +1755,9 @@ pub struct ImageFileWith<X: UserData> {
     /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
     /// The attribute `chromakey`, when the element has it.
-    pub chromakey: Option<String>,
+    pub chromakey: Option<Box<str>>,
     /// The attribute `class`, when the element has it.
-    pub class: Option<String>,
+    pub class: Option<Box<str>>,
     /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:cliptowrap`, when the element has it.
@@ -1767,35 +1767,35 @@ pub struct ImageFileWith<X: UserData> {
     /// The children that are an item of `ShapeElementContent`, in order.
     pub content: Vec<ShapeElementContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
-    pub coordorigin: Option<String>,
+    pub coordorigin: Option<Box<str>>,
     /// The attribute `coordsize`, when the element has it.
-    pub coordsize: Option<String>,
+    pub coordsize: Option<Box<str>>,
     /// The attribute `cropbottom`, when the element has it.
-    pub cropbottom: Option<String>,
+    pub cropbottom: Option<Box<str>>,
     /// The attribute `cropleft`, when the element has it.
-    pub cropleft: Option<String>,
+    pub cropleft: Option<Box<str>>,
     /// The attribute `cropright`, when the element has it.
-    pub cropright: Option<String>,
+    pub cropright: Option<Box<str>>,
     /// The attribute `croptop`, when the element has it.
-    pub croptop: Option<String>,
+    pub croptop: Option<Box<str>>,
     /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmnodekind`, when the element has it.
-    pub dgmnodekind: Option<String>,
+    pub dgmnodekind: Option<Box<str>>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `fillcolor`, when the element has it.
-    pub fillcolor: Option<String>,
+    pub fillcolor: Option<Box<str>>,
     /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
     /// The attribute `gain`, when the element has it.
-    pub gain: Option<String>,
+    pub gain: Option<Box<str>>,
     /// The attribute `gamma`, when the element has it.
-    pub gamma: Option<String>,
+    pub gamma: Option<Box<str>>,
     /// The attribute `grayscale`, when the element has it.
     pub grayscale: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:hr`, when the element has it.
@@ -1803,15 +1803,15 @@ pub struct ImageFileWith<X: UserData> {
     /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
     /// The attribute `href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:hrpct`, when the element has it.
-    pub hrpct: Option<String>,
+    pub hrpct: Option<Box<str>>,
     /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
     /// The attribute `insetpen`, when the element has it.
@@ -1823,31 +1823,31 @@ pub struct ImageFileWith<X: UserData> {
     /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
     /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:regroupid`, when the element has it.
-    pub regroupid: Option<String>,
+    pub regroupid: Option<Box<str>>,
     /// The attribute `o:spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// The attribute `o:spt`, when the element has it.
-    pub spt: Option<String>,
+    pub spt: Option<Box<str>>,
     /// The attribute `src`, when the element has it.
-    pub src: Option<String>,
+    pub src: Option<Box<str>>,
     /// The attribute `strokecolor`, when the element has it.
-    pub strokecolor: Option<String>,
+    pub strokecolor: Option<Box<str>>,
     /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
     /// The attribute `strokeweight`, when the element has it.
-    pub strokeweight: Option<String>,
+    pub strokeweight: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
-    pub style: Option<String>,
+    pub style: Option<Box<str>>,
     /// The attribute `target`, when the element has it.
-    pub target: Option<String>,
+    pub target: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1858,7 +1858,7 @@ pub struct ImageFileWith<X: UserData> {
     /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
     /// The attribute `wrapcoords`, when the element has it.
-    pub wrapcoords: Option<String>,
+    pub wrapcoords: Option<Box<str>>,
 }
 
 /// The `v:image` element of the tree a read gives: [`ImageFileWith`] holding nothing in
@@ -1903,15 +1903,15 @@ pub struct LineWith<X: UserData> {
     /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
     /// The attribute `alt`, when the element has it.
-    pub alt: Option<String>,
+    pub alt: Option<Box<str>>,
     /// The attribute `o:borderbottomcolor`, when the element has it.
-    pub borderbottomcolor: Option<String>,
+    pub borderbottomcolor: Option<Box<str>>,
     /// The attribute `o:borderleftcolor`, when the element has it.
-    pub borderleftcolor: Option<String>,
+    pub borderleftcolor: Option<Box<str>>,
     /// The attribute `o:borderrightcolor`, when the element has it.
-    pub borderrightcolor: Option<String>,
+    pub borderrightcolor: Option<Box<str>>,
     /// The attribute `o:bordertopcolor`, when the element has it.
-    pub bordertopcolor: Option<String>,
+    pub bordertopcolor: Option<Box<str>>,
     /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:button`, when the element has it.
@@ -1923,9 +1923,9 @@ pub struct LineWith<X: UserData> {
     /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
     /// The attribute `chromakey`, when the element has it.
-    pub chromakey: Option<String>,
+    pub chromakey: Option<Box<str>>,
     /// The attribute `class`, when the element has it.
-    pub class: Option<String>,
+    pub class: Option<Box<str>>,
     /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:cliptowrap`, when the element has it.
@@ -1935,39 +1935,39 @@ pub struct LineWith<X: UserData> {
     /// The children that are an item of `ShapeElementContent`, in order.
     pub content: Vec<ShapeElementContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
-    pub coordorigin: Option<String>,
+    pub coordorigin: Option<Box<str>>,
     /// The attribute `coordsize`, when the element has it.
-    pub coordsize: Option<String>,
+    pub coordsize: Option<Box<str>>,
     /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmnodekind`, when the element has it.
-    pub dgmnodekind: Option<String>,
+    pub dgmnodekind: Option<Box<str>>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `fillcolor`, when the element has it.
-    pub fillcolor: Option<String>,
+    pub fillcolor: Option<Box<str>>,
     /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
     /// The attribute `from`, when the element has it.
-    pub from: Option<String>,
+    pub from: Option<Box<str>>,
     /// The attribute `o:hr`, when the element has it.
     pub hr: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
     /// The attribute `href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:hrpct`, when the element has it.
-    pub hrpct: Option<String>,
+    pub hrpct: Option<Box<str>>,
     /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
     /// The attribute `insetpen`, when the element has it.
@@ -1979,31 +1979,31 @@ pub struct LineWith<X: UserData> {
     /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
     /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:regroupid`, when the element has it.
-    pub regroupid: Option<String>,
+    pub regroupid: Option<Box<str>>,
     /// The attribute `o:spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// The attribute `o:spt`, when the element has it.
-    pub spt: Option<String>,
+    pub spt: Option<Box<str>>,
     /// The attribute `strokecolor`, when the element has it.
-    pub strokecolor: Option<String>,
+    pub strokecolor: Option<Box<str>>,
     /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
     /// The attribute `strokeweight`, when the element has it.
-    pub strokeweight: Option<String>,
+    pub strokeweight: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
-    pub style: Option<String>,
+    pub style: Option<Box<str>>,
     /// The attribute `target`, when the element has it.
-    pub target: Option<String>,
+    pub target: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// The attribute `to`, when the element has it.
-    pub to: Option<String>,
+    pub to: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2014,7 +2014,7 @@ pub struct LineWith<X: UserData> {
     /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
     /// The attribute `wrapcoords`, when the element has it.
-    pub wrapcoords: Option<String>,
+    pub wrapcoords: Option<Box<str>>,
 }
 
 /// The `v:line` element of the tree a read gives: [`LineWith`] holding nothing in `user_data`.
@@ -2055,13 +2055,13 @@ pub enum LineJoinTypeMember {
 #[non_exhaustive]
 pub struct LineStrokeSettingsWith<X: UserData> {
     /// The attribute `o:althref`, when the element has it.
-    pub althref: Option<String>,
+    pub althref: Option<Box<str>>,
     /// The attribute `color`, when the element has it.
-    pub color: Option<String>,
+    pub color: Option<Box<str>>,
     /// The attribute `color2`, when the element has it.
-    pub color2: Option<String>,
+    pub color2: Option<Box<str>>,
     /// The attribute `dashstyle`, when the element has it.
-    pub dashstyle: Option<String>,
+    pub dashstyle: Option<Box<str>>,
     /// The attribute `endarrow`, when the element has it.
     pub endarrow: Option<StrokeArrowheadType>,
     /// The attribute `endarrowlength`, when the element has it.
@@ -2075,15 +2075,15 @@ pub struct LineStrokeSettingsWith<X: UserData> {
     /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `imagealignshape`, when the element has it.
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
     /// The attribute `imageaspect`, when the element has it.
     pub imageaspect: Option<ImageScalingBehavior>,
     /// The attribute `imagesize`, when the element has it.
-    pub imagesize: Option<String>,
+    pub imagesize: Option<Box<str>>,
     /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
     /// The attribute `joinstyle`, when the element has it.
@@ -2091,17 +2091,17 @@ pub struct LineStrokeSettingsWith<X: UserData> {
     /// The attribute `linestyle`, when the element has it.
     pub linestyle: Option<StrokeLineStyle>,
     /// The attribute `miterlimit`, when the element has it.
-    pub miterlimit: Option<String>,
+    pub miterlimit: Option<Box<str>>,
     /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `r:id`, when the element has it.
-    pub r_id: Option<String>,
+    pub r_id: Option<Box<str>>,
     /// The attribute `o:relid`, when the element has it.
-    pub relid: Option<String>,
+    pub relid: Option<Box<str>>,
     /// The attribute `src`, when the element has it.
-    pub src: Option<String>,
+    pub src: Option<Box<str>>,
     /// The attribute `startarrow`, when the element has it.
     pub startarrow: Option<StrokeArrowheadType>,
     /// The attribute `startarrowlength`, when the element has it.
@@ -2120,14 +2120,14 @@ pub struct LineStrokeSettingsWith<X: UserData> {
     /// The child that is `super::vml_office_drawing::TextBoxTopStroke`, when there is one.
     pub text_box_top_stroke: Option<Box<super::vml_office_drawing::TextBoxTopStrokeWith<X>>>,
     /// The attribute `o:title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlLineStrokeSettings,
     /// The attribute `weight`, when the element has it.
-    pub weight: Option<String>,
+    pub weight: Option<Box<str>>,
 }
 
 /// The `v:stroke` element of the tree a read gives: [`LineStrokeSettingsWith`] holding nothing in
@@ -2146,15 +2146,15 @@ pub struct MultiplePathLineWith<X: UserData> {
     /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
     /// The attribute `alt`, when the element has it.
-    pub alt: Option<String>,
+    pub alt: Option<Box<str>>,
     /// The attribute `o:borderbottomcolor`, when the element has it.
-    pub borderbottomcolor: Option<String>,
+    pub borderbottomcolor: Option<Box<str>>,
     /// The attribute `o:borderleftcolor`, when the element has it.
-    pub borderleftcolor: Option<String>,
+    pub borderleftcolor: Option<Box<str>>,
     /// The attribute `o:borderrightcolor`, when the element has it.
-    pub borderrightcolor: Option<String>,
+    pub borderrightcolor: Option<Box<str>>,
     /// The attribute `o:bordertopcolor`, when the element has it.
-    pub bordertopcolor: Option<String>,
+    pub bordertopcolor: Option<Box<str>>,
     /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:button`, when the element has it.
@@ -2166,9 +2166,9 @@ pub struct MultiplePathLineWith<X: UserData> {
     /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
     /// The attribute `chromakey`, when the element has it.
-    pub chromakey: Option<String>,
+    pub chromakey: Option<Box<str>>,
     /// The attribute `class`, when the element has it.
-    pub class: Option<String>,
+    pub class: Option<Box<str>>,
     /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:cliptowrap`, when the element has it.
@@ -2178,19 +2178,19 @@ pub struct MultiplePathLineWith<X: UserData> {
     /// The children that are an item of `MultiplePathLineContent`, in order.
     pub content: Vec<MultiplePathLineContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
-    pub coordorigin: Option<String>,
+    pub coordorigin: Option<Box<str>>,
     /// The attribute `coordsize`, when the element has it.
-    pub coordsize: Option<String>,
+    pub coordsize: Option<Box<str>>,
     /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmnodekind`, when the element has it.
-    pub dgmnodekind: Option<String>,
+    pub dgmnodekind: Option<Box<str>>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `fillcolor`, when the element has it.
-    pub fillcolor: Option<String>,
+    pub fillcolor: Option<Box<str>>,
     /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:forcedash`, when the element has it.
@@ -2200,15 +2200,15 @@ pub struct MultiplePathLineWith<X: UserData> {
     /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
     /// The attribute `href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:hrpct`, when the element has it.
-    pub hrpct: Option<String>,
+    pub hrpct: Option<Box<str>>,
     /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
     /// The attribute `insetpen`, when the element has it.
@@ -2220,31 +2220,31 @@ pub struct MultiplePathLineWith<X: UserData> {
     /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `points`, when the element has it.
-    pub points: Option<String>,
+    pub points: Option<Box<str>>,
     /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
     /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:regroupid`, when the element has it.
-    pub regroupid: Option<String>,
+    pub regroupid: Option<Box<str>>,
     /// The attribute `o:spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// The attribute `o:spt`, when the element has it.
-    pub spt: Option<String>,
+    pub spt: Option<Box<str>>,
     /// The attribute `strokecolor`, when the element has it.
-    pub strokecolor: Option<String>,
+    pub strokecolor: Option<Box<str>>,
     /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
     /// The attribute `strokeweight`, when the element has it.
-    pub strokeweight: Option<String>,
+    pub strokeweight: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
-    pub style: Option<String>,
+    pub style: Option<Box<str>>,
     /// The attribute `target`, when the element has it.
-    pub target: Option<String>,
+    pub target: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2255,7 +2255,7 @@ pub struct MultiplePathLineWith<X: UserData> {
     /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
     /// The attribute `wrapcoords`, when the element has it.
-    pub wrapcoords: Option<String>,
+    pub wrapcoords: Option<Box<str>>,
 }
 
 /// The `v:polyline` element of the tree a read gives: [`MultiplePathLineWith`] holding nothing in
@@ -2338,15 +2338,15 @@ pub struct OvalWith<X: UserData> {
     /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
     /// The attribute `alt`, when the element has it.
-    pub alt: Option<String>,
+    pub alt: Option<Box<str>>,
     /// The attribute `o:borderbottomcolor`, when the element has it.
-    pub borderbottomcolor: Option<String>,
+    pub borderbottomcolor: Option<Box<str>>,
     /// The attribute `o:borderleftcolor`, when the element has it.
-    pub borderleftcolor: Option<String>,
+    pub borderleftcolor: Option<Box<str>>,
     /// The attribute `o:borderrightcolor`, when the element has it.
-    pub borderrightcolor: Option<String>,
+    pub borderrightcolor: Option<Box<str>>,
     /// The attribute `o:bordertopcolor`, when the element has it.
-    pub bordertopcolor: Option<String>,
+    pub bordertopcolor: Option<Box<str>>,
     /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:button`, when the element has it.
@@ -2358,9 +2358,9 @@ pub struct OvalWith<X: UserData> {
     /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
     /// The attribute `chromakey`, when the element has it.
-    pub chromakey: Option<String>,
+    pub chromakey: Option<Box<str>>,
     /// The attribute `class`, when the element has it.
-    pub class: Option<String>,
+    pub class: Option<Box<str>>,
     /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:cliptowrap`, when the element has it.
@@ -2370,19 +2370,19 @@ pub struct OvalWith<X: UserData> {
     /// The children that are an item of `ShapeElementContent`, in order.
     pub content: Vec<ShapeElementContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
-    pub coordorigin: Option<String>,
+    pub coordorigin: Option<Box<str>>,
     /// The attribute `coordsize`, when the element has it.
-    pub coordsize: Option<String>,
+    pub coordsize: Option<Box<str>>,
     /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmnodekind`, when the element has it.
-    pub dgmnodekind: Option<String>,
+    pub dgmnodekind: Option<Box<str>>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `fillcolor`, when the element has it.
-    pub fillcolor: Option<String>,
+    pub fillcolor: Option<Box<str>>,
     /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:forcedash`, when the element has it.
@@ -2392,15 +2392,15 @@ pub struct OvalWith<X: UserData> {
     /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
     /// The attribute `href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:hrpct`, when the element has it.
-    pub hrpct: Option<String>,
+    pub hrpct: Option<Box<str>>,
     /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
     /// The attribute `insetpen`, when the element has it.
@@ -2412,29 +2412,29 @@ pub struct OvalWith<X: UserData> {
     /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
     /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:regroupid`, when the element has it.
-    pub regroupid: Option<String>,
+    pub regroupid: Option<Box<str>>,
     /// The attribute `o:spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// The attribute `o:spt`, when the element has it.
-    pub spt: Option<String>,
+    pub spt: Option<Box<str>>,
     /// The attribute `strokecolor`, when the element has it.
-    pub strokecolor: Option<String>,
+    pub strokecolor: Option<Box<str>>,
     /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
     /// The attribute `strokeweight`, when the element has it.
-    pub strokeweight: Option<String>,
+    pub strokeweight: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
-    pub style: Option<String>,
+    pub style: Option<Box<str>>,
     /// The attribute `target`, when the element has it.
-    pub target: Option<String>,
+    pub target: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2445,7 +2445,7 @@ pub struct OvalWith<X: UserData> {
     /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
     /// The attribute `wrapcoords`, when the element has it.
-    pub wrapcoords: Option<String>,
+    pub wrapcoords: Option<Box<str>>,
 }
 
 /// The `v:oval` element of the tree a read gives: [`OvalWith`] holding nothing in `user_data`.
@@ -2463,15 +2463,15 @@ pub struct RectangleWith<X: UserData> {
     /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
     /// The attribute `alt`, when the element has it.
-    pub alt: Option<String>,
+    pub alt: Option<Box<str>>,
     /// The attribute `o:borderbottomcolor`, when the element has it.
-    pub borderbottomcolor: Option<String>,
+    pub borderbottomcolor: Option<Box<str>>,
     /// The attribute `o:borderleftcolor`, when the element has it.
-    pub borderleftcolor: Option<String>,
+    pub borderleftcolor: Option<Box<str>>,
     /// The attribute `o:borderrightcolor`, when the element has it.
-    pub borderrightcolor: Option<String>,
+    pub borderrightcolor: Option<Box<str>>,
     /// The attribute `o:bordertopcolor`, when the element has it.
-    pub bordertopcolor: Option<String>,
+    pub bordertopcolor: Option<Box<str>>,
     /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:button`, when the element has it.
@@ -2483,9 +2483,9 @@ pub struct RectangleWith<X: UserData> {
     /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
     /// The attribute `chromakey`, when the element has it.
-    pub chromakey: Option<String>,
+    pub chromakey: Option<Box<str>>,
     /// The attribute `class`, when the element has it.
-    pub class: Option<String>,
+    pub class: Option<Box<str>>,
     /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:cliptowrap`, when the element has it.
@@ -2495,19 +2495,19 @@ pub struct RectangleWith<X: UserData> {
     /// The children that are an item of `ShapeElementContent`, in order.
     pub content: Vec<ShapeElementContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
-    pub coordorigin: Option<String>,
+    pub coordorigin: Option<Box<str>>,
     /// The attribute `coordsize`, when the element has it.
-    pub coordsize: Option<String>,
+    pub coordsize: Option<Box<str>>,
     /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmnodekind`, when the element has it.
-    pub dgmnodekind: Option<String>,
+    pub dgmnodekind: Option<Box<str>>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `fillcolor`, when the element has it.
-    pub fillcolor: Option<String>,
+    pub fillcolor: Option<Box<str>>,
     /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:forcedash`, when the element has it.
@@ -2517,15 +2517,15 @@ pub struct RectangleWith<X: UserData> {
     /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
     /// The attribute `href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:hrpct`, when the element has it.
-    pub hrpct: Option<String>,
+    pub hrpct: Option<Box<str>>,
     /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
     /// The attribute `insetpen`, when the element has it.
@@ -2537,29 +2537,29 @@ pub struct RectangleWith<X: UserData> {
     /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
     /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:regroupid`, when the element has it.
-    pub regroupid: Option<String>,
+    pub regroupid: Option<Box<str>>,
     /// The attribute `o:spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// The attribute `o:spt`, when the element has it.
-    pub spt: Option<String>,
+    pub spt: Option<Box<str>>,
     /// The attribute `strokecolor`, when the element has it.
-    pub strokecolor: Option<String>,
+    pub strokecolor: Option<Box<str>>,
     /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
     /// The attribute `strokeweight`, when the element has it.
-    pub strokeweight: Option<String>,
+    pub strokeweight: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
-    pub style: Option<String>,
+    pub style: Option<Box<str>>,
     /// The attribute `target`, when the element has it.
-    pub target: Option<String>,
+    pub target: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2570,7 +2570,7 @@ pub struct RectangleWith<X: UserData> {
     /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
     /// The attribute `wrapcoords`, when the element has it.
-    pub wrapcoords: Option<String>,
+    pub wrapcoords: Option<Box<str>>,
 }
 
 /// The `v:rect` element of the tree a read gives: [`RectangleWith`] holding nothing in `user_data`.
@@ -2588,17 +2588,17 @@ pub struct RoundedRectangleWith<X: UserData> {
     /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
     /// The attribute `alt`, when the element has it.
-    pub alt: Option<String>,
+    pub alt: Option<Box<str>>,
     /// The attribute `arcsize`, when the element has it.
-    pub arcsize: Option<String>,
+    pub arcsize: Option<Box<str>>,
     /// The attribute `o:borderbottomcolor`, when the element has it.
-    pub borderbottomcolor: Option<String>,
+    pub borderbottomcolor: Option<Box<str>>,
     /// The attribute `o:borderleftcolor`, when the element has it.
-    pub borderleftcolor: Option<String>,
+    pub borderleftcolor: Option<Box<str>>,
     /// The attribute `o:borderrightcolor`, when the element has it.
-    pub borderrightcolor: Option<String>,
+    pub borderrightcolor: Option<Box<str>>,
     /// The attribute `o:bordertopcolor`, when the element has it.
-    pub bordertopcolor: Option<String>,
+    pub bordertopcolor: Option<Box<str>>,
     /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:button`, when the element has it.
@@ -2610,9 +2610,9 @@ pub struct RoundedRectangleWith<X: UserData> {
     /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
     /// The attribute `chromakey`, when the element has it.
-    pub chromakey: Option<String>,
+    pub chromakey: Option<Box<str>>,
     /// The attribute `class`, when the element has it.
-    pub class: Option<String>,
+    pub class: Option<Box<str>>,
     /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:cliptowrap`, when the element has it.
@@ -2622,19 +2622,19 @@ pub struct RoundedRectangleWith<X: UserData> {
     /// The children that are an item of `ShapeElementContent`, in order.
     pub content: Vec<ShapeElementContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
-    pub coordorigin: Option<String>,
+    pub coordorigin: Option<Box<str>>,
     /// The attribute `coordsize`, when the element has it.
-    pub coordsize: Option<String>,
+    pub coordsize: Option<Box<str>>,
     /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmnodekind`, when the element has it.
-    pub dgmnodekind: Option<String>,
+    pub dgmnodekind: Option<Box<str>>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `fillcolor`, when the element has it.
-    pub fillcolor: Option<String>,
+    pub fillcolor: Option<Box<str>>,
     /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:forcedash`, when the element has it.
@@ -2644,15 +2644,15 @@ pub struct RoundedRectangleWith<X: UserData> {
     /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
     /// The attribute `href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:hrpct`, when the element has it.
-    pub hrpct: Option<String>,
+    pub hrpct: Option<Box<str>>,
     /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
     /// The attribute `insetpen`, when the element has it.
@@ -2664,29 +2664,29 @@ pub struct RoundedRectangleWith<X: UserData> {
     /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
     /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:regroupid`, when the element has it.
-    pub regroupid: Option<String>,
+    pub regroupid: Option<Box<str>>,
     /// The attribute `o:spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// The attribute `o:spt`, when the element has it.
-    pub spt: Option<String>,
+    pub spt: Option<Box<str>>,
     /// The attribute `strokecolor`, when the element has it.
-    pub strokecolor: Option<String>,
+    pub strokecolor: Option<Box<str>>,
     /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
     /// The attribute `strokeweight`, when the element has it.
-    pub strokeweight: Option<String>,
+    pub strokeweight: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
-    pub style: Option<String>,
+    pub style: Option<Box<str>>,
     /// The attribute `target`, when the element has it.
-    pub target: Option<String>,
+    pub target: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2697,7 +2697,7 @@ pub struct RoundedRectangleWith<X: UserData> {
     /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
     /// The attribute `wrapcoords`, when the element has it.
-    pub wrapcoords: Option<String>,
+    pub wrapcoords: Option<Box<str>>,
 }
 
 /// The `v:roundrect` element of the tree a read gives: [`RoundedRectangleWith`] holding nothing in
@@ -2752,25 +2752,25 @@ impl Eq for SetOfHandlesWith<()> {}
 #[non_exhaustive]
 pub struct ShadowEffectWith<X: UserData> {
     /// The attribute `color`, when the element has it.
-    pub color: Option<String>,
+    pub color: Option<Box<str>>,
     /// The attribute `color2`, when the element has it.
-    pub color2: Option<String>,
+    pub color2: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `matrix`, when the element has it.
-    pub matrix: Option<String>,
+    pub matrix: Option<Box<str>>,
     /// The attribute `obscured`, when the element has it.
     pub obscured: Option<common_simple_types::BooleanValue>,
     /// The attribute `offset`, when the element has it.
-    pub offset: Option<String>,
+    pub offset: Option<Box<str>>,
     /// The attribute `offset2`, when the element has it.
-    pub offset2: Option<String>,
+    pub offset2: Option<Box<str>>,
     /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `origin`, when the element has it.
-    pub origin: Option<String>,
+    pub origin: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<ShadowType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -2821,21 +2821,21 @@ pub enum ShadowTypeMember {
 #[non_exhaustive]
 pub struct ShapeDefinitionWith<X: UserData> {
     /// The attribute `adj`, when the element has it.
-    pub adj: Option<String>,
+    pub adj: Option<Box<str>>,
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
     /// The attribute `alt`, when the element has it.
-    pub alt: Option<String>,
+    pub alt: Option<Box<str>>,
     /// The attribute `o:borderbottomcolor`, when the element has it.
-    pub borderbottomcolor: Option<String>,
+    pub borderbottomcolor: Option<Box<str>>,
     /// The attribute `o:borderleftcolor`, when the element has it.
-    pub borderleftcolor: Option<String>,
+    pub borderleftcolor: Option<Box<str>>,
     /// The attribute `o:borderrightcolor`, when the element has it.
-    pub borderrightcolor: Option<String>,
+    pub borderrightcolor: Option<Box<str>>,
     /// The attribute `o:bordertopcolor`, when the element has it.
-    pub bordertopcolor: Option<String>,
+    pub bordertopcolor: Option<Box<str>>,
     /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:button`, when the element has it.
@@ -2847,9 +2847,9 @@ pub struct ShapeDefinitionWith<X: UserData> {
     /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
     /// The attribute `chromakey`, when the element has it.
-    pub chromakey: Option<String>,
+    pub chromakey: Option<Box<str>>,
     /// The attribute `class`, when the element has it.
-    pub class: Option<String>,
+    pub class: Option<Box<str>>,
     /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:cliptowrap`, when the element has it.
@@ -2859,41 +2859,41 @@ pub struct ShapeDefinitionWith<X: UserData> {
     /// The children that are an item of `ShapeDefinitionContent`, in order.
     pub content: Vec<ShapeDefinitionContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
-    pub coordorigin: Option<String>,
+    pub coordorigin: Option<Box<str>>,
     /// The attribute `coordsize`, when the element has it.
-    pub coordsize: Option<String>,
+    pub coordsize: Option<Box<str>>,
     /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmnodekind`, when the element has it.
-    pub dgmnodekind: Option<String>,
+    pub dgmnodekind: Option<Box<str>>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `equationxml`, when the element has it.
-    pub equationxml: Option<String>,
+    pub equationxml: Option<Box<str>>,
     /// The attribute `fillcolor`, when the element has it.
-    pub fillcolor: Option<String>,
+    pub fillcolor: Option<Box<str>>,
     /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:gfxdata`, when the element has it.
-    pub gfxdata: Option<String>,
+    pub gfxdata: Option<Box<str>>,
     /// The attribute `o:hr`, when the element has it.
     pub hr: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
     /// The attribute `href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:hrpct`, when the element has it.
-    pub hrpct: Option<String>,
+    pub hrpct: Option<Box<str>>,
     /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
     /// The attribute `insetpen`, when the element has it.
@@ -2905,33 +2905,33 @@ pub struct ShapeDefinitionWith<X: UserData> {
     /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `path`, when the element has it.
-    pub path: Option<String>,
+    pub path: Option<Box<str>>,
     /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
     /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:regroupid`, when the element has it.
-    pub regroupid: Option<String>,
+    pub regroupid: Option<Box<str>>,
     /// The attribute `o:spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// The attribute `o:spt`, when the element has it.
-    pub spt: Option<String>,
+    pub spt: Option<Box<str>>,
     /// The attribute `strokecolor`, when the element has it.
-    pub strokecolor: Option<String>,
+    pub strokecolor: Option<Box<str>>,
     /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
     /// The attribute `strokeweight`, when the element has it.
-    pub strokeweight: Option<String>,
+    pub strokeweight: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
-    pub style: Option<String>,
+    pub style: Option<Box<str>>,
     /// The attribute `target`, when the element has it.
-    pub target: Option<String>,
+    pub target: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
-    pub r#type: Option<String>,
+    pub r#type: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -2942,7 +2942,7 @@ pub struct ShapeDefinitionWith<X: UserData> {
     /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
     /// The attribute `wrapcoords`, when the element has it.
-    pub wrapcoords: Option<String>,
+    pub wrapcoords: Option<Box<str>>,
 }
 
 /// The `v:shape` element of the tree a read gives: [`ShapeDefinitionWith`] holding nothing in
@@ -3002,7 +3002,7 @@ pub enum ShapeDefinitionContentWith<X: UserData> {
     SkewTransform(Box<super::vml_office_drawing::SkewTransformWith<X>>),
     /// The element `o:equationxml`, a `StorageForAlternateMathContent`.
     StorageForAlternateMathContent(
-        Box<super::vml_office_drawing::StorageForAlternateMathContentWith<X>>,
+        super::vml_office_drawing::StorageForAlternateMathContentWith<X>,
     ),
     /// The element `v:textbox`, a `TextBox`.
     TextBox(Box<TextBoxWith<X>>),
@@ -3095,47 +3095,47 @@ pub struct ShapeFillPropertiesWith<X: UserData> {
     /// The attribute `alignshape`, when the element has it.
     pub alignshape: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:althref`, when the element has it.
-    pub althref: Option<String>,
+    pub althref: Option<Box<str>>,
     /// The attribute `angle`, when the element has it.
-    pub angle: Option<String>,
+    pub angle: Option<Box<str>>,
     /// The attribute `aspect`, when the element has it.
     pub aspect: Option<ImageScalingBehavior>,
     /// The attribute `color`, when the element has it.
-    pub color: Option<String>,
+    pub color: Option<Box<str>>,
     /// The attribute `color2`, when the element has it.
-    pub color2: Option<String>,
+    pub color2: Option<Box<str>>,
     /// The attribute `colors`, when the element has it.
-    pub colors: Option<String>,
+    pub colors: Option<Box<str>>,
     /// The attribute `o:detectmouseclick`, when the element has it.
     pub detectmouseclick: Option<common_simple_types::BooleanValue>,
     /// The attribute `focus`, when the element has it.
-    pub focus: Option<String>,
+    pub focus: Option<Box<str>>,
     /// The attribute `focusposition`, when the element has it.
-    pub focusposition: Option<String>,
+    pub focusposition: Option<Box<str>>,
     /// The attribute `focussize`, when the element has it.
-    pub focussize: Option<String>,
+    pub focussize: Option<Box<str>>,
     /// The attribute `o:href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `method`, when the element has it.
     pub method: Option<GradientFillComputationType>,
     /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `o:opacity2`, when the element has it.
-    pub opacity2: Option<String>,
+    pub opacity2: Option<Box<str>>,
     /// The attribute `origin`, when the element has it.
-    pub origin: Option<String>,
+    pub origin: Option<Box<str>>,
     /// The attribute `position`, when the element has it.
-    pub position: Option<String>,
+    pub position: Option<Box<str>>,
     /// The attribute `r:id`, when the element has it.
-    pub r_id: Option<String>,
+    pub r_id: Option<Box<str>>,
     /// The attribute `recolor`, when the element has it.
     pub recolor: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:relid`, when the element has it.
-    pub relid: Option<String>,
+    pub relid: Option<Box<str>>,
     /// The attribute `rotate`, when the element has it.
     pub rotate: Option<common_simple_types::BooleanValue>,
     /// The child that is `super::vml_office_drawing::ShapeFillExtendedProperties`, when there is
@@ -3143,11 +3143,11 @@ pub struct ShapeFillPropertiesWith<X: UserData> {
     pub shape_fill_extended_properties:
         Option<Box<super::vml_office_drawing::ShapeFillExtendedPropertiesWith<X>>>,
     /// The attribute `size`, when the element has it.
-    pub size: Option<String>,
+    pub size: Option<Box<str>>,
     /// The attribute `src`, when the element has it.
-    pub src: Option<String>,
+    pub src: Option<Box<str>>,
     /// The attribute `o:title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<ShapeFillType>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -3206,39 +3206,39 @@ pub struct ShapeGroupWith<X: UserData> {
     /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
     /// The attribute `alt`, when the element has it.
-    pub alt: Option<String>,
+    pub alt: Option<Box<str>>,
     /// The attribute `o:borderbottomcolor`, when the element has it.
-    pub borderbottomcolor: Option<String>,
+    pub borderbottomcolor: Option<Box<str>>,
     /// The attribute `o:borderleftcolor`, when the element has it.
-    pub borderleftcolor: Option<String>,
+    pub borderleftcolor: Option<Box<str>>,
     /// The attribute `o:borderrightcolor`, when the element has it.
-    pub borderrightcolor: Option<String>,
+    pub borderrightcolor: Option<Box<str>>,
     /// The attribute `o:bordertopcolor`, when the element has it.
-    pub bordertopcolor: Option<String>,
+    pub bordertopcolor: Option<Box<str>>,
     /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:button`, when the element has it.
     pub button: Option<common_simple_types::BooleanValue>,
     /// The attribute `class`, when the element has it.
-    pub class: Option<String>,
+    pub class: Option<Box<str>>,
     /// The children that are an item of `ShapeGroupContent`, in order.
     pub content: Vec<ShapeGroupContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
-    pub coordorigin: Option<String>,
+    pub coordorigin: Option<Box<str>>,
     /// The attribute `coordsize`, when the element has it.
-    pub coordsize: Option<String>,
+    pub coordsize: Option<Box<str>>,
     /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmnodekind`, when the element has it.
-    pub dgmnodekind: Option<String>,
+    pub dgmnodekind: Option<Box<str>>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `editas`, when the element has it.
     pub editas: Option<ShapeGroupingTypes>,
     /// The attribute `fillcolor`, when the element has it.
-    pub fillcolor: Option<String>,
+    pub fillcolor: Option<Box<str>>,
     /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:hr`, when the element has it.
@@ -3246,15 +3246,15 @@ pub struct ShapeGroupWith<X: UserData> {
     /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
     /// The attribute `href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:hrpct`, when the element has it.
-    pub hrpct: Option<String>,
+    pub hrpct: Option<Box<str>>,
     /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
     /// The attribute `o:oned`, when the element has it.
@@ -3262,19 +3262,19 @@ pub struct ShapeGroupWith<X: UserData> {
     /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:regroupid`, when the element has it.
-    pub regroupid: Option<String>,
+    pub regroupid: Option<Box<str>>,
     /// The attribute `o:spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
-    pub style: Option<String>,
+    pub style: Option<Box<str>>,
     /// The attribute `o:tablelimits`, when the element has it.
-    pub tablelimits: Option<String>,
+    pub tablelimits: Option<Box<str>>,
     /// The attribute `o:tableproperties`, when the element has it.
-    pub tableproperties: Option<String>,
+    pub tableproperties: Option<Box<str>>,
     /// The attribute `target`, when the element has it.
-    pub target: Option<String>,
+    pub target: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3285,7 +3285,7 @@ pub struct ShapeGroupWith<X: UserData> {
     /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
     /// The attribute `wrapcoords`, when the element has it.
-    pub wrapcoords: Option<String>,
+    pub wrapcoords: Option<Box<str>>,
 }
 
 /// The `v:group` element of the tree a read gives: [`ShapeGroupWith`] holding nothing in
@@ -3424,13 +3424,13 @@ pub struct ShapeHandleWith<X: UserData> {
     /// The attribute `invy`, when the element has it.
     pub invy: Option<common_simple_types::BooleanValue>,
     /// The attribute `map`, when the element has it.
-    pub map: Option<String>,
+    pub map: Option<Box<str>>,
     /// The attribute `polar`, when the element has it.
-    pub polar: Option<String>,
+    pub polar: Option<Box<str>>,
     /// The attribute `position`, when the element has it.
-    pub position: Option<String>,
+    pub position: Option<Box<str>>,
     /// The attribute `radiusrange`, when the element has it.
-    pub radiusrange: Option<String>,
+    pub radiusrange: Option<Box<str>>,
     /// The attribute `switch`, when the element has it.
     pub switch: Option<common_simple_types::BooleanValueWithBlankFalseState>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -3439,9 +3439,9 @@ pub struct ShapeHandleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlShapeHandle,
     /// The attribute `xrange`, when the element has it.
-    pub xrange: Option<String>,
+    pub xrange: Option<Box<str>>,
     /// The attribute `yrange`, when the element has it.
-    pub yrange: Option<String>,
+    pub yrange: Option<Box<str>>,
 }
 
 /// The `v:h` element of the tree a read gives: [`ShapeHandleWith`] holding nothing in `user_data`.
@@ -3457,9 +3457,9 @@ pub struct ShapePathWith<X: UserData> {
     /// The attribute `arrowok`, when the element has it.
     pub arrowok: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:connectangles`, when the element has it.
-    pub connectangles: Option<String>,
+    pub connectangles: Option<Box<str>>,
     /// The attribute `o:connectlocs`, when the element has it.
-    pub connectlocs: Option<String>,
+    pub connectlocs: Option<Box<str>>,
     /// The attribute `o:connecttype`, when the element has it.
     pub connecttype: Option<super::vml_office_drawing::ConnectionLocationsType>,
     /// The attribute `o:extrusionok`, when the element has it.
@@ -3469,17 +3469,17 @@ pub struct ShapePathWith<X: UserData> {
     /// The attribute `gradientshapeok`, when the element has it.
     pub gradientshapeok: Option<common_simple_types::BooleanValue>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `insetpenok`, when the element has it.
     pub insetpenok: Option<common_simple_types::BooleanValue>,
     /// The attribute `limo`, when the element has it.
-    pub limo: Option<String>,
+    pub limo: Option<Box<str>>,
     /// The attribute `shadowok`, when the element has it.
     pub shadowok: Option<common_simple_types::BooleanValue>,
     /// The attribute `strokeok`, when the element has it.
     pub strokeok: Option<common_simple_types::BooleanValue>,
     /// The attribute `textboxrect`, when the element has it.
-    pub textboxrect: Option<String>,
+    pub textboxrect: Option<Box<str>>,
     /// The attribute `textpathok`, when the element has it.
     pub textpathok: Option<common_simple_types::BooleanValue>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -3488,7 +3488,7 @@ pub struct ShapePathWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlShapePath,
     /// The attribute `v`, when the element has it.
-    pub v: Option<String>,
+    pub v: Option<Box<str>>,
 }
 
 /// The `v:path` element of the tree a read gives: [`ShapePathWith`] holding nothing in `user_data`.
@@ -3502,21 +3502,21 @@ impl Eq for ShapePathWith<()> {}
 #[non_exhaustive]
 pub struct ShapeTemplateWith<X: UserData> {
     /// The attribute `adj`, when the element has it.
-    pub adj: Option<String>,
+    pub adj: Option<Box<str>>,
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
     /// The attribute `alt`, when the element has it.
-    pub alt: Option<String>,
+    pub alt: Option<Box<str>>,
     /// The attribute `o:borderbottomcolor`, when the element has it.
-    pub borderbottomcolor: Option<String>,
+    pub borderbottomcolor: Option<Box<str>>,
     /// The attribute `o:borderleftcolor`, when the element has it.
-    pub borderleftcolor: Option<String>,
+    pub borderleftcolor: Option<Box<str>>,
     /// The attribute `o:borderrightcolor`, when the element has it.
-    pub borderrightcolor: Option<String>,
+    pub borderrightcolor: Option<Box<str>>,
     /// The attribute `o:bordertopcolor`, when the element has it.
-    pub bordertopcolor: Option<String>,
+    pub bordertopcolor: Option<Box<str>>,
     /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:button`, when the element has it.
@@ -3528,9 +3528,9 @@ pub struct ShapeTemplateWith<X: UserData> {
     /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
     /// The attribute `chromakey`, when the element has it.
-    pub chromakey: Option<String>,
+    pub chromakey: Option<Box<str>>,
     /// The attribute `class`, when the element has it.
-    pub class: Option<String>,
+    pub class: Option<Box<str>>,
     /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:cliptowrap`, when the element has it.
@@ -3542,19 +3542,19 @@ pub struct ShapeTemplateWith<X: UserData> {
     /// The children that are an item of `ShapeElementContent`, in order.
     pub content: Vec<ShapeElementContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
-    pub coordorigin: Option<String>,
+    pub coordorigin: Option<Box<str>>,
     /// The attribute `coordsize`, when the element has it.
-    pub coordsize: Option<String>,
+    pub coordsize: Option<Box<str>>,
     /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
     /// The attribute `o:dgmnodekind`, when the element has it.
-    pub dgmnodekind: Option<String>,
+    pub dgmnodekind: Option<Box<str>>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `fillcolor`, when the element has it.
-    pub fillcolor: Option<String>,
+    pub fillcolor: Option<Box<str>>,
     /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:forcedash`, when the element has it.
@@ -3564,21 +3564,21 @@ pub struct ShapeTemplateWith<X: UserData> {
     /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
     /// The attribute `href`, when the element has it.
-    pub href: Option<String>,
+    pub href: Option<Box<str>>,
     /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:hrpct`, when the element has it.
-    pub hrpct: Option<String>,
+    pub hrpct: Option<Box<str>>,
     /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
     /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:master`, when the element has it.
-    pub master: Option<String>,
+    pub master: Option<Box<str>>,
     /// The attribute `o:ole`, when the element has it.
     pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
     /// The attribute `o:oleicon`, when the element has it.
@@ -3586,31 +3586,31 @@ pub struct ShapeTemplateWith<X: UserData> {
     /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
     /// The attribute `opacity`, when the element has it.
-    pub opacity: Option<String>,
+    pub opacity: Option<Box<str>>,
     /// The attribute `path`, when the element has it.
-    pub path: Option<String>,
+    pub path: Option<Box<str>>,
     /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
     /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:regroupid`, when the element has it.
-    pub regroupid: Option<String>,
+    pub regroupid: Option<Box<str>>,
     /// The attribute `o:spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// The attribute `o:spt`, when the element has it.
-    pub spt: Option<String>,
+    pub spt: Option<Box<str>>,
     /// The attribute `strokecolor`, when the element has it.
-    pub strokecolor: Option<String>,
+    pub strokecolor: Option<Box<str>>,
     /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
     /// The attribute `strokeweight`, when the element has it.
-    pub strokeweight: Option<String>,
+    pub strokeweight: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
-    pub style: Option<String>,
+    pub style: Option<Box<str>>,
     /// The attribute `target`, when the element has it.
-    pub target: Option<String>,
+    pub target: Option<Box<str>>,
     /// The attribute `title`, when the element has it.
-    pub title: Option<String>,
+    pub title: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3621,7 +3621,7 @@ pub struct ShapeTemplateWith<X: UserData> {
     /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
     /// The attribute `wrapcoords`, when the element has it.
-    pub wrapcoords: Option<String>,
+    pub wrapcoords: Option<Box<str>>,
 }
 
 /// The `v:shapetype` element of the tree a read gives: [`ShapeTemplateWith`] holding nothing in
@@ -3636,7 +3636,7 @@ impl Eq for ShapeTemplateWith<()> {}
 #[non_exhaustive]
 pub struct SingleFormulaWith<X: UserData> {
     /// The attribute `eqn`, when the element has it.
-    pub eqn: Option<String>,
+    pub eqn: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3803,15 +3803,15 @@ pub struct TextBoxWith<X: UserData> {
     /// The child that is an item of `TextBoxContent`, when there is one.
     pub content: Option<Box<TextBoxContentWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `inset`, when the element has it.
-    pub inset: Option<String>,
+    pub inset: Option<Box<str>>,
     /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
     /// The attribute `o:singleclick`, when the element has it.
     pub singleclick: Option<common_simple_types::BooleanValue>,
     /// The attribute `style`, when the element has it.
-    pub style: Option<String>,
+    pub style: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -3853,13 +3853,13 @@ pub struct TextLayoutPathWith<X: UserData> {
     /// The attribute `fitshape`, when the element has it.
     pub fitshape: Option<common_simple_types::BooleanValue>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
     /// The attribute `string`, when the element has it.
-    pub string: Option<String>,
+    pub string: Option<Box<str>>,
     /// The attribute `style`, when the element has it.
-    pub style: Option<String>,
+    pub style: Option<Box<str>>,
     /// The attribute `trim`, when the element has it.
     pub trim: Option<common_simple_types::BooleanValue>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -6644,9 +6644,7 @@ impl<X: UserData> ShapeDefinitionContentWith<X> {
                 ShapeDefinitionContentWith::SkewTransform(Box::new((*node).into_user_data()))
             }
             Self::StorageForAlternateMathContent(node) => {
-                ShapeDefinitionContentWith::StorageForAlternateMathContent(Box::new(
-                    (*node).into_user_data(),
-                ))
+                ShapeDefinitionContentWith::StorageForAlternateMathContent(node.into_user_data())
             }
             Self::TextBox(node) => {
                 ShapeDefinitionContentWith::TextBox(Box::new((*node).into_user_data()))
@@ -6694,9 +6692,7 @@ impl officekit_markup_base::Read for ShapeDefinitionContent {
             Some((NS_V, "path")) => Self::ShapePath(Box::new(item.read())),
             Some((NS_O, "lock")) => Self::ShapeProtections(Box::new(item.read())),
             Some((NS_O, "skew")) => Self::SkewTransform(Box::new(item.read())),
-            Some((NS_O, "equationxml")) => {
-                Self::StorageForAlternateMathContent(Box::new(item.read()))
-            }
+            Some((NS_O, "equationxml")) => Self::StorageForAlternateMathContent(item.read()),
             Some((NS_V, "textbox")) => Self::TextBox(Box::new(item.read())),
             Some((NS_V, "textpath")) => Self::TextLayoutPath(Box::new(item.read())),
             Some((NS_W10, "wrap")) => Self::TextWrapping(Box::new(item.read())),
@@ -6889,7 +6885,7 @@ impl<X: UserData> From<super::vml_office_drawing::StorageForAlternateMathContent
     for ShapeDefinitionContentWith<X>
 {
     fn from(arm: super::vml_office_drawing::StorageForAlternateMathContentWith<X>) -> Self {
-        Self::StorageForAlternateMathContent(Box::new(arm))
+        Self::StorageForAlternateMathContent(arm)
     }
 }
 

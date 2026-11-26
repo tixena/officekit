@@ -493,7 +493,7 @@ pub enum DocumentConformanceClassValueMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct FixedPercentageValueWithSign(pub String);
+pub struct FixedPercentageValueWithSign(pub Box<str>);
 
 /// The simple type `ST_Guid`, kept as the text the file carried.
 ///
@@ -506,7 +506,7 @@ pub struct FixedPercentageValueWithSign(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct Guid(pub String);
+pub struct Guid(pub Box<str>);
 
 /// Hexadecimal Color Value, the simple type `ST_HexColorRGB` (ECMA-376 Part 1, section 22.9.2.5),
 /// kept as the text the file carried.
@@ -520,7 +520,7 @@ pub struct Guid(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct HexadecimalColorValue(pub String);
+pub struct HexadecimalColorValue(pub Box<str>);
 
 /// Horizontal Alignment Location, the simple type `ST_XAlign` (ECMA-376 Part 1, section 22.9.2.18),
 /// kept as its member or as the text the file carried.
@@ -590,7 +590,7 @@ pub enum MeasurementInTwentiethsOfAPointMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct OnOffValue(pub String);
+pub struct OnOffValue(pub Box<str>);
 
 /// Panose-1 Number, the simple type `ST_Panose` (ECMA-376 Part 1, section 22.9.2.8), kept as the
 /// text the file carried.
@@ -604,7 +604,7 @@ pub struct OnOffValue(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct Panose1Number(pub String);
+pub struct Panose1Number(pub Box<str>);
 
 /// Percentage Value with Sign, the simple type `ST_Percentage` (ECMA-376 Part 1, section 22.9.2.9),
 /// kept as the text the file carried.
@@ -618,7 +618,7 @@ pub struct Panose1Number(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct PercentageValueWithSign(pub String);
+pub struct PercentageValueWithSign(pub Box<str>);
 
 /// Positive Fixed Percentage Value with Sign, the simple type `ST_PositiveFixedPercentage`
 /// (ECMA-376 Part 1, section 22.9.2.10), kept as the text the file carried.
@@ -632,7 +632,7 @@ pub struct PercentageValueWithSign(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct PositiveFixedPercentageValueWithSign(pub String);
+pub struct PositiveFixedPercentageValueWithSign(pub Box<str>);
 
 /// Positive Percentage Value with Sign, the simple type `ST_PositivePercentage` (ECMA-376 Part 1,
 /// section 22.9.2.11), kept as the text the file carried.
@@ -646,7 +646,7 @@ pub struct PositiveFixedPercentageValueWithSign(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct PositivePercentageValueWithSign(pub String);
+pub struct PositivePercentageValueWithSign(pub Box<str>);
 
 /// Positive Universal Measurement, the simple type `ST_PositiveUniversalMeasure` (ECMA-376 Part 1,
 /// section 22.9.2.12), kept as the text the file carried.
@@ -660,7 +660,7 @@ pub struct PositivePercentageValueWithSign(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct PositiveUniversalMeasurement(pub String);
+pub struct PositiveUniversalMeasurement(pub Box<str>);
 
 /// Universal Measurement, the simple type `ST_UniversalMeasure` (ECMA-376 Part 1, section
 /// 22.9.2.15), kept as the text the file carried.
@@ -674,7 +674,7 @@ pub struct PositiveUniversalMeasurement(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct UniversalMeasurement(pub String);
+pub struct UniversalMeasurement(pub Box<str>);
 
 /// Unsigned Decimal Number Value, the simple type `ST_UnsignedDecimalNumber` (ECMA-376 Part 1,
 /// section 22.9.2.16), kept as the text the file carried.
@@ -688,7 +688,7 @@ pub struct UniversalMeasurement(pub String);
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct UnsignedDecimalNumberValue(pub String);
+pub struct UnsignedDecimalNumberValue(pub Box<str>);
 
 /// Vertical Alignment Location, the simple type `ST_YAlign` (ECMA-376 Part 1, section 22.9.2.20),
 /// kept as its member or as the text the file carried.
@@ -762,7 +762,7 @@ pub enum VerticalPositioningLocationMember {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct XMLName(pub String);
+pub struct XMLName(pub Box<str>);
 
 #[cfg(feature = "binary-format")]
 crate::archive_as_spelling!(BooleanValue);
@@ -1406,7 +1406,7 @@ impl AsRef<str> for FixedPercentageValueWithSign {
 
 impl From<String> for FixedPercentageValueWithSign {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -1450,7 +1450,7 @@ impl AsRef<str> for Guid {
 
 impl From<String> for Guid {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -1494,7 +1494,7 @@ impl AsRef<str> for HexadecimalColorValue {
 
 impl From<String> for HexadecimalColorValue {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -1719,7 +1719,7 @@ impl AsRef<str> for OnOffValue {
 
 impl From<String> for OnOffValue {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -1731,7 +1731,7 @@ impl Spelling for OnOffValue {
 
 impl From<bool> for OnOffValue {
     fn from(value: bool) -> Self {
-        Self(value.to_string())
+        Self(Box::from(value.to_string()))
     }
 }
 
@@ -1769,7 +1769,7 @@ impl AsRef<str> for Panose1Number {
 
 impl From<String> for Panose1Number {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -1813,7 +1813,7 @@ impl AsRef<str> for PercentageValueWithSign {
 
 impl From<String> for PercentageValueWithSign {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -1857,7 +1857,7 @@ impl AsRef<str> for PositiveFixedPercentageValueWithSign {
 
 impl From<String> for PositiveFixedPercentageValueWithSign {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -1901,7 +1901,7 @@ impl AsRef<str> for PositivePercentageValueWithSign {
 
 impl From<String> for PositivePercentageValueWithSign {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -1945,7 +1945,7 @@ impl AsRef<str> for PositiveUniversalMeasurement {
 
 impl From<String> for PositiveUniversalMeasurement {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -1989,7 +1989,7 @@ impl AsRef<str> for UniversalMeasurement {
 
 impl From<String> for UniversalMeasurement {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -2033,7 +2033,7 @@ impl AsRef<str> for UnsignedDecimalNumberValue {
 
 impl From<String> for UnsignedDecimalNumberValue {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 
@@ -2258,7 +2258,7 @@ impl AsRef<str> for XMLName {
 
 impl From<String> for XMLName {
     fn from(text: String) -> Self {
-        Self(text)
+        Self(Box::from(text))
     }
 }
 

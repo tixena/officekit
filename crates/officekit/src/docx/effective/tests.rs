@@ -604,7 +604,7 @@ fn font_size(half_points: &str) -> RunPropertiesContent {
 
 fn character_reference(id: &str) -> RunPropertiesContent {
     let mut reference = ReferencedCharacterStyle::default();
-    reference.val = Some(id.to_owned());
+    reference.val = Some(Box::from(id));
     RunPropertiesContent::from(reference)
 }
 
@@ -616,7 +616,7 @@ fn style_of(
     let mut run = RunProperties::default();
     run.content = content;
     let mut style = StyleDefinition::default();
-    style.style_id = Some(id.to_owned());
+    style.style_id = Some(Box::from(id));
     style.r#type = Some(StyleTypes::from(kind));
     style.run_properties = Some(Box::new(run));
     style
@@ -759,7 +759,7 @@ fn numbered(num_id: i64, ilvl: Option<i64>) -> NumberingDefinitionInstanceRefere
 /// A paragraph style `id` whose paragraph properties are `general`.
 fn paragraph_style(id: &str, general: ParagraphPropertiesPPrGeneral) -> StyleDefinition {
     let mut style = StyleDefinition::default();
-    style.style_id = Some(id.to_owned());
+    style.style_id = Some(Box::from(id));
     style.r#type = Some(StyleTypes::from(StyleTypesMember::Paragraph));
     style.paragraph_properties_p_pr_general = Some(Box::new(general));
     style
@@ -812,7 +812,7 @@ fn own_of(
     indent: Option<ParagraphIndentation>,
 ) -> ParagraphProperties {
     let mut reference = ReferencedParagraphStyle::default();
-    reference.val = Some(style.to_owned());
+    reference.val = Some(Box::from(style));
     let mut own = ParagraphProperties::default();
     own.referenced_paragraph_style = Some(Box::new(reference));
     own.numbering_definition_instance_reference_num_pr = numbering.map(Box::new);
@@ -964,7 +964,7 @@ fn grid_style(
 /// A table that names `Grid` and turns its first-row format on.
 fn grid_table(styles: &StyleSheet) -> TableFormat {
     let mut reference = ReferencedTableStyle::default();
-    reference.val = Some("Grid".to_owned());
+    reference.val = Some(Box::from("Grid"));
     let mut look = TableStyleConditionalFormattingSettingsException::default();
     look.first_row = Some(true.into());
     let mut own = TableProperties::default();
@@ -1081,7 +1081,7 @@ fn ascii_theme(member: ThemeFontMember) -> RunPropertiesContent {
 
 fn ascii(family: &str) -> RunPropertiesContent {
     let mut fonts = RunFonts::default();
-    fonts.ascii = Some(family.to_owned());
+    fonts.ascii = Some(Box::from(family));
     RunPropertiesContent::from(fonts)
 }
 
@@ -1098,7 +1098,7 @@ fn a_run_s_own_font_replaces_the_defaults_theme_font_of_its_kind() {
     assert_eq!(effective.and_then(|found| found.ascii_theme.as_ref()), None);
 
     let mut theme = Theme::default();
-    theme.elements.font_scheme.minor_fonts.latin_font.typeface = Some("Calibri".to_owned());
+    theme.elements.font_scheme.minor_fonts.latin_font.typeface = Some(Box::from("Calibri"));
     let families = ThemeFonts::new(Some(&theme), None).families(effective);
     assert_eq!(families.ascii.as_deref(), Some("Courier New"));
 }
@@ -1122,7 +1122,7 @@ fn a_kind_the_later_level_does_not_state_keeps_the_earlier_font() {
     let styles = defaults_sheet(vec![ascii_theme(ThemeFontMember::MinorHAnsi)]);
     let paragraph = styles.paragraph(None);
     let mut own = RunFonts::default();
-    own.cs = Some("Arial".to_owned());
+    own.cs = Some(Box::from("Arial"));
     let run = styles.run(
         &paragraph,
         Some(&run_of(vec![RunPropertiesContent::from(own)])),
@@ -1248,7 +1248,7 @@ fn the_on_off_names_are_sorted() {
 /// The style `id`, based on `parent`, with the paragraph properties `general`.
 fn child_style(id: &str, parent: &str, general: ParagraphPropertiesPPrGeneral) -> StyleDefinition {
     let mut based = ParentStyleID::default();
-    based.val = Some(parent.to_owned());
+    based.val = Some(Box::from(parent));
     let mut style = paragraph_style(id, general);
     style.parent_style_id = Some(Box::new(based));
     style

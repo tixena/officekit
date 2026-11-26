@@ -244,7 +244,7 @@ pub static COMPAT_SP_SHAPE: officekit_markup_base::Shape = officekit_markup_base
 #[non_exhaustive]
 pub struct CompatSpWith<X: UserData> {
     /// The attribute `spid`, when the element has it.
-    pub spid: Option<String>,
+    pub spid: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

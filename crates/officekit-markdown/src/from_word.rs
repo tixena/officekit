@@ -1360,8 +1360,9 @@ impl Walk<'_> {
             .or_else(|| hyperlink.anchor.as_deref().map(anchor_target))?;
         let title = hyperlink
             .tooltip
-            .clone()
-            .filter(|tooltip| !tooltip.is_empty());
+            .as_deref()
+            .filter(|tooltip| !tooltip.is_empty())
+            .map(String::from);
         Some(self.links.index(target, title))
     }
 

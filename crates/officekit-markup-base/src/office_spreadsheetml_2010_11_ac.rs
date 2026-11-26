@@ -242,7 +242,7 @@ pub struct AbsPathWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<crate::Unknown>>,
     /// The attribute `url`, when the element has it.
-    pub url: Option<String>,
+    pub url: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml201011AcAbsPath,
 }

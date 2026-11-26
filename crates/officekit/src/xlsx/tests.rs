@@ -64,7 +64,7 @@ fn date_system(xlsx: &mut Xlsx, date1904: Option<&str>) {
     if let Some(value) = date1904 {
         let mut workbook = xlsx.workbook().unwrap();
         let mut properties = WorkbookProperties::default();
-        properties.date1904 = Some(value.to_owned());
+        properties.date1904 = Some(Box::from(value));
         workbook.properties = Some(Box::new(properties));
         xlsx.set_workbook(&workbook).unwrap();
     }
@@ -94,13 +94,13 @@ where
 fn filtered() -> AutoFilterSettings {
     let mut dynamic = DynamicFilter::default();
     dynamic.r#type = Some(StDynamicFilterType::from("aboveAverage".to_owned()));
-    dynamic.val = Some("46000".to_owned());
-    dynamic.max_val = Some("46309".to_owned());
+    dynamic.val = Some(Box::from("46000"));
+    dynamic.max_val = Some(Box::from("46309"));
     let mut column = AutoFilterColumn::default();
-    column.col_id = Some("0".to_owned());
+    column.col_id = Some(Box::from("0"));
     column.content = Some(Box::new(AutoFilterColumnContent::from(dynamic)));
     let mut settings = AutoFilterSettings::default();
-    settings.r#ref = Some("A1:A3".to_owned());
+    settings.r#ref = Some(Box::from("A1:A3"));
     settings.autofilter_column = vec![column];
     settings
 }
@@ -126,15 +126,15 @@ fn maximum(filter: &DynamicFilter) -> (Option<&str>, Option<&str>) {
 #[cfg(feature = "strict")]
 fn filtered_table() -> Table {
     let mut column = TableColumn::default();
-    column.id = Some("1".to_owned());
-    column.name = Some("Day".to_owned());
+    column.id = Some(Box::from("1"));
+    column.name = Some(Box::from("Day"));
     let mut table = Table::default();
-    table.id = Some("1".to_owned());
-    table.name = Some("T".to_owned());
-    table.display_name = Some("T".to_owned());
-    table.r#ref = Some("A1:A3".to_owned());
+    table.id = Some(Box::from("1"));
+    table.name = Some(Box::from("T"));
+    table.display_name = Some(Box::from("T"));
+    table.r#ref = Some(Box::from("A1:A3"));
     table.autofilter_settings = Some(Box::new(filtered()));
-    table.columns.count = Some("1".to_owned());
+    table.columns.count = Some(Box::from("1"));
     table.columns.table_column = vec![column];
     table
 }
@@ -143,22 +143,22 @@ fn filtered_table() -> Table {
 #[cfg(feature = "strict")]
 fn filtered_pivot_table() -> PivotTableDefinition {
     let mut filter = PivotTableAdvancedFilter::default();
-    filter.fld = Some("0".to_owned());
+    filter.fld = Some(Box::from("0"));
     filter.r#type = Some(PivotFilterTypes::from("dateBetween".to_owned()));
-    filter.id = Some("1".to_owned());
+    filter.id = Some(Box::from("1"));
     *filter.autofilter_settings = filtered();
     let mut filters = Filters::default();
-    filters.count = Some("1".to_owned());
+    filters.count = Some(Box::from("1"));
     filters.pivottable_advanced_filter = vec![filter];
     let mut definition = PivotTableDefinition::default();
-    definition.name = Some("P".to_owned());
-    definition.cache_id = Some("1".to_owned());
-    definition.data_caption = Some("Values".to_owned());
+    definition.name = Some(Box::from("P"));
+    definition.cache_id = Some(Box::from("1"));
+    definition.data_caption = Some(Box::from("Values"));
     let location = &mut definition.pivottable_location;
-    location.r#ref = Some("A1:B3".to_owned());
-    location.first_header_row = Some("1".to_owned());
-    location.first_data_row = Some("1".to_owned());
-    location.first_data_col = Some("1".to_owned());
+    location.r#ref = Some(Box::from("A1:B3"));
+    location.first_header_row = Some(Box::from("1"));
+    location.first_data_row = Some(Box::from("1"));
+    location.first_data_col = Some(Box::from("1"));
     definition.filters = Some(Box::new(filters));
     definition
 }
@@ -167,20 +167,20 @@ fn filtered_pivot_table() -> PivotTableDefinition {
 #[cfg(feature = "strict")]
 fn pivot_cache() -> PivotCacheDefinition {
     let mut source = WorksheetPivotCacheSource::default();
-    source.r#ref = Some("A1:A3".to_owned());
-    source.sheet = Some("Sheet1".to_owned());
+    source.r#ref = Some(Box::from("A1:A3"));
+    source.sheet = Some(Box::from("Sheet1"));
     let mut field = PivotCacheField::default();
-    field.name = Some("Day".to_owned());
+    field.name = Some(Box::from("Day"));
     field.num_fmt_id = Some(NumberFormatId::from("0".to_owned()));
     field.shared_items = Some(Box::default());
     let mut definition = PivotCacheDefinition::default();
-    definition.refreshed_date = Some("46309".to_owned());
-    definition.created_version = Some("8".to_owned());
-    definition.record_count = Some("0".to_owned());
+    definition.refreshed_date = Some(Box::from("46309"));
+    definition.created_version = Some(Box::from("8"));
+    definition.record_count = Some(Box::from("0"));
     let description = &mut definition.pivotcache_source_description;
     description.r#type = Some(PivotCacheType::from("worksheet".to_owned()));
     description.content = Some(Box::new(PivotCacheSourceDescriptionContent::from(source)));
-    definition.pivotcache_fields.count = Some("1".to_owned());
+    definition.pivotcache_fields.count = Some(Box::from("1"));
     definition.pivotcache_fields.pivotcache_field = vec![field];
     definition
 }
@@ -235,14 +235,14 @@ fn strict_dated(date1904: bool) -> Xlsx {
     assert_eq!(xlsx.conformance_class(), ConformanceClass::Strict);
     date_system(&mut xlsx, date1904.then_some("1"));
     let mut value = CellValue::default();
-    value.value = "2024-03-01T12:00:00".to_owned();
+    value.value = Box::from("2024-03-01T12:00:00");
     let mut cell = Cell::default();
-    cell.r = Some("A1".to_owned());
-    cell.s = Some("1".to_owned());
+    cell.r = Some(Box::from("A1"));
+    cell.s = Some(Box::from("1"));
     cell.t = Some(CellType::from("d".to_owned()));
     cell.value = Some(Box::new(value));
     let mut row = Row::default();
-    row.r = Some("1".to_owned());
+    row.r = Some(Box::from("1"));
     row.cell = vec![cell];
     let sheet = name("/xl/worksheets/sheet1.xml");
     let mut dated = worksheet::load(xlsx.package(), &sheet, OpenOptions::default()).unwrap();
@@ -309,8 +309,8 @@ fn a_new_workbook_holds_one_empty_sheet_related_as_rid1() {
 #[test]
 fn a_shared_string_that_keeps_its_space_has_no_validation_error() {
     let mut text = Text::default();
-    text.space = Some("preserve".to_owned());
-    text.value = " two".to_owned();
+    text.space = Some(Box::from("preserve"));
+    text.value = Box::from(" two");
     let mut item = StringItem::default();
     item.text = Some(Box::new(text));
     let mut shared = SharedStringTable::default();
@@ -435,7 +435,7 @@ fn a_strict_date_cell_saved_transitional_becomes_a_number_cell_with_one_warning(
                     cell.r.as_deref(),
                     cell.s.as_deref(),
                     cell.t.as_ref().map(spelled),
-                    cell.value.as_ref().map(|held| held.value.as_str()),
+                    cell.value.as_ref().map(|held| &*held.value),
                 )
             })
             .collect();

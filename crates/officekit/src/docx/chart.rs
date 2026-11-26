@@ -115,13 +115,16 @@ impl Workbook {
             .iter()
             .filter_map(|sheet| {
                 let (name, id) = (sheet.name.as_ref()?, sheet.id.as_ref()?);
-                related.iter().find(|part| &part.id == id).and_then(|part| {
-                    if let Target::Part(target) = &part.target {
-                        Some((name.clone(), target.clone()))
-                    } else {
-                        None
-                    }
-                })
+                related
+                    .iter()
+                    .find(|part| part.id == **id)
+                    .and_then(|part| {
+                        if let Target::Part(target) = &part.target {
+                            Some((String::from(&**name), target.clone()))
+                        } else {
+                            None
+                        }
+                    })
             })
             .collect();
         let shared = match xlsx
@@ -409,7 +412,7 @@ fn read_cells(
 }
 
 fn cell_text(cell: &Cell, shared: &[String]) -> Option<String> {
-    let value = cell.value.as_ref().map(|value| value.value.as_str());
+    let value = cell.value.as_ref().map(|value| &*value.value);
     let kind = cell
         .t
         .as_ref()
@@ -431,8 +434,8 @@ fn inline_text(item: &RichTextInline) -> String {
 }
 
 fn text_and_runs(text: Option<&Text>, runs: &[RichTextRun]) -> String {
-    text.map(|plain| plain.value.as_str())
+    text.map(|plain| &*plain.value)
         .into_iter()
-        .chain(runs.iter().map(|run| run.text.value.as_str()))
+        .chain(runs.iter().map(|run| &*run.text.value))
         .collect()
 }

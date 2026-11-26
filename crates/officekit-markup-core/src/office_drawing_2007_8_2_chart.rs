@@ -498,7 +498,7 @@ pub struct ShowSketchBtnWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing200782ChartShowSketchBtn,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c14:showSketchBtn` element of the tree a read gives: [`ShowSketchBtnWith`] holding nothing
@@ -575,7 +575,7 @@ pub struct StyleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing200782ChartStyle,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `c14:style` element of the tree a read gives: [`StyleWith`] holding nothing in `user_data`.

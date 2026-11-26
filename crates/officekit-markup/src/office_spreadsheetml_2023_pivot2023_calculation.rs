@@ -309,7 +309,7 @@ pub struct AggregationInfoWith<X: UserData> {
     /// The attribute `aggregationType`, when the element has it.
     pub aggregation_type: Option<AggregationType>,
     /// The attribute `sourceField`, when the element has it.
-    pub source_field: Option<String>,
+    pub source_field: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -545,7 +545,7 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct FeatureSupportInfoWith<X: UserData> {
     /// The attribute `featureName`, when the element has it.
-    pub feature_name: Option<String>,
+    pub feature_name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

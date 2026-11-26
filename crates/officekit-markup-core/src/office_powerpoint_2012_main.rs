@@ -326,7 +326,7 @@ pub struct ChartTrackingRefBasedWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficePowerpoint2012MainChartTrackingRefBased,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `p15:chartTrackingRefBased` element of the tree a read gives: [`ChartTrackingRefBasedWith`]
@@ -384,20 +384,20 @@ pub struct GuideWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// The attribute `orient`, when the element has it.
     pub orient: Option<super::presentation::Direction>,
     /// The attribute `pos`, when the element has it.
-    pub pos: Option<String>,
+    pub pos: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficePowerpoint2012MainGuide,
     /// The attribute `userDrawn`, when the element has it.
-    pub user_drawn: Option<String>,
+    pub user_drawn: Option<Box<str>>,
 }
 
 /// The `p15:guide` element of the tree a read gives: [`GuideWith`] holding nothing in `user_data`.
@@ -433,9 +433,9 @@ impl Eq for NotesGuideLstWith<()> {}
 #[non_exhaustive]
 pub struct ParentCmWith<X: UserData> {
     /// The attribute `authorId`, when the element has it.
-    pub author_id: Option<String>,
+    pub author_id: Option<Box<str>>,
     /// The attribute `idx`, when the element has it.
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -455,14 +455,14 @@ impl Eq for ParentCmWith<()> {}
 #[non_exhaustive]
 pub struct PresenceInfoWith<X: UserData> {
     /// The attribute `providerId`, when the element has it.
-    pub provider_id: Option<String>,
+    pub provider_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficePowerpoint2012MainPresenceInfo,
     /// The attribute `userId`, when the element has it.
-    pub user_id: Option<String>,
+    pub user_id: Option<Box<str>>,
 }
 
 /// The `p15:presenceInfo` element of the tree a read gives: [`PresenceInfoWith`] holding nothing in
@@ -477,11 +477,11 @@ impl Eq for PresenceInfoWith<()> {}
 #[non_exhaustive]
 pub struct PrstTransWith<X: UserData> {
     /// The attribute `invX`, when the element has it.
-    pub inv_x: Option<String>,
+    pub inv_x: Option<Box<str>>,
     /// The attribute `invY`, when the element has it.
-    pub inv_y: Option<String>,
+    pub inv_y: Option<Box<str>>,
     /// The attribute `prst`, when the element has it.
-    pub prst: Option<String>,
+    pub prst: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -525,7 +525,7 @@ pub struct ThreadingInfoWith<X: UserData> {
     /// The child that is `ParentCm`, when there is one.
     pub parent_cm: Option<Box<ParentCmWith<X>>>,
     /// The attribute `timeZoneBias`, when the element has it.
-    pub time_zone_bias: Option<String>,
+    pub time_zone_bias: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

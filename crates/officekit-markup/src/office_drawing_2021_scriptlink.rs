@@ -326,7 +326,7 @@ pub struct ScriptLinkWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeDrawing2021ScriptlinkScriptLink,
     /// The attribute `val`, when the element has it.
-    pub val: Option<String>,
+    pub val: Option<Box<str>>,
 }
 
 /// The `asl:scriptLink` element of the tree a read gives: [`ScriptLinkWith`] holding nothing in

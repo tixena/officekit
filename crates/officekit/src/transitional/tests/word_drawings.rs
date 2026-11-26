@@ -73,12 +73,12 @@ fn word_shape(text_box: bool) -> WordprocessingMLShape {
 fn paragraph(uri: &str, item: AnyElementContent) -> BlockContent {
     let mut data = GraphicObjectData::default();
     data.content = vec![item];
-    data.uri = Some(uri.to_owned());
+    data.uri = Some(Box::from(uri));
     let mut graphic = GraphicObject::default();
     graphic.data = Box::new(data);
     let mut properties = DrawingObjectNonVisualProperties::default();
     properties.id = Some(DrawingElementID::from("1".to_owned()));
-    properties.name = Some("Shape 1".to_owned());
+    properties.name = Some(Box::from("Shape 1"));
     let mut size = DrawingObjectSize::default();
     size.cx = Some(PositiveCoordinate::from("914400".to_owned()));
     size.cy = Some(PositiveCoordinate::from("457200".to_owned()));

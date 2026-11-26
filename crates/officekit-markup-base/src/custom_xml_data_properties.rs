@@ -256,7 +256,7 @@ pub struct AssociatedXMLSchemaWith<X: UserData> {
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<crate::Unknown>>,
     /// The attribute `ds:uri`, when the element has it.
-    pub uri: Option<String>,
+    pub uri: Option<Box<str>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::CustomXmlDataPropertiesAssociatedXMLSchema,
 }

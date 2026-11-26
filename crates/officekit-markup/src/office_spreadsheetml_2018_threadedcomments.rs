@@ -497,13 +497,13 @@ impl Eq for ExtLstWith<()> {}
 #[non_exhaustive]
 pub struct MentionWith<X: UserData> {
     /// The attribute `length`, when the element has it.
-    pub length: Option<String>,
+    pub length: Option<Box<str>>,
     /// The attribute `mentionId`, when the element has it.
-    pub mention_id: Option<String>,
+    pub mention_id: Option<Box<str>>,
     /// The attribute `mentionpersonId`, when the element has it.
-    pub mentionperson_id: Option<String>,
+    pub mentionperson_id: Option<Box<str>>,
     /// The attribute `startIndex`, when the element has it.
-    pub start_index: Option<String>,
+    pub start_index: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -543,20 +543,20 @@ impl Eq for MentionsWith<()> {}
 #[non_exhaustive]
 pub struct PersonWith<X: UserData> {
     /// The attribute `displayName`, when the element has it.
-    pub display_name: Option<String>,
+    pub display_name: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `providerId`, when the element has it.
-    pub provider_id: Option<String>,
+    pub provider_id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2018ThreadedcommentsPerson,
     /// The attribute `userId`, when the element has it.
-    pub user_id: Option<String>,
+    pub user_id: Option<Box<str>>,
 }
 
 /// The `xltc:person` element of the tree a read gives: [`PersonWith`] holding nothing in
@@ -598,7 +598,7 @@ pub struct TextWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2018ThreadedcommentsText,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xltc:text` element of the tree a read gives: [`TextWith`] holding nothing in `user_data`.
@@ -612,21 +612,21 @@ impl Eq for TextWith<()> {}
 #[non_exhaustive]
 pub struct ThreadedCommentWith<X: UserData> {
     /// The attribute `dT`, when the element has it.
-    pub d_t: Option<String>,
+    pub d_t: Option<Box<str>>,
     /// The attribute `done`, when the element has it.
-    pub done: Option<String>,
+    pub done: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The child that is `Mentions`, when there is one.
     pub mentions: Option<Box<MentionsWith<X>>>,
     /// The attribute `parentId`, when the element has it.
-    pub parent_id: Option<String>,
+    pub parent_id: Option<Box<str>>,
     /// The attribute `personId`, when the element has it.
-    pub person_id: Option<String>,
+    pub person_id: Option<Box<str>>,
     /// The attribute `ref`, when the element has it.
-    pub r#ref: Option<String>,
+    pub r#ref: Option<Box<str>>,
     /// The child that is `Text`, when there is one.
     pub text: Option<Box<TextWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it

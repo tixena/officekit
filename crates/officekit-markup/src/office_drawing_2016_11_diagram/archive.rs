@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct AutoBuNodeInfoMirror {
     pub bu_pr: Box<super::BuPr>,
-    pub lvl: Option<String>,
+    pub lvl: Option<Box<str>>,
     pub pt_type: Option<super::STorageType>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -244,8 +244,8 @@ pub struct AutoBuNodeInfoLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BuPrMirror {
     pub content: Box<drawing::TextBulletContent>,
-    pub lead_zeros: Option<String>,
-    pub prefix: Option<String>,
+    pub lead_zeros: Option<Box<str>>,
+    pub prefix: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }

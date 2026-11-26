@@ -226,8 +226,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct BlipFillBlipFillPropertiesMirror {
     pub blip: Option<Box<drawing::Blip>>,
     pub content: Option<Box<drawing::FillModeContent>>,
-    pub dpi: Option<String>,
-    pub rot_with_shape: Option<String>,
+    pub dpi: Option<Box<str>>,
+    pub rot_with_shape: Option<Box<str>>,
     pub source_rectangle: Option<Box<drawing::SourceRectangle>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -250,27 +250,27 @@ pub struct BlipFillResetBlipFillPropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BodyPrMirror {
     pub anchor: Option<drawing::TextAnchoringTypes>,
-    pub anchor_ctr: Option<String>,
+    pub anchor_ctr: Option<Box<str>>,
     pub b_ins: Option<drawing::StCoordinate32>,
-    pub compat_ln_spc: Option<String>,
+    pub compat_ln_spc: Option<Box<str>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub force_aa: Option<String>,
-    pub from_word_art: Option<String>,
+    pub force_aa: Option<Box<str>>,
+    pub from_word_art: Option<Box<str>>,
     pub horz_overflow: Option<drawing::TextHorizontalOverflowTypes>,
     pub l_ins: Option<drawing::StCoordinate32>,
     pub num_col: Option<drawing::TextColumnCount>,
     pub preset_text_warp: Option<Box<drawing::PresetTextWarp>>,
     pub r_ins: Option<drawing::StCoordinate32>,
     pub rot: Option<drawing::Angle>,
-    pub rtl_col: Option<String>,
+    pub rtl_col: Option<Box<str>>,
     pub scene3d: Option<Box<drawing::Scene3d>>,
     pub spc_col: Option<drawing::PositiveCoordinatePoint>,
-    pub spc_first_last_para: Option<String>,
+    pub spc_first_last_para: Option<Box<str>>,
     pub t_ins: Option<drawing::StCoordinate32>,
     pub text3d_content: Option<Box<drawing::Text3DContent>>,
     pub text_autofit_content: Option<Box<drawing::TextAutofitContent>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub upright: Option<String>,
+    pub upright: Option<Box<str>>,
     pub user_data: (),
     pub vert: Option<drawing::VerticalTextTypes>,
     pub vert_overflow: Option<drawing::TextVerticalOverflow>,
@@ -281,10 +281,10 @@ pub struct BodyPrMirror {
 #[rkyv(remote = super::Bounds)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BoundsMirror {
-    pub b: Option<String>,
-    pub l: Option<String>,
-    pub r: Option<String>,
-    pub t: Option<String>,
+    pub b: Option<Box<str>>,
+    pub l: Option<Box<str>>,
+    pub r: Option<Box<str>>,
+    pub t: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -302,16 +302,16 @@ pub struct BwModeMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CNvCxnSpPrModifyNonVisualConnectorPropsMirror {
     pub end_cxn_connection: Option<Box<super::EndCxnConnection>>,
-    pub no_adjust_handles: Option<String>,
-    pub no_change_arrowheads: Option<String>,
-    pub no_change_aspect: Option<String>,
-    pub no_change_shape_type: Option<String>,
-    pub no_edit_points: Option<String>,
-    pub no_grp: Option<String>,
-    pub no_move: Option<String>,
-    pub no_resize: Option<String>,
-    pub no_rot: Option<String>,
-    pub no_select: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
+    pub no_change_arrowheads: Option<Box<str>>,
+    pub no_change_aspect: Option<Box<str>>,
+    pub no_change_shape_type: Option<Box<str>>,
+    pub no_edit_points: Option<Box<str>>,
+    pub no_grp: Option<Box<str>>,
+    pub no_move: Option<Box<str>>,
+    pub no_resize: Option<Box<str>>,
+    pub no_rot: Option<Box<str>>,
+    pub no_select: Option<Box<str>>,
     pub st_cxn_connection: Option<Box<super::StCxnConnection>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
@@ -341,12 +341,12 @@ pub struct CNvCxnSpPrResetNonVisualConnectorPropsMirror {
 #[rkyv(remote = super::CNvGraphicFramePr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CNvGraphicFramePrMirror {
-    pub no_change_aspect: Option<String>,
-    pub no_drilldown: Option<String>,
-    pub no_grp: Option<String>,
-    pub no_move: Option<String>,
-    pub no_resize: Option<String>,
-    pub no_select: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
+    pub no_drilldown: Option<Box<str>>,
+    pub no_grp: Option<Box<str>>,
+    pub no_move: Option<Box<str>>,
+    pub no_resize: Option<Box<str>>,
+    pub no_select: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -355,13 +355,13 @@ pub struct CNvGraphicFramePrMirror {
 #[rkyv(remote = super::CNvGrpSpPrModifyNonVisualGroupDrawingShapeProps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CNvGrpSpPrModifyNonVisualGroupDrawingShapePropsMirror {
-    pub no_change_aspect: Option<String>,
-    pub no_grp: Option<String>,
-    pub no_move: Option<String>,
-    pub no_resize: Option<String>,
-    pub no_rot: Option<String>,
-    pub no_select: Option<String>,
-    pub no_ungrp: Option<String>,
+    pub no_change_aspect: Option<Box<str>>,
+    pub no_grp: Option<Box<str>>,
+    pub no_move: Option<Box<str>>,
+    pub no_resize: Option<Box<str>>,
+    pub no_rot: Option<Box<str>>,
+    pub no_select: Option<Box<str>>,
+    pub no_ungrp: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -380,17 +380,17 @@ pub struct CNvGrpSpPrNonVisualGroupDrawingShapePropsMirror {
 #[rkyv(remote = super::CNvInkPr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CNvInkPrMirror {
-    pub is_comment: Option<String>,
-    pub no_adjust_handles: Option<String>,
-    pub no_change_arrowheads: Option<String>,
-    pub no_change_aspect: Option<String>,
-    pub no_change_shape_type: Option<String>,
-    pub no_edit_points: Option<String>,
-    pub no_grp: Option<String>,
-    pub no_move: Option<String>,
-    pub no_resize: Option<String>,
-    pub no_rot: Option<String>,
-    pub no_select: Option<String>,
+    pub is_comment: Option<Box<str>>,
+    pub no_adjust_handles: Option<Box<str>>,
+    pub no_change_arrowheads: Option<Box<str>>,
+    pub no_change_aspect: Option<Box<str>>,
+    pub no_change_shape_type: Option<Box<str>>,
+    pub no_edit_points: Option<Box<str>>,
+    pub no_grp: Option<Box<str>>,
+    pub no_move: Option<Box<str>>,
+    pub no_resize: Option<Box<str>>,
+    pub no_rot: Option<Box<str>>,
+    pub no_select: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -399,18 +399,18 @@ pub struct CNvInkPrMirror {
 #[rkyv(remote = super::CNvPicPrModifyNonVisualPictureProps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CNvPicPrModifyNonVisualPicturePropsMirror {
-    pub no_adjust_handles: Option<String>,
-    pub no_change_arrowheads: Option<String>,
-    pub no_change_aspect: Option<String>,
-    pub no_change_shape_type: Option<String>,
-    pub no_crop: Option<String>,
-    pub no_edit_points: Option<String>,
-    pub no_grp: Option<String>,
-    pub no_move: Option<String>,
-    pub no_resize: Option<String>,
-    pub no_rot: Option<String>,
-    pub no_select: Option<String>,
-    pub prefer_relative_resize: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
+    pub no_change_arrowheads: Option<Box<str>>,
+    pub no_change_aspect: Option<Box<str>>,
+    pub no_change_shape_type: Option<Box<str>>,
+    pub no_crop: Option<Box<str>>,
+    pub no_edit_points: Option<Box<str>>,
+    pub no_grp: Option<Box<str>>,
+    pub no_move: Option<Box<str>>,
+    pub no_resize: Option<Box<str>>,
+    pub no_rot: Option<Box<str>>,
+    pub no_select: Option<Box<str>>,
+    pub prefer_relative_resize: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -428,12 +428,12 @@ pub struct CNvPicPrResetNonVisualPicturePropsMirror {
 #[rkyv(remote = super::CNvPrModifyNonVisualDrawingProps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CNvPrModifyNonVisualDrawingPropsMirror {
-    pub decor: Option<String>,
-    pub descr: Option<String>,
-    pub hidden: Option<String>,
-    pub name: Option<String>,
-    pub script_link: Option<String>,
-    pub title: Option<String>,
+    pub decor: Option<Box<str>>,
+    pub descr: Option<Box<str>>,
+    pub hidden: Option<Box<str>>,
+    pub name: Option<Box<str>>,
+    pub script_link: Option<Box<str>>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -443,13 +443,13 @@ pub struct CNvPrModifyNonVisualDrawingPropsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CNvPrNonVisualDrawingPropsMirror {
     pub click_hyperlink: Option<Box<drawing::ClickHyperlink>>,
-    pub descr: Option<String>,
+    pub descr: Option<Box<str>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub hidden: Option<String>,
+    pub hidden: Option<Box<str>>,
     pub hyperlink_for_hover: Option<Box<drawing::HyperlinkForHover>>,
     pub id: Option<drawing::DrawingElementID>,
-    pub name: Option<String>,
-    pub title: Option<String>,
+    pub name: Option<Box<str>>,
+    pub title: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -458,18 +458,18 @@ pub struct CNvPrNonVisualDrawingPropsMirror {
 #[rkyv(remote = super::CNvSpPr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CNvSpPrMirror {
-    pub no_adjust_handles: Option<String>,
-    pub no_change_arrowheads: Option<String>,
-    pub no_change_aspect: Option<String>,
-    pub no_change_shape_type: Option<String>,
-    pub no_edit_points: Option<String>,
-    pub no_grp: Option<String>,
-    pub no_move: Option<String>,
-    pub no_resize: Option<String>,
-    pub no_rot: Option<String>,
-    pub no_select: Option<String>,
-    pub no_text_edit: Option<String>,
-    pub tx_box: Option<String>,
+    pub no_adjust_handles: Option<Box<str>>,
+    pub no_change_arrowheads: Option<Box<str>>,
+    pub no_change_aspect: Option<Box<str>>,
+    pub no_change_shape_type: Option<Box<str>>,
+    pub no_edit_points: Option<Box<str>>,
+    pub no_grp: Option<Box<str>>,
+    pub no_move: Option<Box<str>>,
+    pub no_resize: Option<Box<str>>,
+    pub no_rot: Option<Box<str>>,
+    pub no_select: Option<Box<str>>,
+    pub no_text_edit: Option<Box<str>>,
+    pub tx_box: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -479,9 +479,9 @@ pub struct CNvSpPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CompressPicPrMirror {
     pub cstate: Option<drawing::BlipCompressionType>,
-    pub remove_crop: Option<String>,
+    pub remove_crop: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
-    pub use_local_dpi: Option<String>,
+    pub use_local_dpi: Option<Box<str>>,
     pub user_data: (),
 }
 
@@ -489,8 +489,8 @@ pub struct CompressPicPrMirror {
 #[rkyv(remote = super::ContextTextCharRangeContext)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ContextTextCharRangeContextMirror {
-    pub hash: Option<String>,
-    pub len: Option<String>,
+    pub hash: Option<Box<str>>,
+    pub len: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -499,8 +499,8 @@ pub struct ContextTextCharRangeContextMirror {
 #[rkyv(remote = super::CxnSpMk)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CxnSpMkMirror {
-    pub creation_id: Option<String>,
-    pub id: Option<String>,
+    pub creation_id: Option<Box<str>>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -625,7 +625,7 @@ pub struct EffectRefMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct EndCxnConnectionMirror {
     pub id: Option<drawing::DrawingElementID>,
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -702,8 +702,8 @@ pub struct GeomMirror {
 #[rkyv(remote = super::GraphicFrameMk)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GraphicFrameMkMirror {
-    pub creation_id: Option<String>,
-    pub id: Option<String>,
+    pub creation_id: Option<Box<str>>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -744,20 +744,20 @@ pub struct GrpCmdMirror {
     pub c_nv_pr_non_visual_drawing_props: Option<Box<super::CNvPrNonVisualDrawingProps>>,
     pub content: Vec<super::GroupCommandContent>,
     pub dg_mk_lst: Box<super::DgMkLst>,
-    pub grp_id: Option<String>,
+    pub grp_id: Option<Box<str>>,
     pub grp_sp_pr_group_shape_properties: Option<Box<super::GrpSpPrGroupShapeProperties>>,
-    pub prevent_regroup: Option<String>,
+    pub prevent_regroup: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub ver_id: Option<String>,
+    pub ver_id: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::GrpSpMk)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GrpSpMkMirror {
-    pub creation_id: Option<String>,
-    pub id: Option<String>,
+    pub creation_id: Option<Box<str>>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -868,14 +868,14 @@ pub struct HlinkResetHyperlinkPropsMirror {
 pub struct ImgDataMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ImgLink)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ImgLinkMirror {
-    pub tgt: Option<String>,
+    pub tgt: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -885,7 +885,7 @@ pub struct ImgLinkMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ImgUrlMirror {
     pub linkage: Option<super::CTResourceLinkage>,
-    pub src: Option<String>,
+    pub src: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -894,8 +894,8 @@ pub struct ImgUrlMirror {
 #[rkyv(remote = super::InkMk)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InkMkMirror {
-    pub creation_id: Option<String>,
-    pub id: Option<String>,
+    pub creation_id: Option<Box<str>>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1058,7 +1058,7 @@ pub struct OffMirror {
 pub struct OrigImgDataMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1068,17 +1068,17 @@ pub struct PPrMirror {
     pub algn: Option<drawing::TextAlignmentTypes>,
     pub def_tab_sz: Option<drawing::StCoordinate32>,
     pub default_text_run_properties: Option<Box<drawing::DefaultTextRunProperties>>,
-    pub ea_ln_brk: Option<String>,
+    pub ea_ln_brk: Option<Box<str>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
     pub font_algn: Option<drawing::FontAlignmentTypes>,
-    pub hanging_punct: Option<String>,
+    pub hanging_punct: Option<Box<str>>,
     pub indent: Option<drawing::TextIndentation>,
-    pub latin_ln_brk: Option<String>,
+    pub latin_ln_brk: Option<Box<str>>,
     pub line_spacing: Option<Box<drawing::LineSpacing>>,
     pub lvl: Option<drawing::TextIndentLevelType>,
     pub mar_l: Option<drawing::TextMargin>,
     pub mar_r: Option<drawing::TextMargin>,
-    pub rtl: Option<String>,
+    pub rtl: Option<Box<str>>,
     pub space_after: Option<Box<drawing::SpaceAfter>>,
     pub space_before: Option<Box<drawing::SpaceBefore>>,
     pub tab_list: Option<Box<drawing::TabList>>,
@@ -1094,8 +1094,8 @@ pub struct PPrMirror {
 #[rkyv(remote = super::PicMk)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PicMkMirror {
-    pub creation_id: Option<String>,
-    pub id: Option<String>,
+    pub creation_id: Option<Box<str>>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1115,7 +1115,7 @@ pub struct PicMkLstMirror {
 pub struct ResetMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1140,7 +1140,7 @@ pub struct Scene3dMirror {
 pub struct SndDataMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1155,8 +1155,8 @@ pub struct Sp3dMirror {
 #[rkyv(remote = super::SpMk)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SpMkMirror {
-    pub creation_id: Option<String>,
-    pub id: Option<String>,
+    pub creation_id: Option<Box<str>>,
+    pub id: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1234,7 +1234,7 @@ pub struct SrcRectRelativeRectPropsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct StCxnConnectionMirror {
     pub id: Option<drawing::DrawingElementID>,
-    pub idx: Option<String>,
+    pub idx: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
@@ -1327,7 +1327,7 @@ pub struct TxMkLstMirror {
 pub struct UseBoundsMirror {
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub value: String,
+    pub value: Box<str>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1351,15 +1351,15 @@ pub struct XfrmEmptyMirror {
 #[rkyv(remote = super::XfrmModifyTransformProps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct XfrmModifyTransformPropsMirror {
-    pub cx: Option<String>,
-    pub cy: Option<String>,
-    pub flip_h: Option<String>,
-    pub flip_v: Option<String>,
-    pub rot: Option<String>,
+    pub cx: Option<Box<str>>,
+    pub cy: Option<Box<str>>,
+    pub flip_h: Option<Box<str>>,
+    pub flip_v: Option<Box<str>>,
+    pub rot: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub x: Option<String>,
-    pub y: Option<String>,
+    pub x: Option<Box<str>>,
+    pub y: Option<Box<str>>,
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1367,8 +1367,8 @@ pub struct XfrmModifyTransformPropsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct XfrmTransform2DMirror {
     pub extents: Option<Box<drawing::Extents>>,
-    pub flip_h: Option<String>,
-    pub flip_v: Option<String>,
+    pub flip_h: Option<Box<str>>,
+    pub flip_v: Option<Box<str>>,
     pub offset: Option<Box<drawing::Offset>>,
     pub rot: Option<drawing::Angle>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

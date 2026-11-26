@@ -417,7 +417,7 @@ pub struct LastRefreshFeatureWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2022PivotVersionInfoLastRefreshFeature,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xxpvi:lastRefreshFeature` element of the tree a read gives: [`LastRefreshFeatureWith`]
@@ -437,7 +437,7 @@ pub struct LastUpdateFeatureWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2022PivotVersionInfoLastUpdateFeature,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xxpvi:lastUpdateFeature` element of the tree a read gives: [`LastUpdateFeatureWith`]
@@ -479,7 +479,7 @@ pub struct RequiredFeatureWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2022PivotVersionInfoRequiredFeature,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xxpvi:requiredFeature` element of the tree a read gives: [`RequiredFeatureWith`] holding

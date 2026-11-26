@@ -553,7 +553,7 @@ pub struct AWith<X: UserData> {
     /// The children that are an item of `ArrayFeaturePropertyContent`, in order.
     pub content: Vec<ArrayFeaturePropertyContentWith<X>>,
     /// The attribute `k`, when the element has it.
-    pub k: Option<String>,
+    pub k: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -602,14 +602,14 @@ impl Eq for ArrayFeaturePropertyContentWith<()> {}
 #[non_exhaustive]
 pub struct BBoolFeaturePropertyWith<X: UserData> {
     /// The attribute `k`, when the element has it.
-    pub k: Option<String>,
+    pub k: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagBBoolFeatureProperty,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xfpb:b` element of the tree a read gives: [`BBoolFeaturePropertyWith`] holding nothing in
@@ -629,7 +629,7 @@ pub struct BBooleanWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagBBoolean,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xfpb:b` element of the tree a read gives: [`BBooleanWith`] holding nothing in `user_data`.
@@ -643,15 +643,15 @@ impl Eq for BBooleanWith<()> {}
 #[non_exhaustive]
 pub struct BagWith<X: UserData> {
     /// The attribute `att`, when the element has it.
-    pub att: Option<String>,
+    pub att: Option<Box<str>>,
     /// The attribute `bagExtId`, when the element has it.
-    pub bag_ext_id: Option<String>,
+    pub bag_ext_id: Option<Box<str>>,
     /// The children that are an item of `FeaturePropertyBagContent`, in order.
     pub content: Vec<FeaturePropertyBagContentWith<X>>,
     /// The attribute `extRef`, when the element has it.
-    pub ext_ref: Option<String>,
+    pub ext_ref: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
-    pub r#type: Option<String>,
+    pub r#type: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -690,14 +690,14 @@ impl Eq for BagExtWith<()> {}
 #[non_exhaustive]
 pub struct BagIdBagFeaturePropertyWith<X: UserData> {
     /// The attribute `k`, when the element has it.
-    pub k: Option<String>,
+    pub k: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagBagIdBagFeatureProperty,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xfpb:bagId` element of the tree a read gives: [`BagIdBagFeaturePropertyWith`] holding
@@ -717,7 +717,7 @@ pub struct BagIdUnsignedIntWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagBagIdUnsignedInt,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xfpb:bagId` element of the tree a read gives: [`BagIdUnsignedIntWith`] holding nothing in
@@ -1520,14 +1520,14 @@ pub trait Context: crate::Context {
 #[non_exhaustive]
 pub struct DDecimalFeaturePropertyWith<X: UserData> {
     /// The attribute `k`, when the element has it.
-    pub k: Option<String>,
+    pub k: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagDDecimalFeatureProperty,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xfpb:d` element of the tree a read gives: [`DDecimalFeaturePropertyWith`] holding nothing
@@ -1547,7 +1547,7 @@ pub struct DDoubleWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagDDouble,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xfpb:d` element of the tree a read gives: [`DDoubleWith`] holding nothing in `user_data`.
@@ -1561,7 +1561,7 @@ impl Eq for DDoubleWith<()> {}
 #[non_exhaustive]
 pub struct DXFComplementWith<X: UserData> {
     /// The attribute `i`, when the element has it.
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -1691,7 +1691,7 @@ pub struct FeaturePropertyBagsWith<X: UserData> {
     /// The children that are `BagExt`, in order.
     pub bag_ext: Vec<BagExtWith<X>>,
     /// The attribute `count`, when the element has it.
-    pub count: Option<String>,
+    pub count: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
@@ -1780,14 +1780,14 @@ impl Eq for HeaderRowRevDxfWith<()> {}
 #[non_exhaustive]
 pub struct IIntFeaturePropertyWith<X: UserData> {
     /// The attribute `k`, when the element has it.
-    pub k: Option<String>,
+    pub k: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagIIntFeatureProperty,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xfpb:i` element of the tree a read gives: [`IIntFeaturePropertyWith`] holding nothing in
@@ -1807,7 +1807,7 @@ pub struct IIntegerWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagIInteger,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xfpb:i` element of the tree a read gives: [`IIntegerWith`] holding nothing in `user_data`.
@@ -1821,14 +1821,14 @@ impl Eq for IIntegerWith<()> {}
 #[non_exhaustive]
 pub struct RelRelFeaturePropertyWith<X: UserData> {
     /// The attribute `k`, when the element has it.
-    pub k: Option<String>,
+    pub k: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagRelRelFeatureProperty,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xfpb:rel` element of the tree a read gives: [`RelRelFeaturePropertyWith`] holding nothing
@@ -1848,7 +1848,7 @@ pub struct RelStringWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagRelString,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xfpb:rel` element of the tree a read gives: [`RelStringWith`] holding nothing in
@@ -1890,7 +1890,7 @@ pub struct SStringWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagSString,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xfpb:s` element of the tree a read gives: [`SStringWith`] holding nothing in `user_data`.
@@ -1904,14 +1904,14 @@ impl Eq for SStringWith<()> {}
 #[non_exhaustive]
 pub struct SStringFeaturePropertyWith<X: UserData> {
     /// The attribute `k`, when the element has it.
-    pub k: Option<String>,
+    pub k: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagSStringFeatureProperty,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `xfpb:s` element of the tree a read gives: [`SStringFeaturePropertyWith`] holding nothing in
@@ -2228,7 +2228,7 @@ pub trait Visitor: crate::Visitor {
 #[non_exhaustive]
 pub struct XfComplementWith<X: UserData> {
     /// The attribute `i`, when the element has it.
-    pub i: Option<String>,
+    pub i: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

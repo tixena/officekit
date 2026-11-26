@@ -346,13 +346,13 @@ impl Eq for AlternateReferencesWith<()> {}
 #[non_exhaustive]
 pub struct BindingWith<X: UserData> {
     /// The attribute `appref`, when the element has it.
-    pub appref: Option<String>,
+    pub appref: Option<Box<str>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `type`, when the element has it.
-    pub r#type: Option<String>,
+    pub r#type: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -634,14 +634,14 @@ impl Eq for PropertiesWith<()> {}
 #[non_exhaustive]
 pub struct PropertyWith<X: UserData> {
     /// The attribute `name`, when the element has it.
-    pub name: Option<String>,
+    pub name: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWebextensionsWebextension201011Property,
     /// The attribute `value`, when the element has it.
-    pub value: Option<String>,
+    pub value: Option<Box<str>>,
 }
 
 /// The `we:property` element of the tree a read gives: [`PropertyWith`] holding nothing in
@@ -658,18 +658,18 @@ pub struct ReferenceWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The attribute `store`, when the element has it.
-    pub store: Option<String>,
+    pub store: Option<Box<str>>,
     /// The attribute `storeType`, when the element has it.
-    pub store_type: Option<String>,
+    pub store_type: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWebextensionsWebextension201011Reference,
     /// The attribute `version`, when the element has it.
-    pub version: Option<String>,
+    pub version: Option<Box<str>>,
 }
 
 /// The `we:reference` element of the tree a read gives: [`ReferenceWith`] holding nothing in
@@ -688,11 +688,11 @@ pub struct SnapshotWith<X: UserData> {
     /// The attribute `cstate`, when the element has it.
     pub cstate: Option<drawing::BlipCompressionType>,
     /// The attribute `r:embed`, when the element has it.
-    pub embed: Option<String>,
+    pub embed: Option<Box<str>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
     /// The attribute `r:link`, when the element has it.
-    pub link: Option<String>,
+    pub link: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
@@ -783,9 +783,9 @@ pub struct WebextensionWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The attribute `frozen`, when the element has it.
-    pub frozen: Option<String>,
+    pub frozen: Option<Box<str>>,
     /// The attribute `id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// The child that is `Properties`, which the schema requires.
     pub properties: Box<PropertiesWith<X>>,
     /// The child that is `Reference`, which the schema requires.
@@ -811,7 +811,7 @@ impl Eq for WebextensionWith<()> {}
 #[non_exhaustive]
 pub struct WebextensionrefWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
-    pub id: Option<String>,
+    pub id: Option<Box<str>>,
     /// What a read found that the schemas do not declare, which a write gives back; `None` when it
     /// found nothing. A read never leaves an empty record here.
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

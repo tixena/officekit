@@ -205,8 +205,8 @@ fn block(content: Vec<ParagraphContent>) -> BlockContent {
 /// The text `value` of a run, its spaces kept.
 fn characters(value: &str) -> TextRunContent {
     let mut characters = wordprocessing::Text::default();
-    characters.space = Some("preserve".to_owned());
-    characters.value = value.to_owned();
+    characters.space = Some(Box::from("preserve"));
+    characters.value = Box::from(value);
     TextRunContent::from(characters)
 }
 
@@ -359,7 +359,7 @@ fn numbering(measure: fn(u16) -> String) -> NumberingDefinitions {
         numbered_by
     };
     let mut parenthesis = NumberingLevelText::default();
-    parenthesis.val = Some("%1)".to_owned());
+    parenthesis.val = Some(Box::from("%1)"));
     let mut decimals = indent(level(0, "decimal"), 720);
     decimals.numbering_level_text = Some(Box::new(parenthesis));
     let mut three = NumberingLevelStartingValueOverride::default();
@@ -407,10 +407,10 @@ fn run_holding(content: Vec<TextRunContent>) -> TextRun {
 /// A style of `kind`, `id` and `name`.
 fn style(kind: &str, id: &str, name: &str) -> StyleDefinition {
     let mut primary = PrimaryStyleName::default();
-    primary.val = Some(name.to_owned());
+    primary.val = Some(Box::from(name));
     let mut style = StyleDefinition::default();
     style.primary_style_name = Some(Box::new(primary));
-    style.style_id = Some(id.to_owned());
+    style.style_id = Some(Box::from(id));
     style.r#type = Some(StyleTypes::from(kind.to_owned()));
     style
 }
@@ -418,7 +418,7 @@ fn style(kind: &str, id: &str, name: &str) -> StyleDefinition {
 /// A reference to the paragraph style `style`.
 fn style_reference(style: &str) -> ReferencedParagraphStyle {
     let mut reference = ReferencedParagraphStyle::default();
-    reference.val = Some(style.to_owned());
+    reference.val = Some(Box::from(style));
     reference
 }
 
@@ -438,7 +438,7 @@ fn styled_by(properties: ParagraphProperties, runs: Vec<TextRun>) -> BlockConten
 fn styles() -> StyleDefinitions {
     let based_on = |mut style: StyleDefinition, parent: &str| {
         let mut reference = ParentStyleID::default();
-        reference.val = Some(parent.to_owned());
+        reference.val = Some(Box::from(parent));
         style.parent_style_id = Some(Box::new(reference));
         style
     };
@@ -465,7 +465,7 @@ fn styles() -> StyleDefinitions {
     let mut numbered = ParagraphPropertiesPPrGeneral::default();
     numbered.numbering_definition_instance_reference_num_pr = Some(Box::new(reference));
     let mut fonts = RunFonts::default();
-    fonts.ascii = Some("Courier New".to_owned());
+    fonts.ascii = Some(Box::from("Courier New"));
     let mut definitions = StyleDefinitions::default();
     definitions.style_definition = alloc::vec![
         normal,
@@ -531,7 +531,7 @@ fn text_cell(value: &str) -> wordprocessing::TableCell {
 /// A hyperlink to the bookmark `anchor` holding the run of `value`.
 fn anchored(anchor: &str, value: &str) -> ParagraphContent {
     let mut hyperlink = Hyperlink::default();
-    hyperlink.anchor = Some(anchor.to_owned());
+    hyperlink.anchor = Some(Box::from(anchor));
     hyperlink.content = alloc::vec![text_run(value)];
     ParagraphContent::from(hyperlink)
 }
@@ -539,8 +539,8 @@ fn anchored(anchor: &str, value: &str) -> ParagraphContent {
 /// The runs of a complex field of `instruction` whose result is the run of `shown`.
 fn complex_field(instruction: &str, shown: &str) -> Vec<ParagraphContent> {
     let mut code = FieldCode::default();
-    code.space = Some("preserve".to_owned());
-    code.value = instruction.to_owned();
+    code.space = Some(Box::from("preserve"));
+    code.value = Box::from(instruction);
     [
         field_character("begin"),
         run_holding(alloc::vec![TextRunContent::from(code)]),
@@ -576,7 +576,7 @@ fn picture(source: PictureSource<'_>, id: u32, descr: &str) -> TextRun {
 fn simple_field(instruction: &str, shown: &str) -> ParagraphContent {
     let mut field = SimpleField::default();
     field.content = alloc::vec![text_run(shown)];
-    field.instr = Some(instruction.to_owned());
+    field.instr = Some(Box::from(instruction));
     ParagraphContent::from(field)
 }
 
@@ -588,9 +588,9 @@ fn text_run(value: &str) -> ParagraphContent {
 /// A VML `v:shape` of the alt text `alt` whose `v:imagedata` names the relationship `id`.
 fn vml_picture(alt: &str, id: &str) -> VmlElementContent {
     let mut data = ImageData::default();
-    data.r_id = Some(id.to_owned());
+    data.r_id = Some(Box::from(id));
     let mut shape = ShapeDefinition::default();
-    shape.alt = Some(alt.to_owned());
+    shape.alt = Some(Box::from(alt));
     shape.content = alloc::vec![ShapeDefinitionContent::from(data)];
     VmlElementContent::from(shape)
 }
@@ -918,11 +918,11 @@ fn a_run_both_bold_and_italic_is_emphasis_holding_strong() {
 fn character_styles_and_code_fonts_mark_runs_and_a_paragraph_style_does_not() {
     let character_style = |id: &str| {
         let mut reference = ReferencedCharacterStyle::default();
-        reference.val = Some(id.to_owned());
+        reference.val = Some(Box::from(id));
         RunPropertiesContent::from(reference)
     };
     let mut consolas = RunFonts::default();
-    consolas.ascii = Some("Consolas".to_owned());
+    consolas.ascii = Some(Box::from("Consolas"));
     let mut not_bold = Bold::default();
     not_bold.val = Some(OnOffValue::from("0".to_owned()));
     let docx = word(alloc::vec![
@@ -955,27 +955,27 @@ fn inserted_text_stays_deleted_text_goes_and_a_field_gives_its_shown_text() {
         };
     let mut inserted = InsertedRunContent::default();
     (inserted.id, inserted.content) = tracked(1, alloc::vec![run("new")]);
-    inserted.author = Some("a".to_owned());
+    inserted.author = Some(Box::from("a"));
     let mut old = DeletedText::default();
-    old.value = "old".to_owned();
+    old.value = Box::from("old");
     let mut deleted = DeletedRunContent::default();
     (deleted.id, deleted.content) = tracked(
         2,
         alloc::vec![run_holding(alloc::vec![TextRunContent::from(old)])],
     );
-    deleted.author = Some("a".to_owned());
+    deleted.author = Some(Box::from("a"));
     let mut instruction = FieldCode::default();
-    instruction.space = Some("preserve".to_owned());
-    instruction.value = r#" DATE \@ "d/M/yyyy" "#.to_owned();
+    instruction.space = Some(Box::from("preserve"));
+    instruction.value = r#" DATE \@ "d/M/yyyy" "#.to_owned().into();
     let mut simple = SimpleField::default();
-    simple.instr = Some(" AUTHOR ".to_owned());
+    simple.instr = Some(Box::from(" AUTHOR "));
     simple.content = alloc::vec![ParagraphContent::from(run("Ana"))];
     let mut moved_from = MoveSourceRunContent::default();
     (moved_from.id, moved_from.content) = tracked(3, alloc::vec![run("gone")]);
-    moved_from.author = Some("a".to_owned());
+    moved_from.author = Some(Box::from("a"));
     let mut moved_to = MoveDestinationRunContent::default();
     (moved_to.id, moved_to.content) = tracked(4, alloc::vec![run(".")]);
-    moved_to.author = Some("a".to_owned());
+    moved_to.author = Some(Box::from("a"));
     let docx = word(alloc::vec![block(alloc::vec![
         ParagraphContent::from(run("Kept ")),
         ParagraphContent::from(inserted),
@@ -1075,7 +1075,7 @@ fn content_controls_smart_tags_and_custom_xml_give_their_content() {
     let mut smart_tag = InlineLevelSmartTag::default();
     smart_tag.content = alloc::vec![ParagraphContent::from(run(" c"))];
     smart_tag.element = Some(XMLName::from("e".to_owned()));
-    smart_tag.uri = Some("u".to_owned());
+    smart_tag.uri = Some(Box::from("u"));
     let mut custom = InlineLevelCustomXMLElement::default();
     custom.content = alloc::vec![ParagraphContent::from(run(" d"))];
     custom.element = Some(XMLName::from("f".to_owned()));
@@ -1196,7 +1196,7 @@ fn an_inline_picture_built_through_the_model_exports_with_its_alt_text() {
 #[test]
 fn an_equation_gives_its_text() {
     let mut solution = MathText::default();
-    solution.value = "x=1".to_owned();
+    solution.value = Box::from("x=1");
     let mut math_run = MathRun::default();
     math_run.content = alloc::vec![MathRunContent::from(solution)];
     let mut equation = OfficeMath::default();
@@ -1224,7 +1224,7 @@ fn to_arky_leaves_the_main_part_as_it_was() {
 #[test]
 fn a_table_cell_is_converted_by_the_same_rules_and_a_hyperlink_is_a_link() {
     let mut hyperlink = Hyperlink::default();
-    hyperlink.anchor = Some("x".to_owned());
+    hyperlink.anchor = Some(Box::from("x"));
     hyperlink.content = alloc::vec![ParagraphContent::from(run("right"))];
     let linked = block(alloc::vec![ParagraphContent::from(hyperlink)]);
     let docx = word(alloc::vec![table(
@@ -1254,7 +1254,11 @@ fn sample() -> Docx {
     );
     let mut dashboard = Hyperlink::default();
     dashboard.content = alloc::vec![text_run("the dashboard")];
-    dashboard.id = Some(fixture.external("https://example.com/q3", &RelationshipType::HYPERLINK));
+    dashboard.id = Some(
+        fixture
+            .external("https://example.com/q3", &RelationshipType::HYPERLINK)
+            .into(),
+    );
     fixture.body(alloc::vec![
         numbered(2, 0, "one"),
         numbered(2, 0, "two"),
@@ -1793,15 +1797,23 @@ fn a_hyperlink_inside_a_hyperlink_joins_its_text_and_bold_inside_a_link_is_link_
     let mut fixture = Fixture::new();
     let mut nested = Hyperlink::default();
     nested.content = alloc::vec![text_run(" c")];
-    nested.id = Some(fixture.external("https://inner.example", &RelationshipType::HYPERLINK));
+    nested.id = Some(
+        fixture
+            .external("https://inner.example", &RelationshipType::HYPERLINK)
+            .into(),
+    );
     let mut outer = Hyperlink::default();
     outer.content = alloc::vec![
         text_run("a "),
         ParagraphContent::from(bold_run("b")),
         ParagraphContent::from(nested),
     ];
-    outer.id = Some(fixture.external("https://outer.example", &RelationshipType::HYPERLINK));
-    outer.tooltip = Some("Tip".to_owned());
+    outer.id = Some(
+        fixture
+            .external("https://outer.example", &RelationshipType::HYPERLINK)
+            .into(),
+    );
+    outer.tooltip = Some(Box::from("Tip"));
     let docx = fixture.body(alloc::vec![block(alloc::vec![ParagraphContent::from(
         outer
     )])]);
@@ -1950,12 +1962,16 @@ fn a_picture_inside_alternate_content_is_read_from_the_first_branch_that_holds_o
 fn an_alt_chunk_naming_an_html_part_is_an_html_block_of_its_body() {
     let mut fixture = Fixture::new();
     let mut chunk = AnchorForImportedExternalContent::default();
-    chunk.id = Some(fixture.part(
-        "/word/htmlChunk1.html",
-        "text/html",
-        &RelationshipType::A_F_CHUNK,
-        b"<html><BODY lang=\"es\"><div>hi</div></BODY></html>",
-    ));
+    chunk.id = Some(
+        fixture
+            .part(
+                "/word/htmlChunk1.html",
+                "text/html",
+                &RelationshipType::A_F_CHUNK,
+                b"<html><BODY lang=\"es\"><div>hi</div></BODY></html>",
+            )
+            .into(),
+    );
     let docx = fixture.body(alloc::vec![
         paragraph("Normal", alloc::vec![run("before")]),
         BlockContent::from(chunk),

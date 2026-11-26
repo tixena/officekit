@@ -222,10 +222,10 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Version)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VersionMirror {
-    pub set_version: Option<String>,
+    pub set_version: Option<Box<str>>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
-    pub warn_below_version: Option<String>,
+    pub warn_below_version: Option<Box<str>>,
 }
 
 impl From<VersionMirror> for super::Version {

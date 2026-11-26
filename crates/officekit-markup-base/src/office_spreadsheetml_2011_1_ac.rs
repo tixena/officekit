@@ -244,7 +244,7 @@ pub struct ListWith<X: UserData> {
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeSpreadsheetml20111AcList,
     /// The element's text.
-    pub value: String,
+    pub value: Box<str>,
 }
 
 /// The `x12ac:list` element of the tree a read gives: [`ListWith`] holding nothing in `user_data`.

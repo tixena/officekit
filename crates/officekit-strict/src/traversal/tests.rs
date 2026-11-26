@@ -480,7 +480,7 @@ impl officekit_markup::Context for UpperCaseEverywhere {
 impl wordprocessing::Context for UpperCaseEverywhere {
     fn text(&mut self, node: &Text) -> Option<Text> {
         let mut upper = node.clone();
-        upper.value = node.value.to_uppercase();
+        upper.value = node.value.to_uppercase().into();
         Some(upper)
     }
 }
@@ -488,7 +488,7 @@ impl wordprocessing::Context for UpperCaseEverywhere {
 impl math::Context for UpperCaseEverywhere {
     fn text(&mut self, node: &math::Text) -> Option<math::Text> {
         let mut upper = node.clone();
-        upper.value = node.value.to_uppercase();
+        upper.value = node.value.to_uppercase().into();
         Some(upper)
     }
 }
@@ -551,7 +551,7 @@ fn control_of(
 ) -> BlockLevelStructuredDocumentTag {
     let properties = alias.map(|name| {
         let mut friendly_name = FriendlyName::default();
-        friendly_name.val = Some(name.to_owned());
+        friendly_name.val = Some(Box::from(name));
         let mut found = StructuredDocumentTagProperties::default();
         found.friendly_name = Some(Box::new(friendly_name));
         Box::new(found)
@@ -639,7 +639,7 @@ where
 /// "x" in math text, then "=1" in `WordprocessingML` text inside the math run.
 fn math_paragraph() -> Paragraph {
     let mut math_text = math::Text::default();
-    math_text.value = "x".to_owned();
+    math_text.value = Box::from("x");
     let mut math_run = math::Run::default();
     math_run.content = vec![
         math::RunContent::from(math_text),
@@ -673,8 +673,8 @@ fn parsed(text: &str) -> Element {
 /// Text whose spaces are kept.
 fn preserved(value: &str) -> Text {
     let mut node = Text::default();
-    node.space = Some("preserve".to_owned());
-    node.value = value.to_owned();
+    node.space = Some(Box::from("preserve"));
+    node.value = Box::from(value);
     node
 }
 
@@ -738,7 +738,7 @@ fn table() -> Table {
 
 fn text(value: &str) -> Text {
     let mut node = Text::default();
-    node.value = value.to_owned();
+    node.value = Box::from(value);
     node
 }
 
@@ -770,7 +770,7 @@ fn upper_case_first_paragraph(document: &mut Document) {
             if let ParagraphContent::TextRun(run) = item {
                 for inner in &mut run.content {
                     if let TextRunContent::Text(value) = inner {
-                        value.value = value.value.to_uppercase();
+                        value.value = value.value.to_uppercase().into();
                     }
                 }
             }
@@ -1107,7 +1107,7 @@ fn both_paths(value: Text) -> (String, String) {
 #[test]
 fn whitespace_that_is_all_a_text_holds_is_written_through_as_the_compact_writer_keeps_it() {
     let mut blank = Text::default();
-    blank.value = " ".to_owned();
+    blank.value = Box::from(" ");
     let (through, tree) = both_paths(blank);
     assert_eq!(through, tree);
     assert!(through.contains("<w:t> </w:t>"));

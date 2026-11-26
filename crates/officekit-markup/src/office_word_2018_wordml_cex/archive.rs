@@ -223,8 +223,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::CommentExtensible)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentExtensibleMirror {
-    pub date_utc: Option<String>,
-    pub durable_id: Option<String>,
+    pub date_utc: Option<Box<str>>,
+    pub durable_id: Option<Box<str>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub intelligent_placeholder: Option<common_simple_types::OnOffValue>,
     pub unknown: Option<Box<officekit_markup_base::Unknown>>,

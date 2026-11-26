@@ -443,9 +443,9 @@ fn general_as_a_section() {
 #[test]
 fn a_cells_number_under_a_number_format_element() {
     let mut element = NumFmt::default();
-    element.format_code = Some("#,##0.00;[Red]-#,##0.00".to_owned());
+    element.format_code = Some(Box::from("#,##0.00;[Red]-#,##0.00"));
     let mut cell = CellValue::default();
-    cell.value = "-1234.5".to_owned();
+    cell.value = Box::from("-1234.5");
     let code = NumberFormat::parse(element.format_code.as_deref().unwrap_or("General")).unwrap();
     let shown = code.number(&cell.value, ANY).unwrap();
     assert_eq!(
