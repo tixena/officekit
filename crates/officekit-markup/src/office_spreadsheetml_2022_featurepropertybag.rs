@@ -575,19 +575,19 @@ impl Eq for AWith<()> {}
 #[non_exhaustive]
 pub enum ArrayFeaturePropertyContentWith<X: UserData> {
     /// The element `xfpb:b`, a `BBoolean`.
-    BBoolean(Box<BBooleanWith<X>>),
+    BBoolean(BBooleanWith<X>),
     /// The element `xfpb:bagId`, a `BagIdUnsignedInt`.
-    BagIdUnsignedInt(Box<BagIdUnsignedIntWith<X>>),
+    BagIdUnsignedInt(BagIdUnsignedIntWith<X>),
     /// The element `xfpb:d`, a `DDouble`.
-    DDouble(Box<DDoubleWith<X>>),
+    DDouble(DDoubleWith<X>),
     /// The element `xfpb:i`, a `IInteger`.
-    IInteger(Box<IIntegerWith<X>>),
+    IInteger(IIntegerWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `xfpb:rel`, a `RelString`.
-    RelString(Box<RelStringWith<X>>),
+    RelString(RelStringWith<X>),
     /// The element `xfpb:s`, a `SString`.
-    SString(Box<SStringWith<X>>),
+    SString(SStringWith<X>),
 }
 
 /// [`ArrayFeaturePropertyContentWith`] of the tree a read gives, where no node holds anything in
@@ -2304,24 +2304,20 @@ impl<X: UserData> ArrayFeaturePropertyContentWith<X> {
     {
         match self {
             Self::BBoolean(node) => {
-                ArrayFeaturePropertyContentWith::BBoolean(Box::new((*node).into_user_data()))
+                ArrayFeaturePropertyContentWith::BBoolean(node.into_user_data())
             }
-            Self::BagIdUnsignedInt(node) => ArrayFeaturePropertyContentWith::BagIdUnsignedInt(
-                Box::new((*node).into_user_data()),
-            ),
-            Self::DDouble(node) => {
-                ArrayFeaturePropertyContentWith::DDouble(Box::new((*node).into_user_data()))
+            Self::BagIdUnsignedInt(node) => {
+                ArrayFeaturePropertyContentWith::BagIdUnsignedInt(node.into_user_data())
             }
+            Self::DDouble(node) => ArrayFeaturePropertyContentWith::DDouble(node.into_user_data()),
             Self::IInteger(node) => {
-                ArrayFeaturePropertyContentWith::IInteger(Box::new((*node).into_user_data()))
+                ArrayFeaturePropertyContentWith::IInteger(node.into_user_data())
             }
             Self::Other(node) => ArrayFeaturePropertyContentWith::Other(node),
             Self::RelString(node) => {
-                ArrayFeaturePropertyContentWith::RelString(Box::new((*node).into_user_data()))
+                ArrayFeaturePropertyContentWith::RelString(node.into_user_data())
             }
-            Self::SString(node) => {
-                ArrayFeaturePropertyContentWith::SString(Box::new((*node).into_user_data()))
-            }
+            Self::SString(node) => ArrayFeaturePropertyContentWith::SString(node.into_user_data()),
         }
     }
 }
@@ -2333,12 +2329,12 @@ impl officekit_markup_base::Read for ArrayFeaturePropertyContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XFPB, "b")) => Self::BBoolean(Box::new(item.read())),
-            Some((NS_XFPB, "bagId")) => Self::BagIdUnsignedInt(Box::new(item.read())),
-            Some((NS_XFPB, "d")) => Self::DDouble(Box::new(item.read())),
-            Some((NS_XFPB, "i")) => Self::IInteger(Box::new(item.read())),
-            Some((NS_XFPB, "rel")) => Self::RelString(Box::new(item.read())),
-            Some((NS_XFPB, "s")) => Self::SString(Box::new(item.read())),
+            Some((NS_XFPB, "b")) => Self::BBoolean(item.read()),
+            Some((NS_XFPB, "bagId")) => Self::BagIdUnsignedInt(item.read()),
+            Some((NS_XFPB, "d")) => Self::DDouble(item.read()),
+            Some((NS_XFPB, "i")) => Self::IInteger(item.read()),
+            Some((NS_XFPB, "rel")) => Self::RelString(item.read()),
+            Some((NS_XFPB, "s")) => Self::SString(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -2360,37 +2356,37 @@ impl officekit_markup_base::Write for ArrayFeaturePropertyContent {
 
 impl<X: UserData> From<BBooleanWith<X>> for ArrayFeaturePropertyContentWith<X> {
     fn from(arm: BBooleanWith<X>) -> Self {
-        Self::BBoolean(Box::new(arm))
+        Self::BBoolean(arm)
     }
 }
 
 impl<X: UserData> From<BagIdUnsignedIntWith<X>> for ArrayFeaturePropertyContentWith<X> {
     fn from(arm: BagIdUnsignedIntWith<X>) -> Self {
-        Self::BagIdUnsignedInt(Box::new(arm))
+        Self::BagIdUnsignedInt(arm)
     }
 }
 
 impl<X: UserData> From<DDoubleWith<X>> for ArrayFeaturePropertyContentWith<X> {
     fn from(arm: DDoubleWith<X>) -> Self {
-        Self::DDouble(Box::new(arm))
+        Self::DDouble(arm)
     }
 }
 
 impl<X: UserData> From<IIntegerWith<X>> for ArrayFeaturePropertyContentWith<X> {
     fn from(arm: IIntegerWith<X>) -> Self {
-        Self::IInteger(Box::new(arm))
+        Self::IInteger(arm)
     }
 }
 
 impl<X: UserData> From<RelStringWith<X>> for ArrayFeaturePropertyContentWith<X> {
     fn from(arm: RelStringWith<X>) -> Self {
-        Self::RelString(Box::new(arm))
+        Self::RelString(arm)
     }
 }
 
 impl<X: UserData> From<SStringWith<X>> for ArrayFeaturePropertyContentWith<X> {
     fn from(arm: SStringWith<X>) -> Self {
-        Self::SString(Box::new(arm))
+        Self::SString(arm)
     }
 }
 

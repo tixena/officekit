@@ -34,8 +34,12 @@ thread_local! {
     /// The `LIVE` above which a rise is counted.
     static FLOOR: Cell<isize> = const { Cell::new(isize::MAX) };
 
-    /// The rises of `LIVE` above `FLOOR` since it was set.
+    /// The rises of `LIVE` above `FLOOR` since it was set. A rise ends when `LIVE` falls to half
+    /// of `FLOOR`, so the small frees inside one phase never split it in two.
     static RISES: Cell<usize> = const { Cell::new(0) };
+
+    /// Whether a rise above `FLOOR` has begun and not yet ended.
+    static RISING: Cell<bool> = const { Cell::new(false) };
 
     /// The most `LIVE` reached in the latest rise above `FLOOR`.
     static RISE_PEAK: Cell<isize> = const { Cell::new(0) };
@@ -66,13 +70,16 @@ unsafe impl GlobalAlloc for Counting {
 /// Adds `change` bytes to this thread's count while it counts.
 fn count(change: isize) {
     if COUNTING.get() {
-        let before = LIVE.get();
-        let live = before.saturating_add(change);
+        let live = LIVE.get().saturating_add(change);
         LIVE.set(live);
         PEAK.set(PEAK.get().max(live));
         let floor = FLOOR.get();
+        if live <= floor / 2 {
+            RISING.set(false);
+        }
         if live > floor {
-            if before <= floor {
+            if !RISING.get() {
+                RISING.set(true);
                 RISES.set(RISES.get().saturating_add(1));
                 RISE_PEAK.set(live);
             }
@@ -228,6 +235,7 @@ fn a_store_over_a_large_part_holds_its_bytes_and_never_its_tree() {
 fn watch_rises_above(floor: usize) {
     FLOOR.set(isize::try_from(floor).unwrap());
     RISES.set(0);
+    RISING.set(false);
     RISE_PEAK.set(0);
 }
 

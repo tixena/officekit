@@ -104,10 +104,15 @@ types = ["CT_Group"]
 "#;
 
 /// `wp:ext`, whose one required child is any element, and `wp:pick`, whose one required child
-/// is `wp:second` or `wp:first`.
+/// is the empty `wp:second` or `wp:first`, whose two attributes make it larger than the inline
+/// bytes.
 const REQUIRED_DRAWING: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns="urn:wp" targetNamespace="urn:wp" elementFormDefault="qualified">
   <xsd:complexType name="CT_Empty"/>
+  <xsd:complexType name="CT_Large">
+    <xsd:attribute name="a" type="xsd:string"/>
+    <xsd:attribute name="b" type="xsd:string"/>
+  </xsd:complexType>
   <xsd:complexType name="CT_Extension">
     <xsd:sequence>
       <xsd:any processContents="lax"/>
@@ -116,7 +121,7 @@ const REQUIRED_DRAWING: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/
   <xsd:complexType name="CT_Pick">
     <xsd:choice>
       <xsd:element name="second" type="CT_Empty"/>
-      <xsd:element name="first" type="CT_Empty"/>
+      <xsd:element name="first" type="CT_Large"/>
     </xsd:choice>
   </xsd:complexType>
   <xsd:element name="ext" type="CT_Extension"/>
@@ -550,6 +555,7 @@ fn an_arm_larger_than_the_inline_bytes_is_boxed_built_from_its_struct_and_bounde
     let text = required_module();
     for expected in [
         "    First(Box<FirstWith<X>>),\n",
+        "    Second(SecondWith<X>),\n",
         "    Other(Box<Node>),\n",
         "impl<X: UserData> From<FirstWith<X>> for PickContentWith<X> {\n    \
          fn from(arm: FirstWith<X>) -> Self {\n        \

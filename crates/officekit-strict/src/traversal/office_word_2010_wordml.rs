@@ -1316,27 +1316,27 @@ impl super::Transform for office_word_2010_wordml::ColorTransformContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Alpha(arm) = self {
-            Self::Alpha(Box::new(arm.transform(ctx)))
+            Self::Alpha(arm.transform(ctx))
         } else if let Self::HueMod(arm) = self {
-            Self::HueMod(Box::new(arm.transform(ctx)))
+            Self::HueMod(arm.transform(ctx))
         } else if let Self::Lum(arm) = self {
-            Self::Lum(Box::new(arm.transform(ctx)))
+            Self::Lum(arm.transform(ctx))
         } else if let Self::LumMod(arm) = self {
-            Self::LumMod(Box::new(arm.transform(ctx)))
+            Self::LumMod(arm.transform(ctx))
         } else if let Self::LumOff(arm) = self {
-            Self::LumOff(Box::new(arm.transform(ctx)))
+            Self::LumOff(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Sat(arm) = self {
-            Self::Sat(Box::new(arm.transform(ctx)))
+            Self::Sat(arm.transform(ctx))
         } else if let Self::SatMod(arm) = self {
-            Self::SatMod(Box::new(arm.transform(ctx)))
+            Self::SatMod(arm.transform(ctx))
         } else if let Self::SatOff(arm) = self {
-            Self::SatOff(Box::new(arm.transform(ctx)))
+            Self::SatOff(arm.transform(ctx))
         } else if let Self::Shade(arm) = self {
-            Self::Shade(Box::new(arm.transform(ctx)))
+            Self::Shade(arm.transform(ctx))
         } else if let Self::Tint(arm) = self {
-            Self::Tint(Box::new(arm.transform(ctx)))
+            Self::Tint(arm.transform(ctx))
         } else {
             self.clone()
         }
@@ -2969,13 +2969,13 @@ impl super::Transform for office_word_2010_wordml::FillPropertiesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::GradFill(arm) = self {
-            Self::GradFill(Box::new(arm.transform(ctx)))
+            Self::GradFill(arm.transform(ctx))
         } else if let Self::NoFill(arm) = self {
-            Self::NoFill(Box::new(arm.transform(ctx)))
+            Self::NoFill(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::SolidFill(arm) = self {
-            Self::SolidFill(Box::new(arm.transform(ctx)))
+            Self::SolidFill(arm.transform(ctx))
         } else {
             self.clone()
         }
@@ -3961,13 +3961,13 @@ impl super::Transform for office_word_2010_wordml::LineJoinContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Bevel(arm) = self {
-            Self::Bevel(Box::new(arm.transform(ctx)))
+            Self::Bevel(arm.transform(ctx))
         } else if let Self::Miter(arm) = self {
-            Self::Miter(Box::new(arm.transform(ctx)))
+            Self::Miter(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Round(arm) = self {
-            Self::Round(Box::new(arm.transform(ctx)))
+            Self::Round(arm.transform(ctx))
         } else {
             self.clone()
         }

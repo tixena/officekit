@@ -411,11 +411,11 @@ impl super::Transform for office_powerpoint_2023_02_main::PlaceholderTypeContent
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Cameo(arm) = self {
-            Self::Cameo(Box::new(arm.transform(ctx)))
+            Self::Cameo(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Unknown(arm) = self {
-            Self::Unknown(Box::new(arm.transform(ctx)))
+            Self::Unknown(arm.transform(ctx))
         } else {
             self.clone()
         }

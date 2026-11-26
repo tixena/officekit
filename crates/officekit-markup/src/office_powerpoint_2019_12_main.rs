@@ -956,27 +956,27 @@ impl Eq for TaskHistoryDetailsWith<()> {}
 #[non_exhaustive]
 pub enum TaskHistoryEventContentWith<X: UserData> {
     /// The element `p1912:add`, a `Add`.
-    Add(Box<AddWith<X>>),
+    Add(AddWith<X>),
     /// The element `p1912:asgn`, a `Asgn`.
-    Asgn(Box<AsgnWith<X>>),
+    Asgn(AsgnWith<X>),
     /// The element `p1912:date`, a `Date`.
     Date(Box<DateWith<X>>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `p1912:pcntCmplt`, a `PcntCmplt`.
-    PcntCmplt(Box<PcntCmpltWith<X>>),
+    PcntCmplt(PcntCmpltWith<X>),
     /// The element `p1912:pri`, a `Pri`.
-    Pri(Box<PriWith<X>>),
+    Pri(PriWith<X>),
     /// The element `p1912:title`, a `Title`.
-    Title(Box<TitleWith<X>>),
+    Title(TitleWith<X>),
     /// The element `p1912:unAsgn`, a `UnAsgn`.
-    UnAsgn(Box<UnAsgnWith<X>>),
+    UnAsgn(UnAsgnWith<X>),
     /// The element `p1912:unasgnAll`, a `UnasgnAll`.
-    UnasgnAll(Box<UnasgnAllWith<X>>),
+    UnasgnAll(UnasgnAllWith<X>),
     /// The element `p1912:undo`, a `Undo`.
-    Undo(Box<UndoWith<X>>),
+    Undo(UndoWith<X>),
     /// The element `p1912:unknown`, a `Unknown`.
-    Unknown(Box<UnknownWith<X>>),
+    Unknown(UnknownWith<X>),
 }
 
 /// [`TaskHistoryEventContentWith`] of the tree a read gives, where no node holds anything in
@@ -1801,33 +1801,19 @@ impl<X: UserData> TaskHistoryEventContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Add(node) => TaskHistoryEventContentWith::Add(Box::new((*node).into_user_data())),
-            Self::Asgn(node) => {
-                TaskHistoryEventContentWith::Asgn(Box::new((*node).into_user_data()))
-            }
+            Self::Add(node) => TaskHistoryEventContentWith::Add(node.into_user_data()),
+            Self::Asgn(node) => TaskHistoryEventContentWith::Asgn(node.into_user_data()),
             Self::Date(node) => {
                 TaskHistoryEventContentWith::Date(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => TaskHistoryEventContentWith::Other(node),
-            Self::PcntCmplt(node) => {
-                TaskHistoryEventContentWith::PcntCmplt(Box::new((*node).into_user_data()))
-            }
-            Self::Pri(node) => TaskHistoryEventContentWith::Pri(Box::new((*node).into_user_data())),
-            Self::Title(node) => {
-                TaskHistoryEventContentWith::Title(Box::new((*node).into_user_data()))
-            }
-            Self::UnAsgn(node) => {
-                TaskHistoryEventContentWith::UnAsgn(Box::new((*node).into_user_data()))
-            }
-            Self::UnasgnAll(node) => {
-                TaskHistoryEventContentWith::UnasgnAll(Box::new((*node).into_user_data()))
-            }
-            Self::Undo(node) => {
-                TaskHistoryEventContentWith::Undo(Box::new((*node).into_user_data()))
-            }
-            Self::Unknown(node) => {
-                TaskHistoryEventContentWith::Unknown(Box::new((*node).into_user_data()))
-            }
+            Self::PcntCmplt(node) => TaskHistoryEventContentWith::PcntCmplt(node.into_user_data()),
+            Self::Pri(node) => TaskHistoryEventContentWith::Pri(node.into_user_data()),
+            Self::Title(node) => TaskHistoryEventContentWith::Title(node.into_user_data()),
+            Self::UnAsgn(node) => TaskHistoryEventContentWith::UnAsgn(node.into_user_data()),
+            Self::UnasgnAll(node) => TaskHistoryEventContentWith::UnasgnAll(node.into_user_data()),
+            Self::Undo(node) => TaskHistoryEventContentWith::Undo(node.into_user_data()),
+            Self::Unknown(node) => TaskHistoryEventContentWith::Unknown(node.into_user_data()),
         }
     }
 }
@@ -1839,16 +1825,16 @@ impl officekit_markup_base::Read for TaskHistoryEventContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P1912, "add")) => Self::Add(Box::new(item.read())),
-            Some((NS_P1912, "asgn")) => Self::Asgn(Box::new(item.read())),
+            Some((NS_P1912, "add")) => Self::Add(item.read()),
+            Some((NS_P1912, "asgn")) => Self::Asgn(item.read()),
             Some((NS_P1912, "date")) => Self::Date(Box::new(item.read())),
-            Some((NS_P1912, "pcntCmplt")) => Self::PcntCmplt(Box::new(item.read())),
-            Some((NS_P1912, "pri")) => Self::Pri(Box::new(item.read())),
-            Some((NS_P1912, "title")) => Self::Title(Box::new(item.read())),
-            Some((NS_P1912, "unAsgn")) => Self::UnAsgn(Box::new(item.read())),
-            Some((NS_P1912, "unasgnAll")) => Self::UnasgnAll(Box::new(item.read())),
-            Some((NS_P1912, "undo")) => Self::Undo(Box::new(item.read())),
-            Some((NS_P1912, "unknown")) => Self::Unknown(Box::new(item.read())),
+            Some((NS_P1912, "pcntCmplt")) => Self::PcntCmplt(item.read()),
+            Some((NS_P1912, "pri")) => Self::Pri(item.read()),
+            Some((NS_P1912, "title")) => Self::Title(item.read()),
+            Some((NS_P1912, "unAsgn")) => Self::UnAsgn(item.read()),
+            Some((NS_P1912, "unasgnAll")) => Self::UnasgnAll(item.read()),
+            Some((NS_P1912, "undo")) => Self::Undo(item.read()),
+            Some((NS_P1912, "unknown")) => Self::Unknown(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -1874,13 +1860,13 @@ impl officekit_markup_base::Write for TaskHistoryEventContent {
 
 impl<X: UserData> From<AddWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: AddWith<X>) -> Self {
-        Self::Add(Box::new(arm))
+        Self::Add(arm)
     }
 }
 
 impl<X: UserData> From<AsgnWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: AsgnWith<X>) -> Self {
-        Self::Asgn(Box::new(arm))
+        Self::Asgn(arm)
     }
 }
 
@@ -1892,43 +1878,43 @@ impl<X: UserData> From<DateWith<X>> for TaskHistoryEventContentWith<X> {
 
 impl<X: UserData> From<PcntCmpltWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: PcntCmpltWith<X>) -> Self {
-        Self::PcntCmplt(Box::new(arm))
+        Self::PcntCmplt(arm)
     }
 }
 
 impl<X: UserData> From<PriWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: PriWith<X>) -> Self {
-        Self::Pri(Box::new(arm))
+        Self::Pri(arm)
     }
 }
 
 impl<X: UserData> From<TitleWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: TitleWith<X>) -> Self {
-        Self::Title(Box::new(arm))
+        Self::Title(arm)
     }
 }
 
 impl<X: UserData> From<UnAsgnWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: UnAsgnWith<X>) -> Self {
-        Self::UnAsgn(Box::new(arm))
+        Self::UnAsgn(arm)
     }
 }
 
 impl<X: UserData> From<UnasgnAllWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: UnasgnAllWith<X>) -> Self {
-        Self::UnasgnAll(Box::new(arm))
+        Self::UnasgnAll(arm)
     }
 }
 
 impl<X: UserData> From<UndoWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: UndoWith<X>) -> Self {
-        Self::Undo(Box::new(arm))
+        Self::Undo(arm)
     }
 }
 
 impl<X: UserData> From<UnknownWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: UnknownWith<X>) -> Self {
-        Self::Unknown(Box::new(arm))
+        Self::Unknown(arm)
     }
 }
 

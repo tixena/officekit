@@ -6134,91 +6134,91 @@ fn transform_attached_object_data_content_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<vml_spreadsheet_drawing::AttachedObjectDataContent> {
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::Anchor(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::Anchor(
             node,
         ));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::AutoFill(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::AutoFill(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::AutoLine(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::AutoLine(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::AutomaticallySize(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::AutomaticallySize(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::CallbackType(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::CallbackType(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::CameraSourceRange(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::CameraSourceRange(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::CameraTool(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::CameraTool(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::CancelButton(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::CancelButton(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::Checked(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::Checked(
             node,
         ));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::ClipboardFormat(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::ClipboardFormat(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::CommentColumnTarget(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::CommentColumnTarget(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::CommentRowTarget(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::CommentRowTarget(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::CommentVisibilityToggle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             vml_spreadsheet_drawing::AttachedObjectDataContent::CommentVisibilityToggle(node),
         );
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::CommentsColumnIsHidden(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             vml_spreadsheet_drawing::AttachedObjectDataContent::CommentsColumnIsHidden(node),
         );
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::CommentsRowIsHidden(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::CommentsRowIsHidden(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::DefaultButton(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::DefaultButton(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::DefaultSizeToggle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::DefaultSizeToggle(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::Disable3DNoThreeD(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::Disable3DNoThreeD(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::Disable3DNoThreeD2(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::Disable3DNoThreeD2(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::DismissButton(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::DismissButton(node));
     }
     None
@@ -6229,91 +6229,91 @@ fn transform_attached_object_data_content_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<vml_spreadsheet_drawing::AttachedObjectDataContent> {
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::DropdownColorToggle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::DropdownColorToggle(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::DropdownMaximumLines(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             vml_spreadsheet_drawing::AttachedObjectDataContent::DropdownMaximumLines(node),
         );
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::DropdownStyle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::DropdownStyle(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::DynamicDataExchange(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::DynamicDataExchange(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::EmbeddedControl(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::EmbeddedControl(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::FarEastAlignmentToggle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             vml_spreadsheet_drawing::AttachedObjectDataContent::FarEastAlignmentToggle(node),
         );
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::FirstRadioButton(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::FirstRadioButton(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::FontAutoScale(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::FontAutoScale(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::HTMLScriptAttributes(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             vml_spreadsheet_drawing::AttachedObjectDataContent::HTMLScriptAttributes(node),
         );
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::HTMLScriptLanguage(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::HTMLScriptLanguage(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::HTMLScriptLocation(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::HTMLScriptLocation(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::HTMLScriptText(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::HTMLScriptText(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::HelpButton(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::HelpButton(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::HorizontalTextAlignment(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             vml_spreadsheet_drawing::AttachedObjectDataContent::HorizontalTextAlignment(node),
         );
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::LinkedFormula(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::LinkedFormula(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::LinkedFormulaGroupBox(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             vml_spreadsheet_drawing::AttachedObjectDataContent::LinkedFormulaGroupBox(node),
         );
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::ListItemsSourceRange(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             vml_spreadsheet_drawing::AttachedObjectDataContent::ListItemsSourceRange(node),
         );
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::LockToggle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::LockToggle(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::MacroDisableToggle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::MacroDisableToggle(node));
     }
     None
@@ -6324,86 +6324,86 @@ fn transform_attached_object_data_content_3(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<vml_spreadsheet_drawing::AttachedObjectDataContent> {
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::MinimumWidth(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::MinimumWidth(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::MoveWithCells(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::MoveWithCells(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::MultiLine(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::MultiLine(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::MultipleSelections(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::MultipleSelections(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::NonLinkedListItem(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::NonLinkedListItem(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::PasswordEdit(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::PasswordEdit(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::PrimaryKeyboardAccelerator(arm) =
         item
     {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             vml_spreadsheet_drawing::AttachedObjectDataContent::PrimaryKeyboardAccelerator(node),
         );
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::PrintToggle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::PrintToggle(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::RecalculationToggle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::RecalculationToggle(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::ReferenceToCustomFunction(arm) = item
     {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             vml_spreadsheet_drawing::AttachedObjectDataContent::ReferenceToCustomFunction(node),
         );
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::ResizeWithCells(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::ResizeWithCells(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::ScrollBarIncrement(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::ScrollBarIncrement(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::ScrollBarMaximum(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::ScrollBarMaximum(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::ScrollBarMinimum(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::ScrollBarMinimum(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::ScrollBarOrientation(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             vml_spreadsheet_drawing::AttachedObjectDataContent::ScrollBarOrientation(node),
         );
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::ScrollBarPageIncrement(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             vml_spreadsheet_drawing::AttachedObjectDataContent::ScrollBarPageIncrement(node),
         );
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::ScrollBarPosition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::ScrollBarPosition(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::ScrollBarWidth(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::ScrollBarWidth(node));
     }
     None
@@ -6416,47 +6416,47 @@ fn transform_attached_object_data_content_4(
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::SecondaryKeyboardAccelerator(arm) =
         item
     {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             vml_spreadsheet_drawing::AttachedObjectDataContent::SecondaryKeyboardAccelerator(node),
         );
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::SelectedEntry(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::SelectedEntry(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::SelectionType(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::SelectionType(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::TextFormula(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::TextFormula(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::TextLock(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::TextLock(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::UIObjectToggle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::UIObjectToggle(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::ValidID(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::ValidID(
             node,
         ));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::ValidationType(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::ValidationType(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::VerticalScroll(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(vml_spreadsheet_drawing::AttachedObjectDataContent::VerticalScroll(node));
     }
     if let vml_spreadsheet_drawing::AttachedObjectDataContent::VerticalTextAlignment(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             vml_spreadsheet_drawing::AttachedObjectDataContent::VerticalTextAlignment(node),
         );

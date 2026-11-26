@@ -1462,29 +1462,29 @@ impl super::Transform for office_tasks_2019_documenttasks::TaskHistoryEventConte
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Assign(arm) = self {
-            Self::Assign(Box::new(arm.transform(ctx)))
+            Self::Assign(arm.transform(ctx))
         } else if let Self::Create(arm) = self {
-            Self::Create(Box::new(arm.transform(ctx)))
+            Self::Create(arm.transform(ctx))
         } else if let Self::Delete(arm) = self {
-            Self::Delete(Box::new(arm.transform(ctx)))
+            Self::Delete(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Priority(arm) = self {
-            Self::Priority(Box::new(arm.transform(ctx)))
+            Self::Priority(arm.transform(ctx))
         } else if let Self::Progress(arm) = self {
-            Self::Progress(Box::new(arm.transform(ctx)))
+            Self::Progress(arm.transform(ctx))
         } else if let Self::Schedule(arm) = self {
             Self::Schedule(Box::new(arm.transform(ctx)))
         } else if let Self::SetTitle(arm) = self {
-            Self::SetTitle(Box::new(arm.transform(ctx)))
+            Self::SetTitle(arm.transform(ctx))
         } else if let Self::Unassign(arm) = self {
-            Self::Unassign(Box::new(arm.transform(ctx)))
+            Self::Unassign(arm.transform(ctx))
         } else if let Self::UnassignAll(arm) = self {
-            Self::UnassignAll(Box::new(arm.transform(ctx)))
+            Self::UnassignAll(arm.transform(ctx))
         } else if let Self::Undelete(arm) = self {
-            Self::Undelete(Box::new(arm.transform(ctx)))
+            Self::Undelete(arm.transform(ctx))
         } else if let Self::Undo(arm) = self {
-            Self::Undo(Box::new(arm.transform(ctx)))
+            Self::Undo(arm.transform(ctx))
         } else {
             self.clone()
         }

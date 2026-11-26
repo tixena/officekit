@@ -719,7 +719,7 @@ impl super::Transform for office_spreadsheetml_2017_richdata2::CustomRichFilters
         if let Self::CustomFilter(arm) = self {
             Self::CustomFilter(Box::new(arm.transform(ctx)))
         } else if let Self::ExtLst(arm) = self {
-            Self::ExtLst(Box::new(arm.transform(ctx)))
+            Self::ExtLst(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {
@@ -2065,7 +2065,7 @@ impl super::Transform for office_spreadsheetml_2017_richdata2::RichFilterColumnC
         } else if let Self::DynamicFilter(arm) = self {
             Self::DynamicFilter(Box::new(arm.transform(ctx)))
         } else if let Self::ExtLst(arm) = self {
-            Self::ExtLst(Box::new(arm.transform(ctx)))
+            Self::ExtLst(arm.transform(ctx))
         } else if let Self::Filters(arm) = self {
             Self::Filters(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {

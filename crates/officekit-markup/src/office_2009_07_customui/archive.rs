@@ -2440,10 +2440,10 @@ pub enum QuickAccessToolbarItemsContent {
 #[rkyv(remote = super::RibbonContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum RibbonContent {
-    ContextualTabs(Box<super::ContextualTabs>),
+    ContextualTabs(super::ContextualTabs),
     Other(Box<Node>),
-    Qat(Box<super::Qat>),
-    Tabs(Box<super::Tabs>),
+    Qat(super::Qat),
+    Tabs(super::Tabs),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]

@@ -365,17 +365,17 @@ pub struct UnknownAnchorMirror {
 #[rkyv(remote = super::CommentContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum CommentContent {
-    DeMkLst(Box<super::super::office_drawing_2013_main_command::DeMkLst>),
-    GridColMkLst(Box<super::super::office_drawing_2013_main_command::GridColMkLst>),
+    DeMkLst(super::super::office_drawing_2013_main_command::DeMkLst),
+    GridColMkLst(super::super::office_drawing_2013_main_command::GridColMkLst),
     Other(Box<Node>),
-    SldLayoutMkLst(Box<super::super::office_powerpoint_2013_main_command::SldLayoutMkLst>),
-    SldMasterMkLst(Box<super::super::office_powerpoint_2013_main_command::SldMasterMkLst>),
+    SldLayoutMkLst(super::super::office_powerpoint_2013_main_command::SldLayoutMkLst),
+    SldMasterMkLst(super::super::office_powerpoint_2013_main_command::SldMasterMkLst),
     SldMkLst(Box<super::super::office_powerpoint_2013_main_command::SldMkLst>),
-    TcMkLst(Box<super::super::office_drawing_2013_main_command::TcMkLst>),
-    TrMkLst(Box<super::super::office_drawing_2013_main_command::TrMkLst>),
-    TxBodyMkLst(Box<super::super::office_drawing_2013_main_command::TxBodyMkLst>),
-    TxMkLst(Box<super::super::office_drawing_2013_main_command::TxMkLst>),
-    UnknownAnchor(Box<super::UnknownAnchor>),
+    TcMkLst(super::super::office_drawing_2013_main_command::TcMkLst),
+    TrMkLst(super::super::office_drawing_2013_main_command::TrMkLst),
+    TxBodyMkLst(super::super::office_drawing_2013_main_command::TxBodyMkLst),
+    TxMkLst(super::super::office_drawing_2013_main_command::TxMkLst),
+    UnknownAnchor(super::UnknownAnchor),
 }
 
 impl From<AuthorMirror> for super::Author {

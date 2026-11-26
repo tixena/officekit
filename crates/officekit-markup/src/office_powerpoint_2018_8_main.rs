@@ -511,27 +511,27 @@ impl Eq for CmLstWith<()> {}
 #[non_exhaustive]
 pub enum CommentContentWith<X: UserData> {
     /// The element `oac:deMkLst`, a `DeMkLst`.
-    DeMkLst(Box<super::office_drawing_2013_main_command::DeMkLstWith<X>>),
+    DeMkLst(super::office_drawing_2013_main_command::DeMkLstWith<X>),
     /// The element `oac:gridColMkLst`, a `GridColMkLst`.
-    GridColMkLst(Box<super::office_drawing_2013_main_command::GridColMkLstWith<X>>),
+    GridColMkLst(super::office_drawing_2013_main_command::GridColMkLstWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `pc:sldLayoutMkLst`, a `SldLayoutMkLst`.
-    SldLayoutMkLst(Box<super::office_powerpoint_2013_main_command::SldLayoutMkLstWith<X>>),
+    SldLayoutMkLst(super::office_powerpoint_2013_main_command::SldLayoutMkLstWith<X>),
     /// The element `pc:sldMasterMkLst`, a `SldMasterMkLst`.
-    SldMasterMkLst(Box<super::office_powerpoint_2013_main_command::SldMasterMkLstWith<X>>),
+    SldMasterMkLst(super::office_powerpoint_2013_main_command::SldMasterMkLstWith<X>),
     /// The element `pc:sldMkLst`, a `SldMkLst`.
     SldMkLst(Box<super::office_powerpoint_2013_main_command::SldMkLstWith<X>>),
     /// The element `oac:tcMkLst`, a `TcMkLst`.
-    TcMkLst(Box<super::office_drawing_2013_main_command::TcMkLstWith<X>>),
+    TcMkLst(super::office_drawing_2013_main_command::TcMkLstWith<X>),
     /// The element `oac:trMkLst`, a `TrMkLst`.
-    TrMkLst(Box<super::office_drawing_2013_main_command::TrMkLstWith<X>>),
+    TrMkLst(super::office_drawing_2013_main_command::TrMkLstWith<X>),
     /// The element `oac:txBodyMkLst`, a `TxBodyMkLst`.
-    TxBodyMkLst(Box<super::office_drawing_2013_main_command::TxBodyMkLstWith<X>>),
+    TxBodyMkLst(super::office_drawing_2013_main_command::TxBodyMkLstWith<X>),
     /// The element `oac:txMkLst`, a `TxMkLst`.
-    TxMkLst(Box<super::office_drawing_2013_main_command::TxMkLstWith<X>>),
+    TxMkLst(super::office_drawing_2013_main_command::TxMkLstWith<X>),
     /// The element `p188:unknownAnchor`, a `UnknownAnchor`.
-    UnknownAnchor(Box<UnknownAnchorWith<X>>),
+    UnknownAnchor(UnknownAnchorWith<X>),
 }
 
 /// [`CommentContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -1353,29 +1353,19 @@ impl<X: UserData> CommentContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::DeMkLst(node) => CommentContentWith::DeMkLst(Box::new((*node).into_user_data())),
-            Self::GridColMkLst(node) => {
-                CommentContentWith::GridColMkLst(Box::new((*node).into_user_data()))
-            }
+            Self::DeMkLst(node) => CommentContentWith::DeMkLst(node.into_user_data()),
+            Self::GridColMkLst(node) => CommentContentWith::GridColMkLst(node.into_user_data()),
             Self::Other(node) => CommentContentWith::Other(node),
-            Self::SldLayoutMkLst(node) => {
-                CommentContentWith::SldLayoutMkLst(Box::new((*node).into_user_data()))
-            }
-            Self::SldMasterMkLst(node) => {
-                CommentContentWith::SldMasterMkLst(Box::new((*node).into_user_data()))
-            }
+            Self::SldLayoutMkLst(node) => CommentContentWith::SldLayoutMkLst(node.into_user_data()),
+            Self::SldMasterMkLst(node) => CommentContentWith::SldMasterMkLst(node.into_user_data()),
             Self::SldMkLst(node) => {
                 CommentContentWith::SldMkLst(Box::new((*node).into_user_data()))
             }
-            Self::TcMkLst(node) => CommentContentWith::TcMkLst(Box::new((*node).into_user_data())),
-            Self::TrMkLst(node) => CommentContentWith::TrMkLst(Box::new((*node).into_user_data())),
-            Self::TxBodyMkLst(node) => {
-                CommentContentWith::TxBodyMkLst(Box::new((*node).into_user_data()))
-            }
-            Self::TxMkLst(node) => CommentContentWith::TxMkLst(Box::new((*node).into_user_data())),
-            Self::UnknownAnchor(node) => {
-                CommentContentWith::UnknownAnchor(Box::new((*node).into_user_data()))
-            }
+            Self::TcMkLst(node) => CommentContentWith::TcMkLst(node.into_user_data()),
+            Self::TrMkLst(node) => CommentContentWith::TrMkLst(node.into_user_data()),
+            Self::TxBodyMkLst(node) => CommentContentWith::TxBodyMkLst(node.into_user_data()),
+            Self::TxMkLst(node) => CommentContentWith::TxMkLst(node.into_user_data()),
+            Self::UnknownAnchor(node) => CommentContentWith::UnknownAnchor(node.into_user_data()),
         }
     }
 }
@@ -1387,16 +1377,16 @@ impl officekit_markup_base::Read for CommentContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_OAC, "deMkLst")) => Self::DeMkLst(Box::new(item.read())),
-            Some((NS_OAC, "gridColMkLst")) => Self::GridColMkLst(Box::new(item.read())),
-            Some((NS_PC, "sldLayoutMkLst")) => Self::SldLayoutMkLst(Box::new(item.read())),
-            Some((NS_PC, "sldMasterMkLst")) => Self::SldMasterMkLst(Box::new(item.read())),
+            Some((NS_OAC, "deMkLst")) => Self::DeMkLst(item.read()),
+            Some((NS_OAC, "gridColMkLst")) => Self::GridColMkLst(item.read()),
+            Some((NS_PC, "sldLayoutMkLst")) => Self::SldLayoutMkLst(item.read()),
+            Some((NS_PC, "sldMasterMkLst")) => Self::SldMasterMkLst(item.read()),
             Some((NS_PC, "sldMkLst")) => Self::SldMkLst(Box::new(item.read())),
-            Some((NS_OAC, "tcMkLst")) => Self::TcMkLst(Box::new(item.read())),
-            Some((NS_OAC, "trMkLst")) => Self::TrMkLst(Box::new(item.read())),
-            Some((NS_OAC, "txBodyMkLst")) => Self::TxBodyMkLst(Box::new(item.read())),
-            Some((NS_OAC, "txMkLst")) => Self::TxMkLst(Box::new(item.read())),
-            Some((NS_P188, "unknownAnchor")) => Self::UnknownAnchor(Box::new(item.read())),
+            Some((NS_OAC, "tcMkLst")) => Self::TcMkLst(item.read()),
+            Some((NS_OAC, "trMkLst")) => Self::TrMkLst(item.read()),
+            Some((NS_OAC, "txBodyMkLst")) => Self::TxBodyMkLst(item.read()),
+            Some((NS_OAC, "txMkLst")) => Self::TxMkLst(item.read()),
+            Some((NS_P188, "unknownAnchor")) => Self::UnknownAnchor(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -1424,7 +1414,7 @@ impl<X: UserData> From<super::office_drawing_2013_main_command::DeMkLstWith<X>>
     for CommentContentWith<X>
 {
     fn from(arm: super::office_drawing_2013_main_command::DeMkLstWith<X>) -> Self {
-        Self::DeMkLst(Box::new(arm))
+        Self::DeMkLst(arm)
     }
 }
 
@@ -1432,7 +1422,7 @@ impl<X: UserData> From<super::office_drawing_2013_main_command::GridColMkLstWith
     for CommentContentWith<X>
 {
     fn from(arm: super::office_drawing_2013_main_command::GridColMkLstWith<X>) -> Self {
-        Self::GridColMkLst(Box::new(arm))
+        Self::GridColMkLst(arm)
     }
 }
 
@@ -1440,7 +1430,7 @@ impl<X: UserData> From<super::office_powerpoint_2013_main_command::SldLayoutMkLs
     for CommentContentWith<X>
 {
     fn from(arm: super::office_powerpoint_2013_main_command::SldLayoutMkLstWith<X>) -> Self {
-        Self::SldLayoutMkLst(Box::new(arm))
+        Self::SldLayoutMkLst(arm)
     }
 }
 
@@ -1448,7 +1438,7 @@ impl<X: UserData> From<super::office_powerpoint_2013_main_command::SldMasterMkLs
     for CommentContentWith<X>
 {
     fn from(arm: super::office_powerpoint_2013_main_command::SldMasterMkLstWith<X>) -> Self {
-        Self::SldMasterMkLst(Box::new(arm))
+        Self::SldMasterMkLst(arm)
     }
 }
 
@@ -1464,7 +1454,7 @@ impl<X: UserData> From<super::office_drawing_2013_main_command::TcMkLstWith<X>>
     for CommentContentWith<X>
 {
     fn from(arm: super::office_drawing_2013_main_command::TcMkLstWith<X>) -> Self {
-        Self::TcMkLst(Box::new(arm))
+        Self::TcMkLst(arm)
     }
 }
 
@@ -1472,7 +1462,7 @@ impl<X: UserData> From<super::office_drawing_2013_main_command::TrMkLstWith<X>>
     for CommentContentWith<X>
 {
     fn from(arm: super::office_drawing_2013_main_command::TrMkLstWith<X>) -> Self {
-        Self::TrMkLst(Box::new(arm))
+        Self::TrMkLst(arm)
     }
 }
 
@@ -1480,7 +1470,7 @@ impl<X: UserData> From<super::office_drawing_2013_main_command::TxBodyMkLstWith<
     for CommentContentWith<X>
 {
     fn from(arm: super::office_drawing_2013_main_command::TxBodyMkLstWith<X>) -> Self {
-        Self::TxBodyMkLst(Box::new(arm))
+        Self::TxBodyMkLst(arm)
     }
 }
 
@@ -1488,13 +1478,13 @@ impl<X: UserData> From<super::office_drawing_2013_main_command::TxMkLstWith<X>>
     for CommentContentWith<X>
 {
     fn from(arm: super::office_drawing_2013_main_command::TxMkLstWith<X>) -> Self {
-        Self::TxMkLst(Box::new(arm))
+        Self::TxMkLst(arm)
     }
 }
 
 impl<X: UserData> From<UnknownAnchorWith<X>> for CommentContentWith<X> {
     fn from(arm: UnknownAnchorWith<X>) -> Self {
-        Self::UnknownAnchor(Box::new(arm))
+        Self::UnknownAnchor(arm)
     }
 }
 

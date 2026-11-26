@@ -828,141 +828,141 @@ impl Eq for AttachedObjectDataWith<()> {}
 #[non_exhaustive]
 pub enum AttachedObjectDataContentWith<X: UserData> {
     /// The element `xvml:Anchor`, a `Anchor`.
-    Anchor(Box<AnchorWith<X>>),
+    Anchor(AnchorWith<X>),
     /// The element `xvml:AutoFill`, a `AutoFill`.
-    AutoFill(Box<AutoFillWith<X>>),
+    AutoFill(AutoFillWith<X>),
     /// The element `xvml:AutoLine`, a `AutoLine`.
-    AutoLine(Box<AutoLineWith<X>>),
+    AutoLine(AutoLineWith<X>),
     /// The element `xvml:AutoPict`, a `AutomaticallySize`.
-    AutomaticallySize(Box<AutomaticallySizeWith<X>>),
+    AutomaticallySize(AutomaticallySizeWith<X>),
     /// The element `xvml:LCT`, a `CallbackType`.
-    CallbackType(Box<CallbackTypeWith<X>>),
+    CallbackType(CallbackTypeWith<X>),
     /// The element `xvml:FmlaPict`, a `CameraSourceRange`.
-    CameraSourceRange(Box<CameraSourceRangeWith<X>>),
+    CameraSourceRange(CameraSourceRangeWith<X>),
     /// The element `xvml:Camera`, a `CameraTool`.
-    CameraTool(Box<CameraToolWith<X>>),
+    CameraTool(CameraToolWith<X>),
     /// The element `xvml:Cancel`, a `CancelButton`.
-    CancelButton(Box<CancelButtonWith<X>>),
+    CancelButton(CancelButtonWith<X>),
     /// The element `xvml:Checked`, a `Checked`.
-    Checked(Box<CheckedWith<X>>),
+    Checked(CheckedWith<X>),
     /// The element `xvml:CF`, a `ClipboardFormat`.
-    ClipboardFormat(Box<ClipboardFormatWith<X>>),
+    ClipboardFormat(ClipboardFormatWith<X>),
     /// The element `xvml:Column`, a `CommentColumnTarget`.
-    CommentColumnTarget(Box<CommentColumnTargetWith<X>>),
+    CommentColumnTarget(CommentColumnTargetWith<X>),
     /// The element `xvml:Row`, a `CommentRowTarget`.
-    CommentRowTarget(Box<CommentRowTargetWith<X>>),
+    CommentRowTarget(CommentRowTargetWith<X>),
     /// The element `xvml:Visible`, a `CommentVisibilityToggle`.
-    CommentVisibilityToggle(Box<CommentVisibilityToggleWith<X>>),
+    CommentVisibilityToggle(CommentVisibilityToggleWith<X>),
     /// The element `xvml:ColHidden`, a `CommentsColumnIsHidden`.
-    CommentsColumnIsHidden(Box<CommentsColumnIsHiddenWith<X>>),
+    CommentsColumnIsHidden(CommentsColumnIsHiddenWith<X>),
     /// The element `xvml:RowHidden`, a `CommentsRowIsHidden`.
-    CommentsRowIsHidden(Box<CommentsRowIsHiddenWith<X>>),
+    CommentsRowIsHidden(CommentsRowIsHiddenWith<X>),
     /// The element `xvml:Default`, a `DefaultButton`.
-    DefaultButton(Box<DefaultButtonWith<X>>),
+    DefaultButton(DefaultButtonWith<X>),
     /// The element `xvml:DefaultSize`, a `DefaultSizeToggle`.
-    DefaultSizeToggle(Box<DefaultSizeToggleWith<X>>),
+    DefaultSizeToggle(DefaultSizeToggleWith<X>),
     /// The element `xvml:NoThreeD`, a `Disable3DNoThreeD`.
-    Disable3DNoThreeD(Box<Disable3DNoThreeDWith<X>>),
+    Disable3DNoThreeD(Disable3DNoThreeDWith<X>),
     /// The element `xvml:NoThreeD2`, a `Disable3DNoThreeD2`.
-    Disable3DNoThreeD2(Box<Disable3DNoThreeD2With<X>>),
+    Disable3DNoThreeD2(Disable3DNoThreeD2With<X>),
     /// The element `xvml:Dismiss`, a `DismissButton`.
-    DismissButton(Box<DismissButtonWith<X>>),
+    DismissButton(DismissButtonWith<X>),
     /// The element `xvml:Colored`, a `DropdownColorToggle`.
-    DropdownColorToggle(Box<DropdownColorToggleWith<X>>),
+    DropdownColorToggle(DropdownColorToggleWith<X>),
     /// The element `xvml:DropLines`, a `DropdownMaximumLines`.
-    DropdownMaximumLines(Box<DropdownMaximumLinesWith<X>>),
+    DropdownMaximumLines(DropdownMaximumLinesWith<X>),
     /// The element `xvml:DropStyle`, a `DropdownStyle`.
-    DropdownStyle(Box<DropdownStyleWith<X>>),
+    DropdownStyle(DropdownStyleWith<X>),
     /// The element `xvml:DDE`, a `DynamicDataExchange`.
-    DynamicDataExchange(Box<DynamicDataExchangeWith<X>>),
+    DynamicDataExchange(DynamicDataExchangeWith<X>),
     /// The element `xvml:MapOCX`, a `EmbeddedControl`.
-    EmbeddedControl(Box<EmbeddedControlWith<X>>),
+    EmbeddedControl(EmbeddedControlWith<X>),
     /// The element `xvml:JustLastX`, a `FarEastAlignmentToggle`.
-    FarEastAlignmentToggle(Box<FarEastAlignmentToggleWith<X>>),
+    FarEastAlignmentToggle(FarEastAlignmentToggleWith<X>),
     /// The element `xvml:FirstButton`, a `FirstRadioButton`.
-    FirstRadioButton(Box<FirstRadioButtonWith<X>>),
+    FirstRadioButton(FirstRadioButtonWith<X>),
     /// The element `xvml:AutoScale`, a `FontAutoScale`.
-    FontAutoScale(Box<FontAutoScaleWith<X>>),
+    FontAutoScale(FontAutoScaleWith<X>),
     /// The element `xvml:ScriptExtended`, a `HTMLScriptAttributes`.
-    HTMLScriptAttributes(Box<HTMLScriptAttributesWith<X>>),
+    HTMLScriptAttributes(HTMLScriptAttributesWith<X>),
     /// The element `xvml:ScriptLanguage`, a `HTMLScriptLanguage`.
-    HTMLScriptLanguage(Box<HTMLScriptLanguageWith<X>>),
+    HTMLScriptLanguage(HTMLScriptLanguageWith<X>),
     /// The element `xvml:ScriptLocation`, a `HTMLScriptLocation`.
-    HTMLScriptLocation(Box<HTMLScriptLocationWith<X>>),
+    HTMLScriptLocation(HTMLScriptLocationWith<X>),
     /// The element `xvml:ScriptText`, a `HTMLScriptText`.
-    HTMLScriptText(Box<HTMLScriptTextWith<X>>),
+    HTMLScriptText(HTMLScriptTextWith<X>),
     /// The element `xvml:Help`, a `HelpButton`.
-    HelpButton(Box<HelpButtonWith<X>>),
+    HelpButton(HelpButtonWith<X>),
     /// The element `xvml:TextHAlign`, a `HorizontalTextAlignment`.
-    HorizontalTextAlignment(Box<HorizontalTextAlignmentWith<X>>),
+    HorizontalTextAlignment(HorizontalTextAlignmentWith<X>),
     /// The element `xvml:FmlaLink`, a `LinkedFormula`.
-    LinkedFormula(Box<LinkedFormulaWith<X>>),
+    LinkedFormula(LinkedFormulaWith<X>),
     /// The element `xvml:FmlaGroup`, a `LinkedFormulaGroupBox`.
-    LinkedFormulaGroupBox(Box<LinkedFormulaGroupBoxWith<X>>),
+    LinkedFormulaGroupBox(LinkedFormulaGroupBoxWith<X>),
     /// The element `xvml:FmlaRange`, a `ListItemsSourceRange`.
-    ListItemsSourceRange(Box<ListItemsSourceRangeWith<X>>),
+    ListItemsSourceRange(ListItemsSourceRangeWith<X>),
     /// The element `xvml:Locked`, a `LockToggle`.
-    LockToggle(Box<LockToggleWith<X>>),
+    LockToggle(LockToggleWith<X>),
     /// The element `xvml:Disabled`, a `MacroDisableToggle`.
-    MacroDisableToggle(Box<MacroDisableToggleWith<X>>),
+    MacroDisableToggle(MacroDisableToggleWith<X>),
     /// The element `xvml:WidthMin`, a `MinimumWidth`.
-    MinimumWidth(Box<MinimumWidthWith<X>>),
+    MinimumWidth(MinimumWidthWith<X>),
     /// The element `xvml:MoveWithCells`, a `MoveWithCells`.
-    MoveWithCells(Box<MoveWithCellsWith<X>>),
+    MoveWithCells(MoveWithCellsWith<X>),
     /// The element `xvml:MultiLine`, a `MultiLine`.
-    MultiLine(Box<MultiLineWith<X>>),
+    MultiLine(MultiLineWith<X>),
     /// The element `xvml:MultiSel`, a `MultipleSelections`.
-    MultipleSelections(Box<MultipleSelectionsWith<X>>),
+    MultipleSelections(MultipleSelectionsWith<X>),
     /// The element `xvml:ListItem`, a `NonLinkedListItem`.
-    NonLinkedListItem(Box<NonLinkedListItemWith<X>>),
+    NonLinkedListItem(NonLinkedListItemWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `xvml:SecretEdit`, a `PasswordEdit`.
-    PasswordEdit(Box<PasswordEditWith<X>>),
+    PasswordEdit(PasswordEditWith<X>),
     /// The element `xvml:Accel`, a `PrimaryKeyboardAccelerator`.
-    PrimaryKeyboardAccelerator(Box<PrimaryKeyboardAcceleratorWith<X>>),
+    PrimaryKeyboardAccelerator(PrimaryKeyboardAcceleratorWith<X>),
     /// The element `xvml:PrintObject`, a `PrintToggle`.
-    PrintToggle(Box<PrintToggleWith<X>>),
+    PrintToggle(PrintToggleWith<X>),
     /// The element `xvml:RecalcAlways`, a `RecalculationToggle`.
-    RecalculationToggle(Box<RecalculationToggleWith<X>>),
+    RecalculationToggle(RecalculationToggleWith<X>),
     /// The element `xvml:FmlaMacro`, a `ReferenceToCustomFunction`.
-    ReferenceToCustomFunction(Box<ReferenceToCustomFunctionWith<X>>),
+    ReferenceToCustomFunction(ReferenceToCustomFunctionWith<X>),
     /// The element `xvml:SizeWithCells`, a `ResizeWithCells`.
-    ResizeWithCells(Box<ResizeWithCellsWith<X>>),
+    ResizeWithCells(ResizeWithCellsWith<X>),
     /// The element `xvml:Inc`, a `ScrollBarIncrement`.
-    ScrollBarIncrement(Box<ScrollBarIncrementWith<X>>),
+    ScrollBarIncrement(ScrollBarIncrementWith<X>),
     /// The element `xvml:Max`, a `ScrollBarMaximum`.
-    ScrollBarMaximum(Box<ScrollBarMaximumWith<X>>),
+    ScrollBarMaximum(ScrollBarMaximumWith<X>),
     /// The element `xvml:Min`, a `ScrollBarMinimum`.
-    ScrollBarMinimum(Box<ScrollBarMinimumWith<X>>),
+    ScrollBarMinimum(ScrollBarMinimumWith<X>),
     /// The element `xvml:Horiz`, a `ScrollBarOrientation`.
-    ScrollBarOrientation(Box<ScrollBarOrientationWith<X>>),
+    ScrollBarOrientation(ScrollBarOrientationWith<X>),
     /// The element `xvml:Page`, a `ScrollBarPageIncrement`.
-    ScrollBarPageIncrement(Box<ScrollBarPageIncrementWith<X>>),
+    ScrollBarPageIncrement(ScrollBarPageIncrementWith<X>),
     /// The element `xvml:Val`, a `ScrollBarPosition`.
-    ScrollBarPosition(Box<ScrollBarPositionWith<X>>),
+    ScrollBarPosition(ScrollBarPositionWith<X>),
     /// The element `xvml:Dx`, a `ScrollBarWidth`.
-    ScrollBarWidth(Box<ScrollBarWidthWith<X>>),
+    ScrollBarWidth(ScrollBarWidthWith<X>),
     /// The element `xvml:Accel2`, a `SecondaryKeyboardAccelerator`.
-    SecondaryKeyboardAccelerator(Box<SecondaryKeyboardAcceleratorWith<X>>),
+    SecondaryKeyboardAccelerator(SecondaryKeyboardAcceleratorWith<X>),
     /// The element `xvml:Sel`, a `SelectedEntry`.
-    SelectedEntry(Box<SelectedEntryWith<X>>),
+    SelectedEntry(SelectedEntryWith<X>),
     /// The element `xvml:SelType`, a `SelectionType`.
-    SelectionType(Box<SelectionTypeWith<X>>),
+    SelectionType(SelectionTypeWith<X>),
     /// The element `xvml:FmlaTxbx`, a `TextFormula`.
-    TextFormula(Box<TextFormulaWith<X>>),
+    TextFormula(TextFormulaWith<X>),
     /// The element `xvml:LockText`, a `TextLock`.
-    TextLock(Box<TextLockWith<X>>),
+    TextLock(TextLockWith<X>),
     /// The element `xvml:UIObj`, a `UIObjectToggle`.
-    UIObjectToggle(Box<UIObjectToggleWith<X>>),
+    UIObjectToggle(UIObjectToggleWith<X>),
     /// The element `xvml:ValidIds`, a `ValidID`.
-    ValidID(Box<ValidIDWith<X>>),
+    ValidID(ValidIDWith<X>),
     /// The element `xvml:VTEdit`, a `ValidationType`.
-    ValidationType(Box<ValidationTypeWith<X>>),
+    ValidationType(ValidationTypeWith<X>),
     /// The element `xvml:VScroll`, a `VerticalScroll`.
-    VerticalScroll(Box<VerticalScrollWith<X>>),
+    VerticalScroll(VerticalScrollWith<X>),
     /// The element `xvml:TextVAlign`, a `VerticalTextAlignment`.
-    VerticalTextAlignment(Box<VerticalTextAlignmentWith<X>>),
+    VerticalTextAlignment(VerticalTextAlignmentWith<X>),
 }
 
 /// [`AttachedObjectDataContentWith`] of the tree a read gives, where no node holds anything in
@@ -2460,8 +2460,6 @@ impl<X: UserData> AttachedObjectDataContentWith<X> {
     {
         crate::into_user_data_match!(self, AttachedObjectDataContentWith;
             plain [
-            ]
-            boxed [
                 Anchor, AutoFill, AutoLine, AutomaticallySize, CallbackType, CameraSourceRange,
                 CameraTool, CancelButton, Checked, ClipboardFormat, CommentColumnTarget,
                 CommentRowTarget, CommentVisibilityToggle, CommentsColumnIsHidden,
@@ -2479,6 +2477,8 @@ impl<X: UserData> AttachedObjectDataContentWith<X> {
                 SelectionType, TextFormula, TextLock, UIObjectToggle, ValidID, ValidationType,
                 VerticalScroll, VerticalTextAlignment,
             ]
+            boxed [
+            ]
         )
     }
 }
@@ -2490,73 +2490,73 @@ impl crate::Read for AttachedObjectDataContent {
 
     fn read_item(item: crate::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XVML, "Anchor")) => Self::Anchor(Box::new(item.read())),
-            Some((NS_XVML, "AutoFill")) => Self::AutoFill(Box::new(item.read())),
-            Some((NS_XVML, "AutoLine")) => Self::AutoLine(Box::new(item.read())),
-            Some((NS_XVML, "AutoPict")) => Self::AutomaticallySize(Box::new(item.read())),
-            Some((NS_XVML, "LCT")) => Self::CallbackType(Box::new(item.read())),
-            Some((NS_XVML, "FmlaPict")) => Self::CameraSourceRange(Box::new(item.read())),
-            Some((NS_XVML, "Camera")) => Self::CameraTool(Box::new(item.read())),
-            Some((NS_XVML, "Cancel")) => Self::CancelButton(Box::new(item.read())),
-            Some((NS_XVML, "Checked")) => Self::Checked(Box::new(item.read())),
-            Some((NS_XVML, "CF")) => Self::ClipboardFormat(Box::new(item.read())),
-            Some((NS_XVML, "Column")) => Self::CommentColumnTarget(Box::new(item.read())),
-            Some((NS_XVML, "Row")) => Self::CommentRowTarget(Box::new(item.read())),
-            Some((NS_XVML, "Visible")) => Self::CommentVisibilityToggle(Box::new(item.read())),
-            Some((NS_XVML, "ColHidden")) => Self::CommentsColumnIsHidden(Box::new(item.read())),
-            Some((NS_XVML, "RowHidden")) => Self::CommentsRowIsHidden(Box::new(item.read())),
-            Some((NS_XVML, "Default")) => Self::DefaultButton(Box::new(item.read())),
-            Some((NS_XVML, "DefaultSize")) => Self::DefaultSizeToggle(Box::new(item.read())),
-            Some((NS_XVML, "NoThreeD")) => Self::Disable3DNoThreeD(Box::new(item.read())),
-            Some((NS_XVML, "NoThreeD2")) => Self::Disable3DNoThreeD2(Box::new(item.read())),
-            Some((NS_XVML, "Dismiss")) => Self::DismissButton(Box::new(item.read())),
-            Some((NS_XVML, "Colored")) => Self::DropdownColorToggle(Box::new(item.read())),
-            Some((NS_XVML, "DropLines")) => Self::DropdownMaximumLines(Box::new(item.read())),
-            Some((NS_XVML, "DropStyle")) => Self::DropdownStyle(Box::new(item.read())),
-            Some((NS_XVML, "DDE")) => Self::DynamicDataExchange(Box::new(item.read())),
-            Some((NS_XVML, "MapOCX")) => Self::EmbeddedControl(Box::new(item.read())),
-            Some((NS_XVML, "JustLastX")) => Self::FarEastAlignmentToggle(Box::new(item.read())),
-            Some((NS_XVML, "FirstButton")) => Self::FirstRadioButton(Box::new(item.read())),
-            Some((NS_XVML, "AutoScale")) => Self::FontAutoScale(Box::new(item.read())),
-            Some((NS_XVML, "ScriptExtended")) => Self::HTMLScriptAttributes(Box::new(item.read())),
-            Some((NS_XVML, "ScriptLanguage")) => Self::HTMLScriptLanguage(Box::new(item.read())),
-            Some((NS_XVML, "ScriptLocation")) => Self::HTMLScriptLocation(Box::new(item.read())),
-            Some((NS_XVML, "ScriptText")) => Self::HTMLScriptText(Box::new(item.read())),
-            Some((NS_XVML, "Help")) => Self::HelpButton(Box::new(item.read())),
-            Some((NS_XVML, "TextHAlign")) => Self::HorizontalTextAlignment(Box::new(item.read())),
-            Some((NS_XVML, "FmlaLink")) => Self::LinkedFormula(Box::new(item.read())),
-            Some((NS_XVML, "FmlaGroup")) => Self::LinkedFormulaGroupBox(Box::new(item.read())),
-            Some((NS_XVML, "FmlaRange")) => Self::ListItemsSourceRange(Box::new(item.read())),
-            Some((NS_XVML, "Locked")) => Self::LockToggle(Box::new(item.read())),
-            Some((NS_XVML, "Disabled")) => Self::MacroDisableToggle(Box::new(item.read())),
-            Some((NS_XVML, "WidthMin")) => Self::MinimumWidth(Box::new(item.read())),
-            Some((NS_XVML, "MoveWithCells")) => Self::MoveWithCells(Box::new(item.read())),
-            Some((NS_XVML, "MultiLine")) => Self::MultiLine(Box::new(item.read())),
-            Some((NS_XVML, "MultiSel")) => Self::MultipleSelections(Box::new(item.read())),
-            Some((NS_XVML, "ListItem")) => Self::NonLinkedListItem(Box::new(item.read())),
-            Some((NS_XVML, "SecretEdit")) => Self::PasswordEdit(Box::new(item.read())),
-            Some((NS_XVML, "Accel")) => Self::PrimaryKeyboardAccelerator(Box::new(item.read())),
-            Some((NS_XVML, "PrintObject")) => Self::PrintToggle(Box::new(item.read())),
-            Some((NS_XVML, "RecalcAlways")) => Self::RecalculationToggle(Box::new(item.read())),
-            Some((NS_XVML, "FmlaMacro")) => Self::ReferenceToCustomFunction(Box::new(item.read())),
-            Some((NS_XVML, "SizeWithCells")) => Self::ResizeWithCells(Box::new(item.read())),
-            Some((NS_XVML, "Inc")) => Self::ScrollBarIncrement(Box::new(item.read())),
-            Some((NS_XVML, "Max")) => Self::ScrollBarMaximum(Box::new(item.read())),
-            Some((NS_XVML, "Min")) => Self::ScrollBarMinimum(Box::new(item.read())),
-            Some((NS_XVML, "Horiz")) => Self::ScrollBarOrientation(Box::new(item.read())),
-            Some((NS_XVML, "Page")) => Self::ScrollBarPageIncrement(Box::new(item.read())),
-            Some((NS_XVML, "Val")) => Self::ScrollBarPosition(Box::new(item.read())),
-            Some((NS_XVML, "Dx")) => Self::ScrollBarWidth(Box::new(item.read())),
-            Some((NS_XVML, "Accel2")) => Self::SecondaryKeyboardAccelerator(Box::new(item.read())),
-            Some((NS_XVML, "Sel")) => Self::SelectedEntry(Box::new(item.read())),
-            Some((NS_XVML, "SelType")) => Self::SelectionType(Box::new(item.read())),
-            Some((NS_XVML, "FmlaTxbx")) => Self::TextFormula(Box::new(item.read())),
-            Some((NS_XVML, "LockText")) => Self::TextLock(Box::new(item.read())),
-            Some((NS_XVML, "UIObj")) => Self::UIObjectToggle(Box::new(item.read())),
-            Some((NS_XVML, "ValidIds")) => Self::ValidID(Box::new(item.read())),
-            Some((NS_XVML, "VTEdit")) => Self::ValidationType(Box::new(item.read())),
-            Some((NS_XVML, "VScroll")) => Self::VerticalScroll(Box::new(item.read())),
-            Some((NS_XVML, "TextVAlign")) => Self::VerticalTextAlignment(Box::new(item.read())),
+            Some((NS_XVML, "Anchor")) => Self::Anchor(item.read()),
+            Some((NS_XVML, "AutoFill")) => Self::AutoFill(item.read()),
+            Some((NS_XVML, "AutoLine")) => Self::AutoLine(item.read()),
+            Some((NS_XVML, "AutoPict")) => Self::AutomaticallySize(item.read()),
+            Some((NS_XVML, "LCT")) => Self::CallbackType(item.read()),
+            Some((NS_XVML, "FmlaPict")) => Self::CameraSourceRange(item.read()),
+            Some((NS_XVML, "Camera")) => Self::CameraTool(item.read()),
+            Some((NS_XVML, "Cancel")) => Self::CancelButton(item.read()),
+            Some((NS_XVML, "Checked")) => Self::Checked(item.read()),
+            Some((NS_XVML, "CF")) => Self::ClipboardFormat(item.read()),
+            Some((NS_XVML, "Column")) => Self::CommentColumnTarget(item.read()),
+            Some((NS_XVML, "Row")) => Self::CommentRowTarget(item.read()),
+            Some((NS_XVML, "Visible")) => Self::CommentVisibilityToggle(item.read()),
+            Some((NS_XVML, "ColHidden")) => Self::CommentsColumnIsHidden(item.read()),
+            Some((NS_XVML, "RowHidden")) => Self::CommentsRowIsHidden(item.read()),
+            Some((NS_XVML, "Default")) => Self::DefaultButton(item.read()),
+            Some((NS_XVML, "DefaultSize")) => Self::DefaultSizeToggle(item.read()),
+            Some((NS_XVML, "NoThreeD")) => Self::Disable3DNoThreeD(item.read()),
+            Some((NS_XVML, "NoThreeD2")) => Self::Disable3DNoThreeD2(item.read()),
+            Some((NS_XVML, "Dismiss")) => Self::DismissButton(item.read()),
+            Some((NS_XVML, "Colored")) => Self::DropdownColorToggle(item.read()),
+            Some((NS_XVML, "DropLines")) => Self::DropdownMaximumLines(item.read()),
+            Some((NS_XVML, "DropStyle")) => Self::DropdownStyle(item.read()),
+            Some((NS_XVML, "DDE")) => Self::DynamicDataExchange(item.read()),
+            Some((NS_XVML, "MapOCX")) => Self::EmbeddedControl(item.read()),
+            Some((NS_XVML, "JustLastX")) => Self::FarEastAlignmentToggle(item.read()),
+            Some((NS_XVML, "FirstButton")) => Self::FirstRadioButton(item.read()),
+            Some((NS_XVML, "AutoScale")) => Self::FontAutoScale(item.read()),
+            Some((NS_XVML, "ScriptExtended")) => Self::HTMLScriptAttributes(item.read()),
+            Some((NS_XVML, "ScriptLanguage")) => Self::HTMLScriptLanguage(item.read()),
+            Some((NS_XVML, "ScriptLocation")) => Self::HTMLScriptLocation(item.read()),
+            Some((NS_XVML, "ScriptText")) => Self::HTMLScriptText(item.read()),
+            Some((NS_XVML, "Help")) => Self::HelpButton(item.read()),
+            Some((NS_XVML, "TextHAlign")) => Self::HorizontalTextAlignment(item.read()),
+            Some((NS_XVML, "FmlaLink")) => Self::LinkedFormula(item.read()),
+            Some((NS_XVML, "FmlaGroup")) => Self::LinkedFormulaGroupBox(item.read()),
+            Some((NS_XVML, "FmlaRange")) => Self::ListItemsSourceRange(item.read()),
+            Some((NS_XVML, "Locked")) => Self::LockToggle(item.read()),
+            Some((NS_XVML, "Disabled")) => Self::MacroDisableToggle(item.read()),
+            Some((NS_XVML, "WidthMin")) => Self::MinimumWidth(item.read()),
+            Some((NS_XVML, "MoveWithCells")) => Self::MoveWithCells(item.read()),
+            Some((NS_XVML, "MultiLine")) => Self::MultiLine(item.read()),
+            Some((NS_XVML, "MultiSel")) => Self::MultipleSelections(item.read()),
+            Some((NS_XVML, "ListItem")) => Self::NonLinkedListItem(item.read()),
+            Some((NS_XVML, "SecretEdit")) => Self::PasswordEdit(item.read()),
+            Some((NS_XVML, "Accel")) => Self::PrimaryKeyboardAccelerator(item.read()),
+            Some((NS_XVML, "PrintObject")) => Self::PrintToggle(item.read()),
+            Some((NS_XVML, "RecalcAlways")) => Self::RecalculationToggle(item.read()),
+            Some((NS_XVML, "FmlaMacro")) => Self::ReferenceToCustomFunction(item.read()),
+            Some((NS_XVML, "SizeWithCells")) => Self::ResizeWithCells(item.read()),
+            Some((NS_XVML, "Inc")) => Self::ScrollBarIncrement(item.read()),
+            Some((NS_XVML, "Max")) => Self::ScrollBarMaximum(item.read()),
+            Some((NS_XVML, "Min")) => Self::ScrollBarMinimum(item.read()),
+            Some((NS_XVML, "Horiz")) => Self::ScrollBarOrientation(item.read()),
+            Some((NS_XVML, "Page")) => Self::ScrollBarPageIncrement(item.read()),
+            Some((NS_XVML, "Val")) => Self::ScrollBarPosition(item.read()),
+            Some((NS_XVML, "Dx")) => Self::ScrollBarWidth(item.read()),
+            Some((NS_XVML, "Accel2")) => Self::SecondaryKeyboardAccelerator(item.read()),
+            Some((NS_XVML, "Sel")) => Self::SelectedEntry(item.read()),
+            Some((NS_XVML, "SelType")) => Self::SelectionType(item.read()),
+            Some((NS_XVML, "FmlaTxbx")) => Self::TextFormula(item.read()),
+            Some((NS_XVML, "LockText")) => Self::TextLock(item.read()),
+            Some((NS_XVML, "UIObj")) => Self::UIObjectToggle(item.read()),
+            Some((NS_XVML, "ValidIds")) => Self::ValidID(item.read()),
+            Some((NS_XVML, "VTEdit")) => Self::ValidationType(item.read()),
+            Some((NS_XVML, "VScroll")) => Self::VerticalScroll(item.read()),
+            Some((NS_XVML, "TextVAlign")) => Self::VerticalTextAlignment(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -2639,403 +2639,403 @@ impl crate::Write for AttachedObjectDataContent {
 
 impl<X: UserData> From<AnchorWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: AnchorWith<X>) -> Self {
-        Self::Anchor(Box::new(arm))
+        Self::Anchor(arm)
     }
 }
 
 impl<X: UserData> From<AutoFillWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: AutoFillWith<X>) -> Self {
-        Self::AutoFill(Box::new(arm))
+        Self::AutoFill(arm)
     }
 }
 
 impl<X: UserData> From<AutoLineWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: AutoLineWith<X>) -> Self {
-        Self::AutoLine(Box::new(arm))
+        Self::AutoLine(arm)
     }
 }
 
 impl<X: UserData> From<AutomaticallySizeWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: AutomaticallySizeWith<X>) -> Self {
-        Self::AutomaticallySize(Box::new(arm))
+        Self::AutomaticallySize(arm)
     }
 }
 
 impl<X: UserData> From<CallbackTypeWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: CallbackTypeWith<X>) -> Self {
-        Self::CallbackType(Box::new(arm))
+        Self::CallbackType(arm)
     }
 }
 
 impl<X: UserData> From<CameraSourceRangeWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: CameraSourceRangeWith<X>) -> Self {
-        Self::CameraSourceRange(Box::new(arm))
+        Self::CameraSourceRange(arm)
     }
 }
 
 impl<X: UserData> From<CameraToolWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: CameraToolWith<X>) -> Self {
-        Self::CameraTool(Box::new(arm))
+        Self::CameraTool(arm)
     }
 }
 
 impl<X: UserData> From<CancelButtonWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: CancelButtonWith<X>) -> Self {
-        Self::CancelButton(Box::new(arm))
+        Self::CancelButton(arm)
     }
 }
 
 impl<X: UserData> From<CheckedWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: CheckedWith<X>) -> Self {
-        Self::Checked(Box::new(arm))
+        Self::Checked(arm)
     }
 }
 
 impl<X: UserData> From<ClipboardFormatWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: ClipboardFormatWith<X>) -> Self {
-        Self::ClipboardFormat(Box::new(arm))
+        Self::ClipboardFormat(arm)
     }
 }
 
 impl<X: UserData> From<CommentColumnTargetWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: CommentColumnTargetWith<X>) -> Self {
-        Self::CommentColumnTarget(Box::new(arm))
+        Self::CommentColumnTarget(arm)
     }
 }
 
 impl<X: UserData> From<CommentRowTargetWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: CommentRowTargetWith<X>) -> Self {
-        Self::CommentRowTarget(Box::new(arm))
+        Self::CommentRowTarget(arm)
     }
 }
 
 impl<X: UserData> From<CommentVisibilityToggleWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: CommentVisibilityToggleWith<X>) -> Self {
-        Self::CommentVisibilityToggle(Box::new(arm))
+        Self::CommentVisibilityToggle(arm)
     }
 }
 
 impl<X: UserData> From<CommentsColumnIsHiddenWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: CommentsColumnIsHiddenWith<X>) -> Self {
-        Self::CommentsColumnIsHidden(Box::new(arm))
+        Self::CommentsColumnIsHidden(arm)
     }
 }
 
 impl<X: UserData> From<CommentsRowIsHiddenWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: CommentsRowIsHiddenWith<X>) -> Self {
-        Self::CommentsRowIsHidden(Box::new(arm))
+        Self::CommentsRowIsHidden(arm)
     }
 }
 
 impl<X: UserData> From<DefaultButtonWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: DefaultButtonWith<X>) -> Self {
-        Self::DefaultButton(Box::new(arm))
+        Self::DefaultButton(arm)
     }
 }
 
 impl<X: UserData> From<DefaultSizeToggleWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: DefaultSizeToggleWith<X>) -> Self {
-        Self::DefaultSizeToggle(Box::new(arm))
+        Self::DefaultSizeToggle(arm)
     }
 }
 
 impl<X: UserData> From<Disable3DNoThreeDWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: Disable3DNoThreeDWith<X>) -> Self {
-        Self::Disable3DNoThreeD(Box::new(arm))
+        Self::Disable3DNoThreeD(arm)
     }
 }
 
 impl<X: UserData> From<Disable3DNoThreeD2With<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: Disable3DNoThreeD2With<X>) -> Self {
-        Self::Disable3DNoThreeD2(Box::new(arm))
+        Self::Disable3DNoThreeD2(arm)
     }
 }
 
 impl<X: UserData> From<DismissButtonWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: DismissButtonWith<X>) -> Self {
-        Self::DismissButton(Box::new(arm))
+        Self::DismissButton(arm)
     }
 }
 
 impl<X: UserData> From<DropdownColorToggleWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: DropdownColorToggleWith<X>) -> Self {
-        Self::DropdownColorToggle(Box::new(arm))
+        Self::DropdownColorToggle(arm)
     }
 }
 
 impl<X: UserData> From<DropdownMaximumLinesWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: DropdownMaximumLinesWith<X>) -> Self {
-        Self::DropdownMaximumLines(Box::new(arm))
+        Self::DropdownMaximumLines(arm)
     }
 }
 
 impl<X: UserData> From<DropdownStyleWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: DropdownStyleWith<X>) -> Self {
-        Self::DropdownStyle(Box::new(arm))
+        Self::DropdownStyle(arm)
     }
 }
 
 impl<X: UserData> From<DynamicDataExchangeWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: DynamicDataExchangeWith<X>) -> Self {
-        Self::DynamicDataExchange(Box::new(arm))
+        Self::DynamicDataExchange(arm)
     }
 }
 
 impl<X: UserData> From<EmbeddedControlWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: EmbeddedControlWith<X>) -> Self {
-        Self::EmbeddedControl(Box::new(arm))
+        Self::EmbeddedControl(arm)
     }
 }
 
 impl<X: UserData> From<FarEastAlignmentToggleWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: FarEastAlignmentToggleWith<X>) -> Self {
-        Self::FarEastAlignmentToggle(Box::new(arm))
+        Self::FarEastAlignmentToggle(arm)
     }
 }
 
 impl<X: UserData> From<FirstRadioButtonWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: FirstRadioButtonWith<X>) -> Self {
-        Self::FirstRadioButton(Box::new(arm))
+        Self::FirstRadioButton(arm)
     }
 }
 
 impl<X: UserData> From<FontAutoScaleWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: FontAutoScaleWith<X>) -> Self {
-        Self::FontAutoScale(Box::new(arm))
+        Self::FontAutoScale(arm)
     }
 }
 
 impl<X: UserData> From<HTMLScriptAttributesWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: HTMLScriptAttributesWith<X>) -> Self {
-        Self::HTMLScriptAttributes(Box::new(arm))
+        Self::HTMLScriptAttributes(arm)
     }
 }
 
 impl<X: UserData> From<HTMLScriptLanguageWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: HTMLScriptLanguageWith<X>) -> Self {
-        Self::HTMLScriptLanguage(Box::new(arm))
+        Self::HTMLScriptLanguage(arm)
     }
 }
 
 impl<X: UserData> From<HTMLScriptLocationWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: HTMLScriptLocationWith<X>) -> Self {
-        Self::HTMLScriptLocation(Box::new(arm))
+        Self::HTMLScriptLocation(arm)
     }
 }
 
 impl<X: UserData> From<HTMLScriptTextWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: HTMLScriptTextWith<X>) -> Self {
-        Self::HTMLScriptText(Box::new(arm))
+        Self::HTMLScriptText(arm)
     }
 }
 
 impl<X: UserData> From<HelpButtonWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: HelpButtonWith<X>) -> Self {
-        Self::HelpButton(Box::new(arm))
+        Self::HelpButton(arm)
     }
 }
 
 impl<X: UserData> From<HorizontalTextAlignmentWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: HorizontalTextAlignmentWith<X>) -> Self {
-        Self::HorizontalTextAlignment(Box::new(arm))
+        Self::HorizontalTextAlignment(arm)
     }
 }
 
 impl<X: UserData> From<LinkedFormulaWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: LinkedFormulaWith<X>) -> Self {
-        Self::LinkedFormula(Box::new(arm))
+        Self::LinkedFormula(arm)
     }
 }
 
 impl<X: UserData> From<LinkedFormulaGroupBoxWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: LinkedFormulaGroupBoxWith<X>) -> Self {
-        Self::LinkedFormulaGroupBox(Box::new(arm))
+        Self::LinkedFormulaGroupBox(arm)
     }
 }
 
 impl<X: UserData> From<ListItemsSourceRangeWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: ListItemsSourceRangeWith<X>) -> Self {
-        Self::ListItemsSourceRange(Box::new(arm))
+        Self::ListItemsSourceRange(arm)
     }
 }
 
 impl<X: UserData> From<LockToggleWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: LockToggleWith<X>) -> Self {
-        Self::LockToggle(Box::new(arm))
+        Self::LockToggle(arm)
     }
 }
 
 impl<X: UserData> From<MacroDisableToggleWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: MacroDisableToggleWith<X>) -> Self {
-        Self::MacroDisableToggle(Box::new(arm))
+        Self::MacroDisableToggle(arm)
     }
 }
 
 impl<X: UserData> From<MinimumWidthWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: MinimumWidthWith<X>) -> Self {
-        Self::MinimumWidth(Box::new(arm))
+        Self::MinimumWidth(arm)
     }
 }
 
 impl<X: UserData> From<MoveWithCellsWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: MoveWithCellsWith<X>) -> Self {
-        Self::MoveWithCells(Box::new(arm))
+        Self::MoveWithCells(arm)
     }
 }
 
 impl<X: UserData> From<MultiLineWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: MultiLineWith<X>) -> Self {
-        Self::MultiLine(Box::new(arm))
+        Self::MultiLine(arm)
     }
 }
 
 impl<X: UserData> From<MultipleSelectionsWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: MultipleSelectionsWith<X>) -> Self {
-        Self::MultipleSelections(Box::new(arm))
+        Self::MultipleSelections(arm)
     }
 }
 
 impl<X: UserData> From<NonLinkedListItemWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: NonLinkedListItemWith<X>) -> Self {
-        Self::NonLinkedListItem(Box::new(arm))
+        Self::NonLinkedListItem(arm)
     }
 }
 
 impl<X: UserData> From<PasswordEditWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: PasswordEditWith<X>) -> Self {
-        Self::PasswordEdit(Box::new(arm))
+        Self::PasswordEdit(arm)
     }
 }
 
 impl<X: UserData> From<PrimaryKeyboardAcceleratorWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: PrimaryKeyboardAcceleratorWith<X>) -> Self {
-        Self::PrimaryKeyboardAccelerator(Box::new(arm))
+        Self::PrimaryKeyboardAccelerator(arm)
     }
 }
 
 impl<X: UserData> From<PrintToggleWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: PrintToggleWith<X>) -> Self {
-        Self::PrintToggle(Box::new(arm))
+        Self::PrintToggle(arm)
     }
 }
 
 impl<X: UserData> From<RecalculationToggleWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: RecalculationToggleWith<X>) -> Self {
-        Self::RecalculationToggle(Box::new(arm))
+        Self::RecalculationToggle(arm)
     }
 }
 
 impl<X: UserData> From<ReferenceToCustomFunctionWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: ReferenceToCustomFunctionWith<X>) -> Self {
-        Self::ReferenceToCustomFunction(Box::new(arm))
+        Self::ReferenceToCustomFunction(arm)
     }
 }
 
 impl<X: UserData> From<ResizeWithCellsWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: ResizeWithCellsWith<X>) -> Self {
-        Self::ResizeWithCells(Box::new(arm))
+        Self::ResizeWithCells(arm)
     }
 }
 
 impl<X: UserData> From<ScrollBarIncrementWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: ScrollBarIncrementWith<X>) -> Self {
-        Self::ScrollBarIncrement(Box::new(arm))
+        Self::ScrollBarIncrement(arm)
     }
 }
 
 impl<X: UserData> From<ScrollBarMaximumWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: ScrollBarMaximumWith<X>) -> Self {
-        Self::ScrollBarMaximum(Box::new(arm))
+        Self::ScrollBarMaximum(arm)
     }
 }
 
 impl<X: UserData> From<ScrollBarMinimumWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: ScrollBarMinimumWith<X>) -> Self {
-        Self::ScrollBarMinimum(Box::new(arm))
+        Self::ScrollBarMinimum(arm)
     }
 }
 
 impl<X: UserData> From<ScrollBarOrientationWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: ScrollBarOrientationWith<X>) -> Self {
-        Self::ScrollBarOrientation(Box::new(arm))
+        Self::ScrollBarOrientation(arm)
     }
 }
 
 impl<X: UserData> From<ScrollBarPageIncrementWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: ScrollBarPageIncrementWith<X>) -> Self {
-        Self::ScrollBarPageIncrement(Box::new(arm))
+        Self::ScrollBarPageIncrement(arm)
     }
 }
 
 impl<X: UserData> From<ScrollBarPositionWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: ScrollBarPositionWith<X>) -> Self {
-        Self::ScrollBarPosition(Box::new(arm))
+        Self::ScrollBarPosition(arm)
     }
 }
 
 impl<X: UserData> From<ScrollBarWidthWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: ScrollBarWidthWith<X>) -> Self {
-        Self::ScrollBarWidth(Box::new(arm))
+        Self::ScrollBarWidth(arm)
     }
 }
 
 impl<X: UserData> From<SecondaryKeyboardAcceleratorWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: SecondaryKeyboardAcceleratorWith<X>) -> Self {
-        Self::SecondaryKeyboardAccelerator(Box::new(arm))
+        Self::SecondaryKeyboardAccelerator(arm)
     }
 }
 
 impl<X: UserData> From<SelectedEntryWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: SelectedEntryWith<X>) -> Self {
-        Self::SelectedEntry(Box::new(arm))
+        Self::SelectedEntry(arm)
     }
 }
 
 impl<X: UserData> From<SelectionTypeWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: SelectionTypeWith<X>) -> Self {
-        Self::SelectionType(Box::new(arm))
+        Self::SelectionType(arm)
     }
 }
 
 impl<X: UserData> From<TextFormulaWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: TextFormulaWith<X>) -> Self {
-        Self::TextFormula(Box::new(arm))
+        Self::TextFormula(arm)
     }
 }
 
 impl<X: UserData> From<TextLockWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: TextLockWith<X>) -> Self {
-        Self::TextLock(Box::new(arm))
+        Self::TextLock(arm)
     }
 }
 
 impl<X: UserData> From<UIObjectToggleWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: UIObjectToggleWith<X>) -> Self {
-        Self::UIObjectToggle(Box::new(arm))
+        Self::UIObjectToggle(arm)
     }
 }
 
 impl<X: UserData> From<ValidIDWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: ValidIDWith<X>) -> Self {
-        Self::ValidID(Box::new(arm))
+        Self::ValidID(arm)
     }
 }
 
 impl<X: UserData> From<ValidationTypeWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: ValidationTypeWith<X>) -> Self {
-        Self::ValidationType(Box::new(arm))
+        Self::ValidationType(arm)
     }
 }
 
 impl<X: UserData> From<VerticalScrollWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: VerticalScrollWith<X>) -> Self {
-        Self::VerticalScroll(Box::new(arm))
+        Self::VerticalScroll(arm)
     }
 }
 
 impl<X: UserData> From<VerticalTextAlignmentWith<X>> for AttachedObjectDataContentWith<X> {
     fn from(arm: VerticalTextAlignmentWith<X>) -> Self {
-        Self::VerticalTextAlignment(Box::new(arm))
+        Self::VerticalTextAlignment(arm)
     }
 }
 

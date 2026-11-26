@@ -1588,7 +1588,7 @@ pub struct WorkbookPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub enum PivotUserEditContent {
     EditValue(Box<super::EditValue>),
-    F(Box<office_excel_2006_main::F>),
+    F(office_excel_2006_main::F),
     Other(Box<Node>),
 }
 

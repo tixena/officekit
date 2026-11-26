@@ -2895,9 +2895,9 @@ pub enum MathPropertiesContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `m:wrapIndent`, a `WrapIndent`.
-    WrapIndent(Box<WrapIndentWith<X>>),
+    WrapIndent(WrapIndentWith<X>),
     /// The element `m:wrapRight`, a `WrapRight`.
-    WrapRight(Box<WrapRightWith<X>>),
+    WrapRight(WrapRightWith<X>),
 }
 
 /// [`MathPropertiesContentWith`] of the tree a read gives, where no node holds anything in
@@ -3365,19 +3365,19 @@ impl Eq for OfficeMathWith<()> {}
 #[non_exhaustive]
 pub enum OfficeMathContentWith<X: UserData> {
     /// The element `m:acc`, a `Accent`.
-    Accent(Box<AccentWith<X>>),
+    Accent(AccentWith<X>),
     /// The element `m:eqArr`, a `ArrayObject`.
     ArrayObject(Box<ArrayObjectWith<X>>),
     /// The element `m:bar`, a `Bar`.
-    Bar(Box<BarWith<X>>),
+    Bar(BarWith<X>),
     /// The element `w:bookmarkEnd`, a `BookmarkEnd`.
     BookmarkEnd(Box<super::wordprocessing::BookmarkEndWith<X>>),
     /// The element `w:bookmarkStart`, a `BookmarkStart`.
     BookmarkStart(Box<super::wordprocessing::BookmarkStartWith<X>>),
     /// The element `m:borderBox`, a `BorderBoxObject`.
-    BorderBoxObject(Box<BorderBoxObjectWith<X>>),
+    BorderBoxObject(BorderBoxObjectWith<X>),
     /// The element `m:box`, a `BoxObject`.
-    BoxObject(Box<BoxObjectWith<X>>),
+    BoxObject(BoxObjectWith<X>),
     /// The element `w:commentRangeEnd`, a `CommentAnchorRangeEnd`.
     CommentAnchorRangeEnd(Box<super::wordprocessing::CommentAnchorRangeEndWith<X>>),
     /// The element `w:commentRangeStart`, a `CommentAnchorRangeStart`.
@@ -3391,22 +3391,22 @@ pub enum OfficeMathContentWith<X: UserData> {
         Box<super::office_word_2010_wordml::ConflictInsRunTrackChangeWith<X>>,
     ),
     /// The element `w:customXmlDelRangeEnd`, a `CustomXMLMarkupDeletionEnd`.
-    CustomXMLMarkupDeletionEnd(Box<super::wordprocessing::CustomXMLMarkupDeletionEndWith<X>>),
+    CustomXMLMarkupDeletionEnd(super::wordprocessing::CustomXMLMarkupDeletionEndWith<X>),
     /// The element `w:customXmlDelRangeStart`, a `CustomXMLMarkupDeletionStart`.
     CustomXMLMarkupDeletionStart(Box<super::wordprocessing::CustomXMLMarkupDeletionStartWith<X>>),
     /// The element `w:customXmlInsRangeEnd`, a `CustomXMLMarkupInsertionEnd`.
-    CustomXMLMarkupInsertionEnd(Box<super::wordprocessing::CustomXMLMarkupInsertionEndWith<X>>),
+    CustomXMLMarkupInsertionEnd(super::wordprocessing::CustomXMLMarkupInsertionEndWith<X>),
     /// The element `w:customXmlInsRangeStart`, a `CustomXMLMarkupInsertionStart`.
     CustomXMLMarkupInsertionStart(Box<super::wordprocessing::CustomXMLMarkupInsertionStartWith<X>>),
     /// The element `w:customXmlMoveFromRangeEnd`, a `CustomXMLMarkupMoveSourceEnd`.
-    CustomXMLMarkupMoveSourceEnd(Box<super::wordprocessing::CustomXMLMarkupMoveSourceEndWith<X>>),
+    CustomXMLMarkupMoveSourceEnd(super::wordprocessing::CustomXMLMarkupMoveSourceEndWith<X>),
     /// The element `w:customXmlMoveFromRangeStart`, a `CustomXMLMarkupMoveSourceStart`.
     CustomXMLMarkupMoveSourceStart(
         Box<super::wordprocessing::CustomXMLMarkupMoveSourceStartWith<X>>,
     ),
     /// The element `w14:customXmlConflictDelRangeEnd`, a `CustomXmlConflictDelRangeEnd`.
     CustomXmlConflictDelRangeEnd(
-        Box<super::office_word_2010_wordml::CustomXmlConflictDelRangeEndWith<X>>,
+        super::office_word_2010_wordml::CustomXmlConflictDelRangeEndWith<X>,
     ),
     /// The element `w14:customXmlConflictDelRangeStart`, a `CustomXmlConflictDelRangeStart`.
     CustomXmlConflictDelRangeStart(
@@ -3414,14 +3414,14 @@ pub enum OfficeMathContentWith<X: UserData> {
     ),
     /// The element `w14:customXmlConflictInsRangeEnd`, a `CustomXmlConflictInsRangeEnd`.
     CustomXmlConflictInsRangeEnd(
-        Box<super::office_word_2010_wordml::CustomXmlConflictInsRangeEndWith<X>>,
+        super::office_word_2010_wordml::CustomXmlConflictInsRangeEndWith<X>,
     ),
     /// The element `w14:customXmlConflictInsRangeStart`, a `CustomXmlConflictInsRangeStart`.
     CustomXmlConflictInsRangeStart(
         Box<super::office_word_2010_wordml::CustomXmlConflictInsRangeStartWith<X>>,
     ),
     /// The element `w:customXmlMoveToRangeEnd`, a `CustomXmlMoveToRangeEnd`.
-    CustomXmlMoveToRangeEnd(Box<super::wordprocessing::CustomXmlMoveToRangeEndWith<X>>),
+    CustomXmlMoveToRangeEnd(super::wordprocessing::CustomXmlMoveToRangeEndWith<X>),
     /// The element `w:customXmlMoveToRangeStart`, a `CustomXmlMoveToRangeStart`.
     CustomXmlMoveToRangeStart(Box<super::wordprocessing::CustomXmlMoveToRangeStartWith<X>>),
     /// The element `w:del`, a `DeletedRunContent`.
@@ -3429,11 +3429,11 @@ pub enum OfficeMathContentWith<X: UserData> {
     /// The element `m:d`, a `DelimiterObject`.
     DelimiterObject(Box<DelimiterObjectWith<X>>),
     /// The element `m:f`, a `FractionObject`.
-    FractionObject(Box<FractionObjectWith<X>>),
+    FractionObject(FractionObjectWith<X>),
     /// The element `m:func`, a `FunctionApplyObject`.
-    FunctionApplyObject(Box<FunctionApplyObjectWith<X>>),
+    FunctionApplyObject(FunctionApplyObjectWith<X>),
     /// The element `m:groupChr`, a `GroupCharacterObject`.
-    GroupCharacterObject(Box<GroupCharacterObjectWith<X>>),
+    GroupCharacterObject(GroupCharacterObjectWith<X>),
     /// The element `w:hyperlink`, a `Hyperlink`.
     Hyperlink(Box<super::wordprocessing::HyperlinkWith<X>>),
     /// The element `w:customXml`, a `InlineLevelCustomXMLElement`.
@@ -3447,7 +3447,7 @@ pub enum OfficeMathContentWith<X: UserData> {
     /// The element `w:ins`, a `InsertedRunContent`.
     InsertedRunContent(Box<super::wordprocessing::InsertedRunContentWith<X>>),
     /// The element `m:limLow`, a `LowerLimitObject`.
-    LowerLimitObject(Box<LowerLimitObjectWith<X>>),
+    LowerLimitObject(LowerLimitObjectWith<X>),
     /// The element `m:m`, a `MatrixObject`.
     MatrixObject(Box<MatrixObjectWith<X>>),
     /// The element `w:moveToRangeEnd`, a `MoveDestinationLocationContainerEnd`.
@@ -3473,19 +3473,19 @@ pub enum OfficeMathContentWith<X: UserData> {
     /// The element `m:nary`, a `Nary`.
     Nary(Box<NaryWith<X>>),
     /// The element `m:oMath`, a `OfficeMath`.
-    OfficeMath(Box<OfficeMathWith<X>>),
+    OfficeMath(OfficeMathWith<X>),
     /// The element `m:oMathPara`, a `OfficeMathParagraph`.
     OfficeMathParagraph(Box<OfficeMathParagraphWith<X>>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `m:phant`, a `PhantomObject`.
-    PhantomObject(Box<PhantomObjectWith<X>>),
+    PhantomObject(PhantomObjectWith<X>),
     /// The element `m:sPre`, a `PreSubSuperscriptObject`.
     PreSubSuperscriptObject(Box<PreSubSuperscriptObjectWith<X>>),
     /// The element `w:proofErr`, a `ProofingErrorAnchor`.
-    ProofingErrorAnchor(Box<super::wordprocessing::ProofingErrorAnchorWith<X>>),
+    ProofingErrorAnchor(super::wordprocessing::ProofingErrorAnchorWith<X>),
     /// The element `m:rad`, a `RadicalObject`.
-    RadicalObject(Box<RadicalObjectWith<X>>),
+    RadicalObject(RadicalObjectWith<X>),
     /// The element `w:permEnd`, a `RangePermissionEnd`.
     RangePermissionEnd(Box<super::wordprocessing::RangePermissionEndWith<X>>),
     /// The element `w:permStart`, a `RangePermissionStart`.
@@ -3497,11 +3497,11 @@ pub enum OfficeMathContentWith<X: UserData> {
     /// The element `m:sSubSup`, a `SubSuperscriptObject`.
     SubSuperscriptObject(Box<SubSuperscriptObjectWith<X>>),
     /// The element `m:sSub`, a `SubscriptObject`.
-    SubscriptObject(Box<SubscriptObjectWith<X>>),
+    SubscriptObject(SubscriptObjectWith<X>),
     /// The element `m:sSup`, a `SuperscriptObject`.
-    SuperscriptObject(Box<SuperscriptObjectWith<X>>),
+    SuperscriptObject(SuperscriptObjectWith<X>),
     /// The element `m:limUpp`, a `UpperLimitObject`.
-    UpperLimitObject(Box<UpperLimitObjectWith<X>>),
+    UpperLimitObject(UpperLimitObjectWith<X>),
 }
 
 /// [`OfficeMathContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -3988,67 +3988,67 @@ pub enum RunContentWith<X: UserData> {
     /// The element `w:br`, a `Break`.
     Break(Box<super::wordprocessing::BreakWith<X>>),
     /// The element `w:cr`, a `CarriageReturn`.
-    CarriageReturn(Box<super::wordprocessing::CarriageReturnWith<X>>),
+    CarriageReturn(super::wordprocessing::CarriageReturnWith<X>),
     /// The element `w:commentReference`, a `CommentContentReferenceMark`.
-    CommentContentReferenceMark(Box<super::wordprocessing::CommentContentReferenceMarkWith<X>>),
+    CommentContentReferenceMark(super::wordprocessing::CommentContentReferenceMarkWith<X>),
     /// The element `w:annotationRef`, a `CommentInformationBlock`.
-    CommentInformationBlock(Box<super::wordprocessing::CommentInformationBlockWith<X>>),
+    CommentInformationBlock(super::wordprocessing::CommentInformationBlockWith<X>),
     /// The element `w:fldChar`, a `ComplexFieldCharacter`.
     ComplexFieldCharacter(Box<super::wordprocessing::ComplexFieldCharacterWith<X>>),
     /// The element `w:contentPart`, a `ContentPart`.
-    ContentPart(Box<super::wordprocessing::ContentPartWith<X>>),
+    ContentPart(super::wordprocessing::ContentPartWith<X>),
     /// The element `w:continuationSeparator`, a `ContinuationSeparatorMark`.
-    ContinuationSeparatorMark(Box<super::wordprocessing::ContinuationSeparatorMarkWith<X>>),
+    ContinuationSeparatorMark(super::wordprocessing::ContinuationSeparatorMarkWith<X>),
     /// The element `w:dayLong`, a `DateBlockLongDayFormat`.
-    DateBlockLongDayFormat(Box<super::wordprocessing::DateBlockLongDayFormatWith<X>>),
+    DateBlockLongDayFormat(super::wordprocessing::DateBlockLongDayFormatWith<X>),
     /// The element `w:monthLong`, a `DateBlockLongMonthFormat`.
-    DateBlockLongMonthFormat(Box<super::wordprocessing::DateBlockLongMonthFormatWith<X>>),
+    DateBlockLongMonthFormat(super::wordprocessing::DateBlockLongMonthFormatWith<X>),
     /// The element `w:yearLong`, a `DateBlockLongYearFormat`.
-    DateBlockLongYearFormat(Box<super::wordprocessing::DateBlockLongYearFormatWith<X>>),
+    DateBlockLongYearFormat(super::wordprocessing::DateBlockLongYearFormatWith<X>),
     /// The element `w:dayShort`, a `DateBlockShortDayFormat`.
-    DateBlockShortDayFormat(Box<super::wordprocessing::DateBlockShortDayFormatWith<X>>),
+    DateBlockShortDayFormat(super::wordprocessing::DateBlockShortDayFormatWith<X>),
     /// The element `w:monthShort`, a `DateBlockShortMonthFormat`.
-    DateBlockShortMonthFormat(Box<super::wordprocessing::DateBlockShortMonthFormatWith<X>>),
+    DateBlockShortMonthFormat(super::wordprocessing::DateBlockShortMonthFormatWith<X>),
     /// The element `w:yearShort`, a `DateBlockShortYearFormat`.
-    DateBlockShortYearFormat(Box<super::wordprocessing::DateBlockShortYearFormatWith<X>>),
+    DateBlockShortYearFormat(super::wordprocessing::DateBlockShortYearFormatWith<X>),
     /// The element `w:delInstrText`, a `DeletedFieldCode`.
     DeletedFieldCode(Box<super::wordprocessing::DeletedFieldCodeWith<X>>),
     /// The element `w:delText`, a `DeletedText`.
     DeletedText(Box<super::wordprocessing::DeletedTextWith<X>>),
     /// The element `w:drawing`, a `DrawingMLObject`.
-    DrawingMLObject(Box<super::wordprocessing::DrawingMLObjectWith<X>>),
+    DrawingMLObject(super::wordprocessing::DrawingMLObjectWith<X>),
     /// The element `w:object`, a `EmbeddedObject`.
     EmbeddedObject(Box<super::wordprocessing::EmbeddedObjectWith<X>>),
     /// The element `w:endnoteReference`, a `EndnoteReference`.
     EndnoteReference(Box<super::wordprocessing::EndnoteReferenceWith<X>>),
     /// The element `w:endnoteRef`, a `EndnoteReferenceMark`.
-    EndnoteReferenceMark(Box<super::wordprocessing::EndnoteReferenceMarkWith<X>>),
+    EndnoteReferenceMark(super::wordprocessing::EndnoteReferenceMarkWith<X>),
     /// The element `w:instrText`, a `FieldCode`.
     FieldCode(Box<super::wordprocessing::FieldCodeWith<X>>),
     /// The element `w:separator`, a `FootnoteEndnoteSeparatorMark`.
-    FootnoteEndnoteSeparatorMark(Box<super::wordprocessing::FootnoteEndnoteSeparatorMarkWith<X>>),
+    FootnoteEndnoteSeparatorMark(super::wordprocessing::FootnoteEndnoteSeparatorMarkWith<X>),
     /// The element `w:footnoteReference`, a `FootnoteReference`.
     FootnoteReference(Box<super::wordprocessing::FootnoteReferenceWith<X>>),
     /// The element `w:footnoteRef`, a `FootnoteReferenceMark`.
-    FootnoteReferenceMark(Box<super::wordprocessing::FootnoteReferenceMarkWith<X>>),
+    FootnoteReferenceMark(super::wordprocessing::FootnoteReferenceMarkWith<X>),
     /// The element `w:noBreakHyphen`, a `NonBreakingHyphenCharacter`.
-    NonBreakingHyphenCharacter(Box<super::wordprocessing::NonBreakingHyphenCharacterWith<X>>),
+    NonBreakingHyphenCharacter(super::wordprocessing::NonBreakingHyphenCharacterWith<X>),
     /// The element `w:softHyphen`, a `OptionalHyphenCharacter`.
-    OptionalHyphenCharacter(Box<super::wordprocessing::OptionalHyphenCharacterWith<X>>),
+    OptionalHyphenCharacter(super::wordprocessing::OptionalHyphenCharacterWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `w:pgNum`, a `PageNumberBlock`.
-    PageNumberBlock(Box<super::wordprocessing::PageNumberBlockWith<X>>),
+    PageNumberBlock(super::wordprocessing::PageNumberBlockWith<X>),
     /// The element `w:ruby`, a `PhoneticGuide`.
-    PhoneticGuide(Box<super::wordprocessing::PhoneticGuideWith<X>>),
+    PhoneticGuide(super::wordprocessing::PhoneticGuideWith<X>),
     /// The element `w:lastRenderedPageBreak`, a `PositionOfLastCalculatedPageBreak`.
     PositionOfLastCalculatedPageBreak(
-        Box<super::wordprocessing::PositionOfLastCalculatedPageBreakWith<X>>,
+        super::wordprocessing::PositionOfLastCalculatedPageBreakWith<X>,
     ),
     /// The element `w:sym`, a `SymbolCharacter`.
     SymbolCharacter(Box<super::wordprocessing::SymbolCharacterWith<X>>),
     /// The element `w:tab`, a `TabCharacter`.
-    TabCharacter(Box<super::wordprocessing::TabCharacterWith<X>>),
+    TabCharacter(super::wordprocessing::TabCharacterWith<X>),
     /// The element `m:t`, a `Text`.
     Text(Box<TextWith<X>>),
     /// The element `w:pict`, a `VMLObject`.
@@ -4097,13 +4097,13 @@ impl Eq for RunPropertiesWith<()> {}
 #[non_exhaustive]
 pub enum RunPropertiesContentWith<X: UserData> {
     /// The element `m:nor`, a `NormalText`.
-    NormalText(Box<NormalTextWith<X>>),
+    NormalText(NormalTextWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `m:scr`, a `Script`.
-    Script(Box<ScriptWith<X>>),
+    Script(ScriptWith<X>),
     /// The element `m:sty`, a `Sty`.
-    Sty(Box<StyWith<X>>),
+    Sty(StyWith<X>),
 }
 
 /// [`RunPropertiesContentWith`] of the tree a read gives, where no node holds anything in
@@ -8165,12 +8165,8 @@ impl<X: UserData> MathPropertiesContentWith<X> {
     {
         match self {
             Self::Other(node) => MathPropertiesContentWith::Other(node),
-            Self::WrapIndent(node) => {
-                MathPropertiesContentWith::WrapIndent(Box::new((*node).into_user_data()))
-            }
-            Self::WrapRight(node) => {
-                MathPropertiesContentWith::WrapRight(Box::new((*node).into_user_data()))
-            }
+            Self::WrapIndent(node) => MathPropertiesContentWith::WrapIndent(node.into_user_data()),
+            Self::WrapRight(node) => MathPropertiesContentWith::WrapRight(node.into_user_data()),
         }
     }
 }
@@ -8182,8 +8178,8 @@ impl officekit_markup_base::Read for MathPropertiesContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_M, "wrapIndent")) => Self::WrapIndent(Box::new(item.read())),
-            Some((NS_M, "wrapRight")) => Self::WrapRight(Box::new(item.read())),
+            Some((NS_M, "wrapIndent")) => Self::WrapIndent(item.read()),
+            Some((NS_M, "wrapRight")) => Self::WrapRight(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -8201,13 +8197,13 @@ impl officekit_markup_base::Write for MathPropertiesContent {
 
 impl<X: UserData> From<WrapIndentWith<X>> for MathPropertiesContentWith<X> {
     fn from(arm: WrapIndentWith<X>) -> Self {
-        Self::WrapIndent(Box::new(arm))
+        Self::WrapIndent(arm)
     }
 }
 
 impl<X: UserData> From<WrapRightWith<X>> for MathPropertiesContentWith<X> {
     fn from(arm: WrapRightWith<X>) -> Self {
-        Self::WrapRight(Box::new(arm))
+        Self::WrapRight(arm)
     }
 }
 
@@ -9322,26 +9318,26 @@ impl<X: UserData> OfficeMathContentWith<X> {
     {
         officekit_markup_base::into_user_data_match!(self, OfficeMathContentWith;
             plain [
+                Accent, Bar, BorderBoxObject, BoxObject, CustomXMLMarkupDeletionEnd,
+                CustomXMLMarkupInsertionEnd, CustomXMLMarkupMoveSourceEnd,
+                CustomXmlConflictDelRangeEnd, CustomXmlConflictInsRangeEnd, CustomXmlMoveToRangeEnd,
+                FractionObject, FunctionApplyObject, GroupCharacterObject, LowerLimitObject,
+                OfficeMath, PhantomObject, ProofingErrorAnchor, RadicalObject, SubscriptObject,
+                SuperscriptObject, UpperLimitObject,
             ]
             boxed [
-                Accent, ArrayObject, Bar, BookmarkEnd, BookmarkStart, BorderBoxObject, BoxObject,
-                CommentAnchorRangeEnd, CommentAnchorRangeStart, ConflictDelRunTrackChange,
-                ConflictInsRunTrackChange, CustomXMLMarkupDeletionEnd, CustomXMLMarkupDeletionStart,
-                CustomXMLMarkupInsertionEnd, CustomXMLMarkupInsertionStart,
-                CustomXMLMarkupMoveSourceEnd, CustomXMLMarkupMoveSourceStart,
-                CustomXmlConflictDelRangeEnd, CustomXmlConflictDelRangeStart,
-                CustomXmlConflictInsRangeEnd, CustomXmlConflictInsRangeStart,
-                CustomXmlMoveToRangeEnd, CustomXmlMoveToRangeStart, DeletedRunContent,
-                DelimiterObject, FractionObject, FunctionApplyObject, GroupCharacterObject,
-                Hyperlink, InlineLevelCustomXMLElement, InlineLevelSmartTag,
-                InlineLevelStructuredDocumentTag, InsertedRunContent, LowerLimitObject,
-                MatrixObject, MoveDestinationLocationContainerEnd,
-                MoveDestinationLocationContainerStart, MoveDestinationRunContent,
-                MoveSourceLocationContainerEnd, MoveSourceLocationContainerStart,
-                MoveSourceRunContent, Nary, OfficeMath, OfficeMathParagraph, PhantomObject,
-                PreSubSuperscriptObject, ProofingErrorAnchor, RadicalObject, RangePermissionEnd,
-                RangePermissionStart, Run, SimpleField, SubSuperscriptObject, SubscriptObject,
-                SuperscriptObject, UpperLimitObject,
+                ArrayObject, BookmarkEnd, BookmarkStart, CommentAnchorRangeEnd,
+                CommentAnchorRangeStart, ConflictDelRunTrackChange, ConflictInsRunTrackChange,
+                CustomXMLMarkupDeletionStart, CustomXMLMarkupInsertionStart,
+                CustomXMLMarkupMoveSourceStart, CustomXmlConflictDelRangeStart,
+                CustomXmlConflictInsRangeStart, CustomXmlMoveToRangeStart, DeletedRunContent,
+                DelimiterObject, Hyperlink, InlineLevelCustomXMLElement, InlineLevelSmartTag,
+                InlineLevelStructuredDocumentTag, InsertedRunContent, MatrixObject,
+                MoveDestinationLocationContainerEnd, MoveDestinationLocationContainerStart,
+                MoveDestinationRunContent, MoveSourceLocationContainerEnd,
+                MoveSourceLocationContainerStart, MoveSourceRunContent, Nary, OfficeMathParagraph,
+                PreSubSuperscriptObject, RangePermissionEnd, RangePermissionStart, Run, SimpleField,
+                SubSuperscriptObject,
             ]
         )
     }
@@ -9353,7 +9349,93 @@ impl officekit_markup_base::Read for OfficeMathContent {
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
-        read_office_math_content_1(item)
+        match item.name() {
+            Some((NS_M, "acc")) => Self::Accent(item.read()),
+            Some((NS_M, "eqArr")) => Self::ArrayObject(Box::new(item.read())),
+            Some((NS_M, "bar")) => Self::Bar(item.read()),
+            Some((NS_W, "bookmarkEnd")) => Self::BookmarkEnd(Box::new(item.read())),
+            Some((NS_W, "bookmarkStart")) => Self::BookmarkStart(Box::new(item.read())),
+            Some((NS_M, "borderBox")) => Self::BorderBoxObject(item.read()),
+            Some((NS_M, "box")) => Self::BoxObject(item.read()),
+            Some((NS_W, "commentRangeEnd")) => Self::CommentAnchorRangeEnd(Box::new(item.read())),
+            Some((NS_W, "commentRangeStart")) => {
+                Self::CommentAnchorRangeStart(Box::new(item.read()))
+            }
+            Some((NS_W14, "conflictDel")) => Self::ConflictDelRunTrackChange(Box::new(item.read())),
+            Some((NS_W14, "conflictIns")) => Self::ConflictInsRunTrackChange(Box::new(item.read())),
+            Some((NS_W, "customXmlDelRangeEnd")) => Self::CustomXMLMarkupDeletionEnd(item.read()),
+            Some((NS_W, "customXmlDelRangeStart")) => {
+                Self::CustomXMLMarkupDeletionStart(Box::new(item.read()))
+            }
+            Some((NS_W, "customXmlInsRangeEnd")) => Self::CustomXMLMarkupInsertionEnd(item.read()),
+            Some((NS_W, "customXmlInsRangeStart")) => {
+                Self::CustomXMLMarkupInsertionStart(Box::new(item.read()))
+            }
+            Some((NS_W, "customXmlMoveFromRangeEnd")) => {
+                Self::CustomXMLMarkupMoveSourceEnd(item.read())
+            }
+            Some((NS_W, "customXmlMoveFromRangeStart")) => {
+                Self::CustomXMLMarkupMoveSourceStart(Box::new(item.read()))
+            }
+            Some((NS_W14, "customXmlConflictDelRangeEnd")) => {
+                Self::CustomXmlConflictDelRangeEnd(item.read())
+            }
+            Some((NS_W14, "customXmlConflictDelRangeStart")) => {
+                Self::CustomXmlConflictDelRangeStart(Box::new(item.read()))
+            }
+            Some((NS_W14, "customXmlConflictInsRangeEnd")) => {
+                Self::CustomXmlConflictInsRangeEnd(item.read())
+            }
+            Some((NS_W14, "customXmlConflictInsRangeStart")) => {
+                Self::CustomXmlConflictInsRangeStart(Box::new(item.read()))
+            }
+            Some((NS_W, "customXmlMoveToRangeEnd")) => Self::CustomXmlMoveToRangeEnd(item.read()),
+            Some((NS_W, "customXmlMoveToRangeStart")) => {
+                Self::CustomXmlMoveToRangeStart(Box::new(item.read()))
+            }
+            Some((NS_W, "del")) => Self::DeletedRunContent(Box::new(item.read())),
+            Some((NS_M, "d")) => Self::DelimiterObject(Box::new(item.read())),
+            Some((NS_M, "f")) => Self::FractionObject(item.read()),
+            Some((NS_M, "func")) => Self::FunctionApplyObject(item.read()),
+            Some((NS_M, "groupChr")) => Self::GroupCharacterObject(item.read()),
+            Some((NS_W, "hyperlink")) => Self::Hyperlink(Box::new(item.read())),
+            Some((NS_W, "customXml")) => Self::InlineLevelCustomXMLElement(Box::new(item.read())),
+            Some((NS_W, "smartTag")) => Self::InlineLevelSmartTag(Box::new(item.read())),
+            Some((NS_W, "sdt")) => Self::InlineLevelStructuredDocumentTag(Box::new(item.read())),
+            Some((NS_W, "ins")) => Self::InsertedRunContent(Box::new(item.read())),
+            Some((NS_M, "limLow")) => Self::LowerLimitObject(item.read()),
+            Some((NS_M, "m")) => Self::MatrixObject(Box::new(item.read())),
+            Some((NS_W, "moveToRangeEnd")) => {
+                Self::MoveDestinationLocationContainerEnd(Box::new(item.read()))
+            }
+            Some((NS_W, "moveToRangeStart")) => {
+                Self::MoveDestinationLocationContainerStart(Box::new(item.read()))
+            }
+            Some((NS_W, "moveTo")) => Self::MoveDestinationRunContent(Box::new(item.read())),
+            Some((NS_W, "moveFromRangeEnd")) => {
+                Self::MoveSourceLocationContainerEnd(Box::new(item.read()))
+            }
+            Some((NS_W, "moveFromRangeStart")) => {
+                Self::MoveSourceLocationContainerStart(Box::new(item.read()))
+            }
+            Some((NS_W, "moveFrom")) => Self::MoveSourceRunContent(Box::new(item.read())),
+            Some((NS_M, "nary")) => Self::Nary(Box::new(item.read())),
+            Some((NS_M, "oMath")) => Self::OfficeMath(item.read()),
+            Some((NS_M, "oMathPara")) => Self::OfficeMathParagraph(Box::new(item.read())),
+            Some((NS_M, "phant")) => Self::PhantomObject(item.read()),
+            Some((NS_M, "sPre")) => Self::PreSubSuperscriptObject(Box::new(item.read())),
+            Some((NS_W, "proofErr")) => Self::ProofingErrorAnchor(item.read()),
+            Some((NS_M, "rad")) => Self::RadicalObject(item.read()),
+            Some((NS_W, "permEnd")) => Self::RangePermissionEnd(Box::new(item.read())),
+            Some((NS_W, "permStart")) => Self::RangePermissionStart(Box::new(item.read())),
+            Some((NS_M, "r")) => Self::Run(Box::new(item.read())),
+            Some((NS_W, "fldSimple")) => Self::SimpleField(Box::new(item.read())),
+            Some((NS_M, "sSubSup")) => Self::SubSuperscriptObject(Box::new(item.read())),
+            Some((NS_M, "sSub")) => Self::SubscriptObject(item.read()),
+            Some((NS_M, "sSup")) => Self::SuperscriptObject(item.read()),
+            Some((NS_M, "limUpp")) => Self::UpperLimitObject(item.read()),
+            _ => Self::Other(Box::new(item.into_node())),
+        }
     }
 }
 
@@ -9423,7 +9505,7 @@ impl officekit_markup_base::Write for OfficeMathContent {
 
 impl<X: UserData> From<AccentWith<X>> for OfficeMathContentWith<X> {
     fn from(arm: AccentWith<X>) -> Self {
-        Self::Accent(Box::new(arm))
+        Self::Accent(arm)
     }
 }
 
@@ -9435,7 +9517,7 @@ impl<X: UserData> From<ArrayObjectWith<X>> for OfficeMathContentWith<X> {
 
 impl<X: UserData> From<BarWith<X>> for OfficeMathContentWith<X> {
     fn from(arm: BarWith<X>) -> Self {
-        Self::Bar(Box::new(arm))
+        Self::Bar(arm)
     }
 }
 
@@ -9453,13 +9535,13 @@ impl<X: UserData> From<super::wordprocessing::BookmarkStartWith<X>> for OfficeMa
 
 impl<X: UserData> From<BorderBoxObjectWith<X>> for OfficeMathContentWith<X> {
     fn from(arm: BorderBoxObjectWith<X>) -> Self {
-        Self::BorderBoxObject(Box::new(arm))
+        Self::BorderBoxObject(arm)
     }
 }
 
 impl<X: UserData> From<BoxObjectWith<X>> for OfficeMathContentWith<X> {
     fn from(arm: BoxObjectWith<X>) -> Self {
-        Self::BoxObject(Box::new(arm))
+        Self::BoxObject(arm)
     }
 }
 
@@ -9499,7 +9581,7 @@ impl<X: UserData> From<super::wordprocessing::CustomXMLMarkupDeletionEndWith<X>>
     for OfficeMathContentWith<X>
 {
     fn from(arm: super::wordprocessing::CustomXMLMarkupDeletionEndWith<X>) -> Self {
-        Self::CustomXMLMarkupDeletionEnd(Box::new(arm))
+        Self::CustomXMLMarkupDeletionEnd(arm)
     }
 }
 
@@ -9515,7 +9597,7 @@ impl<X: UserData> From<super::wordprocessing::CustomXMLMarkupInsertionEndWith<X>
     for OfficeMathContentWith<X>
 {
     fn from(arm: super::wordprocessing::CustomXMLMarkupInsertionEndWith<X>) -> Self {
-        Self::CustomXMLMarkupInsertionEnd(Box::new(arm))
+        Self::CustomXMLMarkupInsertionEnd(arm)
     }
 }
 
@@ -9531,7 +9613,7 @@ impl<X: UserData> From<super::wordprocessing::CustomXMLMarkupMoveSourceEndWith<X
     for OfficeMathContentWith<X>
 {
     fn from(arm: super::wordprocessing::CustomXMLMarkupMoveSourceEndWith<X>) -> Self {
-        Self::CustomXMLMarkupMoveSourceEnd(Box::new(arm))
+        Self::CustomXMLMarkupMoveSourceEnd(arm)
     }
 }
 
@@ -9547,7 +9629,7 @@ impl<X: UserData> From<super::office_word_2010_wordml::CustomXmlConflictDelRange
     for OfficeMathContentWith<X>
 {
     fn from(arm: super::office_word_2010_wordml::CustomXmlConflictDelRangeEndWith<X>) -> Self {
-        Self::CustomXmlConflictDelRangeEnd(Box::new(arm))
+        Self::CustomXmlConflictDelRangeEnd(arm)
     }
 }
 
@@ -9563,7 +9645,7 @@ impl<X: UserData> From<super::office_word_2010_wordml::CustomXmlConflictInsRange
     for OfficeMathContentWith<X>
 {
     fn from(arm: super::office_word_2010_wordml::CustomXmlConflictInsRangeEndWith<X>) -> Self {
-        Self::CustomXmlConflictInsRangeEnd(Box::new(arm))
+        Self::CustomXmlConflictInsRangeEnd(arm)
     }
 }
 
@@ -9579,7 +9661,7 @@ impl<X: UserData> From<super::wordprocessing::CustomXmlMoveToRangeEndWith<X>>
     for OfficeMathContentWith<X>
 {
     fn from(arm: super::wordprocessing::CustomXmlMoveToRangeEndWith<X>) -> Self {
-        Self::CustomXmlMoveToRangeEnd(Box::new(arm))
+        Self::CustomXmlMoveToRangeEnd(arm)
     }
 }
 
@@ -9607,19 +9689,19 @@ impl<X: UserData> From<DelimiterObjectWith<X>> for OfficeMathContentWith<X> {
 
 impl<X: UserData> From<FractionObjectWith<X>> for OfficeMathContentWith<X> {
     fn from(arm: FractionObjectWith<X>) -> Self {
-        Self::FractionObject(Box::new(arm))
+        Self::FractionObject(arm)
     }
 }
 
 impl<X: UserData> From<FunctionApplyObjectWith<X>> for OfficeMathContentWith<X> {
     fn from(arm: FunctionApplyObjectWith<X>) -> Self {
-        Self::FunctionApplyObject(Box::new(arm))
+        Self::FunctionApplyObject(arm)
     }
 }
 
 impl<X: UserData> From<GroupCharacterObjectWith<X>> for OfficeMathContentWith<X> {
     fn from(arm: GroupCharacterObjectWith<X>) -> Self {
-        Self::GroupCharacterObject(Box::new(arm))
+        Self::GroupCharacterObject(arm)
     }
 }
 
@@ -9663,7 +9745,7 @@ impl<X: UserData> From<super::wordprocessing::InsertedRunContentWith<X>>
 
 impl<X: UserData> From<LowerLimitObjectWith<X>> for OfficeMathContentWith<X> {
     fn from(arm: LowerLimitObjectWith<X>) -> Self {
-        Self::LowerLimitObject(Box::new(arm))
+        Self::LowerLimitObject(arm)
     }
 }
 
@@ -9729,7 +9811,7 @@ impl<X: UserData> From<NaryWith<X>> for OfficeMathContentWith<X> {
 
 impl<X: UserData> From<OfficeMathWith<X>> for OfficeMathContentWith<X> {
     fn from(arm: OfficeMathWith<X>) -> Self {
-        Self::OfficeMath(Box::new(arm))
+        Self::OfficeMath(arm)
     }
 }
 
@@ -9741,7 +9823,7 @@ impl<X: UserData> From<OfficeMathParagraphWith<X>> for OfficeMathContentWith<X> 
 
 impl<X: UserData> From<PhantomObjectWith<X>> for OfficeMathContentWith<X> {
     fn from(arm: PhantomObjectWith<X>) -> Self {
-        Self::PhantomObject(Box::new(arm))
+        Self::PhantomObject(arm)
     }
 }
 
@@ -9755,13 +9837,13 @@ impl<X: UserData> From<super::wordprocessing::ProofingErrorAnchorWith<X>>
     for OfficeMathContentWith<X>
 {
     fn from(arm: super::wordprocessing::ProofingErrorAnchorWith<X>) -> Self {
-        Self::ProofingErrorAnchor(Box::new(arm))
+        Self::ProofingErrorAnchor(arm)
     }
 }
 
 impl<X: UserData> From<RadicalObjectWith<X>> for OfficeMathContentWith<X> {
     fn from(arm: RadicalObjectWith<X>) -> Self {
-        Self::RadicalObject(Box::new(arm))
+        Self::RadicalObject(arm)
     }
 }
 
@@ -9801,19 +9883,19 @@ impl<X: UserData> From<SubSuperscriptObjectWith<X>> for OfficeMathContentWith<X>
 
 impl<X: UserData> From<SubscriptObjectWith<X>> for OfficeMathContentWith<X> {
     fn from(arm: SubscriptObjectWith<X>) -> Self {
-        Self::SubscriptObject(Box::new(arm))
+        Self::SubscriptObject(arm)
     }
 }
 
 impl<X: UserData> From<SuperscriptObjectWith<X>> for OfficeMathContentWith<X> {
     fn from(arm: SuperscriptObjectWith<X>) -> Self {
-        Self::SuperscriptObject(Box::new(arm))
+        Self::SuperscriptObject(arm)
     }
 }
 
 impl<X: UserData> From<UpperLimitObjectWith<X>> for OfficeMathContentWith<X> {
     fn from(arm: UpperLimitObjectWith<X>) -> Self {
-        Self::UpperLimitObject(Box::new(arm))
+        Self::UpperLimitObject(arm)
     }
 }
 
@@ -11001,22 +11083,91 @@ impl<X: UserData> RunContentWith<X> {
     where
         Y: UserData,
     {
-        officekit_markup_base::into_user_data_match!(self, RunContentWith;
-            plain [
-            ]
-            boxed [
-                AbsolutePositionTabCharacter, Break, CarriageReturn, CommentContentReferenceMark,
-                CommentInformationBlock, ComplexFieldCharacter, ContentPart,
-                ContinuationSeparatorMark, DateBlockLongDayFormat, DateBlockLongMonthFormat,
-                DateBlockLongYearFormat, DateBlockShortDayFormat, DateBlockShortMonthFormat,
-                DateBlockShortYearFormat, DeletedFieldCode, DeletedText, DrawingMLObject,
-                EmbeddedObject, EndnoteReference, EndnoteReferenceMark, FieldCode,
-                FootnoteEndnoteSeparatorMark, FootnoteReference, FootnoteReferenceMark,
-                NonBreakingHyphenCharacter, OptionalHyphenCharacter, PageNumberBlock, PhoneticGuide,
-                PositionOfLastCalculatedPageBreak, SymbolCharacter, TabCharacter, Text, VMLObject,
-                WordprocessingText,
-            ]
-        )
+        match self {
+            Self::AbsolutePositionTabCharacter(node) => {
+                RunContentWith::AbsolutePositionTabCharacter(Box::new((*node).into_user_data()))
+            }
+            Self::Break(node) => RunContentWith::Break(Box::new((*node).into_user_data())),
+            Self::CarriageReturn(node) => RunContentWith::CarriageReturn(node.into_user_data()),
+            Self::CommentContentReferenceMark(node) => {
+                RunContentWith::CommentContentReferenceMark(node.into_user_data())
+            }
+            Self::CommentInformationBlock(node) => {
+                RunContentWith::CommentInformationBlock(node.into_user_data())
+            }
+            Self::ComplexFieldCharacter(node) => {
+                RunContentWith::ComplexFieldCharacter(Box::new((*node).into_user_data()))
+            }
+            Self::ContentPart(node) => RunContentWith::ContentPart(node.into_user_data()),
+            Self::ContinuationSeparatorMark(node) => {
+                RunContentWith::ContinuationSeparatorMark(node.into_user_data())
+            }
+            Self::DateBlockLongDayFormat(node) => {
+                RunContentWith::DateBlockLongDayFormat(node.into_user_data())
+            }
+            Self::DateBlockLongMonthFormat(node) => {
+                RunContentWith::DateBlockLongMonthFormat(node.into_user_data())
+            }
+            Self::DateBlockLongYearFormat(node) => {
+                RunContentWith::DateBlockLongYearFormat(node.into_user_data())
+            }
+            Self::DateBlockShortDayFormat(node) => {
+                RunContentWith::DateBlockShortDayFormat(node.into_user_data())
+            }
+            Self::DateBlockShortMonthFormat(node) => {
+                RunContentWith::DateBlockShortMonthFormat(node.into_user_data())
+            }
+            Self::DateBlockShortYearFormat(node) => {
+                RunContentWith::DateBlockShortYearFormat(node.into_user_data())
+            }
+            Self::DeletedFieldCode(node) => {
+                RunContentWith::DeletedFieldCode(Box::new((*node).into_user_data()))
+            }
+            Self::DeletedText(node) => {
+                RunContentWith::DeletedText(Box::new((*node).into_user_data()))
+            }
+            Self::DrawingMLObject(node) => RunContentWith::DrawingMLObject(node.into_user_data()),
+            Self::EmbeddedObject(node) => {
+                RunContentWith::EmbeddedObject(Box::new((*node).into_user_data()))
+            }
+            Self::EndnoteReference(node) => {
+                RunContentWith::EndnoteReference(Box::new((*node).into_user_data()))
+            }
+            Self::EndnoteReferenceMark(node) => {
+                RunContentWith::EndnoteReferenceMark(node.into_user_data())
+            }
+            Self::FieldCode(node) => RunContentWith::FieldCode(Box::new((*node).into_user_data())),
+            Self::FootnoteEndnoteSeparatorMark(node) => {
+                RunContentWith::FootnoteEndnoteSeparatorMark(node.into_user_data())
+            }
+            Self::FootnoteReference(node) => {
+                RunContentWith::FootnoteReference(Box::new((*node).into_user_data()))
+            }
+            Self::FootnoteReferenceMark(node) => {
+                RunContentWith::FootnoteReferenceMark(node.into_user_data())
+            }
+            Self::NonBreakingHyphenCharacter(node) => {
+                RunContentWith::NonBreakingHyphenCharacter(node.into_user_data())
+            }
+            Self::OptionalHyphenCharacter(node) => {
+                RunContentWith::OptionalHyphenCharacter(node.into_user_data())
+            }
+            Self::Other(node) => RunContentWith::Other(node),
+            Self::PageNumberBlock(node) => RunContentWith::PageNumberBlock(node.into_user_data()),
+            Self::PhoneticGuide(node) => RunContentWith::PhoneticGuide(node.into_user_data()),
+            Self::PositionOfLastCalculatedPageBreak(node) => {
+                RunContentWith::PositionOfLastCalculatedPageBreak(node.into_user_data())
+            }
+            Self::SymbolCharacter(node) => {
+                RunContentWith::SymbolCharacter(Box::new((*node).into_user_data()))
+            }
+            Self::TabCharacter(node) => RunContentWith::TabCharacter(node.into_user_data()),
+            Self::Text(node) => RunContentWith::Text(Box::new((*node).into_user_data())),
+            Self::VMLObject(node) => RunContentWith::VMLObject(Box::new((*node).into_user_data())),
+            Self::WordprocessingText(node) => {
+                RunContentWith::WordprocessingText(Box::new((*node).into_user_data()))
+            }
+        }
     }
 }
 
@@ -11029,43 +11180,37 @@ impl officekit_markup_base::Read for RunContent {
         match item.name() {
             Some((NS_W, "ptab")) => Self::AbsolutePositionTabCharacter(Box::new(item.read())),
             Some((NS_W, "br")) => Self::Break(Box::new(item.read())),
-            Some((NS_W, "cr")) => Self::CarriageReturn(Box::new(item.read())),
-            Some((NS_W, "commentReference")) => {
-                Self::CommentContentReferenceMark(Box::new(item.read()))
-            }
-            Some((NS_W, "annotationRef")) => Self::CommentInformationBlock(Box::new(item.read())),
+            Some((NS_W, "cr")) => Self::CarriageReturn(item.read()),
+            Some((NS_W, "commentReference")) => Self::CommentContentReferenceMark(item.read()),
+            Some((NS_W, "annotationRef")) => Self::CommentInformationBlock(item.read()),
             Some((NS_W, "fldChar")) => Self::ComplexFieldCharacter(Box::new(item.read())),
-            Some((NS_W, "contentPart")) => Self::ContentPart(Box::new(item.read())),
-            Some((NS_W, "continuationSeparator")) => {
-                Self::ContinuationSeparatorMark(Box::new(item.read()))
-            }
-            Some((NS_W, "dayLong")) => Self::DateBlockLongDayFormat(Box::new(item.read())),
-            Some((NS_W, "monthLong")) => Self::DateBlockLongMonthFormat(Box::new(item.read())),
-            Some((NS_W, "yearLong")) => Self::DateBlockLongYearFormat(Box::new(item.read())),
-            Some((NS_W, "dayShort")) => Self::DateBlockShortDayFormat(Box::new(item.read())),
-            Some((NS_W, "monthShort")) => Self::DateBlockShortMonthFormat(Box::new(item.read())),
-            Some((NS_W, "yearShort")) => Self::DateBlockShortYearFormat(Box::new(item.read())),
+            Some((NS_W, "contentPart")) => Self::ContentPart(item.read()),
+            Some((NS_W, "continuationSeparator")) => Self::ContinuationSeparatorMark(item.read()),
+            Some((NS_W, "dayLong")) => Self::DateBlockLongDayFormat(item.read()),
+            Some((NS_W, "monthLong")) => Self::DateBlockLongMonthFormat(item.read()),
+            Some((NS_W, "yearLong")) => Self::DateBlockLongYearFormat(item.read()),
+            Some((NS_W, "dayShort")) => Self::DateBlockShortDayFormat(item.read()),
+            Some((NS_W, "monthShort")) => Self::DateBlockShortMonthFormat(item.read()),
+            Some((NS_W, "yearShort")) => Self::DateBlockShortYearFormat(item.read()),
             Some((NS_W, "delInstrText")) => Self::DeletedFieldCode(Box::new(item.read())),
             Some((NS_W, "delText")) => Self::DeletedText(Box::new(item.read())),
-            Some((NS_W, "drawing")) => Self::DrawingMLObject(Box::new(item.read())),
+            Some((NS_W, "drawing")) => Self::DrawingMLObject(item.read()),
             Some((NS_W, "object")) => Self::EmbeddedObject(Box::new(item.read())),
             Some((NS_W, "endnoteReference")) => Self::EndnoteReference(Box::new(item.read())),
-            Some((NS_W, "endnoteRef")) => Self::EndnoteReferenceMark(Box::new(item.read())),
+            Some((NS_W, "endnoteRef")) => Self::EndnoteReferenceMark(item.read()),
             Some((NS_W, "instrText")) => Self::FieldCode(Box::new(item.read())),
-            Some((NS_W, "separator")) => Self::FootnoteEndnoteSeparatorMark(Box::new(item.read())),
+            Some((NS_W, "separator")) => Self::FootnoteEndnoteSeparatorMark(item.read()),
             Some((NS_W, "footnoteReference")) => Self::FootnoteReference(Box::new(item.read())),
-            Some((NS_W, "footnoteRef")) => Self::FootnoteReferenceMark(Box::new(item.read())),
-            Some((NS_W, "noBreakHyphen")) => {
-                Self::NonBreakingHyphenCharacter(Box::new(item.read()))
-            }
-            Some((NS_W, "softHyphen")) => Self::OptionalHyphenCharacter(Box::new(item.read())),
-            Some((NS_W, "pgNum")) => Self::PageNumberBlock(Box::new(item.read())),
-            Some((NS_W, "ruby")) => Self::PhoneticGuide(Box::new(item.read())),
+            Some((NS_W, "footnoteRef")) => Self::FootnoteReferenceMark(item.read()),
+            Some((NS_W, "noBreakHyphen")) => Self::NonBreakingHyphenCharacter(item.read()),
+            Some((NS_W, "softHyphen")) => Self::OptionalHyphenCharacter(item.read()),
+            Some((NS_W, "pgNum")) => Self::PageNumberBlock(item.read()),
+            Some((NS_W, "ruby")) => Self::PhoneticGuide(item.read()),
             Some((NS_W, "lastRenderedPageBreak")) => {
-                Self::PositionOfLastCalculatedPageBreak(Box::new(item.read()))
+                Self::PositionOfLastCalculatedPageBreak(item.read())
             }
             Some((NS_W, "sym")) => Self::SymbolCharacter(Box::new(item.read())),
-            Some((NS_W, "tab")) => Self::TabCharacter(Box::new(item.read())),
+            Some((NS_W, "tab")) => Self::TabCharacter(item.read()),
             Some((NS_M, "t")) => Self::Text(Box::new(item.read())),
             Some((NS_W, "pict")) => Self::VMLObject(Box::new(item.read())),
             Some((NS_W, "t")) => Self::WordprocessingText(Box::new(item.read())),
@@ -11132,7 +11277,7 @@ impl<X: UserData> From<super::wordprocessing::BreakWith<X>> for RunContentWith<X
 
 impl<X: UserData> From<super::wordprocessing::CarriageReturnWith<X>> for RunContentWith<X> {
     fn from(arm: super::wordprocessing::CarriageReturnWith<X>) -> Self {
-        Self::CarriageReturn(Box::new(arm))
+        Self::CarriageReturn(arm)
     }
 }
 
@@ -11140,7 +11285,7 @@ impl<X: UserData> From<super::wordprocessing::CommentContentReferenceMarkWith<X>
     for RunContentWith<X>
 {
     fn from(arm: super::wordprocessing::CommentContentReferenceMarkWith<X>) -> Self {
-        Self::CommentContentReferenceMark(Box::new(arm))
+        Self::CommentContentReferenceMark(arm)
     }
 }
 
@@ -11148,7 +11293,7 @@ impl<X: UserData> From<super::wordprocessing::CommentInformationBlockWith<X>>
     for RunContentWith<X>
 {
     fn from(arm: super::wordprocessing::CommentInformationBlockWith<X>) -> Self {
-        Self::CommentInformationBlock(Box::new(arm))
+        Self::CommentInformationBlock(arm)
     }
 }
 
@@ -11160,7 +11305,7 @@ impl<X: UserData> From<super::wordprocessing::ComplexFieldCharacterWith<X>> for 
 
 impl<X: UserData> From<super::wordprocessing::ContentPartWith<X>> for RunContentWith<X> {
     fn from(arm: super::wordprocessing::ContentPartWith<X>) -> Self {
-        Self::ContentPart(Box::new(arm))
+        Self::ContentPart(arm)
     }
 }
 
@@ -11168,13 +11313,13 @@ impl<X: UserData> From<super::wordprocessing::ContinuationSeparatorMarkWith<X>>
     for RunContentWith<X>
 {
     fn from(arm: super::wordprocessing::ContinuationSeparatorMarkWith<X>) -> Self {
-        Self::ContinuationSeparatorMark(Box::new(arm))
+        Self::ContinuationSeparatorMark(arm)
     }
 }
 
 impl<X: UserData> From<super::wordprocessing::DateBlockLongDayFormatWith<X>> for RunContentWith<X> {
     fn from(arm: super::wordprocessing::DateBlockLongDayFormatWith<X>) -> Self {
-        Self::DateBlockLongDayFormat(Box::new(arm))
+        Self::DateBlockLongDayFormat(arm)
     }
 }
 
@@ -11182,7 +11327,7 @@ impl<X: UserData> From<super::wordprocessing::DateBlockLongMonthFormatWith<X>>
     for RunContentWith<X>
 {
     fn from(arm: super::wordprocessing::DateBlockLongMonthFormatWith<X>) -> Self {
-        Self::DateBlockLongMonthFormat(Box::new(arm))
+        Self::DateBlockLongMonthFormat(arm)
     }
 }
 
@@ -11190,7 +11335,7 @@ impl<X: UserData> From<super::wordprocessing::DateBlockLongYearFormatWith<X>>
     for RunContentWith<X>
 {
     fn from(arm: super::wordprocessing::DateBlockLongYearFormatWith<X>) -> Self {
-        Self::DateBlockLongYearFormat(Box::new(arm))
+        Self::DateBlockLongYearFormat(arm)
     }
 }
 
@@ -11198,7 +11343,7 @@ impl<X: UserData> From<super::wordprocessing::DateBlockShortDayFormatWith<X>>
     for RunContentWith<X>
 {
     fn from(arm: super::wordprocessing::DateBlockShortDayFormatWith<X>) -> Self {
-        Self::DateBlockShortDayFormat(Box::new(arm))
+        Self::DateBlockShortDayFormat(arm)
     }
 }
 
@@ -11206,7 +11351,7 @@ impl<X: UserData> From<super::wordprocessing::DateBlockShortMonthFormatWith<X>>
     for RunContentWith<X>
 {
     fn from(arm: super::wordprocessing::DateBlockShortMonthFormatWith<X>) -> Self {
-        Self::DateBlockShortMonthFormat(Box::new(arm))
+        Self::DateBlockShortMonthFormat(arm)
     }
 }
 
@@ -11214,7 +11359,7 @@ impl<X: UserData> From<super::wordprocessing::DateBlockShortYearFormatWith<X>>
     for RunContentWith<X>
 {
     fn from(arm: super::wordprocessing::DateBlockShortYearFormatWith<X>) -> Self {
-        Self::DateBlockShortYearFormat(Box::new(arm))
+        Self::DateBlockShortYearFormat(arm)
     }
 }
 
@@ -11232,7 +11377,7 @@ impl<X: UserData> From<super::wordprocessing::DeletedTextWith<X>> for RunContent
 
 impl<X: UserData> From<super::wordprocessing::DrawingMLObjectWith<X>> for RunContentWith<X> {
     fn from(arm: super::wordprocessing::DrawingMLObjectWith<X>) -> Self {
-        Self::DrawingMLObject(Box::new(arm))
+        Self::DrawingMLObject(arm)
     }
 }
 
@@ -11250,7 +11395,7 @@ impl<X: UserData> From<super::wordprocessing::EndnoteReferenceWith<X>> for RunCo
 
 impl<X: UserData> From<super::wordprocessing::EndnoteReferenceMarkWith<X>> for RunContentWith<X> {
     fn from(arm: super::wordprocessing::EndnoteReferenceMarkWith<X>) -> Self {
-        Self::EndnoteReferenceMark(Box::new(arm))
+        Self::EndnoteReferenceMark(arm)
     }
 }
 
@@ -11264,7 +11409,7 @@ impl<X: UserData> From<super::wordprocessing::FootnoteEndnoteSeparatorMarkWith<X
     for RunContentWith<X>
 {
     fn from(arm: super::wordprocessing::FootnoteEndnoteSeparatorMarkWith<X>) -> Self {
-        Self::FootnoteEndnoteSeparatorMark(Box::new(arm))
+        Self::FootnoteEndnoteSeparatorMark(arm)
     }
 }
 
@@ -11276,7 +11421,7 @@ impl<X: UserData> From<super::wordprocessing::FootnoteReferenceWith<X>> for RunC
 
 impl<X: UserData> From<super::wordprocessing::FootnoteReferenceMarkWith<X>> for RunContentWith<X> {
     fn from(arm: super::wordprocessing::FootnoteReferenceMarkWith<X>) -> Self {
-        Self::FootnoteReferenceMark(Box::new(arm))
+        Self::FootnoteReferenceMark(arm)
     }
 }
 
@@ -11284,7 +11429,7 @@ impl<X: UserData> From<super::wordprocessing::NonBreakingHyphenCharacterWith<X>>
     for RunContentWith<X>
 {
     fn from(arm: super::wordprocessing::NonBreakingHyphenCharacterWith<X>) -> Self {
-        Self::NonBreakingHyphenCharacter(Box::new(arm))
+        Self::NonBreakingHyphenCharacter(arm)
     }
 }
 
@@ -11292,19 +11437,19 @@ impl<X: UserData> From<super::wordprocessing::OptionalHyphenCharacterWith<X>>
     for RunContentWith<X>
 {
     fn from(arm: super::wordprocessing::OptionalHyphenCharacterWith<X>) -> Self {
-        Self::OptionalHyphenCharacter(Box::new(arm))
+        Self::OptionalHyphenCharacter(arm)
     }
 }
 
 impl<X: UserData> From<super::wordprocessing::PageNumberBlockWith<X>> for RunContentWith<X> {
     fn from(arm: super::wordprocessing::PageNumberBlockWith<X>) -> Self {
-        Self::PageNumberBlock(Box::new(arm))
+        Self::PageNumberBlock(arm)
     }
 }
 
 impl<X: UserData> From<super::wordprocessing::PhoneticGuideWith<X>> for RunContentWith<X> {
     fn from(arm: super::wordprocessing::PhoneticGuideWith<X>) -> Self {
-        Self::PhoneticGuide(Box::new(arm))
+        Self::PhoneticGuide(arm)
     }
 }
 
@@ -11312,7 +11457,7 @@ impl<X: UserData> From<super::wordprocessing::PositionOfLastCalculatedPageBreakW
     for RunContentWith<X>
 {
     fn from(arm: super::wordprocessing::PositionOfLastCalculatedPageBreakWith<X>) -> Self {
-        Self::PositionOfLastCalculatedPageBreak(Box::new(arm))
+        Self::PositionOfLastCalculatedPageBreak(arm)
     }
 }
 
@@ -11324,7 +11469,7 @@ impl<X: UserData> From<super::wordprocessing::SymbolCharacterWith<X>> for RunCon
 
 impl<X: UserData> From<super::wordprocessing::TabCharacterWith<X>> for RunContentWith<X> {
     fn from(arm: super::wordprocessing::TabCharacterWith<X>) -> Self {
-        Self::TabCharacter(Box::new(arm))
+        Self::TabCharacter(arm)
     }
 }
 
@@ -11647,14 +11792,10 @@ impl<X: UserData> RunPropertiesContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::NormalText(node) => {
-                RunPropertiesContentWith::NormalText(Box::new((*node).into_user_data()))
-            }
+            Self::NormalText(node) => RunPropertiesContentWith::NormalText(node.into_user_data()),
             Self::Other(node) => RunPropertiesContentWith::Other(node),
-            Self::Script(node) => {
-                RunPropertiesContentWith::Script(Box::new((*node).into_user_data()))
-            }
-            Self::Sty(node) => RunPropertiesContentWith::Sty(Box::new((*node).into_user_data())),
+            Self::Script(node) => RunPropertiesContentWith::Script(node.into_user_data()),
+            Self::Sty(node) => RunPropertiesContentWith::Sty(node.into_user_data()),
         }
     }
 }
@@ -11666,9 +11807,9 @@ impl officekit_markup_base::Read for RunPropertiesContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_M, "nor")) => Self::NormalText(Box::new(item.read())),
-            Some((NS_M, "scr")) => Self::Script(Box::new(item.read())),
-            Some((NS_M, "sty")) => Self::Sty(Box::new(item.read())),
+            Some((NS_M, "nor")) => Self::NormalText(item.read()),
+            Some((NS_M, "scr")) => Self::Script(item.read()),
+            Some((NS_M, "sty")) => Self::Sty(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -11687,19 +11828,19 @@ impl officekit_markup_base::Write for RunPropertiesContent {
 
 impl<X: UserData> From<NormalTextWith<X>> for RunPropertiesContentWith<X> {
     fn from(arm: NormalTextWith<X>) -> Self {
-        Self::NormalText(Box::new(arm))
+        Self::NormalText(arm)
     }
 }
 
 impl<X: UserData> From<ScriptWith<X>> for RunPropertiesContentWith<X> {
     fn from(arm: ScriptWith<X>) -> Self {
-        Self::Script(Box::new(arm))
+        Self::Script(arm)
     }
 }
 
 impl<X: UserData> From<StyWith<X>> for RunPropertiesContentWith<X> {
     fn from(arm: StyWith<X>) -> Self {
-        Self::Sty(Box::new(arm))
+        Self::Sty(arm)
     }
 }
 
@@ -13238,120 +13379,6 @@ impl officekit_markup_base::Write for WrapRight {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::wrap_right(self, writer.scope());
         writer.known(element);
-    }
-}
-
-fn read_office_math_content_1(item: officekit_markup_base::Item<'_>) -> OfficeMathContent {
-    match item.name() {
-        Some((NS_M, "acc")) => OfficeMathContent::Accent(Box::new(item.read())),
-        Some((NS_M, "eqArr")) => OfficeMathContent::ArrayObject(Box::new(item.read())),
-        Some((NS_M, "bar")) => OfficeMathContent::Bar(Box::new(item.read())),
-        Some((NS_W, "bookmarkEnd")) => OfficeMathContent::BookmarkEnd(Box::new(item.read())),
-        Some((NS_W, "bookmarkStart")) => OfficeMathContent::BookmarkStart(Box::new(item.read())),
-        Some((NS_M, "borderBox")) => OfficeMathContent::BorderBoxObject(Box::new(item.read())),
-        Some((NS_M, "box")) => OfficeMathContent::BoxObject(Box::new(item.read())),
-        Some((NS_W, "commentRangeEnd")) => {
-            OfficeMathContent::CommentAnchorRangeEnd(Box::new(item.read()))
-        }
-        Some((NS_W, "commentRangeStart")) => {
-            OfficeMathContent::CommentAnchorRangeStart(Box::new(item.read()))
-        }
-        Some((NS_W14, "conflictDel")) => {
-            OfficeMathContent::ConflictDelRunTrackChange(Box::new(item.read()))
-        }
-        Some((NS_W14, "conflictIns")) => {
-            OfficeMathContent::ConflictInsRunTrackChange(Box::new(item.read()))
-        }
-        Some((NS_W, "customXmlDelRangeEnd")) => {
-            OfficeMathContent::CustomXMLMarkupDeletionEnd(Box::new(item.read()))
-        }
-        Some((NS_W, "customXmlDelRangeStart")) => {
-            OfficeMathContent::CustomXMLMarkupDeletionStart(Box::new(item.read()))
-        }
-        Some((NS_W, "customXmlInsRangeEnd")) => {
-            OfficeMathContent::CustomXMLMarkupInsertionEnd(Box::new(item.read()))
-        }
-        Some((NS_W, "customXmlInsRangeStart")) => {
-            OfficeMathContent::CustomXMLMarkupInsertionStart(Box::new(item.read()))
-        }
-        Some((NS_W, "customXmlMoveFromRangeEnd")) => {
-            OfficeMathContent::CustomXMLMarkupMoveSourceEnd(Box::new(item.read()))
-        }
-        Some((NS_W, "customXmlMoveFromRangeStart")) => {
-            OfficeMathContent::CustomXMLMarkupMoveSourceStart(Box::new(item.read()))
-        }
-        Some((NS_W14, "customXmlConflictDelRangeEnd")) => {
-            OfficeMathContent::CustomXmlConflictDelRangeEnd(Box::new(item.read()))
-        }
-        Some((NS_W14, "customXmlConflictDelRangeStart")) => {
-            OfficeMathContent::CustomXmlConflictDelRangeStart(Box::new(item.read()))
-        }
-        Some((NS_W14, "customXmlConflictInsRangeEnd")) => {
-            OfficeMathContent::CustomXmlConflictInsRangeEnd(Box::new(item.read()))
-        }
-        Some((NS_W14, "customXmlConflictInsRangeStart")) => {
-            OfficeMathContent::CustomXmlConflictInsRangeStart(Box::new(item.read()))
-        }
-        Some((NS_W, "customXmlMoveToRangeEnd")) => {
-            OfficeMathContent::CustomXmlMoveToRangeEnd(Box::new(item.read()))
-        }
-        Some((NS_W, "customXmlMoveToRangeStart")) => {
-            OfficeMathContent::CustomXmlMoveToRangeStart(Box::new(item.read()))
-        }
-        Some((NS_W, "del")) => OfficeMathContent::DeletedRunContent(Box::new(item.read())),
-        Some((NS_M, "d")) => OfficeMathContent::DelimiterObject(Box::new(item.read())),
-        Some((NS_M, "f")) => OfficeMathContent::FractionObject(Box::new(item.read())),
-        Some((NS_M, "func")) => OfficeMathContent::FunctionApplyObject(Box::new(item.read())),
-        Some((NS_M, "groupChr")) => OfficeMathContent::GroupCharacterObject(Box::new(item.read())),
-        Some((NS_W, "hyperlink")) => OfficeMathContent::Hyperlink(Box::new(item.read())),
-        Some((NS_W, "customXml")) => {
-            OfficeMathContent::InlineLevelCustomXMLElement(Box::new(item.read()))
-        }
-        Some((NS_W, "smartTag")) => OfficeMathContent::InlineLevelSmartTag(Box::new(item.read())),
-        Some((NS_W, "sdt")) => {
-            OfficeMathContent::InlineLevelStructuredDocumentTag(Box::new(item.read()))
-        }
-        Some((NS_W, "ins")) => OfficeMathContent::InsertedRunContent(Box::new(item.read())),
-        Some((NS_M, "limLow")) => OfficeMathContent::LowerLimitObject(Box::new(item.read())),
-        Some((NS_M, "m")) => OfficeMathContent::MatrixObject(Box::new(item.read())),
-        Some((NS_W, "moveToRangeEnd")) => {
-            OfficeMathContent::MoveDestinationLocationContainerEnd(Box::new(item.read()))
-        }
-        Some((NS_W, "moveToRangeStart")) => {
-            OfficeMathContent::MoveDestinationLocationContainerStart(Box::new(item.read()))
-        }
-        Some((NS_W, "moveTo")) => {
-            OfficeMathContent::MoveDestinationRunContent(Box::new(item.read()))
-        }
-        Some((NS_W, "moveFromRangeEnd")) => {
-            OfficeMathContent::MoveSourceLocationContainerEnd(Box::new(item.read()))
-        }
-        Some((NS_W, "moveFromRangeStart")) => {
-            OfficeMathContent::MoveSourceLocationContainerStart(Box::new(item.read()))
-        }
-        _ => read_office_math_content_2(item),
-    }
-}
-
-fn read_office_math_content_2(item: officekit_markup_base::Item<'_>) -> OfficeMathContent {
-    match item.name() {
-        Some((NS_W, "moveFrom")) => OfficeMathContent::MoveSourceRunContent(Box::new(item.read())),
-        Some((NS_M, "nary")) => OfficeMathContent::Nary(Box::new(item.read())),
-        Some((NS_M, "oMath")) => OfficeMathContent::OfficeMath(Box::new(item.read())),
-        Some((NS_M, "oMathPara")) => OfficeMathContent::OfficeMathParagraph(Box::new(item.read())),
-        Some((NS_M, "phant")) => OfficeMathContent::PhantomObject(Box::new(item.read())),
-        Some((NS_M, "sPre")) => OfficeMathContent::PreSubSuperscriptObject(Box::new(item.read())),
-        Some((NS_W, "proofErr")) => OfficeMathContent::ProofingErrorAnchor(Box::new(item.read())),
-        Some((NS_M, "rad")) => OfficeMathContent::RadicalObject(Box::new(item.read())),
-        Some((NS_W, "permEnd")) => OfficeMathContent::RangePermissionEnd(Box::new(item.read())),
-        Some((NS_W, "permStart")) => OfficeMathContent::RangePermissionStart(Box::new(item.read())),
-        Some((NS_M, "r")) => OfficeMathContent::Run(Box::new(item.read())),
-        Some((NS_W, "fldSimple")) => OfficeMathContent::SimpleField(Box::new(item.read())),
-        Some((NS_M, "sSubSup")) => OfficeMathContent::SubSuperscriptObject(Box::new(item.read())),
-        Some((NS_M, "sSub")) => OfficeMathContent::SubscriptObject(Box::new(item.read())),
-        Some((NS_M, "sSup")) => OfficeMathContent::SuperscriptObject(Box::new(item.read())),
-        Some((NS_M, "limUpp")) => OfficeMathContent::UpperLimitObject(Box::new(item.read())),
-        _ => OfficeMathContent::Other(Box::new(item.into_node())),
     }
 }
 

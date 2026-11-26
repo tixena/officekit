@@ -765,11 +765,11 @@ pub struct XfrmMirror {
 pub enum ShowEventRecordListContent {
     NullEvt(Box<super::NullEvt>),
     Other(Box<Node>),
-    PauseEvt(Box<super::PauseEvt>),
-    PlayEvt(Box<super::PlayEvt>),
-    ResumeEvt(Box<super::ResumeEvt>),
+    PauseEvt(super::PauseEvt),
+    PlayEvt(super::PlayEvt),
+    ResumeEvt(super::ResumeEvt),
     SeekEvt(Box<super::SeekEvt>),
-    StopEvt(Box<super::StopEvt>),
+    StopEvt(super::StopEvt),
     TriggerEvt(Box<super::TriggerEvt>),
 }
 

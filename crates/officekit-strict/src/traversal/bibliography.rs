@@ -1573,39 +1573,39 @@ impl super::Transform for bibliography::ContributorsListContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Artist(arm) = self {
-            Self::Artist(Box::new(arm.transform(ctx)))
+            Self::Artist(arm.transform(ctx))
         } else if let Self::Author(arm) = self {
-            Self::Author(Box::new(arm.transform(ctx)))
+            Self::Author(arm.transform(ctx))
         } else if let Self::BookAuthor(arm) = self {
-            Self::BookAuthor(Box::new(arm.transform(ctx)))
+            Self::BookAuthor(arm.transform(ctx))
         } else if let Self::Compiler(arm) = self {
-            Self::Compiler(Box::new(arm.transform(ctx)))
+            Self::Compiler(arm.transform(ctx))
         } else if let Self::Composer(arm) = self {
-            Self::Composer(Box::new(arm.transform(ctx)))
+            Self::Composer(arm.transform(ctx))
         } else if let Self::Conductor(arm) = self {
-            Self::Conductor(Box::new(arm.transform(ctx)))
+            Self::Conductor(arm.transform(ctx))
         } else if let Self::Counsel(arm) = self {
-            Self::Counsel(Box::new(arm.transform(ctx)))
+            Self::Counsel(arm.transform(ctx))
         } else if let Self::Director(arm) = self {
-            Self::Director(Box::new(arm.transform(ctx)))
+            Self::Director(arm.transform(ctx))
         } else if let Self::Editor(arm) = self {
-            Self::Editor(Box::new(arm.transform(ctx)))
+            Self::Editor(arm.transform(ctx))
         } else if let Self::Interviewee(arm) = self {
-            Self::Interviewee(Box::new(arm.transform(ctx)))
+            Self::Interviewee(arm.transform(ctx))
         } else if let Self::Interviewer(arm) = self {
-            Self::Interviewer(Box::new(arm.transform(ctx)))
+            Self::Interviewer(arm.transform(ctx))
         } else if let Self::Inventor(arm) = self {
-            Self::Inventor(Box::new(arm.transform(ctx)))
+            Self::Inventor(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Performer(arm) = self {
-            Self::Performer(Box::new(arm.transform(ctx)))
+            Self::Performer(arm.transform(ctx))
         } else if let Self::ProducerName(arm) = self {
-            Self::ProducerName(Box::new(arm.transform(ctx)))
+            Self::ProducerName(arm.transform(ctx))
         } else if let Self::Translator(arm) = self {
-            Self::Translator(Box::new(arm.transform(ctx)))
+            Self::Translator(arm.transform(ctx))
         } else if let Self::Writer(arm) = self {
-            Self::Writer(Box::new(arm.transform(ctx)))
+            Self::Writer(arm.transform(ctx))
         } else {
             self.clone()
         }
@@ -3581,9 +3581,9 @@ impl super::Transform for bibliography::NameOrCorporateContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::CorporateAuthor(arm) = self {
-            Self::CorporateAuthor(Box::new(arm.transform(ctx)))
+            Self::CorporateAuthor(arm.transform(ctx))
         } else if let Self::NameList(arm) = self {
-            Self::NameList(Box::new(arm.transform(ctx)))
+            Self::NameList(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {
@@ -6454,85 +6454,85 @@ fn transform_source_content_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<bibliography::SourceContent> {
     if let bibliography::SourceContent::AbbreviatedCaseNumber(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::AbbreviatedCaseNumber(node));
     }
     if let bibliography::SourceContent::AlbumTitle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::AlbumTitle(node));
     }
     if let bibliography::SourceContent::BookTitle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::BookTitle(node));
     }
     if let bibliography::SourceContent::BroadcastTitle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::BroadcastTitle(node));
     }
     if let bibliography::SourceContent::Broadcaster(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Broadcaster(node));
     }
     if let bibliography::SourceContent::CaseNumber(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::CaseNumber(node));
     }
     if let bibliography::SourceContent::ChapterNumber(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::ChapterNumber(node));
     }
     if let bibliography::SourceContent::City(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::City(node));
     }
     if let bibliography::SourceContent::Comments(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Comments(node));
     }
     if let bibliography::SourceContent::ConferenceOrProceedingsName(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::ConferenceOrProceedingsName(
             node,
         ));
     }
     if let bibliography::SourceContent::ContributorsList(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::ContributorsList(node));
     }
     if let bibliography::SourceContent::CountryOrRegion(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::CountryOrRegion(node));
     }
     if let bibliography::SourceContent::Court(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Court(node));
     }
     if let bibliography::SourceContent::Day(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Day(node));
     }
     if let bibliography::SourceContent::DayAccessed(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::DayAccessed(node));
     }
     if let bibliography::SourceContent::Department(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Department(node));
     }
     if let bibliography::SourceContent::Distributor(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Distributor(node));
     }
     if let bibliography::SourceContent::EditorEdition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::EditorEdition(node));
     }
     if let bibliography::SourceContent::Guid(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Guid(node));
     }
     if let bibliography::SourceContent::Institution(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Institution(node));
     }
     None
@@ -6543,83 +6543,83 @@ fn transform_source_content_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<bibliography::SourceContent> {
     if let bibliography::SourceContent::InternetSiteTitle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::InternetSiteTitle(node));
     }
     if let bibliography::SourceContent::Issue(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Issue(node));
     }
     if let bibliography::SourceContent::JournalName(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::JournalName(node));
     }
     if let bibliography::SourceContent::LocaleID(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::LocaleID(node));
     }
     if let bibliography::SourceContent::Medium(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Medium(node));
     }
     if let bibliography::SourceContent::Month(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Month(node));
     }
     if let bibliography::SourceContent::MonthAccessed(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::MonthAccessed(node));
     }
     if let bibliography::SourceContent::NumberOfVolumes(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::NumberOfVolumes(node));
     }
     if let bibliography::SourceContent::Pages(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Pages(node));
     }
     if let bibliography::SourceContent::PatentNumber(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::PatentNumber(node));
     }
     if let bibliography::SourceContent::PatentType(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::PatentType(node));
     }
     if let bibliography::SourceContent::PeriodicalTitle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::PeriodicalTitle(node));
     }
     if let bibliography::SourceContent::ProductionCompany(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::ProductionCompany(node));
     }
     if let bibliography::SourceContent::PublicationTitle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::PublicationTitle(node));
     }
     if let bibliography::SourceContent::Publisher(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Publisher(node));
     }
     if let bibliography::SourceContent::RecordingNumber(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::RecordingNumber(node));
     }
     if let bibliography::SourceContent::ReferenceOrder(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::ReferenceOrder(node));
     }
     if let bibliography::SourceContent::Reporter(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Reporter(node));
     }
     if let bibliography::SourceContent::ShortTitle(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::ShortTitle(node));
     }
     if let bibliography::SourceContent::SourceType(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::SourceType(node));
     }
     None
@@ -6630,51 +6630,51 @@ fn transform_source_content_3(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<bibliography::SourceContent> {
     if let bibliography::SourceContent::StandardNumber(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::StandardNumber(node));
     }
     if let bibliography::SourceContent::StateOrProvince(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::StateOrProvince(node));
     }
     if let bibliography::SourceContent::Station(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Station(node));
     }
     if let bibliography::SourceContent::Tag(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Tag(node));
     }
     if let bibliography::SourceContent::Theater(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Theater(node));
     }
     if let bibliography::SourceContent::ThesisType(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::ThesisType(node));
     }
     if let bibliography::SourceContent::Title(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Title(node));
     }
     if let bibliography::SourceContent::Url(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Url(node));
     }
     if let bibliography::SourceContent::Version(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Version(node));
     }
     if let bibliography::SourceContent::Volume(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Volume(node));
     }
     if let bibliography::SourceContent::Year(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Year(node));
     }
     if let bibliography::SourceContent::YearAccessed(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::YearAccessed(node));
     }
     None

@@ -346,71 +346,71 @@ pub enum CustomFilePropertyContentWith<X: UserData> {
     /// The element `vt:array`, a `Array`.
     Array(Box<super::document_properties_variant_types::ArrayWith<X>>),
     /// The element `vt:bstr`, a `BasicString`.
-    BasicString(Box<super::document_properties_variant_types::BasicStringWith<X>>),
+    BasicString(super::document_properties_variant_types::BasicStringWith<X>),
     /// The element `vt:blob`, a `BinaryBlob`.
-    BinaryBlob(Box<super::document_properties_variant_types::BinaryBlobWith<X>>),
+    BinaryBlob(super::document_properties_variant_types::BinaryBlobWith<X>),
     /// The element `vt:oblob`, a `BinaryBlobObject`.
-    BinaryBlobObject(Box<super::document_properties_variant_types::BinaryBlobObjectWith<X>>),
+    BinaryBlobObject(super::document_properties_variant_types::BinaryBlobObjectWith<X>),
     /// The element `vt:storage`, a `BinaryStorage`.
-    BinaryStorage(Box<super::document_properties_variant_types::BinaryStorageWith<X>>),
+    BinaryStorage(super::document_properties_variant_types::BinaryStorageWith<X>),
     /// The element `vt:ostorage`, a `BinaryStorageObject`.
-    BinaryStorageObject(Box<super::document_properties_variant_types::BinaryStorageObjectWith<X>>),
+    BinaryStorageObject(super::document_properties_variant_types::BinaryStorageObjectWith<X>),
     /// The element `vt:stream`, a `BinaryStream`.
-    BinaryStream(Box<super::document_properties_variant_types::BinaryStreamWith<X>>),
+    BinaryStream(super::document_properties_variant_types::BinaryStreamWith<X>),
     /// The element `vt:ostream`, a `BinaryStreamObject`.
-    BinaryStreamObject(Box<super::document_properties_variant_types::BinaryStreamObjectWith<X>>),
+    BinaryStreamObject(super::document_properties_variant_types::BinaryStreamObjectWith<X>),
     /// The element `vt:vstream`, a `BinaryVersionedStream`.
     BinaryVersionedStream(
         Box<super::document_properties_variant_types::BinaryVersionedStreamWith<X>>,
     ),
     /// The element `vt:bool`, a `Boolean`.
-    Boolean(Box<super::document_properties_variant_types::BooleanWith<X>>),
+    Boolean(super::document_properties_variant_types::BooleanWith<X>),
     /// The element `vt:clsid`, a `ClassID`.
-    ClassID(Box<super::document_properties_variant_types::ClassIDWith<X>>),
+    ClassID(super::document_properties_variant_types::ClassIDWith<X>),
     /// The element `vt:cy`, a `Currency`.
-    Currency(Box<super::document_properties_variant_types::CurrencyWith<X>>),
+    Currency(super::document_properties_variant_types::CurrencyWith<X>),
     /// The element `vt:date`, a `DateAndTime`.
-    DateAndTime(Box<super::document_properties_variant_types::DateAndTimeWith<X>>),
+    DateAndTime(super::document_properties_variant_types::DateAndTimeWith<X>),
     /// The element `vt:decimal`, a `Decimal`.
-    Decimal(Box<super::document_properties_variant_types::DecimalWith<X>>),
+    Decimal(super::document_properties_variant_types::DecimalWith<X>),
     /// The element `vt:empty`, a `Empty`.
-    Empty(Box<super::document_properties_variant_types::EmptyWith<X>>),
+    Empty(super::document_properties_variant_types::EmptyWith<X>),
     /// The element `vt:error`, a `ErrorStatusCode`.
-    ErrorStatusCode(Box<super::document_properties_variant_types::ErrorStatusCodeWith<X>>),
+    ErrorStatusCode(super::document_properties_variant_types::ErrorStatusCodeWith<X>),
     /// The element `vt:filetime`, a `FileTime`.
-    FileTime(Box<super::document_properties_variant_types::FileTimeWith<X>>),
+    FileTime(super::document_properties_variant_types::FileTimeWith<X>),
     /// The element `vt:i1`, a `I1`.
-    I1(Box<super::document_properties_variant_types::I1With<X>>),
+    I1(super::document_properties_variant_types::I1With<X>),
     /// The element `vt:i2`, a `I2`.
-    I2(Box<super::document_properties_variant_types::I2With<X>>),
+    I2(super::document_properties_variant_types::I2With<X>),
     /// The element `vt:i4`, a `I4`.
-    I4(Box<super::document_properties_variant_types::I4With<X>>),
+    I4(super::document_properties_variant_types::I4With<X>),
     /// The element `vt:i8`, a `I8`.
-    I8(Box<super::document_properties_variant_types::I8With<X>>),
+    I8(super::document_properties_variant_types::I8With<X>),
     /// The element `vt:int`, a `Integer`.
-    Integer(Box<super::document_properties_variant_types::IntegerWith<X>>),
+    Integer(super::document_properties_variant_types::IntegerWith<X>),
     /// The element `vt:lpstr`, a `Lpstr`.
-    Lpstr(Box<super::document_properties_variant_types::LpstrWith<X>>),
+    Lpstr(super::document_properties_variant_types::LpstrWith<X>),
     /// The element `vt:lpwstr`, a `Lpwstr`.
-    Lpwstr(Box<super::document_properties_variant_types::LpwstrWith<X>>),
+    Lpwstr(super::document_properties_variant_types::LpwstrWith<X>),
     /// The element `vt:null`, a `Null`.
-    Null(Box<super::document_properties_variant_types::NullWith<X>>),
+    Null(super::document_properties_variant_types::NullWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `vt:r4`, a `R4`.
-    R4(Box<super::document_properties_variant_types::R4With<X>>),
+    R4(super::document_properties_variant_types::R4With<X>),
     /// The element `vt:r8`, a `R8`.
-    R8(Box<super::document_properties_variant_types::R8With<X>>),
+    R8(super::document_properties_variant_types::R8With<X>),
     /// The element `vt:ui1`, a `Ui1`.
-    Ui1(Box<super::document_properties_variant_types::Ui1With<X>>),
+    Ui1(super::document_properties_variant_types::Ui1With<X>),
     /// The element `vt:ui2`, a `Ui2`.
-    Ui2(Box<super::document_properties_variant_types::Ui2With<X>>),
+    Ui2(super::document_properties_variant_types::Ui2With<X>),
     /// The element `vt:ui4`, a `Ui4`.
-    Ui4(Box<super::document_properties_variant_types::Ui4With<X>>),
+    Ui4(super::document_properties_variant_types::Ui4With<X>),
     /// The element `vt:ui8`, a `Ui8`.
-    Ui8(Box<super::document_properties_variant_types::Ui8With<X>>),
+    Ui8(super::document_properties_variant_types::Ui8With<X>),
     /// The element `vt:uint`, a `UnsignedInteger`.
-    UnsignedInteger(Box<super::document_properties_variant_types::UnsignedIntegerWith<X>>),
+    UnsignedInteger(super::document_properties_variant_types::UnsignedIntegerWith<X>),
     /// The element `vt:vector`, a `Vector`.
     Vector(Box<super::document_properties_variant_types::VectorWith<X>>),
 }
@@ -536,17 +536,70 @@ impl<X: UserData> CustomFilePropertyContentWith<X> {
     where
         Y: UserData,
     {
-        crate::into_user_data_match!(self, CustomFilePropertyContentWith;
-            plain [
-            ]
-            boxed [
-                Array, BasicString, BinaryBlob, BinaryBlobObject, BinaryStorage,
-                BinaryStorageObject, BinaryStream, BinaryStreamObject, BinaryVersionedStream,
-                Boolean, ClassID, Currency, DateAndTime, Decimal, Empty, ErrorStatusCode, FileTime,
-                I1, I2, I4, I8, Integer, Lpstr, Lpwstr, Null, R4, R8, Ui1, Ui2, Ui4, Ui8,
-                UnsignedInteger, Vector,
-            ]
-        )
+        match self {
+            Self::Array(node) => {
+                CustomFilePropertyContentWith::Array(Box::new((*node).into_user_data()))
+            }
+            Self::BasicString(node) => {
+                CustomFilePropertyContentWith::BasicString(node.into_user_data())
+            }
+            Self::BinaryBlob(node) => {
+                CustomFilePropertyContentWith::BinaryBlob(node.into_user_data())
+            }
+            Self::BinaryBlobObject(node) => {
+                CustomFilePropertyContentWith::BinaryBlobObject(node.into_user_data())
+            }
+            Self::BinaryStorage(node) => {
+                CustomFilePropertyContentWith::BinaryStorage(node.into_user_data())
+            }
+            Self::BinaryStorageObject(node) => {
+                CustomFilePropertyContentWith::BinaryStorageObject(node.into_user_data())
+            }
+            Self::BinaryStream(node) => {
+                CustomFilePropertyContentWith::BinaryStream(node.into_user_data())
+            }
+            Self::BinaryStreamObject(node) => {
+                CustomFilePropertyContentWith::BinaryStreamObject(node.into_user_data())
+            }
+            Self::BinaryVersionedStream(node) => {
+                CustomFilePropertyContentWith::BinaryVersionedStream(Box::new(
+                    (*node).into_user_data(),
+                ))
+            }
+            Self::Boolean(node) => CustomFilePropertyContentWith::Boolean(node.into_user_data()),
+            Self::ClassID(node) => CustomFilePropertyContentWith::ClassID(node.into_user_data()),
+            Self::Currency(node) => CustomFilePropertyContentWith::Currency(node.into_user_data()),
+            Self::DateAndTime(node) => {
+                CustomFilePropertyContentWith::DateAndTime(node.into_user_data())
+            }
+            Self::Decimal(node) => CustomFilePropertyContentWith::Decimal(node.into_user_data()),
+            Self::Empty(node) => CustomFilePropertyContentWith::Empty(node.into_user_data()),
+            Self::ErrorStatusCode(node) => {
+                CustomFilePropertyContentWith::ErrorStatusCode(node.into_user_data())
+            }
+            Self::FileTime(node) => CustomFilePropertyContentWith::FileTime(node.into_user_data()),
+            Self::I1(node) => CustomFilePropertyContentWith::I1(node.into_user_data()),
+            Self::I2(node) => CustomFilePropertyContentWith::I2(node.into_user_data()),
+            Self::I4(node) => CustomFilePropertyContentWith::I4(node.into_user_data()),
+            Self::I8(node) => CustomFilePropertyContentWith::I8(node.into_user_data()),
+            Self::Integer(node) => CustomFilePropertyContentWith::Integer(node.into_user_data()),
+            Self::Lpstr(node) => CustomFilePropertyContentWith::Lpstr(node.into_user_data()),
+            Self::Lpwstr(node) => CustomFilePropertyContentWith::Lpwstr(node.into_user_data()),
+            Self::Null(node) => CustomFilePropertyContentWith::Null(node.into_user_data()),
+            Self::Other(node) => CustomFilePropertyContentWith::Other(node),
+            Self::R4(node) => CustomFilePropertyContentWith::R4(node.into_user_data()),
+            Self::R8(node) => CustomFilePropertyContentWith::R8(node.into_user_data()),
+            Self::Ui1(node) => CustomFilePropertyContentWith::Ui1(node.into_user_data()),
+            Self::Ui2(node) => CustomFilePropertyContentWith::Ui2(node.into_user_data()),
+            Self::Ui4(node) => CustomFilePropertyContentWith::Ui4(node.into_user_data()),
+            Self::Ui8(node) => CustomFilePropertyContentWith::Ui8(node.into_user_data()),
+            Self::UnsignedInteger(node) => {
+                CustomFilePropertyContentWith::UnsignedInteger(node.into_user_data())
+            }
+            Self::Vector(node) => {
+                CustomFilePropertyContentWith::Vector(Box::new((*node).into_user_data()))
+            }
+        }
     }
 }
 
@@ -564,37 +617,37 @@ impl crate::Read for CustomFilePropertyContent {
     fn read_item(item: crate::Item<'_>) -> Self {
         match item.name() {
             Some((NS_VT, "array")) => Self::Array(Box::new(item.read())),
-            Some((NS_VT, "bstr")) => Self::BasicString(Box::new(item.read())),
-            Some((NS_VT, "blob")) => Self::BinaryBlob(Box::new(item.read())),
-            Some((NS_VT, "oblob")) => Self::BinaryBlobObject(Box::new(item.read())),
-            Some((NS_VT, "storage")) => Self::BinaryStorage(Box::new(item.read())),
-            Some((NS_VT, "ostorage")) => Self::BinaryStorageObject(Box::new(item.read())),
-            Some((NS_VT, "stream")) => Self::BinaryStream(Box::new(item.read())),
-            Some((NS_VT, "ostream")) => Self::BinaryStreamObject(Box::new(item.read())),
+            Some((NS_VT, "bstr")) => Self::BasicString(item.read()),
+            Some((NS_VT, "blob")) => Self::BinaryBlob(item.read()),
+            Some((NS_VT, "oblob")) => Self::BinaryBlobObject(item.read()),
+            Some((NS_VT, "storage")) => Self::BinaryStorage(item.read()),
+            Some((NS_VT, "ostorage")) => Self::BinaryStorageObject(item.read()),
+            Some((NS_VT, "stream")) => Self::BinaryStream(item.read()),
+            Some((NS_VT, "ostream")) => Self::BinaryStreamObject(item.read()),
             Some((NS_VT, "vstream")) => Self::BinaryVersionedStream(Box::new(item.read())),
-            Some((NS_VT, "bool")) => Self::Boolean(Box::new(item.read())),
-            Some((NS_VT, "clsid")) => Self::ClassID(Box::new(item.read())),
-            Some((NS_VT, "cy")) => Self::Currency(Box::new(item.read())),
-            Some((NS_VT, "date")) => Self::DateAndTime(Box::new(item.read())),
-            Some((NS_VT, "decimal")) => Self::Decimal(Box::new(item.read())),
-            Some((NS_VT, "empty")) => Self::Empty(Box::new(item.read())),
-            Some((NS_VT, "error")) => Self::ErrorStatusCode(Box::new(item.read())),
-            Some((NS_VT, "filetime")) => Self::FileTime(Box::new(item.read())),
-            Some((NS_VT, "i1")) => Self::I1(Box::new(item.read())),
-            Some((NS_VT, "i2")) => Self::I2(Box::new(item.read())),
-            Some((NS_VT, "i4")) => Self::I4(Box::new(item.read())),
-            Some((NS_VT, "i8")) => Self::I8(Box::new(item.read())),
-            Some((NS_VT, "int")) => Self::Integer(Box::new(item.read())),
-            Some((NS_VT, "lpstr")) => Self::Lpstr(Box::new(item.read())),
-            Some((NS_VT, "lpwstr")) => Self::Lpwstr(Box::new(item.read())),
-            Some((NS_VT, "null")) => Self::Null(Box::new(item.read())),
-            Some((NS_VT, "r4")) => Self::R4(Box::new(item.read())),
-            Some((NS_VT, "r8")) => Self::R8(Box::new(item.read())),
-            Some((NS_VT, "ui1")) => Self::Ui1(Box::new(item.read())),
-            Some((NS_VT, "ui2")) => Self::Ui2(Box::new(item.read())),
-            Some((NS_VT, "ui4")) => Self::Ui4(Box::new(item.read())),
-            Some((NS_VT, "ui8")) => Self::Ui8(Box::new(item.read())),
-            Some((NS_VT, "uint")) => Self::UnsignedInteger(Box::new(item.read())),
+            Some((NS_VT, "bool")) => Self::Boolean(item.read()),
+            Some((NS_VT, "clsid")) => Self::ClassID(item.read()),
+            Some((NS_VT, "cy")) => Self::Currency(item.read()),
+            Some((NS_VT, "date")) => Self::DateAndTime(item.read()),
+            Some((NS_VT, "decimal")) => Self::Decimal(item.read()),
+            Some((NS_VT, "empty")) => Self::Empty(item.read()),
+            Some((NS_VT, "error")) => Self::ErrorStatusCode(item.read()),
+            Some((NS_VT, "filetime")) => Self::FileTime(item.read()),
+            Some((NS_VT, "i1")) => Self::I1(item.read()),
+            Some((NS_VT, "i2")) => Self::I2(item.read()),
+            Some((NS_VT, "i4")) => Self::I4(item.read()),
+            Some((NS_VT, "i8")) => Self::I8(item.read()),
+            Some((NS_VT, "int")) => Self::Integer(item.read()),
+            Some((NS_VT, "lpstr")) => Self::Lpstr(item.read()),
+            Some((NS_VT, "lpwstr")) => Self::Lpwstr(item.read()),
+            Some((NS_VT, "null")) => Self::Null(item.read()),
+            Some((NS_VT, "r4")) => Self::R4(item.read()),
+            Some((NS_VT, "r8")) => Self::R8(item.read()),
+            Some((NS_VT, "ui1")) => Self::Ui1(item.read()),
+            Some((NS_VT, "ui2")) => Self::Ui2(item.read()),
+            Some((NS_VT, "ui4")) => Self::Ui4(item.read()),
+            Some((NS_VT, "ui8")) => Self::Ui8(item.read()),
+            Some((NS_VT, "uint")) => Self::UnsignedInteger(item.read()),
             Some((NS_VT, "vector")) => Self::Vector(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -654,7 +707,7 @@ impl<X: UserData> From<super::document_properties_variant_types::BasicStringWith
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::BasicStringWith<X>) -> Self {
-        Self::BasicString(Box::new(arm))
+        Self::BasicString(arm)
     }
 }
 
@@ -662,7 +715,7 @@ impl<X: UserData> From<super::document_properties_variant_types::BinaryBlobWith<
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::BinaryBlobWith<X>) -> Self {
-        Self::BinaryBlob(Box::new(arm))
+        Self::BinaryBlob(arm)
     }
 }
 
@@ -670,7 +723,7 @@ impl<X: UserData> From<super::document_properties_variant_types::BinaryBlobObjec
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::BinaryBlobObjectWith<X>) -> Self {
-        Self::BinaryBlobObject(Box::new(arm))
+        Self::BinaryBlobObject(arm)
     }
 }
 
@@ -678,7 +731,7 @@ impl<X: UserData> From<super::document_properties_variant_types::BinaryStorageWi
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::BinaryStorageWith<X>) -> Self {
-        Self::BinaryStorage(Box::new(arm))
+        Self::BinaryStorage(arm)
     }
 }
 
@@ -686,7 +739,7 @@ impl<X: UserData> From<super::document_properties_variant_types::BinaryStorageOb
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::BinaryStorageObjectWith<X>) -> Self {
-        Self::BinaryStorageObject(Box::new(arm))
+        Self::BinaryStorageObject(arm)
     }
 }
 
@@ -694,7 +747,7 @@ impl<X: UserData> From<super::document_properties_variant_types::BinaryStreamWit
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::BinaryStreamWith<X>) -> Self {
-        Self::BinaryStream(Box::new(arm))
+        Self::BinaryStream(arm)
     }
 }
 
@@ -702,7 +755,7 @@ impl<X: UserData> From<super::document_properties_variant_types::BinaryStreamObj
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::BinaryStreamObjectWith<X>) -> Self {
-        Self::BinaryStreamObject(Box::new(arm))
+        Self::BinaryStreamObject(arm)
     }
 }
 
@@ -718,7 +771,7 @@ impl<X: UserData> From<super::document_properties_variant_types::BooleanWith<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::BooleanWith<X>) -> Self {
-        Self::Boolean(Box::new(arm))
+        Self::Boolean(arm)
     }
 }
 
@@ -726,7 +779,7 @@ impl<X: UserData> From<super::document_properties_variant_types::ClassIDWith<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::ClassIDWith<X>) -> Self {
-        Self::ClassID(Box::new(arm))
+        Self::ClassID(arm)
     }
 }
 
@@ -734,7 +787,7 @@ impl<X: UserData> From<super::document_properties_variant_types::CurrencyWith<X>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::CurrencyWith<X>) -> Self {
-        Self::Currency(Box::new(arm))
+        Self::Currency(arm)
     }
 }
 
@@ -742,7 +795,7 @@ impl<X: UserData> From<super::document_properties_variant_types::DateAndTimeWith
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::DateAndTimeWith<X>) -> Self {
-        Self::DateAndTime(Box::new(arm))
+        Self::DateAndTime(arm)
     }
 }
 
@@ -750,7 +803,7 @@ impl<X: UserData> From<super::document_properties_variant_types::DecimalWith<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::DecimalWith<X>) -> Self {
-        Self::Decimal(Box::new(arm))
+        Self::Decimal(arm)
     }
 }
 
@@ -758,7 +811,7 @@ impl<X: UserData> From<super::document_properties_variant_types::EmptyWith<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::EmptyWith<X>) -> Self {
-        Self::Empty(Box::new(arm))
+        Self::Empty(arm)
     }
 }
 
@@ -766,7 +819,7 @@ impl<X: UserData> From<super::document_properties_variant_types::ErrorStatusCode
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::ErrorStatusCodeWith<X>) -> Self {
-        Self::ErrorStatusCode(Box::new(arm))
+        Self::ErrorStatusCode(arm)
     }
 }
 
@@ -774,7 +827,7 @@ impl<X: UserData> From<super::document_properties_variant_types::FileTimeWith<X>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::FileTimeWith<X>) -> Self {
-        Self::FileTime(Box::new(arm))
+        Self::FileTime(arm)
     }
 }
 
@@ -782,7 +835,7 @@ impl<X: UserData> From<super::document_properties_variant_types::I1With<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::I1With<X>) -> Self {
-        Self::I1(Box::new(arm))
+        Self::I1(arm)
     }
 }
 
@@ -790,7 +843,7 @@ impl<X: UserData> From<super::document_properties_variant_types::I2With<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::I2With<X>) -> Self {
-        Self::I2(Box::new(arm))
+        Self::I2(arm)
     }
 }
 
@@ -798,7 +851,7 @@ impl<X: UserData> From<super::document_properties_variant_types::I4With<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::I4With<X>) -> Self {
-        Self::I4(Box::new(arm))
+        Self::I4(arm)
     }
 }
 
@@ -806,7 +859,7 @@ impl<X: UserData> From<super::document_properties_variant_types::I8With<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::I8With<X>) -> Self {
-        Self::I8(Box::new(arm))
+        Self::I8(arm)
     }
 }
 
@@ -814,7 +867,7 @@ impl<X: UserData> From<super::document_properties_variant_types::IntegerWith<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::IntegerWith<X>) -> Self {
-        Self::Integer(Box::new(arm))
+        Self::Integer(arm)
     }
 }
 
@@ -822,7 +875,7 @@ impl<X: UserData> From<super::document_properties_variant_types::LpstrWith<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::LpstrWith<X>) -> Self {
-        Self::Lpstr(Box::new(arm))
+        Self::Lpstr(arm)
     }
 }
 
@@ -830,7 +883,7 @@ impl<X: UserData> From<super::document_properties_variant_types::LpwstrWith<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::LpwstrWith<X>) -> Self {
-        Self::Lpwstr(Box::new(arm))
+        Self::Lpwstr(arm)
     }
 }
 
@@ -838,7 +891,7 @@ impl<X: UserData> From<super::document_properties_variant_types::NullWith<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::NullWith<X>) -> Self {
-        Self::Null(Box::new(arm))
+        Self::Null(arm)
     }
 }
 
@@ -846,7 +899,7 @@ impl<X: UserData> From<super::document_properties_variant_types::R4With<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::R4With<X>) -> Self {
-        Self::R4(Box::new(arm))
+        Self::R4(arm)
     }
 }
 
@@ -854,7 +907,7 @@ impl<X: UserData> From<super::document_properties_variant_types::R8With<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::R8With<X>) -> Self {
-        Self::R8(Box::new(arm))
+        Self::R8(arm)
     }
 }
 
@@ -862,7 +915,7 @@ impl<X: UserData> From<super::document_properties_variant_types::Ui1With<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::Ui1With<X>) -> Self {
-        Self::Ui1(Box::new(arm))
+        Self::Ui1(arm)
     }
 }
 
@@ -870,7 +923,7 @@ impl<X: UserData> From<super::document_properties_variant_types::Ui2With<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::Ui2With<X>) -> Self {
-        Self::Ui2(Box::new(arm))
+        Self::Ui2(arm)
     }
 }
 
@@ -878,7 +931,7 @@ impl<X: UserData> From<super::document_properties_variant_types::Ui4With<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::Ui4With<X>) -> Self {
-        Self::Ui4(Box::new(arm))
+        Self::Ui4(arm)
     }
 }
 
@@ -886,7 +939,7 @@ impl<X: UserData> From<super::document_properties_variant_types::Ui8With<X>>
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::Ui8With<X>) -> Self {
-        Self::Ui8(Box::new(arm))
+        Self::Ui8(arm)
     }
 }
 
@@ -894,7 +947,7 @@ impl<X: UserData> From<super::document_properties_variant_types::UnsignedInteger
     for CustomFilePropertyContentWith<X>
 {
     fn from(arm: super::document_properties_variant_types::UnsignedIntegerWith<X>) -> Self {
-        Self::UnsignedInteger(Box::new(arm))
+        Self::UnsignedInteger(arm)
     }
 }
 

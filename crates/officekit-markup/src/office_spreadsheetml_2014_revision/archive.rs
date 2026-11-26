@@ -982,7 +982,7 @@ pub struct XrrtestMirror {
 #[rkyv(remote = super::ReferenceMapContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ReferenceMapContent {
-    Future(Box<super::Future>),
+    Future(super::Future),
     OartAnchor(Box<super::OartAnchor>),
     Other(Box<Node>),
     Ref(Box<super::Ref>),
@@ -994,8 +994,8 @@ pub enum ReferenceMapContent {
 #[rkyv(remote = super::RevisionChangeObjectContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum RevisionChangeObjectContent {
-    Body(Box<super::Body>),
-    Link(Box<super::Link>),
+    Body(super::Body),
+    Link(super::Link),
     Other(Box<Node>),
 }
 
@@ -1023,8 +1023,8 @@ pub enum RevisionGroupContent {
 #[rkyv(remote = super::RevisionStateContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum RevisionStateContent {
-    FreezePanes(Box<super::FreezePanes>),
-    HideUnhideSheet(Box<super::HideUnhideSheet>),
+    FreezePanes(super::FreezePanes),
+    HideUnhideSheet(super::HideUnhideSheet),
     Other(Box<Node>),
     Outlines(Box<super::Outlines>),
     RowColVisualOps(Box<super::RowColVisualOps>),
@@ -1057,7 +1057,7 @@ pub enum RevisionStreamContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum StateBasedObjectContent {
     AutoFilter(Box<super::AutoFilter>),
-    Comments(Box<super::Comments>),
+    Comments(super::Comments),
     DataValidation(Box<super::DataValidation>),
     Hyperlink(Box<super::Hyperlink>),
     Other(Box<Node>),

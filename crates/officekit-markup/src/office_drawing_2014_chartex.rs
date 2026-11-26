@@ -1586,7 +1586,7 @@ impl Eq for AxisWith<()> {}
 #[non_exhaustive]
 pub enum AxisContentWith<X: UserData> {
     /// The element `cx:catScaling`, a `CatScaling`.
-    CatScaling(Box<CatScalingWith<X>>),
+    CatScaling(CatScalingWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `cx:valScaling`, a `ValScaling`.
@@ -1750,9 +1750,9 @@ impl Eq for BinningWith<()> {}
 #[non_exhaustive]
 pub enum BinningContentWith<X: UserData> {
     /// The element `cx:binCount`, a `BinCount`.
-    BinCount(Box<BinCountWith<X>>),
+    BinCount(BinCountWith<X>),
     /// The element `cx:binSize`, a `BinSize`.
-    BinSize(Box<BinSizeWith<X>>),
+    BinSize(BinSizeWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -5795,7 +5795,7 @@ impl Eq for GeographyWith<()> {}
 #[non_exhaustive]
 pub enum GeographyCacheContentWith<X: UserData> {
     /// The element `cx:binary`, a `Binary`.
-    Binary(Box<BinaryWith<X>>),
+    Binary(BinaryWith<X>),
     /// The element `cx:clear`, a `Clear`.
     Clear(Box<ClearWith<X>>),
     /// An element or node the schemas do not declare at this position.
@@ -6292,11 +6292,11 @@ impl Eq for NumberWith<()> {}
 #[non_exhaustive]
 pub enum NumericDimensionContentWith<X: UserData> {
     /// The element `cx:f`, a `F`.
-    F(Box<FWith<X>>),
+    F(FWith<X>),
     /// The element `cx:lvl`, a `LvlNumericLevel`.
     LvlNumericLevel(Box<LvlNumericLevelWith<X>>),
     /// The element `cx:nf`, a `Nf`.
-    Nf(Box<NfWith<X>>),
+    Nf(NfWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -6891,7 +6891,7 @@ pub enum SeriesLayoutMember {
 #[non_exhaustive]
 pub enum SeriesLayoutPropertiesContentWith<X: UserData> {
     /// The element `cx:aggregation`, a `Aggregation`.
-    Aggregation(Box<AggregationWith<X>>),
+    Aggregation(AggregationWith<X>),
     /// The element `cx:binning`, a `Binning`.
     Binning(Box<BinningWith<X>>),
     /// An element or node the schemas do not declare at this position.
@@ -7109,11 +7109,11 @@ impl Eq for StrDimWith<()> {}
 #[non_exhaustive]
 pub enum StringDimensionContentWith<X: UserData> {
     /// The element `cx:f`, a `F`.
-    F(Box<FWith<X>>),
+    F(FWith<X>),
     /// The element `cx:lvl`, a `LvlStringLevel`.
     LvlStringLevel(Box<LvlStringLevelWith<X>>),
     /// The element `cx:nf`, a `Nf`.
-    Nf(Box<NfWith<X>>),
+    Nf(NfWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -7182,7 +7182,7 @@ pub enum TextContentWith<X: UserData> {
     /// The element `cx:rich`, a `Rich`.
     Rich(Box<RichWith<X>>),
     /// The element `cx:txData`, a `TxData`.
-    TxData(Box<TxDataWith<X>>),
+    TxData(TxDataWith<X>),
 }
 
 /// [`TextContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -7199,11 +7199,11 @@ impl Eq for TextContentWith<()> {}
 #[non_exhaustive]
 pub enum TextDataContentWith<X: UserData> {
     /// The element `cx:f`, a `F`.
-    F(Box<FWith<X>>),
+    F(FWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `cx:v`, a `V`.
-    V(Box<VWith<X>>),
+    V(VWith<X>),
 }
 
 /// [`TextDataContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -7457,13 +7457,13 @@ impl Eq for ValScalingWith<()> {}
 #[non_exhaustive]
 pub enum ValueColorEndPositionContentWith<X: UserData> {
     /// The element `cx:extremeValue`, a `ExtremeValue`.
-    ExtremeValue(Box<ExtremeValueWith<X>>),
+    ExtremeValue(ExtremeValueWith<X>),
     /// The element `cx:number`, a `Number`.
-    Number(Box<NumberWith<X>>),
+    Number(NumberWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `cx:percent`, a `Percent`.
-    Percent(Box<PercentWith<X>>),
+    Percent(PercentWith<X>),
 }
 
 /// [`ValueColorEndPositionContentWith`] of the tree a read gives, where no node holds anything in
@@ -7481,11 +7481,11 @@ impl Eq for ValueColorEndPositionContentWith<()> {}
 #[non_exhaustive]
 pub enum ValueColorMiddlePositionContentWith<X: UserData> {
     /// The element `cx:number`, a `Number`.
-    Number(Box<NumberWith<X>>),
+    Number(NumberWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `cx:percent`, a `Percent`.
-    Percent(Box<PercentWith<X>>),
+    Percent(PercentWith<X>),
 }
 
 /// [`ValueColorMiddlePositionContentWith`] of the tree a read gives, where no node holds anything
@@ -8628,9 +8628,7 @@ impl<X: UserData> AxisContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::CatScaling(node) => {
-                AxisContentWith::CatScaling(Box::new((*node).into_user_data()))
-            }
+            Self::CatScaling(node) => AxisContentWith::CatScaling(node.into_user_data()),
             Self::Other(node) => AxisContentWith::Other(node),
             Self::ValScaling(node) => {
                 AxisContentWith::ValScaling(Box::new((*node).into_user_data()))
@@ -8641,7 +8639,7 @@ impl<X: UserData> AxisContentWith<X> {
 
 impl<X: UserData> Default for AxisContentWith<X> {
     fn default() -> Self {
-        Self::CatScaling(Box::default())
+        Self::CatScaling(CatScalingWith::default())
     }
 }
 
@@ -8652,7 +8650,7 @@ impl officekit_markup_base::Read for AxisContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_CX, "catScaling")) => Self::CatScaling(Box::new(item.read())),
+            Some((NS_CX, "catScaling")) => Self::CatScaling(item.read()),
             Some((NS_CX, "valScaling")) => Self::ValScaling(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -8671,7 +8669,7 @@ impl officekit_markup_base::Write for AxisContent {
 
 impl<X: UserData> From<CatScalingWith<X>> for AxisContentWith<X> {
     fn from(arm: CatScalingWith<X>) -> Self {
-        Self::CatScaling(Box::new(arm))
+        Self::CatScaling(arm)
     }
 }
 
@@ -9032,10 +9030,8 @@ impl<X: UserData> BinningContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::BinCount(node) => {
-                BinningContentWith::BinCount(Box::new((*node).into_user_data()))
-            }
-            Self::BinSize(node) => BinningContentWith::BinSize(Box::new((*node).into_user_data())),
+            Self::BinCount(node) => BinningContentWith::BinCount(node.into_user_data()),
+            Self::BinSize(node) => BinningContentWith::BinSize(node.into_user_data()),
             Self::Other(node) => BinningContentWith::Other(node),
         }
     }
@@ -9048,8 +9044,8 @@ impl officekit_markup_base::Read for BinningContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_CX, "binCount")) => Self::BinCount(Box::new(item.read())),
-            Some((NS_CX, "binSize")) => Self::BinSize(Box::new(item.read())),
+            Some((NS_CX, "binCount")) => Self::BinCount(item.read()),
+            Some((NS_CX, "binSize")) => Self::BinSize(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -9067,13 +9063,13 @@ impl officekit_markup_base::Write for BinningContent {
 
 impl<X: UserData> From<BinCountWith<X>> for BinningContentWith<X> {
     fn from(arm: BinCountWith<X>) -> Self {
-        Self::BinCount(Box::new(arm))
+        Self::BinCount(arm)
     }
 }
 
 impl<X: UserData> From<BinSizeWith<X>> for BinningContentWith<X> {
     fn from(arm: BinSizeWith<X>) -> Self {
-        Self::BinSize(Box::new(arm))
+        Self::BinSize(arm)
     }
 }
 
@@ -12296,9 +12292,7 @@ impl<X: UserData> GeographyCacheContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Binary(node) => {
-                GeographyCacheContentWith::Binary(Box::new((*node).into_user_data()))
-            }
+            Self::Binary(node) => GeographyCacheContentWith::Binary(node.into_user_data()),
             Self::Clear(node) => {
                 GeographyCacheContentWith::Clear(Box::new((*node).into_user_data()))
             }
@@ -12314,7 +12308,7 @@ impl officekit_markup_base::Read for GeographyCacheContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_CX, "binary")) => Self::Binary(Box::new(item.read())),
+            Some((NS_CX, "binary")) => Self::Binary(item.read()),
             Some((NS_CX, "clear")) => Self::Clear(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -12333,7 +12327,7 @@ impl officekit_markup_base::Write for GeographyCacheContent {
 
 impl<X: UserData> From<BinaryWith<X>> for GeographyCacheContentWith<X> {
     fn from(arm: BinaryWith<X>) -> Self {
-        Self::Binary(Box::new(arm))
+        Self::Binary(arm)
     }
 }
 
@@ -13493,11 +13487,11 @@ impl<X: UserData> NumericDimensionContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::F(node) => NumericDimensionContentWith::F(Box::new((*node).into_user_data())),
+            Self::F(node) => NumericDimensionContentWith::F(node.into_user_data()),
             Self::LvlNumericLevel(node) => {
                 NumericDimensionContentWith::LvlNumericLevel(Box::new((*node).into_user_data()))
             }
-            Self::Nf(node) => NumericDimensionContentWith::Nf(Box::new((*node).into_user_data())),
+            Self::Nf(node) => NumericDimensionContentWith::Nf(node.into_user_data()),
             Self::Other(node) => NumericDimensionContentWith::Other(node),
         }
     }
@@ -13510,9 +13504,9 @@ impl officekit_markup_base::Read for NumericDimensionContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_CX, "f")) => Self::F(Box::new(item.read())),
+            Some((NS_CX, "f")) => Self::F(item.read()),
             Some((NS_CX, "lvl")) => Self::LvlNumericLevel(Box::new(item.read())),
-            Some((NS_CX, "nf")) => Self::Nf(Box::new(item.read())),
+            Some((NS_CX, "nf")) => Self::Nf(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -13531,7 +13525,7 @@ impl officekit_markup_base::Write for NumericDimensionContent {
 
 impl<X: UserData> From<FWith<X>> for NumericDimensionContentWith<X> {
     fn from(arm: FWith<X>) -> Self {
-        Self::F(Box::new(arm))
+        Self::F(arm)
     }
 }
 
@@ -13543,7 +13537,7 @@ impl<X: UserData> From<LvlNumericLevelWith<X>> for NumericDimensionContentWith<X
 
 impl<X: UserData> From<NfWith<X>> for NumericDimensionContentWith<X> {
     fn from(arm: NfWith<X>) -> Self {
-        Self::Nf(Box::new(arm))
+        Self::Nf(arm)
     }
 }
 
@@ -14856,7 +14850,7 @@ impl<X: UserData> SeriesLayoutPropertiesContentWith<X> {
     {
         match self {
             Self::Aggregation(node) => {
-                SeriesLayoutPropertiesContentWith::Aggregation(Box::new((*node).into_user_data()))
+                SeriesLayoutPropertiesContentWith::Aggregation(node.into_user_data())
             }
             Self::Binning(node) => {
                 SeriesLayoutPropertiesContentWith::Binning(Box::new((*node).into_user_data()))
@@ -14873,7 +14867,7 @@ impl officekit_markup_base::Read for SeriesLayoutPropertiesContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_CX, "aggregation")) => Self::Aggregation(Box::new(item.read())),
+            Some((NS_CX, "aggregation")) => Self::Aggregation(item.read()),
             Some((NS_CX, "binning")) => Self::Binning(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -14892,7 +14886,7 @@ impl officekit_markup_base::Write for SeriesLayoutPropertiesContent {
 
 impl<X: UserData> From<AggregationWith<X>> for SeriesLayoutPropertiesContentWith<X> {
     fn from(arm: AggregationWith<X>) -> Self {
-        Self::Aggregation(Box::new(arm))
+        Self::Aggregation(arm)
     }
 }
 
@@ -15352,11 +15346,11 @@ impl<X: UserData> StringDimensionContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::F(node) => StringDimensionContentWith::F(Box::new((*node).into_user_data())),
+            Self::F(node) => StringDimensionContentWith::F(node.into_user_data()),
             Self::LvlStringLevel(node) => {
                 StringDimensionContentWith::LvlStringLevel(Box::new((*node).into_user_data()))
             }
-            Self::Nf(node) => StringDimensionContentWith::Nf(Box::new((*node).into_user_data())),
+            Self::Nf(node) => StringDimensionContentWith::Nf(node.into_user_data()),
             Self::Other(node) => StringDimensionContentWith::Other(node),
         }
     }
@@ -15369,9 +15363,9 @@ impl officekit_markup_base::Read for StringDimensionContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_CX, "f")) => Self::F(Box::new(item.read())),
+            Some((NS_CX, "f")) => Self::F(item.read()),
             Some((NS_CX, "lvl")) => Self::LvlStringLevel(Box::new(item.read())),
-            Some((NS_CX, "nf")) => Self::Nf(Box::new(item.read())),
+            Some((NS_CX, "nf")) => Self::Nf(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -15390,7 +15384,7 @@ impl officekit_markup_base::Write for StringDimensionContent {
 
 impl<X: UserData> From<FWith<X>> for StringDimensionContentWith<X> {
     fn from(arm: FWith<X>) -> Self {
-        Self::F(Box::new(arm))
+        Self::F(arm)
     }
 }
 
@@ -15402,7 +15396,7 @@ impl<X: UserData> From<LvlStringLevelWith<X>> for StringDimensionContentWith<X> 
 
 impl<X: UserData> From<NfWith<X>> for StringDimensionContentWith<X> {
     fn from(arm: NfWith<X>) -> Self {
-        Self::Nf(Box::new(arm))
+        Self::Nf(arm)
     }
 }
 
@@ -15521,7 +15515,7 @@ impl<X: UserData> TextContentWith<X> {
         match self {
             Self::Other(node) => TextContentWith::Other(node),
             Self::Rich(node) => TextContentWith::Rich(Box::new((*node).into_user_data())),
-            Self::TxData(node) => TextContentWith::TxData(Box::new((*node).into_user_data())),
+            Self::TxData(node) => TextContentWith::TxData(node.into_user_data()),
         }
     }
 }
@@ -15540,7 +15534,7 @@ impl officekit_markup_base::Read for TextContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_CX, "rich")) => Self::Rich(Box::new(item.read())),
-            Some((NS_CX, "txData")) => Self::TxData(Box::new(item.read())),
+            Some((NS_CX, "txData")) => Self::TxData(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -15564,7 +15558,7 @@ impl<X: UserData> From<RichWith<X>> for TextContentWith<X> {
 
 impl<X: UserData> From<TxDataWith<X>> for TextContentWith<X> {
     fn from(arm: TxDataWith<X>) -> Self {
-        Self::TxData(Box::new(arm))
+        Self::TxData(arm)
     }
 }
 
@@ -15581,16 +15575,16 @@ impl<X: UserData> TextDataContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::F(node) => TextDataContentWith::F(Box::new((*node).into_user_data())),
+            Self::F(node) => TextDataContentWith::F(node.into_user_data()),
             Self::Other(node) => TextDataContentWith::Other(node),
-            Self::V(node) => TextDataContentWith::V(Box::new((*node).into_user_data())),
+            Self::V(node) => TextDataContentWith::V(node.into_user_data()),
         }
     }
 }
 
 impl<X: UserData> Default for TextDataContentWith<X> {
     fn default() -> Self {
-        Self::F(Box::default())
+        Self::F(FWith::default())
     }
 }
 
@@ -15601,8 +15595,8 @@ impl officekit_markup_base::Read for TextDataContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_CX, "f")) => Self::F(Box::new(item.read())),
-            Some((NS_CX, "v")) => Self::V(Box::new(item.read())),
+            Some((NS_CX, "f")) => Self::F(item.read()),
+            Some((NS_CX, "v")) => Self::V(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -15620,13 +15614,13 @@ impl officekit_markup_base::Write for TextDataContent {
 
 impl<X: UserData> From<FWith<X>> for TextDataContentWith<X> {
     fn from(arm: FWith<X>) -> Self {
-        Self::F(Box::new(arm))
+        Self::F(arm)
     }
 }
 
 impl<X: UserData> From<VWith<X>> for TextDataContentWith<X> {
     fn from(arm: VWith<X>) -> Self {
-        Self::V(Box::new(arm))
+        Self::V(arm)
     }
 }
 
@@ -16208,22 +16202,18 @@ impl<X: UserData> ValueColorEndPositionContentWith<X> {
     {
         match self {
             Self::ExtremeValue(node) => {
-                ValueColorEndPositionContentWith::ExtremeValue(Box::new((*node).into_user_data()))
+                ValueColorEndPositionContentWith::ExtremeValue(node.into_user_data())
             }
-            Self::Number(node) => {
-                ValueColorEndPositionContentWith::Number(Box::new((*node).into_user_data()))
-            }
+            Self::Number(node) => ValueColorEndPositionContentWith::Number(node.into_user_data()),
             Self::Other(node) => ValueColorEndPositionContentWith::Other(node),
-            Self::Percent(node) => {
-                ValueColorEndPositionContentWith::Percent(Box::new((*node).into_user_data()))
-            }
+            Self::Percent(node) => ValueColorEndPositionContentWith::Percent(node.into_user_data()),
         }
     }
 }
 
 impl<X: UserData> Default for ValueColorEndPositionContentWith<X> {
     fn default() -> Self {
-        Self::ExtremeValue(Box::default())
+        Self::ExtremeValue(ExtremeValueWith::default())
     }
 }
 
@@ -16234,9 +16224,9 @@ impl officekit_markup_base::Read for ValueColorEndPositionContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_CX, "extremeValue")) => Self::ExtremeValue(Box::new(item.read())),
-            Some((NS_CX, "number")) => Self::Number(Box::new(item.read())),
-            Some((NS_CX, "percent")) => Self::Percent(Box::new(item.read())),
+            Some((NS_CX, "extremeValue")) => Self::ExtremeValue(item.read()),
+            Some((NS_CX, "number")) => Self::Number(item.read()),
+            Some((NS_CX, "percent")) => Self::Percent(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -16255,19 +16245,19 @@ impl officekit_markup_base::Write for ValueColorEndPositionContent {
 
 impl<X: UserData> From<ExtremeValueWith<X>> for ValueColorEndPositionContentWith<X> {
     fn from(arm: ExtremeValueWith<X>) -> Self {
-        Self::ExtremeValue(Box::new(arm))
+        Self::ExtremeValue(arm)
     }
 }
 
 impl<X: UserData> From<NumberWith<X>> for ValueColorEndPositionContentWith<X> {
     fn from(arm: NumberWith<X>) -> Self {
-        Self::Number(Box::new(arm))
+        Self::Number(arm)
     }
 }
 
 impl<X: UserData> From<PercentWith<X>> for ValueColorEndPositionContentWith<X> {
     fn from(arm: PercentWith<X>) -> Self {
-        Self::Percent(Box::new(arm))
+        Self::Percent(arm)
     }
 }
 
@@ -16310,11 +16300,11 @@ impl<X: UserData> ValueColorMiddlePositionContentWith<X> {
     {
         match self {
             Self::Number(node) => {
-                ValueColorMiddlePositionContentWith::Number(Box::new((*node).into_user_data()))
+                ValueColorMiddlePositionContentWith::Number(node.into_user_data())
             }
             Self::Other(node) => ValueColorMiddlePositionContentWith::Other(node),
             Self::Percent(node) => {
-                ValueColorMiddlePositionContentWith::Percent(Box::new((*node).into_user_data()))
+                ValueColorMiddlePositionContentWith::Percent(node.into_user_data())
             }
         }
     }
@@ -16322,7 +16312,7 @@ impl<X: UserData> ValueColorMiddlePositionContentWith<X> {
 
 impl<X: UserData> Default for ValueColorMiddlePositionContentWith<X> {
     fn default() -> Self {
-        Self::Number(Box::default())
+        Self::Number(NumberWith::default())
     }
 }
 
@@ -16333,8 +16323,8 @@ impl officekit_markup_base::Read for ValueColorMiddlePositionContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_CX, "number")) => Self::Number(Box::new(item.read())),
-            Some((NS_CX, "percent")) => Self::Percent(Box::new(item.read())),
+            Some((NS_CX, "number")) => Self::Number(item.read()),
+            Some((NS_CX, "percent")) => Self::Percent(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -16352,13 +16342,13 @@ impl officekit_markup_base::Write for ValueColorMiddlePositionContent {
 
 impl<X: UserData> From<NumberWith<X>> for ValueColorMiddlePositionContentWith<X> {
     fn from(arm: NumberWith<X>) -> Self {
-        Self::Number(Box::new(arm))
+        Self::Number(arm)
     }
 }
 
 impl<X: UserData> From<PercentWith<X>> for ValueColorMiddlePositionContentWith<X> {
     fn from(arm: PercentWith<X>) -> Self {
-        Self::Percent(Box::new(arm))
+        Self::Percent(arm)
     }
 }
 

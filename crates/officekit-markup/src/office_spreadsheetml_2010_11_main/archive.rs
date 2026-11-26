@@ -1007,8 +1007,8 @@ pub struct XMirror {
 #[rkyv(remote = super::DatabaseSourceContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum DatabaseSourceContent {
-    DbCommand(Box<super::DbCommand>),
-    DbTables(Box<super::DbTables>),
+    DbCommand(super::DbCommand),
+    DbTables(super::DbTables),
     Other(Box<Node>),
 }
 

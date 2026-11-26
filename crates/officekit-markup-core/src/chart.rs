@@ -2942,9 +2942,9 @@ impl Eq for AutomaticCategoryAxisWith<()> {}
 #[non_exhaustive]
 pub enum AxisCrossingContentWith<X: UserData> {
     /// The element `c:crosses`, a `Crosses`.
-    Crosses(Box<CrossesWith<X>>),
+    Crosses(CrossesWith<X>),
     /// The element `c:crossesAt`, a `CrossingValue`.
-    CrossingValue(Box<CrossingValueWith<X>>),
+    CrossingValue(CrossingValueWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -2964,17 +2964,17 @@ impl Eq for AxisCrossingContentWith<()> {}
 #[non_exhaustive]
 pub enum AxisDataSourceContentWith<X: UserData> {
     /// The element `c:multiLvlStrRef`, a `MultiLevelStringReference`.
-    MultiLevelStringReference(Box<MultiLevelStringReferenceWith<X>>),
+    MultiLevelStringReference(MultiLevelStringReferenceWith<X>),
     /// The element `c:numLit`, a `NumberLiteral`.
     NumberLiteral(Box<NumberLiteralWith<X>>),
     /// The element `c:numRef`, a `NumberReference`.
-    NumberReference(Box<NumberReferenceWith<X>>),
+    NumberReference(NumberReferenceWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `c:strLit`, a `StringLiteral`.
     StringLiteral(Box<StringLiteralWith<X>>),
     /// The element `c:strRef`, a `StringReference`.
-    StringReference(Box<StringReferenceWith<X>>),
+    StringReference(StringReferenceWith<X>),
 }
 
 /// [`AxisDataSourceContentWith`] of the tree a read gives, where no node holds anything in
@@ -3797,7 +3797,7 @@ pub enum ChartTextContentWith<X: UserData> {
     /// The element `c:rich`, a `RichText`.
     RichText(Box<RichTextWith<X>>),
     /// The element `c:strRef`, a `StringReference`.
-    StringReference(Box<StringReferenceWith<X>>),
+    StringReference(StringReferenceWith<X>),
 }
 
 /// [`ChartTextContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -4021,33 +4021,33 @@ impl Eq for DataLabelWith<()> {}
 #[non_exhaustive]
 pub enum DataLabelContentWith<X: UserData> {
     /// The element `c:tx`, a `ChartText`.
-    ChartText(Box<ChartTextWith<X>>),
+    ChartText(ChartTextWith<X>),
     /// The element `c:dLblPos`, a `DataLabelPosition`.
-    DataLabelPosition(Box<DataLabelPositionWith<X>>),
+    DataLabelPosition(DataLabelPositionWith<X>),
     /// The element `c:delete`, a `Delete`.
-    Delete(Box<DeleteWith<X>>),
+    Delete(DeleteWith<X>),
     /// The element `c:layout`, a `Layout`.
-    Layout(Box<LayoutWith<X>>),
+    Layout(LayoutWith<X>),
     /// The element `c:numFmt`, a `NumberFormat`.
     NumberFormat(Box<NumberFormatWith<X>>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `c:separator`, a `Separator`.
-    Separator(Box<SeparatorWith<X>>),
+    Separator(SeparatorWith<X>),
     /// The element `c:spPr`, a `ShapeProperties`.
     ShapeProperties(Box<ShapePropertiesWith<X>>),
     /// The element `c:showBubbleSize`, a `ShowBubbleSize`.
-    ShowBubbleSize(Box<ShowBubbleSizeWith<X>>),
+    ShowBubbleSize(ShowBubbleSizeWith<X>),
     /// The element `c:showCatName`, a `ShowCategoryName`.
-    ShowCategoryName(Box<ShowCategoryNameWith<X>>),
+    ShowCategoryName(ShowCategoryNameWith<X>),
     /// The element `c:showLegendKey`, a `ShowLegendKey`.
-    ShowLegendKey(Box<ShowLegendKeyWith<X>>),
+    ShowLegendKey(ShowLegendKeyWith<X>),
     /// The element `c:showPercent`, a `ShowPercent`.
-    ShowPercent(Box<ShowPercentWith<X>>),
+    ShowPercent(ShowPercentWith<X>),
     /// The element `c:showSerName`, a `ShowSeriesName`.
-    ShowSeriesName(Box<ShowSeriesNameWith<X>>),
+    ShowSeriesName(ShowSeriesNameWith<X>),
     /// The element `c:showVal`, a `ShowValue`.
-    ShowValue(Box<ShowValueWith<X>>),
+    ShowValue(ShowValueWith<X>),
     /// The element `c:txPr`, a `TextProperties`.
     TextProperties(Box<TextPropertiesWith<X>>),
 }
@@ -4110,33 +4110,33 @@ impl Eq for DataLabelsWith<()> {}
 #[non_exhaustive]
 pub enum DataLabelsContentWith<X: UserData> {
     /// The element `c:dLblPos`, a `DataLabelPosition`.
-    DataLabelPosition(Box<DataLabelPositionWith<X>>),
+    DataLabelPosition(DataLabelPositionWith<X>),
     /// The element `c:delete`, a `Delete`.
-    Delete(Box<DeleteWith<X>>),
+    Delete(DeleteWith<X>),
     /// The element `c:leaderLines`, a `LeaderLines`.
-    LeaderLines(Box<LeaderLinesWith<X>>),
+    LeaderLines(LeaderLinesWith<X>),
     /// The element `c:numFmt`, a `NumberFormat`.
     NumberFormat(Box<NumberFormatWith<X>>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `c:separator`, a `Separator`.
-    Separator(Box<SeparatorWith<X>>),
+    Separator(SeparatorWith<X>),
     /// The element `c:spPr`, a `ShapeProperties`.
     ShapeProperties(Box<ShapePropertiesWith<X>>),
     /// The element `c:showBubbleSize`, a `ShowBubbleSize`.
-    ShowBubbleSize(Box<ShowBubbleSizeWith<X>>),
+    ShowBubbleSize(ShowBubbleSizeWith<X>),
     /// The element `c:showCatName`, a `ShowCategoryName`.
-    ShowCategoryName(Box<ShowCategoryNameWith<X>>),
+    ShowCategoryName(ShowCategoryNameWith<X>),
     /// The element `c:showLeaderLines`, a `ShowLeaderLines`.
-    ShowLeaderLines(Box<ShowLeaderLinesWith<X>>),
+    ShowLeaderLines(ShowLeaderLinesWith<X>),
     /// The element `c:showLegendKey`, a `ShowLegendKey`.
-    ShowLegendKey(Box<ShowLegendKeyWith<X>>),
+    ShowLegendKey(ShowLegendKeyWith<X>),
     /// The element `c:showPercent`, a `ShowPercent`.
-    ShowPercent(Box<ShowPercentWith<X>>),
+    ShowPercent(ShowPercentWith<X>),
     /// The element `c:showSerName`, a `ShowSeriesName`.
-    ShowSeriesName(Box<ShowSeriesNameWith<X>>),
+    ShowSeriesName(ShowSeriesNameWith<X>),
     /// The element `c:showVal`, a `ShowValue`.
-    ShowValue(Box<ShowValueWith<X>>),
+    ShowValue(ShowValueWith<X>),
     /// The element `c:txPr`, a `TextProperties`.
     TextProperties(Box<TextPropertiesWith<X>>),
 }
@@ -4467,9 +4467,9 @@ impl Eq for DisplayUnitsWith<()> {}
 #[non_exhaustive]
 pub enum DisplayUnitsContentWith<X: UserData> {
     /// The element `c:builtInUnit`, a `BuiltInDisplayUnitValue`.
-    BuiltInDisplayUnitValue(Box<BuiltInDisplayUnitValueWith<X>>),
+    BuiltInDisplayUnitValue(BuiltInDisplayUnitValueWith<X>),
     /// The element `c:custUnit`, a `CustomDisplayUnit`.
-    CustomDisplayUnit(Box<CustomDisplayUnitWith<X>>),
+    CustomDisplayUnit(CustomDisplayUnitWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -5648,7 +5648,7 @@ impl Eq for LegendEntryWith<()> {}
 #[non_exhaustive]
 pub enum LegendEntryContentWith<X: UserData> {
     /// The element `c:delete`, a `Delete`.
-    Delete(Box<DeleteWith<X>>),
+    Delete(DeleteWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `c:txPr`, a `TextProperties`.
@@ -6299,7 +6299,7 @@ pub enum NumberDataSourceContentWith<X: UserData> {
     /// The element `c:numLit`, a `NumberLiteral`.
     NumberLiteral(Box<NumberLiteralWith<X>>),
     /// The element `c:numRef`, a `NumberReference`.
-    NumberReference(Box<NumberReferenceWith<X>>),
+    NumberReference(NumberReferenceWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -7786,11 +7786,11 @@ impl Eq for SeriesTextWith<()> {}
 #[non_exhaustive]
 pub enum SeriesTextContentWith<X: UserData> {
     /// The element `c:v`, a `NumericValue`.
-    NumericValue(Box<NumericValueWith<X>>),
+    NumericValue(NumericValueWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `c:strRef`, a `StringReference`.
-    StringReference(Box<StringReferenceWith<X>>),
+    StringReference(StringReferenceWith<X>),
 }
 
 /// [`SeriesTextContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -10658,11 +10658,9 @@ impl<X: UserData> AxisCrossingContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Crosses(node) => {
-                AxisCrossingContentWith::Crosses(Box::new((*node).into_user_data()))
-            }
+            Self::Crosses(node) => AxisCrossingContentWith::Crosses(node.into_user_data()),
             Self::CrossingValue(node) => {
-                AxisCrossingContentWith::CrossingValue(Box::new((*node).into_user_data()))
+                AxisCrossingContentWith::CrossingValue(node.into_user_data())
             }
             Self::Other(node) => AxisCrossingContentWith::Other(node),
         }
@@ -10676,8 +10674,8 @@ impl officekit_markup_base::Read for AxisCrossingContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_C, "crosses")) => Self::Crosses(Box::new(item.read())),
-            Some((NS_C, "crossesAt")) => Self::CrossingValue(Box::new(item.read())),
+            Some((NS_C, "crosses")) => Self::Crosses(item.read()),
+            Some((NS_C, "crossesAt")) => Self::CrossingValue(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -10695,13 +10693,13 @@ impl officekit_markup_base::Write for AxisCrossingContent {
 
 impl<X: UserData> From<CrossesWith<X>> for AxisCrossingContentWith<X> {
     fn from(arm: CrossesWith<X>) -> Self {
-        Self::Crosses(Box::new(arm))
+        Self::Crosses(arm)
     }
 }
 
 impl<X: UserData> From<CrossingValueWith<X>> for AxisCrossingContentWith<X> {
     fn from(arm: CrossingValueWith<X>) -> Self {
-        Self::CrossingValue(Box::new(arm))
+        Self::CrossingValue(arm)
     }
 }
 
@@ -10719,22 +10717,20 @@ impl<X: UserData> AxisDataSourceContentWith<X> {
     {
         match self {
             Self::MultiLevelStringReference(node) => {
-                AxisDataSourceContentWith::MultiLevelStringReference(Box::new(
-                    (*node).into_user_data(),
-                ))
+                AxisDataSourceContentWith::MultiLevelStringReference(node.into_user_data())
             }
             Self::NumberLiteral(node) => {
                 AxisDataSourceContentWith::NumberLiteral(Box::new((*node).into_user_data()))
             }
             Self::NumberReference(node) => {
-                AxisDataSourceContentWith::NumberReference(Box::new((*node).into_user_data()))
+                AxisDataSourceContentWith::NumberReference(node.into_user_data())
             }
             Self::Other(node) => AxisDataSourceContentWith::Other(node),
             Self::StringLiteral(node) => {
                 AxisDataSourceContentWith::StringLiteral(Box::new((*node).into_user_data()))
             }
             Self::StringReference(node) => {
-                AxisDataSourceContentWith::StringReference(Box::new((*node).into_user_data()))
+                AxisDataSourceContentWith::StringReference(node.into_user_data())
             }
         }
     }
@@ -10742,7 +10738,7 @@ impl<X: UserData> AxisDataSourceContentWith<X> {
 
 impl<X: UserData> Default for AxisDataSourceContentWith<X> {
     fn default() -> Self {
-        Self::MultiLevelStringReference(Box::default())
+        Self::MultiLevelStringReference(MultiLevelStringReferenceWith::default())
     }
 }
 
@@ -10753,13 +10749,11 @@ impl officekit_markup_base::Read for AxisDataSourceContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_C, "multiLvlStrRef")) => {
-                Self::MultiLevelStringReference(Box::new(item.read()))
-            }
+            Some((NS_C, "multiLvlStrRef")) => Self::MultiLevelStringReference(item.read()),
             Some((NS_C, "numLit")) => Self::NumberLiteral(Box::new(item.read())),
-            Some((NS_C, "numRef")) => Self::NumberReference(Box::new(item.read())),
+            Some((NS_C, "numRef")) => Self::NumberReference(item.read()),
             Some((NS_C, "strLit")) => Self::StringLiteral(Box::new(item.read())),
-            Some((NS_C, "strRef")) => Self::StringReference(Box::new(item.read())),
+            Some((NS_C, "strRef")) => Self::StringReference(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -10780,7 +10774,7 @@ impl officekit_markup_base::Write for AxisDataSourceContent {
 
 impl<X: UserData> From<MultiLevelStringReferenceWith<X>> for AxisDataSourceContentWith<X> {
     fn from(arm: MultiLevelStringReferenceWith<X>) -> Self {
-        Self::MultiLevelStringReference(Box::new(arm))
+        Self::MultiLevelStringReference(arm)
     }
 }
 
@@ -10792,7 +10786,7 @@ impl<X: UserData> From<NumberLiteralWith<X>> for AxisDataSourceContentWith<X> {
 
 impl<X: UserData> From<NumberReferenceWith<X>> for AxisDataSourceContentWith<X> {
     fn from(arm: NumberReferenceWith<X>) -> Self {
-        Self::NumberReference(Box::new(arm))
+        Self::NumberReference(arm)
     }
 }
 
@@ -10804,7 +10798,7 @@ impl<X: UserData> From<StringLiteralWith<X>> for AxisDataSourceContentWith<X> {
 
 impl<X: UserData> From<StringReferenceWith<X>> for AxisDataSourceContentWith<X> {
     fn from(arm: StringReferenceWith<X>) -> Self {
-        Self::StringReference(Box::new(arm))
+        Self::StringReference(arm)
     }
 }
 
@@ -12584,7 +12578,7 @@ impl<X: UserData> ChartTextContentWith<X> {
                 ChartTextContentWith::RichText(Box::new((*node).into_user_data()))
             }
             Self::StringReference(node) => {
-                ChartTextContentWith::StringReference(Box::new((*node).into_user_data()))
+                ChartTextContentWith::StringReference(node.into_user_data())
             }
         }
     }
@@ -12604,7 +12598,7 @@ impl officekit_markup_base::Read for ChartTextContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_C, "rich")) => Self::RichText(Box::new(item.read())),
-            Some((NS_C, "strRef")) => Self::StringReference(Box::new(item.read())),
+            Some((NS_C, "strRef")) => Self::StringReference(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -12628,7 +12622,7 @@ impl<X: UserData> From<RichTextWith<X>> for ChartTextContentWith<X> {
 
 impl<X: UserData> From<StringReferenceWith<X>> for ChartTextContentWith<X> {
     fn from(arm: StringReferenceWith<X>) -> Self {
-        Self::StringReference(Box::new(arm))
+        Self::StringReference(arm)
     }
 }
 
@@ -13120,42 +13114,32 @@ impl<X: UserData> DataLabelContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::ChartText(node) => {
-                DataLabelContentWith::ChartText(Box::new((*node).into_user_data()))
-            }
+            Self::ChartText(node) => DataLabelContentWith::ChartText(node.into_user_data()),
             Self::DataLabelPosition(node) => {
-                DataLabelContentWith::DataLabelPosition(Box::new((*node).into_user_data()))
+                DataLabelContentWith::DataLabelPosition(node.into_user_data())
             }
-            Self::Delete(node) => DataLabelContentWith::Delete(Box::new((*node).into_user_data())),
-            Self::Layout(node) => DataLabelContentWith::Layout(Box::new((*node).into_user_data())),
+            Self::Delete(node) => DataLabelContentWith::Delete(node.into_user_data()),
+            Self::Layout(node) => DataLabelContentWith::Layout(node.into_user_data()),
             Self::NumberFormat(node) => {
                 DataLabelContentWith::NumberFormat(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => DataLabelContentWith::Other(node),
-            Self::Separator(node) => {
-                DataLabelContentWith::Separator(Box::new((*node).into_user_data()))
-            }
+            Self::Separator(node) => DataLabelContentWith::Separator(node.into_user_data()),
             Self::ShapeProperties(node) => {
                 DataLabelContentWith::ShapeProperties(Box::new((*node).into_user_data()))
             }
             Self::ShowBubbleSize(node) => {
-                DataLabelContentWith::ShowBubbleSize(Box::new((*node).into_user_data()))
+                DataLabelContentWith::ShowBubbleSize(node.into_user_data())
             }
             Self::ShowCategoryName(node) => {
-                DataLabelContentWith::ShowCategoryName(Box::new((*node).into_user_data()))
+                DataLabelContentWith::ShowCategoryName(node.into_user_data())
             }
-            Self::ShowLegendKey(node) => {
-                DataLabelContentWith::ShowLegendKey(Box::new((*node).into_user_data()))
-            }
-            Self::ShowPercent(node) => {
-                DataLabelContentWith::ShowPercent(Box::new((*node).into_user_data()))
-            }
+            Self::ShowLegendKey(node) => DataLabelContentWith::ShowLegendKey(node.into_user_data()),
+            Self::ShowPercent(node) => DataLabelContentWith::ShowPercent(node.into_user_data()),
             Self::ShowSeriesName(node) => {
-                DataLabelContentWith::ShowSeriesName(Box::new((*node).into_user_data()))
+                DataLabelContentWith::ShowSeriesName(node.into_user_data())
             }
-            Self::ShowValue(node) => {
-                DataLabelContentWith::ShowValue(Box::new((*node).into_user_data()))
-            }
+            Self::ShowValue(node) => DataLabelContentWith::ShowValue(node.into_user_data()),
             Self::TextProperties(node) => {
                 DataLabelContentWith::TextProperties(Box::new((*node).into_user_data()))
             }
@@ -13170,19 +13154,19 @@ impl officekit_markup_base::Read for DataLabelContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_C, "tx")) => Self::ChartText(Box::new(item.read())),
-            Some((NS_C, "dLblPos")) => Self::DataLabelPosition(Box::new(item.read())),
-            Some((NS_C, "delete")) => Self::Delete(Box::new(item.read())),
-            Some((NS_C, "layout")) => Self::Layout(Box::new(item.read())),
+            Some((NS_C, "tx")) => Self::ChartText(item.read()),
+            Some((NS_C, "dLblPos")) => Self::DataLabelPosition(item.read()),
+            Some((NS_C, "delete")) => Self::Delete(item.read()),
+            Some((NS_C, "layout")) => Self::Layout(item.read()),
             Some((NS_C, "numFmt")) => Self::NumberFormat(Box::new(item.read())),
-            Some((NS_C, "separator")) => Self::Separator(Box::new(item.read())),
+            Some((NS_C, "separator")) => Self::Separator(item.read()),
             Some((NS_C, "spPr")) => Self::ShapeProperties(Box::new(item.read())),
-            Some((NS_C, "showBubbleSize")) => Self::ShowBubbleSize(Box::new(item.read())),
-            Some((NS_C, "showCatName")) => Self::ShowCategoryName(Box::new(item.read())),
-            Some((NS_C, "showLegendKey")) => Self::ShowLegendKey(Box::new(item.read())),
-            Some((NS_C, "showPercent")) => Self::ShowPercent(Box::new(item.read())),
-            Some((NS_C, "showSerName")) => Self::ShowSeriesName(Box::new(item.read())),
-            Some((NS_C, "showVal")) => Self::ShowValue(Box::new(item.read())),
+            Some((NS_C, "showBubbleSize")) => Self::ShowBubbleSize(item.read()),
+            Some((NS_C, "showCatName")) => Self::ShowCategoryName(item.read()),
+            Some((NS_C, "showLegendKey")) => Self::ShowLegendKey(item.read()),
+            Some((NS_C, "showPercent")) => Self::ShowPercent(item.read()),
+            Some((NS_C, "showSerName")) => Self::ShowSeriesName(item.read()),
+            Some((NS_C, "showVal")) => Self::ShowValue(item.read()),
             Some((NS_C, "txPr")) => Self::TextProperties(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -13213,25 +13197,25 @@ impl officekit_markup_base::Write for DataLabelContent {
 
 impl<X: UserData> From<ChartTextWith<X>> for DataLabelContentWith<X> {
     fn from(arm: ChartTextWith<X>) -> Self {
-        Self::ChartText(Box::new(arm))
+        Self::ChartText(arm)
     }
 }
 
 impl<X: UserData> From<DataLabelPositionWith<X>> for DataLabelContentWith<X> {
     fn from(arm: DataLabelPositionWith<X>) -> Self {
-        Self::DataLabelPosition(Box::new(arm))
+        Self::DataLabelPosition(arm)
     }
 }
 
 impl<X: UserData> From<DeleteWith<X>> for DataLabelContentWith<X> {
     fn from(arm: DeleteWith<X>) -> Self {
-        Self::Delete(Box::new(arm))
+        Self::Delete(arm)
     }
 }
 
 impl<X: UserData> From<LayoutWith<X>> for DataLabelContentWith<X> {
     fn from(arm: LayoutWith<X>) -> Self {
-        Self::Layout(Box::new(arm))
+        Self::Layout(arm)
     }
 }
 
@@ -13243,7 +13227,7 @@ impl<X: UserData> From<NumberFormatWith<X>> for DataLabelContentWith<X> {
 
 impl<X: UserData> From<SeparatorWith<X>> for DataLabelContentWith<X> {
     fn from(arm: SeparatorWith<X>) -> Self {
-        Self::Separator(Box::new(arm))
+        Self::Separator(arm)
     }
 }
 
@@ -13255,37 +13239,37 @@ impl<X: UserData> From<ShapePropertiesWith<X>> for DataLabelContentWith<X> {
 
 impl<X: UserData> From<ShowBubbleSizeWith<X>> for DataLabelContentWith<X> {
     fn from(arm: ShowBubbleSizeWith<X>) -> Self {
-        Self::ShowBubbleSize(Box::new(arm))
+        Self::ShowBubbleSize(arm)
     }
 }
 
 impl<X: UserData> From<ShowCategoryNameWith<X>> for DataLabelContentWith<X> {
     fn from(arm: ShowCategoryNameWith<X>) -> Self {
-        Self::ShowCategoryName(Box::new(arm))
+        Self::ShowCategoryName(arm)
     }
 }
 
 impl<X: UserData> From<ShowLegendKeyWith<X>> for DataLabelContentWith<X> {
     fn from(arm: ShowLegendKeyWith<X>) -> Self {
-        Self::ShowLegendKey(Box::new(arm))
+        Self::ShowLegendKey(arm)
     }
 }
 
 impl<X: UserData> From<ShowPercentWith<X>> for DataLabelContentWith<X> {
     fn from(arm: ShowPercentWith<X>) -> Self {
-        Self::ShowPercent(Box::new(arm))
+        Self::ShowPercent(arm)
     }
 }
 
 impl<X: UserData> From<ShowSeriesNameWith<X>> for DataLabelContentWith<X> {
     fn from(arm: ShowSeriesNameWith<X>) -> Self {
-        Self::ShowSeriesName(Box::new(arm))
+        Self::ShowSeriesName(arm)
     }
 }
 
 impl<X: UserData> From<ShowValueWith<X>> for DataLabelContentWith<X> {
     fn from(arm: ShowValueWith<X>) -> Self {
-        Self::ShowValue(Box::new(arm))
+        Self::ShowValue(arm)
     }
 }
 
@@ -13451,43 +13435,35 @@ impl<X: UserData> DataLabelsContentWith<X> {
     {
         match self {
             Self::DataLabelPosition(node) => {
-                DataLabelsContentWith::DataLabelPosition(Box::new((*node).into_user_data()))
+                DataLabelsContentWith::DataLabelPosition(node.into_user_data())
             }
-            Self::Delete(node) => DataLabelsContentWith::Delete(Box::new((*node).into_user_data())),
-            Self::LeaderLines(node) => {
-                DataLabelsContentWith::LeaderLines(Box::new((*node).into_user_data()))
-            }
+            Self::Delete(node) => DataLabelsContentWith::Delete(node.into_user_data()),
+            Self::LeaderLines(node) => DataLabelsContentWith::LeaderLines(node.into_user_data()),
             Self::NumberFormat(node) => {
                 DataLabelsContentWith::NumberFormat(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => DataLabelsContentWith::Other(node),
-            Self::Separator(node) => {
-                DataLabelsContentWith::Separator(Box::new((*node).into_user_data()))
-            }
+            Self::Separator(node) => DataLabelsContentWith::Separator(node.into_user_data()),
             Self::ShapeProperties(node) => {
                 DataLabelsContentWith::ShapeProperties(Box::new((*node).into_user_data()))
             }
             Self::ShowBubbleSize(node) => {
-                DataLabelsContentWith::ShowBubbleSize(Box::new((*node).into_user_data()))
+                DataLabelsContentWith::ShowBubbleSize(node.into_user_data())
             }
             Self::ShowCategoryName(node) => {
-                DataLabelsContentWith::ShowCategoryName(Box::new((*node).into_user_data()))
+                DataLabelsContentWith::ShowCategoryName(node.into_user_data())
             }
             Self::ShowLeaderLines(node) => {
-                DataLabelsContentWith::ShowLeaderLines(Box::new((*node).into_user_data()))
+                DataLabelsContentWith::ShowLeaderLines(node.into_user_data())
             }
             Self::ShowLegendKey(node) => {
-                DataLabelsContentWith::ShowLegendKey(Box::new((*node).into_user_data()))
+                DataLabelsContentWith::ShowLegendKey(node.into_user_data())
             }
-            Self::ShowPercent(node) => {
-                DataLabelsContentWith::ShowPercent(Box::new((*node).into_user_data()))
-            }
+            Self::ShowPercent(node) => DataLabelsContentWith::ShowPercent(node.into_user_data()),
             Self::ShowSeriesName(node) => {
-                DataLabelsContentWith::ShowSeriesName(Box::new((*node).into_user_data()))
+                DataLabelsContentWith::ShowSeriesName(node.into_user_data())
             }
-            Self::ShowValue(node) => {
-                DataLabelsContentWith::ShowValue(Box::new((*node).into_user_data()))
-            }
+            Self::ShowValue(node) => DataLabelsContentWith::ShowValue(node.into_user_data()),
             Self::TextProperties(node) => {
                 DataLabelsContentWith::TextProperties(Box::new((*node).into_user_data()))
             }
@@ -13502,19 +13478,19 @@ impl officekit_markup_base::Read for DataLabelsContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_C, "dLblPos")) => Self::DataLabelPosition(Box::new(item.read())),
-            Some((NS_C, "delete")) => Self::Delete(Box::new(item.read())),
-            Some((NS_C, "leaderLines")) => Self::LeaderLines(Box::new(item.read())),
+            Some((NS_C, "dLblPos")) => Self::DataLabelPosition(item.read()),
+            Some((NS_C, "delete")) => Self::Delete(item.read()),
+            Some((NS_C, "leaderLines")) => Self::LeaderLines(item.read()),
             Some((NS_C, "numFmt")) => Self::NumberFormat(Box::new(item.read())),
-            Some((NS_C, "separator")) => Self::Separator(Box::new(item.read())),
+            Some((NS_C, "separator")) => Self::Separator(item.read()),
             Some((NS_C, "spPr")) => Self::ShapeProperties(Box::new(item.read())),
-            Some((NS_C, "showBubbleSize")) => Self::ShowBubbleSize(Box::new(item.read())),
-            Some((NS_C, "showCatName")) => Self::ShowCategoryName(Box::new(item.read())),
-            Some((NS_C, "showLeaderLines")) => Self::ShowLeaderLines(Box::new(item.read())),
-            Some((NS_C, "showLegendKey")) => Self::ShowLegendKey(Box::new(item.read())),
-            Some((NS_C, "showPercent")) => Self::ShowPercent(Box::new(item.read())),
-            Some((NS_C, "showSerName")) => Self::ShowSeriesName(Box::new(item.read())),
-            Some((NS_C, "showVal")) => Self::ShowValue(Box::new(item.read())),
+            Some((NS_C, "showBubbleSize")) => Self::ShowBubbleSize(item.read()),
+            Some((NS_C, "showCatName")) => Self::ShowCategoryName(item.read()),
+            Some((NS_C, "showLeaderLines")) => Self::ShowLeaderLines(item.read()),
+            Some((NS_C, "showLegendKey")) => Self::ShowLegendKey(item.read()),
+            Some((NS_C, "showPercent")) => Self::ShowPercent(item.read()),
+            Some((NS_C, "showSerName")) => Self::ShowSeriesName(item.read()),
+            Some((NS_C, "showVal")) => Self::ShowValue(item.read()),
             Some((NS_C, "txPr")) => Self::TextProperties(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -13545,19 +13521,19 @@ impl officekit_markup_base::Write for DataLabelsContent {
 
 impl<X: UserData> From<DataLabelPositionWith<X>> for DataLabelsContentWith<X> {
     fn from(arm: DataLabelPositionWith<X>) -> Self {
-        Self::DataLabelPosition(Box::new(arm))
+        Self::DataLabelPosition(arm)
     }
 }
 
 impl<X: UserData> From<DeleteWith<X>> for DataLabelsContentWith<X> {
     fn from(arm: DeleteWith<X>) -> Self {
-        Self::Delete(Box::new(arm))
+        Self::Delete(arm)
     }
 }
 
 impl<X: UserData> From<LeaderLinesWith<X>> for DataLabelsContentWith<X> {
     fn from(arm: LeaderLinesWith<X>) -> Self {
-        Self::LeaderLines(Box::new(arm))
+        Self::LeaderLines(arm)
     }
 }
 
@@ -13569,7 +13545,7 @@ impl<X: UserData> From<NumberFormatWith<X>> for DataLabelsContentWith<X> {
 
 impl<X: UserData> From<SeparatorWith<X>> for DataLabelsContentWith<X> {
     fn from(arm: SeparatorWith<X>) -> Self {
-        Self::Separator(Box::new(arm))
+        Self::Separator(arm)
     }
 }
 
@@ -13581,43 +13557,43 @@ impl<X: UserData> From<ShapePropertiesWith<X>> for DataLabelsContentWith<X> {
 
 impl<X: UserData> From<ShowBubbleSizeWith<X>> for DataLabelsContentWith<X> {
     fn from(arm: ShowBubbleSizeWith<X>) -> Self {
-        Self::ShowBubbleSize(Box::new(arm))
+        Self::ShowBubbleSize(arm)
     }
 }
 
 impl<X: UserData> From<ShowCategoryNameWith<X>> for DataLabelsContentWith<X> {
     fn from(arm: ShowCategoryNameWith<X>) -> Self {
-        Self::ShowCategoryName(Box::new(arm))
+        Self::ShowCategoryName(arm)
     }
 }
 
 impl<X: UserData> From<ShowLeaderLinesWith<X>> for DataLabelsContentWith<X> {
     fn from(arm: ShowLeaderLinesWith<X>) -> Self {
-        Self::ShowLeaderLines(Box::new(arm))
+        Self::ShowLeaderLines(arm)
     }
 }
 
 impl<X: UserData> From<ShowLegendKeyWith<X>> for DataLabelsContentWith<X> {
     fn from(arm: ShowLegendKeyWith<X>) -> Self {
-        Self::ShowLegendKey(Box::new(arm))
+        Self::ShowLegendKey(arm)
     }
 }
 
 impl<X: UserData> From<ShowPercentWith<X>> for DataLabelsContentWith<X> {
     fn from(arm: ShowPercentWith<X>) -> Self {
-        Self::ShowPercent(Box::new(arm))
+        Self::ShowPercent(arm)
     }
 }
 
 impl<X: UserData> From<ShowSeriesNameWith<X>> for DataLabelsContentWith<X> {
     fn from(arm: ShowSeriesNameWith<X>) -> Self {
-        Self::ShowSeriesName(Box::new(arm))
+        Self::ShowSeriesName(arm)
     }
 }
 
 impl<X: UserData> From<ShowValueWith<X>> for DataLabelsContentWith<X> {
     fn from(arm: ShowValueWith<X>) -> Self {
-        Self::ShowValue(Box::new(arm))
+        Self::ShowValue(arm)
     }
 }
 
@@ -14298,10 +14274,10 @@ impl<X: UserData> DisplayUnitsContentWith<X> {
     {
         match self {
             Self::BuiltInDisplayUnitValue(node) => {
-                DisplayUnitsContentWith::BuiltInDisplayUnitValue(Box::new((*node).into_user_data()))
+                DisplayUnitsContentWith::BuiltInDisplayUnitValue(node.into_user_data())
             }
             Self::CustomDisplayUnit(node) => {
-                DisplayUnitsContentWith::CustomDisplayUnit(Box::new((*node).into_user_data()))
+                DisplayUnitsContentWith::CustomDisplayUnit(node.into_user_data())
             }
             Self::Other(node) => DisplayUnitsContentWith::Other(node),
         }
@@ -14310,7 +14286,7 @@ impl<X: UserData> DisplayUnitsContentWith<X> {
 
 impl<X: UserData> Default for DisplayUnitsContentWith<X> {
     fn default() -> Self {
-        Self::BuiltInDisplayUnitValue(Box::default())
+        Self::BuiltInDisplayUnitValue(BuiltInDisplayUnitValueWith::default())
     }
 }
 
@@ -14321,8 +14297,8 @@ impl officekit_markup_base::Read for DisplayUnitsContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_C, "builtInUnit")) => Self::BuiltInDisplayUnitValue(Box::new(item.read())),
-            Some((NS_C, "custUnit")) => Self::CustomDisplayUnit(Box::new(item.read())),
+            Some((NS_C, "builtInUnit")) => Self::BuiltInDisplayUnitValue(item.read()),
+            Some((NS_C, "custUnit")) => Self::CustomDisplayUnit(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -14340,13 +14316,13 @@ impl officekit_markup_base::Write for DisplayUnitsContent {
 
 impl<X: UserData> From<BuiltInDisplayUnitValueWith<X>> for DisplayUnitsContentWith<X> {
     fn from(arm: BuiltInDisplayUnitValueWith<X>) -> Self {
-        Self::BuiltInDisplayUnitValue(Box::new(arm))
+        Self::BuiltInDisplayUnitValue(arm)
     }
 }
 
 impl<X: UserData> From<CustomDisplayUnitWith<X>> for DisplayUnitsContentWith<X> {
     fn from(arm: CustomDisplayUnitWith<X>) -> Self {
-        Self::CustomDisplayUnit(Box::new(arm))
+        Self::CustomDisplayUnit(arm)
     }
 }
 
@@ -17072,9 +17048,7 @@ impl<X: UserData> LegendEntryContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Delete(node) => {
-                LegendEntryContentWith::Delete(Box::new((*node).into_user_data()))
-            }
+            Self::Delete(node) => LegendEntryContentWith::Delete(node.into_user_data()),
             Self::Other(node) => LegendEntryContentWith::Other(node),
             Self::TextProperties(node) => {
                 LegendEntryContentWith::TextProperties(Box::new((*node).into_user_data()))
@@ -17090,7 +17064,7 @@ impl officekit_markup_base::Read for LegendEntryContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_C, "delete")) => Self::Delete(Box::new(item.read())),
+            Some((NS_C, "delete")) => Self::Delete(item.read()),
             Some((NS_C, "txPr")) => Self::TextProperties(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -17109,7 +17083,7 @@ impl officekit_markup_base::Write for LegendEntryContent {
 
 impl<X: UserData> From<DeleteWith<X>> for LegendEntryContentWith<X> {
     fn from(arm: DeleteWith<X>) -> Self {
-        Self::Delete(Box::new(arm))
+        Self::Delete(arm)
     }
 }
 
@@ -18586,7 +18560,7 @@ impl<X: UserData> NumberDataSourceContentWith<X> {
                 NumberDataSourceContentWith::NumberLiteral(Box::new((*node).into_user_data()))
             }
             Self::NumberReference(node) => {
-                NumberDataSourceContentWith::NumberReference(Box::new((*node).into_user_data()))
+                NumberDataSourceContentWith::NumberReference(node.into_user_data())
             }
             Self::Other(node) => NumberDataSourceContentWith::Other(node),
         }
@@ -18607,7 +18581,7 @@ impl officekit_markup_base::Read for NumberDataSourceContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_C, "numLit")) => Self::NumberLiteral(Box::new(item.read())),
-            Some((NS_C, "numRef")) => Self::NumberReference(Box::new(item.read())),
+            Some((NS_C, "numRef")) => Self::NumberReference(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -18631,7 +18605,7 @@ impl<X: UserData> From<NumberLiteralWith<X>> for NumberDataSourceContentWith<X> 
 
 impl<X: UserData> From<NumberReferenceWith<X>> for NumberDataSourceContentWith<X> {
     fn from(arm: NumberReferenceWith<X>) -> Self {
-        Self::NumberReference(Box::new(arm))
+        Self::NumberReference(arm)
     }
 }
 
@@ -22161,12 +22135,10 @@ impl<X: UserData> SeriesTextContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::NumericValue(node) => {
-                SeriesTextContentWith::NumericValue(Box::new((*node).into_user_data()))
-            }
+            Self::NumericValue(node) => SeriesTextContentWith::NumericValue(node.into_user_data()),
             Self::Other(node) => SeriesTextContentWith::Other(node),
             Self::StringReference(node) => {
-                SeriesTextContentWith::StringReference(Box::new((*node).into_user_data()))
+                SeriesTextContentWith::StringReference(node.into_user_data())
             }
         }
     }
@@ -22174,7 +22146,7 @@ impl<X: UserData> SeriesTextContentWith<X> {
 
 impl<X: UserData> Default for SeriesTextContentWith<X> {
     fn default() -> Self {
-        Self::NumericValue(Box::default())
+        Self::NumericValue(NumericValueWith::default())
     }
 }
 
@@ -22185,8 +22157,8 @@ impl officekit_markup_base::Read for SeriesTextContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_C, "v")) => Self::NumericValue(Box::new(item.read())),
-            Some((NS_C, "strRef")) => Self::StringReference(Box::new(item.read())),
+            Some((NS_C, "v")) => Self::NumericValue(item.read()),
+            Some((NS_C, "strRef")) => Self::StringReference(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -22204,13 +22176,13 @@ impl officekit_markup_base::Write for SeriesTextContent {
 
 impl<X: UserData> From<NumericValueWith<X>> for SeriesTextContentWith<X> {
     fn from(arm: NumericValueWith<X>) -> Self {
-        Self::NumericValue(Box::new(arm))
+        Self::NumericValue(arm)
     }
 }
 
 impl<X: UserData> From<StringReferenceWith<X>> for SeriesTextContentWith<X> {
     fn from(arm: StringReferenceWith<X>) -> Self {
-        Self::StringReference(Box::new(arm))
+        Self::StringReference(arm)
     }
 }
 

@@ -1291,27 +1291,27 @@ impl super::Transform for office_powerpoint_2021_06_main::TaskHistoryEventConten
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Add(arm) = self {
-            Self::Add(Box::new(arm.transform(ctx)))
+            Self::Add(arm.transform(ctx))
         } else if let Self::Asgn(arm) = self {
-            Self::Asgn(Box::new(arm.transform(ctx)))
+            Self::Asgn(arm.transform(ctx))
         } else if let Self::Date(arm) = self {
             Self::Date(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PcntCmplt(arm) = self {
-            Self::PcntCmplt(Box::new(arm.transform(ctx)))
+            Self::PcntCmplt(arm.transform(ctx))
         } else if let Self::Pri(arm) = self {
-            Self::Pri(Box::new(arm.transform(ctx)))
+            Self::Pri(arm.transform(ctx))
         } else if let Self::Title(arm) = self {
-            Self::Title(Box::new(arm.transform(ctx)))
+            Self::Title(arm.transform(ctx))
         } else if let Self::UnAsgn(arm) = self {
-            Self::UnAsgn(Box::new(arm.transform(ctx)))
+            Self::UnAsgn(arm.transform(ctx))
         } else if let Self::UnasgnAll(arm) = self {
-            Self::UnasgnAll(Box::new(arm.transform(ctx)))
+            Self::UnasgnAll(arm.transform(ctx))
         } else if let Self::Undo(arm) = self {
-            Self::Undo(Box::new(arm.transform(ctx)))
+            Self::Undo(arm.transform(ctx))
         } else if let Self::Unknown(arm) = self {
-            Self::Unknown(Box::new(arm.transform(ctx)))
+            Self::Unknown(arm.transform(ctx))
         } else {
             self.clone()
         }

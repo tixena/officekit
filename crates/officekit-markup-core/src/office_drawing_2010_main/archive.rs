@@ -786,7 +786,7 @@ pub struct XfrmMirror {
 #[rkyv(remote = super::PictureEffectContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum PictureEffectContent {
-    ArtisticBlur(Box<super::ArtisticBlur>),
+    ArtisticBlur(super::ArtisticBlur),
     ArtisticCement(Box<super::ArtisticCement>),
     ArtisticChalkSketch(Box<super::ArtisticChalkSketch>),
     ArtisticCrisscrossEtching(Box<super::ArtisticCrisscrossEtching>),
@@ -810,10 +810,10 @@ pub enum PictureEffectContent {
     ArtisticWatercolorSponge(Box<super::ArtisticWatercolorSponge>),
     BackgroundRemoval(Box<super::BackgroundRemoval>),
     BrightnessContrast(Box<super::BrightnessContrast>),
-    ColorTemperature(Box<super::ColorTemperature>),
+    ColorTemperature(super::ColorTemperature),
     Other(Box<Node>),
-    Saturation(Box<super::Saturation>),
-    SharpenSoften(Box<super::SharpenSoften>),
+    Saturation(super::Saturation),
+    SharpenSoften(super::SharpenSoften),
 }
 
 impl From<ArtisticBlurMirror> for super::ArtisticBlur {

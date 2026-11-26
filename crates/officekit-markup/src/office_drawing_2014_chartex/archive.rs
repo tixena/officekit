@@ -1519,7 +1519,7 @@ pub struct VisibilitySeriesElementVisibilitiesMirror {
 #[rkyv(remote = super::AxisContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum AxisContent {
-    CatScaling(Box<super::CatScaling>),
+    CatScaling(super::CatScaling),
     Other(Box<Node>),
     ValScaling(Box<super::ValScaling>),
 }
@@ -1528,8 +1528,8 @@ pub enum AxisContent {
 #[rkyv(remote = super::BinningContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum BinningContent {
-    BinCount(Box<super::BinCount>),
-    BinSize(Box<super::BinSize>),
+    BinCount(super::BinCount),
+    BinSize(super::BinSize),
     Other(Box<Node>),
 }
 
@@ -1546,7 +1546,7 @@ pub enum DataContent {
 #[rkyv(remote = super::GeographyCacheContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum GeographyCacheContent {
-    Binary(Box<super::Binary>),
+    Binary(super::Binary),
     Clear(Box<super::Clear>),
     Other(Box<Node>),
 }
@@ -1555,9 +1555,9 @@ pub enum GeographyCacheContent {
 #[rkyv(remote = super::NumericDimensionContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum NumericDimensionContent {
-    F(Box<super::F>),
+    F(super::F),
     LvlNumericLevel(Box<super::LvlNumericLevel>),
-    Nf(Box<super::Nf>),
+    Nf(super::Nf),
     Other(Box<Node>),
 }
 
@@ -1565,7 +1565,7 @@ pub enum NumericDimensionContent {
 #[rkyv(remote = super::SeriesLayoutPropertiesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum SeriesLayoutPropertiesContent {
-    Aggregation(Box<super::Aggregation>),
+    Aggregation(super::Aggregation),
     Binning(Box<super::Binning>),
     Other(Box<Node>),
 }
@@ -1574,9 +1574,9 @@ pub enum SeriesLayoutPropertiesContent {
 #[rkyv(remote = super::StringDimensionContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum StringDimensionContent {
-    F(Box<super::F>),
+    F(super::F),
     LvlStringLevel(Box<super::LvlStringLevel>),
-    Nf(Box<super::Nf>),
+    Nf(super::Nf),
     Other(Box<Node>),
 }
 
@@ -1586,35 +1586,35 @@ pub enum StringDimensionContent {
 pub enum TextContent {
     Other(Box<Node>),
     Rich(Box<super::Rich>),
-    TxData(Box<super::TxData>),
+    TxData(super::TxData),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextDataContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum TextDataContent {
-    F(Box<super::F>),
+    F(super::F),
     Other(Box<Node>),
-    V(Box<super::V>),
+    V(super::V),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ValueColorEndPositionContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ValueColorEndPositionContent {
-    ExtremeValue(Box<super::ExtremeValue>),
-    Number(Box<super::Number>),
+    ExtremeValue(super::ExtremeValue),
+    Number(super::Number),
     Other(Box<Node>),
-    Percent(Box<super::Percent>),
+    Percent(super::Percent),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ValueColorMiddlePositionContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ValueColorMiddlePositionContent {
-    Number(Box<super::Number>),
+    Number(super::Number),
     Other(Box<Node>),
-    Percent(Box<super::Percent>),
+    Percent(super::Percent),
 }
 
 impl From<AddressMirror> for super::Address {

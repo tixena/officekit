@@ -768,13 +768,13 @@ impl super::Transform for office_drawing_2018_sketchyshapes::LineSketchTypePrope
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::LineSketchCurved(arm) = self {
-            Self::LineSketchCurved(Box::new(arm.transform(ctx)))
+            Self::LineSketchCurved(arm.transform(ctx))
         } else if let Self::LineSketchFreehand(arm) = self {
-            Self::LineSketchFreehand(Box::new(arm.transform(ctx)))
+            Self::LineSketchFreehand(arm.transform(ctx))
         } else if let Self::LineSketchNone(arm) = self {
-            Self::LineSketchNone(Box::new(arm.transform(ctx)))
+            Self::LineSketchNone(arm.transform(ctx))
         } else if let Self::LineSketchScribble(arm) = self {
-            Self::LineSketchScribble(Box::new(arm.transform(ctx)))
+            Self::LineSketchScribble(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {

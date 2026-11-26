@@ -624,13 +624,13 @@ impl Eq for LineSketchStylePropsWith<()> {}
 #[non_exhaustive]
 pub enum LineSketchTypePropertiesContentWith<X: UserData> {
     /// The element `ask:lineSketchCurved`, a `LineSketchCurved`.
-    LineSketchCurved(Box<LineSketchCurvedWith<X>>),
+    LineSketchCurved(LineSketchCurvedWith<X>),
     /// The element `ask:lineSketchFreehand`, a `LineSketchFreehand`.
-    LineSketchFreehand(Box<LineSketchFreehandWith<X>>),
+    LineSketchFreehand(LineSketchFreehandWith<X>),
     /// The element `ask:lineSketchNone`, a `LineSketchNone`.
-    LineSketchNone(Box<LineSketchNoneWith<X>>),
+    LineSketchNone(LineSketchNoneWith<X>),
     /// The element `ask:lineSketchScribble`, a `LineSketchScribble`.
-    LineSketchScribble(Box<LineSketchScribbleWith<X>>),
+    LineSketchScribble(LineSketchScribbleWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -1051,21 +1051,17 @@ impl<X: UserData> LineSketchTypePropertiesContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::LineSketchCurved(node) => LineSketchTypePropertiesContentWith::LineSketchCurved(
-                Box::new((*node).into_user_data()),
-            ),
-            Self::LineSketchFreehand(node) => {
-                LineSketchTypePropertiesContentWith::LineSketchFreehand(Box::new(
-                    (*node).into_user_data(),
-                ))
+            Self::LineSketchCurved(node) => {
+                LineSketchTypePropertiesContentWith::LineSketchCurved(node.into_user_data())
             }
-            Self::LineSketchNone(node) => LineSketchTypePropertiesContentWith::LineSketchNone(
-                Box::new((*node).into_user_data()),
-            ),
+            Self::LineSketchFreehand(node) => {
+                LineSketchTypePropertiesContentWith::LineSketchFreehand(node.into_user_data())
+            }
+            Self::LineSketchNone(node) => {
+                LineSketchTypePropertiesContentWith::LineSketchNone(node.into_user_data())
+            }
             Self::LineSketchScribble(node) => {
-                LineSketchTypePropertiesContentWith::LineSketchScribble(Box::new(
-                    (*node).into_user_data(),
-                ))
+                LineSketchTypePropertiesContentWith::LineSketchScribble(node.into_user_data())
             }
             Self::Other(node) => LineSketchTypePropertiesContentWith::Other(node),
         }
@@ -1079,10 +1075,10 @@ impl officekit_markup_base::Read for LineSketchTypePropertiesContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_ASK, "lineSketchCurved")) => Self::LineSketchCurved(Box::new(item.read())),
-            Some((NS_ASK, "lineSketchFreehand")) => Self::LineSketchFreehand(Box::new(item.read())),
-            Some((NS_ASK, "lineSketchNone")) => Self::LineSketchNone(Box::new(item.read())),
-            Some((NS_ASK, "lineSketchScribble")) => Self::LineSketchScribble(Box::new(item.read())),
+            Some((NS_ASK, "lineSketchCurved")) => Self::LineSketchCurved(item.read()),
+            Some((NS_ASK, "lineSketchFreehand")) => Self::LineSketchFreehand(item.read()),
+            Some((NS_ASK, "lineSketchNone")) => Self::LineSketchNone(item.read()),
+            Some((NS_ASK, "lineSketchScribble")) => Self::LineSketchScribble(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -1102,25 +1098,25 @@ impl officekit_markup_base::Write for LineSketchTypePropertiesContent {
 
 impl<X: UserData> From<LineSketchCurvedWith<X>> for LineSketchTypePropertiesContentWith<X> {
     fn from(arm: LineSketchCurvedWith<X>) -> Self {
-        Self::LineSketchCurved(Box::new(arm))
+        Self::LineSketchCurved(arm)
     }
 }
 
 impl<X: UserData> From<LineSketchFreehandWith<X>> for LineSketchTypePropertiesContentWith<X> {
     fn from(arm: LineSketchFreehandWith<X>) -> Self {
-        Self::LineSketchFreehand(Box::new(arm))
+        Self::LineSketchFreehand(arm)
     }
 }
 
 impl<X: UserData> From<LineSketchNoneWith<X>> for LineSketchTypePropertiesContentWith<X> {
     fn from(arm: LineSketchNoneWith<X>) -> Self {
-        Self::LineSketchNone(Box::new(arm))
+        Self::LineSketchNone(arm)
     }
 }
 
 impl<X: UserData> From<LineSketchScribbleWith<X>> for LineSketchTypePropertiesContentWith<X> {
     fn from(arm: LineSketchScribbleWith<X>) -> Self {
-        Self::LineSketchScribble(Box::new(arm))
+        Self::LineSketchScribble(arm)
     }
 }
 

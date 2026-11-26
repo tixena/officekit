@@ -257,9 +257,9 @@ pub struct UnknownMirror {
 #[rkyv(remote = super::PlaceholderTypeContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum PlaceholderTypeContent {
-    Cameo(Box<super::Cameo>),
+    Cameo(super::Cameo),
     Other(Box<Node>),
-    Unknown(Box<super::Unknown>),
+    Unknown(super::Unknown),
 }
 
 impl From<CameoMirror> for super::Cameo {

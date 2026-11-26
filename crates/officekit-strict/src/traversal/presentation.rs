@@ -1048,17 +1048,17 @@ impl super::Transform for presentation::AnimationVariantContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::BooleanVariant(arm) = self {
-            Self::BooleanVariant(Box::new(arm.transform(ctx)))
+            Self::BooleanVariant(arm.transform(ctx))
         } else if let Self::ColorValue(arm) = self {
-            Self::ColorValue(Box::new(arm.transform(ctx)))
+            Self::ColorValue(arm.transform(ctx))
         } else if let Self::FloatValue(arm) = self {
-            Self::FloatValue(Box::new(arm.transform(ctx)))
+            Self::FloatValue(arm.transform(ctx))
         } else if let Self::Integer(arm) = self {
-            Self::Integer(Box::new(arm.transform(ctx)))
+            Self::Integer(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::StringValue(arm) = self {
-            Self::StringValue(Box::new(arm.transform(ctx)))
+            Self::StringValue(arm.transform(ctx))
         } else {
             self.clone()
         }
@@ -2449,9 +2449,9 @@ impl super::Transform for presentation::BuildGraphicsContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::BuildAsOne(arm) = self {
-            Self::BuildAsOne(Box::new(arm.transform(ctx)))
+            Self::BuildAsOne(arm.transform(ctx))
         } else if let Self::BuildSubElements(arm) = self {
-            Self::BuildSubElements(Box::new(arm.transform(ctx)))
+            Self::BuildSubElements(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {
@@ -7986,7 +7986,7 @@ impl super::Transform for presentation::GroupShapeContent {
         if let Self::ConnectionShape(arm) = self {
             Self::ConnectionShape(Box::new(arm.transform(ctx)))
         } else if let Self::ContentPart(arm) = self {
-            Self::ContentPart(Box::new(arm.transform(ctx)))
+            Self::ContentPart(arm.transform(ctx))
         } else if let Self::GraphicFrame(arm) = self {
             Self::GraphicFrame(Box::new(arm.transform(ctx)))
         } else if let Self::GroupShape(arm) = self {
@@ -8970,9 +8970,9 @@ impl super::Transform for presentation::IterateContent {
         if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::TimeAbsolute(arm) = self {
-            Self::TimeAbsolute(Box::new(arm.transform(ctx)))
+            Self::TimeAbsolute(arm.transform(ctx))
         } else if let Self::TimePercentage(arm) = self {
-            Self::TimePercentage(Box::new(arm.transform(ctx)))
+            Self::TimePercentage(arm.transform(ctx))
         } else {
             self.clone()
         }
@@ -11247,7 +11247,7 @@ impl super::Transform for presentation::NonVisualPropertiesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::AudioFromCD(arm) = self {
-            Self::AudioFromCD(Box::new(arm.transform(ctx)))
+            Self::AudioFromCD(arm.transform(ctx))
         } else if let Self::AudioFromFile(arm) = self {
             Self::AudioFromFile(Box::new(arm.transform(ctx)))
         } else if let Self::AudioFromWAVFile(arm) = self {
@@ -16377,17 +16377,17 @@ impl super::Transform for presentation::ShapeTargetContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Background(arm) = self {
-            Self::Background(Box::new(arm.transform(ctx)))
+            Self::Background(arm.transform(ctx))
         } else if let Self::EmbeddedChartElement(arm) = self {
             Self::EmbeddedChartElement(Box::new(arm.transform(ctx)))
         } else if let Self::GraphicElement(arm) = self {
-            Self::GraphicElement(Box::new(arm.transform(ctx)))
+            Self::GraphicElement(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Subshape(arm) = self {
-            Self::Subshape(Box::new(arm.transform(ctx)))
+            Self::Subshape(arm.transform(ctx))
         } else if let Self::TextElement(arm) = self {
-            Self::TextElement(Box::new(arm.transform(ctx)))
+            Self::TextElement(arm.transform(ctx))
         } else {
             self.clone()
         }
@@ -16683,13 +16683,13 @@ impl super::Transform for presentation::ShowTypeContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::BrowseSlideShowMode(arm) = self {
-            Self::BrowseSlideShowMode(Box::new(arm.transform(ctx)))
+            Self::BrowseSlideShowMode(arm.transform(ctx))
         } else if let Self::KioskSlideShowMode(arm) = self {
-            Self::KioskSlideShowMode(Box::new(arm.transform(ctx)))
+            Self::KioskSlideShowMode(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PresenterSlideShowMode(arm) = self {
-            Self::PresenterSlideShowMode(Box::new(arm.transform(ctx)))
+            Self::PresenterSlideShowMode(arm.transform(ctx))
         } else {
             self.clone()
         }
@@ -17250,9 +17250,9 @@ impl super::Transform for presentation::SlideListContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::AllSlides(arm) = self {
-            Self::AllSlides(Box::new(arm.transform(ctx)))
+            Self::AllSlides(arm.transform(ctx))
         } else if let Self::CustomShow(arm) = self {
-            Self::CustomShow(Box::new(arm.transform(ctx)))
+            Self::CustomShow(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::SlideRange(arm) = self {
@@ -19005,7 +19005,7 @@ impl super::Transform for presentation::SoundActionContent {
         } else if let Self::StartSoundAction(arm) = self {
             Self::StartSoundAction(Box::new(arm.transform(ctx)))
         } else if let Self::StopSoundAction(arm) = self {
-            Self::StopSoundAction(Box::new(arm.transform(ctx)))
+            Self::StopSoundAction(arm.transform(ctx))
         } else {
             self.clone()
         }
@@ -19950,13 +19950,13 @@ impl super::Transform for presentation::TargetElementContent {
         if let Self::BmkTgt(arm) = self {
             Self::BmkTgt(Box::new(arm.transform(ctx)))
         } else if let Self::InkTarget(arm) = self {
-            Self::InkTarget(Box::new(arm.transform(ctx)))
+            Self::InkTarget(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::ShapeTarget(arm) = self {
             Self::ShapeTarget(Box::new(arm.transform(ctx)))
         } else if let Self::SlideTarget(arm) = self {
-            Self::SlideTarget(Box::new(arm.transform(ctx)))
+            Self::SlideTarget(arm.transform(ctx))
         } else if let Self::SoundTarget(arm) = self {
             Self::SoundTarget(Box::new(arm.transform(ctx)))
         } else {
@@ -20695,11 +20695,11 @@ impl super::Transform for presentation::TimeConditionContent {
         if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::RuntimeNodeTriggerChoice(arm) = self {
-            Self::RuntimeNodeTriggerChoice(Box::new(arm.transform(ctx)))
+            Self::RuntimeNodeTriggerChoice(arm.transform(ctx))
         } else if let Self::TargetElement(arm) = self {
-            Self::TargetElement(Box::new(arm.transform(ctx)))
+            Self::TargetElement(arm.transform(ctx))
         } else if let Self::TimeNode(arm) = self {
-            Self::TimeNode(Box::new(arm.transform(ctx)))
+            Self::TimeNode(arm.transform(ctx))
         } else {
             self.clone()
         }
@@ -20993,15 +20993,15 @@ impl super::Transform for presentation::TimeNodeListContent {
         } else if let Self::Command(arm) = self {
             Self::Command(Box::new(arm.transform(ctx)))
         } else if let Self::Exclusive(arm) = self {
-            Self::Exclusive(Box::new(arm.transform(ctx)))
+            Self::Exclusive(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::ParallelTimeNode(arm) = self {
-            Self::ParallelTimeNode(Box::new(arm.transform(ctx)))
+            Self::ParallelTimeNode(arm.transform(ctx))
         } else if let Self::SequenceTimeNode(arm) = self {
             Self::SequenceTimeNode(Box::new(arm.transform(ctx)))
         } else if let Self::SetTimeNodeBehavior(arm) = self {
-            Self::SetTimeNodeBehavior(Box::new(arm.transform(ctx)))
+            Self::SetTimeNodeBehavior(arm.transform(ctx))
         } else if let Self::Video(arm) = self {
             Self::Video(Box::new(arm.transform(ctx)))
         } else {
@@ -22272,71 +22272,71 @@ fn transform_slide_transition_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<presentation::SlideTransitionContent> {
     if let presentation::SlideTransitionContent::BlindsSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::BlindsSlideTransition(
             node,
         ));
     }
     if let presentation::SlideTransitionContent::CheckerSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::CheckerSlideTransition(node));
     }
     if let presentation::SlideTransitionContent::CircleSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::CircleSlideTransition(
             node,
         ));
     }
     if let presentation::SlideTransitionContent::CombSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::CombSlideTransition(
             node,
         ));
     }
     if let presentation::SlideTransitionContent::Conveyor(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::Conveyor(node));
     }
     if let presentation::SlideTransitionContent::CoverSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::CoverSlideTransition(
             node,
         ));
     }
     if let presentation::SlideTransitionContent::CutSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::CutSlideTransition(
             node,
         ));
     }
     if let presentation::SlideTransitionContent::DiamondSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::DiamondSlideTransition(node));
     }
     if let presentation::SlideTransitionContent::DissolveSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::DissolveSlideTransition(node));
     }
     if let presentation::SlideTransitionContent::Doors(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::Doors(node));
     }
     if let presentation::SlideTransitionContent::FadeSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::FadeSlideTransition(
             node,
         ));
     }
     if let presentation::SlideTransitionContent::Ferris(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::Ferris(node));
     }
     if let presentation::SlideTransitionContent::Flash(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::Flash(node));
     }
     if let presentation::SlideTransitionContent::Flip(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::Flip(node));
     }
     if let presentation::SlideTransitionContent::Flythrough(arm) = item {
@@ -22344,7 +22344,7 @@ fn transform_slide_transition_1(
         return Some(presentation::SlideTransitionContent::Flythrough(node));
     }
     if let presentation::SlideTransitionContent::Gallery(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::Gallery(node));
     }
     if let presentation::SlideTransitionContent::Glitter(arm) = item {
@@ -22352,11 +22352,11 @@ fn transform_slide_transition_1(
         return Some(presentation::SlideTransitionContent::Glitter(node));
     }
     if let presentation::SlideTransitionContent::Honeycomb(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::Honeycomb(node));
     }
     if let presentation::SlideTransitionContent::NewsflashSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::NewsflashSlideTransition(node));
     }
     None
@@ -22367,11 +22367,11 @@ fn transform_slide_transition_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<presentation::SlideTransitionContent> {
     if let presentation::SlideTransitionContent::Pan(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::Pan(node));
     }
     if let presentation::SlideTransitionContent::PlusSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::PlusSlideTransition(
             node,
         ));
@@ -22385,23 +22385,23 @@ fn transform_slide_transition_2(
         return Some(presentation::SlideTransitionContent::PrstTrans(node));
     }
     if let presentation::SlideTransitionContent::PullSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::PullSlideTransition(
             node,
         ));
     }
     if let presentation::SlideTransitionContent::PushSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::PushSlideTransition(
             node,
         ));
     }
     if let presentation::SlideTransitionContent::RandomBarSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::RandomBarSlideTransition(node));
     }
     if let presentation::SlideTransitionContent::RandomSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::RandomSlideTransition(
             node,
         ));
@@ -22411,7 +22411,7 @@ fn transform_slide_transition_2(
         return Some(presentation::SlideTransitionContent::Reveal(node));
     }
     if let presentation::SlideTransitionContent::Ripple(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::Ripple(node));
     }
     if let presentation::SlideTransitionContent::Shred(arm) = item {
@@ -22425,31 +22425,31 @@ fn transform_slide_transition_2(
         ));
     }
     if let presentation::SlideTransitionContent::StripsSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::StripsSlideTransition(
             node,
         ));
     }
     if let presentation::SlideTransitionContent::Switch(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::Switch(node));
     }
     if let presentation::SlideTransitionContent::Vortex(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::Vortex(node));
     }
     if let presentation::SlideTransitionContent::Warp(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::Warp(node));
     }
     if let presentation::SlideTransitionContent::WedgeSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::WedgeSlideTransition(
             node,
         ));
     }
     if let presentation::SlideTransitionContent::WheelReverse(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::WheelReverse(node));
     }
     None
@@ -22460,23 +22460,23 @@ fn transform_slide_transition_3(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<presentation::SlideTransitionContent> {
     if let presentation::SlideTransitionContent::WheelSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::WheelSlideTransition(
             node,
         ));
     }
     if let presentation::SlideTransitionContent::Window(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::Window(node));
     }
     if let presentation::SlideTransitionContent::WipeSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::WipeSlideTransition(
             node,
         ));
     }
     if let presentation::SlideTransitionContent::ZoomSlideTransition(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(presentation::SlideTransitionContent::ZoomSlideTransition(
             node,
         ));

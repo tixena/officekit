@@ -8436,13 +8436,13 @@ impl Eq for RibbonWith<()> {}
 #[non_exhaustive]
 pub enum RibbonContentWith<X: UserData> {
     /// The element `mso14:contextualTabs`, a `ContextualTabs`.
-    ContextualTabs(Box<ContextualTabsWith<X>>),
+    ContextualTabs(ContextualTabsWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `mso14:qat`, a `Qat`.
-    Qat(Box<QatWith<X>>),
+    Qat(QatWith<X>),
     /// The element `mso14:tabs`, a `Tabs`.
-    Tabs(Box<TabsWith<X>>),
+    Tabs(TabsWith<X>),
 }
 
 /// [`RibbonContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -17194,12 +17194,10 @@ impl<X: UserData> RibbonContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::ContextualTabs(node) => {
-                RibbonContentWith::ContextualTabs(Box::new((*node).into_user_data()))
-            }
+            Self::ContextualTabs(node) => RibbonContentWith::ContextualTabs(node.into_user_data()),
             Self::Other(node) => RibbonContentWith::Other(node),
-            Self::Qat(node) => RibbonContentWith::Qat(Box::new((*node).into_user_data())),
-            Self::Tabs(node) => RibbonContentWith::Tabs(Box::new((*node).into_user_data())),
+            Self::Qat(node) => RibbonContentWith::Qat(node.into_user_data()),
+            Self::Tabs(node) => RibbonContentWith::Tabs(node.into_user_data()),
         }
     }
 }
@@ -17211,9 +17209,9 @@ impl officekit_markup_base::Read for RibbonContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "contextualTabs")) => Self::ContextualTabs(Box::new(item.read())),
-            Some((NS_MSO14, "qat")) => Self::Qat(Box::new(item.read())),
-            Some((NS_MSO14, "tabs")) => Self::Tabs(Box::new(item.read())),
+            Some((NS_MSO14, "contextualTabs")) => Self::ContextualTabs(item.read()),
+            Some((NS_MSO14, "qat")) => Self::Qat(item.read()),
+            Some((NS_MSO14, "tabs")) => Self::Tabs(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -17232,19 +17230,19 @@ impl officekit_markup_base::Write for RibbonContent {
 
 impl<X: UserData> From<ContextualTabsWith<X>> for RibbonContentWith<X> {
     fn from(arm: ContextualTabsWith<X>) -> Self {
-        Self::ContextualTabs(Box::new(arm))
+        Self::ContextualTabs(arm)
     }
 }
 
 impl<X: UserData> From<QatWith<X>> for RibbonContentWith<X> {
     fn from(arm: QatWith<X>) -> Self {
-        Self::Qat(Box::new(arm))
+        Self::Qat(arm)
     }
 }
 
 impl<X: UserData> From<TabsWith<X>> for RibbonContentWith<X> {
     fn from(arm: TabsWith<X>) -> Self {
-        Self::Tabs(Box::new(arm))
+        Self::Tabs(arm)
     }
 }
 

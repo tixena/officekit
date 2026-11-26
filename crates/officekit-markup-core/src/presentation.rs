@@ -3023,17 +3023,17 @@ pub enum AnimationTimeMember {
 #[non_exhaustive]
 pub enum AnimationVariantContentWith<X: UserData> {
     /// The element `p:boolVal`, a `BooleanVariant`.
-    BooleanVariant(Box<BooleanVariantWith<X>>),
+    BooleanVariant(BooleanVariantWith<X>),
     /// The element `p:clrVal`, a `ColorValue`.
-    ColorValue(Box<ColorValueWith<X>>),
+    ColorValue(ColorValueWith<X>),
     /// The element `p:fltVal`, a `FloatValue`.
-    FloatValue(Box<FloatValueWith<X>>),
+    FloatValue(FloatValueWith<X>),
     /// The element `p:intVal`, a `Integer`.
-    Integer(Box<IntegerWith<X>>),
+    Integer(IntegerWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `p:strVal`, a `StringValue`.
-    StringValue(Box<StringValueWith<X>>),
+    StringValue(StringValueWith<X>),
 }
 
 /// [`AnimationVariantContentWith`] of the tree a read gives, where no node holds anything in
@@ -3492,9 +3492,9 @@ impl Eq for BuildGraphicsWith<()> {}
 #[non_exhaustive]
 pub enum BuildGraphicsContentWith<X: UserData> {
     /// The element `p:bldAsOne`, a `BuildAsOne`.
-    BuildAsOne(Box<BuildAsOneWith<X>>),
+    BuildAsOne(BuildAsOneWith<X>),
     /// The element `p:bldSub`, a `BuildSubElements`.
-    BuildSubElements(Box<BuildSubElementsWith<X>>),
+    BuildSubElements(BuildSubElementsWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -5208,7 +5208,7 @@ pub enum GroupShapeContentWith<X: UserData> {
     /// The element `p:cxnSp`, a `ConnectionShape`.
     ConnectionShape(Box<ConnectionShapeWith<X>>),
     /// The element `p:contentPart`, a `ContentPart`.
-    ContentPart(Box<ContentPartWith<X>>),
+    ContentPart(ContentPartWith<X>),
     /// The element `p:graphicFrame`, a `GraphicFrame`.
     GraphicFrame(Box<GraphicFrameWith<X>>),
     /// The element `p:grpSp`, a `GroupShape`.
@@ -5592,9 +5592,9 @@ pub enum IterateContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `p:tmAbs`, a `TimeAbsolute`.
-    TimeAbsolute(Box<TimeAbsoluteWith<X>>),
+    TimeAbsolute(TimeAbsoluteWith<X>),
     /// The element `p:tmPct`, a `TimePercentage`.
-    TimePercentage(Box<TimePercentageWith<X>>),
+    TimePercentage(TimePercentageWith<X>),
 }
 
 /// [`IterateContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -6256,7 +6256,7 @@ impl Eq for NonVisualPropertiesWith<()> {}
 #[non_exhaustive]
 pub enum NonVisualPropertiesContentWith<X: UserData> {
     /// The element `a:audioCd`, a `AudioFromCD`.
-    AudioFromCD(Box<super::drawing::AudioFromCDWith<X>>),
+    AudioFromCD(super::drawing::AudioFromCDWith<X>),
     /// The element `a:audioFile`, a `AudioFromFile`.
     AudioFromFile(Box<super::drawing::AudioFromFileWith<X>>),
     /// The element `a:wavAudioFile`, a `AudioFromWAVFile`.
@@ -7913,17 +7913,17 @@ impl Eq for ShapeTargetWith<()> {}
 #[non_exhaustive]
 pub enum ShapeTargetContentWith<X: UserData> {
     /// The element `p:bg`, a `Background`.
-    Background(Box<BackgroundWith<X>>),
+    Background(BackgroundWith<X>),
     /// The element `p:oleChartEl`, a `EmbeddedChartElement`.
     EmbeddedChartElement(Box<EmbeddedChartElementWith<X>>),
     /// The element `p:graphicEl`, a `GraphicElement`.
-    GraphicElement(Box<GraphicElementWith<X>>),
+    GraphicElement(GraphicElementWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `p:subSp`, a `Subshape`.
-    Subshape(Box<SubshapeWith<X>>),
+    Subshape(SubshapeWith<X>),
     /// The element `p:txEl`, a `TextElement`.
-    TextElement(Box<TextElementWith<X>>),
+    TextElement(TextElementWith<X>),
 }
 
 /// [`ShapeTargetContentWith`] of the tree a read gives, where no node holds anything in
@@ -7992,13 +7992,13 @@ impl Eq for ShapeTreeWith<()> {}
 #[non_exhaustive]
 pub enum ShowTypeContentWith<X: UserData> {
     /// The element `p:browse`, a `BrowseSlideShowMode`.
-    BrowseSlideShowMode(Box<BrowseSlideShowModeWith<X>>),
+    BrowseSlideShowMode(BrowseSlideShowModeWith<X>),
     /// The element `p:kiosk`, a `KioskSlideShowMode`.
-    KioskSlideShowMode(Box<KioskSlideShowModeWith<X>>),
+    KioskSlideShowMode(KioskSlideShowModeWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `p:present`, a `PresenterSlideShowMode`.
-    PresenterSlideShowMode(Box<PresenterSlideShowModeWith<X>>),
+    PresenterSlideShowMode(PresenterSlideShowModeWith<X>),
 }
 
 /// [`ShowTypeContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -8270,9 +8270,9 @@ pub enum SlideLayoutTypeMember {
 #[non_exhaustive]
 pub enum SlideListContentWith<X: UserData> {
     /// The element `p:sldAll`, a `AllSlides`.
-    AllSlides(Box<AllSlidesWith<X>>),
+    AllSlides(AllSlidesWith<X>),
     /// The element `p:custShow`, a `CustomShow`.
-    CustomShow(Box<CustomShowWith<X>>),
+    CustomShow(CustomShowWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `p:sldRg`, a `SlideRange`.
@@ -8681,89 +8681,89 @@ impl Eq for SlideTimingInformationWith<()> {}
 #[non_exhaustive]
 pub enum SlideTransitionContentWith<X: UserData> {
     /// The element `p:blinds`, a `BlindsSlideTransition`.
-    BlindsSlideTransition(Box<BlindsSlideTransitionWith<X>>),
+    BlindsSlideTransition(BlindsSlideTransitionWith<X>),
     /// The element `p:checker`, a `CheckerSlideTransition`.
-    CheckerSlideTransition(Box<CheckerSlideTransitionWith<X>>),
+    CheckerSlideTransition(CheckerSlideTransitionWith<X>),
     /// The element `p:circle`, a `CircleSlideTransition`.
-    CircleSlideTransition(Box<CircleSlideTransitionWith<X>>),
+    CircleSlideTransition(CircleSlideTransitionWith<X>),
     /// The element `p:comb`, a `CombSlideTransition`.
-    CombSlideTransition(Box<CombSlideTransitionWith<X>>),
+    CombSlideTransition(CombSlideTransitionWith<X>),
     /// The element `p14:conveyor`, a `Conveyor`.
-    Conveyor(Box<super::office_powerpoint_2010_main::ConveyorWith<X>>),
+    Conveyor(super::office_powerpoint_2010_main::ConveyorWith<X>),
     /// The element `p:cover`, a `CoverSlideTransition`.
-    CoverSlideTransition(Box<CoverSlideTransitionWith<X>>),
+    CoverSlideTransition(CoverSlideTransitionWith<X>),
     /// The element `p:cut`, a `CutSlideTransition`.
-    CutSlideTransition(Box<CutSlideTransitionWith<X>>),
+    CutSlideTransition(CutSlideTransitionWith<X>),
     /// The element `p:diamond`, a `DiamondSlideTransition`.
-    DiamondSlideTransition(Box<DiamondSlideTransitionWith<X>>),
+    DiamondSlideTransition(DiamondSlideTransitionWith<X>),
     /// The element `p:dissolve`, a `DissolveSlideTransition`.
-    DissolveSlideTransition(Box<DissolveSlideTransitionWith<X>>),
+    DissolveSlideTransition(DissolveSlideTransitionWith<X>),
     /// The element `p14:doors`, a `Doors`.
-    Doors(Box<super::office_powerpoint_2010_main::DoorsWith<X>>),
+    Doors(super::office_powerpoint_2010_main::DoorsWith<X>),
     /// The element `p:fade`, a `FadeSlideTransition`.
-    FadeSlideTransition(Box<FadeSlideTransitionWith<X>>),
+    FadeSlideTransition(FadeSlideTransitionWith<X>),
     /// The element `p14:ferris`, a `Ferris`.
-    Ferris(Box<super::office_powerpoint_2010_main::FerrisWith<X>>),
+    Ferris(super::office_powerpoint_2010_main::FerrisWith<X>),
     /// The element `p14:flash`, a `Flash`.
-    Flash(Box<super::office_powerpoint_2010_main::FlashWith<X>>),
+    Flash(super::office_powerpoint_2010_main::FlashWith<X>),
     /// The element `p14:flip`, a `Flip`.
-    Flip(Box<super::office_powerpoint_2010_main::FlipWith<X>>),
+    Flip(super::office_powerpoint_2010_main::FlipWith<X>),
     /// The element `p14:flythrough`, a `Flythrough`.
     Flythrough(Box<super::office_powerpoint_2010_main::FlythroughWith<X>>),
     /// The element `p14:gallery`, a `Gallery`.
-    Gallery(Box<super::office_powerpoint_2010_main::GalleryWith<X>>),
+    Gallery(super::office_powerpoint_2010_main::GalleryWith<X>),
     /// The element `p14:glitter`, a `Glitter`.
     Glitter(Box<super::office_powerpoint_2010_main::GlitterWith<X>>),
     /// The element `p14:honeycomb`, a `Honeycomb`.
-    Honeycomb(Box<super::office_powerpoint_2010_main::HoneycombWith<X>>),
+    Honeycomb(super::office_powerpoint_2010_main::HoneycombWith<X>),
     /// The element `p:newsflash`, a `NewsflashSlideTransition`.
-    NewsflashSlideTransition(Box<NewsflashSlideTransitionWith<X>>),
+    NewsflashSlideTransition(NewsflashSlideTransitionWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `p14:pan`, a `Pan`.
-    Pan(Box<super::office_powerpoint_2010_main::PanWith<X>>),
+    Pan(super::office_powerpoint_2010_main::PanWith<X>),
     /// The element `p:plus`, a `PlusSlideTransition`.
-    PlusSlideTransition(Box<PlusSlideTransitionWith<X>>),
+    PlusSlideTransition(PlusSlideTransitionWith<X>),
     /// The element `p14:prism`, a `Prism`.
     Prism(Box<super::office_powerpoint_2010_main::PrismWith<X>>),
     /// The element `p15:prstTrans`, a `PrstTrans`.
     PrstTrans(Box<super::office_powerpoint_2012_main::PrstTransWith<X>>),
     /// The element `p:pull`, a `PullSlideTransition`.
-    PullSlideTransition(Box<PullSlideTransitionWith<X>>),
+    PullSlideTransition(PullSlideTransitionWith<X>),
     /// The element `p:push`, a `PushSlideTransition`.
-    PushSlideTransition(Box<PushSlideTransitionWith<X>>),
+    PushSlideTransition(PushSlideTransitionWith<X>),
     /// The element `p:randomBar`, a `RandomBarSlideTransition`.
-    RandomBarSlideTransition(Box<RandomBarSlideTransitionWith<X>>),
+    RandomBarSlideTransition(RandomBarSlideTransitionWith<X>),
     /// The element `p:random`, a `RandomSlideTransition`.
-    RandomSlideTransition(Box<RandomSlideTransitionWith<X>>),
+    RandomSlideTransition(RandomSlideTransitionWith<X>),
     /// The element `p14:reveal`, a `Reveal`.
     Reveal(Box<super::office_powerpoint_2010_main::RevealWith<X>>),
     /// The element `p14:ripple`, a `Ripple`.
-    Ripple(Box<super::office_powerpoint_2010_main::RippleWith<X>>),
+    Ripple(super::office_powerpoint_2010_main::RippleWith<X>),
     /// The element `p14:shred`, a `Shred`.
     Shred(Box<super::office_powerpoint_2010_main::ShredWith<X>>),
     /// The element `p:split`, a `SplitSlideTransition`.
     SplitSlideTransition(Box<SplitSlideTransitionWith<X>>),
     /// The element `p:strips`, a `StripsSlideTransition`.
-    StripsSlideTransition(Box<StripsSlideTransitionWith<X>>),
+    StripsSlideTransition(StripsSlideTransitionWith<X>),
     /// The element `p14:switch`, a `Switch`.
-    Switch(Box<super::office_powerpoint_2010_main::SwitchWith<X>>),
+    Switch(super::office_powerpoint_2010_main::SwitchWith<X>),
     /// The element `p14:vortex`, a `Vortex`.
-    Vortex(Box<super::office_powerpoint_2010_main::VortexWith<X>>),
+    Vortex(super::office_powerpoint_2010_main::VortexWith<X>),
     /// The element `p14:warp`, a `Warp`.
-    Warp(Box<super::office_powerpoint_2010_main::WarpWith<X>>),
+    Warp(super::office_powerpoint_2010_main::WarpWith<X>),
     /// The element `p:wedge`, a `WedgeSlideTransition`.
-    WedgeSlideTransition(Box<WedgeSlideTransitionWith<X>>),
+    WedgeSlideTransition(WedgeSlideTransitionWith<X>),
     /// The element `p14:wheelReverse`, a `WheelReverse`.
-    WheelReverse(Box<super::office_powerpoint_2010_main::WheelReverseWith<X>>),
+    WheelReverse(super::office_powerpoint_2010_main::WheelReverseWith<X>),
     /// The element `p:wheel`, a `WheelSlideTransition`.
-    WheelSlideTransition(Box<WheelSlideTransitionWith<X>>),
+    WheelSlideTransition(WheelSlideTransitionWith<X>),
     /// The element `p14:window`, a `Window`.
-    Window(Box<super::office_powerpoint_2010_main::WindowWith<X>>),
+    Window(super::office_powerpoint_2010_main::WindowWith<X>),
     /// The element `p:wipe`, a `WipeSlideTransition`.
-    WipeSlideTransition(Box<WipeSlideTransitionWith<X>>),
+    WipeSlideTransition(WipeSlideTransitionWith<X>),
     /// The element `p:zoom`, a `ZoomSlideTransition`.
-    ZoomSlideTransition(Box<ZoomSlideTransitionWith<X>>),
+    ZoomSlideTransition(ZoomSlideTransitionWith<X>),
 }
 
 /// [`SlideTransitionContentWith`] of the tree a read gives, where no node holds anything in
@@ -8901,7 +8901,7 @@ pub enum SoundActionContentWith<X: UserData> {
     /// The element `p:stSnd`, a `StartSoundAction`.
     StartSoundAction(Box<StartSoundActionWith<X>>),
     /// The element `p:endSnd`, a `StopSoundAction`.
-    StopSoundAction(Box<StopSoundActionWith<X>>),
+    StopSoundAction(StopSoundActionWith<X>),
 }
 
 /// [`SoundActionContentWith`] of the tree a read gives, where no node holds anything in
@@ -9260,13 +9260,13 @@ pub enum TargetElementContentWith<X: UserData> {
     /// The element `p14:bmkTgt`, a `BmkTgt`.
     BmkTgt(Box<super::office_powerpoint_2010_main::BmkTgtWith<X>>),
     /// The element `p:inkTgt`, a `InkTarget`.
-    InkTarget(Box<InkTargetWith<X>>),
+    InkTarget(InkTargetWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `p:spTgt`, a `ShapeTarget`.
     ShapeTarget(Box<ShapeTargetWith<X>>),
     /// The element `p:sldTgt`, a `SlideTarget`.
-    SlideTarget(Box<SlideTargetWith<X>>),
+    SlideTarget(SlideTargetWith<X>),
     /// The element `p:sndTgt`, a `SoundTarget`.
     SoundTarget(Box<SoundTargetWith<X>>),
 }
@@ -9460,11 +9460,11 @@ pub enum TimeConditionContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `p:rtn`, a `RuntimeNodeTriggerChoice`.
-    RuntimeNodeTriggerChoice(Box<RuntimeNodeTriggerChoiceWith<X>>),
+    RuntimeNodeTriggerChoice(RuntimeNodeTriggerChoiceWith<X>),
     /// The element `p:tgtEl`, a `TargetElement`.
-    TargetElement(Box<TargetElementWith<X>>),
+    TargetElement(TargetElementWith<X>),
     /// The element `p:tn`, a `TimeNode`.
-    TimeNode(Box<TimeNodeWith<X>>),
+    TimeNode(TimeNodeWith<X>),
 }
 
 /// [`TimeConditionContentWith`] of the tree a read gives, where no node holds anything in
@@ -9653,15 +9653,15 @@ pub enum TimeNodeListContentWith<X: UserData> {
     /// The element `p:cmd`, a `Command`.
     Command(Box<CommandWith<X>>),
     /// The element `p:excl`, a `Exclusive`.
-    Exclusive(Box<ExclusiveWith<X>>),
+    Exclusive(ExclusiveWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `p:par`, a `ParallelTimeNode`.
-    ParallelTimeNode(Box<ParallelTimeNodeWith<X>>),
+    ParallelTimeNode(ParallelTimeNodeWith<X>),
     /// The element `p:seq`, a `SequenceTimeNode`.
     SequenceTimeNode(Box<SequenceTimeNodeWith<X>>),
     /// The element `p:set`, a `SetTimeNodeBehavior`.
-    SetTimeNodeBehavior(Box<SetTimeNodeBehaviorWith<X>>),
+    SetTimeNodeBehavior(SetTimeNodeBehaviorWith<X>),
     /// The element `p:video`, a `Video`.
     Video(Box<VideoWith<X>>),
 }
@@ -10928,20 +10928,18 @@ impl<X: UserData> AnimationVariantContentWith<X> {
     {
         match self {
             Self::BooleanVariant(node) => {
-                AnimationVariantContentWith::BooleanVariant(Box::new((*node).into_user_data()))
+                AnimationVariantContentWith::BooleanVariant(node.into_user_data())
             }
             Self::ColorValue(node) => {
-                AnimationVariantContentWith::ColorValue(Box::new((*node).into_user_data()))
+                AnimationVariantContentWith::ColorValue(node.into_user_data())
             }
             Self::FloatValue(node) => {
-                AnimationVariantContentWith::FloatValue(Box::new((*node).into_user_data()))
+                AnimationVariantContentWith::FloatValue(node.into_user_data())
             }
-            Self::Integer(node) => {
-                AnimationVariantContentWith::Integer(Box::new((*node).into_user_data()))
-            }
+            Self::Integer(node) => AnimationVariantContentWith::Integer(node.into_user_data()),
             Self::Other(node) => AnimationVariantContentWith::Other(node),
             Self::StringValue(node) => {
-                AnimationVariantContentWith::StringValue(Box::new((*node).into_user_data()))
+                AnimationVariantContentWith::StringValue(node.into_user_data())
             }
         }
     }
@@ -10949,7 +10947,7 @@ impl<X: UserData> AnimationVariantContentWith<X> {
 
 impl<X: UserData> Default for AnimationVariantContentWith<X> {
     fn default() -> Self {
-        Self::BooleanVariant(Box::default())
+        Self::BooleanVariant(BooleanVariantWith::default())
     }
 }
 
@@ -10960,11 +10958,11 @@ impl officekit_markup_base::Read for AnimationVariantContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "boolVal")) => Self::BooleanVariant(Box::new(item.read())),
-            Some((NS_P, "clrVal")) => Self::ColorValue(Box::new(item.read())),
-            Some((NS_P, "fltVal")) => Self::FloatValue(Box::new(item.read())),
-            Some((NS_P, "intVal")) => Self::Integer(Box::new(item.read())),
-            Some((NS_P, "strVal")) => Self::StringValue(Box::new(item.read())),
+            Some((NS_P, "boolVal")) => Self::BooleanVariant(item.read()),
+            Some((NS_P, "clrVal")) => Self::ColorValue(item.read()),
+            Some((NS_P, "fltVal")) => Self::FloatValue(item.read()),
+            Some((NS_P, "intVal")) => Self::Integer(item.read()),
+            Some((NS_P, "strVal")) => Self::StringValue(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -10985,31 +10983,31 @@ impl officekit_markup_base::Write for AnimationVariantContent {
 
 impl<X: UserData> From<BooleanVariantWith<X>> for AnimationVariantContentWith<X> {
     fn from(arm: BooleanVariantWith<X>) -> Self {
-        Self::BooleanVariant(Box::new(arm))
+        Self::BooleanVariant(arm)
     }
 }
 
 impl<X: UserData> From<ColorValueWith<X>> for AnimationVariantContentWith<X> {
     fn from(arm: ColorValueWith<X>) -> Self {
-        Self::ColorValue(Box::new(arm))
+        Self::ColorValue(arm)
     }
 }
 
 impl<X: UserData> From<FloatValueWith<X>> for AnimationVariantContentWith<X> {
     fn from(arm: FloatValueWith<X>) -> Self {
-        Self::FloatValue(Box::new(arm))
+        Self::FloatValue(arm)
     }
 }
 
 impl<X: UserData> From<IntegerWith<X>> for AnimationVariantContentWith<X> {
     fn from(arm: IntegerWith<X>) -> Self {
-        Self::Integer(Box::new(arm))
+        Self::Integer(arm)
     }
 }
 
 impl<X: UserData> From<StringValueWith<X>> for AnimationVariantContentWith<X> {
     fn from(arm: StringValueWith<X>) -> Self {
-        Self::StringValue(Box::new(arm))
+        Self::StringValue(arm)
     }
 }
 
@@ -12029,11 +12027,9 @@ impl<X: UserData> BuildGraphicsContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::BuildAsOne(node) => {
-                BuildGraphicsContentWith::BuildAsOne(Box::new((*node).into_user_data()))
-            }
+            Self::BuildAsOne(node) => BuildGraphicsContentWith::BuildAsOne(node.into_user_data()),
             Self::BuildSubElements(node) => {
-                BuildGraphicsContentWith::BuildSubElements(Box::new((*node).into_user_data()))
+                BuildGraphicsContentWith::BuildSubElements(node.into_user_data())
             }
             Self::Other(node) => BuildGraphicsContentWith::Other(node),
         }
@@ -12042,7 +12038,7 @@ impl<X: UserData> BuildGraphicsContentWith<X> {
 
 impl<X: UserData> Default for BuildGraphicsContentWith<X> {
     fn default() -> Self {
-        Self::BuildAsOne(Box::default())
+        Self::BuildAsOne(BuildAsOneWith::default())
     }
 }
 
@@ -12053,8 +12049,8 @@ impl officekit_markup_base::Read for BuildGraphicsContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "bldAsOne")) => Self::BuildAsOne(Box::new(item.read())),
-            Some((NS_P, "bldSub")) => Self::BuildSubElements(Box::new(item.read())),
+            Some((NS_P, "bldAsOne")) => Self::BuildAsOne(item.read()),
+            Some((NS_P, "bldSub")) => Self::BuildSubElements(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -12072,13 +12068,13 @@ impl officekit_markup_base::Write for BuildGraphicsContent {
 
 impl<X: UserData> From<BuildAsOneWith<X>> for BuildGraphicsContentWith<X> {
     fn from(arm: BuildAsOneWith<X>) -> Self {
-        Self::BuildAsOne(Box::new(arm))
+        Self::BuildAsOne(arm)
     }
 }
 
 impl<X: UserData> From<BuildSubElementsWith<X>> for BuildGraphicsContentWith<X> {
     fn from(arm: BuildSubElementsWith<X>) -> Self {
-        Self::BuildSubElements(Box::new(arm))
+        Self::BuildSubElements(arm)
     }
 }
 
@@ -15840,9 +15836,7 @@ impl<X: UserData> GroupShapeContentWith<X> {
             Self::ConnectionShape(node) => {
                 GroupShapeContentWith::ConnectionShape(Box::new((*node).into_user_data()))
             }
-            Self::ContentPart(node) => {
-                GroupShapeContentWith::ContentPart(Box::new((*node).into_user_data()))
-            }
+            Self::ContentPart(node) => GroupShapeContentWith::ContentPart(node.into_user_data()),
             Self::GraphicFrame(node) => {
                 GroupShapeContentWith::GraphicFrame(Box::new((*node).into_user_data()))
             }
@@ -15866,7 +15860,7 @@ impl officekit_markup_base::Read for GroupShapeContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_P, "cxnSp")) => Self::ConnectionShape(Box::new(item.read())),
-            Some((NS_P, "contentPart")) => Self::ContentPart(Box::new(item.read())),
+            Some((NS_P, "contentPart")) => Self::ContentPart(item.read()),
             Some((NS_P, "graphicFrame")) => Self::GraphicFrame(Box::new(item.read())),
             Some((NS_P, "grpSp")) => Self::GroupShape(Box::new(item.read())),
             Some((NS_P, "pic")) => Self::Picture(Box::new(item.read())),
@@ -15898,7 +15892,7 @@ impl<X: UserData> From<ConnectionShapeWith<X>> for GroupShapeContentWith<X> {
 
 impl<X: UserData> From<ContentPartWith<X>> for GroupShapeContentWith<X> {
     fn from(arm: ContentPartWith<X>) -> Self {
-        Self::ContentPart(Box::new(arm))
+        Self::ContentPart(arm)
     }
 }
 
@@ -16694,19 +16688,15 @@ impl<X: UserData> IterateContentWith<X> {
     {
         match self {
             Self::Other(node) => IterateContentWith::Other(node),
-            Self::TimeAbsolute(node) => {
-                IterateContentWith::TimeAbsolute(Box::new((*node).into_user_data()))
-            }
-            Self::TimePercentage(node) => {
-                IterateContentWith::TimePercentage(Box::new((*node).into_user_data()))
-            }
+            Self::TimeAbsolute(node) => IterateContentWith::TimeAbsolute(node.into_user_data()),
+            Self::TimePercentage(node) => IterateContentWith::TimePercentage(node.into_user_data()),
         }
     }
 }
 
 impl<X: UserData> Default for IterateContentWith<X> {
     fn default() -> Self {
-        Self::TimeAbsolute(Box::default())
+        Self::TimeAbsolute(TimeAbsoluteWith::default())
     }
 }
 
@@ -16717,8 +16707,8 @@ impl officekit_markup_base::Read for IterateContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "tmAbs")) => Self::TimeAbsolute(Box::new(item.read())),
-            Some((NS_P, "tmPct")) => Self::TimePercentage(Box::new(item.read())),
+            Some((NS_P, "tmAbs")) => Self::TimeAbsolute(item.read()),
+            Some((NS_P, "tmPct")) => Self::TimePercentage(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -16736,13 +16726,13 @@ impl officekit_markup_base::Write for IterateContent {
 
 impl<X: UserData> From<TimeAbsoluteWith<X>> for IterateContentWith<X> {
     fn from(arm: TimeAbsoluteWith<X>) -> Self {
-        Self::TimeAbsolute(Box::new(arm))
+        Self::TimeAbsolute(arm)
     }
 }
 
 impl<X: UserData> From<TimePercentageWith<X>> for IterateContentWith<X> {
     fn from(arm: TimePercentageWith<X>) -> Self {
-        Self::TimePercentage(Box::new(arm))
+        Self::TimePercentage(arm)
     }
 }
 
@@ -18201,7 +18191,7 @@ impl<X: UserData> NonVisualPropertiesContentWith<X> {
     {
         match self {
             Self::AudioFromCD(node) => {
-                NonVisualPropertiesContentWith::AudioFromCD(Box::new((*node).into_user_data()))
+                NonVisualPropertiesContentWith::AudioFromCD(node.into_user_data())
             }
             Self::AudioFromFile(node) => {
                 NonVisualPropertiesContentWith::AudioFromFile(Box::new((*node).into_user_data()))
@@ -18227,7 +18217,7 @@ impl officekit_markup_base::Read for NonVisualPropertiesContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "audioCd")) => Self::AudioFromCD(Box::new(item.read())),
+            Some((NS_A, "audioCd")) => Self::AudioFromCD(item.read()),
             Some((NS_A, "audioFile")) => Self::AudioFromFile(Box::new(item.read())),
             Some((NS_A, "wavAudioFile")) => Self::AudioFromWAVFile(Box::new(item.read())),
             Some((NS_A, "quickTimeFile")) => Self::QuickTimeFromFile(Box::new(item.read())),
@@ -18252,7 +18242,7 @@ impl officekit_markup_base::Write for NonVisualPropertiesContent {
 
 impl<X: UserData> From<super::drawing::AudioFromCDWith<X>> for NonVisualPropertiesContentWith<X> {
     fn from(arm: super::drawing::AudioFromCDWith<X>) -> Self {
-        Self::AudioFromCD(Box::new(arm))
+        Self::AudioFromCD(arm)
     }
 }
 
@@ -21879,22 +21869,16 @@ impl<X: UserData> ShapeTargetContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Background(node) => {
-                ShapeTargetContentWith::Background(Box::new((*node).into_user_data()))
-            }
+            Self::Background(node) => ShapeTargetContentWith::Background(node.into_user_data()),
             Self::EmbeddedChartElement(node) => {
                 ShapeTargetContentWith::EmbeddedChartElement(Box::new((*node).into_user_data()))
             }
             Self::GraphicElement(node) => {
-                ShapeTargetContentWith::GraphicElement(Box::new((*node).into_user_data()))
+                ShapeTargetContentWith::GraphicElement(node.into_user_data())
             }
             Self::Other(node) => ShapeTargetContentWith::Other(node),
-            Self::Subshape(node) => {
-                ShapeTargetContentWith::Subshape(Box::new((*node).into_user_data()))
-            }
-            Self::TextElement(node) => {
-                ShapeTargetContentWith::TextElement(Box::new((*node).into_user_data()))
-            }
+            Self::Subshape(node) => ShapeTargetContentWith::Subshape(node.into_user_data()),
+            Self::TextElement(node) => ShapeTargetContentWith::TextElement(node.into_user_data()),
         }
     }
 }
@@ -21906,11 +21890,11 @@ impl officekit_markup_base::Read for ShapeTargetContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "bg")) => Self::Background(Box::new(item.read())),
+            Some((NS_P, "bg")) => Self::Background(item.read()),
             Some((NS_P, "oleChartEl")) => Self::EmbeddedChartElement(Box::new(item.read())),
-            Some((NS_P, "graphicEl")) => Self::GraphicElement(Box::new(item.read())),
-            Some((NS_P, "subSp")) => Self::Subshape(Box::new(item.read())),
-            Some((NS_P, "txEl")) => Self::TextElement(Box::new(item.read())),
+            Some((NS_P, "graphicEl")) => Self::GraphicElement(item.read()),
+            Some((NS_P, "subSp")) => Self::Subshape(item.read()),
+            Some((NS_P, "txEl")) => Self::TextElement(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -21931,7 +21915,7 @@ impl officekit_markup_base::Write for ShapeTargetContent {
 
 impl<X: UserData> From<BackgroundWith<X>> for ShapeTargetContentWith<X> {
     fn from(arm: BackgroundWith<X>) -> Self {
-        Self::Background(Box::new(arm))
+        Self::Background(arm)
     }
 }
 
@@ -21943,19 +21927,19 @@ impl<X: UserData> From<EmbeddedChartElementWith<X>> for ShapeTargetContentWith<X
 
 impl<X: UserData> From<GraphicElementWith<X>> for ShapeTargetContentWith<X> {
     fn from(arm: GraphicElementWith<X>) -> Self {
-        Self::GraphicElement(Box::new(arm))
+        Self::GraphicElement(arm)
     }
 }
 
 impl<X: UserData> From<SubshapeWith<X>> for ShapeTargetContentWith<X> {
     fn from(arm: SubshapeWith<X>) -> Self {
-        Self::Subshape(Box::new(arm))
+        Self::Subshape(arm)
     }
 }
 
 impl<X: UserData> From<TextElementWith<X>> for ShapeTargetContentWith<X> {
     fn from(arm: TextElementWith<X>) -> Self {
-        Self::TextElement(Box::new(arm))
+        Self::TextElement(arm)
     }
 }
 
@@ -22091,14 +22075,14 @@ impl<X: UserData> ShowTypeContentWith<X> {
     {
         match self {
             Self::BrowseSlideShowMode(node) => {
-                ShowTypeContentWith::BrowseSlideShowMode(Box::new((*node).into_user_data()))
+                ShowTypeContentWith::BrowseSlideShowMode(node.into_user_data())
             }
             Self::KioskSlideShowMode(node) => {
-                ShowTypeContentWith::KioskSlideShowMode(Box::new((*node).into_user_data()))
+                ShowTypeContentWith::KioskSlideShowMode(node.into_user_data())
             }
             Self::Other(node) => ShowTypeContentWith::Other(node),
             Self::PresenterSlideShowMode(node) => {
-                ShowTypeContentWith::PresenterSlideShowMode(Box::new((*node).into_user_data()))
+                ShowTypeContentWith::PresenterSlideShowMode(node.into_user_data())
             }
         }
     }
@@ -22111,9 +22095,9 @@ impl officekit_markup_base::Read for ShowTypeContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "browse")) => Self::BrowseSlideShowMode(Box::new(item.read())),
-            Some((NS_P, "kiosk")) => Self::KioskSlideShowMode(Box::new(item.read())),
-            Some((NS_P, "present")) => Self::PresenterSlideShowMode(Box::new(item.read())),
+            Some((NS_P, "browse")) => Self::BrowseSlideShowMode(item.read()),
+            Some((NS_P, "kiosk")) => Self::KioskSlideShowMode(item.read()),
+            Some((NS_P, "present")) => Self::PresenterSlideShowMode(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -22132,19 +22116,19 @@ impl officekit_markup_base::Write for ShowTypeContent {
 
 impl<X: UserData> From<BrowseSlideShowModeWith<X>> for ShowTypeContentWith<X> {
     fn from(arm: BrowseSlideShowModeWith<X>) -> Self {
-        Self::BrowseSlideShowMode(Box::new(arm))
+        Self::BrowseSlideShowMode(arm)
     }
 }
 
 impl<X: UserData> From<KioskSlideShowModeWith<X>> for ShowTypeContentWith<X> {
     fn from(arm: KioskSlideShowModeWith<X>) -> Self {
-        Self::KioskSlideShowMode(Box::new(arm))
+        Self::KioskSlideShowMode(arm)
     }
 }
 
 impl<X: UserData> From<PresenterSlideShowModeWith<X>> for ShowTypeContentWith<X> {
     fn from(arm: PresenterSlideShowModeWith<X>) -> Self {
-        Self::PresenterSlideShowMode(Box::new(arm))
+        Self::PresenterSlideShowMode(arm)
     }
 }
 
@@ -22613,12 +22597,8 @@ impl<X: UserData> SlideListContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::AllSlides(node) => {
-                SlideListContentWith::AllSlides(Box::new((*node).into_user_data()))
-            }
-            Self::CustomShow(node) => {
-                SlideListContentWith::CustomShow(Box::new((*node).into_user_data()))
-            }
+            Self::AllSlides(node) => SlideListContentWith::AllSlides(node.into_user_data()),
+            Self::CustomShow(node) => SlideListContentWith::CustomShow(node.into_user_data()),
             Self::Other(node) => SlideListContentWith::Other(node),
             Self::SlideRange(node) => {
                 SlideListContentWith::SlideRange(Box::new((*node).into_user_data()))
@@ -22629,7 +22609,7 @@ impl<X: UserData> SlideListContentWith<X> {
 
 impl<X: UserData> Default for SlideListContentWith<X> {
     fn default() -> Self {
-        Self::AllSlides(Box::default())
+        Self::AllSlides(AllSlidesWith::default())
     }
 }
 
@@ -22640,8 +22620,8 @@ impl officekit_markup_base::Read for SlideListContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "sldAll")) => Self::AllSlides(Box::new(item.read())),
-            Some((NS_P, "custShow")) => Self::CustomShow(Box::new(item.read())),
+            Some((NS_P, "sldAll")) => Self::AllSlides(item.read()),
+            Some((NS_P, "custShow")) => Self::CustomShow(item.read()),
             Some((NS_P, "sldRg")) => Self::SlideRange(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -22661,13 +22641,13 @@ impl officekit_markup_base::Write for SlideListContent {
 
 impl<X: UserData> From<AllSlidesWith<X>> for SlideListContentWith<X> {
     fn from(arm: AllSlidesWith<X>) -> Self {
-        Self::AllSlides(Box::new(arm))
+        Self::AllSlides(arm)
     }
 }
 
 impl<X: UserData> From<CustomShowWith<X>> for SlideListContentWith<X> {
     fn from(arm: CustomShowWith<X>) -> Self {
-        Self::CustomShow(Box::new(arm))
+        Self::CustomShow(arm)
     }
 }
 
@@ -23508,17 +23488,17 @@ impl<X: UserData> SlideTransitionContentWith<X> {
     {
         officekit_markup_base::into_user_data_match!(self, SlideTransitionContentWith;
             plain [
-            ]
-            boxed [
                 BlindsSlideTransition, CheckerSlideTransition, CircleSlideTransition,
                 CombSlideTransition, Conveyor, CoverSlideTransition, CutSlideTransition,
                 DiamondSlideTransition, DissolveSlideTransition, Doors, FadeSlideTransition, Ferris,
-                Flash, Flip, Flythrough, Gallery, Glitter, Honeycomb, NewsflashSlideTransition, Pan,
-                PlusSlideTransition, Prism, PrstTrans, PullSlideTransition, PushSlideTransition,
-                RandomBarSlideTransition, RandomSlideTransition, Reveal, Ripple, Shred,
-                SplitSlideTransition, StripsSlideTransition, Switch, Vortex, Warp,
+                Flash, Flip, Gallery, Honeycomb, NewsflashSlideTransition, Pan, PlusSlideTransition,
+                PullSlideTransition, PushSlideTransition, RandomBarSlideTransition,
+                RandomSlideTransition, Ripple, StripsSlideTransition, Switch, Vortex, Warp,
                 WedgeSlideTransition, WheelReverse, WheelSlideTransition, Window,
                 WipeSlideTransition, ZoomSlideTransition,
+            ]
+            boxed [
+                Flythrough, Glitter, Prism, PrstTrans, Reveal, Shred, SplitSlideTransition,
             ]
         )
     }
@@ -23531,47 +23511,47 @@ impl officekit_markup_base::Read for SlideTransitionContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "blinds")) => Self::BlindsSlideTransition(Box::new(item.read())),
-            Some((NS_P, "checker")) => Self::CheckerSlideTransition(Box::new(item.read())),
-            Some((NS_P, "circle")) => Self::CircleSlideTransition(Box::new(item.read())),
-            Some((NS_P, "comb")) => Self::CombSlideTransition(Box::new(item.read())),
-            Some((NS_P14, "conveyor")) => Self::Conveyor(Box::new(item.read())),
-            Some((NS_P, "cover")) => Self::CoverSlideTransition(Box::new(item.read())),
-            Some((NS_P, "cut")) => Self::CutSlideTransition(Box::new(item.read())),
-            Some((NS_P, "diamond")) => Self::DiamondSlideTransition(Box::new(item.read())),
-            Some((NS_P, "dissolve")) => Self::DissolveSlideTransition(Box::new(item.read())),
-            Some((NS_P14, "doors")) => Self::Doors(Box::new(item.read())),
-            Some((NS_P, "fade")) => Self::FadeSlideTransition(Box::new(item.read())),
-            Some((NS_P14, "ferris")) => Self::Ferris(Box::new(item.read())),
-            Some((NS_P14, "flash")) => Self::Flash(Box::new(item.read())),
-            Some((NS_P14, "flip")) => Self::Flip(Box::new(item.read())),
+            Some((NS_P, "blinds")) => Self::BlindsSlideTransition(item.read()),
+            Some((NS_P, "checker")) => Self::CheckerSlideTransition(item.read()),
+            Some((NS_P, "circle")) => Self::CircleSlideTransition(item.read()),
+            Some((NS_P, "comb")) => Self::CombSlideTransition(item.read()),
+            Some((NS_P14, "conveyor")) => Self::Conveyor(item.read()),
+            Some((NS_P, "cover")) => Self::CoverSlideTransition(item.read()),
+            Some((NS_P, "cut")) => Self::CutSlideTransition(item.read()),
+            Some((NS_P, "diamond")) => Self::DiamondSlideTransition(item.read()),
+            Some((NS_P, "dissolve")) => Self::DissolveSlideTransition(item.read()),
+            Some((NS_P14, "doors")) => Self::Doors(item.read()),
+            Some((NS_P, "fade")) => Self::FadeSlideTransition(item.read()),
+            Some((NS_P14, "ferris")) => Self::Ferris(item.read()),
+            Some((NS_P14, "flash")) => Self::Flash(item.read()),
+            Some((NS_P14, "flip")) => Self::Flip(item.read()),
             Some((NS_P14, "flythrough")) => Self::Flythrough(Box::new(item.read())),
-            Some((NS_P14, "gallery")) => Self::Gallery(Box::new(item.read())),
+            Some((NS_P14, "gallery")) => Self::Gallery(item.read()),
             Some((NS_P14, "glitter")) => Self::Glitter(Box::new(item.read())),
-            Some((NS_P14, "honeycomb")) => Self::Honeycomb(Box::new(item.read())),
-            Some((NS_P, "newsflash")) => Self::NewsflashSlideTransition(Box::new(item.read())),
-            Some((NS_P14, "pan")) => Self::Pan(Box::new(item.read())),
-            Some((NS_P, "plus")) => Self::PlusSlideTransition(Box::new(item.read())),
+            Some((NS_P14, "honeycomb")) => Self::Honeycomb(item.read()),
+            Some((NS_P, "newsflash")) => Self::NewsflashSlideTransition(item.read()),
+            Some((NS_P14, "pan")) => Self::Pan(item.read()),
+            Some((NS_P, "plus")) => Self::PlusSlideTransition(item.read()),
             Some((NS_P14, "prism")) => Self::Prism(Box::new(item.read())),
             Some((NS_P15, "prstTrans")) => Self::PrstTrans(Box::new(item.read())),
-            Some((NS_P, "pull")) => Self::PullSlideTransition(Box::new(item.read())),
-            Some((NS_P, "push")) => Self::PushSlideTransition(Box::new(item.read())),
-            Some((NS_P, "randomBar")) => Self::RandomBarSlideTransition(Box::new(item.read())),
-            Some((NS_P, "random")) => Self::RandomSlideTransition(Box::new(item.read())),
+            Some((NS_P, "pull")) => Self::PullSlideTransition(item.read()),
+            Some((NS_P, "push")) => Self::PushSlideTransition(item.read()),
+            Some((NS_P, "randomBar")) => Self::RandomBarSlideTransition(item.read()),
+            Some((NS_P, "random")) => Self::RandomSlideTransition(item.read()),
             Some((NS_P14, "reveal")) => Self::Reveal(Box::new(item.read())),
-            Some((NS_P14, "ripple")) => Self::Ripple(Box::new(item.read())),
+            Some((NS_P14, "ripple")) => Self::Ripple(item.read()),
             Some((NS_P14, "shred")) => Self::Shred(Box::new(item.read())),
             Some((NS_P, "split")) => Self::SplitSlideTransition(Box::new(item.read())),
-            Some((NS_P, "strips")) => Self::StripsSlideTransition(Box::new(item.read())),
-            Some((NS_P14, "switch")) => Self::Switch(Box::new(item.read())),
-            Some((NS_P14, "vortex")) => Self::Vortex(Box::new(item.read())),
-            Some((NS_P14, "warp")) => Self::Warp(Box::new(item.read())),
-            Some((NS_P, "wedge")) => Self::WedgeSlideTransition(Box::new(item.read())),
-            Some((NS_P14, "wheelReverse")) => Self::WheelReverse(Box::new(item.read())),
-            Some((NS_P, "wheel")) => Self::WheelSlideTransition(Box::new(item.read())),
-            Some((NS_P14, "window")) => Self::Window(Box::new(item.read())),
-            Some((NS_P, "wipe")) => Self::WipeSlideTransition(Box::new(item.read())),
-            Some((NS_P, "zoom")) => Self::ZoomSlideTransition(Box::new(item.read())),
+            Some((NS_P, "strips")) => Self::StripsSlideTransition(item.read()),
+            Some((NS_P14, "switch")) => Self::Switch(item.read()),
+            Some((NS_P14, "vortex")) => Self::Vortex(item.read()),
+            Some((NS_P14, "warp")) => Self::Warp(item.read()),
+            Some((NS_P, "wedge")) => Self::WedgeSlideTransition(item.read()),
+            Some((NS_P14, "wheelReverse")) => Self::WheelReverse(item.read()),
+            Some((NS_P, "wheel")) => Self::WheelSlideTransition(item.read()),
+            Some((NS_P14, "window")) => Self::Window(item.read()),
+            Some((NS_P, "wipe")) => Self::WipeSlideTransition(item.read()),
+            Some((NS_P, "zoom")) => Self::ZoomSlideTransition(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -23628,25 +23608,25 @@ impl officekit_markup_base::Write for SlideTransitionContent {
 
 impl<X: UserData> From<BlindsSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: BlindsSlideTransitionWith<X>) -> Self {
-        Self::BlindsSlideTransition(Box::new(arm))
+        Self::BlindsSlideTransition(arm)
     }
 }
 
 impl<X: UserData> From<CheckerSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: CheckerSlideTransitionWith<X>) -> Self {
-        Self::CheckerSlideTransition(Box::new(arm))
+        Self::CheckerSlideTransition(arm)
     }
 }
 
 impl<X: UserData> From<CircleSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: CircleSlideTransitionWith<X>) -> Self {
-        Self::CircleSlideTransition(Box::new(arm))
+        Self::CircleSlideTransition(arm)
     }
 }
 
 impl<X: UserData> From<CombSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: CombSlideTransitionWith<X>) -> Self {
-        Self::CombSlideTransition(Box::new(arm))
+        Self::CombSlideTransition(arm)
     }
 }
 
@@ -23654,31 +23634,31 @@ impl<X: UserData> From<super::office_powerpoint_2010_main::ConveyorWith<X>>
     for SlideTransitionContentWith<X>
 {
     fn from(arm: super::office_powerpoint_2010_main::ConveyorWith<X>) -> Self {
-        Self::Conveyor(Box::new(arm))
+        Self::Conveyor(arm)
     }
 }
 
 impl<X: UserData> From<CoverSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: CoverSlideTransitionWith<X>) -> Self {
-        Self::CoverSlideTransition(Box::new(arm))
+        Self::CoverSlideTransition(arm)
     }
 }
 
 impl<X: UserData> From<CutSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: CutSlideTransitionWith<X>) -> Self {
-        Self::CutSlideTransition(Box::new(arm))
+        Self::CutSlideTransition(arm)
     }
 }
 
 impl<X: UserData> From<DiamondSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: DiamondSlideTransitionWith<X>) -> Self {
-        Self::DiamondSlideTransition(Box::new(arm))
+        Self::DiamondSlideTransition(arm)
     }
 }
 
 impl<X: UserData> From<DissolveSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: DissolveSlideTransitionWith<X>) -> Self {
-        Self::DissolveSlideTransition(Box::new(arm))
+        Self::DissolveSlideTransition(arm)
     }
 }
 
@@ -23686,13 +23666,13 @@ impl<X: UserData> From<super::office_powerpoint_2010_main::DoorsWith<X>>
     for SlideTransitionContentWith<X>
 {
     fn from(arm: super::office_powerpoint_2010_main::DoorsWith<X>) -> Self {
-        Self::Doors(Box::new(arm))
+        Self::Doors(arm)
     }
 }
 
 impl<X: UserData> From<FadeSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: FadeSlideTransitionWith<X>) -> Self {
-        Self::FadeSlideTransition(Box::new(arm))
+        Self::FadeSlideTransition(arm)
     }
 }
 
@@ -23700,7 +23680,7 @@ impl<X: UserData> From<super::office_powerpoint_2010_main::FerrisWith<X>>
     for SlideTransitionContentWith<X>
 {
     fn from(arm: super::office_powerpoint_2010_main::FerrisWith<X>) -> Self {
-        Self::Ferris(Box::new(arm))
+        Self::Ferris(arm)
     }
 }
 
@@ -23708,7 +23688,7 @@ impl<X: UserData> From<super::office_powerpoint_2010_main::FlashWith<X>>
     for SlideTransitionContentWith<X>
 {
     fn from(arm: super::office_powerpoint_2010_main::FlashWith<X>) -> Self {
-        Self::Flash(Box::new(arm))
+        Self::Flash(arm)
     }
 }
 
@@ -23716,7 +23696,7 @@ impl<X: UserData> From<super::office_powerpoint_2010_main::FlipWith<X>>
     for SlideTransitionContentWith<X>
 {
     fn from(arm: super::office_powerpoint_2010_main::FlipWith<X>) -> Self {
-        Self::Flip(Box::new(arm))
+        Self::Flip(arm)
     }
 }
 
@@ -23732,7 +23712,7 @@ impl<X: UserData> From<super::office_powerpoint_2010_main::GalleryWith<X>>
     for SlideTransitionContentWith<X>
 {
     fn from(arm: super::office_powerpoint_2010_main::GalleryWith<X>) -> Self {
-        Self::Gallery(Box::new(arm))
+        Self::Gallery(arm)
     }
 }
 
@@ -23748,13 +23728,13 @@ impl<X: UserData> From<super::office_powerpoint_2010_main::HoneycombWith<X>>
     for SlideTransitionContentWith<X>
 {
     fn from(arm: super::office_powerpoint_2010_main::HoneycombWith<X>) -> Self {
-        Self::Honeycomb(Box::new(arm))
+        Self::Honeycomb(arm)
     }
 }
 
 impl<X: UserData> From<NewsflashSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: NewsflashSlideTransitionWith<X>) -> Self {
-        Self::NewsflashSlideTransition(Box::new(arm))
+        Self::NewsflashSlideTransition(arm)
     }
 }
 
@@ -23762,13 +23742,13 @@ impl<X: UserData> From<super::office_powerpoint_2010_main::PanWith<X>>
     for SlideTransitionContentWith<X>
 {
     fn from(arm: super::office_powerpoint_2010_main::PanWith<X>) -> Self {
-        Self::Pan(Box::new(arm))
+        Self::Pan(arm)
     }
 }
 
 impl<X: UserData> From<PlusSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: PlusSlideTransitionWith<X>) -> Self {
-        Self::PlusSlideTransition(Box::new(arm))
+        Self::PlusSlideTransition(arm)
     }
 }
 
@@ -23790,25 +23770,25 @@ impl<X: UserData> From<super::office_powerpoint_2012_main::PrstTransWith<X>>
 
 impl<X: UserData> From<PullSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: PullSlideTransitionWith<X>) -> Self {
-        Self::PullSlideTransition(Box::new(arm))
+        Self::PullSlideTransition(arm)
     }
 }
 
 impl<X: UserData> From<PushSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: PushSlideTransitionWith<X>) -> Self {
-        Self::PushSlideTransition(Box::new(arm))
+        Self::PushSlideTransition(arm)
     }
 }
 
 impl<X: UserData> From<RandomBarSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: RandomBarSlideTransitionWith<X>) -> Self {
-        Self::RandomBarSlideTransition(Box::new(arm))
+        Self::RandomBarSlideTransition(arm)
     }
 }
 
 impl<X: UserData> From<RandomSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: RandomSlideTransitionWith<X>) -> Self {
-        Self::RandomSlideTransition(Box::new(arm))
+        Self::RandomSlideTransition(arm)
     }
 }
 
@@ -23824,7 +23804,7 @@ impl<X: UserData> From<super::office_powerpoint_2010_main::RippleWith<X>>
     for SlideTransitionContentWith<X>
 {
     fn from(arm: super::office_powerpoint_2010_main::RippleWith<X>) -> Self {
-        Self::Ripple(Box::new(arm))
+        Self::Ripple(arm)
     }
 }
 
@@ -23844,7 +23824,7 @@ impl<X: UserData> From<SplitSlideTransitionWith<X>> for SlideTransitionContentWi
 
 impl<X: UserData> From<StripsSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: StripsSlideTransitionWith<X>) -> Self {
-        Self::StripsSlideTransition(Box::new(arm))
+        Self::StripsSlideTransition(arm)
     }
 }
 
@@ -23852,7 +23832,7 @@ impl<X: UserData> From<super::office_powerpoint_2010_main::SwitchWith<X>>
     for SlideTransitionContentWith<X>
 {
     fn from(arm: super::office_powerpoint_2010_main::SwitchWith<X>) -> Self {
-        Self::Switch(Box::new(arm))
+        Self::Switch(arm)
     }
 }
 
@@ -23860,7 +23840,7 @@ impl<X: UserData> From<super::office_powerpoint_2010_main::VortexWith<X>>
     for SlideTransitionContentWith<X>
 {
     fn from(arm: super::office_powerpoint_2010_main::VortexWith<X>) -> Self {
-        Self::Vortex(Box::new(arm))
+        Self::Vortex(arm)
     }
 }
 
@@ -23868,13 +23848,13 @@ impl<X: UserData> From<super::office_powerpoint_2010_main::WarpWith<X>>
     for SlideTransitionContentWith<X>
 {
     fn from(arm: super::office_powerpoint_2010_main::WarpWith<X>) -> Self {
-        Self::Warp(Box::new(arm))
+        Self::Warp(arm)
     }
 }
 
 impl<X: UserData> From<WedgeSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: WedgeSlideTransitionWith<X>) -> Self {
-        Self::WedgeSlideTransition(Box::new(arm))
+        Self::WedgeSlideTransition(arm)
     }
 }
 
@@ -23882,13 +23862,13 @@ impl<X: UserData> From<super::office_powerpoint_2010_main::WheelReverseWith<X>>
     for SlideTransitionContentWith<X>
 {
     fn from(arm: super::office_powerpoint_2010_main::WheelReverseWith<X>) -> Self {
-        Self::WheelReverse(Box::new(arm))
+        Self::WheelReverse(arm)
     }
 }
 
 impl<X: UserData> From<WheelSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: WheelSlideTransitionWith<X>) -> Self {
-        Self::WheelSlideTransition(Box::new(arm))
+        Self::WheelSlideTransition(arm)
     }
 }
 
@@ -23896,19 +23876,19 @@ impl<X: UserData> From<super::office_powerpoint_2010_main::WindowWith<X>>
     for SlideTransitionContentWith<X>
 {
     fn from(arm: super::office_powerpoint_2010_main::WindowWith<X>) -> Self {
-        Self::Window(Box::new(arm))
+        Self::Window(arm)
     }
 }
 
 impl<X: UserData> From<WipeSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: WipeSlideTransitionWith<X>) -> Self {
-        Self::WipeSlideTransition(Box::new(arm))
+        Self::WipeSlideTransition(arm)
     }
 }
 
 impl<X: UserData> From<ZoomSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
     fn from(arm: ZoomSlideTransitionWith<X>) -> Self {
-        Self::ZoomSlideTransition(Box::new(arm))
+        Self::ZoomSlideTransition(arm)
     }
 }
 
@@ -24199,7 +24179,7 @@ impl<X: UserData> SoundActionContentWith<X> {
                 SoundActionContentWith::StartSoundAction(Box::new((*node).into_user_data()))
             }
             Self::StopSoundAction(node) => {
-                SoundActionContentWith::StopSoundAction(Box::new((*node).into_user_data()))
+                SoundActionContentWith::StopSoundAction(node.into_user_data())
             }
         }
     }
@@ -24219,7 +24199,7 @@ impl officekit_markup_base::Read for SoundActionContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_P, "stSnd")) => Self::StartSoundAction(Box::new(item.read())),
-            Some((NS_P, "endSnd")) => Self::StopSoundAction(Box::new(item.read())),
+            Some((NS_P, "endSnd")) => Self::StopSoundAction(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -24243,7 +24223,7 @@ impl<X: UserData> From<StartSoundActionWith<X>> for SoundActionContentWith<X> {
 
 impl<X: UserData> From<StopSoundActionWith<X>> for SoundActionContentWith<X> {
     fn from(arm: StopSoundActionWith<X>) -> Self {
-        Self::StopSoundAction(Box::new(arm))
+        Self::StopSoundAction(arm)
     }
 }
 
@@ -25048,16 +25028,12 @@ impl<X: UserData> TargetElementContentWith<X> {
             Self::BmkTgt(node) => {
                 TargetElementContentWith::BmkTgt(Box::new((*node).into_user_data()))
             }
-            Self::InkTarget(node) => {
-                TargetElementContentWith::InkTarget(Box::new((*node).into_user_data()))
-            }
+            Self::InkTarget(node) => TargetElementContentWith::InkTarget(node.into_user_data()),
             Self::Other(node) => TargetElementContentWith::Other(node),
             Self::ShapeTarget(node) => {
                 TargetElementContentWith::ShapeTarget(Box::new((*node).into_user_data()))
             }
-            Self::SlideTarget(node) => {
-                TargetElementContentWith::SlideTarget(Box::new((*node).into_user_data()))
-            }
+            Self::SlideTarget(node) => TargetElementContentWith::SlideTarget(node.into_user_data()),
             Self::SoundTarget(node) => {
                 TargetElementContentWith::SoundTarget(Box::new((*node).into_user_data()))
             }
@@ -25079,9 +25055,9 @@ impl officekit_markup_base::Read for TargetElementContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_P14, "bmkTgt")) => Self::BmkTgt(Box::new(item.read())),
-            Some((NS_P, "inkTgt")) => Self::InkTarget(Box::new(item.read())),
+            Some((NS_P, "inkTgt")) => Self::InkTarget(item.read()),
             Some((NS_P, "spTgt")) => Self::ShapeTarget(Box::new(item.read())),
-            Some((NS_P, "sldTgt")) => Self::SlideTarget(Box::new(item.read())),
+            Some((NS_P, "sldTgt")) => Self::SlideTarget(item.read()),
             Some((NS_P, "sndTgt")) => Self::SoundTarget(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -25111,7 +25087,7 @@ impl<X: UserData> From<super::office_powerpoint_2010_main::BmkTgtWith<X>>
 
 impl<X: UserData> From<InkTargetWith<X>> for TargetElementContentWith<X> {
     fn from(arm: InkTargetWith<X>) -> Self {
-        Self::InkTarget(Box::new(arm))
+        Self::InkTarget(arm)
     }
 }
 
@@ -25123,7 +25099,7 @@ impl<X: UserData> From<ShapeTargetWith<X>> for TargetElementContentWith<X> {
 
 impl<X: UserData> From<SlideTargetWith<X>> for TargetElementContentWith<X> {
     fn from(arm: SlideTargetWith<X>) -> Self {
-        Self::SlideTarget(Box::new(arm))
+        Self::SlideTarget(arm)
     }
 }
 
@@ -25543,16 +25519,12 @@ impl<X: UserData> TimeConditionContentWith<X> {
         match self {
             Self::Other(node) => TimeConditionContentWith::Other(node),
             Self::RuntimeNodeTriggerChoice(node) => {
-                TimeConditionContentWith::RuntimeNodeTriggerChoice(Box::new(
-                    (*node).into_user_data(),
-                ))
+                TimeConditionContentWith::RuntimeNodeTriggerChoice(node.into_user_data())
             }
             Self::TargetElement(node) => {
-                TimeConditionContentWith::TargetElement(Box::new((*node).into_user_data()))
+                TimeConditionContentWith::TargetElement(node.into_user_data())
             }
-            Self::TimeNode(node) => {
-                TimeConditionContentWith::TimeNode(Box::new((*node).into_user_data()))
-            }
+            Self::TimeNode(node) => TimeConditionContentWith::TimeNode(node.into_user_data()),
         }
     }
 }
@@ -25564,9 +25536,9 @@ impl officekit_markup_base::Read for TimeConditionContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "rtn")) => Self::RuntimeNodeTriggerChoice(Box::new(item.read())),
-            Some((NS_P, "tgtEl")) => Self::TargetElement(Box::new(item.read())),
-            Some((NS_P, "tn")) => Self::TimeNode(Box::new(item.read())),
+            Some((NS_P, "rtn")) => Self::RuntimeNodeTriggerChoice(item.read()),
+            Some((NS_P, "tgtEl")) => Self::TargetElement(item.read()),
+            Some((NS_P, "tn")) => Self::TimeNode(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -25585,19 +25557,19 @@ impl officekit_markup_base::Write for TimeConditionContent {
 
 impl<X: UserData> From<RuntimeNodeTriggerChoiceWith<X>> for TimeConditionContentWith<X> {
     fn from(arm: RuntimeNodeTriggerChoiceWith<X>) -> Self {
-        Self::RuntimeNodeTriggerChoice(Box::new(arm))
+        Self::RuntimeNodeTriggerChoice(arm)
     }
 }
 
 impl<X: UserData> From<TargetElementWith<X>> for TimeConditionContentWith<X> {
     fn from(arm: TargetElementWith<X>) -> Self {
-        Self::TargetElement(Box::new(arm))
+        Self::TargetElement(arm)
     }
 }
 
 impl<X: UserData> From<TimeNodeWith<X>> for TimeConditionContentWith<X> {
     fn from(arm: TimeNodeWith<X>) -> Self {
-        Self::TimeNode(Box::new(arm))
+        Self::TimeNode(arm)
     }
 }
 
@@ -25968,18 +25940,16 @@ impl<X: UserData> TimeNodeListContentWith<X> {
             Self::Command(node) => {
                 TimeNodeListContentWith::Command(Box::new((*node).into_user_data()))
             }
-            Self::Exclusive(node) => {
-                TimeNodeListContentWith::Exclusive(Box::new((*node).into_user_data()))
-            }
+            Self::Exclusive(node) => TimeNodeListContentWith::Exclusive(node.into_user_data()),
             Self::Other(node) => TimeNodeListContentWith::Other(node),
             Self::ParallelTimeNode(node) => {
-                TimeNodeListContentWith::ParallelTimeNode(Box::new((*node).into_user_data()))
+                TimeNodeListContentWith::ParallelTimeNode(node.into_user_data())
             }
             Self::SequenceTimeNode(node) => {
                 TimeNodeListContentWith::SequenceTimeNode(Box::new((*node).into_user_data()))
             }
             Self::SetTimeNodeBehavior(node) => {
-                TimeNodeListContentWith::SetTimeNodeBehavior(Box::new((*node).into_user_data()))
+                TimeNodeListContentWith::SetTimeNodeBehavior(node.into_user_data())
             }
             Self::Video(node) => TimeNodeListContentWith::Video(Box::new((*node).into_user_data())),
         }
@@ -26001,10 +25971,10 @@ impl officekit_markup_base::Read for TimeNodeListContent {
             Some((NS_P, "animScale")) => Self::AnimateScale(Box::new(item.read())),
             Some((NS_P, "audio")) => Self::Audio(Box::new(item.read())),
             Some((NS_P, "cmd")) => Self::Command(Box::new(item.read())),
-            Some((NS_P, "excl")) => Self::Exclusive(Box::new(item.read())),
-            Some((NS_P, "par")) => Self::ParallelTimeNode(Box::new(item.read())),
+            Some((NS_P, "excl")) => Self::Exclusive(item.read()),
+            Some((NS_P, "par")) => Self::ParallelTimeNode(item.read()),
             Some((NS_P, "seq")) => Self::SequenceTimeNode(Box::new(item.read())),
-            Some((NS_P, "set")) => Self::SetTimeNodeBehavior(Box::new(item.read())),
+            Some((NS_P, "set")) => Self::SetTimeNodeBehavior(item.read()),
             Some((NS_P, "video")) => Self::Video(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -26082,13 +26052,13 @@ impl<X: UserData> From<CommandWith<X>> for TimeNodeListContentWith<X> {
 
 impl<X: UserData> From<ExclusiveWith<X>> for TimeNodeListContentWith<X> {
     fn from(arm: ExclusiveWith<X>) -> Self {
-        Self::Exclusive(Box::new(arm))
+        Self::Exclusive(arm)
     }
 }
 
 impl<X: UserData> From<ParallelTimeNodeWith<X>> for TimeNodeListContentWith<X> {
     fn from(arm: ParallelTimeNodeWith<X>) -> Self {
-        Self::ParallelTimeNode(Box::new(arm))
+        Self::ParallelTimeNode(arm)
     }
 }
 
@@ -26100,7 +26070,7 @@ impl<X: UserData> From<SequenceTimeNodeWith<X>> for TimeNodeListContentWith<X> {
 
 impl<X: UserData> From<SetTimeNodeBehaviorWith<X>> for TimeNodeListContentWith<X> {
     fn from(arm: SetTimeNodeBehaviorWith<X>) -> Self {
-        Self::SetTimeNodeBehavior(Box::new(arm))
+        Self::SetTimeNodeBehavior(arm)
     }
 }
 

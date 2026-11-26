@@ -1314,13 +1314,13 @@ pub struct WholeE2OFormattingMirror {
 pub enum LayoutElementContent {
     Algorithm(#[rkyv(omit_bounds)] Box<super::Algorithm>),
     ChooseElement(#[rkyv(omit_bounds)] Box<super::ChooseElement>),
-    ConstraintList(#[rkyv(omit_bounds)] Box<super::ConstraintList>),
-    ExtensionList(#[rkyv(omit_bounds)] Box<super::ExtensionList>),
+    ConstraintList(#[rkyv(omit_bounds)] super::ConstraintList),
+    ExtensionList(#[rkyv(omit_bounds)] super::ExtensionList),
     ForEach(#[rkyv(omit_bounds)] Box<super::ForEach>),
     LayoutNode(#[rkyv(omit_bounds)] Box<super::LayoutNode>),
     Other(Box<Node>),
     PresentationOf(#[rkyv(omit_bounds)] Box<super::PresentationOf>),
-    RuleList(#[rkyv(omit_bounds)] Box<super::RuleList>),
+    RuleList(#[rkyv(omit_bounds)] super::RuleList),
     Shape(#[rkyv(omit_bounds)] Box<super::Shape>),
 }
 
@@ -1333,13 +1333,13 @@ pub enum LayoutElementContent {
 pub enum LayoutNodeContent {
     Algorithm(#[rkyv(omit_bounds)] Box<super::Algorithm>),
     ChooseElement(#[rkyv(omit_bounds)] Box<super::ChooseElement>),
-    ConstraintList(#[rkyv(omit_bounds)] Box<super::ConstraintList>),
-    ExtensionList(#[rkyv(omit_bounds)] Box<super::ExtensionList>),
+    ConstraintList(#[rkyv(omit_bounds)] super::ConstraintList),
+    ExtensionList(#[rkyv(omit_bounds)] super::ExtensionList),
     ForEach(#[rkyv(omit_bounds)] Box<super::ForEach>),
     LayoutNode(#[rkyv(omit_bounds)] Box<super::LayoutNode>),
     Other(Box<Node>),
     PresentationOf(#[rkyv(omit_bounds)] Box<super::PresentationOf>),
-    RuleList(#[rkyv(omit_bounds)] Box<super::RuleList>),
+    RuleList(#[rkyv(omit_bounds)] super::RuleList),
     Shape(#[rkyv(omit_bounds)] Box<super::Shape>),
     VariableList(Box<super::VariableList>),
 }

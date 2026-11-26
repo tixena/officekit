@@ -3771,15 +3771,15 @@ impl super::Transform for office_powerpoint_2010_main::ShowEventRecordListConten
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PauseEvt(arm) = self {
-            Self::PauseEvt(Box::new(arm.transform(ctx)))
+            Self::PauseEvt(arm.transform(ctx))
         } else if let Self::PlayEvt(arm) = self {
-            Self::PlayEvt(Box::new(arm.transform(ctx)))
+            Self::PlayEvt(arm.transform(ctx))
         } else if let Self::ResumeEvt(arm) = self {
-            Self::ResumeEvt(Box::new(arm.transform(ctx)))
+            Self::ResumeEvt(arm.transform(ctx))
         } else if let Self::SeekEvt(arm) = self {
             Self::SeekEvt(Box::new(arm.transform(ctx)))
         } else if let Self::StopEvt(arm) = self {
-            Self::StopEvt(Box::new(arm.transform(ctx)))
+            Self::StopEvt(arm.transform(ctx))
         } else if let Self::TriggerEvt(arm) = self {
             Self::TriggerEvt(Box::new(arm.transform(ctx)))
         } else {

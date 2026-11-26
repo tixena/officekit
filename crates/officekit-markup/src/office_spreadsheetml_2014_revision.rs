@@ -3158,7 +3158,7 @@ impl Eq for RefWith<()> {}
 #[non_exhaustive]
 pub enum ReferenceMapContentWith<X: UserData> {
     /// The element `xr:future`, a `Future`.
-    Future(Box<FutureWith<X>>),
+    Future(FutureWith<X>),
     /// The element `xr:oartAnchor`, a `OartAnchor`.
     OartAnchor(Box<OartAnchorWith<X>>),
     /// An element or node the schemas do not declare at this position.
@@ -3253,9 +3253,9 @@ impl Eq for RevStreamWith<()> {}
 #[non_exhaustive]
 pub enum RevisionChangeObjectContentWith<X: UserData> {
     /// The element `xr:body`, a `Body`.
-    Body(Box<BodyWith<X>>),
+    Body(BodyWith<X>),
     /// The element `xr:link`, a `Link`.
-    Link(Box<LinkWith<X>>),
+    Link(LinkWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -3368,9 +3368,9 @@ impl Eq for RevisionPtrWith<()> {}
 #[non_exhaustive]
 pub enum RevisionStateContentWith<X: UserData> {
     /// The element `xr:freezePanes`, a `FreezePanes`.
-    FreezePanes(Box<FreezePanesWith<X>>),
+    FreezePanes(FreezePanesWith<X>),
     /// The element `xr:hideUnhideSheet`, a `HideUnhideSheet`.
-    HideUnhideSheet(Box<HideUnhideSheetWith<X>>),
+    HideUnhideSheet(HideUnhideSheetWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `xr:outlines`, a `Outlines`.
@@ -3673,7 +3673,7 @@ pub enum StateBasedObjectContentWith<X: UserData> {
     /// The element `xr:autoFilter`, a `AutoFilter`.
     AutoFilter(Box<AutoFilterWith<X>>),
     /// The element `xr:comments`, a `Comments`.
-    Comments(Box<CommentsWith<X>>),
+    Comments(CommentsWith<X>),
     /// The element `xr:dataValidation`, a `DataValidation`.
     DataValidation(Box<DataValidationWith<X>>),
     /// The element `xr:hyperlink`, a `Hyperlink`.
@@ -6488,9 +6488,7 @@ impl<X: UserData> ReferenceMapContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Future(node) => {
-                ReferenceMapContentWith::Future(Box::new((*node).into_user_data()))
-            }
+            Self::Future(node) => ReferenceMapContentWith::Future(node.into_user_data()),
             Self::OartAnchor(node) => {
                 ReferenceMapContentWith::OartAnchor(Box::new((*node).into_user_data()))
             }
@@ -6511,7 +6509,7 @@ impl officekit_markup_base::Read for ReferenceMapContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XR, "future")) => Self::Future(Box::new(item.read())),
+            Some((NS_XR, "future")) => Self::Future(item.read()),
             Some((NS_XR, "oartAnchor")) => Self::OartAnchor(Box::new(item.read())),
             Some((NS_XR, "ref")) => Self::Ref(Box::new(item.read())),
             Some((NS_XR, "sheetUid")) => Self::SheetUid(Box::new(item.read())),
@@ -6536,7 +6534,7 @@ impl officekit_markup_base::Write for ReferenceMapContent {
 
 impl<X: UserData> From<FutureWith<X>> for ReferenceMapContentWith<X> {
     fn from(arm: FutureWith<X>) -> Self {
-        Self::Future(Box::new(arm))
+        Self::Future(arm)
     }
 }
 
@@ -6734,12 +6732,8 @@ impl<X: UserData> RevisionChangeObjectContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Body(node) => {
-                RevisionChangeObjectContentWith::Body(Box::new((*node).into_user_data()))
-            }
-            Self::Link(node) => {
-                RevisionChangeObjectContentWith::Link(Box::new((*node).into_user_data()))
-            }
+            Self::Body(node) => RevisionChangeObjectContentWith::Body(node.into_user_data()),
+            Self::Link(node) => RevisionChangeObjectContentWith::Link(node.into_user_data()),
             Self::Other(node) => RevisionChangeObjectContentWith::Other(node),
         }
     }
@@ -6747,7 +6741,7 @@ impl<X: UserData> RevisionChangeObjectContentWith<X> {
 
 impl<X: UserData> Default for RevisionChangeObjectContentWith<X> {
     fn default() -> Self {
-        Self::Body(Box::default())
+        Self::Body(BodyWith::default())
     }
 }
 
@@ -6758,8 +6752,8 @@ impl officekit_markup_base::Read for RevisionChangeObjectContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XR, "body")) => Self::Body(Box::new(item.read())),
-            Some((NS_XR, "link")) => Self::Link(Box::new(item.read())),
+            Some((NS_XR, "body")) => Self::Body(item.read()),
+            Some((NS_XR, "link")) => Self::Link(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -6777,13 +6771,13 @@ impl officekit_markup_base::Write for RevisionChangeObjectContent {
 
 impl<X: UserData> From<BodyWith<X>> for RevisionChangeObjectContentWith<X> {
     fn from(arm: BodyWith<X>) -> Self {
-        Self::Body(Box::new(arm))
+        Self::Body(arm)
     }
 }
 
 impl<X: UserData> From<LinkWith<X>> for RevisionChangeObjectContentWith<X> {
     fn from(arm: LinkWith<X>) -> Self {
-        Self::Link(Box::new(arm))
+        Self::Link(arm)
     }
 }
 
@@ -7081,11 +7075,9 @@ impl<X: UserData> RevisionStateContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::FreezePanes(node) => {
-                RevisionStateContentWith::FreezePanes(Box::new((*node).into_user_data()))
-            }
+            Self::FreezePanes(node) => RevisionStateContentWith::FreezePanes(node.into_user_data()),
             Self::HideUnhideSheet(node) => {
-                RevisionStateContentWith::HideUnhideSheet(Box::new((*node).into_user_data()))
+                RevisionStateContentWith::HideUnhideSheet(node.into_user_data())
             }
             Self::Other(node) => RevisionStateContentWith::Other(node),
             Self::Outlines(node) => {
@@ -7103,7 +7095,7 @@ impl<X: UserData> RevisionStateContentWith<X> {
 
 impl<X: UserData> Default for RevisionStateContentWith<X> {
     fn default() -> Self {
-        Self::FreezePanes(Box::default())
+        Self::FreezePanes(FreezePanesWith::default())
     }
 }
 
@@ -7114,8 +7106,8 @@ impl officekit_markup_base::Read for RevisionStateContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XR, "freezePanes")) => Self::FreezePanes(Box::new(item.read())),
-            Some((NS_XR, "hideUnhideSheet")) => Self::HideUnhideSheet(Box::new(item.read())),
+            Some((NS_XR, "freezePanes")) => Self::FreezePanes(item.read()),
+            Some((NS_XR, "hideUnhideSheet")) => Self::HideUnhideSheet(item.read()),
             Some((NS_XR, "outlines")) => Self::Outlines(Box::new(item.read())),
             Some((NS_XR, "rowColVisualOps")) => Self::RowColVisualOps(Box::new(item.read())),
             Some((NS_XR, "showGridlinesHeadings")) => {
@@ -7141,13 +7133,13 @@ impl officekit_markup_base::Write for RevisionStateContent {
 
 impl<X: UserData> From<FreezePanesWith<X>> for RevisionStateContentWith<X> {
     fn from(arm: FreezePanesWith<X>) -> Self {
-        Self::FreezePanes(Box::new(arm))
+        Self::FreezePanes(arm)
     }
 }
 
 impl<X: UserData> From<HideUnhideSheetWith<X>> for RevisionStateContentWith<X> {
     fn from(arm: HideUnhideSheetWith<X>) -> Self {
-        Self::HideUnhideSheet(Box::new(arm))
+        Self::HideUnhideSheet(arm)
     }
 }
 
@@ -7851,9 +7843,7 @@ impl<X: UserData> StateBasedObjectContentWith<X> {
             Self::AutoFilter(node) => {
                 StateBasedObjectContentWith::AutoFilter(Box::new((*node).into_user_data()))
             }
-            Self::Comments(node) => {
-                StateBasedObjectContentWith::Comments(Box::new((*node).into_user_data()))
-            }
+            Self::Comments(node) => StateBasedObjectContentWith::Comments(node.into_user_data()),
             Self::DataValidation(node) => {
                 StateBasedObjectContentWith::DataValidation(Box::new((*node).into_user_data()))
             }
@@ -7885,7 +7875,7 @@ impl officekit_markup_base::Read for StateBasedObjectContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_XR, "autoFilter")) => Self::AutoFilter(Box::new(item.read())),
-            Some((NS_XR, "comments")) => Self::Comments(Box::new(item.read())),
+            Some((NS_XR, "comments")) => Self::Comments(item.read()),
             Some((NS_XR, "dataValidation")) => Self::DataValidation(Box::new(item.read())),
             Some((NS_XR, "hyperlink")) => Self::Hyperlink(Box::new(item.read())),
             Some((NS_XR, "pivotTableDefinition")) => {
@@ -7919,7 +7909,7 @@ impl<X: UserData> From<AutoFilterWith<X>> for StateBasedObjectContentWith<X> {
 
 impl<X: UserData> From<CommentsWith<X>> for StateBasedObjectContentWith<X> {
     fn from(arm: CommentsWith<X>) -> Self {
-        Self::Comments(Box::new(arm))
+        Self::Comments(arm)
     }
 }
 

@@ -346,19 +346,19 @@ impl super::Transform
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::BBoolean(arm) = self {
-            Self::BBoolean(Box::new(arm.transform(ctx)))
+            Self::BBoolean(arm.transform(ctx))
         } else if let Self::BagIdUnsignedInt(arm) = self {
-            Self::BagIdUnsignedInt(Box::new(arm.transform(ctx)))
+            Self::BagIdUnsignedInt(arm.transform(ctx))
         } else if let Self::DDouble(arm) = self {
-            Self::DDouble(Box::new(arm.transform(ctx)))
+            Self::DDouble(arm.transform(ctx))
         } else if let Self::IInteger(arm) = self {
-            Self::IInteger(Box::new(arm.transform(ctx)))
+            Self::IInteger(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::RelString(arm) = self {
-            Self::RelString(Box::new(arm.transform(ctx)))
+            Self::RelString(arm.transform(ctx))
         } else if let Self::SString(arm) = self {
-            Self::SString(Box::new(arm.transform(ctx)))
+            Self::SString(arm.transform(ctx))
         } else {
             self.clone()
         }

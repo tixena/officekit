@@ -932,7 +932,7 @@ pub struct XfrmMirror {
 #[rkyv(remote = super::AnchorContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum AnchorContent {
-    NoTextWrapping(Box<super::NoTextWrapping>),
+    NoTextWrapping(super::NoTextWrapping),
     Other(Box<Node>),
     SquareWrapping(Box<super::SquareWrapping>),
     ThroughWrapping(Box<super::ThroughWrapping>),
@@ -974,10 +974,10 @@ pub enum GroupShapeContent {
 #[rkyv(remote = super::HorizontalPositioningContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum HorizontalPositioningContent {
-    AbsolutePositionOffset(Box<super::AbsolutePositionOffset>),
+    AbsolutePositionOffset(super::AbsolutePositionOffset),
     Other(Box<Node>),
-    PctPosHOffset(Box<super::super::office_word_2010_wordprocessing_drawing::PctPosHOffset>),
-    RelativeHorizontalAlignment(Box<super::RelativeHorizontalAlignment>),
+    PctPosHOffset(super::super::office_word_2010_wordprocessing_drawing::PctPosHOffset),
+    RelativeHorizontalAlignment(super::RelativeHorizontalAlignment),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1014,10 +1014,10 @@ pub enum ShapeTextContent {
 #[rkyv(remote = super::VerticalPositioningContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum VerticalPositioningContent {
-    AbsolutePositionOffset(Box<super::AbsolutePositionOffset>),
+    AbsolutePositionOffset(super::AbsolutePositionOffset),
     Other(Box<Node>),
-    PctPosVOffset(Box<super::super::office_word_2010_wordprocessing_drawing::PctPosVOffset>),
-    RelativeVerticalAlignment(Box<super::RelativeVerticalAlignment>),
+    PctPosVOffset(super::super::office_word_2010_wordprocessing_drawing::PctPosVOffset),
+    RelativeVerticalAlignment(super::RelativeVerticalAlignment),
 }
 
 impl From<AbsolutePositionOffsetMirror> for super::AbsolutePositionOffset {

@@ -1105,27 +1105,27 @@ impl Eq for ColorContentWith<()> {}
 #[non_exhaustive]
 pub enum ColorTransformContentWith<X: UserData> {
     /// The element `w14:alpha`, a `Alpha`.
-    Alpha(Box<AlphaWith<X>>),
+    Alpha(AlphaWith<X>),
     /// The element `w14:hueMod`, a `HueMod`.
-    HueMod(Box<HueModWith<X>>),
+    HueMod(HueModWith<X>),
     /// The element `w14:lum`, a `Lum`.
-    Lum(Box<LumWith<X>>),
+    Lum(LumWith<X>),
     /// The element `w14:lumMod`, a `LumMod`.
-    LumMod(Box<LumModWith<X>>),
+    LumMod(LumModWith<X>),
     /// The element `w14:lumOff`, a `LumOff`.
-    LumOff(Box<LumOffWith<X>>),
+    LumOff(LumOffWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `w14:sat`, a `Sat`.
-    Sat(Box<SatWith<X>>),
+    Sat(SatWith<X>),
     /// The element `w14:satMod`, a `SatMod`.
-    SatMod(Box<SatModWith<X>>),
+    SatMod(SatModWith<X>),
     /// The element `w14:satOff`, a `SatOff`.
-    SatOff(Box<SatOffWith<X>>),
+    SatOff(SatOffWith<X>),
     /// The element `w14:shade`, a `Shade`.
-    Shade(Box<ShadeWith<X>>),
+    Shade(ShadeWith<X>),
     /// The element `w14:tint`, a `Tint`.
-    Tint(Box<TintWith<X>>),
+    Tint(TintWith<X>),
 }
 
 /// [`ColorTransformContentWith`] of the tree a read gives, where no node holds anything in
@@ -1541,13 +1541,13 @@ impl Eq for ExtrusionClrWith<()> {}
 #[non_exhaustive]
 pub enum FillPropertiesContentWith<X: UserData> {
     /// The element `w14:gradFill`, a `GradFill`.
-    GradFill(Box<GradFillWith<X>>),
+    GradFill(GradFillWith<X>),
     /// The element `w14:noFill`, a `NoFill`.
-    NoFill(Box<NoFillWith<X>>),
+    NoFill(NoFillWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `w14:solidFill`, a `SolidFill`.
-    SolidFill(Box<SolidFillWith<X>>),
+    SolidFill(SolidFillWith<X>),
 }
 
 /// [`FillPropertiesContentWith`] of the tree a read gives, where no node holds anything in
@@ -1914,13 +1914,13 @@ pub enum LineCapMember {
 #[non_exhaustive]
 pub enum LineJoinContentWith<X: UserData> {
     /// The element `w14:bevel`, a `Bevel`.
-    Bevel(Box<BevelWith<X>>),
+    Bevel(BevelWith<X>),
     /// The element `w14:miter`, a `Miter`.
-    Miter(Box<MiterWith<X>>),
+    Miter(MiterWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `w14:round`, a `Round`.
-    Round(Box<RoundWith<X>>),
+    Round(RoundWith<X>),
 }
 
 /// [`LineJoinContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -3707,31 +3707,17 @@ impl<X: UserData> ColorTransformContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Alpha(node) => {
-                ColorTransformContentWith::Alpha(Box::new((*node).into_user_data()))
-            }
-            Self::HueMod(node) => {
-                ColorTransformContentWith::HueMod(Box::new((*node).into_user_data()))
-            }
-            Self::Lum(node) => ColorTransformContentWith::Lum(Box::new((*node).into_user_data())),
-            Self::LumMod(node) => {
-                ColorTransformContentWith::LumMod(Box::new((*node).into_user_data()))
-            }
-            Self::LumOff(node) => {
-                ColorTransformContentWith::LumOff(Box::new((*node).into_user_data()))
-            }
+            Self::Alpha(node) => ColorTransformContentWith::Alpha(node.into_user_data()),
+            Self::HueMod(node) => ColorTransformContentWith::HueMod(node.into_user_data()),
+            Self::Lum(node) => ColorTransformContentWith::Lum(node.into_user_data()),
+            Self::LumMod(node) => ColorTransformContentWith::LumMod(node.into_user_data()),
+            Self::LumOff(node) => ColorTransformContentWith::LumOff(node.into_user_data()),
             Self::Other(node) => ColorTransformContentWith::Other(node),
-            Self::Sat(node) => ColorTransformContentWith::Sat(Box::new((*node).into_user_data())),
-            Self::SatMod(node) => {
-                ColorTransformContentWith::SatMod(Box::new((*node).into_user_data()))
-            }
-            Self::SatOff(node) => {
-                ColorTransformContentWith::SatOff(Box::new((*node).into_user_data()))
-            }
-            Self::Shade(node) => {
-                ColorTransformContentWith::Shade(Box::new((*node).into_user_data()))
-            }
-            Self::Tint(node) => ColorTransformContentWith::Tint(Box::new((*node).into_user_data())),
+            Self::Sat(node) => ColorTransformContentWith::Sat(node.into_user_data()),
+            Self::SatMod(node) => ColorTransformContentWith::SatMod(node.into_user_data()),
+            Self::SatOff(node) => ColorTransformContentWith::SatOff(node.into_user_data()),
+            Self::Shade(node) => ColorTransformContentWith::Shade(node.into_user_data()),
+            Self::Tint(node) => ColorTransformContentWith::Tint(node.into_user_data()),
         }
     }
 }
@@ -3743,16 +3729,16 @@ impl officekit_markup_base::Read for ColorTransformContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_W14, "alpha")) => Self::Alpha(Box::new(item.read())),
-            Some((NS_W14, "hueMod")) => Self::HueMod(Box::new(item.read())),
-            Some((NS_W14, "lum")) => Self::Lum(Box::new(item.read())),
-            Some((NS_W14, "lumMod")) => Self::LumMod(Box::new(item.read())),
-            Some((NS_W14, "lumOff")) => Self::LumOff(Box::new(item.read())),
-            Some((NS_W14, "sat")) => Self::Sat(Box::new(item.read())),
-            Some((NS_W14, "satMod")) => Self::SatMod(Box::new(item.read())),
-            Some((NS_W14, "satOff")) => Self::SatOff(Box::new(item.read())),
-            Some((NS_W14, "shade")) => Self::Shade(Box::new(item.read())),
-            Some((NS_W14, "tint")) => Self::Tint(Box::new(item.read())),
+            Some((NS_W14, "alpha")) => Self::Alpha(item.read()),
+            Some((NS_W14, "hueMod")) => Self::HueMod(item.read()),
+            Some((NS_W14, "lum")) => Self::Lum(item.read()),
+            Some((NS_W14, "lumMod")) => Self::LumMod(item.read()),
+            Some((NS_W14, "lumOff")) => Self::LumOff(item.read()),
+            Some((NS_W14, "sat")) => Self::Sat(item.read()),
+            Some((NS_W14, "satMod")) => Self::SatMod(item.read()),
+            Some((NS_W14, "satOff")) => Self::SatOff(item.read()),
+            Some((NS_W14, "shade")) => Self::Shade(item.read()),
+            Some((NS_W14, "tint")) => Self::Tint(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -3778,61 +3764,61 @@ impl officekit_markup_base::Write for ColorTransformContent {
 
 impl<X: UserData> From<AlphaWith<X>> for ColorTransformContentWith<X> {
     fn from(arm: AlphaWith<X>) -> Self {
-        Self::Alpha(Box::new(arm))
+        Self::Alpha(arm)
     }
 }
 
 impl<X: UserData> From<HueModWith<X>> for ColorTransformContentWith<X> {
     fn from(arm: HueModWith<X>) -> Self {
-        Self::HueMod(Box::new(arm))
+        Self::HueMod(arm)
     }
 }
 
 impl<X: UserData> From<LumWith<X>> for ColorTransformContentWith<X> {
     fn from(arm: LumWith<X>) -> Self {
-        Self::Lum(Box::new(arm))
+        Self::Lum(arm)
     }
 }
 
 impl<X: UserData> From<LumModWith<X>> for ColorTransformContentWith<X> {
     fn from(arm: LumModWith<X>) -> Self {
-        Self::LumMod(Box::new(arm))
+        Self::LumMod(arm)
     }
 }
 
 impl<X: UserData> From<LumOffWith<X>> for ColorTransformContentWith<X> {
     fn from(arm: LumOffWith<X>) -> Self {
-        Self::LumOff(Box::new(arm))
+        Self::LumOff(arm)
     }
 }
 
 impl<X: UserData> From<SatWith<X>> for ColorTransformContentWith<X> {
     fn from(arm: SatWith<X>) -> Self {
-        Self::Sat(Box::new(arm))
+        Self::Sat(arm)
     }
 }
 
 impl<X: UserData> From<SatModWith<X>> for ColorTransformContentWith<X> {
     fn from(arm: SatModWith<X>) -> Self {
-        Self::SatMod(Box::new(arm))
+        Self::SatMod(arm)
     }
 }
 
 impl<X: UserData> From<SatOffWith<X>> for ColorTransformContentWith<X> {
     fn from(arm: SatOffWith<X>) -> Self {
-        Self::SatOff(Box::new(arm))
+        Self::SatOff(arm)
     }
 }
 
 impl<X: UserData> From<ShadeWith<X>> for ColorTransformContentWith<X> {
     fn from(arm: ShadeWith<X>) -> Self {
-        Self::Shade(Box::new(arm))
+        Self::Shade(arm)
     }
 }
 
 impl<X: UserData> From<TintWith<X>> for ColorTransformContentWith<X> {
     fn from(arm: TintWith<X>) -> Self {
-        Self::Tint(Box::new(arm))
+        Self::Tint(arm)
     }
 }
 
@@ -4776,16 +4762,10 @@ impl<X: UserData> FillPropertiesContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::GradFill(node) => {
-                FillPropertiesContentWith::GradFill(Box::new((*node).into_user_data()))
-            }
-            Self::NoFill(node) => {
-                FillPropertiesContentWith::NoFill(Box::new((*node).into_user_data()))
-            }
+            Self::GradFill(node) => FillPropertiesContentWith::GradFill(node.into_user_data()),
+            Self::NoFill(node) => FillPropertiesContentWith::NoFill(node.into_user_data()),
             Self::Other(node) => FillPropertiesContentWith::Other(node),
-            Self::SolidFill(node) => {
-                FillPropertiesContentWith::SolidFill(Box::new((*node).into_user_data()))
-            }
+            Self::SolidFill(node) => FillPropertiesContentWith::SolidFill(node.into_user_data()),
         }
     }
 }
@@ -4797,9 +4777,9 @@ impl officekit_markup_base::Read for FillPropertiesContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_W14, "gradFill")) => Self::GradFill(Box::new(item.read())),
-            Some((NS_W14, "noFill")) => Self::NoFill(Box::new(item.read())),
-            Some((NS_W14, "solidFill")) => Self::SolidFill(Box::new(item.read())),
+            Some((NS_W14, "gradFill")) => Self::GradFill(item.read()),
+            Some((NS_W14, "noFill")) => Self::NoFill(item.read()),
+            Some((NS_W14, "solidFill")) => Self::SolidFill(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -4818,19 +4798,19 @@ impl officekit_markup_base::Write for FillPropertiesContent {
 
 impl<X: UserData> From<GradFillWith<X>> for FillPropertiesContentWith<X> {
     fn from(arm: GradFillWith<X>) -> Self {
-        Self::GradFill(Box::new(arm))
+        Self::GradFill(arm)
     }
 }
 
 impl<X: UserData> From<NoFillWith<X>> for FillPropertiesContentWith<X> {
     fn from(arm: NoFillWith<X>) -> Self {
-        Self::NoFill(Box::new(arm))
+        Self::NoFill(arm)
     }
 }
 
 impl<X: UserData> From<SolidFillWith<X>> for FillPropertiesContentWith<X> {
     fn from(arm: SolidFillWith<X>) -> Self {
-        Self::SolidFill(Box::new(arm))
+        Self::SolidFill(arm)
     }
 }
 
@@ -5610,10 +5590,10 @@ impl<X: UserData> LineJoinContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Bevel(node) => LineJoinContentWith::Bevel(Box::new((*node).into_user_data())),
-            Self::Miter(node) => LineJoinContentWith::Miter(Box::new((*node).into_user_data())),
+            Self::Bevel(node) => LineJoinContentWith::Bevel(node.into_user_data()),
+            Self::Miter(node) => LineJoinContentWith::Miter(node.into_user_data()),
             Self::Other(node) => LineJoinContentWith::Other(node),
-            Self::Round(node) => LineJoinContentWith::Round(Box::new((*node).into_user_data())),
+            Self::Round(node) => LineJoinContentWith::Round(node.into_user_data()),
         }
     }
 }
@@ -5625,9 +5605,9 @@ impl officekit_markup_base::Read for LineJoinContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_W14, "bevel")) => Self::Bevel(Box::new(item.read())),
-            Some((NS_W14, "miter")) => Self::Miter(Box::new(item.read())),
-            Some((NS_W14, "round")) => Self::Round(Box::new(item.read())),
+            Some((NS_W14, "bevel")) => Self::Bevel(item.read()),
+            Some((NS_W14, "miter")) => Self::Miter(item.read()),
+            Some((NS_W14, "round")) => Self::Round(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -5646,19 +5626,19 @@ impl officekit_markup_base::Write for LineJoinContent {
 
 impl<X: UserData> From<BevelWith<X>> for LineJoinContentWith<X> {
     fn from(arm: BevelWith<X>) -> Self {
-        Self::Bevel(Box::new(arm))
+        Self::Bevel(arm)
     }
 }
 
 impl<X: UserData> From<MiterWith<X>> for LineJoinContentWith<X> {
     fn from(arm: MiterWith<X>) -> Self {
-        Self::Miter(Box::new(arm))
+        Self::Miter(arm)
     }
 }
 
 impl<X: UserData> From<RoundWith<X>> for LineJoinContentWith<X> {
     fn from(arm: RoundWith<X>) -> Self {
-        Self::Round(Box::new(arm))
+        Self::Round(arm)
     }
 }
 

@@ -3058,9 +3058,9 @@ pub enum LayoutElementContentWith<X: UserData> {
     /// The element `dgm:choose`, a `ChooseElement`.
     ChooseElement(Box<ChooseElementWith<X>>),
     /// The element `dgm:constrLst`, a `ConstraintList`.
-    ConstraintList(Box<ConstraintListWith<X>>),
+    ConstraintList(ConstraintListWith<X>),
     /// The element `dgm:extLst`, a `ExtensionList`.
-    ExtensionList(Box<ExtensionListWith<X>>),
+    ExtensionList(ExtensionListWith<X>),
     /// The element `dgm:forEach`, a `ForEach`.
     ForEach(Box<ForEachWith<X>>),
     /// The element `dgm:layoutNode`, a `LayoutNode`.
@@ -3070,7 +3070,7 @@ pub enum LayoutElementContentWith<X: UserData> {
     /// The element `dgm:presOf`, a `PresentationOf`.
     PresentationOf(Box<PresentationOfWith<X>>),
     /// The element `dgm:ruleLst`, a `RuleList`.
-    RuleList(Box<RuleListWith<X>>),
+    RuleList(RuleListWith<X>),
     /// The element `dgm:shape`, a `Shape`.
     Shape(Box<ShapeWith<X>>),
 }
@@ -3122,9 +3122,9 @@ pub enum LayoutNodeContentWith<X: UserData> {
     /// The element `dgm:choose`, a `ChooseElement`.
     ChooseElement(Box<ChooseElementWith<X>>),
     /// The element `dgm:constrLst`, a `ConstraintList`.
-    ConstraintList(Box<ConstraintListWith<X>>),
+    ConstraintList(ConstraintListWith<X>),
     /// The element `dgm:extLst`, a `ExtensionList`.
-    ExtensionList(Box<ExtensionListWith<X>>),
+    ExtensionList(ExtensionListWith<X>),
     /// The element `dgm:forEach`, a `ForEach`.
     ForEach(Box<ForEachWith<X>>),
     /// The element `dgm:layoutNode`, a `LayoutNode`.
@@ -3134,7 +3134,7 @@ pub enum LayoutNodeContentWith<X: UserData> {
     /// The element `dgm:presOf`, a `PresentationOf`.
     PresentationOf(Box<PresentationOfWith<X>>),
     /// The element `dgm:ruleLst`, a `RuleList`.
-    RuleList(Box<RuleListWith<X>>),
+    RuleList(RuleListWith<X>),
     /// The element `dgm:shape`, a `Shape`.
     Shape(Box<ShapeWith<X>>),
     /// The element `dgm:varLst`, a `VariableList`.
@@ -8841,10 +8841,10 @@ impl<X: UserData> LayoutElementContentWith<X> {
                 LayoutElementContentWith::ChooseElement(Box::new((*node).into_user_data()))
             }
             Self::ConstraintList(node) => {
-                LayoutElementContentWith::ConstraintList(Box::new((*node).into_user_data()))
+                LayoutElementContentWith::ConstraintList(node.into_user_data())
             }
             Self::ExtensionList(node) => {
-                LayoutElementContentWith::ExtensionList(Box::new((*node).into_user_data()))
+                LayoutElementContentWith::ExtensionList(node.into_user_data())
             }
             Self::ForEach(node) => {
                 LayoutElementContentWith::ForEach(Box::new((*node).into_user_data()))
@@ -8856,9 +8856,7 @@ impl<X: UserData> LayoutElementContentWith<X> {
             Self::PresentationOf(node) => {
                 LayoutElementContentWith::PresentationOf(Box::new((*node).into_user_data()))
             }
-            Self::RuleList(node) => {
-                LayoutElementContentWith::RuleList(Box::new((*node).into_user_data()))
-            }
+            Self::RuleList(node) => LayoutElementContentWith::RuleList(node.into_user_data()),
             Self::Shape(node) => {
                 LayoutElementContentWith::Shape(Box::new((*node).into_user_data()))
             }
@@ -8875,12 +8873,12 @@ impl officekit_markup_base::Read for LayoutElementContent {
         match item.name() {
             Some((NS_DGM, "alg")) => Self::Algorithm(Box::new(item.read())),
             Some((NS_DGM, "choose")) => Self::ChooseElement(Box::new(item.read())),
-            Some((NS_DGM, "constrLst")) => Self::ConstraintList(Box::new(item.read())),
-            Some((NS_DGM, "extLst")) => Self::ExtensionList(Box::new(item.read())),
+            Some((NS_DGM, "constrLst")) => Self::ConstraintList(item.read()),
+            Some((NS_DGM, "extLst")) => Self::ExtensionList(item.read()),
             Some((NS_DGM, "forEach")) => Self::ForEach(Box::new(item.read())),
             Some((NS_DGM, "layoutNode")) => Self::LayoutNode(Box::new(item.read())),
             Some((NS_DGM, "presOf")) => Self::PresentationOf(Box::new(item.read())),
-            Some((NS_DGM, "ruleLst")) => Self::RuleList(Box::new(item.read())),
+            Some((NS_DGM, "ruleLst")) => Self::RuleList(item.read()),
             Some((NS_DGM, "shape")) => Self::Shape(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -8918,13 +8916,13 @@ impl<X: UserData> From<ChooseElementWith<X>> for LayoutElementContentWith<X> {
 
 impl<X: UserData> From<ConstraintListWith<X>> for LayoutElementContentWith<X> {
     fn from(arm: ConstraintListWith<X>) -> Self {
-        Self::ConstraintList(Box::new(arm))
+        Self::ConstraintList(arm)
     }
 }
 
 impl<X: UserData> From<ExtensionListWith<X>> for LayoutElementContentWith<X> {
     fn from(arm: ExtensionListWith<X>) -> Self {
-        Self::ExtensionList(Box::new(arm))
+        Self::ExtensionList(arm)
     }
 }
 
@@ -8948,7 +8946,7 @@ impl<X: UserData> From<PresentationOfWith<X>> for LayoutElementContentWith<X> {
 
 impl<X: UserData> From<RuleListWith<X>> for LayoutElementContentWith<X> {
     fn from(arm: RuleListWith<X>) -> Self {
-        Self::RuleList(Box::new(arm))
+        Self::RuleList(arm)
     }
 }
 
@@ -9037,10 +9035,10 @@ impl<X: UserData> LayoutNodeContentWith<X> {
                 LayoutNodeContentWith::ChooseElement(Box::new((*node).into_user_data()))
             }
             Self::ConstraintList(node) => {
-                LayoutNodeContentWith::ConstraintList(Box::new((*node).into_user_data()))
+                LayoutNodeContentWith::ConstraintList(node.into_user_data())
             }
             Self::ExtensionList(node) => {
-                LayoutNodeContentWith::ExtensionList(Box::new((*node).into_user_data()))
+                LayoutNodeContentWith::ExtensionList(node.into_user_data())
             }
             Self::ForEach(node) => {
                 LayoutNodeContentWith::ForEach(Box::new((*node).into_user_data()))
@@ -9052,9 +9050,7 @@ impl<X: UserData> LayoutNodeContentWith<X> {
             Self::PresentationOf(node) => {
                 LayoutNodeContentWith::PresentationOf(Box::new((*node).into_user_data()))
             }
-            Self::RuleList(node) => {
-                LayoutNodeContentWith::RuleList(Box::new((*node).into_user_data()))
-            }
+            Self::RuleList(node) => LayoutNodeContentWith::RuleList(node.into_user_data()),
             Self::Shape(node) => LayoutNodeContentWith::Shape(Box::new((*node).into_user_data())),
             Self::VariableList(node) => {
                 LayoutNodeContentWith::VariableList(Box::new((*node).into_user_data()))
@@ -9072,12 +9068,12 @@ impl officekit_markup_base::Read for LayoutNodeContent {
         match item.name() {
             Some((NS_DGM, "alg")) => Self::Algorithm(Box::new(item.read())),
             Some((NS_DGM, "choose")) => Self::ChooseElement(Box::new(item.read())),
-            Some((NS_DGM, "constrLst")) => Self::ConstraintList(Box::new(item.read())),
-            Some((NS_DGM, "extLst")) => Self::ExtensionList(Box::new(item.read())),
+            Some((NS_DGM, "constrLst")) => Self::ConstraintList(item.read()),
+            Some((NS_DGM, "extLst")) => Self::ExtensionList(item.read()),
             Some((NS_DGM, "forEach")) => Self::ForEach(Box::new(item.read())),
             Some((NS_DGM, "layoutNode")) => Self::LayoutNode(Box::new(item.read())),
             Some((NS_DGM, "presOf")) => Self::PresentationOf(Box::new(item.read())),
-            Some((NS_DGM, "ruleLst")) => Self::RuleList(Box::new(item.read())),
+            Some((NS_DGM, "ruleLst")) => Self::RuleList(item.read()),
             Some((NS_DGM, "shape")) => Self::Shape(Box::new(item.read())),
             Some((NS_DGM, "varLst")) => Self::VariableList(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
@@ -9117,13 +9113,13 @@ impl<X: UserData> From<ChooseElementWith<X>> for LayoutNodeContentWith<X> {
 
 impl<X: UserData> From<ConstraintListWith<X>> for LayoutNodeContentWith<X> {
     fn from(arm: ConstraintListWith<X>) -> Self {
-        Self::ConstraintList(Box::new(arm))
+        Self::ConstraintList(arm)
     }
 }
 
 impl<X: UserData> From<ExtensionListWith<X>> for LayoutNodeContentWith<X> {
     fn from(arm: ExtensionListWith<X>) -> Self {
-        Self::ExtensionList(Box::new(arm))
+        Self::ExtensionList(arm)
     }
 }
 
@@ -9147,7 +9143,7 @@ impl<X: UserData> From<PresentationOfWith<X>> for LayoutNodeContentWith<X> {
 
 impl<X: UserData> From<RuleListWith<X>> for LayoutNodeContentWith<X> {
     fn from(arm: RuleListWith<X>) -> Self {
-        Self::RuleList(Box::new(arm))
+        Self::RuleList(arm)
     }
 }
 

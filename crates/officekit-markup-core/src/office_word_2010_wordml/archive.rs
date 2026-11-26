@@ -905,27 +905,27 @@ pub enum ColorContent {
 #[rkyv(remote = super::ColorTransformContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ColorTransformContent {
-    Alpha(Box<super::Alpha>),
-    HueMod(Box<super::HueMod>),
-    Lum(Box<super::Lum>),
-    LumMod(Box<super::LumMod>),
-    LumOff(Box<super::LumOff>),
+    Alpha(super::Alpha),
+    HueMod(super::HueMod),
+    Lum(super::Lum),
+    LumMod(super::LumMod),
+    LumOff(super::LumOff),
     Other(Box<Node>),
-    Sat(Box<super::Sat>),
-    SatMod(Box<super::SatMod>),
-    SatOff(Box<super::SatOff>),
-    Shade(Box<super::Shade>),
-    Tint(Box<super::Tint>),
+    Sat(super::Sat),
+    SatMod(super::SatMod),
+    SatOff(super::SatOff),
+    Shade(super::Shade),
+    Tint(super::Tint),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FillPropertiesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum FillPropertiesContent {
-    GradFill(Box<super::GradFill>),
-    NoFill(Box<super::NoFill>),
+    GradFill(super::GradFill),
+    NoFill(super::NoFill),
     Other(Box<Node>),
-    SolidFill(Box<super::SolidFill>),
+    SolidFill(super::SolidFill),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -941,10 +941,10 @@ pub enum GradientFillPropertiesContent {
 #[rkyv(remote = super::LineJoinContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum LineJoinContent {
-    Bevel(Box<super::Bevel>),
-    Miter(Box<super::Miter>),
+    Bevel(super::Bevel),
+    Miter(super::Miter),
     Other(Box<Node>),
-    Round(Box<super::Round>),
+    Round(super::Round),
 }
 
 impl From<AlphaMirror> for super::Alpha {

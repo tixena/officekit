@@ -543,15 +543,15 @@ impl Eq for ExtLstWith<()> {}
 #[non_exhaustive]
 pub enum LiveFeedBackgroundPropertiesContentWith<X: UserData> {
     /// The element `alf:Blur`, a `Blur`.
-    Blur(Box<BlurWith<X>>),
+    Blur(BlurWith<X>),
     /// The element `alf:Custom`, a `Custom`.
-    Custom(Box<CustomWith<X>>),
+    Custom(CustomWith<X>),
     /// The element `alf:Normal`, a `Normal`.
-    Normal(Box<NormalWith<X>>),
+    Normal(NormalWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `alf:Removed`, a `Removed`.
-    Removed(Box<RemovedWith<X>>),
+    Removed(RemovedWith<X>),
 }
 
 /// [`LiveFeedBackgroundPropertiesContentWith`] of the tree a read gives, where no node holds
@@ -884,17 +884,17 @@ impl<X: UserData> LiveFeedBackgroundPropertiesContentWith<X> {
     {
         match self {
             Self::Blur(node) => {
-                LiveFeedBackgroundPropertiesContentWith::Blur(Box::new((*node).into_user_data()))
+                LiveFeedBackgroundPropertiesContentWith::Blur(node.into_user_data())
             }
             Self::Custom(node) => {
-                LiveFeedBackgroundPropertiesContentWith::Custom(Box::new((*node).into_user_data()))
+                LiveFeedBackgroundPropertiesContentWith::Custom(node.into_user_data())
             }
             Self::Normal(node) => {
-                LiveFeedBackgroundPropertiesContentWith::Normal(Box::new((*node).into_user_data()))
+                LiveFeedBackgroundPropertiesContentWith::Normal(node.into_user_data())
             }
             Self::Other(node) => LiveFeedBackgroundPropertiesContentWith::Other(node),
             Self::Removed(node) => {
-                LiveFeedBackgroundPropertiesContentWith::Removed(Box::new((*node).into_user_data()))
+                LiveFeedBackgroundPropertiesContentWith::Removed(node.into_user_data())
             }
         }
     }
@@ -907,10 +907,10 @@ impl officekit_markup_base::Read for LiveFeedBackgroundPropertiesContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_ALF, "Blur")) => Self::Blur(Box::new(item.read())),
-            Some((NS_ALF, "Custom")) => Self::Custom(Box::new(item.read())),
-            Some((NS_ALF, "Normal")) => Self::Normal(Box::new(item.read())),
-            Some((NS_ALF, "Removed")) => Self::Removed(Box::new(item.read())),
+            Some((NS_ALF, "Blur")) => Self::Blur(item.read()),
+            Some((NS_ALF, "Custom")) => Self::Custom(item.read()),
+            Some((NS_ALF, "Normal")) => Self::Normal(item.read()),
+            Some((NS_ALF, "Removed")) => Self::Removed(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -930,25 +930,25 @@ impl officekit_markup_base::Write for LiveFeedBackgroundPropertiesContent {
 
 impl<X: UserData> From<BlurWith<X>> for LiveFeedBackgroundPropertiesContentWith<X> {
     fn from(arm: BlurWith<X>) -> Self {
-        Self::Blur(Box::new(arm))
+        Self::Blur(arm)
     }
 }
 
 impl<X: UserData> From<CustomWith<X>> for LiveFeedBackgroundPropertiesContentWith<X> {
     fn from(arm: CustomWith<X>) -> Self {
-        Self::Custom(Box::new(arm))
+        Self::Custom(arm)
     }
 }
 
 impl<X: UserData> From<NormalWith<X>> for LiveFeedBackgroundPropertiesContentWith<X> {
     fn from(arm: NormalWith<X>) -> Self {
-        Self::Normal(Box::new(arm))
+        Self::Normal(arm)
     }
 }
 
 impl<X: UserData> From<RemovedWith<X>> for LiveFeedBackgroundPropertiesContentWith<X> {
     fn from(arm: RemovedWith<X>) -> Self {
-        Self::Removed(Box::new(arm))
+        Self::Removed(arm)
     }
 }
 

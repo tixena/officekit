@@ -1248,39 +1248,39 @@ impl Eq for ContributorsListWith<()> {}
 #[non_exhaustive]
 pub enum ContributorsListContentWith<X: UserData> {
     /// The element `b:Artist`, a `Artist`.
-    Artist(Box<ArtistWith<X>>),
+    Artist(ArtistWith<X>),
     /// The element `b:Author`, a `Author`.
-    Author(Box<AuthorWith<X>>),
+    Author(AuthorWith<X>),
     /// The element `b:BookAuthor`, a `BookAuthor`.
-    BookAuthor(Box<BookAuthorWith<X>>),
+    BookAuthor(BookAuthorWith<X>),
     /// The element `b:Compiler`, a `Compiler`.
-    Compiler(Box<CompilerWith<X>>),
+    Compiler(CompilerWith<X>),
     /// The element `b:Composer`, a `Composer`.
-    Composer(Box<ComposerWith<X>>),
+    Composer(ComposerWith<X>),
     /// The element `b:Conductor`, a `Conductor`.
-    Conductor(Box<ConductorWith<X>>),
+    Conductor(ConductorWith<X>),
     /// The element `b:Counsel`, a `Counsel`.
-    Counsel(Box<CounselWith<X>>),
+    Counsel(CounselWith<X>),
     /// The element `b:Director`, a `Director`.
-    Director(Box<DirectorWith<X>>),
+    Director(DirectorWith<X>),
     /// The element `b:Editor`, a `Editor`.
-    Editor(Box<EditorWith<X>>),
+    Editor(EditorWith<X>),
     /// The element `b:Interviewee`, a `Interviewee`.
-    Interviewee(Box<IntervieweeWith<X>>),
+    Interviewee(IntervieweeWith<X>),
     /// The element `b:Interviewer`, a `Interviewer`.
-    Interviewer(Box<InterviewerWith<X>>),
+    Interviewer(InterviewerWith<X>),
     /// The element `b:Inventor`, a `Inventor`.
-    Inventor(Box<InventorWith<X>>),
+    Inventor(InventorWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `b:Performer`, a `Performer`.
-    Performer(Box<PerformerWith<X>>),
+    Performer(PerformerWith<X>),
     /// The element `b:ProducerName`, a `ProducerName`.
-    ProducerName(Box<ProducerNameWith<X>>),
+    ProducerName(ProducerNameWith<X>),
     /// The element `b:Translator`, a `Translator`.
-    Translator(Box<TranslatorWith<X>>),
+    Translator(TranslatorWith<X>),
     /// The element `b:Writer`, a `Writer`.
-    Writer(Box<WriterWith<X>>),
+    Writer(WriterWith<X>),
 }
 
 /// [`ContributorsListContentWith`] of the tree a read gives, where no node holds anything in
@@ -1768,9 +1768,9 @@ impl Eq for NameListWith<()> {}
 #[non_exhaustive]
 pub enum NameOrCorporateContentWith<X: UserData> {
     /// The element `b:Corporate`, a `CorporateAuthor`.
-    CorporateAuthor(Box<CorporateAuthorWith<X>>),
+    CorporateAuthor(CorporateAuthorWith<X>),
     /// The element `b:NameList`, a `NameList`.
-    NameList(Box<NameListWith<X>>),
+    NameList(NameListWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -2171,111 +2171,111 @@ impl Eq for SourceWith<()> {}
 #[non_exhaustive]
 pub enum SourceContentWith<X: UserData> {
     /// The element `b:AbbreviatedCaseNumber`, a `AbbreviatedCaseNumber`.
-    AbbreviatedCaseNumber(Box<AbbreviatedCaseNumberWith<X>>),
+    AbbreviatedCaseNumber(AbbreviatedCaseNumberWith<X>),
     /// The element `b:AlbumTitle`, a `AlbumTitle`.
-    AlbumTitle(Box<AlbumTitleWith<X>>),
+    AlbumTitle(AlbumTitleWith<X>),
     /// The element `b:BookTitle`, a `BookTitle`.
-    BookTitle(Box<BookTitleWith<X>>),
+    BookTitle(BookTitleWith<X>),
     /// The element `b:BroadcastTitle`, a `BroadcastTitle`.
-    BroadcastTitle(Box<BroadcastTitleWith<X>>),
+    BroadcastTitle(BroadcastTitleWith<X>),
     /// The element `b:Broadcaster`, a `Broadcaster`.
-    Broadcaster(Box<BroadcasterWith<X>>),
+    Broadcaster(BroadcasterWith<X>),
     /// The element `b:CaseNumber`, a `CaseNumber`.
-    CaseNumber(Box<CaseNumberWith<X>>),
+    CaseNumber(CaseNumberWith<X>),
     /// The element `b:ChapterNumber`, a `ChapterNumber`.
-    ChapterNumber(Box<ChapterNumberWith<X>>),
+    ChapterNumber(ChapterNumberWith<X>),
     /// The element `b:City`, a `City`.
-    City(Box<CityWith<X>>),
+    City(CityWith<X>),
     /// The element `b:Comments`, a `Comments`.
-    Comments(Box<CommentsWith<X>>),
+    Comments(CommentsWith<X>),
     /// The element `b:ConferenceName`, a `ConferenceOrProceedingsName`.
-    ConferenceOrProceedingsName(Box<ConferenceOrProceedingsNameWith<X>>),
+    ConferenceOrProceedingsName(ConferenceOrProceedingsNameWith<X>),
     /// The element `b:Author`, a `ContributorsList`.
-    ContributorsList(Box<ContributorsListWith<X>>),
+    ContributorsList(ContributorsListWith<X>),
     /// The element `b:CountryRegion`, a `CountryOrRegion`.
-    CountryOrRegion(Box<CountryOrRegionWith<X>>),
+    CountryOrRegion(CountryOrRegionWith<X>),
     /// The element `b:Court`, a `Court`.
-    Court(Box<CourtWith<X>>),
+    Court(CourtWith<X>),
     /// The element `b:Day`, a `Day`.
-    Day(Box<DayWith<X>>),
+    Day(DayWith<X>),
     /// The element `b:DayAccessed`, a `DayAccessed`.
-    DayAccessed(Box<DayAccessedWith<X>>),
+    DayAccessed(DayAccessedWith<X>),
     /// The element `b:Department`, a `Department`.
-    Department(Box<DepartmentWith<X>>),
+    Department(DepartmentWith<X>),
     /// The element `b:Distributor`, a `Distributor`.
-    Distributor(Box<DistributorWith<X>>),
+    Distributor(DistributorWith<X>),
     /// The element `b:Edition`, a `EditorEdition`.
-    EditorEdition(Box<EditorEditionWith<X>>),
+    EditorEdition(EditorEditionWith<X>),
     /// The element `b:Guid`, a `Guid`.
-    Guid(Box<GuidWith<X>>),
+    Guid(GuidWith<X>),
     /// The element `b:Institution`, a `Institution`.
-    Institution(Box<InstitutionWith<X>>),
+    Institution(InstitutionWith<X>),
     /// The element `b:InternetSiteTitle`, a `InternetSiteTitle`.
-    InternetSiteTitle(Box<InternetSiteTitleWith<X>>),
+    InternetSiteTitle(InternetSiteTitleWith<X>),
     /// The element `b:Issue`, a `Issue`.
-    Issue(Box<IssueWith<X>>),
+    Issue(IssueWith<X>),
     /// The element `b:JournalName`, a `JournalName`.
-    JournalName(Box<JournalNameWith<X>>),
+    JournalName(JournalNameWith<X>),
     /// The element `b:LCID`, a `LocaleID`.
-    LocaleID(Box<LocaleIDWith<X>>),
+    LocaleID(LocaleIDWith<X>),
     /// The element `b:Medium`, a `Medium`.
-    Medium(Box<MediumWith<X>>),
+    Medium(MediumWith<X>),
     /// The element `b:Month`, a `Month`.
-    Month(Box<MonthWith<X>>),
+    Month(MonthWith<X>),
     /// The element `b:MonthAccessed`, a `MonthAccessed`.
-    MonthAccessed(Box<MonthAccessedWith<X>>),
+    MonthAccessed(MonthAccessedWith<X>),
     /// The element `b:NumberVolumes`, a `NumberOfVolumes`.
-    NumberOfVolumes(Box<NumberOfVolumesWith<X>>),
+    NumberOfVolumes(NumberOfVolumesWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `b:Pages`, a `Pages`.
-    Pages(Box<PagesWith<X>>),
+    Pages(PagesWith<X>),
     /// The element `b:PatentNumber`, a `PatentNumber`.
-    PatentNumber(Box<PatentNumberWith<X>>),
+    PatentNumber(PatentNumberWith<X>),
     /// The element `b:Type`, a `PatentType`.
-    PatentType(Box<PatentTypeWith<X>>),
+    PatentType(PatentTypeWith<X>),
     /// The element `b:PeriodicalTitle`, a `PeriodicalTitle`.
-    PeriodicalTitle(Box<PeriodicalTitleWith<X>>),
+    PeriodicalTitle(PeriodicalTitleWith<X>),
     /// The element `b:ProductionCompany`, a `ProductionCompany`.
-    ProductionCompany(Box<ProductionCompanyWith<X>>),
+    ProductionCompany(ProductionCompanyWith<X>),
     /// The element `b:PublicationTitle`, a `PublicationTitle`.
-    PublicationTitle(Box<PublicationTitleWith<X>>),
+    PublicationTitle(PublicationTitleWith<X>),
     /// The element `b:Publisher`, a `Publisher`.
-    Publisher(Box<PublisherWith<X>>),
+    Publisher(PublisherWith<X>),
     /// The element `b:RecordingNumber`, a `RecordingNumber`.
-    RecordingNumber(Box<RecordingNumberWith<X>>),
+    RecordingNumber(RecordingNumberWith<X>),
     /// The element `b:RefOrder`, a `ReferenceOrder`.
-    ReferenceOrder(Box<ReferenceOrderWith<X>>),
+    ReferenceOrder(ReferenceOrderWith<X>),
     /// The element `b:Reporter`, a `Reporter`.
-    Reporter(Box<ReporterWith<X>>),
+    Reporter(ReporterWith<X>),
     /// The element `b:ShortTitle`, a `ShortTitle`.
-    ShortTitle(Box<ShortTitleWith<X>>),
+    ShortTitle(ShortTitleWith<X>),
     /// The element `b:SourceType`, a `SourceType`.
-    SourceType(Box<SourceTypeWith<X>>),
+    SourceType(SourceTypeWith<X>),
     /// The element `b:StandardNumber`, a `StandardNumber`.
-    StandardNumber(Box<StandardNumberWith<X>>),
+    StandardNumber(StandardNumberWith<X>),
     /// The element `b:StateProvince`, a `StateOrProvince`.
-    StateOrProvince(Box<StateOrProvinceWith<X>>),
+    StateOrProvince(StateOrProvinceWith<X>),
     /// The element `b:Station`, a `Station`.
-    Station(Box<StationWith<X>>),
+    Station(StationWith<X>),
     /// The element `b:Tag`, a `Tag`.
-    Tag(Box<TagWith<X>>),
+    Tag(TagWith<X>),
     /// The element `b:Theater`, a `Theater`.
-    Theater(Box<TheaterWith<X>>),
+    Theater(TheaterWith<X>),
     /// The element `b:ThesisType`, a `ThesisType`.
-    ThesisType(Box<ThesisTypeWith<X>>),
+    ThesisType(ThesisTypeWith<X>),
     /// The element `b:Title`, a `Title`.
-    Title(Box<TitleWith<X>>),
+    Title(TitleWith<X>),
     /// The element `b:URL`, a `Url`.
-    Url(Box<UrlWith<X>>),
+    Url(UrlWith<X>),
     /// The element `b:Version`, a `Version`.
-    Version(Box<VersionWith<X>>),
+    Version(VersionWith<X>),
     /// The element `b:Volume`, a `Volume`.
-    Volume(Box<VolumeWith<X>>),
+    Volume(VolumeWith<X>),
     /// The element `b:Year`, a `Year`.
-    Year(Box<YearWith<X>>),
+    Year(YearWith<X>),
     /// The element `b:YearAccessed`, a `YearAccessed`.
-    YearAccessed(Box<YearAccessedWith<X>>),
+    YearAccessed(YearAccessedWith<X>),
 }
 
 /// [`SourceContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -3513,55 +3513,33 @@ impl<X: UserData> ContributorsListContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Artist(node) => {
-                ContributorsListContentWith::Artist(Box::new((*node).into_user_data()))
-            }
-            Self::Author(node) => {
-                ContributorsListContentWith::Author(Box::new((*node).into_user_data()))
-            }
+            Self::Artist(node) => ContributorsListContentWith::Artist(node.into_user_data()),
+            Self::Author(node) => ContributorsListContentWith::Author(node.into_user_data()),
             Self::BookAuthor(node) => {
-                ContributorsListContentWith::BookAuthor(Box::new((*node).into_user_data()))
+                ContributorsListContentWith::BookAuthor(node.into_user_data())
             }
-            Self::Compiler(node) => {
-                ContributorsListContentWith::Compiler(Box::new((*node).into_user_data()))
-            }
-            Self::Composer(node) => {
-                ContributorsListContentWith::Composer(Box::new((*node).into_user_data()))
-            }
-            Self::Conductor(node) => {
-                ContributorsListContentWith::Conductor(Box::new((*node).into_user_data()))
-            }
-            Self::Counsel(node) => {
-                ContributorsListContentWith::Counsel(Box::new((*node).into_user_data()))
-            }
-            Self::Director(node) => {
-                ContributorsListContentWith::Director(Box::new((*node).into_user_data()))
-            }
-            Self::Editor(node) => {
-                ContributorsListContentWith::Editor(Box::new((*node).into_user_data()))
-            }
+            Self::Compiler(node) => ContributorsListContentWith::Compiler(node.into_user_data()),
+            Self::Composer(node) => ContributorsListContentWith::Composer(node.into_user_data()),
+            Self::Conductor(node) => ContributorsListContentWith::Conductor(node.into_user_data()),
+            Self::Counsel(node) => ContributorsListContentWith::Counsel(node.into_user_data()),
+            Self::Director(node) => ContributorsListContentWith::Director(node.into_user_data()),
+            Self::Editor(node) => ContributorsListContentWith::Editor(node.into_user_data()),
             Self::Interviewee(node) => {
-                ContributorsListContentWith::Interviewee(Box::new((*node).into_user_data()))
+                ContributorsListContentWith::Interviewee(node.into_user_data())
             }
             Self::Interviewer(node) => {
-                ContributorsListContentWith::Interviewer(Box::new((*node).into_user_data()))
+                ContributorsListContentWith::Interviewer(node.into_user_data())
             }
-            Self::Inventor(node) => {
-                ContributorsListContentWith::Inventor(Box::new((*node).into_user_data()))
-            }
+            Self::Inventor(node) => ContributorsListContentWith::Inventor(node.into_user_data()),
             Self::Other(node) => ContributorsListContentWith::Other(node),
-            Self::Performer(node) => {
-                ContributorsListContentWith::Performer(Box::new((*node).into_user_data()))
-            }
+            Self::Performer(node) => ContributorsListContentWith::Performer(node.into_user_data()),
             Self::ProducerName(node) => {
-                ContributorsListContentWith::ProducerName(Box::new((*node).into_user_data()))
+                ContributorsListContentWith::ProducerName(node.into_user_data())
             }
             Self::Translator(node) => {
-                ContributorsListContentWith::Translator(Box::new((*node).into_user_data()))
+                ContributorsListContentWith::Translator(node.into_user_data())
             }
-            Self::Writer(node) => {
-                ContributorsListContentWith::Writer(Box::new((*node).into_user_data()))
-            }
+            Self::Writer(node) => ContributorsListContentWith::Writer(node.into_user_data()),
         }
     }
 }
@@ -3573,22 +3551,22 @@ impl crate::Read for ContributorsListContent {
 
     fn read_item(item: crate::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_B, "Artist")) => Self::Artist(Box::new(item.read())),
-            Some((NS_B, "Author")) => Self::Author(Box::new(item.read())),
-            Some((NS_B, "BookAuthor")) => Self::BookAuthor(Box::new(item.read())),
-            Some((NS_B, "Compiler")) => Self::Compiler(Box::new(item.read())),
-            Some((NS_B, "Composer")) => Self::Composer(Box::new(item.read())),
-            Some((NS_B, "Conductor")) => Self::Conductor(Box::new(item.read())),
-            Some((NS_B, "Counsel")) => Self::Counsel(Box::new(item.read())),
-            Some((NS_B, "Director")) => Self::Director(Box::new(item.read())),
-            Some((NS_B, "Editor")) => Self::Editor(Box::new(item.read())),
-            Some((NS_B, "Interviewee")) => Self::Interviewee(Box::new(item.read())),
-            Some((NS_B, "Interviewer")) => Self::Interviewer(Box::new(item.read())),
-            Some((NS_B, "Inventor")) => Self::Inventor(Box::new(item.read())),
-            Some((NS_B, "Performer")) => Self::Performer(Box::new(item.read())),
-            Some((NS_B, "ProducerName")) => Self::ProducerName(Box::new(item.read())),
-            Some((NS_B, "Translator")) => Self::Translator(Box::new(item.read())),
-            Some((NS_B, "Writer")) => Self::Writer(Box::new(item.read())),
+            Some((NS_B, "Artist")) => Self::Artist(item.read()),
+            Some((NS_B, "Author")) => Self::Author(item.read()),
+            Some((NS_B, "BookAuthor")) => Self::BookAuthor(item.read()),
+            Some((NS_B, "Compiler")) => Self::Compiler(item.read()),
+            Some((NS_B, "Composer")) => Self::Composer(item.read()),
+            Some((NS_B, "Conductor")) => Self::Conductor(item.read()),
+            Some((NS_B, "Counsel")) => Self::Counsel(item.read()),
+            Some((NS_B, "Director")) => Self::Director(item.read()),
+            Some((NS_B, "Editor")) => Self::Editor(item.read()),
+            Some((NS_B, "Interviewee")) => Self::Interviewee(item.read()),
+            Some((NS_B, "Interviewer")) => Self::Interviewer(item.read()),
+            Some((NS_B, "Inventor")) => Self::Inventor(item.read()),
+            Some((NS_B, "Performer")) => Self::Performer(item.read()),
+            Some((NS_B, "ProducerName")) => Self::ProducerName(item.read()),
+            Some((NS_B, "Translator")) => Self::Translator(item.read()),
+            Some((NS_B, "Writer")) => Self::Writer(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -3620,97 +3598,97 @@ impl crate::Write for ContributorsListContent {
 
 impl<X: UserData> From<ArtistWith<X>> for ContributorsListContentWith<X> {
     fn from(arm: ArtistWith<X>) -> Self {
-        Self::Artist(Box::new(arm))
+        Self::Artist(arm)
     }
 }
 
 impl<X: UserData> From<AuthorWith<X>> for ContributorsListContentWith<X> {
     fn from(arm: AuthorWith<X>) -> Self {
-        Self::Author(Box::new(arm))
+        Self::Author(arm)
     }
 }
 
 impl<X: UserData> From<BookAuthorWith<X>> for ContributorsListContentWith<X> {
     fn from(arm: BookAuthorWith<X>) -> Self {
-        Self::BookAuthor(Box::new(arm))
+        Self::BookAuthor(arm)
     }
 }
 
 impl<X: UserData> From<CompilerWith<X>> for ContributorsListContentWith<X> {
     fn from(arm: CompilerWith<X>) -> Self {
-        Self::Compiler(Box::new(arm))
+        Self::Compiler(arm)
     }
 }
 
 impl<X: UserData> From<ComposerWith<X>> for ContributorsListContentWith<X> {
     fn from(arm: ComposerWith<X>) -> Self {
-        Self::Composer(Box::new(arm))
+        Self::Composer(arm)
     }
 }
 
 impl<X: UserData> From<ConductorWith<X>> for ContributorsListContentWith<X> {
     fn from(arm: ConductorWith<X>) -> Self {
-        Self::Conductor(Box::new(arm))
+        Self::Conductor(arm)
     }
 }
 
 impl<X: UserData> From<CounselWith<X>> for ContributorsListContentWith<X> {
     fn from(arm: CounselWith<X>) -> Self {
-        Self::Counsel(Box::new(arm))
+        Self::Counsel(arm)
     }
 }
 
 impl<X: UserData> From<DirectorWith<X>> for ContributorsListContentWith<X> {
     fn from(arm: DirectorWith<X>) -> Self {
-        Self::Director(Box::new(arm))
+        Self::Director(arm)
     }
 }
 
 impl<X: UserData> From<EditorWith<X>> for ContributorsListContentWith<X> {
     fn from(arm: EditorWith<X>) -> Self {
-        Self::Editor(Box::new(arm))
+        Self::Editor(arm)
     }
 }
 
 impl<X: UserData> From<IntervieweeWith<X>> for ContributorsListContentWith<X> {
     fn from(arm: IntervieweeWith<X>) -> Self {
-        Self::Interviewee(Box::new(arm))
+        Self::Interviewee(arm)
     }
 }
 
 impl<X: UserData> From<InterviewerWith<X>> for ContributorsListContentWith<X> {
     fn from(arm: InterviewerWith<X>) -> Self {
-        Self::Interviewer(Box::new(arm))
+        Self::Interviewer(arm)
     }
 }
 
 impl<X: UserData> From<InventorWith<X>> for ContributorsListContentWith<X> {
     fn from(arm: InventorWith<X>) -> Self {
-        Self::Inventor(Box::new(arm))
+        Self::Inventor(arm)
     }
 }
 
 impl<X: UserData> From<PerformerWith<X>> for ContributorsListContentWith<X> {
     fn from(arm: PerformerWith<X>) -> Self {
-        Self::Performer(Box::new(arm))
+        Self::Performer(arm)
     }
 }
 
 impl<X: UserData> From<ProducerNameWith<X>> for ContributorsListContentWith<X> {
     fn from(arm: ProducerNameWith<X>) -> Self {
-        Self::ProducerName(Box::new(arm))
+        Self::ProducerName(arm)
     }
 }
 
 impl<X: UserData> From<TranslatorWith<X>> for ContributorsListContentWith<X> {
     fn from(arm: TranslatorWith<X>) -> Self {
-        Self::Translator(Box::new(arm))
+        Self::Translator(arm)
     }
 }
 
 impl<X: UserData> From<WriterWith<X>> for ContributorsListContentWith<X> {
     fn from(arm: WriterWith<X>) -> Self {
-        Self::Writer(Box::new(arm))
+        Self::Writer(arm)
     }
 }
 
@@ -4901,11 +4879,9 @@ impl<X: UserData> NameOrCorporateContentWith<X> {
     {
         match self {
             Self::CorporateAuthor(node) => {
-                NameOrCorporateContentWith::CorporateAuthor(Box::new((*node).into_user_data()))
+                NameOrCorporateContentWith::CorporateAuthor(node.into_user_data())
             }
-            Self::NameList(node) => {
-                NameOrCorporateContentWith::NameList(Box::new((*node).into_user_data()))
-            }
+            Self::NameList(node) => NameOrCorporateContentWith::NameList(node.into_user_data()),
             Self::Other(node) => NameOrCorporateContentWith::Other(node),
         }
     }
@@ -4918,8 +4894,8 @@ impl crate::Read for NameOrCorporateContent {
 
     fn read_item(item: crate::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_B, "Corporate")) => Self::CorporateAuthor(Box::new(item.read())),
-            Some((NS_B, "NameList")) => Self::NameList(Box::new(item.read())),
+            Some((NS_B, "Corporate")) => Self::CorporateAuthor(item.read()),
+            Some((NS_B, "NameList")) => Self::NameList(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -4937,13 +4913,13 @@ impl crate::Write for NameOrCorporateContent {
 
 impl<X: UserData> From<CorporateAuthorWith<X>> for NameOrCorporateContentWith<X> {
     fn from(arm: CorporateAuthorWith<X>) -> Self {
-        Self::CorporateAuthor(Box::new(arm))
+        Self::CorporateAuthor(arm)
     }
 }
 
 impl<X: UserData> From<NameListWith<X>> for NameOrCorporateContentWith<X> {
     fn from(arm: NameListWith<X>) -> Self {
-        Self::NameList(Box::new(arm))
+        Self::NameList(arm)
     }
 }
 
@@ -5892,20 +5868,83 @@ impl<X: UserData> SourceContentWith<X> {
     where
         Y: UserData,
     {
-        crate::into_user_data_match!(self, SourceContentWith;
-            plain [
-            ]
-            boxed [
-                AbbreviatedCaseNumber, AlbumTitle, BookTitle, BroadcastTitle, Broadcaster,
-                CaseNumber, ChapterNumber, City, Comments, ConferenceOrProceedingsName,
-                ContributorsList, CountryOrRegion, Court, Day, DayAccessed, Department, Distributor,
-                EditorEdition, Guid, Institution, InternetSiteTitle, Issue, JournalName, LocaleID,
-                Medium, Month, MonthAccessed, NumberOfVolumes, Pages, PatentNumber, PatentType,
-                PeriodicalTitle, ProductionCompany, PublicationTitle, Publisher, RecordingNumber,
-                ReferenceOrder, Reporter, ShortTitle, SourceType, StandardNumber, StateOrProvince,
-                Station, Tag, Theater, ThesisType, Title, Url, Version, Volume, Year, YearAccessed,
-            ]
-        )
+        match self {
+            Self::AbbreviatedCaseNumber(node) => {
+                SourceContentWith::AbbreviatedCaseNumber(node.into_user_data())
+            }
+            Self::AlbumTitle(node) => SourceContentWith::AlbumTitle(node.into_user_data()),
+            Self::BookTitle(node) => SourceContentWith::BookTitle(node.into_user_data()),
+            Self::BroadcastTitle(node) => SourceContentWith::BroadcastTitle(node.into_user_data()),
+            Self::Broadcaster(node) => SourceContentWith::Broadcaster(node.into_user_data()),
+            Self::CaseNumber(node) => SourceContentWith::CaseNumber(node.into_user_data()),
+            Self::ChapterNumber(node) => SourceContentWith::ChapterNumber(node.into_user_data()),
+            Self::City(node) => SourceContentWith::City(node.into_user_data()),
+            Self::Comments(node) => SourceContentWith::Comments(node.into_user_data()),
+            Self::ConferenceOrProceedingsName(node) => {
+                SourceContentWith::ConferenceOrProceedingsName(node.into_user_data())
+            }
+            Self::ContributorsList(node) => {
+                SourceContentWith::ContributorsList(node.into_user_data())
+            }
+            Self::CountryOrRegion(node) => {
+                SourceContentWith::CountryOrRegion(node.into_user_data())
+            }
+            Self::Court(node) => SourceContentWith::Court(node.into_user_data()),
+            Self::Day(node) => SourceContentWith::Day(node.into_user_data()),
+            Self::DayAccessed(node) => SourceContentWith::DayAccessed(node.into_user_data()),
+            Self::Department(node) => SourceContentWith::Department(node.into_user_data()),
+            Self::Distributor(node) => SourceContentWith::Distributor(node.into_user_data()),
+            Self::EditorEdition(node) => SourceContentWith::EditorEdition(node.into_user_data()),
+            Self::Guid(node) => SourceContentWith::Guid(node.into_user_data()),
+            Self::Institution(node) => SourceContentWith::Institution(node.into_user_data()),
+            Self::InternetSiteTitle(node) => {
+                SourceContentWith::InternetSiteTitle(node.into_user_data())
+            }
+            Self::Issue(node) => SourceContentWith::Issue(node.into_user_data()),
+            Self::JournalName(node) => SourceContentWith::JournalName(node.into_user_data()),
+            Self::LocaleID(node) => SourceContentWith::LocaleID(node.into_user_data()),
+            Self::Medium(node) => SourceContentWith::Medium(node.into_user_data()),
+            Self::Month(node) => SourceContentWith::Month(node.into_user_data()),
+            Self::MonthAccessed(node) => SourceContentWith::MonthAccessed(node.into_user_data()),
+            Self::NumberOfVolumes(node) => {
+                SourceContentWith::NumberOfVolumes(node.into_user_data())
+            }
+            Self::Other(node) => SourceContentWith::Other(node),
+            Self::Pages(node) => SourceContentWith::Pages(node.into_user_data()),
+            Self::PatentNumber(node) => SourceContentWith::PatentNumber(node.into_user_data()),
+            Self::PatentType(node) => SourceContentWith::PatentType(node.into_user_data()),
+            Self::PeriodicalTitle(node) => {
+                SourceContentWith::PeriodicalTitle(node.into_user_data())
+            }
+            Self::ProductionCompany(node) => {
+                SourceContentWith::ProductionCompany(node.into_user_data())
+            }
+            Self::PublicationTitle(node) => {
+                SourceContentWith::PublicationTitle(node.into_user_data())
+            }
+            Self::Publisher(node) => SourceContentWith::Publisher(node.into_user_data()),
+            Self::RecordingNumber(node) => {
+                SourceContentWith::RecordingNumber(node.into_user_data())
+            }
+            Self::ReferenceOrder(node) => SourceContentWith::ReferenceOrder(node.into_user_data()),
+            Self::Reporter(node) => SourceContentWith::Reporter(node.into_user_data()),
+            Self::ShortTitle(node) => SourceContentWith::ShortTitle(node.into_user_data()),
+            Self::SourceType(node) => SourceContentWith::SourceType(node.into_user_data()),
+            Self::StandardNumber(node) => SourceContentWith::StandardNumber(node.into_user_data()),
+            Self::StateOrProvince(node) => {
+                SourceContentWith::StateOrProvince(node.into_user_data())
+            }
+            Self::Station(node) => SourceContentWith::Station(node.into_user_data()),
+            Self::Tag(node) => SourceContentWith::Tag(node.into_user_data()),
+            Self::Theater(node) => SourceContentWith::Theater(node.into_user_data()),
+            Self::ThesisType(node) => SourceContentWith::ThesisType(node.into_user_data()),
+            Self::Title(node) => SourceContentWith::Title(node.into_user_data()),
+            Self::Url(node) => SourceContentWith::Url(node.into_user_data()),
+            Self::Version(node) => SourceContentWith::Version(node.into_user_data()),
+            Self::Volume(node) => SourceContentWith::Volume(node.into_user_data()),
+            Self::Year(node) => SourceContentWith::Year(node.into_user_data()),
+            Self::YearAccessed(node) => SourceContentWith::YearAccessed(node.into_user_data()),
+        }
     }
 }
 
@@ -5916,62 +5955,58 @@ impl crate::Read for SourceContent {
 
     fn read_item(item: crate::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_B, "AbbreviatedCaseNumber")) => {
-                Self::AbbreviatedCaseNumber(Box::new(item.read()))
-            }
-            Some((NS_B, "AlbumTitle")) => Self::AlbumTitle(Box::new(item.read())),
-            Some((NS_B, "BookTitle")) => Self::BookTitle(Box::new(item.read())),
-            Some((NS_B, "BroadcastTitle")) => Self::BroadcastTitle(Box::new(item.read())),
-            Some((NS_B, "Broadcaster")) => Self::Broadcaster(Box::new(item.read())),
-            Some((NS_B, "CaseNumber")) => Self::CaseNumber(Box::new(item.read())),
-            Some((NS_B, "ChapterNumber")) => Self::ChapterNumber(Box::new(item.read())),
-            Some((NS_B, "City")) => Self::City(Box::new(item.read())),
-            Some((NS_B, "Comments")) => Self::Comments(Box::new(item.read())),
-            Some((NS_B, "ConferenceName")) => {
-                Self::ConferenceOrProceedingsName(Box::new(item.read()))
-            }
-            Some((NS_B, "Author")) => Self::ContributorsList(Box::new(item.read())),
-            Some((NS_B, "CountryRegion")) => Self::CountryOrRegion(Box::new(item.read())),
-            Some((NS_B, "Court")) => Self::Court(Box::new(item.read())),
-            Some((NS_B, "Day")) => Self::Day(Box::new(item.read())),
-            Some((NS_B, "DayAccessed")) => Self::DayAccessed(Box::new(item.read())),
-            Some((NS_B, "Department")) => Self::Department(Box::new(item.read())),
-            Some((NS_B, "Distributor")) => Self::Distributor(Box::new(item.read())),
-            Some((NS_B, "Edition")) => Self::EditorEdition(Box::new(item.read())),
-            Some((NS_B, "Guid")) => Self::Guid(Box::new(item.read())),
-            Some((NS_B, "Institution")) => Self::Institution(Box::new(item.read())),
-            Some((NS_B, "InternetSiteTitle")) => Self::InternetSiteTitle(Box::new(item.read())),
-            Some((NS_B, "Issue")) => Self::Issue(Box::new(item.read())),
-            Some((NS_B, "JournalName")) => Self::JournalName(Box::new(item.read())),
-            Some((NS_B, "LCID")) => Self::LocaleID(Box::new(item.read())),
-            Some((NS_B, "Medium")) => Self::Medium(Box::new(item.read())),
-            Some((NS_B, "Month")) => Self::Month(Box::new(item.read())),
-            Some((NS_B, "MonthAccessed")) => Self::MonthAccessed(Box::new(item.read())),
-            Some((NS_B, "NumberVolumes")) => Self::NumberOfVolumes(Box::new(item.read())),
-            Some((NS_B, "Pages")) => Self::Pages(Box::new(item.read())),
-            Some((NS_B, "PatentNumber")) => Self::PatentNumber(Box::new(item.read())),
-            Some((NS_B, "Type")) => Self::PatentType(Box::new(item.read())),
-            Some((NS_B, "PeriodicalTitle")) => Self::PeriodicalTitle(Box::new(item.read())),
-            Some((NS_B, "ProductionCompany")) => Self::ProductionCompany(Box::new(item.read())),
-            Some((NS_B, "PublicationTitle")) => Self::PublicationTitle(Box::new(item.read())),
-            Some((NS_B, "Publisher")) => Self::Publisher(Box::new(item.read())),
-            Some((NS_B, "RecordingNumber")) => Self::RecordingNumber(Box::new(item.read())),
-            Some((NS_B, "RefOrder")) => Self::ReferenceOrder(Box::new(item.read())),
-            Some((NS_B, "Reporter")) => Self::Reporter(Box::new(item.read())),
-            Some((NS_B, "ShortTitle")) => Self::ShortTitle(Box::new(item.read())),
-            Some((NS_B, "SourceType")) => Self::SourceType(Box::new(item.read())),
-            Some((NS_B, "StandardNumber")) => Self::StandardNumber(Box::new(item.read())),
-            Some((NS_B, "StateProvince")) => Self::StateOrProvince(Box::new(item.read())),
-            Some((NS_B, "Station")) => Self::Station(Box::new(item.read())),
-            Some((NS_B, "Tag")) => Self::Tag(Box::new(item.read())),
-            Some((NS_B, "Theater")) => Self::Theater(Box::new(item.read())),
-            Some((NS_B, "ThesisType")) => Self::ThesisType(Box::new(item.read())),
-            Some((NS_B, "Title")) => Self::Title(Box::new(item.read())),
-            Some((NS_B, "URL")) => Self::Url(Box::new(item.read())),
-            Some((NS_B, "Version")) => Self::Version(Box::new(item.read())),
-            Some((NS_B, "Volume")) => Self::Volume(Box::new(item.read())),
-            Some((NS_B, "Year")) => Self::Year(Box::new(item.read())),
-            Some((NS_B, "YearAccessed")) => Self::YearAccessed(Box::new(item.read())),
+            Some((NS_B, "AbbreviatedCaseNumber")) => Self::AbbreviatedCaseNumber(item.read()),
+            Some((NS_B, "AlbumTitle")) => Self::AlbumTitle(item.read()),
+            Some((NS_B, "BookTitle")) => Self::BookTitle(item.read()),
+            Some((NS_B, "BroadcastTitle")) => Self::BroadcastTitle(item.read()),
+            Some((NS_B, "Broadcaster")) => Self::Broadcaster(item.read()),
+            Some((NS_B, "CaseNumber")) => Self::CaseNumber(item.read()),
+            Some((NS_B, "ChapterNumber")) => Self::ChapterNumber(item.read()),
+            Some((NS_B, "City")) => Self::City(item.read()),
+            Some((NS_B, "Comments")) => Self::Comments(item.read()),
+            Some((NS_B, "ConferenceName")) => Self::ConferenceOrProceedingsName(item.read()),
+            Some((NS_B, "Author")) => Self::ContributorsList(item.read()),
+            Some((NS_B, "CountryRegion")) => Self::CountryOrRegion(item.read()),
+            Some((NS_B, "Court")) => Self::Court(item.read()),
+            Some((NS_B, "Day")) => Self::Day(item.read()),
+            Some((NS_B, "DayAccessed")) => Self::DayAccessed(item.read()),
+            Some((NS_B, "Department")) => Self::Department(item.read()),
+            Some((NS_B, "Distributor")) => Self::Distributor(item.read()),
+            Some((NS_B, "Edition")) => Self::EditorEdition(item.read()),
+            Some((NS_B, "Guid")) => Self::Guid(item.read()),
+            Some((NS_B, "Institution")) => Self::Institution(item.read()),
+            Some((NS_B, "InternetSiteTitle")) => Self::InternetSiteTitle(item.read()),
+            Some((NS_B, "Issue")) => Self::Issue(item.read()),
+            Some((NS_B, "JournalName")) => Self::JournalName(item.read()),
+            Some((NS_B, "LCID")) => Self::LocaleID(item.read()),
+            Some((NS_B, "Medium")) => Self::Medium(item.read()),
+            Some((NS_B, "Month")) => Self::Month(item.read()),
+            Some((NS_B, "MonthAccessed")) => Self::MonthAccessed(item.read()),
+            Some((NS_B, "NumberVolumes")) => Self::NumberOfVolumes(item.read()),
+            Some((NS_B, "Pages")) => Self::Pages(item.read()),
+            Some((NS_B, "PatentNumber")) => Self::PatentNumber(item.read()),
+            Some((NS_B, "Type")) => Self::PatentType(item.read()),
+            Some((NS_B, "PeriodicalTitle")) => Self::PeriodicalTitle(item.read()),
+            Some((NS_B, "ProductionCompany")) => Self::ProductionCompany(item.read()),
+            Some((NS_B, "PublicationTitle")) => Self::PublicationTitle(item.read()),
+            Some((NS_B, "Publisher")) => Self::Publisher(item.read()),
+            Some((NS_B, "RecordingNumber")) => Self::RecordingNumber(item.read()),
+            Some((NS_B, "RefOrder")) => Self::ReferenceOrder(item.read()),
+            Some((NS_B, "Reporter")) => Self::Reporter(item.read()),
+            Some((NS_B, "ShortTitle")) => Self::ShortTitle(item.read()),
+            Some((NS_B, "SourceType")) => Self::SourceType(item.read()),
+            Some((NS_B, "StandardNumber")) => Self::StandardNumber(item.read()),
+            Some((NS_B, "StateProvince")) => Self::StateOrProvince(item.read()),
+            Some((NS_B, "Station")) => Self::Station(item.read()),
+            Some((NS_B, "Tag")) => Self::Tag(item.read()),
+            Some((NS_B, "Theater")) => Self::Theater(item.read()),
+            Some((NS_B, "ThesisType")) => Self::ThesisType(item.read()),
+            Some((NS_B, "Title")) => Self::Title(item.read()),
+            Some((NS_B, "URL")) => Self::Url(item.read()),
+            Some((NS_B, "Version")) => Self::Version(item.read()),
+            Some((NS_B, "Volume")) => Self::Volume(item.read()),
+            Some((NS_B, "Year")) => Self::Year(item.read()),
+            Some((NS_B, "YearAccessed")) => Self::YearAccessed(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -6039,313 +6074,313 @@ impl crate::Write for SourceContent {
 
 impl<X: UserData> From<AbbreviatedCaseNumberWith<X>> for SourceContentWith<X> {
     fn from(arm: AbbreviatedCaseNumberWith<X>) -> Self {
-        Self::AbbreviatedCaseNumber(Box::new(arm))
+        Self::AbbreviatedCaseNumber(arm)
     }
 }
 
 impl<X: UserData> From<AlbumTitleWith<X>> for SourceContentWith<X> {
     fn from(arm: AlbumTitleWith<X>) -> Self {
-        Self::AlbumTitle(Box::new(arm))
+        Self::AlbumTitle(arm)
     }
 }
 
 impl<X: UserData> From<BookTitleWith<X>> for SourceContentWith<X> {
     fn from(arm: BookTitleWith<X>) -> Self {
-        Self::BookTitle(Box::new(arm))
+        Self::BookTitle(arm)
     }
 }
 
 impl<X: UserData> From<BroadcastTitleWith<X>> for SourceContentWith<X> {
     fn from(arm: BroadcastTitleWith<X>) -> Self {
-        Self::BroadcastTitle(Box::new(arm))
+        Self::BroadcastTitle(arm)
     }
 }
 
 impl<X: UserData> From<BroadcasterWith<X>> for SourceContentWith<X> {
     fn from(arm: BroadcasterWith<X>) -> Self {
-        Self::Broadcaster(Box::new(arm))
+        Self::Broadcaster(arm)
     }
 }
 
 impl<X: UserData> From<CaseNumberWith<X>> for SourceContentWith<X> {
     fn from(arm: CaseNumberWith<X>) -> Self {
-        Self::CaseNumber(Box::new(arm))
+        Self::CaseNumber(arm)
     }
 }
 
 impl<X: UserData> From<ChapterNumberWith<X>> for SourceContentWith<X> {
     fn from(arm: ChapterNumberWith<X>) -> Self {
-        Self::ChapterNumber(Box::new(arm))
+        Self::ChapterNumber(arm)
     }
 }
 
 impl<X: UserData> From<CityWith<X>> for SourceContentWith<X> {
     fn from(arm: CityWith<X>) -> Self {
-        Self::City(Box::new(arm))
+        Self::City(arm)
     }
 }
 
 impl<X: UserData> From<CommentsWith<X>> for SourceContentWith<X> {
     fn from(arm: CommentsWith<X>) -> Self {
-        Self::Comments(Box::new(arm))
+        Self::Comments(arm)
     }
 }
 
 impl<X: UserData> From<ConferenceOrProceedingsNameWith<X>> for SourceContentWith<X> {
     fn from(arm: ConferenceOrProceedingsNameWith<X>) -> Self {
-        Self::ConferenceOrProceedingsName(Box::new(arm))
+        Self::ConferenceOrProceedingsName(arm)
     }
 }
 
 impl<X: UserData> From<ContributorsListWith<X>> for SourceContentWith<X> {
     fn from(arm: ContributorsListWith<X>) -> Self {
-        Self::ContributorsList(Box::new(arm))
+        Self::ContributorsList(arm)
     }
 }
 
 impl<X: UserData> From<CountryOrRegionWith<X>> for SourceContentWith<X> {
     fn from(arm: CountryOrRegionWith<X>) -> Self {
-        Self::CountryOrRegion(Box::new(arm))
+        Self::CountryOrRegion(arm)
     }
 }
 
 impl<X: UserData> From<CourtWith<X>> for SourceContentWith<X> {
     fn from(arm: CourtWith<X>) -> Self {
-        Self::Court(Box::new(arm))
+        Self::Court(arm)
     }
 }
 
 impl<X: UserData> From<DayWith<X>> for SourceContentWith<X> {
     fn from(arm: DayWith<X>) -> Self {
-        Self::Day(Box::new(arm))
+        Self::Day(arm)
     }
 }
 
 impl<X: UserData> From<DayAccessedWith<X>> for SourceContentWith<X> {
     fn from(arm: DayAccessedWith<X>) -> Self {
-        Self::DayAccessed(Box::new(arm))
+        Self::DayAccessed(arm)
     }
 }
 
 impl<X: UserData> From<DepartmentWith<X>> for SourceContentWith<X> {
     fn from(arm: DepartmentWith<X>) -> Self {
-        Self::Department(Box::new(arm))
+        Self::Department(arm)
     }
 }
 
 impl<X: UserData> From<DistributorWith<X>> for SourceContentWith<X> {
     fn from(arm: DistributorWith<X>) -> Self {
-        Self::Distributor(Box::new(arm))
+        Self::Distributor(arm)
     }
 }
 
 impl<X: UserData> From<EditorEditionWith<X>> for SourceContentWith<X> {
     fn from(arm: EditorEditionWith<X>) -> Self {
-        Self::EditorEdition(Box::new(arm))
+        Self::EditorEdition(arm)
     }
 }
 
 impl<X: UserData> From<GuidWith<X>> for SourceContentWith<X> {
     fn from(arm: GuidWith<X>) -> Self {
-        Self::Guid(Box::new(arm))
+        Self::Guid(arm)
     }
 }
 
 impl<X: UserData> From<InstitutionWith<X>> for SourceContentWith<X> {
     fn from(arm: InstitutionWith<X>) -> Self {
-        Self::Institution(Box::new(arm))
+        Self::Institution(arm)
     }
 }
 
 impl<X: UserData> From<InternetSiteTitleWith<X>> for SourceContentWith<X> {
     fn from(arm: InternetSiteTitleWith<X>) -> Self {
-        Self::InternetSiteTitle(Box::new(arm))
+        Self::InternetSiteTitle(arm)
     }
 }
 
 impl<X: UserData> From<IssueWith<X>> for SourceContentWith<X> {
     fn from(arm: IssueWith<X>) -> Self {
-        Self::Issue(Box::new(arm))
+        Self::Issue(arm)
     }
 }
 
 impl<X: UserData> From<JournalNameWith<X>> for SourceContentWith<X> {
     fn from(arm: JournalNameWith<X>) -> Self {
-        Self::JournalName(Box::new(arm))
+        Self::JournalName(arm)
     }
 }
 
 impl<X: UserData> From<LocaleIDWith<X>> for SourceContentWith<X> {
     fn from(arm: LocaleIDWith<X>) -> Self {
-        Self::LocaleID(Box::new(arm))
+        Self::LocaleID(arm)
     }
 }
 
 impl<X: UserData> From<MediumWith<X>> for SourceContentWith<X> {
     fn from(arm: MediumWith<X>) -> Self {
-        Self::Medium(Box::new(arm))
+        Self::Medium(arm)
     }
 }
 
 impl<X: UserData> From<MonthWith<X>> for SourceContentWith<X> {
     fn from(arm: MonthWith<X>) -> Self {
-        Self::Month(Box::new(arm))
+        Self::Month(arm)
     }
 }
 
 impl<X: UserData> From<MonthAccessedWith<X>> for SourceContentWith<X> {
     fn from(arm: MonthAccessedWith<X>) -> Self {
-        Self::MonthAccessed(Box::new(arm))
+        Self::MonthAccessed(arm)
     }
 }
 
 impl<X: UserData> From<NumberOfVolumesWith<X>> for SourceContentWith<X> {
     fn from(arm: NumberOfVolumesWith<X>) -> Self {
-        Self::NumberOfVolumes(Box::new(arm))
+        Self::NumberOfVolumes(arm)
     }
 }
 
 impl<X: UserData> From<PagesWith<X>> for SourceContentWith<X> {
     fn from(arm: PagesWith<X>) -> Self {
-        Self::Pages(Box::new(arm))
+        Self::Pages(arm)
     }
 }
 
 impl<X: UserData> From<PatentNumberWith<X>> for SourceContentWith<X> {
     fn from(arm: PatentNumberWith<X>) -> Self {
-        Self::PatentNumber(Box::new(arm))
+        Self::PatentNumber(arm)
     }
 }
 
 impl<X: UserData> From<PatentTypeWith<X>> for SourceContentWith<X> {
     fn from(arm: PatentTypeWith<X>) -> Self {
-        Self::PatentType(Box::new(arm))
+        Self::PatentType(arm)
     }
 }
 
 impl<X: UserData> From<PeriodicalTitleWith<X>> for SourceContentWith<X> {
     fn from(arm: PeriodicalTitleWith<X>) -> Self {
-        Self::PeriodicalTitle(Box::new(arm))
+        Self::PeriodicalTitle(arm)
     }
 }
 
 impl<X: UserData> From<ProductionCompanyWith<X>> for SourceContentWith<X> {
     fn from(arm: ProductionCompanyWith<X>) -> Self {
-        Self::ProductionCompany(Box::new(arm))
+        Self::ProductionCompany(arm)
     }
 }
 
 impl<X: UserData> From<PublicationTitleWith<X>> for SourceContentWith<X> {
     fn from(arm: PublicationTitleWith<X>) -> Self {
-        Self::PublicationTitle(Box::new(arm))
+        Self::PublicationTitle(arm)
     }
 }
 
 impl<X: UserData> From<PublisherWith<X>> for SourceContentWith<X> {
     fn from(arm: PublisherWith<X>) -> Self {
-        Self::Publisher(Box::new(arm))
+        Self::Publisher(arm)
     }
 }
 
 impl<X: UserData> From<RecordingNumberWith<X>> for SourceContentWith<X> {
     fn from(arm: RecordingNumberWith<X>) -> Self {
-        Self::RecordingNumber(Box::new(arm))
+        Self::RecordingNumber(arm)
     }
 }
 
 impl<X: UserData> From<ReferenceOrderWith<X>> for SourceContentWith<X> {
     fn from(arm: ReferenceOrderWith<X>) -> Self {
-        Self::ReferenceOrder(Box::new(arm))
+        Self::ReferenceOrder(arm)
     }
 }
 
 impl<X: UserData> From<ReporterWith<X>> for SourceContentWith<X> {
     fn from(arm: ReporterWith<X>) -> Self {
-        Self::Reporter(Box::new(arm))
+        Self::Reporter(arm)
     }
 }
 
 impl<X: UserData> From<ShortTitleWith<X>> for SourceContentWith<X> {
     fn from(arm: ShortTitleWith<X>) -> Self {
-        Self::ShortTitle(Box::new(arm))
+        Self::ShortTitle(arm)
     }
 }
 
 impl<X: UserData> From<SourceTypeWith<X>> for SourceContentWith<X> {
     fn from(arm: SourceTypeWith<X>) -> Self {
-        Self::SourceType(Box::new(arm))
+        Self::SourceType(arm)
     }
 }
 
 impl<X: UserData> From<StandardNumberWith<X>> for SourceContentWith<X> {
     fn from(arm: StandardNumberWith<X>) -> Self {
-        Self::StandardNumber(Box::new(arm))
+        Self::StandardNumber(arm)
     }
 }
 
 impl<X: UserData> From<StateOrProvinceWith<X>> for SourceContentWith<X> {
     fn from(arm: StateOrProvinceWith<X>) -> Self {
-        Self::StateOrProvince(Box::new(arm))
+        Self::StateOrProvince(arm)
     }
 }
 
 impl<X: UserData> From<StationWith<X>> for SourceContentWith<X> {
     fn from(arm: StationWith<X>) -> Self {
-        Self::Station(Box::new(arm))
+        Self::Station(arm)
     }
 }
 
 impl<X: UserData> From<TagWith<X>> for SourceContentWith<X> {
     fn from(arm: TagWith<X>) -> Self {
-        Self::Tag(Box::new(arm))
+        Self::Tag(arm)
     }
 }
 
 impl<X: UserData> From<TheaterWith<X>> for SourceContentWith<X> {
     fn from(arm: TheaterWith<X>) -> Self {
-        Self::Theater(Box::new(arm))
+        Self::Theater(arm)
     }
 }
 
 impl<X: UserData> From<ThesisTypeWith<X>> for SourceContentWith<X> {
     fn from(arm: ThesisTypeWith<X>) -> Self {
-        Self::ThesisType(Box::new(arm))
+        Self::ThesisType(arm)
     }
 }
 
 impl<X: UserData> From<TitleWith<X>> for SourceContentWith<X> {
     fn from(arm: TitleWith<X>) -> Self {
-        Self::Title(Box::new(arm))
+        Self::Title(arm)
     }
 }
 
 impl<X: UserData> From<UrlWith<X>> for SourceContentWith<X> {
     fn from(arm: UrlWith<X>) -> Self {
-        Self::Url(Box::new(arm))
+        Self::Url(arm)
     }
 }
 
 impl<X: UserData> From<VersionWith<X>> for SourceContentWith<X> {
     fn from(arm: VersionWith<X>) -> Self {
-        Self::Version(Box::new(arm))
+        Self::Version(arm)
     }
 }
 
 impl<X: UserData> From<VolumeWith<X>> for SourceContentWith<X> {
     fn from(arm: VolumeWith<X>) -> Self {
-        Self::Volume(Box::new(arm))
+        Self::Volume(arm)
     }
 }
 
 impl<X: UserData> From<YearWith<X>> for SourceContentWith<X> {
     fn from(arm: YearWith<X>) -> Self {
-        Self::Year(Box::new(arm))
+        Self::Year(arm)
     }
 }
 
 impl<X: UserData> From<YearAccessedWith<X>> for SourceContentWith<X> {
     fn from(arm: YearAccessedWith<X>) -> Self {
-        Self::YearAccessed(Box::new(arm))
+        Self::YearAccessed(arm)
     }
 }
 

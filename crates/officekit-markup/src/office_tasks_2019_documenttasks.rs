@@ -1062,29 +1062,29 @@ impl Eq for TaskWith<()> {}
 #[non_exhaustive]
 pub enum TaskHistoryEventContentWith<X: UserData> {
     /// The element `t:Assign`, a `Assign`.
-    Assign(Box<AssignWith<X>>),
+    Assign(AssignWith<X>),
     /// The element `t:Create`, a `Create`.
-    Create(Box<CreateWith<X>>),
+    Create(CreateWith<X>),
     /// The element `t:Delete`, a `Delete`.
-    Delete(Box<DeleteWith<X>>),
+    Delete(DeleteWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `t:Priority`, a `Priority`.
-    Priority(Box<PriorityWith<X>>),
+    Priority(PriorityWith<X>),
     /// The element `t:Progress`, a `Progress`.
-    Progress(Box<ProgressWith<X>>),
+    Progress(ProgressWith<X>),
     /// The element `t:Schedule`, a `Schedule`.
     Schedule(Box<ScheduleWith<X>>),
     /// The element `t:SetTitle`, a `SetTitle`.
-    SetTitle(Box<SetTitleWith<X>>),
+    SetTitle(SetTitleWith<X>),
     /// The element `t:Unassign`, a `Unassign`.
-    Unassign(Box<UnassignWith<X>>),
+    Unassign(UnassignWith<X>),
     /// The element `t:UnassignAll`, a `UnassignAll`.
-    UnassignAll(Box<UnassignAllWith<X>>),
+    UnassignAll(UnassignAllWith<X>),
     /// The element `t:Undelete`, a `Undelete`.
-    Undelete(Box<UndeleteWith<X>>),
+    Undelete(UndeleteWith<X>),
     /// The element `t:Undo`, a `Undo`.
-    Undo(Box<UndoWith<X>>),
+    Undo(UndoWith<X>),
 }
 
 /// [`TaskHistoryEventContentWith`] of the tree a read gives, where no node holds anything in
@@ -2014,40 +2014,22 @@ impl<X: UserData> TaskHistoryEventContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Assign(node) => {
-                TaskHistoryEventContentWith::Assign(Box::new((*node).into_user_data()))
-            }
-            Self::Create(node) => {
-                TaskHistoryEventContentWith::Create(Box::new((*node).into_user_data()))
-            }
-            Self::Delete(node) => {
-                TaskHistoryEventContentWith::Delete(Box::new((*node).into_user_data()))
-            }
+            Self::Assign(node) => TaskHistoryEventContentWith::Assign(node.into_user_data()),
+            Self::Create(node) => TaskHistoryEventContentWith::Create(node.into_user_data()),
+            Self::Delete(node) => TaskHistoryEventContentWith::Delete(node.into_user_data()),
             Self::Other(node) => TaskHistoryEventContentWith::Other(node),
-            Self::Priority(node) => {
-                TaskHistoryEventContentWith::Priority(Box::new((*node).into_user_data()))
-            }
-            Self::Progress(node) => {
-                TaskHistoryEventContentWith::Progress(Box::new((*node).into_user_data()))
-            }
+            Self::Priority(node) => TaskHistoryEventContentWith::Priority(node.into_user_data()),
+            Self::Progress(node) => TaskHistoryEventContentWith::Progress(node.into_user_data()),
             Self::Schedule(node) => {
                 TaskHistoryEventContentWith::Schedule(Box::new((*node).into_user_data()))
             }
-            Self::SetTitle(node) => {
-                TaskHistoryEventContentWith::SetTitle(Box::new((*node).into_user_data()))
-            }
-            Self::Unassign(node) => {
-                TaskHistoryEventContentWith::Unassign(Box::new((*node).into_user_data()))
-            }
+            Self::SetTitle(node) => TaskHistoryEventContentWith::SetTitle(node.into_user_data()),
+            Self::Unassign(node) => TaskHistoryEventContentWith::Unassign(node.into_user_data()),
             Self::UnassignAll(node) => {
-                TaskHistoryEventContentWith::UnassignAll(Box::new((*node).into_user_data()))
+                TaskHistoryEventContentWith::UnassignAll(node.into_user_data())
             }
-            Self::Undelete(node) => {
-                TaskHistoryEventContentWith::Undelete(Box::new((*node).into_user_data()))
-            }
-            Self::Undo(node) => {
-                TaskHistoryEventContentWith::Undo(Box::new((*node).into_user_data()))
-            }
+            Self::Undelete(node) => TaskHistoryEventContentWith::Undelete(node.into_user_data()),
+            Self::Undo(node) => TaskHistoryEventContentWith::Undo(node.into_user_data()),
         }
     }
 }
@@ -2059,17 +2041,17 @@ impl officekit_markup_base::Read for TaskHistoryEventContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_T, "Assign")) => Self::Assign(Box::new(item.read())),
-            Some((NS_T, "Create")) => Self::Create(Box::new(item.read())),
-            Some((NS_T, "Delete")) => Self::Delete(Box::new(item.read())),
-            Some((NS_T, "Priority")) => Self::Priority(Box::new(item.read())),
-            Some((NS_T, "Progress")) => Self::Progress(Box::new(item.read())),
+            Some((NS_T, "Assign")) => Self::Assign(item.read()),
+            Some((NS_T, "Create")) => Self::Create(item.read()),
+            Some((NS_T, "Delete")) => Self::Delete(item.read()),
+            Some((NS_T, "Priority")) => Self::Priority(item.read()),
+            Some((NS_T, "Progress")) => Self::Progress(item.read()),
             Some((NS_T, "Schedule")) => Self::Schedule(Box::new(item.read())),
-            Some((NS_T, "SetTitle")) => Self::SetTitle(Box::new(item.read())),
-            Some((NS_T, "Unassign")) => Self::Unassign(Box::new(item.read())),
-            Some((NS_T, "UnassignAll")) => Self::UnassignAll(Box::new(item.read())),
-            Some((NS_T, "Undelete")) => Self::Undelete(Box::new(item.read())),
-            Some((NS_T, "Undo")) => Self::Undo(Box::new(item.read())),
+            Some((NS_T, "SetTitle")) => Self::SetTitle(item.read()),
+            Some((NS_T, "Unassign")) => Self::Unassign(item.read()),
+            Some((NS_T, "UnassignAll")) => Self::UnassignAll(item.read()),
+            Some((NS_T, "Undelete")) => Self::Undelete(item.read()),
+            Some((NS_T, "Undo")) => Self::Undo(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -2096,31 +2078,31 @@ impl officekit_markup_base::Write for TaskHistoryEventContent {
 
 impl<X: UserData> From<AssignWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: AssignWith<X>) -> Self {
-        Self::Assign(Box::new(arm))
+        Self::Assign(arm)
     }
 }
 
 impl<X: UserData> From<CreateWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: CreateWith<X>) -> Self {
-        Self::Create(Box::new(arm))
+        Self::Create(arm)
     }
 }
 
 impl<X: UserData> From<DeleteWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: DeleteWith<X>) -> Self {
-        Self::Delete(Box::new(arm))
+        Self::Delete(arm)
     }
 }
 
 impl<X: UserData> From<PriorityWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: PriorityWith<X>) -> Self {
-        Self::Priority(Box::new(arm))
+        Self::Priority(arm)
     }
 }
 
 impl<X: UserData> From<ProgressWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: ProgressWith<X>) -> Self {
-        Self::Progress(Box::new(arm))
+        Self::Progress(arm)
     }
 }
 
@@ -2132,31 +2114,31 @@ impl<X: UserData> From<ScheduleWith<X>> for TaskHistoryEventContentWith<X> {
 
 impl<X: UserData> From<SetTitleWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: SetTitleWith<X>) -> Self {
-        Self::SetTitle(Box::new(arm))
+        Self::SetTitle(arm)
     }
 }
 
 impl<X: UserData> From<UnassignWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: UnassignWith<X>) -> Self {
-        Self::Unassign(Box::new(arm))
+        Self::Unassign(arm)
     }
 }
 
 impl<X: UserData> From<UnassignAllWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: UnassignAllWith<X>) -> Self {
-        Self::UnassignAll(Box::new(arm))
+        Self::UnassignAll(arm)
     }
 }
 
 impl<X: UserData> From<UndeleteWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: UndeleteWith<X>) -> Self {
-        Self::Undelete(Box::new(arm))
+        Self::Undelete(arm)
     }
 }
 
 impl<X: UserData> From<UndoWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: UndoWith<X>) -> Self {
-        Self::Undo(Box::new(arm))
+        Self::Undo(arm)
     }
 }
 

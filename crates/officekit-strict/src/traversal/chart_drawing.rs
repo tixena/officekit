@@ -3142,11 +3142,11 @@ impl super::Transform for chart_drawing::UserShapesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::AbsoluteAnchorShapeSize(arm) = self {
-            Self::AbsoluteAnchorShapeSize(Box::new(arm.transform(ctx)))
+            Self::AbsoluteAnchorShapeSize(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::RelativeAnchorShapeSize(arm) = self {
-            Self::RelativeAnchorShapeSize(Box::new(arm.transform(ctx)))
+            Self::RelativeAnchorShapeSize(arm.transform(ctx))
         } else {
             self.clone()
         }

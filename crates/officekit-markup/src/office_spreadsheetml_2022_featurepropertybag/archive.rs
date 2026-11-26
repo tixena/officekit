@@ -535,13 +535,13 @@ pub struct XfComplementMirror {
 #[rkyv(remote = super::ArrayFeaturePropertyContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ArrayFeaturePropertyContent {
-    BBoolean(Box<super::BBoolean>),
-    BagIdUnsignedInt(Box<super::BagIdUnsignedInt>),
-    DDouble(Box<super::DDouble>),
-    IInteger(Box<super::IInteger>),
+    BBoolean(super::BBoolean),
+    BagIdUnsignedInt(super::BagIdUnsignedInt),
+    DDouble(super::DDouble),
+    IInteger(super::IInteger),
     Other(Box<Node>),
-    RelString(Box<super::RelString>),
-    SString(Box<super::SString>),
+    RelString(super::RelString),
+    SString(super::SString),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]

@@ -3961,7 +3961,7 @@ pub enum PivotUserEditContentWith<X: UserData> {
     /// The element `x14:editValue`, a `EditValue`.
     EditValue(Box<EditValueWith<X>>),
     /// The element `xne:f`, a `F`.
-    F(Box<office_excel_2006_main::FWith<X>>),
+    F(office_excel_2006_main::FWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -10399,7 +10399,7 @@ impl<X: UserData> PivotUserEditContentWith<X> {
             Self::EditValue(node) => {
                 PivotUserEditContentWith::EditValue(Box::new((*node).into_user_data()))
             }
-            Self::F(node) => PivotUserEditContentWith::F(Box::new((*node).into_user_data())),
+            Self::F(node) => PivotUserEditContentWith::F(node.into_user_data()),
             Self::Other(node) => PivotUserEditContentWith::Other(node),
         }
     }
@@ -10419,7 +10419,7 @@ impl officekit_markup_base::Read for PivotUserEditContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_X14, "editValue")) => Self::EditValue(Box::new(item.read())),
-            Some((NS_XNE, "f")) => Self::F(Box::new(item.read())),
+            Some((NS_XNE, "f")) => Self::F(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -10443,7 +10443,7 @@ impl<X: UserData> From<EditValueWith<X>> for PivotUserEditContentWith<X> {
 
 impl<X: UserData> From<office_excel_2006_main::FWith<X>> for PivotUserEditContentWith<X> {
     fn from(arm: office_excel_2006_main::FWith<X>) -> Self {
-        Self::F(Box::new(arm))
+        Self::F(arm)
     }
 }
 

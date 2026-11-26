@@ -1376,11 +1376,11 @@ impl Eq for StartingAnchorPointWith<()> {}
 #[non_exhaustive]
 pub enum UserShapesContentWith<X: UserData> {
     /// The element `cdr:absSizeAnchor`, a `AbsoluteAnchorShapeSize`.
-    AbsoluteAnchorShapeSize(Box<AbsoluteAnchorShapeSizeWith<X>>),
+    AbsoluteAnchorShapeSize(AbsoluteAnchorShapeSizeWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `cdr:relSizeAnchor`, a `RelativeAnchorShapeSize`.
-    RelativeAnchorShapeSize(Box<RelativeAnchorShapeSizeWith<X>>),
+    RelativeAnchorShapeSize(RelativeAnchorShapeSizeWith<X>),
 }
 
 /// [`UserShapesContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -3232,11 +3232,11 @@ impl<X: UserData> UserShapesContentWith<X> {
     {
         match self {
             Self::AbsoluteAnchorShapeSize(node) => {
-                UserShapesContentWith::AbsoluteAnchorShapeSize(Box::new((*node).into_user_data()))
+                UserShapesContentWith::AbsoluteAnchorShapeSize(node.into_user_data())
             }
             Self::Other(node) => UserShapesContentWith::Other(node),
             Self::RelativeAnchorShapeSize(node) => {
-                UserShapesContentWith::RelativeAnchorShapeSize(Box::new((*node).into_user_data()))
+                UserShapesContentWith::RelativeAnchorShapeSize(node.into_user_data())
             }
         }
     }
@@ -3249,8 +3249,8 @@ impl officekit_markup_base::Read for UserShapesContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_CDR, "absSizeAnchor")) => Self::AbsoluteAnchorShapeSize(Box::new(item.read())),
-            Some((NS_CDR, "relSizeAnchor")) => Self::RelativeAnchorShapeSize(Box::new(item.read())),
+            Some((NS_CDR, "absSizeAnchor")) => Self::AbsoluteAnchorShapeSize(item.read()),
+            Some((NS_CDR, "relSizeAnchor")) => Self::RelativeAnchorShapeSize(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -3268,13 +3268,13 @@ impl officekit_markup_base::Write for UserShapesContent {
 
 impl<X: UserData> From<AbsoluteAnchorShapeSizeWith<X>> for UserShapesContentWith<X> {
     fn from(arm: AbsoluteAnchorShapeSizeWith<X>) -> Self {
-        Self::AbsoluteAnchorShapeSize(Box::new(arm))
+        Self::AbsoluteAnchorShapeSize(arm)
     }
 }
 
 impl<X: UserData> From<RelativeAnchorShapeSizeWith<X>> for UserShapesContentWith<X> {
     fn from(arm: RelativeAnchorShapeSizeWith<X>) -> Self {
-        Self::RelativeAnchorShapeSize(Box::new(arm))
+        Self::RelativeAnchorShapeSize(arm)
     }
 }
 

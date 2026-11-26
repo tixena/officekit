@@ -656,41 +656,41 @@ pub enum ArrayBaseTypeSimpleTypeMember {
 #[derive(Clone, Debug, PartialEq)]
 pub enum ArrayContentWith<X: UserData> {
     /// The element `vt:bstr`, a `BasicString`.
-    BasicString(Box<BasicStringWith<X>>),
+    BasicString(BasicStringWith<X>),
     /// The element `vt:bool`, a `Boolean`.
-    Boolean(Box<BooleanWith<X>>),
+    Boolean(BooleanWith<X>),
     /// The element `vt:cy`, a `Currency`.
-    Currency(Box<CurrencyWith<X>>),
+    Currency(CurrencyWith<X>),
     /// The element `vt:date`, a `DateAndTime`.
-    DateAndTime(Box<DateAndTimeWith<X>>),
+    DateAndTime(DateAndTimeWith<X>),
     /// The element `vt:decimal`, a `Decimal`.
-    Decimal(Box<DecimalWith<X>>),
+    Decimal(DecimalWith<X>),
     /// The element `vt:error`, a `ErrorStatusCode`.
-    ErrorStatusCode(Box<ErrorStatusCodeWith<X>>),
+    ErrorStatusCode(ErrorStatusCodeWith<X>),
     /// The element `vt:i1`, a `I1`.
-    I1(Box<I1With<X>>),
+    I1(I1With<X>),
     /// The element `vt:i2`, a `I2`.
-    I2(Box<I2With<X>>),
+    I2(I2With<X>),
     /// The element `vt:i4`, a `I4`.
-    I4(Box<I4With<X>>),
+    I4(I4With<X>),
     /// The element `vt:int`, a `Integer`.
-    Integer(Box<IntegerWith<X>>),
+    Integer(IntegerWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `vt:r4`, a `R4`.
-    R4(Box<R4With<X>>),
+    R4(R4With<X>),
     /// The element `vt:r8`, a `R8`.
-    R8(Box<R8With<X>>),
+    R8(R8With<X>),
     /// The element `vt:ui1`, a `Ui1`.
-    Ui1(Box<Ui1With<X>>),
+    Ui1(Ui1With<X>),
     /// The element `vt:ui2`, a `Ui2`.
-    Ui2(Box<Ui2With<X>>),
+    Ui2(Ui2With<X>),
     /// The element `vt:ui4`, a `Ui4`.
-    Ui4(Box<Ui4With<X>>),
+    Ui4(Ui4With<X>),
     /// The element `vt:uint`, a `UnsignedInteger`.
-    UnsignedInteger(Box<UnsignedIntegerWith<X>>),
+    UnsignedInteger(UnsignedIntegerWith<X>),
     /// The element `vt:variant`, a `Variant`.
-    Variant(Box<VariantWith<X>>),
+    Variant(VariantWith<X>),
 }
 
 /// [`ArrayContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -1342,71 +1342,71 @@ pub enum VariantContentWith<X: UserData> {
     /// The element `vt:array`, a `Array`.
     Array(Box<ArrayWith<X>>),
     /// The element `vt:bstr`, a `BasicString`.
-    BasicString(Box<BasicStringWith<X>>),
+    BasicString(BasicStringWith<X>),
     /// The element `vt:blob`, a `BinaryBlob`.
-    BinaryBlob(Box<BinaryBlobWith<X>>),
+    BinaryBlob(BinaryBlobWith<X>),
     /// The element `vt:oblob`, a `BinaryBlobObject`.
-    BinaryBlobObject(Box<BinaryBlobObjectWith<X>>),
+    BinaryBlobObject(BinaryBlobObjectWith<X>),
     /// The element `vt:storage`, a `BinaryStorage`.
-    BinaryStorage(Box<BinaryStorageWith<X>>),
+    BinaryStorage(BinaryStorageWith<X>),
     /// The element `vt:ostorage`, a `BinaryStorageObject`.
-    BinaryStorageObject(Box<BinaryStorageObjectWith<X>>),
+    BinaryStorageObject(BinaryStorageObjectWith<X>),
     /// The element `vt:stream`, a `BinaryStream`.
-    BinaryStream(Box<BinaryStreamWith<X>>),
+    BinaryStream(BinaryStreamWith<X>),
     /// The element `vt:ostream`, a `BinaryStreamObject`.
-    BinaryStreamObject(Box<BinaryStreamObjectWith<X>>),
+    BinaryStreamObject(BinaryStreamObjectWith<X>),
     /// The element `vt:vstream`, a `BinaryVersionedStream`.
     BinaryVersionedStream(Box<BinaryVersionedStreamWith<X>>),
     /// The element `vt:bool`, a `Boolean`.
-    Boolean(Box<BooleanWith<X>>),
+    Boolean(BooleanWith<X>),
     /// The element `vt:clsid`, a `ClassID`.
-    ClassID(Box<ClassIDWith<X>>),
+    ClassID(ClassIDWith<X>),
     /// The element `vt:cy`, a `Currency`.
-    Currency(Box<CurrencyWith<X>>),
+    Currency(CurrencyWith<X>),
     /// The element `vt:date`, a `DateAndTime`.
-    DateAndTime(Box<DateAndTimeWith<X>>),
+    DateAndTime(DateAndTimeWith<X>),
     /// The element `vt:decimal`, a `Decimal`.
-    Decimal(Box<DecimalWith<X>>),
+    Decimal(DecimalWith<X>),
     /// The element `vt:empty`, a `Empty`.
-    Empty(Box<EmptyWith<X>>),
+    Empty(EmptyWith<X>),
     /// The element `vt:error`, a `ErrorStatusCode`.
-    ErrorStatusCode(Box<ErrorStatusCodeWith<X>>),
+    ErrorStatusCode(ErrorStatusCodeWith<X>),
     /// The element `vt:filetime`, a `FileTime`.
-    FileTime(Box<FileTimeWith<X>>),
+    FileTime(FileTimeWith<X>),
     /// The element `vt:i1`, a `I1`.
-    I1(Box<I1With<X>>),
+    I1(I1With<X>),
     /// The element `vt:i2`, a `I2`.
-    I2(Box<I2With<X>>),
+    I2(I2With<X>),
     /// The element `vt:i4`, a `I4`.
-    I4(Box<I4With<X>>),
+    I4(I4With<X>),
     /// The element `vt:i8`, a `I8`.
-    I8(Box<I8With<X>>),
+    I8(I8With<X>),
     /// The element `vt:int`, a `Integer`.
-    Integer(Box<IntegerWith<X>>),
+    Integer(IntegerWith<X>),
     /// The element `vt:lpstr`, a `Lpstr`.
-    Lpstr(Box<LpstrWith<X>>),
+    Lpstr(LpstrWith<X>),
     /// The element `vt:lpwstr`, a `Lpwstr`.
-    Lpwstr(Box<LpwstrWith<X>>),
+    Lpwstr(LpwstrWith<X>),
     /// The element `vt:null`, a `Null`.
-    Null(Box<NullWith<X>>),
+    Null(NullWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `vt:r4`, a `R4`.
-    R4(Box<R4With<X>>),
+    R4(R4With<X>),
     /// The element `vt:r8`, a `R8`.
-    R8(Box<R8With<X>>),
+    R8(R8With<X>),
     /// The element `vt:ui1`, a `Ui1`.
-    Ui1(Box<Ui1With<X>>),
+    Ui1(Ui1With<X>),
     /// The element `vt:ui2`, a `Ui2`.
-    Ui2(Box<Ui2With<X>>),
+    Ui2(Ui2With<X>),
     /// The element `vt:ui4`, a `Ui4`.
-    Ui4(Box<Ui4With<X>>),
+    Ui4(Ui4With<X>),
     /// The element `vt:ui8`, a `Ui8`.
-    Ui8(Box<Ui8With<X>>),
+    Ui8(Ui8With<X>),
     /// The element `vt:uint`, a `UnsignedInteger`.
-    UnsignedInteger(Box<UnsignedIntegerWith<X>>),
+    UnsignedInteger(UnsignedIntegerWith<X>),
     /// The element `vt:variant`, a `Variant`.
-    Variant(Box<VariantWith<X>>),
+    Variant(VariantWith<X>),
     /// The element `vt:vector`, a `Vector`.
     Vector(Box<VectorWith<X>>),
 }
@@ -1507,47 +1507,47 @@ pub enum VectorBaseTypeSimpleTypeMember {
 #[derive(Clone, Debug, PartialEq)]
 pub enum VectorContentWith<X: UserData> {
     /// The element `vt:bstr`, a `BasicString`.
-    BasicString(Box<BasicStringWith<X>>),
+    BasicString(BasicStringWith<X>),
     /// The element `vt:bool`, a `Boolean`.
-    Boolean(Box<BooleanWith<X>>),
+    Boolean(BooleanWith<X>),
     /// The element `vt:clsid`, a `ClassID`.
-    ClassID(Box<ClassIDWith<X>>),
+    ClassID(ClassIDWith<X>),
     /// The element `vt:cy`, a `Currency`.
-    Currency(Box<CurrencyWith<X>>),
+    Currency(CurrencyWith<X>),
     /// The element `vt:date`, a `DateAndTime`.
-    DateAndTime(Box<DateAndTimeWith<X>>),
+    DateAndTime(DateAndTimeWith<X>),
     /// The element `vt:error`, a `ErrorStatusCode`.
-    ErrorStatusCode(Box<ErrorStatusCodeWith<X>>),
+    ErrorStatusCode(ErrorStatusCodeWith<X>),
     /// The element `vt:filetime`, a `FileTime`.
-    FileTime(Box<FileTimeWith<X>>),
+    FileTime(FileTimeWith<X>),
     /// The element `vt:i1`, a `I1`.
-    I1(Box<I1With<X>>),
+    I1(I1With<X>),
     /// The element `vt:i2`, a `I2`.
-    I2(Box<I2With<X>>),
+    I2(I2With<X>),
     /// The element `vt:i4`, a `I4`.
-    I4(Box<I4With<X>>),
+    I4(I4With<X>),
     /// The element `vt:i8`, a `I8`.
-    I8(Box<I8With<X>>),
+    I8(I8With<X>),
     /// The element `vt:lpstr`, a `Lpstr`.
-    Lpstr(Box<LpstrWith<X>>),
+    Lpstr(LpstrWith<X>),
     /// The element `vt:lpwstr`, a `Lpwstr`.
-    Lpwstr(Box<LpwstrWith<X>>),
+    Lpwstr(LpwstrWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `vt:r4`, a `R4`.
-    R4(Box<R4With<X>>),
+    R4(R4With<X>),
     /// The element `vt:r8`, a `R8`.
-    R8(Box<R8With<X>>),
+    R8(R8With<X>),
     /// The element `vt:ui1`, a `Ui1`.
-    Ui1(Box<Ui1With<X>>),
+    Ui1(Ui1With<X>),
     /// The element `vt:ui2`, a `Ui2`.
-    Ui2(Box<Ui2With<X>>),
+    Ui2(Ui2With<X>),
     /// The element `vt:ui4`, a `Ui4`.
-    Ui4(Box<Ui4With<X>>),
+    Ui4(Ui4With<X>),
     /// The element `vt:ui8`, a `Ui8`.
-    Ui8(Box<Ui8With<X>>),
+    Ui8(Ui8With<X>),
     /// The element `vt:variant`, a `Variant`.
-    Variant(Box<VariantWith<X>>),
+    Variant(VariantWith<X>),
 }
 
 /// [`VectorContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -1685,32 +1685,24 @@ impl<X: UserData> ArrayContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::BasicString(node) => {
-                ArrayContentWith::BasicString(Box::new((*node).into_user_data()))
-            }
-            Self::Boolean(node) => ArrayContentWith::Boolean(Box::new((*node).into_user_data())),
-            Self::Currency(node) => ArrayContentWith::Currency(Box::new((*node).into_user_data())),
-            Self::DateAndTime(node) => {
-                ArrayContentWith::DateAndTime(Box::new((*node).into_user_data()))
-            }
-            Self::Decimal(node) => ArrayContentWith::Decimal(Box::new((*node).into_user_data())),
-            Self::ErrorStatusCode(node) => {
-                ArrayContentWith::ErrorStatusCode(Box::new((*node).into_user_data()))
-            }
-            Self::I1(node) => ArrayContentWith::I1(Box::new((*node).into_user_data())),
-            Self::I2(node) => ArrayContentWith::I2(Box::new((*node).into_user_data())),
-            Self::I4(node) => ArrayContentWith::I4(Box::new((*node).into_user_data())),
-            Self::Integer(node) => ArrayContentWith::Integer(Box::new((*node).into_user_data())),
+            Self::BasicString(node) => ArrayContentWith::BasicString(node.into_user_data()),
+            Self::Boolean(node) => ArrayContentWith::Boolean(node.into_user_data()),
+            Self::Currency(node) => ArrayContentWith::Currency(node.into_user_data()),
+            Self::DateAndTime(node) => ArrayContentWith::DateAndTime(node.into_user_data()),
+            Self::Decimal(node) => ArrayContentWith::Decimal(node.into_user_data()),
+            Self::ErrorStatusCode(node) => ArrayContentWith::ErrorStatusCode(node.into_user_data()),
+            Self::I1(node) => ArrayContentWith::I1(node.into_user_data()),
+            Self::I2(node) => ArrayContentWith::I2(node.into_user_data()),
+            Self::I4(node) => ArrayContentWith::I4(node.into_user_data()),
+            Self::Integer(node) => ArrayContentWith::Integer(node.into_user_data()),
             Self::Other(node) => ArrayContentWith::Other(node),
-            Self::R4(node) => ArrayContentWith::R4(Box::new((*node).into_user_data())),
-            Self::R8(node) => ArrayContentWith::R8(Box::new((*node).into_user_data())),
-            Self::Ui1(node) => ArrayContentWith::Ui1(Box::new((*node).into_user_data())),
-            Self::Ui2(node) => ArrayContentWith::Ui2(Box::new((*node).into_user_data())),
-            Self::Ui4(node) => ArrayContentWith::Ui4(Box::new((*node).into_user_data())),
-            Self::UnsignedInteger(node) => {
-                ArrayContentWith::UnsignedInteger(Box::new((*node).into_user_data()))
-            }
-            Self::Variant(node) => ArrayContentWith::Variant(Box::new((*node).into_user_data())),
+            Self::R4(node) => ArrayContentWith::R4(node.into_user_data()),
+            Self::R8(node) => ArrayContentWith::R8(node.into_user_data()),
+            Self::Ui1(node) => ArrayContentWith::Ui1(node.into_user_data()),
+            Self::Ui2(node) => ArrayContentWith::Ui2(node.into_user_data()),
+            Self::Ui4(node) => ArrayContentWith::Ui4(node.into_user_data()),
+            Self::UnsignedInteger(node) => ArrayContentWith::UnsignedInteger(node.into_user_data()),
+            Self::Variant(node) => ArrayContentWith::Variant(node.into_user_data()),
         }
     }
 }
@@ -1722,23 +1714,23 @@ impl crate::Read for ArrayContent {
 
     fn read_item(item: crate::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_VT, "bstr")) => Self::BasicString(Box::new(item.read())),
-            Some((NS_VT, "bool")) => Self::Boolean(Box::new(item.read())),
-            Some((NS_VT, "cy")) => Self::Currency(Box::new(item.read())),
-            Some((NS_VT, "date")) => Self::DateAndTime(Box::new(item.read())),
-            Some((NS_VT, "decimal")) => Self::Decimal(Box::new(item.read())),
-            Some((NS_VT, "error")) => Self::ErrorStatusCode(Box::new(item.read())),
-            Some((NS_VT, "i1")) => Self::I1(Box::new(item.read())),
-            Some((NS_VT, "i2")) => Self::I2(Box::new(item.read())),
-            Some((NS_VT, "i4")) => Self::I4(Box::new(item.read())),
-            Some((NS_VT, "int")) => Self::Integer(Box::new(item.read())),
-            Some((NS_VT, "r4")) => Self::R4(Box::new(item.read())),
-            Some((NS_VT, "r8")) => Self::R8(Box::new(item.read())),
-            Some((NS_VT, "ui1")) => Self::Ui1(Box::new(item.read())),
-            Some((NS_VT, "ui2")) => Self::Ui2(Box::new(item.read())),
-            Some((NS_VT, "ui4")) => Self::Ui4(Box::new(item.read())),
-            Some((NS_VT, "uint")) => Self::UnsignedInteger(Box::new(item.read())),
-            Some((NS_VT, "variant")) => Self::Variant(Box::new(item.read())),
+            Some((NS_VT, "bstr")) => Self::BasicString(item.read()),
+            Some((NS_VT, "bool")) => Self::Boolean(item.read()),
+            Some((NS_VT, "cy")) => Self::Currency(item.read()),
+            Some((NS_VT, "date")) => Self::DateAndTime(item.read()),
+            Some((NS_VT, "decimal")) => Self::Decimal(item.read()),
+            Some((NS_VT, "error")) => Self::ErrorStatusCode(item.read()),
+            Some((NS_VT, "i1")) => Self::I1(item.read()),
+            Some((NS_VT, "i2")) => Self::I2(item.read()),
+            Some((NS_VT, "i4")) => Self::I4(item.read()),
+            Some((NS_VT, "int")) => Self::Integer(item.read()),
+            Some((NS_VT, "r4")) => Self::R4(item.read()),
+            Some((NS_VT, "r8")) => Self::R8(item.read()),
+            Some((NS_VT, "ui1")) => Self::Ui1(item.read()),
+            Some((NS_VT, "ui2")) => Self::Ui2(item.read()),
+            Some((NS_VT, "ui4")) => Self::Ui4(item.read()),
+            Some((NS_VT, "uint")) => Self::UnsignedInteger(item.read()),
+            Some((NS_VT, "variant")) => Self::Variant(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -1771,103 +1763,103 @@ impl crate::Write for ArrayContent {
 
 impl<X: UserData> From<BasicStringWith<X>> for ArrayContentWith<X> {
     fn from(arm: BasicStringWith<X>) -> Self {
-        Self::BasicString(Box::new(arm))
+        Self::BasicString(arm)
     }
 }
 
 impl<X: UserData> From<BooleanWith<X>> for ArrayContentWith<X> {
     fn from(arm: BooleanWith<X>) -> Self {
-        Self::Boolean(Box::new(arm))
+        Self::Boolean(arm)
     }
 }
 
 impl<X: UserData> From<CurrencyWith<X>> for ArrayContentWith<X> {
     fn from(arm: CurrencyWith<X>) -> Self {
-        Self::Currency(Box::new(arm))
+        Self::Currency(arm)
     }
 }
 
 impl<X: UserData> From<DateAndTimeWith<X>> for ArrayContentWith<X> {
     fn from(arm: DateAndTimeWith<X>) -> Self {
-        Self::DateAndTime(Box::new(arm))
+        Self::DateAndTime(arm)
     }
 }
 
 impl<X: UserData> From<DecimalWith<X>> for ArrayContentWith<X> {
     fn from(arm: DecimalWith<X>) -> Self {
-        Self::Decimal(Box::new(arm))
+        Self::Decimal(arm)
     }
 }
 
 impl<X: UserData> From<ErrorStatusCodeWith<X>> for ArrayContentWith<X> {
     fn from(arm: ErrorStatusCodeWith<X>) -> Self {
-        Self::ErrorStatusCode(Box::new(arm))
+        Self::ErrorStatusCode(arm)
     }
 }
 
 impl<X: UserData> From<I1With<X>> for ArrayContentWith<X> {
     fn from(arm: I1With<X>) -> Self {
-        Self::I1(Box::new(arm))
+        Self::I1(arm)
     }
 }
 
 impl<X: UserData> From<I2With<X>> for ArrayContentWith<X> {
     fn from(arm: I2With<X>) -> Self {
-        Self::I2(Box::new(arm))
+        Self::I2(arm)
     }
 }
 
 impl<X: UserData> From<I4With<X>> for ArrayContentWith<X> {
     fn from(arm: I4With<X>) -> Self {
-        Self::I4(Box::new(arm))
+        Self::I4(arm)
     }
 }
 
 impl<X: UserData> From<IntegerWith<X>> for ArrayContentWith<X> {
     fn from(arm: IntegerWith<X>) -> Self {
-        Self::Integer(Box::new(arm))
+        Self::Integer(arm)
     }
 }
 
 impl<X: UserData> From<R4With<X>> for ArrayContentWith<X> {
     fn from(arm: R4With<X>) -> Self {
-        Self::R4(Box::new(arm))
+        Self::R4(arm)
     }
 }
 
 impl<X: UserData> From<R8With<X>> for ArrayContentWith<X> {
     fn from(arm: R8With<X>) -> Self {
-        Self::R8(Box::new(arm))
+        Self::R8(arm)
     }
 }
 
 impl<X: UserData> From<Ui1With<X>> for ArrayContentWith<X> {
     fn from(arm: Ui1With<X>) -> Self {
-        Self::Ui1(Box::new(arm))
+        Self::Ui1(arm)
     }
 }
 
 impl<X: UserData> From<Ui2With<X>> for ArrayContentWith<X> {
     fn from(arm: Ui2With<X>) -> Self {
-        Self::Ui2(Box::new(arm))
+        Self::Ui2(arm)
     }
 }
 
 impl<X: UserData> From<Ui4With<X>> for ArrayContentWith<X> {
     fn from(arm: Ui4With<X>) -> Self {
-        Self::Ui4(Box::new(arm))
+        Self::Ui4(arm)
     }
 }
 
 impl<X: UserData> From<UnsignedIntegerWith<X>> for ArrayContentWith<X> {
     fn from(arm: UnsignedIntegerWith<X>) -> Self {
-        Self::UnsignedInteger(Box::new(arm))
+        Self::UnsignedInteger(arm)
     }
 }
 
 impl<X: UserData> From<VariantWith<X>> for ArrayContentWith<X> {
     fn from(arm: VariantWith<X>) -> Self {
-        Self::Variant(Box::new(arm))
+        Self::Variant(arm)
     }
 }
 
@@ -3493,65 +3485,51 @@ impl<X: UserData> VariantContentWith<X> {
     {
         match self {
             Self::Array(node) => VariantContentWith::Array(Box::new((*node).into_user_data())),
-            Self::BasicString(node) => {
-                VariantContentWith::BasicString(Box::new((*node).into_user_data()))
-            }
-            Self::BinaryBlob(node) => {
-                VariantContentWith::BinaryBlob(Box::new((*node).into_user_data()))
-            }
+            Self::BasicString(node) => VariantContentWith::BasicString(node.into_user_data()),
+            Self::BinaryBlob(node) => VariantContentWith::BinaryBlob(node.into_user_data()),
             Self::BinaryBlobObject(node) => {
-                VariantContentWith::BinaryBlobObject(Box::new((*node).into_user_data()))
+                VariantContentWith::BinaryBlobObject(node.into_user_data())
             }
-            Self::BinaryStorage(node) => {
-                VariantContentWith::BinaryStorage(Box::new((*node).into_user_data()))
-            }
+            Self::BinaryStorage(node) => VariantContentWith::BinaryStorage(node.into_user_data()),
             Self::BinaryStorageObject(node) => {
-                VariantContentWith::BinaryStorageObject(Box::new((*node).into_user_data()))
+                VariantContentWith::BinaryStorageObject(node.into_user_data())
             }
-            Self::BinaryStream(node) => {
-                VariantContentWith::BinaryStream(Box::new((*node).into_user_data()))
-            }
+            Self::BinaryStream(node) => VariantContentWith::BinaryStream(node.into_user_data()),
             Self::BinaryStreamObject(node) => {
-                VariantContentWith::BinaryStreamObject(Box::new((*node).into_user_data()))
+                VariantContentWith::BinaryStreamObject(node.into_user_data())
             }
             Self::BinaryVersionedStream(node) => {
                 VariantContentWith::BinaryVersionedStream(Box::new((*node).into_user_data()))
             }
-            Self::Boolean(node) => VariantContentWith::Boolean(Box::new((*node).into_user_data())),
-            Self::ClassID(node) => VariantContentWith::ClassID(Box::new((*node).into_user_data())),
-            Self::Currency(node) => {
-                VariantContentWith::Currency(Box::new((*node).into_user_data()))
-            }
-            Self::DateAndTime(node) => {
-                VariantContentWith::DateAndTime(Box::new((*node).into_user_data()))
-            }
-            Self::Decimal(node) => VariantContentWith::Decimal(Box::new((*node).into_user_data())),
-            Self::Empty(node) => VariantContentWith::Empty(Box::new((*node).into_user_data())),
+            Self::Boolean(node) => VariantContentWith::Boolean(node.into_user_data()),
+            Self::ClassID(node) => VariantContentWith::ClassID(node.into_user_data()),
+            Self::Currency(node) => VariantContentWith::Currency(node.into_user_data()),
+            Self::DateAndTime(node) => VariantContentWith::DateAndTime(node.into_user_data()),
+            Self::Decimal(node) => VariantContentWith::Decimal(node.into_user_data()),
+            Self::Empty(node) => VariantContentWith::Empty(node.into_user_data()),
             Self::ErrorStatusCode(node) => {
-                VariantContentWith::ErrorStatusCode(Box::new((*node).into_user_data()))
+                VariantContentWith::ErrorStatusCode(node.into_user_data())
             }
-            Self::FileTime(node) => {
-                VariantContentWith::FileTime(Box::new((*node).into_user_data()))
-            }
-            Self::I1(node) => VariantContentWith::I1(Box::new((*node).into_user_data())),
-            Self::I2(node) => VariantContentWith::I2(Box::new((*node).into_user_data())),
-            Self::I4(node) => VariantContentWith::I4(Box::new((*node).into_user_data())),
-            Self::I8(node) => VariantContentWith::I8(Box::new((*node).into_user_data())),
-            Self::Integer(node) => VariantContentWith::Integer(Box::new((*node).into_user_data())),
-            Self::Lpstr(node) => VariantContentWith::Lpstr(Box::new((*node).into_user_data())),
-            Self::Lpwstr(node) => VariantContentWith::Lpwstr(Box::new((*node).into_user_data())),
-            Self::Null(node) => VariantContentWith::Null(Box::new((*node).into_user_data())),
+            Self::FileTime(node) => VariantContentWith::FileTime(node.into_user_data()),
+            Self::I1(node) => VariantContentWith::I1(node.into_user_data()),
+            Self::I2(node) => VariantContentWith::I2(node.into_user_data()),
+            Self::I4(node) => VariantContentWith::I4(node.into_user_data()),
+            Self::I8(node) => VariantContentWith::I8(node.into_user_data()),
+            Self::Integer(node) => VariantContentWith::Integer(node.into_user_data()),
+            Self::Lpstr(node) => VariantContentWith::Lpstr(node.into_user_data()),
+            Self::Lpwstr(node) => VariantContentWith::Lpwstr(node.into_user_data()),
+            Self::Null(node) => VariantContentWith::Null(node.into_user_data()),
             Self::Other(node) => VariantContentWith::Other(node),
-            Self::R4(node) => VariantContentWith::R4(Box::new((*node).into_user_data())),
-            Self::R8(node) => VariantContentWith::R8(Box::new((*node).into_user_data())),
-            Self::Ui1(node) => VariantContentWith::Ui1(Box::new((*node).into_user_data())),
-            Self::Ui2(node) => VariantContentWith::Ui2(Box::new((*node).into_user_data())),
-            Self::Ui4(node) => VariantContentWith::Ui4(Box::new((*node).into_user_data())),
-            Self::Ui8(node) => VariantContentWith::Ui8(Box::new((*node).into_user_data())),
+            Self::R4(node) => VariantContentWith::R4(node.into_user_data()),
+            Self::R8(node) => VariantContentWith::R8(node.into_user_data()),
+            Self::Ui1(node) => VariantContentWith::Ui1(node.into_user_data()),
+            Self::Ui2(node) => VariantContentWith::Ui2(node.into_user_data()),
+            Self::Ui4(node) => VariantContentWith::Ui4(node.into_user_data()),
+            Self::Ui8(node) => VariantContentWith::Ui8(node.into_user_data()),
             Self::UnsignedInteger(node) => {
-                VariantContentWith::UnsignedInteger(Box::new((*node).into_user_data()))
+                VariantContentWith::UnsignedInteger(node.into_user_data())
             }
-            Self::Variant(node) => VariantContentWith::Variant(Box::new((*node).into_user_data())),
+            Self::Variant(node) => VariantContentWith::Variant(node.into_user_data()),
             Self::Vector(node) => VariantContentWith::Vector(Box::new((*node).into_user_data())),
         }
     }
@@ -3571,38 +3549,38 @@ impl crate::Read for VariantContent {
     fn read_item(item: crate::Item<'_>) -> Self {
         match item.name() {
             Some((NS_VT, "array")) => Self::Array(Box::new(item.read())),
-            Some((NS_VT, "bstr")) => Self::BasicString(Box::new(item.read())),
-            Some((NS_VT, "blob")) => Self::BinaryBlob(Box::new(item.read())),
-            Some((NS_VT, "oblob")) => Self::BinaryBlobObject(Box::new(item.read())),
-            Some((NS_VT, "storage")) => Self::BinaryStorage(Box::new(item.read())),
-            Some((NS_VT, "ostorage")) => Self::BinaryStorageObject(Box::new(item.read())),
-            Some((NS_VT, "stream")) => Self::BinaryStream(Box::new(item.read())),
-            Some((NS_VT, "ostream")) => Self::BinaryStreamObject(Box::new(item.read())),
+            Some((NS_VT, "bstr")) => Self::BasicString(item.read()),
+            Some((NS_VT, "blob")) => Self::BinaryBlob(item.read()),
+            Some((NS_VT, "oblob")) => Self::BinaryBlobObject(item.read()),
+            Some((NS_VT, "storage")) => Self::BinaryStorage(item.read()),
+            Some((NS_VT, "ostorage")) => Self::BinaryStorageObject(item.read()),
+            Some((NS_VT, "stream")) => Self::BinaryStream(item.read()),
+            Some((NS_VT, "ostream")) => Self::BinaryStreamObject(item.read()),
             Some((NS_VT, "vstream")) => Self::BinaryVersionedStream(Box::new(item.read())),
-            Some((NS_VT, "bool")) => Self::Boolean(Box::new(item.read())),
-            Some((NS_VT, "clsid")) => Self::ClassID(Box::new(item.read())),
-            Some((NS_VT, "cy")) => Self::Currency(Box::new(item.read())),
-            Some((NS_VT, "date")) => Self::DateAndTime(Box::new(item.read())),
-            Some((NS_VT, "decimal")) => Self::Decimal(Box::new(item.read())),
-            Some((NS_VT, "empty")) => Self::Empty(Box::new(item.read())),
-            Some((NS_VT, "error")) => Self::ErrorStatusCode(Box::new(item.read())),
-            Some((NS_VT, "filetime")) => Self::FileTime(Box::new(item.read())),
-            Some((NS_VT, "i1")) => Self::I1(Box::new(item.read())),
-            Some((NS_VT, "i2")) => Self::I2(Box::new(item.read())),
-            Some((NS_VT, "i4")) => Self::I4(Box::new(item.read())),
-            Some((NS_VT, "i8")) => Self::I8(Box::new(item.read())),
-            Some((NS_VT, "int")) => Self::Integer(Box::new(item.read())),
-            Some((NS_VT, "lpstr")) => Self::Lpstr(Box::new(item.read())),
-            Some((NS_VT, "lpwstr")) => Self::Lpwstr(Box::new(item.read())),
-            Some((NS_VT, "null")) => Self::Null(Box::new(item.read())),
-            Some((NS_VT, "r4")) => Self::R4(Box::new(item.read())),
-            Some((NS_VT, "r8")) => Self::R8(Box::new(item.read())),
-            Some((NS_VT, "ui1")) => Self::Ui1(Box::new(item.read())),
-            Some((NS_VT, "ui2")) => Self::Ui2(Box::new(item.read())),
-            Some((NS_VT, "ui4")) => Self::Ui4(Box::new(item.read())),
-            Some((NS_VT, "ui8")) => Self::Ui8(Box::new(item.read())),
-            Some((NS_VT, "uint")) => Self::UnsignedInteger(Box::new(item.read())),
-            Some((NS_VT, "variant")) => Self::Variant(Box::new(item.read())),
+            Some((NS_VT, "bool")) => Self::Boolean(item.read()),
+            Some((NS_VT, "clsid")) => Self::ClassID(item.read()),
+            Some((NS_VT, "cy")) => Self::Currency(item.read()),
+            Some((NS_VT, "date")) => Self::DateAndTime(item.read()),
+            Some((NS_VT, "decimal")) => Self::Decimal(item.read()),
+            Some((NS_VT, "empty")) => Self::Empty(item.read()),
+            Some((NS_VT, "error")) => Self::ErrorStatusCode(item.read()),
+            Some((NS_VT, "filetime")) => Self::FileTime(item.read()),
+            Some((NS_VT, "i1")) => Self::I1(item.read()),
+            Some((NS_VT, "i2")) => Self::I2(item.read()),
+            Some((NS_VT, "i4")) => Self::I4(item.read()),
+            Some((NS_VT, "i8")) => Self::I8(item.read()),
+            Some((NS_VT, "int")) => Self::Integer(item.read()),
+            Some((NS_VT, "lpstr")) => Self::Lpstr(item.read()),
+            Some((NS_VT, "lpwstr")) => Self::Lpwstr(item.read()),
+            Some((NS_VT, "null")) => Self::Null(item.read()),
+            Some((NS_VT, "r4")) => Self::R4(item.read()),
+            Some((NS_VT, "r8")) => Self::R8(item.read()),
+            Some((NS_VT, "ui1")) => Self::Ui1(item.read()),
+            Some((NS_VT, "ui2")) => Self::Ui2(item.read()),
+            Some((NS_VT, "ui4")) => Self::Ui4(item.read()),
+            Some((NS_VT, "ui8")) => Self::Ui8(item.read()),
+            Some((NS_VT, "uint")) => Self::UnsignedInteger(item.read()),
+            Some((NS_VT, "variant")) => Self::Variant(item.read()),
             Some((NS_VT, "vector")) => Self::Vector(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -3659,43 +3637,43 @@ impl<X: UserData> From<ArrayWith<X>> for VariantContentWith<X> {
 
 impl<X: UserData> From<BasicStringWith<X>> for VariantContentWith<X> {
     fn from(arm: BasicStringWith<X>) -> Self {
-        Self::BasicString(Box::new(arm))
+        Self::BasicString(arm)
     }
 }
 
 impl<X: UserData> From<BinaryBlobWith<X>> for VariantContentWith<X> {
     fn from(arm: BinaryBlobWith<X>) -> Self {
-        Self::BinaryBlob(Box::new(arm))
+        Self::BinaryBlob(arm)
     }
 }
 
 impl<X: UserData> From<BinaryBlobObjectWith<X>> for VariantContentWith<X> {
     fn from(arm: BinaryBlobObjectWith<X>) -> Self {
-        Self::BinaryBlobObject(Box::new(arm))
+        Self::BinaryBlobObject(arm)
     }
 }
 
 impl<X: UserData> From<BinaryStorageWith<X>> for VariantContentWith<X> {
     fn from(arm: BinaryStorageWith<X>) -> Self {
-        Self::BinaryStorage(Box::new(arm))
+        Self::BinaryStorage(arm)
     }
 }
 
 impl<X: UserData> From<BinaryStorageObjectWith<X>> for VariantContentWith<X> {
     fn from(arm: BinaryStorageObjectWith<X>) -> Self {
-        Self::BinaryStorageObject(Box::new(arm))
+        Self::BinaryStorageObject(arm)
     }
 }
 
 impl<X: UserData> From<BinaryStreamWith<X>> for VariantContentWith<X> {
     fn from(arm: BinaryStreamWith<X>) -> Self {
-        Self::BinaryStream(Box::new(arm))
+        Self::BinaryStream(arm)
     }
 }
 
 impl<X: UserData> From<BinaryStreamObjectWith<X>> for VariantContentWith<X> {
     fn from(arm: BinaryStreamObjectWith<X>) -> Self {
-        Self::BinaryStreamObject(Box::new(arm))
+        Self::BinaryStreamObject(arm)
     }
 }
 
@@ -3707,145 +3685,145 @@ impl<X: UserData> From<BinaryVersionedStreamWith<X>> for VariantContentWith<X> {
 
 impl<X: UserData> From<BooleanWith<X>> for VariantContentWith<X> {
     fn from(arm: BooleanWith<X>) -> Self {
-        Self::Boolean(Box::new(arm))
+        Self::Boolean(arm)
     }
 }
 
 impl<X: UserData> From<ClassIDWith<X>> for VariantContentWith<X> {
     fn from(arm: ClassIDWith<X>) -> Self {
-        Self::ClassID(Box::new(arm))
+        Self::ClassID(arm)
     }
 }
 
 impl<X: UserData> From<CurrencyWith<X>> for VariantContentWith<X> {
     fn from(arm: CurrencyWith<X>) -> Self {
-        Self::Currency(Box::new(arm))
+        Self::Currency(arm)
     }
 }
 
 impl<X: UserData> From<DateAndTimeWith<X>> for VariantContentWith<X> {
     fn from(arm: DateAndTimeWith<X>) -> Self {
-        Self::DateAndTime(Box::new(arm))
+        Self::DateAndTime(arm)
     }
 }
 
 impl<X: UserData> From<DecimalWith<X>> for VariantContentWith<X> {
     fn from(arm: DecimalWith<X>) -> Self {
-        Self::Decimal(Box::new(arm))
+        Self::Decimal(arm)
     }
 }
 
 impl<X: UserData> From<EmptyWith<X>> for VariantContentWith<X> {
     fn from(arm: EmptyWith<X>) -> Self {
-        Self::Empty(Box::new(arm))
+        Self::Empty(arm)
     }
 }
 
 impl<X: UserData> From<ErrorStatusCodeWith<X>> for VariantContentWith<X> {
     fn from(arm: ErrorStatusCodeWith<X>) -> Self {
-        Self::ErrorStatusCode(Box::new(arm))
+        Self::ErrorStatusCode(arm)
     }
 }
 
 impl<X: UserData> From<FileTimeWith<X>> for VariantContentWith<X> {
     fn from(arm: FileTimeWith<X>) -> Self {
-        Self::FileTime(Box::new(arm))
+        Self::FileTime(arm)
     }
 }
 
 impl<X: UserData> From<I1With<X>> for VariantContentWith<X> {
     fn from(arm: I1With<X>) -> Self {
-        Self::I1(Box::new(arm))
+        Self::I1(arm)
     }
 }
 
 impl<X: UserData> From<I2With<X>> for VariantContentWith<X> {
     fn from(arm: I2With<X>) -> Self {
-        Self::I2(Box::new(arm))
+        Self::I2(arm)
     }
 }
 
 impl<X: UserData> From<I4With<X>> for VariantContentWith<X> {
     fn from(arm: I4With<X>) -> Self {
-        Self::I4(Box::new(arm))
+        Self::I4(arm)
     }
 }
 
 impl<X: UserData> From<I8With<X>> for VariantContentWith<X> {
     fn from(arm: I8With<X>) -> Self {
-        Self::I8(Box::new(arm))
+        Self::I8(arm)
     }
 }
 
 impl<X: UserData> From<IntegerWith<X>> for VariantContentWith<X> {
     fn from(arm: IntegerWith<X>) -> Self {
-        Self::Integer(Box::new(arm))
+        Self::Integer(arm)
     }
 }
 
 impl<X: UserData> From<LpstrWith<X>> for VariantContentWith<X> {
     fn from(arm: LpstrWith<X>) -> Self {
-        Self::Lpstr(Box::new(arm))
+        Self::Lpstr(arm)
     }
 }
 
 impl<X: UserData> From<LpwstrWith<X>> for VariantContentWith<X> {
     fn from(arm: LpwstrWith<X>) -> Self {
-        Self::Lpwstr(Box::new(arm))
+        Self::Lpwstr(arm)
     }
 }
 
 impl<X: UserData> From<NullWith<X>> for VariantContentWith<X> {
     fn from(arm: NullWith<X>) -> Self {
-        Self::Null(Box::new(arm))
+        Self::Null(arm)
     }
 }
 
 impl<X: UserData> From<R4With<X>> for VariantContentWith<X> {
     fn from(arm: R4With<X>) -> Self {
-        Self::R4(Box::new(arm))
+        Self::R4(arm)
     }
 }
 
 impl<X: UserData> From<R8With<X>> for VariantContentWith<X> {
     fn from(arm: R8With<X>) -> Self {
-        Self::R8(Box::new(arm))
+        Self::R8(arm)
     }
 }
 
 impl<X: UserData> From<Ui1With<X>> for VariantContentWith<X> {
     fn from(arm: Ui1With<X>) -> Self {
-        Self::Ui1(Box::new(arm))
+        Self::Ui1(arm)
     }
 }
 
 impl<X: UserData> From<Ui2With<X>> for VariantContentWith<X> {
     fn from(arm: Ui2With<X>) -> Self {
-        Self::Ui2(Box::new(arm))
+        Self::Ui2(arm)
     }
 }
 
 impl<X: UserData> From<Ui4With<X>> for VariantContentWith<X> {
     fn from(arm: Ui4With<X>) -> Self {
-        Self::Ui4(Box::new(arm))
+        Self::Ui4(arm)
     }
 }
 
 impl<X: UserData> From<Ui8With<X>> for VariantContentWith<X> {
     fn from(arm: Ui8With<X>) -> Self {
-        Self::Ui8(Box::new(arm))
+        Self::Ui8(arm)
     }
 }
 
 impl<X: UserData> From<UnsignedIntegerWith<X>> for VariantContentWith<X> {
     fn from(arm: UnsignedIntegerWith<X>) -> Self {
-        Self::UnsignedInteger(Box::new(arm))
+        Self::UnsignedInteger(arm)
     }
 }
 
 impl<X: UserData> From<VariantWith<X>> for VariantContentWith<X> {
     fn from(arm: VariantWith<X>) -> Self {
-        Self::Variant(Box::new(arm))
+        Self::Variant(arm)
     }
 }
 
@@ -4192,33 +4170,29 @@ impl<X: UserData> VectorContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::BasicString(node) => {
-                VectorContentWith::BasicString(Box::new((*node).into_user_data()))
-            }
-            Self::Boolean(node) => VectorContentWith::Boolean(Box::new((*node).into_user_data())),
-            Self::ClassID(node) => VectorContentWith::ClassID(Box::new((*node).into_user_data())),
-            Self::Currency(node) => VectorContentWith::Currency(Box::new((*node).into_user_data())),
-            Self::DateAndTime(node) => {
-                VectorContentWith::DateAndTime(Box::new((*node).into_user_data()))
-            }
+            Self::BasicString(node) => VectorContentWith::BasicString(node.into_user_data()),
+            Self::Boolean(node) => VectorContentWith::Boolean(node.into_user_data()),
+            Self::ClassID(node) => VectorContentWith::ClassID(node.into_user_data()),
+            Self::Currency(node) => VectorContentWith::Currency(node.into_user_data()),
+            Self::DateAndTime(node) => VectorContentWith::DateAndTime(node.into_user_data()),
             Self::ErrorStatusCode(node) => {
-                VectorContentWith::ErrorStatusCode(Box::new((*node).into_user_data()))
+                VectorContentWith::ErrorStatusCode(node.into_user_data())
             }
-            Self::FileTime(node) => VectorContentWith::FileTime(Box::new((*node).into_user_data())),
-            Self::I1(node) => VectorContentWith::I1(Box::new((*node).into_user_data())),
-            Self::I2(node) => VectorContentWith::I2(Box::new((*node).into_user_data())),
-            Self::I4(node) => VectorContentWith::I4(Box::new((*node).into_user_data())),
-            Self::I8(node) => VectorContentWith::I8(Box::new((*node).into_user_data())),
-            Self::Lpstr(node) => VectorContentWith::Lpstr(Box::new((*node).into_user_data())),
-            Self::Lpwstr(node) => VectorContentWith::Lpwstr(Box::new((*node).into_user_data())),
+            Self::FileTime(node) => VectorContentWith::FileTime(node.into_user_data()),
+            Self::I1(node) => VectorContentWith::I1(node.into_user_data()),
+            Self::I2(node) => VectorContentWith::I2(node.into_user_data()),
+            Self::I4(node) => VectorContentWith::I4(node.into_user_data()),
+            Self::I8(node) => VectorContentWith::I8(node.into_user_data()),
+            Self::Lpstr(node) => VectorContentWith::Lpstr(node.into_user_data()),
+            Self::Lpwstr(node) => VectorContentWith::Lpwstr(node.into_user_data()),
             Self::Other(node) => VectorContentWith::Other(node),
-            Self::R4(node) => VectorContentWith::R4(Box::new((*node).into_user_data())),
-            Self::R8(node) => VectorContentWith::R8(Box::new((*node).into_user_data())),
-            Self::Ui1(node) => VectorContentWith::Ui1(Box::new((*node).into_user_data())),
-            Self::Ui2(node) => VectorContentWith::Ui2(Box::new((*node).into_user_data())),
-            Self::Ui4(node) => VectorContentWith::Ui4(Box::new((*node).into_user_data())),
-            Self::Ui8(node) => VectorContentWith::Ui8(Box::new((*node).into_user_data())),
-            Self::Variant(node) => VectorContentWith::Variant(Box::new((*node).into_user_data())),
+            Self::R4(node) => VectorContentWith::R4(node.into_user_data()),
+            Self::R8(node) => VectorContentWith::R8(node.into_user_data()),
+            Self::Ui1(node) => VectorContentWith::Ui1(node.into_user_data()),
+            Self::Ui2(node) => VectorContentWith::Ui2(node.into_user_data()),
+            Self::Ui4(node) => VectorContentWith::Ui4(node.into_user_data()),
+            Self::Ui8(node) => VectorContentWith::Ui8(node.into_user_data()),
+            Self::Variant(node) => VectorContentWith::Variant(node.into_user_data()),
         }
     }
 }
@@ -4230,26 +4204,26 @@ impl crate::Read for VectorContent {
 
     fn read_item(item: crate::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_VT, "bstr")) => Self::BasicString(Box::new(item.read())),
-            Some((NS_VT, "bool")) => Self::Boolean(Box::new(item.read())),
-            Some((NS_VT, "clsid")) => Self::ClassID(Box::new(item.read())),
-            Some((NS_VT, "cy")) => Self::Currency(Box::new(item.read())),
-            Some((NS_VT, "date")) => Self::DateAndTime(Box::new(item.read())),
-            Some((NS_VT, "error")) => Self::ErrorStatusCode(Box::new(item.read())),
-            Some((NS_VT, "filetime")) => Self::FileTime(Box::new(item.read())),
-            Some((NS_VT, "i1")) => Self::I1(Box::new(item.read())),
-            Some((NS_VT, "i2")) => Self::I2(Box::new(item.read())),
-            Some((NS_VT, "i4")) => Self::I4(Box::new(item.read())),
-            Some((NS_VT, "i8")) => Self::I8(Box::new(item.read())),
-            Some((NS_VT, "lpstr")) => Self::Lpstr(Box::new(item.read())),
-            Some((NS_VT, "lpwstr")) => Self::Lpwstr(Box::new(item.read())),
-            Some((NS_VT, "r4")) => Self::R4(Box::new(item.read())),
-            Some((NS_VT, "r8")) => Self::R8(Box::new(item.read())),
-            Some((NS_VT, "ui1")) => Self::Ui1(Box::new(item.read())),
-            Some((NS_VT, "ui2")) => Self::Ui2(Box::new(item.read())),
-            Some((NS_VT, "ui4")) => Self::Ui4(Box::new(item.read())),
-            Some((NS_VT, "ui8")) => Self::Ui8(Box::new(item.read())),
-            Some((NS_VT, "variant")) => Self::Variant(Box::new(item.read())),
+            Some((NS_VT, "bstr")) => Self::BasicString(item.read()),
+            Some((NS_VT, "bool")) => Self::Boolean(item.read()),
+            Some((NS_VT, "clsid")) => Self::ClassID(item.read()),
+            Some((NS_VT, "cy")) => Self::Currency(item.read()),
+            Some((NS_VT, "date")) => Self::DateAndTime(item.read()),
+            Some((NS_VT, "error")) => Self::ErrorStatusCode(item.read()),
+            Some((NS_VT, "filetime")) => Self::FileTime(item.read()),
+            Some((NS_VT, "i1")) => Self::I1(item.read()),
+            Some((NS_VT, "i2")) => Self::I2(item.read()),
+            Some((NS_VT, "i4")) => Self::I4(item.read()),
+            Some((NS_VT, "i8")) => Self::I8(item.read()),
+            Some((NS_VT, "lpstr")) => Self::Lpstr(item.read()),
+            Some((NS_VT, "lpwstr")) => Self::Lpwstr(item.read()),
+            Some((NS_VT, "r4")) => Self::R4(item.read()),
+            Some((NS_VT, "r8")) => Self::R8(item.read()),
+            Some((NS_VT, "ui1")) => Self::Ui1(item.read()),
+            Some((NS_VT, "ui2")) => Self::Ui2(item.read()),
+            Some((NS_VT, "ui4")) => Self::Ui4(item.read()),
+            Some((NS_VT, "ui8")) => Self::Ui8(item.read()),
+            Some((NS_VT, "variant")) => Self::Variant(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -4285,121 +4259,121 @@ impl crate::Write for VectorContent {
 
 impl<X: UserData> From<BasicStringWith<X>> for VectorContentWith<X> {
     fn from(arm: BasicStringWith<X>) -> Self {
-        Self::BasicString(Box::new(arm))
+        Self::BasicString(arm)
     }
 }
 
 impl<X: UserData> From<BooleanWith<X>> for VectorContentWith<X> {
     fn from(arm: BooleanWith<X>) -> Self {
-        Self::Boolean(Box::new(arm))
+        Self::Boolean(arm)
     }
 }
 
 impl<X: UserData> From<ClassIDWith<X>> for VectorContentWith<X> {
     fn from(arm: ClassIDWith<X>) -> Self {
-        Self::ClassID(Box::new(arm))
+        Self::ClassID(arm)
     }
 }
 
 impl<X: UserData> From<CurrencyWith<X>> for VectorContentWith<X> {
     fn from(arm: CurrencyWith<X>) -> Self {
-        Self::Currency(Box::new(arm))
+        Self::Currency(arm)
     }
 }
 
 impl<X: UserData> From<DateAndTimeWith<X>> for VectorContentWith<X> {
     fn from(arm: DateAndTimeWith<X>) -> Self {
-        Self::DateAndTime(Box::new(arm))
+        Self::DateAndTime(arm)
     }
 }
 
 impl<X: UserData> From<ErrorStatusCodeWith<X>> for VectorContentWith<X> {
     fn from(arm: ErrorStatusCodeWith<X>) -> Self {
-        Self::ErrorStatusCode(Box::new(arm))
+        Self::ErrorStatusCode(arm)
     }
 }
 
 impl<X: UserData> From<FileTimeWith<X>> for VectorContentWith<X> {
     fn from(arm: FileTimeWith<X>) -> Self {
-        Self::FileTime(Box::new(arm))
+        Self::FileTime(arm)
     }
 }
 
 impl<X: UserData> From<I1With<X>> for VectorContentWith<X> {
     fn from(arm: I1With<X>) -> Self {
-        Self::I1(Box::new(arm))
+        Self::I1(arm)
     }
 }
 
 impl<X: UserData> From<I2With<X>> for VectorContentWith<X> {
     fn from(arm: I2With<X>) -> Self {
-        Self::I2(Box::new(arm))
+        Self::I2(arm)
     }
 }
 
 impl<X: UserData> From<I4With<X>> for VectorContentWith<X> {
     fn from(arm: I4With<X>) -> Self {
-        Self::I4(Box::new(arm))
+        Self::I4(arm)
     }
 }
 
 impl<X: UserData> From<I8With<X>> for VectorContentWith<X> {
     fn from(arm: I8With<X>) -> Self {
-        Self::I8(Box::new(arm))
+        Self::I8(arm)
     }
 }
 
 impl<X: UserData> From<LpstrWith<X>> for VectorContentWith<X> {
     fn from(arm: LpstrWith<X>) -> Self {
-        Self::Lpstr(Box::new(arm))
+        Self::Lpstr(arm)
     }
 }
 
 impl<X: UserData> From<LpwstrWith<X>> for VectorContentWith<X> {
     fn from(arm: LpwstrWith<X>) -> Self {
-        Self::Lpwstr(Box::new(arm))
+        Self::Lpwstr(arm)
     }
 }
 
 impl<X: UserData> From<R4With<X>> for VectorContentWith<X> {
     fn from(arm: R4With<X>) -> Self {
-        Self::R4(Box::new(arm))
+        Self::R4(arm)
     }
 }
 
 impl<X: UserData> From<R8With<X>> for VectorContentWith<X> {
     fn from(arm: R8With<X>) -> Self {
-        Self::R8(Box::new(arm))
+        Self::R8(arm)
     }
 }
 
 impl<X: UserData> From<Ui1With<X>> for VectorContentWith<X> {
     fn from(arm: Ui1With<X>) -> Self {
-        Self::Ui1(Box::new(arm))
+        Self::Ui1(arm)
     }
 }
 
 impl<X: UserData> From<Ui2With<X>> for VectorContentWith<X> {
     fn from(arm: Ui2With<X>) -> Self {
-        Self::Ui2(Box::new(arm))
+        Self::Ui2(arm)
     }
 }
 
 impl<X: UserData> From<Ui4With<X>> for VectorContentWith<X> {
     fn from(arm: Ui4With<X>) -> Self {
-        Self::Ui4(Box::new(arm))
+        Self::Ui4(arm)
     }
 }
 
 impl<X: UserData> From<Ui8With<X>> for VectorContentWith<X> {
     fn from(arm: Ui8With<X>) -> Self {
-        Self::Ui8(Box::new(arm))
+        Self::Ui8(arm)
     }
 }
 
 impl<X: UserData> From<VariantWith<X>> for VectorContentWith<X> {
     fn from(arm: VariantWith<X>) -> Self {
-        Self::Variant(Box::new(arm))
+        Self::Variant(arm)
     }
 }
 

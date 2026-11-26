@@ -1897,7 +1897,7 @@ fn struct_size(node: &Node) -> usize {
             })
             .sum(),
     };
-    mem::size_of::<Unknown>() + attributes + body
+    mem::size_of::<Option<Box<Unknown>>>() + attributes + body
 }
 
 /// The rows of `enum_names.toml` an enum matches: by its wildcard's

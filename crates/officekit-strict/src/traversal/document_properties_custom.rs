@@ -499,33 +499,33 @@ fn transform_custom_file_property_content_1(
         return Some(document_properties_custom::CustomFilePropertyContent::Array(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::BasicString(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::BasicString(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::BinaryBlob(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::BinaryBlob(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::BinaryBlobObject(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::BinaryBlobObject(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::BinaryStorage(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::BinaryStorage(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::BinaryStorageObject(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             document_properties_custom::CustomFilePropertyContent::BinaryStorageObject(node),
         );
     }
     if let document_properties_custom::CustomFilePropertyContent::BinaryStream(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::BinaryStream(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::BinaryStreamObject(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(
             document_properties_custom::CustomFilePropertyContent::BinaryStreamObject(node),
         );
@@ -538,45 +538,45 @@ fn transform_custom_file_property_content_1(
         );
     }
     if let document_properties_custom::CustomFilePropertyContent::Boolean(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::Boolean(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::ClassID(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::ClassID(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::Currency(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::Currency(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::DateAndTime(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::DateAndTime(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::Decimal(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::Decimal(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::Empty(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::Empty(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::ErrorStatusCode(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::ErrorStatusCode(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::FileTime(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::FileTime(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::I1(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::I1(
             node,
         ));
     }
     if let document_properties_custom::CustomFilePropertyContent::I2(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::I2(
             node,
         ));
@@ -589,73 +589,73 @@ fn transform_custom_file_property_content_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<document_properties_custom::CustomFilePropertyContent> {
     if let document_properties_custom::CustomFilePropertyContent::I4(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::I4(
             node,
         ));
     }
     if let document_properties_custom::CustomFilePropertyContent::I8(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::I8(
             node,
         ));
     }
     if let document_properties_custom::CustomFilePropertyContent::Integer(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::Integer(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::Lpstr(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::Lpstr(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::Lpwstr(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::Lpwstr(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::Null(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::Null(
             node,
         ));
     }
     if let document_properties_custom::CustomFilePropertyContent::R4(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::R4(
             node,
         ));
     }
     if let document_properties_custom::CustomFilePropertyContent::R8(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::R8(
             node,
         ));
     }
     if let document_properties_custom::CustomFilePropertyContent::Ui1(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::Ui1(
             node,
         ));
     }
     if let document_properties_custom::CustomFilePropertyContent::Ui2(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::Ui2(
             node,
         ));
     }
     if let document_properties_custom::CustomFilePropertyContent::Ui4(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::Ui4(
             node,
         ));
     }
     if let document_properties_custom::CustomFilePropertyContent::Ui8(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::Ui8(
             node,
         ));
     }
     if let document_properties_custom::CustomFilePropertyContent::UnsignedInteger(arm) = item {
-        let node = Box::new(arm.transform(ctx));
+        let node = arm.transform(ctx);
         return Some(document_properties_custom::CustomFilePropertyContent::UnsignedInteger(node));
     }
     if let document_properties_custom::CustomFilePropertyContent::Vector(arm) = item {

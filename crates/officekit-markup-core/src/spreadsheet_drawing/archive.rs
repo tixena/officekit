@@ -786,7 +786,7 @@ pub enum GroupShapeContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum ObjectContent {
     ConnectionShape(#[rkyv(omit_bounds)] Box<super::ConnectionShape>),
-    ContentPart(Box<super::ContentPart>),
+    ContentPart(super::ContentPart),
     GraphicFrame(#[rkyv(omit_bounds)] Box<super::GraphicFrame>),
     GroupShape(#[rkyv(omit_bounds)] Box<super::GroupShape>),
     Other(Box<Node>),

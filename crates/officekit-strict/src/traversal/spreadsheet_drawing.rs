@@ -2387,7 +2387,7 @@ impl super::Transform for spreadsheet_drawing::ObjectContent {
         if let Self::ConnectionShape(arm) = self {
             Self::ConnectionShape(Box::new(arm.transform(ctx)))
         } else if let Self::ContentPart(arm) = self {
-            Self::ContentPart(Box::new(arm.transform(ctx)))
+            Self::ContentPart(arm.transform(ctx))
         } else if let Self::GraphicFrame(arm) = self {
             Self::GraphicFrame(Box::new(arm.transform(ctx)))
         } else if let Self::GroupShape(arm) = self {

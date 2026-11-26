@@ -364,15 +364,15 @@ pub struct UnknownMirror {
 #[rkyv(remote = super::TaskHistoryEventContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum TaskHistoryEventContent {
-    Add(Box<super::Add>),
-    Asgn(Box<super::Asgn>),
+    Add(super::Add),
+    Asgn(super::Asgn),
     Date(Box<super::Date>),
     Other(Box<Node>),
-    PcntCmplt(Box<super::PcntCmplt>),
-    Title(Box<super::Title>),
-    UnasgnAll(Box<super::UnasgnAll>),
-    Undo(Box<super::Undo>),
-    Unknown(Box<super::Unknown>),
+    PcntCmplt(super::PcntCmplt),
+    Title(super::Title),
+    UnasgnAll(super::UnasgnAll),
+    Undo(super::Undo),
+    Unknown(super::Unknown),
 }
 
 impl From<AddMirror> for super::Add {

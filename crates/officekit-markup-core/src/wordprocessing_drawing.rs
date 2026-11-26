@@ -910,7 +910,7 @@ pub struct AbsolutePositionOffsetValue(pub String);
 #[non_exhaustive]
 pub enum AnchorContentWith<X: UserData> {
     /// The element `wp:wrapNone`, a `NoTextWrapping`.
-    NoTextWrapping(Box<NoTextWrappingWith<X>>),
+    NoTextWrapping(NoTextWrappingWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `wp:wrapSquare`, a `SquareWrapping`.
@@ -1398,13 +1398,13 @@ impl Eq for HorizontalPositioningWith<()> {}
 #[non_exhaustive]
 pub enum HorizontalPositioningContentWith<X: UserData> {
     /// The element `wp:posOffset`, a `AbsolutePositionOffset`.
-    AbsolutePositionOffset(Box<AbsolutePositionOffsetWith<X>>),
+    AbsolutePositionOffset(AbsolutePositionOffsetWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `wp14:pctPosHOffset`, a `PctPosHOffset`.
-    PctPosHOffset(Box<super::office_word_2010_wordprocessing_drawing::PctPosHOffsetWith<X>>),
+    PctPosHOffset(super::office_word_2010_wordprocessing_drawing::PctPosHOffsetWith<X>),
     /// The element `wp:align`, a `RelativeHorizontalAlignment`.
-    RelativeHorizontalAlignment(Box<RelativeHorizontalAlignmentWith<X>>),
+    RelativeHorizontalAlignment(RelativeHorizontalAlignmentWith<X>),
 }
 
 /// [`HorizontalPositioningContentWith`] of the tree a read gives, where no node holds anything in
@@ -2169,13 +2169,13 @@ impl Eq for VerticalPositioningWith<()> {}
 #[non_exhaustive]
 pub enum VerticalPositioningContentWith<X: UserData> {
     /// The element `wp:posOffset`, a `AbsolutePositionOffset`.
-    AbsolutePositionOffset(Box<AbsolutePositionOffsetWith<X>>),
+    AbsolutePositionOffset(AbsolutePositionOffsetWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `wp14:pctPosVOffset`, a `PctPosVOffset`.
-    PctPosVOffset(Box<super::office_word_2010_wordprocessing_drawing::PctPosVOffsetWith<X>>),
+    PctPosVOffset(super::office_word_2010_wordprocessing_drawing::PctPosVOffsetWith<X>),
     /// The element `wp:align`, a `RelativeVerticalAlignment`.
-    RelativeVerticalAlignment(Box<RelativeVerticalAlignmentWith<X>>),
+    RelativeVerticalAlignment(RelativeVerticalAlignmentWith<X>),
 }
 
 /// [`VerticalPositioningContentWith`] of the tree a read gives, where no node holds anything in
@@ -2504,9 +2504,7 @@ impl<X: UserData> AnchorContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::NoTextWrapping(node) => {
-                AnchorContentWith::NoTextWrapping(Box::new((*node).into_user_data()))
-            }
+            Self::NoTextWrapping(node) => AnchorContentWith::NoTextWrapping(node.into_user_data()),
             Self::Other(node) => AnchorContentWith::Other(node),
             Self::SquareWrapping(node) => {
                 AnchorContentWith::SquareWrapping(Box::new((*node).into_user_data()))
@@ -2526,7 +2524,7 @@ impl<X: UserData> AnchorContentWith<X> {
 
 impl<X: UserData> Default for AnchorContentWith<X> {
     fn default() -> Self {
-        Self::NoTextWrapping(Box::default())
+        Self::NoTextWrapping(NoTextWrappingWith::default())
     }
 }
 
@@ -2537,7 +2535,7 @@ impl officekit_markup_base::Read for AnchorContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_WP, "wrapNone")) => Self::NoTextWrapping(Box::new(item.read())),
+            Some((NS_WP, "wrapNone")) => Self::NoTextWrapping(item.read()),
             Some((NS_WP, "wrapSquare")) => Self::SquareWrapping(Box::new(item.read())),
             Some((NS_WP, "wrapThrough")) => Self::ThroughWrapping(Box::new(item.read())),
             Some((NS_WP, "wrapTight")) => Self::TightWrapping(Box::new(item.read())),
@@ -2562,7 +2560,7 @@ impl officekit_markup_base::Write for AnchorContent {
 
 impl<X: UserData> From<NoTextWrappingWith<X>> for AnchorContentWith<X> {
     fn from(arm: NoTextWrappingWith<X>) -> Self {
-        Self::NoTextWrapping(Box::new(arm))
+        Self::NoTextWrapping(arm)
     }
 }
 
@@ -3637,18 +3635,14 @@ impl<X: UserData> HorizontalPositioningContentWith<X> {
     {
         match self {
             Self::AbsolutePositionOffset(node) => {
-                HorizontalPositioningContentWith::AbsolutePositionOffset(Box::new(
-                    (*node).into_user_data(),
-                ))
+                HorizontalPositioningContentWith::AbsolutePositionOffset(node.into_user_data())
             }
             Self::Other(node) => HorizontalPositioningContentWith::Other(node),
             Self::PctPosHOffset(node) => {
-                HorizontalPositioningContentWith::PctPosHOffset(Box::new((*node).into_user_data()))
+                HorizontalPositioningContentWith::PctPosHOffset(node.into_user_data())
             }
             Self::RelativeHorizontalAlignment(node) => {
-                HorizontalPositioningContentWith::RelativeHorizontalAlignment(Box::new(
-                    (*node).into_user_data(),
-                ))
+                HorizontalPositioningContentWith::RelativeHorizontalAlignment(node.into_user_data())
             }
         }
     }
@@ -3656,7 +3650,7 @@ impl<X: UserData> HorizontalPositioningContentWith<X> {
 
 impl<X: UserData> Default for HorizontalPositioningContentWith<X> {
     fn default() -> Self {
-        Self::AbsolutePositionOffset(Box::default())
+        Self::AbsolutePositionOffset(AbsolutePositionOffsetWith::default())
     }
 }
 
@@ -3667,9 +3661,9 @@ impl officekit_markup_base::Read for HorizontalPositioningContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_WP, "posOffset")) => Self::AbsolutePositionOffset(Box::new(item.read())),
-            Some((NS_WP14, "pctPosHOffset")) => Self::PctPosHOffset(Box::new(item.read())),
-            Some((NS_WP, "align")) => Self::RelativeHorizontalAlignment(Box::new(item.read())),
+            Some((NS_WP, "posOffset")) => Self::AbsolutePositionOffset(item.read()),
+            Some((NS_WP14, "pctPosHOffset")) => Self::PctPosHOffset(item.read()),
+            Some((NS_WP, "align")) => Self::RelativeHorizontalAlignment(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -3688,7 +3682,7 @@ impl officekit_markup_base::Write for HorizontalPositioningContent {
 
 impl<X: UserData> From<AbsolutePositionOffsetWith<X>> for HorizontalPositioningContentWith<X> {
     fn from(arm: AbsolutePositionOffsetWith<X>) -> Self {
-        Self::AbsolutePositionOffset(Box::new(arm))
+        Self::AbsolutePositionOffset(arm)
     }
 }
 
@@ -3696,13 +3690,13 @@ impl<X: UserData> From<super::office_word_2010_wordprocessing_drawing::PctPosHOf
     for HorizontalPositioningContentWith<X>
 {
     fn from(arm: super::office_word_2010_wordprocessing_drawing::PctPosHOffsetWith<X>) -> Self {
-        Self::PctPosHOffset(Box::new(arm))
+        Self::PctPosHOffset(arm)
     }
 }
 
 impl<X: UserData> From<RelativeHorizontalAlignmentWith<X>> for HorizontalPositioningContentWith<X> {
     fn from(arm: RelativeHorizontalAlignmentWith<X>) -> Self {
-        Self::RelativeHorizontalAlignment(Box::new(arm))
+        Self::RelativeHorizontalAlignment(arm)
     }
 }
 
@@ -5404,18 +5398,14 @@ impl<X: UserData> VerticalPositioningContentWith<X> {
     {
         match self {
             Self::AbsolutePositionOffset(node) => {
-                VerticalPositioningContentWith::AbsolutePositionOffset(Box::new(
-                    (*node).into_user_data(),
-                ))
+                VerticalPositioningContentWith::AbsolutePositionOffset(node.into_user_data())
             }
             Self::Other(node) => VerticalPositioningContentWith::Other(node),
             Self::PctPosVOffset(node) => {
-                VerticalPositioningContentWith::PctPosVOffset(Box::new((*node).into_user_data()))
+                VerticalPositioningContentWith::PctPosVOffset(node.into_user_data())
             }
             Self::RelativeVerticalAlignment(node) => {
-                VerticalPositioningContentWith::RelativeVerticalAlignment(Box::new(
-                    (*node).into_user_data(),
-                ))
+                VerticalPositioningContentWith::RelativeVerticalAlignment(node.into_user_data())
             }
         }
     }
@@ -5423,7 +5413,7 @@ impl<X: UserData> VerticalPositioningContentWith<X> {
 
 impl<X: UserData> Default for VerticalPositioningContentWith<X> {
     fn default() -> Self {
-        Self::AbsolutePositionOffset(Box::default())
+        Self::AbsolutePositionOffset(AbsolutePositionOffsetWith::default())
     }
 }
 
@@ -5434,9 +5424,9 @@ impl officekit_markup_base::Read for VerticalPositioningContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_WP, "posOffset")) => Self::AbsolutePositionOffset(Box::new(item.read())),
-            Some((NS_WP14, "pctPosVOffset")) => Self::PctPosVOffset(Box::new(item.read())),
-            Some((NS_WP, "align")) => Self::RelativeVerticalAlignment(Box::new(item.read())),
+            Some((NS_WP, "posOffset")) => Self::AbsolutePositionOffset(item.read()),
+            Some((NS_WP14, "pctPosVOffset")) => Self::PctPosVOffset(item.read()),
+            Some((NS_WP, "align")) => Self::RelativeVerticalAlignment(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -5455,7 +5445,7 @@ impl officekit_markup_base::Write for VerticalPositioningContent {
 
 impl<X: UserData> From<AbsolutePositionOffsetWith<X>> for VerticalPositioningContentWith<X> {
     fn from(arm: AbsolutePositionOffsetWith<X>) -> Self {
-        Self::AbsolutePositionOffset(Box::new(arm))
+        Self::AbsolutePositionOffset(arm)
     }
 }
 
@@ -5463,13 +5453,13 @@ impl<X: UserData> From<super::office_word_2010_wordprocessing_drawing::PctPosVOf
     for VerticalPositioningContentWith<X>
 {
     fn from(arm: super::office_word_2010_wordprocessing_drawing::PctPosVOffsetWith<X>) -> Self {
-        Self::PctPosVOffset(Box::new(arm))
+        Self::PctPosVOffset(arm)
     }
 }
 
 impl<X: UserData> From<RelativeVerticalAlignmentWith<X>> for VerticalPositioningContentWith<X> {
     fn from(arm: RelativeVerticalAlignmentWith<X>) -> Self {
-        Self::RelativeVerticalAlignment(Box::new(arm))
+        Self::RelativeVerticalAlignment(arm)
     }
 }
 

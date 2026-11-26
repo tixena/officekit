@@ -289,11 +289,11 @@ pub struct RemovedMirror {
 #[rkyv(remote = super::LiveFeedBackgroundPropertiesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum LiveFeedBackgroundPropertiesContent {
-    Blur(Box<super::Blur>),
-    Custom(Box<super::Custom>),
-    Normal(Box<super::Normal>),
+    Blur(super::Blur),
+    Custom(super::Custom),
+    Normal(super::Normal),
     Other(Box<Node>),
-    Removed(Box<super::Removed>),
+    Removed(super::Removed),
 }
 
 impl From<BackgroundPropsMirror> for super::BackgroundProps {

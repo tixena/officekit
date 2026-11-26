@@ -3312,20 +3312,20 @@ pub enum AnimateColorByContent {
 #[rkyv(remote = super::AnimationVariantContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum AnimationVariantContent {
-    BooleanVariant(Box<super::BooleanVariant>),
-    ColorValue(Box<super::ColorValue>),
-    FloatValue(Box<super::FloatValue>),
-    Integer(Box<super::Integer>),
+    BooleanVariant(super::BooleanVariant),
+    ColorValue(super::ColorValue),
+    FloatValue(super::FloatValue),
+    Integer(super::Integer),
     Other(Box<Node>),
-    StringValue(Box<super::StringValue>),
+    StringValue(super::StringValue),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BuildGraphicsContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum BuildGraphicsContent {
-    BuildAsOne(Box<super::BuildAsOne>),
-    BuildSubElements(Box<super::BuildSubElements>),
+    BuildAsOne(super::BuildAsOne),
+    BuildSubElements(super::BuildSubElements),
     Other(Box<Node>),
 }
 
@@ -3360,7 +3360,7 @@ pub enum EmbeddedObjectContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum GroupShapeContent {
     ConnectionShape(#[rkyv(omit_bounds)] Box<super::ConnectionShape>),
-    ContentPart(Box<super::ContentPart>),
+    ContentPart(super::ContentPart),
     GraphicFrame(#[rkyv(omit_bounds)] Box<super::GraphicFrame>),
     GroupShape(#[rkyv(omit_bounds)] Box<super::GroupShape>),
     Other(Box<Node>),
@@ -3373,8 +3373,8 @@ pub enum GroupShapeContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum IterateContent {
     Other(Box<Node>),
-    TimeAbsolute(Box<super::TimeAbsolute>),
-    TimePercentage(Box<super::TimePercentage>),
+    TimeAbsolute(super::TimeAbsolute),
+    TimePercentage(super::TimePercentage),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3384,7 +3384,7 @@ pub enum IterateContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum NonVisualPropertiesContent {
-    AudioFromCD(#[rkyv(omit_bounds)] Box<super::super::drawing::AudioFromCD>),
+    AudioFromCD(#[rkyv(omit_bounds)] super::super::drawing::AudioFromCD),
     AudioFromFile(#[rkyv(omit_bounds)] Box<super::super::drawing::AudioFromFile>),
     AudioFromWAVFile(Box<super::super::drawing::AudioFromWAVFile>),
     Other(Box<Node>),
@@ -3396,22 +3396,22 @@ pub enum NonVisualPropertiesContent {
 #[rkyv(remote = super::ShapeTargetContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ShapeTargetContent {
-    Background(Box<super::Background>),
+    Background(super::Background),
     EmbeddedChartElement(Box<super::EmbeddedChartElement>),
-    GraphicElement(Box<super::GraphicElement>),
+    GraphicElement(super::GraphicElement),
     Other(Box<Node>),
-    Subshape(Box<super::Subshape>),
-    TextElement(Box<super::TextElement>),
+    Subshape(super::Subshape),
+    TextElement(super::TextElement),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ShowTypeContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ShowTypeContent {
-    BrowseSlideShowMode(Box<super::BrowseSlideShowMode>),
-    KioskSlideShowMode(Box<super::KioskSlideShowMode>),
+    BrowseSlideShowMode(super::BrowseSlideShowMode),
+    KioskSlideShowMode(super::KioskSlideShowMode),
     Other(Box<Node>),
-    PresenterSlideShowMode(Box<super::PresenterSlideShowMode>),
+    PresenterSlideShowMode(super::PresenterSlideShowMode),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3430,8 +3430,8 @@ pub enum SlideBackgroundContent {
 #[rkyv(remote = super::SlideListContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum SlideListContent {
-    AllSlides(Box<super::AllSlides>),
-    CustomShow(Box<super::CustomShow>),
+    AllSlides(super::AllSlides),
+    CustomShow(super::CustomShow),
     Other(Box<Node>),
     SlideRange(Box<super::SlideRange>),
 }
@@ -3440,48 +3440,48 @@ pub enum SlideListContent {
 #[rkyv(remote = super::SlideTransitionContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum SlideTransitionContent {
-    BlindsSlideTransition(Box<super::BlindsSlideTransition>),
-    CheckerSlideTransition(Box<super::CheckerSlideTransition>),
-    CircleSlideTransition(Box<super::CircleSlideTransition>),
-    CombSlideTransition(Box<super::CombSlideTransition>),
-    Conveyor(Box<super::super::office_powerpoint_2010_main::Conveyor>),
-    CoverSlideTransition(Box<super::CoverSlideTransition>),
-    CutSlideTransition(Box<super::CutSlideTransition>),
-    DiamondSlideTransition(Box<super::DiamondSlideTransition>),
-    DissolveSlideTransition(Box<super::DissolveSlideTransition>),
-    Doors(Box<super::super::office_powerpoint_2010_main::Doors>),
-    FadeSlideTransition(Box<super::FadeSlideTransition>),
-    Ferris(Box<super::super::office_powerpoint_2010_main::Ferris>),
-    Flash(Box<super::super::office_powerpoint_2010_main::Flash>),
-    Flip(Box<super::super::office_powerpoint_2010_main::Flip>),
+    BlindsSlideTransition(super::BlindsSlideTransition),
+    CheckerSlideTransition(super::CheckerSlideTransition),
+    CircleSlideTransition(super::CircleSlideTransition),
+    CombSlideTransition(super::CombSlideTransition),
+    Conveyor(super::super::office_powerpoint_2010_main::Conveyor),
+    CoverSlideTransition(super::CoverSlideTransition),
+    CutSlideTransition(super::CutSlideTransition),
+    DiamondSlideTransition(super::DiamondSlideTransition),
+    DissolveSlideTransition(super::DissolveSlideTransition),
+    Doors(super::super::office_powerpoint_2010_main::Doors),
+    FadeSlideTransition(super::FadeSlideTransition),
+    Ferris(super::super::office_powerpoint_2010_main::Ferris),
+    Flash(super::super::office_powerpoint_2010_main::Flash),
+    Flip(super::super::office_powerpoint_2010_main::Flip),
     Flythrough(Box<super::super::office_powerpoint_2010_main::Flythrough>),
-    Gallery(Box<super::super::office_powerpoint_2010_main::Gallery>),
+    Gallery(super::super::office_powerpoint_2010_main::Gallery),
     Glitter(Box<super::super::office_powerpoint_2010_main::Glitter>),
-    Honeycomb(Box<super::super::office_powerpoint_2010_main::Honeycomb>),
-    NewsflashSlideTransition(Box<super::NewsflashSlideTransition>),
+    Honeycomb(super::super::office_powerpoint_2010_main::Honeycomb),
+    NewsflashSlideTransition(super::NewsflashSlideTransition),
     Other(Box<Node>),
-    Pan(Box<super::super::office_powerpoint_2010_main::Pan>),
-    PlusSlideTransition(Box<super::PlusSlideTransition>),
+    Pan(super::super::office_powerpoint_2010_main::Pan),
+    PlusSlideTransition(super::PlusSlideTransition),
     Prism(Box<super::super::office_powerpoint_2010_main::Prism>),
     PrstTrans(Box<super::super::office_powerpoint_2012_main::PrstTrans>),
-    PullSlideTransition(Box<super::PullSlideTransition>),
-    PushSlideTransition(Box<super::PushSlideTransition>),
-    RandomBarSlideTransition(Box<super::RandomBarSlideTransition>),
-    RandomSlideTransition(Box<super::RandomSlideTransition>),
+    PullSlideTransition(super::PullSlideTransition),
+    PushSlideTransition(super::PushSlideTransition),
+    RandomBarSlideTransition(super::RandomBarSlideTransition),
+    RandomSlideTransition(super::RandomSlideTransition),
     Reveal(Box<super::super::office_powerpoint_2010_main::Reveal>),
-    Ripple(Box<super::super::office_powerpoint_2010_main::Ripple>),
+    Ripple(super::super::office_powerpoint_2010_main::Ripple),
     Shred(Box<super::super::office_powerpoint_2010_main::Shred>),
     SplitSlideTransition(Box<super::SplitSlideTransition>),
-    StripsSlideTransition(Box<super::StripsSlideTransition>),
-    Switch(Box<super::super::office_powerpoint_2010_main::Switch>),
-    Vortex(Box<super::super::office_powerpoint_2010_main::Vortex>),
-    Warp(Box<super::super::office_powerpoint_2010_main::Warp>),
-    WedgeSlideTransition(Box<super::WedgeSlideTransition>),
-    WheelReverse(Box<super::super::office_powerpoint_2010_main::WheelReverse>),
-    WheelSlideTransition(Box<super::WheelSlideTransition>),
-    Window(Box<super::super::office_powerpoint_2010_main::Window>),
-    WipeSlideTransition(Box<super::WipeSlideTransition>),
-    ZoomSlideTransition(Box<super::ZoomSlideTransition>),
+    StripsSlideTransition(super::StripsSlideTransition),
+    Switch(super::super::office_powerpoint_2010_main::Switch),
+    Vortex(super::super::office_powerpoint_2010_main::Vortex),
+    Warp(super::super::office_powerpoint_2010_main::Warp),
+    WedgeSlideTransition(super::WedgeSlideTransition),
+    WheelReverse(super::super::office_powerpoint_2010_main::WheelReverse),
+    WheelSlideTransition(super::WheelSlideTransition),
+    Window(super::super::office_powerpoint_2010_main::Window),
+    WipeSlideTransition(super::WipeSlideTransition),
+    ZoomSlideTransition(super::ZoomSlideTransition),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3490,7 +3490,7 @@ pub enum SlideTransitionContent {
 pub enum SoundActionContent {
     Other(Box<Node>),
     StartSoundAction(Box<super::StartSoundAction>),
-    StopSoundAction(Box<super::StopSoundAction>),
+    StopSoundAction(super::StopSoundAction),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3498,10 +3498,10 @@ pub enum SoundActionContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum TargetElementContent {
     BmkTgt(Box<super::super::office_powerpoint_2010_main::BmkTgt>),
-    InkTarget(Box<super::InkTarget>),
+    InkTarget(super::InkTarget),
     Other(Box<Node>),
     ShapeTarget(Box<super::ShapeTarget>),
-    SlideTarget(Box<super::SlideTarget>),
+    SlideTarget(super::SlideTarget),
     SoundTarget(Box<super::SoundTarget>),
 }
 
@@ -3519,9 +3519,9 @@ pub enum TextElementContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum TimeConditionContent {
     Other(Box<Node>),
-    RuntimeNodeTriggerChoice(Box<super::RuntimeNodeTriggerChoice>),
-    TargetElement(Box<super::TargetElement>),
-    TimeNode(Box<super::TimeNode>),
+    RuntimeNodeTriggerChoice(super::RuntimeNodeTriggerChoice),
+    TargetElement(super::TargetElement),
+    TimeNode(super::TimeNode),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3539,11 +3539,11 @@ pub enum TimeNodeListContent {
     AnimateScale(#[rkyv(omit_bounds)] Box<super::AnimateScale>),
     Audio(#[rkyv(omit_bounds)] Box<super::Audio>),
     Command(#[rkyv(omit_bounds)] Box<super::Command>),
-    Exclusive(#[rkyv(omit_bounds)] Box<super::Exclusive>),
+    Exclusive(#[rkyv(omit_bounds)] super::Exclusive),
     Other(Box<Node>),
-    ParallelTimeNode(#[rkyv(omit_bounds)] Box<super::ParallelTimeNode>),
+    ParallelTimeNode(#[rkyv(omit_bounds)] super::ParallelTimeNode),
     SequenceTimeNode(#[rkyv(omit_bounds)] Box<super::SequenceTimeNode>),
-    SetTimeNodeBehavior(#[rkyv(omit_bounds)] Box<super::SetTimeNodeBehavior>),
+    SetTimeNodeBehavior(#[rkyv(omit_bounds)] super::SetTimeNodeBehavior),
     Video(#[rkyv(omit_bounds)] Box<super::Video>),
 }
 
