@@ -310,8 +310,10 @@ struct Around<'base> {
 /// gives without building the part's tree.
 ///
 /// A typed node whose element no rule of the walk changes is written tag by tag; one whose
-/// element a rule changes is written as one element, converted by the walk. A main part's root
-/// takes `conformance="strict"` in its attribute `conformance`.
+/// element a rule changes is written as one element, converted by the walk. A child a `CHILDREN`
+/// row refuses is written as one element, and checked against the element it stands in, which
+/// is written tag by tag unless another rule changes it. A main part's root takes
+/// `conformance="strict"` in its attribute `conformance`.
 #[derive(Debug)]
 pub struct StrictRules {
     conformance: Option<Tag>,
@@ -360,7 +362,13 @@ impl StrictRules {
         let mut owners: Vec<Tag> = ATTRIBUTES
             .iter()
             .map(|(owner, _, _)| *owner)
-            .chain(CHILDREN.iter().map(|(owner, _, _)| *owner))
+            .chain(CHILDREN.iter().map(|(owner, child, rule)| {
+                if matches!(rule, ChildRule::Refuse(_)) {
+                    *child
+                } else {
+                    *owner
+                }
+            }))
             .chain(CONTEXTUAL.iter().map(|(_, owner, _, _)| *owner))
             .chain(TEXTS.iter().map(|(owner, _)| *owner))
             .chain(ELEMENTS.iter().copied())
@@ -378,6 +386,13 @@ impl StrictRules {
 impl ClassRules for StrictRules {
     fn convert(&mut self, element: Element, site: &Site<'_>) -> Result<Vec<Node>, WriteError> {
         let parent = site.parent.and_then(tag_of);
+        if let Some(label) = parent.and_then(|owner| refused_child(owner, &element)) {
+            return if REMOVED_CHILDREN.contains(&label) {
+                Ok(Vec::new())
+            } else {
+                Err(not_in_class(label))
+            };
+        }
         let root = site.is_root();
         let mut nodes = if !root && word_shape_block(&element) {
             choice_content(element)
@@ -1101,6 +1116,16 @@ fn refuse_element(element: &Element) -> Result<(), &'static str> {
         return Err(tag.1);
     }
     Ok(())
+}
+
+/// The label of the `CHILDREN` row of `owner` that refuses `child`.
+fn refused_child(owner: (Option<NamespaceId>, &str), child: &Element) -> Option<&'static str> {
+    rules_of(CHILDREN, owner).iter().find_map(|(_, tag, rule)| {
+        let ChildRule::Refuse(label) = rule else {
+            return None;
+        };
+        is(*tag, &child.name).then_some(*label)
+    })
 }
 
 /// Rename the child at `index` to `to`, or drop it when a sibling already

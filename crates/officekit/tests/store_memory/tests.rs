@@ -2,8 +2,9 @@ use core::alloc::{GlobalAlloc, Layout as Allocation};
 use core::cell::Cell;
 use std::alloc::System;
 
-use officekit::parts::main_document;
 use officekit::parts::part_root::{self, PartRoot as _};
+use officekit::parts::{main_document, worksheet};
+use officekit_markup::spreadsheet;
 use officekit_markup::wordprocessing::{
     BlockContent, Document, DocumentBody, Paragraph, ParagraphContent, Text, TextRun,
     TextRunContent,
@@ -226,6 +227,57 @@ fn a_store_over_a_large_part_holds_its_bytes_and_never_its_tree() {
         assert!(
             peak < typed_bytes + generic + old_bytes + MARGIN,
             "{class:?}: peak {peak} bytes, new trees {typed_bytes} and {generic}, old part {old_bytes}"
+        );
+    }
+}
+
+/// A worksheet of `count` rows, each holding one cell with a number.
+fn worksheet(count: usize) -> spreadsheet::Worksheet {
+    let mut sheet = spreadsheet::Worksheet::default();
+    sheet.sheet_data.row = (0..count)
+        .map(|index| {
+            let mut value = spreadsheet::CellValue::default();
+            value.value = index.to_string();
+            let mut cell = spreadsheet::Cell::default();
+            cell.r = Some(format!("A{}", index + 1));
+            cell.value = Some(Box::new(value));
+            let mut row = spreadsheet::Row::default();
+            row.r = Some((index + 1).to_string());
+            row.cell.push(cell);
+            row
+        })
+        .collect();
+    sheet
+}
+
+/// Below the typed tree and the generic tree it writes as: a Strict store of a worksheet writes
+/// its rows tag by tag, though its root names children Strict refuses.
+#[test]
+fn a_strict_worksheet_store_holds_less_than_its_trees() {
+    let name = PartName::new("/xl/worksheets/sheet1.xml").unwrap();
+    for layout in [Layout::Compact, Layout::Pretty] {
+        let mut package = Package::new();
+        start();
+        let typed = worksheet(20_000);
+        let typed_bytes = live();
+        let tree = typed.to_tree(ConformanceClass::Strict).unwrap();
+        let generic = live() - typed_bytes;
+        drop(tree);
+        let before = live();
+        PEAK.set(LIVE.get());
+        part_root::store(
+            &mut package,
+            &name,
+            worksheet::CONTENT_TYPE,
+            &typed,
+            ConformanceClass::Strict,
+            WriteOptions::new(layout, true),
+        )
+        .unwrap();
+        let peak = typed_bytes + stop() - before;
+        assert!(
+            peak < typed_bytes + generic,
+            "{layout:?}: peak {peak} bytes, typed tree {typed_bytes}, generic tree {generic}"
         );
     }
 }

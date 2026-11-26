@@ -621,3 +621,111 @@ fn a_date_cell_is_refused_in_transitional_as_the_tree_refuses_it() {
     assert!(through.0.contains("c/@t"), "{}", through.0);
     assert!(!through.1);
 }
+
+/// A root of type `R` read from `xml`, stored in Strict written through and through its tree in
+/// every layout, with and without the cleanup: the part's text, or the error's, both stores give.
+#[cfg(feature = "strict")]
+fn strict_outcome<R>(xml: &str) -> String
+where
+    R: PartRoot,
+{
+    let root = R::from_tree(&parse(xml.as_bytes()).unwrap().root).unwrap();
+    let part = name("/part.xml");
+    let mut outcomes = Vec::new();
+    for layout in [Layout::Compact, Layout::Pretty] {
+        for cleanup in [true, false] {
+            let options = WriteOptions::new(layout, cleanup);
+            let outcome = |write: Store<R>| {
+                let mut package = Package::new();
+                write(
+                    &mut package,
+                    &part,
+                    "application/xml",
+                    &root,
+                    ConformanceClass::Strict,
+                    options,
+                )
+                .map_err(|error| format!("{error:?}"))?;
+                let bytes = package
+                    .part_bytes(&part)
+                    .map_err(|error| format!("{error:?}"))?;
+                String::from_utf8(bytes).map_err(|error| error.to_string())
+            };
+            let through = outcome(store);
+            assert_eq!(
+                through,
+                outcome(store_tree),
+                "{layout:?}, cleanup {cleanup}: {xml}"
+            );
+            outcomes.push(through.unwrap_or_else(|error| error));
+        }
+    }
+    outcomes.swap_remove(0)
+}
+
+#[cfg(feature = "strict")]
+#[test]
+fn a_root_naming_children_strict_refuses_gives_the_bytes_and_the_refusals_of_the_tree() {
+    use officekit_markup::presentation::PresentationWideProperties;
+    use officekit_markup::spreadsheet::{ChartSheet, DialogSheet, Worksheet};
+    use officekit_markup::wordprocessing::{DocumentSettings, WebPageSettings};
+
+    const X: &str = "xmlns:x=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"";
+    const W: &str = "xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:v=\"urn:schemas-microsoft-com:vml\"";
+    const P: &str = "xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\"";
+    let refused = |outcome: String| {
+        assert!(outcome.contains("NotInClass"), "{outcome}");
+        outcome
+    };
+    let rows = "<x:sheetData><x:row r=\"1\"><x:c r=\"A1\"><x:v>1</x:v></x:c></x:row></x:sheetData>";
+    let sheet = strict_outcome::<Worksheet>(&format!("<x:worksheet {X}>{rows}</x:worksheet>"));
+    assert!(sheet.contains("<x:v>1</x:v>"), "{sheet}");
+    for refused_child in ["legacyDrawing", "legacyDrawingHF"] {
+        let xml =
+            format!("<x:worksheet {X}>{rows}<x:{refused_child} r:id=\"rId1\"/></x:worksheet>");
+        let error = refused(strict_outcome::<Worksheet>(&xml));
+        assert!(
+            error.contains(&format!("tag: \"{refused_child}\"")),
+            "{error}"
+        );
+    }
+    let chartsheet = format!(
+        "<x:chartsheet {X}><x:sheetViews><x:sheetView workbookViewId=\"0\"/></x:sheetViews><x:drawing r:id=\"rId1\"/><x:legacyDrawing r:id=\"rId2\"/></x:chartsheet>"
+    );
+    assert!(refused(strict_outcome::<ChartSheet>(&chartsheet)).contains("tag: \"legacyDrawing\""));
+    let dialogsheet =
+        format!("<x:dialogsheet {X}><x:legacyDrawingHF r:id=\"rId1\"/></x:dialogsheet>");
+    assert!(
+        refused(strict_outcome::<DialogSheet>(&dialogsheet)).contains("tag: \"legacyDrawingHF\"")
+    );
+    let settings = strict_outcome::<DocumentSettings>(&format!(
+        "<w:settings {W}><w:zoom w:percent=\"100\"/><w:hdrShapeDefaults><o:shapedefaults v:ext=\"edit\" spidmax=\"2049\"/></w:hdrShapeDefaults><w:defaultTabStop w:val=\"720\"/><w:shapeDefaults><o:shapedefaults v:ext=\"edit\" spidmax=\"2049\"/></w:shapeDefaults></w:settings>"
+    ));
+    assert!(
+        settings.contains("<w:defaultTabStop w:val=\"720\"/>"),
+        "{settings}"
+    );
+    assert!(!settings.contains("shapedefaults"), "{settings}");
+    let compat = format!(
+        "<w:settings {W}><w:compat><w:doNotUseHTMLParagraphAutoSpacing/></w:compat></w:settings>"
+    );
+    assert!(
+        refused(strict_outcome::<DocumentSettings>(&compat))
+            .contains("tag: \"doNotUseHTMLParagraphAutoSpacing\"")
+    );
+    let web = strict_outcome::<WebPageSettings>(&format!(
+        "<w:webSettings {W}><w:relyOnVML/><w:optimizeForBrowser/></w:webSettings>"
+    ));
+    assert!(
+        web.contains("<w:optimizeForBrowser/>") && !web.contains("relyOnVML"),
+        "{web}"
+    );
+    for refused_child in ["htmlPubPr", "webPr"] {
+        let xml = format!("<p:presentationPr {P}><p:{refused_child}/></p:presentationPr>");
+        let error = refused(strict_outcome::<PresentationWideProperties>(&xml));
+        assert!(
+            error.contains(&format!("tag: \"{refused_child}\"")),
+            "{error}"
+        );
+    }
+}
