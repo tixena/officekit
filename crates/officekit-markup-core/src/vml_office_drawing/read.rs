@@ -358,6 +358,7 @@ pub fn diagram_relationship_table_from_item(
             _ => {}
         }
     }
+    node.diagram_relationship.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -696,6 +697,7 @@ pub fn new_shape_defaults_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -767,6 +769,7 @@ pub fn rule_from_item(item: officekit_markup_base::Item<'_>) -> super::Rule {
             _ => {}
         }
     }
+    node.shape_reference.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -798,6 +801,7 @@ pub fn rule_set_from_item(item: officekit_markup_base::Item<'_>) -> super::RuleS
             _ => {}
         }
     }
+    node.rule.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -901,6 +905,7 @@ pub fn shape_grouping_history_from_item(
             _ => {}
         }
     }
+    node.regroup_entry.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -967,6 +972,7 @@ pub fn shape_layout_properties_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

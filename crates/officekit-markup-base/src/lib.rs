@@ -976,6 +976,9 @@ impl<'element> Reader<'element> {
             .filter(|(_, (slot, filled))| slot.occurs == SlotOccurs::Required && !**filled)
             .map(|(position, _)| position)
             .collect();
+        self.unknown.absent.shrink_to_fit();
+        self.unknown.attributes.shrink_to_fit();
+        self.unknown.children.shrink_to_fit();
         self.unknown.boxed()
     }
 

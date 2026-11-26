@@ -8,7 +8,7 @@ use core::fmt::Write as _;
 
 use super::render::layout::{self, Expr};
 use super::render::{Names, Uses};
-use super::structs::Body;
+use super::structs::{Body, Occurs};
 
 /// The struct fields a reader function holds before it is split.
 const FIELDS: usize = 85;
@@ -77,6 +77,7 @@ fn node_reader(names: &Names<'_>, index: usize, function: &str) -> String {
     let node = &catalog.nodes[index];
     let runtime = names.runtime();
     let mut arms: Vec<Expr> = Vec::new();
+    let mut lists: Vec<&str> = Vec::new();
     for attribute in &node.attributes {
         arms.push(take("field.attribute", &attribute.field));
     }
@@ -85,6 +86,9 @@ fn node_reader(names: &Names<'_>, index: usize, function: &str) -> String {
         Body::Children(children) => {
             for child in children {
                 arms.push(take("field.child", &child.field));
+                if child.occurs == Occurs::List {
+                    lists.push(&child.field);
+                }
             }
         }
     }
@@ -147,7 +151,17 @@ fn node_reader(names: &Names<'_>, index: usize, function: &str) -> String {
         let _ = writeln!(out, "        {function}_1(&mut node, index, field);");
         helpers = reader_helpers(runtime, function, &node.name, &arms);
     }
-    out.push_str("    }\n    node.unknown = reader.finish();\n    node\n}\n");
+    out.push_str("    }\n");
+    // A list grows by doubling while it is read; it keeps only the room its items take.
+    for list in lists {
+        let chain = format!("node.{list}.shrink_to_fit()");
+        if chain.len() <= layout::CHAIN_WIDTH {
+            let _ = writeln!(out, "    {chain};");
+        } else {
+            let _ = writeln!(out, "    node.{list}\n        .shrink_to_fit();");
+        }
+    }
+    out.push_str("    node.unknown = reader.finish();\n    node\n}\n");
     out.push_str(&helpers);
     out
 }

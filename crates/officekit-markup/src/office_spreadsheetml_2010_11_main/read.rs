@@ -284,6 +284,7 @@ pub fn auto_filter_from_item(item: officekit_markup_base::Item<'_>) -> super::Au
             _ => {}
         }
     }
+    node.autofilter_column.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -438,6 +439,7 @@ pub fn cached_unique_names_from_item(
             field.child(&mut node.cached_unique_name);
         }
     }
+    node.cached_unique_name.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -704,6 +706,7 @@ pub fn db_tables_from_item(item: officekit_markup_base::Item<'_>) -> super::DbTa
             field.child(&mut node.db_table);
         }
     }
+    node.db_table.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -766,6 +769,7 @@ pub fn dxfs_from_item(item: officekit_markup_base::Item<'_>) -> super::Dxfs {
             _ => {}
         }
     }
+    node.formatting.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -795,6 +799,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -865,6 +870,7 @@ pub fn model_relationships_from_item(
             field.child(&mut node.model_relationship);
         }
     }
+    node.model_relationship.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -928,6 +934,7 @@ pub fn model_tables_from_item(item: officekit_markup_base::Item<'_>) -> super::M
             field.child(&mut node.model_table);
         }
     }
+    node.model_table.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1125,6 +1132,7 @@ pub fn pivot_caches_from_item(item: officekit_markup_base::Item<'_>) -> super::P
             field.child(&mut node.pivotcache);
         }
     }
+    node.pivotcache.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1187,6 +1195,7 @@ pub fn pivot_row_from_item(item: officekit_markup_base::Item<'_>) -> super::Pivo
             _ => {}
         }
     }
+    node.c.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1320,6 +1329,7 @@ pub fn pivot_table_references_from_item(
             field.child(&mut node.pivot_table_reference);
         }
     }
+    node.pivot_table_reference.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1356,6 +1366,7 @@ pub fn pivot_table_server_formats_from_item(
             _ => {}
         }
     }
+    node.server_format.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1393,6 +1404,7 @@ pub fn pivot_table_ui_settings_from_item(
             _ => {}
         }
     }
+    node.active_tab_top_level_entity.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1423,6 +1435,7 @@ pub fn pivot_tables_from_item(item: officekit_markup_base::Item<'_>) -> super::P
             field.child(&mut node.pivot_table);
         }
     }
+    node.pivot_table.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1558,6 +1571,7 @@ pub fn questions_from_item(item: officekit_markup_base::Item<'_>) -> super::Ques
             _ => {}
         }
     }
+    node.question.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1715,6 +1729,7 @@ pub fn slicer_cache_hide_items_with_no_data_from_item(
             _ => {}
         }
     }
+    node.slicer_cache_olap_level_name.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1785,6 +1800,7 @@ pub fn slicer_cache_pivot_tables_from_item(
             field.child(&mut node.pivot_table);
         }
     }
+    node.pivot_table.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1815,6 +1831,7 @@ pub fn slicer_caches_from_item(item: officekit_markup_base::Item<'_>) -> super::
             field.child(&mut node.slicer_cache);
         }
     }
+    node.slicer_cache.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2122,6 +2139,7 @@ pub fn timeline_cache_pivot_caches_from_item(
             field.child(&mut node.pivotcache);
         }
     }
+    node.pivotcache.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2188,6 +2206,7 @@ pub fn timeline_cache_refs_from_item(
             field.child(&mut node.timeline_cache_ref);
         }
     }
+    node.timeline_cache_ref.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2282,6 +2301,7 @@ pub fn timeline_refs_from_item(item: officekit_markup_base::Item<'_>) -> super::
             field.child(&mut node.timeline_ref);
         }
     }
+    node.timeline_ref.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2383,6 +2403,7 @@ pub fn timeline_style_elements_from_item(
             field.child(&mut node.timeline_style_element);
         }
     }
+    node.timeline_style_element.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2416,6 +2437,7 @@ pub fn timeline_styles_from_item(item: officekit_markup_base::Item<'_>) -> super
             _ => {}
         }
     }
+    node.timeline_style.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2446,6 +2468,7 @@ pub fn timelines_from_item(item: officekit_markup_base::Item<'_>) -> super::Time
             field.child(&mut node.timeline);
         }
     }
+    node.timeline.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2564,6 +2587,7 @@ pub fn web_extensions_from_item(item: officekit_markup_base::Item<'_>) -> super:
             field.child(&mut node.web_extension);
         }
     }
+    node.web_extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

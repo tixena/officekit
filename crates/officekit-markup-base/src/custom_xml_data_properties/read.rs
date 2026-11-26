@@ -313,6 +313,7 @@ pub fn set_of_associated_xml_schemas_from_item(
             field.child(&mut node.associated_xml_schema);
         }
     }
+    node.associated_xml_schema.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

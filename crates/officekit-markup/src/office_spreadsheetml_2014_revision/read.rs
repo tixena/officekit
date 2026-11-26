@@ -248,6 +248,7 @@ pub fn auto_filter_from_item(item: officekit_markup_base::Item<'_>) -> super::Au
             _ => {}
         }
     }
+    node.autofilter_column.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -344,6 +345,7 @@ pub fn ccse_from_item(item: officekit_markup_base::Item<'_>) -> super::Ccse {
             _ => {}
         }
     }
+    node.c.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -488,6 +490,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -770,6 +773,8 @@ pub fn is_from_item(item: officekit_markup_base::Item<'_>) -> super::Is {
             _ => {}
         }
     }
+    node.rich_text_run.shrink_to_fit();
+    node.phonetic_run.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -935,6 +940,7 @@ pub fn outlines_from_item(item: officekit_markup_base::Item<'_>) -> super::Outli
             _ => {}
         }
     }
+    node.outline.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1124,6 +1130,7 @@ pub fn refmap_from_item(item: officekit_markup_base::Item<'_>) -> super::Refmap 
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1158,6 +1165,7 @@ pub fn rev_hdrs_from_item(item: officekit_markup_base::Item<'_>) -> super::RevHd
             _ => {}
         }
     }
+    node.hdr_rev_ex_header.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1188,6 +1196,7 @@ pub fn rev_stream_from_item(item: officekit_markup_base::Item<'_>) -> super::Rev
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1747,6 +1756,8 @@ pub fn xrrc_from_item(item: officekit_markup_base::Item<'_>) -> super::Xrrc {
             _ => {}
         }
     }
+    node.c.shrink_to_fit();
+    node.ccse.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1904,6 +1915,7 @@ pub fn xrrftr_from_item(item: officekit_markup_base::Item<'_>) -> super::Xrrftr 
             _ => {}
         }
     }
+    node.xrrtest.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1939,6 +1951,7 @@ pub fn xrrg_from_item(item: officekit_markup_base::Item<'_>) -> super::Xrrg {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

@@ -313,6 +313,7 @@ pub fn blip_from_item(item: officekit_markup_base::Item<'_>) -> super::Blip {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -478,6 +479,7 @@ pub fn ext_lst_model3d_extension_list_from_item(
             field.child(&mut node.ext);
         }
     }
+    node.ext.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -512,6 +514,7 @@ pub fn ext_lst_office_art_extension_list_from_item(
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -665,6 +668,7 @@ pub fn model3d_from_item(item: officekit_markup_base::Item<'_>) -> super::Model3
             _ => {}
         }
     }
+    node.light_content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

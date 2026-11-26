@@ -245,6 +245,7 @@ pub fn custom_file_properties_from_item(item: crate::Item<'_>) -> super::CustomF
             field.child(&mut node.custom_file_property);
         }
     }
+    node.custom_file_property.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

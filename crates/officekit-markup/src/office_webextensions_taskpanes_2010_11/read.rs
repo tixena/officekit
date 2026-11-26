@@ -243,6 +243,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -310,6 +311,7 @@ pub fn taskpanes_from_item(item: officekit_markup_base::Item<'_>) -> super::Task
             field.child(&mut node.taskpane);
         }
     }
+    node.taskpane.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

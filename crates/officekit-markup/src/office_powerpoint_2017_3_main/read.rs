@@ -278,6 +278,7 @@ pub fn track_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::Trac
             field.child(&mut node.track);
         }
     }
+    node.track.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

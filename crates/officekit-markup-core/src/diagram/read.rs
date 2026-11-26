@@ -247,6 +247,7 @@ pub fn algorithm_from_item(item: officekit_markup_base::Item<'_>) -> super::Algo
             _ => {}
         }
     }
+    node.parameter.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -342,6 +343,7 @@ pub fn category_list_from_item(item: officekit_markup_base::Item<'_>) -> super::
             field.child(&mut node.category);
         }
     }
+    node.category.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -376,6 +378,7 @@ pub fn category_list_sd_categories_from_item(
             field.child(&mut node.category_sd_category);
         }
     }
+    node.category_sd_category.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -443,6 +446,7 @@ pub fn choose_element_from_item(item: officekit_markup_base::Item<'_>) -> super:
             _ => {}
         }
     }
+    node.r#if.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -513,6 +517,7 @@ pub fn color_transform_category_list_from_item(
             field.child(&mut node.color_transform_category);
         }
     }
+    node.color_transform_category.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -556,6 +561,8 @@ pub fn color_transform_definition_header_from_item(
             _ => {}
         }
     }
+    node.title_ct_name.shrink_to_fit();
+    node.description_ct_description.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -597,6 +604,9 @@ pub fn color_transform_definitions_from_item(
             _ => {}
         }
     }
+    node.title_ct_name.shrink_to_fit();
+    node.description_ct_description.shrink_to_fit();
+    node.style_label.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -631,6 +641,7 @@ pub fn color_transform_header_list_from_item(
             field.child(&mut node.color_transform_definition_header);
         }
     }
+    node.color_transform_definition_header.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -736,6 +747,7 @@ pub fn connection_list_from_item(item: officekit_markup_base::Item<'_>) -> super
             field.child(&mut node.connection);
         }
     }
+    node.connection.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -807,6 +819,7 @@ pub fn constraint_list_from_item(item: officekit_markup_base::Item<'_>) -> super
             field.child(&mut node.constraint);
         }
     }
+    node.constraint.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -975,6 +988,7 @@ pub fn diagram_layout_header_list_from_item(
             field.child(&mut node.layout_definition_header);
         }
     }
+    node.layout_definition_header.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1011,6 +1025,7 @@ pub fn effect_color_list_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1042,6 +1057,7 @@ pub fn else_from_item(item: officekit_markup_base::Item<'_>) -> super::Else {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1116,6 +1132,7 @@ pub fn extension_list_from_item(item: officekit_markup_base::Item<'_>) -> super:
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1149,6 +1166,7 @@ pub fn fill_color_list_from_item(item: officekit_markup_base::Item<'_>) -> super
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1187,6 +1205,7 @@ pub fn for_each_from_item(item: officekit_markup_base::Item<'_>) -> super::ForEa
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1228,6 +1247,7 @@ pub fn if_from_item(item: officekit_markup_base::Item<'_>) -> super::If {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1272,6 +1292,8 @@ pub fn layout_definition_from_item(
             _ => {}
         }
     }
+    node.title.shrink_to_fit();
+    node.description.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1314,6 +1336,8 @@ pub fn layout_definition_header_from_item(
             _ => {}
         }
     }
+    node.title.shrink_to_fit();
+    node.description.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1355,6 +1379,7 @@ pub fn layout_node_from_item(item: officekit_markup_base::Item<'_>) -> super::La
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1424,6 +1449,7 @@ pub fn line_color_list_from_item(item: officekit_markup_base::Item<'_>) -> super
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1458,6 +1484,7 @@ pub fn list_of_style_definition_headers_from_item(
             field.child(&mut node.style_definition_header);
         }
     }
+    node.style_definition_header.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1652,6 +1679,7 @@ pub fn point_list_from_item(item: officekit_markup_base::Item<'_>) -> super::Poi
             field.child(&mut node.point);
         }
     }
+    node.point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1891,6 +1919,7 @@ pub fn rule_list_from_item(item: officekit_markup_base::Item<'_>) -> super::Rule
             field.child(&mut node.rule);
         }
     }
+    node.rule.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2057,6 +2086,7 @@ pub fn shape_adjust_list_from_item(
             field.child(&mut node.shape_adjust);
         }
     }
+    node.shape_adjust.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2341,6 +2371,9 @@ pub fn style_definition_from_item(item: officekit_markup_base::Item<'_>) -> supe
             _ => {}
         }
     }
+    node.title_sd_name.shrink_to_fit();
+    node.style_label_description.shrink_to_fit();
+    node.style_label_style_label.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2381,6 +2414,8 @@ pub fn style_definition_header_from_item(
             _ => {}
         }
     }
+    node.title_sd_name.shrink_to_fit();
+    node.style_label_description.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2525,6 +2560,7 @@ pub fn text_body_from_item(item: officekit_markup_base::Item<'_>) -> super::Text
             _ => {}
         }
     }
+    node.text_paragraphs.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2561,6 +2597,7 @@ pub fn text_effect_color_list_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2597,6 +2634,7 @@ pub fn text_fill_color_list_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2633,6 +2671,7 @@ pub fn text_line_color_list_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

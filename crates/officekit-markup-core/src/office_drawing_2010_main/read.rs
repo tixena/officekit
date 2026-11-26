@@ -1049,6 +1049,8 @@ pub fn background_removal_from_item(
             _ => {}
         }
     }
+    node.foreground_mark.shrink_to_fit();
+    node.background_mark.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1356,6 +1358,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1629,6 +1632,7 @@ pub fn img_layer_from_item(item: officekit_markup_base::Item<'_>) -> super::ImgL
             _ => {}
         }
     }
+    node.img_effect.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

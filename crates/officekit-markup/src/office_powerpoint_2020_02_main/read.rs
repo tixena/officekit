@@ -310,6 +310,7 @@ pub fn design_tag_lst_from_item(item: officekit_markup_base::Item<'_>) -> super:
             field.child(&mut node.design_tag);
         }
     }
+    node.design_tag.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -339,6 +340,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

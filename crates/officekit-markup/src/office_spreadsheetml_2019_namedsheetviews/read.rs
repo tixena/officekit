@@ -250,6 +250,7 @@ pub fn column_filter_from_item(item: officekit_markup_base::Item<'_>) -> super::
             _ => {}
         }
     }
+    node.filter.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -315,6 +316,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -383,6 +385,7 @@ pub fn named_sheet_view_from_item(item: officekit_markup_base::Item<'_>) -> supe
             _ => {}
         }
     }
+    node.nsv_filter.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -418,6 +421,7 @@ pub fn named_sheet_views_from_item(
             _ => {}
         }
     }
+    node.named_sheet_view.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -454,6 +458,7 @@ pub fn nsv_filter_from_item(item: officekit_markup_base::Item<'_>) -> super::Nsv
             _ => {}
         }
     }
+    node.column_filter.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -607,6 +612,7 @@ pub fn sort_rules_from_item(item: officekit_markup_base::Item<'_>) -> super::Sor
             _ => {}
         }
     }
+    node.sort_rule.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

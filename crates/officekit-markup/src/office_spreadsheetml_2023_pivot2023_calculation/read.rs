@@ -314,6 +314,7 @@ pub fn pivot_area_reference_subtotals_from_item(
             field.child(&mut node.subtotal_pivot_subtotal_type);
         }
     }
+    node.subtotal_pivot_subtotal_type.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -348,6 +349,7 @@ pub fn pivot_field_subtotal_line_items_from_item(
             field.child(&mut node.subtotal_line_item);
         }
     }
+    node.subtotal_line_item.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -381,6 +383,7 @@ pub fn pivot_field_subtotals_from_item(
             field.child(&mut node.subtotal_pivot_item_subtotal);
         }
     }
+    node.subtotal_pivot_item_subtotal.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

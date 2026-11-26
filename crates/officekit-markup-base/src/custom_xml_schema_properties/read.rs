@@ -289,6 +289,7 @@ pub fn embedded_custom_xml_schema_supplementary_data_from_item(
             field.child(&mut node.custom_xml_schema_reference);
         }
     }
+    node.custom_xml_schema_reference.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

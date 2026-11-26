@@ -247,6 +247,7 @@ pub fn backstage_from_item(item: officekit_markup_base::Item<'_>) -> super::Back
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -295,6 +296,7 @@ pub fn bottom_items_from_item(item: officekit_markup_base::Item<'_>) -> super::B
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -341,6 +343,7 @@ pub fn box_box_from_item(item: officekit_markup_base::Item<'_>) -> super::BoxBox
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -727,6 +730,7 @@ pub fn button_group_from_item(item: officekit_markup_base::Item<'_>) -> super::B
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -843,6 +847,7 @@ pub fn category_task_form_group_category_from_item(
             _ => {}
         }
     }
+    node.task_task_form_group_task.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -890,6 +895,7 @@ pub fn category_task_group_category_from_item(
             _ => {}
         }
     }
+    node.task_task_group_task.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1106,6 +1112,7 @@ pub fn combo_box_backstage_combo_box_from_item(
             _ => {}
         }
     }
+    node.item_backstage_item.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1179,6 +1186,7 @@ pub fn combo_box_combo_box_from_item(
             _ => {}
         }
     }
+    node.item_item.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1242,6 +1250,7 @@ pub fn commands_from_item(item: officekit_markup_base::Item<'_>) -> super::Comma
             field.child(&mut node.command);
         }
     }
+    node.command.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1274,6 +1283,7 @@ pub fn context_menu_from_item(item: officekit_markup_base::Item<'_>) -> super::C
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1311,6 +1321,7 @@ pub fn context_menus_from_item(item: officekit_markup_base::Item<'_>) -> super::
             field.child(&mut node.context_menu);
         }
     }
+    node.context_menu.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1342,6 +1353,7 @@ pub fn contextual_tabs_from_item(item: officekit_markup_base::Item<'_>) -> super
             field.child(&mut node.tab_set);
         }
     }
+    node.tab_set.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1631,6 +1643,7 @@ pub fn document_controls_from_item(
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1689,6 +1702,7 @@ pub fn drop_down_backstage_drop_down_from_item(
             _ => {}
         }
     }
+    node.item_backstage_item.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1764,6 +1778,8 @@ pub fn drop_down_drop_down_regular_from_item(
             _ => {}
         }
     }
+    node.item_item.shrink_to_fit();
+    node.button_button_regular.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2040,6 +2056,7 @@ pub fn first_column_from_item(item: officekit_markup_base::Item<'_>) -> super::F
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2123,6 +2140,8 @@ pub fn gallery_gallery_from_item(item: officekit_markup_base::Item<'_>) -> super
             _ => {}
         }
     }
+    node.item_item.shrink_to_fit();
+    node.button_button_regular.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2207,6 +2226,8 @@ pub fn gallery_gallery_regular_from_item(
             _ => {}
         }
     }
+    node.item_item.shrink_to_fit();
+    node.button_button_regular.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2304,6 +2325,7 @@ pub fn group_box_from_item(item: officekit_markup_base::Item<'_>) -> super::Grou
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2365,6 +2387,7 @@ pub fn group_group_from_item(item: officekit_markup_base::Item<'_>) -> super::Gr
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2668,6 +2691,7 @@ pub fn layout_container_from_item(item: officekit_markup_base::Item<'_>) -> supe
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2727,6 +2751,7 @@ pub fn menu_backstage_primary_menu_from_item(
             _ => {}
         }
     }
+    node.group.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2777,6 +2802,7 @@ pub fn menu_backstage_sub_menu_from_item(
             _ => {}
         }
     }
+    node.group.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2814,6 +2840,7 @@ pub fn menu_group_from_item(item: officekit_markup_base::Item<'_>) -> super::Men
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2876,6 +2903,7 @@ pub fn menu_menu_from_item(item: officekit_markup_base::Item<'_>) -> super::Menu
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2939,6 +2967,7 @@ pub fn menu_menu_regular_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2973,6 +3002,7 @@ pub fn menu_menu_root_from_item(item: officekit_markup_base::Item<'_>) -> super:
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3036,6 +3066,7 @@ pub fn menu_menu_with_title_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3281,6 +3312,7 @@ pub fn radio_group_from_item(item: officekit_markup_base::Item<'_>) -> super::Ra
             _ => {}
         }
     }
+    node.radio_button.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3312,6 +3344,7 @@ pub fn ribbon_from_item(item: officekit_markup_base::Item<'_>) -> super::Ribbon 
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3349,6 +3382,7 @@ pub fn second_column_from_item(item: officekit_markup_base::Item<'_>) -> super::
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3419,6 +3453,7 @@ pub fn shared_controls_from_item(item: officekit_markup_base::Item<'_>) -> super
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3685,6 +3720,7 @@ pub fn tab_set_from_item(item: officekit_markup_base::Item<'_>) -> super::TabSet
             _ => {}
         }
     }
+    node.tab_tab.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3729,6 +3765,7 @@ pub fn tab_tab_from_item(item: officekit_markup_base::Item<'_>) -> super::TabTab
             _ => {}
         }
     }
+    node.group_group.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3758,6 +3795,7 @@ pub fn tabs_from_item(item: officekit_markup_base::Item<'_>) -> super::Tabs {
             field.child(&mut node.tab_tab);
         }
     }
+    node.tab_tab.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3803,6 +3841,7 @@ pub fn task_form_group_from_item(item: officekit_markup_base::Item<'_>) -> super
             _ => {}
         }
     }
+    node.category_task_form_group_category.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3851,6 +3890,7 @@ pub fn task_group_from_item(item: officekit_markup_base::Item<'_>) -> super::Tas
             _ => {}
         }
     }
+    node.category_task_group_category.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3907,6 +3947,7 @@ pub fn task_task_form_group_task_from_item(
             _ => {}
         }
     }
+    node.group_backstage_group.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -4253,6 +4294,7 @@ pub fn top_items_from_item(item: officekit_markup_base::Item<'_>) -> super::TopI
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

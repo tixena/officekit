@@ -599,6 +599,7 @@ pub fn extension_list_from_item(item: officekit_markup_base::Item<'_>) -> super:
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -672,6 +673,7 @@ pub fn group_shape_from_item(item: officekit_markup_base::Item<'_>) -> super::Gr
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1265,6 +1267,7 @@ pub fn rich_text_box_content_container_from_item(
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1720,6 +1723,7 @@ pub fn wordprocessing_ml_drawing_canvas_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1799,6 +1803,7 @@ pub fn wordprocessing_ml_shape_group_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1833,6 +1838,7 @@ pub fn wrapping_polygon_from_item(item: officekit_markup_base::Item<'_>) -> supe
             _ => {}
         }
     }
+    node.line_end_position.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

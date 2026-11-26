@@ -244,6 +244,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -280,6 +281,7 @@ pub fn ms_form_from_item(item: officekit_markup_base::Item<'_>) -> super::MsForm
             _ => {}
         }
     }
+    node.synced_question_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

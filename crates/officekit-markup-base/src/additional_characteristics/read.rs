@@ -249,6 +249,7 @@ pub fn set_of_additional_characteristics_from_item(
             field.child(&mut node.single_characteristic);
         }
     }
+    node.single_characteristic.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

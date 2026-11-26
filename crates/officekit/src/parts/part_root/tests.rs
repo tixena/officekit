@@ -1,8 +1,10 @@
+use core::fmt::Write as _;
+
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use officekit_markup::spreadsheet::Worksheet;
 #[cfg(feature = "transitional")]
 use officekit_markup::wordprocessing::Footer;
-use officekit_markup::wordprocessing::{BlockContent, Document};
+use officekit_markup::wordprocessing::{BlockContent, Document, ParagraphContent};
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(feature = "strict")]
 use officekit_xml::element::Document as XmlDocument;
@@ -434,6 +436,90 @@ fn unknown_elements_and_attributes_are_kept_as_the_tree_keeps_them() {
             .len(),
         1
     );
+}
+
+/// The run properties of a run of `count` children, each a different one, in schema order.
+fn run_properties(count: usize) -> String {
+    let all = [
+        "<w:rStyle w:val=\"Strong\"/>",
+        "<w:rFonts w:ascii=\"Arial\"/>",
+        "<w:b/>",
+        "<w:bCs/>",
+        "<w:i/>",
+        "<w:iCs/>",
+        "<w:caps/>",
+        "<w:smallCaps/>",
+        "<w:strike/>",
+    ];
+    format!("<w:rPr>{}</w:rPr>", all[..count].concat())
+}
+
+#[test]
+fn a_read_leaves_every_list_at_the_capacity_of_its_length() {
+    let mut body = String::from("<w:body>");
+    for count in [1, 5, 9] {
+        let run = format!(
+            "<w:r>{}{}</w:r>",
+            run_properties(count),
+            "<w:t>a</w:t>".repeat(count)
+        );
+        let unknown = (0..count).fold(String::new(), |mut text, index| {
+            let _ = write!(text, " y:a{index}=\"1\"");
+            text
+        });
+        let _ = write!(
+            body,
+            "<w:p xmlns:y=\"urn:y\"{unknown}>{}</w:p>",
+            run.repeat(count)
+        );
+    }
+    body.push_str(&"<w:p/>".repeat(6));
+    body.push_str("</w:body>");
+    let package = document_holding(&body);
+    let mut options = OpenOptions::default();
+    options.markup_compatibility = MarkupCompatibility::Keep;
+    let forward = load::<Document>(&package, &name("/word/document.xml"), options).unwrap();
+    let tree = from_tree(&package, options).unwrap();
+    for read in [forward, tree] {
+        let blocks = &read.body.as_deref().unwrap().content;
+        assert_eq!((blocks.len(), blocks.capacity()), (9, 9));
+        let paragraphs: Vec<_> = blocks
+            .iter()
+            .filter_map(|block| {
+                if let BlockContent::Paragraph(paragraph) = block {
+                    Some(paragraph)
+                } else {
+                    None
+                }
+            })
+            .collect();
+        assert_eq!(paragraphs.len(), 9);
+        for (paragraph, count) in paragraphs.into_iter().zip([1, 5, 9]) {
+            let attributes = &paragraph.unknown().unwrap().attributes;
+            assert_eq!((attributes.len(), attributes.capacity()), (count, count));
+            assert_eq!(
+                (paragraph.content.len(), paragraph.content.capacity()),
+                (count, count)
+            );
+            let runs: Vec<_> = paragraph
+                .content
+                .iter()
+                .filter_map(|content| {
+                    if let ParagraphContent::TextRun(run) = content {
+                        Some(run)
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+            assert_eq!(runs.len(), count);
+            for run in runs {
+                assert_eq!((run.content.len(), run.content.capacity()), (count, count));
+                let properties = &run.properties.as_deref().unwrap().content;
+                assert_eq!((properties.len(), properties.capacity()), (count, count));
+            }
+        }
+    }
 }
 
 #[test]

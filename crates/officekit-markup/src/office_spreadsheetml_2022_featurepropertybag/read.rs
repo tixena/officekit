@@ -242,6 +242,7 @@ pub fn a_from_item(item: officekit_markup_base::Item<'_>) -> super::A {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -345,6 +346,7 @@ pub fn bag_from_item(item: officekit_markup_base::Item<'_>) -> super::Bag {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -740,6 +742,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -783,6 +786,8 @@ pub fn feature_property_bags_from_item(
             _ => {}
         }
     }
+    node.bag_ext.shrink_to_fit();
+    node.bag.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -815,6 +820,8 @@ pub fn fpbs_from_item(item: officekit_markup_base::Item<'_>) -> super::Fpbs {
             _ => {}
         }
     }
+    node.bag_ext.shrink_to_fit();
+    node.bag.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

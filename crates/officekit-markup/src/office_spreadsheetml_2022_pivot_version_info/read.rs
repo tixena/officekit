@@ -249,6 +249,8 @@ pub fn cache_version_info_from_item(
             _ => {}
         }
     }
+    node.required_feature.shrink_to_fit();
+    node.last_refresh_feature.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -350,6 +352,8 @@ pub fn pivot_version_info_from_item(
             _ => {}
         }
     }
+    node.required_feature.shrink_to_fit();
+    node.last_update_feature.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

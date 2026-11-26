@@ -273,6 +273,7 @@ pub fn attached_object_data_from_item(item: crate::Item<'_>) -> super::AttachedO
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

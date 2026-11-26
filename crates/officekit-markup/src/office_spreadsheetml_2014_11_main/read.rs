@@ -288,6 +288,7 @@ pub fn model_time_grouping_from_item(
             _ => {}
         }
     }
+    node.calculated_time_column.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -321,6 +322,7 @@ pub fn model_time_groupings_from_item(
             field.child(&mut node.model_time_grouping);
         }
     }
+    node.model_time_grouping.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

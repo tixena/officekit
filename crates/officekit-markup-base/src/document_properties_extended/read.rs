@@ -280,6 +280,7 @@ pub fn application_specific_file_properties_from_item(
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

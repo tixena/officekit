@@ -1108,6 +1108,7 @@ pub fn background_fill_style_list_from_item(
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1362,6 +1363,7 @@ pub fn blip_from_item(item: officekit_markup_base::Item<'_>) -> super::Blip {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2687,6 +2689,7 @@ pub fn custom_color_list_from_item(
             field.child(&mut node.custom_color);
         }
     }
+    node.custom_color.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2716,6 +2719,7 @@ pub fn custom_dash_from_item(item: officekit_markup_base::Item<'_>) -> super::Cu
             field.child(&mut node.stop);
         }
     }
+    node.stop.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3063,6 +3067,7 @@ pub fn draw_cubic_bezier_curve_to_from_item(
             field.child(&mut node.shape_path_point);
         }
     }
+    node.shape_path_point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3126,6 +3131,7 @@ pub fn draw_quadratic_bezier_curve_to_from_item(
             field.child(&mut node.shape_path_point);
         }
     }
+    node.shape_path_point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3156,6 +3162,7 @@ pub fn duotone_effect_from_item(item: officekit_markup_base::Item<'_>) -> super:
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3259,6 +3266,7 @@ pub fn effect_container_cont_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3296,6 +3304,7 @@ pub fn effect_container_effect_dag_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3475,6 +3484,7 @@ pub fn effect_style_list_from_item(
             field.child(&mut node.effect_style);
         }
     }
+    node.effect_style.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3573,6 +3583,7 @@ pub fn extension_from_item(item: officekit_markup_base::Item<'_>) -> super::Exte
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3603,6 +3614,7 @@ pub fn extension_list_from_item(item: officekit_markup_base::Item<'_>) -> super:
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3702,6 +3714,7 @@ pub fn extra_color_scheme_list_from_item(
             field.child(&mut node.extra_color_scheme);
         }
     }
+    node.extra_color_scheme.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3933,6 +3946,7 @@ pub fn fill_style_list_from_item(item: officekit_markup_base::Item<'_>) -> super
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -4188,6 +4202,7 @@ pub fn font_font_collection_from_item(
             _ => {}
         }
     }
+    node.font.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -4454,6 +4469,7 @@ pub fn gradient_stop_list_from_item(
             field.child(&mut node.gradient_stops);
         }
     }
+    node.gradient_stops.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -4630,6 +4646,7 @@ pub fn graphic_object_data_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -4830,6 +4847,7 @@ pub fn group_shape_from_item(item: officekit_markup_base::Item<'_>) -> super::Gr
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -4948,6 +4966,7 @@ pub fn header_cells_associated_with_table_cell_from_item(
             field.child(&mut node.header_cell_reference);
         }
     }
+    node.header_cell_reference.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -5138,6 +5157,7 @@ pub fn hue_saturation_luminance_color_model_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -5892,6 +5912,7 @@ pub fn line_style_list_from_item(item: officekit_markup_base::Item<'_>) -> super
             field.child(&mut node.outline);
         }
     }
+    node.outline.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -6437,6 +6458,7 @@ pub fn list_of_shape_adjust_handles_from_item(
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -6471,6 +6493,7 @@ pub fn list_of_shape_adjust_values_from_item(
             field.child(&mut node.shape_guide);
         }
     }
+    node.shape_guide.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -6505,6 +6528,7 @@ pub fn list_of_shape_connection_sites_from_item(
             field.child(&mut node.shape_connection_site);
         }
     }
+    node.shape_connection_site.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -6537,6 +6561,7 @@ pub fn list_of_shape_guides_from_item(
             field.child(&mut node.shape_guide);
         }
     }
+    node.shape_guide.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -6569,6 +6594,7 @@ pub fn list_of_shape_paths_from_item(
             field.child(&mut node.shape_path);
         }
     }
+    node.shape_path.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -6725,6 +6751,7 @@ pub fn major_font_from_item(item: officekit_markup_base::Item<'_>) -> super::Maj
             _ => {}
         }
     }
+    node.font.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -6789,6 +6816,7 @@ pub fn minor_fonts_from_item(item: officekit_markup_base::Item<'_>) -> super::Mi
             _ => {}
         }
     }
+    node.font.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -8055,6 +8083,7 @@ pub fn preset_color_from_item(item: officekit_markup_base::Item<'_>) -> super::P
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -8422,6 +8451,7 @@ pub fn rgb_color_model_hex_variant_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -8462,6 +8492,7 @@ pub fn rgb_color_model_percentage_variant_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -8779,6 +8810,7 @@ pub fn scheme_color_from_item(item: officekit_markup_base::Item<'_>) -> super::S
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -9049,6 +9081,7 @@ pub fn shape_path_from_item(item: officekit_markup_base::Item<'_>) -> super::Sha
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -9226,6 +9259,7 @@ pub fn shape_text_body_from_item(item: officekit_markup_base::Item<'_>) -> super
             _ => {}
         }
     }
+    node.text_paragraphs.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -9697,6 +9731,7 @@ pub fn system_color_from_item(item: officekit_markup_base::Item<'_>) -> super::S
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -9726,6 +9761,7 @@ pub fn tab_list_from_item(item: officekit_markup_base::Item<'_>) -> super::TabLi
             field.child(&mut node.tab_stop);
         }
     }
+    node.tab_stop.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -9789,6 +9825,7 @@ pub fn table_from_item(item: officekit_markup_base::Item<'_>) -> super::Table {
             _ => {}
         }
     }
+    node.row.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -10063,6 +10100,7 @@ pub fn table_grid_from_item(item: officekit_markup_base::Item<'_>) -> super::Tab
             field.child(&mut node.column);
         }
     }
+    node.column.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -10176,6 +10214,7 @@ pub fn table_row_from_item(item: officekit_markup_base::Item<'_>) -> super::Tabl
             _ => {}
         }
     }
+    node.table_cell.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -10285,6 +10324,7 @@ pub fn table_style_list_from_item(item: officekit_markup_base::Item<'_>) -> supe
             _ => {}
         }
     }
+    node.table_style_tbl_style.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -10629,6 +10669,7 @@ pub fn text_paragraphs_from_item(item: officekit_markup_base::Item<'_>) -> super
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

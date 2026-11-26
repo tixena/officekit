@@ -342,6 +342,8 @@ pub fn area3d_chart_from_item(item: officekit_markup_base::Item<'_>) -> super::A
             _ => {}
         }
     }
+    node.area_chart_series.shrink_to_fit();
+    node.axis_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -385,6 +387,9 @@ pub fn area_chart_series_from_item(
             _ => {}
         }
     }
+    node.data_point.shrink_to_fit();
+    node.trendlines.shrink_to_fit();
+    node.error_bars.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -422,6 +427,8 @@ pub fn area_charts_from_item(item: officekit_markup_base::Item<'_>) -> super::Ar
             _ => {}
         }
     }
+    node.area_chart_series.shrink_to_fit();
+    node.axis_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -710,6 +717,7 @@ pub fn band_formats_from_item(item: officekit_markup_base::Item<'_>) -> super::B
             field.child(&mut node.band_format);
         }
     }
+    node.band_format.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -750,6 +758,8 @@ pub fn bar3d_chart_from_item(item: officekit_markup_base::Item<'_>) -> super::Ba
             _ => {}
         }
     }
+    node.bar_chart_series.shrink_to_fit();
+    node.axis_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -793,6 +803,8 @@ pub fn bar_chart_series_from_item(item: officekit_markup_base::Item<'_>) -> supe
             _ => {}
         }
     }
+    node.data_point.shrink_to_fit();
+    node.trendlines.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -832,6 +844,9 @@ pub fn bar_charts_from_item(item: officekit_markup_base::Item<'_>) -> super::Bar
             _ => {}
         }
     }
+    node.bar_chart_series.shrink_to_fit();
+    node.series_lines.shrink_to_fit();
+    node.axis_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -996,6 +1011,9 @@ pub fn bubble_chart_series_from_item(
             _ => {}
         }
     }
+    node.data_point.shrink_to_fit();
+    node.trendlines.shrink_to_fit();
+    node.error_bars.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1035,6 +1053,8 @@ pub fn bubble_charts_from_item(item: officekit_markup_base::Item<'_>) -> super::
             _ => {}
         }
     }
+    node.bubble_chart_series.shrink_to_fit();
+    node.axis_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1290,6 +1310,7 @@ pub fn chart_extensibility_from_item(
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1626,6 +1647,7 @@ pub fn custom_split_from_item(item: officekit_markup_base::Item<'_>) -> super::C
             field.child(&mut node.second_pie_point);
         }
     }
+    node.second_pie_point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1690,6 +1712,7 @@ pub fn data_label_from_item(item: officekit_markup_base::Item<'_>) -> super::Dat
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1760,6 +1783,8 @@ pub fn data_labels_from_item(item: officekit_markup_base::Item<'_>) -> super::Da
             _ => {}
         }
     }
+    node.data_label.shrink_to_fit();
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2188,6 +2213,7 @@ pub fn doughnut_charts_from_item(item: officekit_markup_base::Item<'_>) -> super
             _ => {}
         }
     }
+    node.pie_chart_series.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3519,6 +3545,7 @@ pub fn legend_from_item(item: officekit_markup_base::Item<'_>) -> super::Legend 
             _ => {}
         }
     }
+    node.entry.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3617,6 +3644,7 @@ pub fn level_from_item(item: officekit_markup_base::Item<'_>) -> super::Level {
             field.child(&mut node.string_point);
         }
     }
+    node.string_point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3655,6 +3683,8 @@ pub fn line3d_chart_from_item(item: officekit_markup_base::Item<'_>) -> super::L
             _ => {}
         }
     }
+    node.line_chart_series.shrink_to_fit();
+    node.axis_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3699,6 +3729,8 @@ pub fn line_chart_series_from_item(
             _ => {}
         }
     }
+    node.data_point.shrink_to_fit();
+    node.trendlines.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3740,6 +3772,8 @@ pub fn line_charts_from_item(item: officekit_markup_base::Item<'_>) -> super::Li
             _ => {}
         }
     }
+    node.line_chart_series.shrink_to_fit();
+    node.axis_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -4207,6 +4241,7 @@ pub fn multi_level_string_cache_from_item(
             _ => {}
         }
     }
+    node.level.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -4340,6 +4375,7 @@ pub fn number_cache_from_item(item: officekit_markup_base::Item<'_>) -> super::N
             _ => {}
         }
     }
+    node.numeric_point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -4411,6 +4447,7 @@ pub fn number_literal_from_item(item: officekit_markup_base::Item<'_>) -> super:
             _ => {}
         }
     }
+    node.numeric_point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -4918,6 +4955,7 @@ pub fn pie3d_chart_from_item(item: officekit_markup_base::Item<'_>) -> super::Pi
             _ => {}
         }
     }
+    node.pie_chart_series.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -4957,6 +4995,7 @@ pub fn pie_chart_series_from_item(item: officekit_markup_base::Item<'_>) -> supe
             _ => {}
         }
     }
+    node.data_point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -4991,6 +5030,7 @@ pub fn pie_charts_from_item(item: officekit_markup_base::Item<'_>) -> super::Pie
             _ => {}
         }
     }
+    node.pie_chart_series.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -5032,6 +5072,8 @@ pub fn pie_of_pie_charts_from_item(item: officekit_markup_base::Item<'_>) -> sup
             _ => {}
         }
     }
+    node.pie_chart_series.shrink_to_fit();
+    node.series_lines.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -5128,6 +5170,7 @@ pub fn pivot_formats_from_item(item: officekit_markup_base::Item<'_>) -> super::
             field.child(&mut node.pivot_format);
         }
     }
+    node.pivot_format.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -5190,6 +5233,7 @@ pub fn pivot_source_from_item(item: officekit_markup_base::Item<'_>) -> super::P
             _ => {}
         }
     }
+    node.chart_extensibility.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -5225,6 +5269,8 @@ pub fn plot_area_from_item(item: officekit_markup_base::Item<'_>) -> super::Plot
             _ => {}
         }
     }
+    node.chart_content.shrink_to_fit();
+    node.axis_content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -5472,6 +5518,7 @@ pub fn radar_chart_series_from_item(
             _ => {}
         }
     }
+    node.data_point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -5508,6 +5555,8 @@ pub fn radar_charts_from_item(item: officekit_markup_base::Item<'_>) -> super::R
             _ => {}
         }
     }
+    node.radar_chart_series.shrink_to_fit();
+    node.axis_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -5636,6 +5685,7 @@ pub fn rich_text_from_item(item: officekit_markup_base::Item<'_>) -> super::Rich
             _ => {}
         }
     }
+    node.paragraphs.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -5776,6 +5826,9 @@ pub fn scatter_chart_series_from_item(
             _ => {}
         }
     }
+    node.data_point.shrink_to_fit();
+    node.trendlines.shrink_to_fit();
+    node.error_bars.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -5812,6 +5865,8 @@ pub fn scatter_charts_from_item(item: officekit_markup_base::Item<'_>) -> super:
             _ => {}
         }
     }
+    node.scatter_chart_series.shrink_to_fit();
+    node.axis_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -6799,6 +6854,8 @@ pub fn stock_charts_from_item(item: officekit_markup_base::Item<'_>) -> super::S
             _ => {}
         }
     }
+    node.line_chart_series.shrink_to_fit();
+    node.axis_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -6832,6 +6889,7 @@ pub fn string_cache_from_item(item: officekit_markup_base::Item<'_>) -> super::S
             _ => {}
         }
     }
+    node.string_point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -6865,6 +6923,7 @@ pub fn string_literal_from_item(item: officekit_markup_base::Item<'_>) -> super:
             _ => {}
         }
     }
+    node.string_point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -6994,6 +7053,8 @@ pub fn surface3d_chart_from_item(item: officekit_markup_base::Item<'_>) -> super
             _ => {}
         }
     }
+    node.surface_chart_series.shrink_to_fit();
+    node.axis_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -7068,6 +7129,8 @@ pub fn surface_charts_from_item(item: officekit_markup_base::Item<'_>) -> super:
             _ => {}
         }
     }
+    node.surface_chart_series.shrink_to_fit();
+    node.axis_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -7129,6 +7192,7 @@ pub fn text_properties_from_item(item: officekit_markup_base::Item<'_>) -> super
             _ => {}
         }
     }
+    node.text_paragraphs.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -7637,6 +7701,7 @@ pub fn user_shapes_from_item(item: officekit_markup_base::Item<'_>) -> super::Us
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

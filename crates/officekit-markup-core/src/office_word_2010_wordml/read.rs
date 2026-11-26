@@ -575,6 +575,7 @@ pub fn conflict_del_run_track_change_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -650,6 +651,7 @@ pub fn conflict_ins_run_track_change_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1074,6 +1076,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1273,6 +1276,7 @@ pub fn gs_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::GsLst {
             field.child(&mut node.gs);
         }
     }
+    node.gs.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1958,6 +1962,7 @@ pub fn scheme_clr_from_item(item: officekit_markup_base::Item<'_>) -> super::Sch
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2082,6 +2087,7 @@ pub fn srgb_clr_from_item(item: officekit_markup_base::Item<'_>) -> super::SrgbC
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2144,6 +2150,7 @@ pub fn stylistic_sets_from_item(item: officekit_markup_base::Item<'_>) -> super:
             field.child(&mut node.style_set);
         }
     }
+    node.style_set.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

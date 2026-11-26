@@ -281,6 +281,7 @@ pub fn refresh_intervals_from_item(
             field.child(&mut node.refresh_interval);
         }
     }
+    node.refresh_interval.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

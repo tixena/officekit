@@ -568,6 +568,7 @@ pub fn attribute_name_list_from_item(
             field.child(&mut node.attribute_name);
         }
     }
+    node.attribute_name.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1022,6 +1023,7 @@ pub fn build_list_from_item(item: officekit_markup_base::Item<'_>) -> super::Bui
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1258,6 +1260,7 @@ pub fn children_time_node_list_from_item(
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1316,6 +1319,7 @@ pub fn color_mru_from_item(item: officekit_markup_base::Item<'_>) -> super::Colo
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1586,6 +1590,7 @@ pub fn comment_list_from_item(item: officekit_markup_base::Item<'_>) -> super::C
             field.child(&mut node.comment);
         }
     }
+    node.comment.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2166,6 +2171,7 @@ pub fn customer_data_list_from_item(
             _ => {}
         }
     }
+    node.customer_data.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2429,6 +2435,7 @@ pub fn embedded_font_list_from_item(
             field.child(&mut node.embedded_font);
         }
     }
+    node.embedded_font.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2583,6 +2590,7 @@ pub fn end_conditions_list_from_item(
             field.child(&mut node.condition);
         }
     }
+    node.condition.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2675,6 +2683,7 @@ pub fn extension_from_item(item: officekit_markup_base::Item<'_>) -> super::Exte
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2705,6 +2714,7 @@ pub fn extension_list_from_item(item: officekit_markup_base::Item<'_>) -> super:
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2747,6 +2757,7 @@ pub fn extension_list_with_modification_flag_from_item(
             _ => {}
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2998,6 +3009,7 @@ pub fn group_shape_from_item(item: officekit_markup_base::Item<'_>) -> super::Gr
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3492,6 +3504,7 @@ pub fn list_of_comment_authors_from_item(
             field.child(&mut node.comment_author);
         }
     }
+    node.comment_author.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3522,6 +3535,7 @@ pub fn list_of_controls_from_item(item: officekit_markup_base::Item<'_>) -> supe
             field.child(&mut node.embedded_control);
         }
     }
+    node.embedded_control.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3555,6 +3569,7 @@ pub fn list_of_custom_shows_from_item(
             field.child(&mut node.custom_show_custom_show);
         }
     }
+    node.custom_show_custom_show.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3585,6 +3600,7 @@ pub fn list_of_guides_from_item(item: officekit_markup_base::Item<'_>) -> super:
             field.child(&mut node.a_guide);
         }
     }
+    node.a_guide.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3687,6 +3703,7 @@ pub fn list_of_presentation_slides_from_item(
             field.child(&mut node.presentation_slide);
         }
     }
+    node.presentation_slide.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3729,6 +3746,8 @@ pub fn list_of_presentation_slides_outline_view_slide_list_from_item(
             field.child(&mut node.presentation_slide_outline_view_slide_entry);
         }
     }
+    node.presentation_slide_outline_view_slide_entry
+        .shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3761,6 +3780,7 @@ pub fn list_of_slide_i_ds_from_item(
             field.child(&mut node.slide_id);
         }
     }
+    node.slide_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3794,6 +3814,7 @@ pub fn list_of_slide_layouts_from_item(
             field.child(&mut node.slide_layout_id);
         }
     }
+    node.slide_layout_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3828,6 +3849,7 @@ pub fn list_of_slide_master_i_ds_from_item(
             field.child(&mut node.slide_master_id);
         }
     }
+    node.slide_master_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3939,6 +3961,7 @@ pub fn next_conditions_list_from_item(
             field.child(&mut node.condition);
         }
     }
+    node.condition.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -5572,6 +5595,7 @@ pub fn previous_conditions_list_from_item(
             field.child(&mut node.condition);
         }
     }
+    node.condition.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -5678,6 +5702,7 @@ pub fn programmable_tab_list_from_item(
             field.child(&mut node.programmable_extensibility_tag);
         }
     }
+    node.programmable_extensibility_tag.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -6212,6 +6237,7 @@ pub fn shape_text_body_from_item(item: officekit_markup_base::Item<'_>) -> super
             _ => {}
         }
     }
+    node.text_paragraphs.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -6245,6 +6271,7 @@ pub fn shape_tree_from_item(item: officekit_markup_base::Item<'_>) -> super::Sha
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -7095,6 +7122,7 @@ pub fn start_conditions_list_from_item(
             field.child(&mut node.condition);
         }
     }
+    node.condition.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -7251,6 +7279,7 @@ pub fn sub_time_nodes_list_from_item(
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -7383,6 +7412,7 @@ pub fn template_effects_tmpl_lst_from_item(
             field.child(&mut node.template_effects_tmpl);
         }
     }
+    node.template_effects_tmpl.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -7516,6 +7546,7 @@ pub fn time_animated_value_list_from_item(
             field.child(&mut node.time_animate_value);
         }
     }
+    node.time_animate_value.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -7580,6 +7611,7 @@ pub fn time_node_list_from_item(item: officekit_markup_base::Item<'_>) -> super:
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

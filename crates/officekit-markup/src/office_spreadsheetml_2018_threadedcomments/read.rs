@@ -243,6 +243,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -306,6 +307,7 @@ pub fn mentions_from_item(item: officekit_markup_base::Item<'_>) -> super::Menti
             field.child(&mut node.mention);
         }
     }
+    node.mention.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -372,6 +374,7 @@ pub fn person_list_from_item(item: officekit_markup_base::Item<'_>) -> super::Pe
             _ => {}
         }
     }
+    node.person.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -476,6 +479,7 @@ pub fn threaded_comments_from_item(
             _ => {}
         }
     }
+    node.threaded_comment.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

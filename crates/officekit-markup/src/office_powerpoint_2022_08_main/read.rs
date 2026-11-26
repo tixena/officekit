@@ -444,6 +444,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -473,6 +474,7 @@ pub fn history_from_item(item: officekit_markup_base::Item<'_>) -> super::Histor
             field.child(&mut node.event);
         }
     }
+    node.event.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

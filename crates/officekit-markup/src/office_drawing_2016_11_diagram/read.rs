@@ -281,6 +281,7 @@ pub fn auto_bu_node_info_lst_from_item(
             field.child(&mut node.auto_bu_node_info);
         }
     }
+    node.auto_bu_node_info.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

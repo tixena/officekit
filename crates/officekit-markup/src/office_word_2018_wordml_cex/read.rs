@@ -286,6 +286,7 @@ pub fn comments_extensible_from_item(
             _ => {}
         }
     }
+    node.comment_extensible.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -315,6 +316,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.ext);
         }
     }
+    node.ext.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

@@ -299,6 +299,7 @@ pub fn arc_segment_from_item(item: officekit_markup_base::Item<'_>) -> super::Ar
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -386,6 +387,7 @@ pub fn bezier_curve_from_item(item: officekit_markup_base::Item<'_>) -> super::B
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -573,6 +575,7 @@ pub fn image_file_from_item(item: officekit_markup_base::Item<'_>) -> super::Ima
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -658,6 +661,7 @@ pub fn line_from_item(item: officekit_markup_base::Item<'_>) -> super::Line {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -811,6 +815,7 @@ pub fn multiple_path_line_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -900,6 +905,7 @@ pub fn oval_from_item(item: officekit_markup_base::Item<'_>) -> super::Oval {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -983,6 +989,7 @@ pub fn rectangle_from_item(item: officekit_markup_base::Item<'_>) -> super::Rect
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1070,6 +1077,7 @@ pub fn rounded_rectangle_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1100,6 +1108,7 @@ pub fn set_of_formulas_from_item(item: officekit_markup_base::Item<'_>) -> super
             field.child(&mut node.single_formula);
         }
     }
+    node.single_formula.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1130,6 +1139,7 @@ pub fn set_of_handles_from_item(item: officekit_markup_base::Item<'_>) -> super:
             field.child(&mut node.shape_handle);
         }
     }
+    node.shape_handle.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1259,6 +1269,7 @@ pub fn shape_definition_from_item(item: officekit_markup_base::Item<'_>) -> supe
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1400,6 +1411,7 @@ pub fn shape_group_from_item(item: officekit_markup_base::Item<'_>) -> super::Sh
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1576,6 +1588,7 @@ pub fn shape_template_from_item(item: officekit_markup_base::Item<'_>) -> super:
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

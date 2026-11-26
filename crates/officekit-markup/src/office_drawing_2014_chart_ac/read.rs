@@ -248,6 +248,7 @@ pub fn multi_lvl_str_lit_from_item(item: officekit_markup_base::Item<'_>) -> sup
             _ => {}
         }
     }
+    node.level.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

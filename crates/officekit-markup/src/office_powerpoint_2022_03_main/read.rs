@@ -243,6 +243,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -306,6 +307,7 @@ pub fn reactions_from_item(item: officekit_markup_base::Item<'_>) -> super::Reac
             field.child(&mut node.rxn);
         }
     }
+    node.rxn.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -337,6 +339,7 @@ pub fn rxn_from_item(item: officekit_markup_base::Item<'_>) -> super::Rxn {
             _ => {}
         }
     }
+    node.instance.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

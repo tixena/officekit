@@ -247,6 +247,7 @@ pub fn alternate_references_from_item(
             field.child(&mut node.reference);
         }
     }
+    node.reference.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -309,6 +310,7 @@ pub fn bindings_from_item(item: officekit_markup_base::Item<'_>) -> super::Bindi
             field.child(&mut node.binding);
         }
     }
+    node.binding.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -338,6 +340,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -368,6 +371,7 @@ pub fn properties_from_item(item: officekit_markup_base::Item<'_>) -> super::Pro
             field.child(&mut node.property);
         }
     }
+    node.property.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -468,6 +472,7 @@ pub fn snapshot_from_item(item: officekit_markup_base::Item<'_>) -> super::Snaps
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

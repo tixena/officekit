@@ -244,6 +244,7 @@ pub fn array_from_item(item: crate::Item<'_>) -> super::Array {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1154,6 +1155,7 @@ pub fn vector_from_item(item: crate::Item<'_>) -> super::Vector {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

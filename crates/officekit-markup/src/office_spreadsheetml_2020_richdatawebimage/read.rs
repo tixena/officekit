@@ -294,6 +294,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -390,6 +391,7 @@ pub fn web_images_srd_from_item(item: officekit_markup_base::Item<'_>) -> super:
             _ => {}
         }
     }
+    node.web_image_srd.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

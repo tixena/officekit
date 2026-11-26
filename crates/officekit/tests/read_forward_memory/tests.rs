@@ -4,15 +4,16 @@ use core::fmt::Write as _;
 use std::alloc::System;
 
 use officekit::parts::part_root::{self, PartRoot as _};
-use officekit_markup::wordprocessing::Document;
+use officekit_markup::wordprocessing::{BlockContent, Document};
 use officekit_xml::packaging::package::{OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
 
 const MAIN: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
 
-/// What the read may hold past the typed tree and the part's bytes: the start tags and text of
-/// the element being read, and a list's buffer growing.
+/// What the read may hold past the typed tree and the part's bytes, besides the room the body's
+/// list of blocks takes while it grows: the start tags and text of the element being read, and
+/// the other lists' buffers growing.
 const MARGIN: usize = 1 << 20;
 
 #[global_allocator]
@@ -49,6 +50,16 @@ unsafe impl GlobalAlloc for Counting {
         count(-isize::try_from(layout.size()).unwrap_or(isize::MAX));
         // SAFETY: the caller's contract for `dealloc` is passed on as it is.
         unsafe { System.dealloc(ptr, layout) }
+    }
+
+    unsafe fn realloc(&self, ptr: *mut u8, layout: Layout, new_size: usize) -> *mut u8 {
+        // SAFETY: the caller's contract for `realloc` is passed on as it is.
+        let pointer = unsafe { System.realloc(ptr, layout, new_size) };
+        if !pointer.is_null() {
+            count(-isize::try_from(layout.size()).unwrap_or(isize::MAX));
+            count(isize::try_from(new_size).unwrap_or(isize::MAX));
+        }
+        pointer
     }
 }
 
@@ -104,7 +115,9 @@ fn a_large_part_reads_into_its_typed_tree_in_the_heap_of_the_tree_and_the_parts_
 
     let (forward, peak, typed) =
         measured(|| part_root::load(&package, &name, OpenOptions::default()).unwrap());
-    let bound = typed + bytes.len() + MARGIN;
+    // A list grows by doubling, and a read shrinks it to its length once it is read.
+    let growing = forward.body.as_deref().unwrap().content.len() * size_of::<BlockContent>();
+    let bound = typed + bytes.len() + growing + MARGIN;
     assert!(
         peak <= bound,
         "peak heap {peak} bytes; the typed tree holds {typed}, the part is {} bytes",

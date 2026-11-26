@@ -251,6 +251,7 @@ pub fn locked_canvas_container_from_item(
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

@@ -576,6 +576,7 @@ pub fn chart_data_from_item(item: officekit_markup_base::Item<'_>) -> super::Cha
             _ => {}
         }
     }
+    node.data.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -783,6 +784,7 @@ pub fn copyrights_from_item(item: officekit_markup_base::Item<'_>) -> super::Cop
             field.child(&mut node.copyright);
         }
     }
+    node.copyright.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -815,6 +817,7 @@ pub fn data_from_item(item: officekit_markup_base::Item<'_>) -> super::Data {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -960,6 +963,8 @@ pub fn data_labels_from_item(item: officekit_markup_base::Item<'_>) -> super::Da
             _ => {}
         }
     }
+    node.data_label.shrink_to_fit();
+    node.data_label_hidden.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1142,6 +1147,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.ext);
         }
     }
+    node.ext.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1347,6 +1353,7 @@ pub fn fmt_ovrs_from_item(item: officekit_markup_base::Item<'_>) -> super::FmtOv
             field.child(&mut node.fmt_ovr);
         }
     }
+    node.fmt_ovr.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1378,6 +1385,7 @@ pub fn geo_cache_from_item(item: officekit_markup_base::Item<'_>) -> super::GeoC
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1411,6 +1419,7 @@ pub fn geo_child_entities_from_item(
             field.child(&mut node.geo_hierarchy_entity);
         }
     }
+    node.geo_hierarchy_entity.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1517,6 +1526,7 @@ pub fn geo_child_entities_query_results_from_item(
             field.child(&mut node.geo_child_entities_query_result);
         }
     }
+    node.geo_child_entities_query_result.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1548,6 +1558,7 @@ pub fn geo_child_types_from_item(item: officekit_markup_base::Item<'_>) -> super
             field.child(&mut node.entity_type);
         }
     }
+    node.entity_type.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1690,6 +1701,7 @@ pub fn geo_data_entity_query_results_from_item(
             field.child(&mut node.geo_data_entity_query_result);
         }
     }
+    node.geo_data_entity_query_result.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1844,6 +1856,7 @@ pub fn geo_data_point_to_entity_query_results_from_item(
             field.child(&mut node.geo_data_point_to_entity_query_result);
         }
     }
+    node.geo_data_point_to_entity_query_result.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2055,6 +2068,7 @@ pub fn geo_location_query_results_from_item(
             field.child(&mut node.geo_location_query_result);
         }
     }
+    node.geo_location_query_result.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2192,6 +2206,7 @@ pub fn geo_parent_entities_query_results_from_item(
             field.child(&mut node.geo_parent_entities_query_result);
         }
     }
+    node.geo_parent_entities_query_result.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2288,6 +2303,7 @@ pub fn geo_polygons_from_item(item: officekit_markup_base::Item<'_>) -> super::G
             field.child(&mut node.geo_polygon);
         }
     }
+    node.geo_polygon.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2507,6 +2523,7 @@ pub fn lvl_numeric_level_from_item(
             _ => {}
         }
     }
+    node.pt_numeric_value.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2539,6 +2556,7 @@ pub fn lvl_string_level_from_item(item: officekit_markup_base::Item<'_>) -> supe
             _ => {}
         }
     }
+    node.pt_string_value.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2901,6 +2919,7 @@ pub fn num_dim_from_item(item: officekit_markup_base::Item<'_>) -> super::NumDim
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3270,6 +3289,7 @@ pub fn plot_area_from_item(item: officekit_markup_base::Item<'_>) -> super::Plot
             _ => {}
         }
     }
+    node.axis.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3304,6 +3324,7 @@ pub fn plot_area_region_from_item(item: officekit_markup_base::Item<'_>) -> supe
             _ => {}
         }
     }
+    node.series.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3497,6 +3518,7 @@ pub fn rich_from_item(item: officekit_markup_base::Item<'_>) -> super::Rich {
             _ => {}
         }
     }
+    node.text_paragraphs.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3571,6 +3593,8 @@ pub fn series_from_item(item: officekit_markup_base::Item<'_>) -> super::Series 
             _ => {}
         }
     }
+    node.data_pt.shrink_to_fit();
+    node.axis_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3677,6 +3701,7 @@ pub fn str_dim_from_item(item: officekit_markup_base::Item<'_>) -> super::StrDim
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3713,6 +3738,7 @@ pub fn subtotals_from_item(item: officekit_markup_base::Item<'_>) -> super::Subt
             field.child(&mut node.idx);
         }
     }
+    node.idx.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3920,6 +3946,7 @@ pub fn tx_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::TxPr {
             _ => {}
         }
     }
+    node.text_paragraphs.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

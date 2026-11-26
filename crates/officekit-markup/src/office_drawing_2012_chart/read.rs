@@ -376,6 +376,7 @@ pub fn category_filter_exceptions_from_item(
             field.child(&mut node.category_filter_exception);
         }
     }
+    node.category_filter_exception.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -408,6 +409,7 @@ pub fn d_lbl_from_item(item: officekit_markup_base::Item<'_>) -> super::DLbl {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -472,6 +474,7 @@ pub fn dlbl_field_table_from_item(item: officekit_markup_base::Item<'_>) -> supe
             field.child(&mut node.dlbl_ft_entry);
         }
     }
+    node.dlbl_ft_entry.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -508,6 +511,7 @@ pub fn dlbl_field_table_cache_from_item(
             _ => {}
         }
     }
+    node.string_point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -575,6 +579,7 @@ pub fn dlbl_range_cache_from_item(item: officekit_markup_base::Item<'_>) -> supe
             _ => {}
         }
     }
+    node.string_point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1240,6 +1245,7 @@ pub fn pivot_source_from_item(item: officekit_markup_base::Item<'_>) -> super::P
             _ => {}
         }
     }
+    node.chart_extensibility.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1281,6 +1287,9 @@ pub fn ser_area_ser_from_item(item: officekit_markup_base::Item<'_>) -> super::S
             _ => {}
         }
     }
+    node.data_point.shrink_to_fit();
+    node.trendlines.shrink_to_fit();
+    node.error_bars.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1324,6 +1333,8 @@ pub fn ser_bar_ser_from_item(item: officekit_markup_base::Item<'_>) -> super::Se
             _ => {}
         }
     }
+    node.data_point.shrink_to_fit();
+    node.trendlines.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1367,6 +1378,9 @@ pub fn ser_bubble_ser_from_item(item: officekit_markup_base::Item<'_>) -> super:
             _ => {}
         }
     }
+    node.data_point.shrink_to_fit();
+    node.trendlines.shrink_to_fit();
+    node.error_bars.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1409,6 +1423,8 @@ pub fn ser_line_ser_from_item(item: officekit_markup_base::Item<'_>) -> super::S
             _ => {}
         }
     }
+    node.data_point.shrink_to_fit();
+    node.trendlines.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1448,6 +1464,7 @@ pub fn ser_pie_ser_from_item(item: officekit_markup_base::Item<'_>) -> super::Se
             _ => {}
         }
     }
+    node.data_point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1487,6 +1504,7 @@ pub fn ser_radar_ser_from_item(item: officekit_markup_base::Item<'_>) -> super::
             _ => {}
         }
     }
+    node.data_point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1529,6 +1547,9 @@ pub fn ser_scatter_ser_from_item(item: officekit_markup_base::Item<'_>) -> super
             _ => {}
         }
     }
+    node.data_point.shrink_to_fit();
+    node.trendlines.shrink_to_fit();
+    node.error_bars.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

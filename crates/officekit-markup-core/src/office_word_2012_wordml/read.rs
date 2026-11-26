@@ -404,6 +404,7 @@ pub fn comments_ex_from_item(item: officekit_markup_base::Item<'_>) -> super::Co
             field.child(&mut node.comment_ex);
         }
     }
+    node.comment_ex.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -562,6 +563,7 @@ pub fn people_from_item(item: officekit_markup_base::Item<'_>) -> super::People 
             field.child(&mut node.person);
         }
     }
+    node.person.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

@@ -243,6 +243,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -334,6 +335,7 @@ pub fn rv_from_item(item: officekit_markup_base::Item<'_>) -> super::Rv {
             _ => {}
         }
     }
+    node.v.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -366,6 +368,7 @@ pub fn rv_data_from_item(item: officekit_markup_base::Item<'_>) -> super::RvData
             _ => {}
         }
     }
+    node.rv.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -400,6 +403,7 @@ pub fn rv_structures_from_item(item: officekit_markup_base::Item<'_>) -> super::
             _ => {}
         }
     }
+    node.s.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -457,6 +461,7 @@ pub fn s_from_item(item: officekit_markup_base::Item<'_>) -> super::S {
             _ => {}
         }
     }
+    node.k.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

@@ -429,6 +429,7 @@ pub fn array_object_from_item(item: officekit_markup_base::Item<'_>) -> super::A
             _ => {}
         }
     }
+    node.e.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1055,6 +1056,7 @@ pub fn degree_from_item(item: officekit_markup_base::Item<'_>) -> super::Degree 
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1154,6 +1156,7 @@ pub fn delimiter_object_from_item(item: officekit_markup_base::Item<'_>) -> supe
             _ => {}
         }
     }
+    node.e.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1258,6 +1261,7 @@ pub fn denominator_from_item(item: officekit_markup_base::Item<'_>) -> super::De
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1316,6 +1320,7 @@ pub fn e_from_item(item: officekit_markup_base::Item<'_>) -> super::E {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1478,6 +1483,7 @@ pub fn function_name_from_item(item: officekit_markup_base::Item<'_>) -> super::
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1979,6 +1985,7 @@ pub fn limit_from_item(item: officekit_markup_base::Item<'_>) -> super::Limit {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2412,6 +2419,7 @@ pub fn matrix_columns_from_item(item: officekit_markup_base::Item<'_>) -> super:
             field.child(&mut node.matrix_column);
         }
     }
+    node.matrix_column.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2443,6 +2451,7 @@ pub fn matrix_object_from_item(item: officekit_markup_base::Item<'_>) -> super::
             _ => {}
         }
     }
+    node.matrix_row.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2513,6 +2522,7 @@ pub fn matrix_row_from_item(item: officekit_markup_base::Item<'_>) -> super::Mat
             field.child(&mut node.e);
         }
     }
+    node.e.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2766,6 +2776,7 @@ pub fn numerator_from_item(item: officekit_markup_base::Item<'_>) -> super::Nume
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2827,6 +2838,7 @@ pub fn office_math_from_item(item: officekit_markup_base::Item<'_>) -> super::Of
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2874,6 +2886,13 @@ pub fn office_math_paragraph_from_item(
             _ => {}
         }
     }
+    node.custom_xml_conflict_ins_range_start.shrink_to_fit();
+    node.custom_xml_conflict_ins_range_end.shrink_to_fit();
+    node.custom_xml_conflict_del_range_start.shrink_to_fit();
+    node.custom_xml_conflict_del_range_end.shrink_to_fit();
+    node.conflict_ins_run_track_change.shrink_to_fit();
+    node.conflict_del_run_track_change.shrink_to_fit();
+    node.office_math.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3514,6 +3533,7 @@ pub fn run_from_item(item: officekit_markup_base::Item<'_>) -> super::Run {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3553,6 +3573,7 @@ pub fn run_properties_from_item(item: officekit_markup_base::Item<'_>) -> super:
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3708,6 +3729,7 @@ pub fn sub_from_item(item: officekit_markup_base::Item<'_>) -> super::Sub {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -3907,6 +3929,7 @@ pub fn sup_from_item(item: officekit_markup_base::Item<'_>) -> super::Sup {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

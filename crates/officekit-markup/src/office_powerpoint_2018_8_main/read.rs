@@ -279,6 +279,7 @@ pub fn author_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::Aut
             field.child(&mut node.author);
         }
     }
+    node.author.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -325,6 +326,7 @@ pub fn cm_from_item(item: officekit_markup_base::Item<'_>) -> super::Cm {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -354,6 +356,7 @@ pub fn cm_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::CmLst {
             field.child(&mut node.cm);
         }
     }
+    node.cm.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -430,6 +433,7 @@ pub fn ext_lst_comment_properties_extension_list_from_item(
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -463,6 +467,7 @@ pub fn ext_lst_extension_list_from_item(
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -561,6 +566,7 @@ pub fn reply_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::Repl
             field.child(&mut node.reply);
         }
     }
+    node.reply.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -593,6 +599,7 @@ pub fn tx_body_from_item(item: officekit_markup_base::Item<'_>) -> super::TxBody
             _ => {}
         }
     }
+    node.text_paragraphs.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

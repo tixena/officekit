@@ -554,6 +554,7 @@ pub fn group_shape_from_item(item: officekit_markup_base::Item<'_>) -> super::Gr
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1396,6 +1397,7 @@ pub fn shape_text_body_from_item(item: officekit_markup_base::Item<'_>) -> super
             _ => {}
         }
     }
+    node.text_paragraphs.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1503,6 +1505,7 @@ pub fn worksheet_drawing_from_item(
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

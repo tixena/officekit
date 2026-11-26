@@ -274,6 +274,7 @@ pub fn bmk_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::BmkLst
             field.child(&mut node.bmk);
         }
     }
+    node.bmk.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -587,6 +588,7 @@ pub fn ext_lst_extension_list_from_item(
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -623,6 +625,7 @@ pub fn ext_lst_extension_list_modify_from_item(
             _ => {}
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -903,6 +906,7 @@ pub fn laser_trace_lst_from_item(item: officekit_markup_base::Item<'_>) -> super
             field.child(&mut node.trace_pt_lst);
         }
     }
+    node.trace_pt_lst.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1292,6 +1296,7 @@ pub fn section_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::Se
             field.child(&mut node.section_section);
         }
     }
+    node.section_section.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1322,6 +1327,7 @@ pub fn section_pr_from_item(item: officekit_markup_base::Item<'_>) -> super::Sec
             field.child(&mut node.section_section_old);
         }
     }
+    node.section_section_old.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1460,6 +1466,7 @@ pub fn show_evt_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::S
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1580,6 +1587,7 @@ pub fn sld_id_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::Sld
             field.child(&mut node.sld_id);
         }
     }
+    node.sld_id.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1692,6 +1700,7 @@ pub fn trace_pt_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::T
             field.child(&mut node.trace_pt);
         }
     }
+    node.trace_pt.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

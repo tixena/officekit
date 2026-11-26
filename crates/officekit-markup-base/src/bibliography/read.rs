@@ -697,6 +697,7 @@ pub fn contributors_list_from_item(item: crate::Item<'_>) -> super::Contributors
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1377,6 +1378,7 @@ pub fn name_list_from_item(item: crate::Item<'_>) -> super::NameList {
             field.child(&mut node.person);
         }
     }
+    node.person.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1585,6 +1587,9 @@ pub fn person_from_item(item: crate::Item<'_>) -> super::Person {
             _ => {}
         }
     }
+    node.persons_last_or_family_name.shrink_to_fit();
+    node.persons_first_or_given_name.shrink_to_fit();
+    node.persons_middle_or_other_name.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1945,6 +1950,7 @@ pub fn source_from_item(item: crate::Item<'_>) -> super::Source {
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2011,6 +2017,7 @@ pub fn sources_from_item(item: crate::Item<'_>) -> super::Sources {
             _ => {}
         }
     }
+    node.source.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

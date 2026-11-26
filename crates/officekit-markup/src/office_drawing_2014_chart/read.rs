@@ -318,6 +318,7 @@ pub fn category_filter_exceptions_from_item(
             field.child(&mut node.category_filter_exception);
         }
     }
+    node.category_filter_exception.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -350,6 +351,7 @@ pub fn d_lbl_from_item(item: officekit_markup_base::Item<'_>) -> super::DLbl {
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -383,6 +385,7 @@ pub fn datapointuniqueidmap_from_item(
             field.child(&mut node.ptentry);
         }
     }
+    node.ptentry.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -674,6 +677,7 @@ pub fn multi_lvl_str_cache_from_item(
             _ => {}
         }
     }
+    node.level.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -707,6 +711,7 @@ pub fn num_cache_from_item(item: officekit_markup_base::Item<'_>) -> super::NumC
             _ => {}
         }
     }
+    node.numeric_point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -904,6 +909,7 @@ pub fn str_cache_from_item(item: officekit_markup_base::Item<'_>) -> super::StrC
             _ => {}
         }
     }
+    node.string_point.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

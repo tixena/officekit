@@ -344,6 +344,9 @@ pub fn version_info_from_item(item: officekit_markup_base::Item<'_>) -> super::V
             _ => {}
         }
     }
+    node.required_feature.shrink_to_fit();
+    node.last_refresh_feature.shrink_to_fit();
+    node.last_edit_feature.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

@@ -245,6 +245,7 @@ pub fn calc_features_from_item(item: officekit_markup_base::Item<'_>) -> super::
             field.child(&mut node.feature);
         }
     }
+    node.feature.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

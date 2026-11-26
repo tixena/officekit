@@ -246,6 +246,7 @@ pub fn a_array_from_item(item: officekit_markup_base::Item<'_>) -> super::AArray
             _ => {}
         }
     }
+    node.v_array_value.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -282,6 +283,7 @@ pub fn a_supporting_property_bag_array_from_item(
             _ => {}
         }
     }
+    node.v_supporting_property_bag_array_value.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -315,6 +317,7 @@ pub fn array_data_from_item(item: officekit_markup_base::Item<'_>) -> super::Arr
             _ => {}
         }
     }
+    node.a_array.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -382,6 +385,7 @@ pub fn custom_filters_from_item(item: officekit_markup_base::Item<'_>) -> super:
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -458,6 +462,7 @@ pub fn dxfs_from_item(item: officekit_markup_base::Item<'_>) -> super::Dxfs {
             _ => {}
         }
     }
+    node.formatting.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -524,6 +529,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -620,6 +626,8 @@ pub fn filters_from_item(item: officekit_markup_base::Item<'_>) -> super::Filter
             _ => {}
         }
     }
+    node.filter.shrink_to_fit();
+    node.date_group_item.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -741,6 +749,7 @@ pub fn key_from_item(item: officekit_markup_base::Item<'_>) -> super::Key {
             _ => {}
         }
     }
+    node.flag.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -771,6 +780,7 @@ pub fn key_flags_from_item(item: officekit_markup_base::Item<'_>) -> super::KeyF
             field.child(&mut node.key);
         }
     }
+    node.key.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -833,6 +843,7 @@ pub fn r_sty_from_item(item: officekit_markup_base::Item<'_>) -> super::RSty {
             _ => {}
         }
     }
+    node.rpv.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -870,6 +881,7 @@ pub fn rich_properties_from_item(item: officekit_markup_base::Item<'_>) -> super
             field.child(&mut node.r_pr);
         }
     }
+    node.r_pr.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -976,6 +988,7 @@ pub fn rich_styles_from_item(item: officekit_markup_base::Item<'_>) -> super::Ri
             field.child(&mut node.r_sty);
         }
     }
+    node.r_sty.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1066,6 +1079,7 @@ pub fn s_from_item(item: officekit_markup_base::Item<'_>) -> super::S {
             field.child(&mut node.k);
         }
     }
+    node.k.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1097,6 +1111,7 @@ pub fn spb_from_item(item: officekit_markup_base::Item<'_>) -> super::Spb {
             _ => {}
         }
     }
+    node.v_supporting_property_bag_value.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1130,6 +1145,7 @@ pub fn spb_arrays_from_item(item: officekit_markup_base::Item<'_>) -> super::Spb
             _ => {}
         }
     }
+    node.a_supporting_property_bag_array.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1162,6 +1178,7 @@ pub fn spb_data_from_item(item: officekit_markup_base::Item<'_>) -> super::SpbDa
             _ => {}
         }
     }
+    node.spb.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1196,6 +1213,7 @@ pub fn spb_structures_from_item(item: officekit_markup_base::Item<'_>) -> super:
             _ => {}
         }
     }
+    node.s.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1327,6 +1345,7 @@ pub fn types_from_item(item: officekit_markup_base::Item<'_>) -> super::Types {
             field.child(&mut node.r#type);
         }
     }
+    node.r#type.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }

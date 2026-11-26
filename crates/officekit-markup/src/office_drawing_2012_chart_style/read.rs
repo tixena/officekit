@@ -515,6 +515,8 @@ pub fn color_style_from_item(item: officekit_markup_base::Item<'_>) -> super::Co
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
+    node.variation.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1225,6 +1227,7 @@ pub fn ext_lst_from_item(item: officekit_markup_base::Item<'_>) -> super::ExtLst
             field.child(&mut node.extension);
         }
     }
+    node.extension.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -1878,6 +1881,7 @@ pub fn style_clr_from_item(item: officekit_markup_base::Item<'_>) -> super::Styl
             _ => {}
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
@@ -2209,6 +2213,7 @@ pub fn variation_from_item(item: officekit_markup_base::Item<'_>) -> super::Vari
             field.child(&mut node.content);
         }
     }
+    node.content.shrink_to_fit();
     node.unknown = reader.finish();
     node
 }
