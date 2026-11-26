@@ -998,6 +998,20 @@ fn refusals_names_every_refusal_in_document_order() {
 }
 
 #[test]
+fn a_refused_child_is_named_after_a_refusal_inside_an_earlier_sibling() {
+    let sheet = element(
+        "<x:worksheet xmlns:x=\"{x}\" xmlns:o=\"urn:schemas-microsoft-com:office:office\"><x:sheetData o:foo=\"1\"/><x:legacyDrawing/></x:worksheet>",
+    );
+    assert_eq!(
+        refusals(sheet)
+            .iter()
+            .map(|refusal| refusal.tag)
+            .collect::<Vec<_>>(),
+        ["o", "legacyDrawing"]
+    );
+}
+
+#[test]
 fn refusals_names_the_namespace_of_a_vml_background() {
     assert_eq!(
         refusals(element(

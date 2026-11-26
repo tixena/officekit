@@ -638,51 +638,52 @@ const fn civil_from_days(days: i64) -> (i64, i64, i64) {
     (year, month, day)
 }
 
-/// Rename the children of `element` its tag's rules name and take out, into `found`, those they
-/// refuse, then convert every child element. `scope` holds the declarations of the elements
-/// around `element`, outermost first.
+/// Rename the children of `element` its tag's rules name, then, in document order, take out
+/// into `found` those they refuse and convert every other child element. `scope` holds the
+/// declarations of the elements around `element`, outermost first.
 fn convert_children(element: &mut Element, scope: &mut Around<'_>, found: &mut Vec<Refusal>) {
     unwrap_word_shapes(element);
     wrap_loose_vml(element, scope);
-    if let Some(owner) = officekit_markup::name(element) {
-        let rules = rules_of(CHILDREN, owner);
-        let mut index = 0;
-        while let Some(node) = element.children.get(index) {
-            let rule = if let Node::Element(child) = node {
-                rules
-                    .iter()
-                    .find(|(_, tag, _)| is(*tag, &child.name))
-                    .map(|(_, _, rule)| rule)
-            } else {
-                None
-            };
-            index = match rule {
-                Some(ChildRule::Refuse(label)) => {
-                    if let Node::Element(child) = element.children.remove(index)
-                        && !REMOVED_CHILDREN.contains(label)
-                    {
-                        found.push(Refusal {
-                            prefix: name_prefix(&child),
-                            tag: label,
-                        });
-                    }
-                    index
-                }
-                Some(ChildRule::Rename { before, to }) => rename_child(element, index, before, to),
-                None => index + 1,
-            };
-        }
+    let rules = officekit_markup::name(element).map_or(&[][..], |owner| rules_of(CHILDREN, owner));
+    let rule_of = |child: &Element| {
+        rules
+            .iter()
+            .find(|(_, tag, _)| is(*tag, &child.name))
+            .map(|(_, _, rule)| rule)
+    };
+    let mut index = 0;
+    while let Some(node) = element.children.get(index) {
+        let rule = if let Node::Element(child) = node {
+            rule_of(child)
+        } else {
+            None
+        };
+        index = match rule {
+            Some(ChildRule::Rename { before, to }) => rename_child(element, index, before, to),
+            Some(ChildRule::Refuse(_)) | None => index + 1,
+        };
     }
     let parent = tag_of(&element.name);
     let depth = scope.declarations.len();
     scope
         .declarations
         .extend(element.namespace_declarations.iter().cloned());
-    for child in &mut element.children {
-        if let Node::Element(inner) = child {
-            convert(inner, parent, scope, found);
+    element.children.retain_mut(|node| {
+        let Node::Element(inner) = node else {
+            return true;
+        };
+        if let Some(ChildRule::Refuse(label)) = rule_of(inner) {
+            if !REMOVED_CHILDREN.contains(label) {
+                found.push(Refusal {
+                    prefix: name_prefix(inner),
+                    tag: label,
+                });
+            }
+            return false;
         }
-    }
+        convert(inner, parent, scope, found);
+        true
+    });
     scope.declarations.truncate(depth);
 }
 

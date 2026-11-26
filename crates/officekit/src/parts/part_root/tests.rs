@@ -689,6 +689,10 @@ fn a_root_naming_children_strict_refuses_gives_the_bytes_and_the_refusals_of_the
             "{error}"
         );
     }
+    let deeper = format!(
+        "<x:worksheet {X} xmlns:o=\"urn:schemas-microsoft-com:office:office\"><x:sheetData o:foo=\"1\"/><x:legacyDrawing r:id=\"rId1\"/></x:worksheet>"
+    );
+    assert!(refused(strict_outcome::<Worksheet>(&deeper)).contains("tag: \"o\""));
     let chartsheet = format!(
         "<x:chartsheet {X}><x:sheetViews><x:sheetView workbookViewId=\"0\"/></x:sheetViews><x:drawing r:id=\"rId1\"/><x:legacyDrawing r:id=\"rId2\"/></x:chartsheet>"
     );
