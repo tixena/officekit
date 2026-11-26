@@ -14,7 +14,7 @@ use officekit_strict::traversal::{Unchanged, WriteThrough};
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(all(feature = "strict", not(feature = "transitional")))]
 use officekit_xml::element::{Attribute, Node};
-use officekit_xml::element::{Document, Element, PartFrame, XmlError};
+use officekit_xml::element::{Element, PartFrame, XmlError};
 use officekit_xml::error::WriteError;
 use officekit_xml::mc::Processed;
 #[cfg(all(feature = "strict", not(feature = "transitional")))]
@@ -30,7 +30,7 @@ use officekit_xml::stream::class::ClassRules;
 use officekit_xml::stream::class::Site;
 use officekit_xml::stream::reader::PartReader;
 use officekit_xml::stream::writer::PartWriter;
-use officekit_xml::write::{Layout, WriteOptions, clean_namespace_bytes};
+use officekit_xml::write::{WriteOptions, clean_namespace_bytes};
 
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use crate::transitional::TransitionalRules;
@@ -131,7 +131,7 @@ pub trait PartRoot: Sized {
     /// form for.
     fn to_tree(&self, class: ConformanceClass) -> Result<Element, WriteError>;
 
-    /// Write the root into `out` in `class`, as the compact layout writes [`to_tree`](Self::to_tree)'s
+    /// Write the root into `out` in `class`, as `out`'s layout writes [`to_tree`](Self::to_tree)'s
     /// element with every namespace declared in the class's URI. This default writes that
     /// element; a generated root writes its typed tree straight to `out`, with no tree.
     ///
@@ -281,8 +281,8 @@ where
 /// class's URI; the part's XML declaration, prolog, and epilog are kept
 /// when it has them.
 ///
-/// The compact layout writes the root through [`PartRoot::write_part`] into a buffer, and
-/// the namespace cleanup runs on its bytes; the pretty layout writes the root's tree.
+/// The root is written through [`PartRoot::write_part`] into a buffer in `options`' layout, and
+/// the namespace cleanup runs on its bytes.
 ///
 /// # Errors
 ///
@@ -300,12 +300,9 @@ pub fn store<R>(
 where
     R: PartRoot,
 {
-    if options.layout != Layout::Compact {
-        return store_tree(package, name, content_type, root, class, options);
-    }
     let frame = package.part_frame(name);
     let mut buffer = PartBuffer::default();
-    let mut out = PartWriter::new(&mut buffer, Layout::Compact);
+    let mut out = PartWriter::new(&mut buffer, options.layout);
     write_part(
         &mut out,
         frame.as_ref().ok().and_then(Option::as_ref),
@@ -351,36 +348,4 @@ where
         out.node(node)?;
     }
     Ok(())
-}
-
-/// Store a typed root through its tree, as [`store`] describes.
-fn store_tree<R>(
-    package: &mut Package,
-    name: &PartName,
-    content_type: &str,
-    root: &R,
-    class: ConformanceClass,
-    options: WriteOptions,
-) -> Result<(), PackageError>
-where
-    R: PartRoot,
-{
-    let mut tree = root.to_tree(class).map_err(|error| PackageError::Write {
-        error,
-        part: name.clone(),
-    })?;
-    tree.set_class(class);
-    if options.namespace_cleanup {
-        tree.clean_namespaces();
-    }
-    let document = match package.part_frame(name)? {
-        Some(frame) => frame.with_root(tree),
-        None => Document::new(DECLARATION, tree),
-    };
-    package.store_tree(
-        name,
-        content_type,
-        &document,
-        WriteOptions::new(options.layout, false),
-    )
 }

@@ -1,4 +1,4 @@
-use core::alloc::{GlobalAlloc, Layout};
+use core::alloc::{GlobalAlloc, Layout as Allocation};
 use core::cell::Cell;
 use std::alloc::System;
 
@@ -11,7 +11,7 @@ use officekit_markup::wordprocessing::{
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::packaging::package::Package;
 use officekit_xml::packaging::part_name::PartName;
-use officekit_xml::write::WriteOptions;
+use officekit_xml::write::{Layout, WriteOptions};
 
 /// What a store over a large part may hold beyond its trees and the old part's bytes: the
 /// reader's buffers and the new part's bytes.
@@ -47,7 +47,7 @@ struct Counting;
 // SAFETY: every call goes to the system allocator unchanged; only the byte
 // counts are added.
 unsafe impl GlobalAlloc for Counting {
-    unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
+    unsafe fn alloc(&self, layout: Allocation) -> *mut u8 {
         // SAFETY: the caller's contract for `alloc` is passed on as it is.
         let pointer = unsafe { System.alloc(layout) };
         if !pointer.is_null() {
@@ -56,7 +56,7 @@ unsafe impl GlobalAlloc for Counting {
         pointer
     }
 
-    unsafe fn dealloc(&self, ptr: *mut u8, layout: Layout) {
+    unsafe fn dealloc(&self, ptr: *mut u8, layout: Allocation) {
         count(-isize::try_from(layout.size()).unwrap_or(isize::MAX));
         // SAFETY: the caller's contract for `dealloc` is passed on as it is.
         unsafe { System.dealloc(ptr, layout) }
@@ -134,12 +134,13 @@ fn main_part() -> PartName {
     PartName::new("/word/document.xml").unwrap()
 }
 
-/// Store `document` into `package`'s main part in `class`; the most bytes this thread held while
-/// it did, above what it held before.
+/// Store `document` into `package`'s main part in `class` with `options`; the most bytes this
+/// thread held while it did, above what it held before.
 fn peak_while_storing(
     package: &mut Package,
     document: &Document,
     class: ConformanceClass,
+    options: WriteOptions,
 ) -> usize {
     let before = live();
     PEAK.set(LIVE.get());
@@ -149,7 +150,7 @@ fn peak_while_storing(
         main_document::CONTENT_TYPES[0],
         document,
         class,
-        WriteOptions::default(),
+        options,
     )
     .unwrap();
     stop() - before
@@ -165,10 +166,30 @@ fn a_store_holds_less_than_its_trees_and_a_copy_of_the_generic_tree() {
         let typed = document(20_000);
         let typed_bytes = live();
         let (generic, copy) = generic_tree_bytes(&typed, class);
-        let peak = typed_bytes + peak_while_storing(&mut package, &typed, class);
+        let peak =
+            typed_bytes + peak_while_storing(&mut package, &typed, class, WriteOptions::default());
         assert!(
             peak < typed_bytes + generic + copy,
             "{class:?}: peak {peak} bytes, typed tree {typed_bytes}, generic tree {generic}, its copy {copy}"
+        );
+    }
+}
+
+/// Below the typed tree and the generic tree it writes as: a store in the pretty layout writes
+/// from the typed tree too, and holds no generic tree of the part.
+#[test]
+fn a_pretty_store_holds_less_than_its_trees() {
+    for class in [ConformanceClass::Strict, ConformanceClass::Transitional] {
+        let mut package = Package::new();
+        start();
+        let typed = document(20_000);
+        let typed_bytes = live();
+        let (generic, _) = generic_tree_bytes(&typed, class);
+        let options = WriteOptions::new(Layout::Pretty, true);
+        let peak = typed_bytes + peak_while_storing(&mut package, &typed, class, options);
+        assert!(
+            peak < typed_bytes + generic,
+            "{class:?}: peak {peak} bytes, typed tree {typed_bytes}, generic tree {generic}"
         );
     }
 }
@@ -193,7 +214,8 @@ fn a_store_over_a_large_part_holds_its_bytes_and_never_its_tree() {
         let typed = document(10);
         let typed_bytes = live();
         let (generic, _) = generic_tree_bytes(&typed, class);
-        let peak = typed_bytes + peak_while_storing(&mut package, &typed, class);
+        let peak =
+            typed_bytes + peak_while_storing(&mut package, &typed, class, WriteOptions::default());
         assert!(
             peak < typed_bytes + generic + old_bytes + MARGIN,
             "{class:?}: peak {peak} bytes, new trees {typed_bytes} and {generic}, old part {old_bytes}"

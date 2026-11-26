@@ -1,9 +1,9 @@
-use super::PartWriter;
+use super::{Children, PartWriter};
 use crate::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
 use crate::name::QName;
 use crate::parse::parse;
 use crate::stream::reader::PartReader;
-use crate::write::{Layout, WriteOptions};
+use crate::write::{Layout, WriteOptions, qualified};
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const DECLARATION: &str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n";
@@ -41,8 +41,9 @@ fn each_layout_gives_its_bytes() {
     }];
     let part = |out: &mut PartWriter<'_>| {
         out.declaration().unwrap();
-        out.start("w:body", &declarations, &[("w:a", "1")]).unwrap();
-        out.start("w:t", &[], &[]).unwrap();
+        out.start("w:body", &declarations, &[("w:a", "1")], Children::Markup)
+            .unwrap();
+        out.start("w:t", &[], &[], Children::Text).unwrap();
         out.text("x < y").unwrap();
         out.end("w:t").unwrap();
         out.element(&paragraph).unwrap();
@@ -62,8 +63,8 @@ fn each_layout_gives_its_bytes() {
         written(Layout::Pretty, part),
         format!(
             "{DECLARATION}<w:body xmlns:w=\"{W}\" w:a=\"1\">\n  <w:t>x &lt; y</w:t>\n  \
-             <w:p xmlns:w=\"urn:w\">\n    <w:r>\n      <w:t>b</w:t>\n    </w:r>\n  </w:p>\n  <!--c--><w:raw/>\n  \
-             <w:sectPr/>\n</w:body>"
+             <w:p xmlns:w=\"urn:w\">\n    <w:r>\n      <w:t>b</w:t>\n    </w:r>\n  </w:p>\n  <!--c-->\n  \
+             <w:raw/>\n  <w:sectPr/>\n</w:body>"
         )
     );
 }
@@ -75,7 +76,7 @@ fn values_are_escaped_as_the_generic_tree_writer_escapes_them() {
         uri: "urn:a&b".to_owned(),
     }];
     let bytes = written(Layout::Compact, |out| {
-        out.start("a", &declarations, &[("b", "\"\t\n\r<&>'")])
+        out.start("a", &declarations, &[("b", "\"\t\n\r<&>'")], Children::Text)
             .unwrap();
         out.empty("c", &[("d", "<\"&\">")]).unwrap();
         out.text("1 < 2 & 3 > 2\r\t\"'\n").unwrap();
@@ -94,11 +95,12 @@ fn values_are_escaped_as_the_generic_tree_writer_escapes_them() {
 #[test]
 fn whitespace_that_is_all_an_element_holds_is_kept_in_the_compact_layout() {
     let part = |out: &mut PartWriter<'_>| {
-        out.start("a", &[], &[]).unwrap();
-        out.start("t", &[], &[]).unwrap();
+        out.start("a", &[], &[], Children::Markup).unwrap();
+        out.start("t", &[], &[], Children::Text).unwrap();
         out.text(" ").unwrap();
         out.end("t").unwrap();
-        out.start("t", &[], &[("xml:space", "preserve")]).unwrap();
+        out.start("t", &[], &[("xml:space", "preserve")], Children::Text)
+            .unwrap();
         out.text(" ").unwrap();
         out.end("t").unwrap();
         out.end("a").unwrap();
@@ -117,11 +119,13 @@ fn whitespace_that_is_all_an_element_holds_is_kept_in_the_compact_layout() {
 #[test]
 fn a_preserve_scope_reaches_the_descendants_until_an_inner_default_ends_it() {
     let bytes = written(Layout::Compact, |out| {
-        out.start("a", &[], &[("xml:space", "preserve")]).unwrap();
-        out.start("b", &[], &[]).unwrap();
+        out.start("a", &[], &[("xml:space", "preserve")], Children::Text)
+            .unwrap();
+        out.start("b", &[], &[], Children::Text).unwrap();
         out.text(" ").unwrap();
         out.end("b").unwrap();
-        out.start("c", &[], &[("xml:space", "default")]).unwrap();
+        out.start("c", &[], &[("xml:space", "default")], Children::Text)
+            .unwrap();
         out.text(" ").unwrap();
         out.end("c").unwrap();
         out.text(" ").unwrap();
@@ -136,7 +140,7 @@ fn a_preserve_scope_reaches_the_descendants_until_an_inner_default_ends_it() {
 #[test]
 fn whitespace_only_text_written_as_a_node_is_dropped_in_the_compact_layout() {
     let part = |out: &mut PartWriter<'_>| {
-        out.start("a", &[], &[]).unwrap();
+        out.start("a", &[], &[], Children::Text).unwrap();
         out.node(&Node::Text(" ".to_owned())).unwrap();
         out.node(&Node::Text("b < c".to_owned())).unwrap();
         out.end("a").unwrap();
@@ -149,19 +153,19 @@ fn whitespace_only_text_written_as_a_node_is_dropped_in_the_compact_layout() {
 #[test]
 fn whitespace_that_is_all_an_element_holds_stays_through_both_writers() {
     let streamed = written(Layout::Compact, |out| {
-        out.start("p", &[], &[]).unwrap();
+        out.start("p", &[], &[], Children::Text).unwrap();
         out.text("\n  ").unwrap();
-        out.start("t", &[], &[]).unwrap();
+        out.start("t", &[], &[], Children::Text).unwrap();
         out.text(" ").unwrap();
         out.end("t").unwrap();
-        out.start("s", &[], &[]).unwrap();
+        out.start("s", &[], &[], Children::Text).unwrap();
         out.text("\n").unwrap();
         out.end("s").unwrap();
-        out.start("a", &[], &[]).unwrap();
+        out.start("a", &[], &[], Children::Text).unwrap();
         out.text(" ").unwrap();
         out.empty("b", &[]).unwrap();
         out.end("a").unwrap();
-        out.start("c", &[], &[]).unwrap();
+        out.start("c", &[], &[], Children::Markup).unwrap();
         out.end("c").unwrap();
         out.text("\n").unwrap();
         out.end("p").unwrap();
@@ -195,7 +199,8 @@ fn empty_text_is_no_content_through_both_writers() {
     let document = Document::new("xml version=\"1.0\"", element);
     for layout in [Layout::Compact, Layout::Pretty] {
         let streamed = written(layout, |out| {
-            out.start("a", &[], &[("xml:space", "preserve")]).unwrap();
+            out.start("a", &[], &[("xml:space", "preserve")], Children::Markup)
+                .unwrap();
             out.text("").unwrap();
             out.end("a").unwrap();
         });
@@ -206,4 +211,51 @@ fn empty_text_is_no_content_through_both_writers() {
             format!("<?xml version=\"1.0\"?>\r\n{streamed}")
         );
     }
+}
+
+/// Write `element` tag by tag, each start saying what the element's children are.
+fn tag_by_tag(out: &mut PartWriter<'_>, element: &Element) {
+    let name = qualified(&element.name);
+    let named: Vec<(String, &str)> = element
+        .attributes
+        .iter()
+        .map(|attribute| (qualified(&attribute.name), attribute.value.as_str()))
+        .collect();
+    let attributes: Vec<(&str, &str)> = named
+        .iter()
+        .map(|(attribute, value)| (attribute.as_str(), *value))
+        .collect();
+    out.start(
+        &name,
+        &element.namespace_declarations,
+        &attributes,
+        Children::of(&element.children),
+    )
+    .unwrap();
+    for child in &element.children {
+        if let Node::Element(inner) = child {
+            tag_by_tag(out, inner);
+        } else {
+            out.node(child).unwrap();
+        }
+    }
+    out.end(&name).unwrap();
+}
+
+// XML input: officekit-xml's writers work on generic elements, below the model.
+#[test]
+fn the_pretty_layout_indents_the_children_the_generic_tree_writer_indents() {
+    let document = parse(
+        b"<a><b>x<c/></b><d><e/><!--f--><g/></d><h xml:space=\"preserve\"><i/></h>\
+          <j><![CDATA[k]]><l/></j><m> <n/></m><o></o></a>",
+    )
+    .unwrap();
+    let streamed = written(Layout::Pretty, |out| tag_by_tag(out, &document.root));
+    assert_eq!(
+        streamed,
+        "<a>\n  <b>x<c/></b>\n  <d>\n    <e/>\n    <!--f-->\n    <g/>\n  </d>\n  \
+         <h xml:space=\"preserve\"><i/></h>\n  <j><![CDATA[k]]><l/></j>\n  <m> <n/></m>\n  <o/>\n</a>"
+    );
+    let tree = document.to_xml(WriteOptions::new(Layout::Pretty, false));
+    assert_eq!(String::from_utf8(tree).unwrap(), streamed);
 }

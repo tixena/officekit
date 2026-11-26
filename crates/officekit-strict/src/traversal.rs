@@ -84,8 +84,8 @@ use officekit_markup::{
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::tag_of;
-use officekit_xml::stream::writer::PartWriter;
-use officekit_xml::write::{is_whitespace_text, preserves_space, qualified};
+use officekit_xml::stream::writer::{Children, PartWriter};
+use officekit_xml::write::{Layout, is_whitespace_text, preserves_space, qualified};
 
 #[cfg(test)]
 mod tests;
@@ -378,7 +378,7 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
         F: Nodes,
         F::Node: WriteThrough,
     {
-        self.open()?;
+        self.open(false)?;
         if self.positions.skips(&self.unknown.absent, field) {
             return Ok(());
         }
@@ -410,7 +410,7 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
     ///
     /// The sink's.
     pub fn finish(mut self, ctx: &mut dyn Context) -> io::Result<()> {
-        self.open()?;
+        self.open(false)?;
         self.place.finish(ctx, self.out)?;
         self.out.end(&qualified(&self.element.name))
     }
@@ -427,7 +427,7 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
         F: Nodes,
         F::Node: Item + WriteThrough,
     {
-        self.open()?;
+        self.open(false)?;
         self.positions.advance();
         for item in field.nodes() {
             if item.is_declared() {
@@ -481,14 +481,21 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
     }
 
     /// Hand the start tag to the part writer, which holds it back until the
-    /// element's first content, once every attribute is known.
-    fn open(&mut self) -> io::Result<()> {
+    /// element's first content, once every attribute is known; `text` tells whether the node's
+    /// simple content is text that is not empty, which with its unknown children says what its
+    /// children are.
+    fn open(&mut self, text: bool) -> io::Result<()> {
         if !self.opened {
             self.opened = true;
             self.element
                 .attributes
                 .extend(self.unknown.attributes.iter().cloned());
-            self.out.open_node(&mut self.element)?;
+            let children = if text {
+                Children::Text
+            } else {
+                Children::of(self.unknown.children.iter().map(|extra| &extra.node))
+            };
+            self.out.open_node(&mut self.element, children)?;
         }
         Ok(())
     }
@@ -502,8 +509,8 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
     where
         T: AsRef<str> + ?Sized,
     {
-        self.open()?;
         let value = text.as_ref();
+        self.open(!value.is_empty())?;
         if value.is_empty() {
             return Ok(());
         }
@@ -603,10 +610,15 @@ impl WriteThrough for Node {
             .iter()
             .map(|(attribute, value)| (attribute.as_str(), *value))
             .collect();
-        out.start(&name, &element.namespace_declarations, &attributes)?;
-        let preserved = preserves_space(element, false);
+        out.start(
+            &name,
+            &element.namespace_declarations,
+            &attributes,
+            Children::of(&element.children),
+        )?;
+        let kept = preserves_space(element, false) || out.layout() == Layout::Pretty;
         for child in &element.children {
-            if preserved || !is_whitespace_text(child) {
+            if kept || !is_whitespace_text(child) {
                 child.write_through(ctx, out)?;
             }
         }

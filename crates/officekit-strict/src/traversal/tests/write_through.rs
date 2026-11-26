@@ -6,7 +6,7 @@ use officekit_markup::{Context, Extra, Unknown, Written};
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::QName;
 use officekit_xml::parse::parse;
-use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::stream::writer::{Children, PartWriter};
 use officekit_xml::write::{Layout, Scope};
 
 use crate::traversal::{Place, Transform as _, Unchanged, WriteThrough as _};
@@ -103,7 +103,7 @@ fn place_writes_each_extra_before_the_declared_child_it_names_and_the_rest_after
     ];
     let bytes = written(|out| {
         let mut place = Place::new(&unknown);
-        out.start("p", &[], &[])?;
+        out.start("p", &[], &[], Children::Markup)?;
         for name in ["first", "second"] {
             place.before_known(&mut Unchanged, out)?;
             out.empty(name, &[])?;

@@ -5,7 +5,7 @@ use alloc::collections::BTreeMap;
 use std::io::{self, Write};
 
 use crate::element::NamespaceDeclaration;
-use crate::stream::writer::PartWriter;
+use crate::stream::writer::{Children, PartWriter};
 use crate::write::Layout;
 use os_shim::archive::ZipStreamWriter;
 
@@ -32,6 +32,7 @@ use crate::packaging::relationship::{self, RELATIONSHIPS_CONTENT_TYPE, Relations
 /// use officekit_xml::packaging::part_name::PartName;
 /// use officekit_xml::packaging::relationship::{Relationship, RelationshipType, TargetMode};
 /// use officekit_xml::element::NamespaceDeclaration;
+/// use officekit_xml::stream::writer::Children;
 /// use officekit_xml::write::Layout;
 ///
 /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -44,7 +45,12 @@ use crate::packaging::relationship::{self, RELATIONSHIPS_CONTENT_TYPE, Relations
 /// let mut writer = PackageWriter::from_template(&mut sink, &Package::new());
 /// let mut part = writer.part(&main, content_type, Layout::Compact)?;
 /// part.declaration()?;
-/// part.start("w:document", &[NamespaceDeclaration::new("w".to_owned(), word.to_owned())], &[])?;
+/// part.start(
+///     "w:document",
+///     &[NamespaceDeclaration::new("w".to_owned(), word.to_owned())],
+///     &[],
+///     Children::Markup,
+/// )?;
 /// part.end("w:document")?;
 /// let relationship = Relationship::new(
 ///     RelationshipType::OFFICE_DOCUMENT.transitional,
@@ -116,7 +122,12 @@ impl<W: Write> PackageWriter<W> {
         self.zip.start_entry(zip_entry(CONTENT_TYPES_PART))?;
         let mut types = PartWriter::new(&mut self.zip, Layout::Compact);
         types.declaration()?;
-        types.start("Types", &declare(content_types::NAMESPACE), &[])?;
+        types.start(
+            "Types",
+            &declare(content_types::NAMESPACE),
+            &[],
+            Children::Markup,
+        )?;
         for (extension, content_type) in &self.defaults {
             types.empty(
                 "Default",
@@ -138,7 +149,12 @@ impl<W: Write> PackageWriter<W> {
             self.zip.start_entry(zip_entry(&name))?;
             let mut out = PartWriter::new(&mut self.zip, Layout::Compact);
             out.declaration()?;
-            out.start("Relationships", &declare(relationship::NAMESPACE), &[])?;
+            out.start(
+                "Relationships",
+                &declare(relationship::NAMESPACE),
+                &[],
+                Children::Markup,
+            )?;
             for item in items {
                 let mut attributes = vec![
                     ("Id", item.id.as_str()),

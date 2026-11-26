@@ -19,7 +19,7 @@ use officekit_xml::packaging::relationship::{
     RELATIONSHIPS_CONTENT_TYPE, Relationship, RelationshipType, Target, TargetMode,
 };
 use officekit_xml::stream::reader::PartEvent;
-use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::stream::writer::{Children, PartWriter};
 use officekit_xml::write::{Layout, Scope, WriteOptions};
 
 const DECLARATION: &str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n";
@@ -274,8 +274,9 @@ fn a_part_written_in_each_layout_gives_its_bytes() {
         out.copy_parts(&template, &[]).unwrap();
         let mut part = out.part(&name, "application/vnd.test+xml", layout).unwrap();
         part.declaration().unwrap();
-        part.start("x:a", &declarations, &[("x:b", "1")]).unwrap();
-        part.start("x:c", &[], &[]).unwrap();
+        part.start("x:a", &declarations, &[("x:b", "1")], Children::Markup)
+            .unwrap();
+        part.start("x:c", &[], &[], Children::Text).unwrap();
         part.text("d < e").unwrap();
         part.end("x:c").unwrap();
         part.empty("x:f", &[]).unwrap();
