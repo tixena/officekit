@@ -117,7 +117,7 @@ impl Display for DateTime {
         if self.nanosecond > 0 {
             let mut digits = self.nanosecond;
             let mut width = 9;
-            while digits % 10 == 0 {
+            while digits.is_multiple_of(10) {
                 digits /= 10;
                 width -= 1;
             }
